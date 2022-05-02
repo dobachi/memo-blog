@@ -5,18 +5,18 @@
     
     <title>dansbecker/partial-dependence-plots | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ PDPはモデルが学習されたあとに計算可能 PDPの計算方法 タイタニックの例 「考察」に関する議論    参考  Kaggleのdansbecker partial-dependence-plots 機械学習モデルを解釈する方法 Permutation Importance / Partial Dependence Plot  メモ PDPはモデルが学習されたあとに計算可能 ただ">
+    <meta name="description" content="参考 メモ  PDPはモデルが学習されたあとに計算可能 PDPの計算方法 タイタニックの例 「考察」に関する議論    参考  Kaggleのdansbecker partial-dependence-plots 機械学習モデルを解釈する方法 Permutation Importance / Partial Dependence Plot  メモ PDPはモデルが学習されたあとに計算可能 た">
 <meta name="keywords" content="Machine Learning,Kaggle,Model,Partial Dependency Plot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dansbecker&#x2F;partial-dependence-plots">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/04/13/dansbecker-partial-dependence-plots/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ PDPはモデルが学習されたあとに計算可能 PDPの計算方法 タイタニックの例 「考察」に関する議論    参考  Kaggleのdansbecker partial-dependence-plots 機械学習モデルを解釈する方法 Permutation Importance / Partial Dependence Plot  メモ PDPはモデルが学習されたあとに計算可能 ただ">
+<meta property="og:description" content="参考 メモ  PDPはモデルが学習されたあとに計算可能 PDPの計算方法 タイタニックの例 「考察」に関する議論    参考  Kaggleのdansbecker partial-dependence-plots 機械学習モデルを解釈する方法 Permutation Importance / Partial Dependence Plot  メモ PDPはモデルが学習されたあとに計算可能 た">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dansbecker&#x2F;partial-dependence-plots">
-<meta name="twitter:description" content="参考 メモ PDPはモデルが学習されたあとに計算可能 PDPの計算方法 タイタニックの例 「考察」に関する議論    参考  Kaggleのdansbecker partial-dependence-plots 機械学習モデルを解釈する方法 Permutation Importance / Partial Dependence Plot  メモ PDPはモデルが学習されたあとに計算可能 ただ">
+<meta name="twitter:description" content="参考 メモ  PDPはモデルが学習されたあとに計算可能 PDPの計算方法 タイタニックの例 「考察」に関する議論    参考  Kaggleのdansbecker partial-dependence-plots 機械学習モデルを解釈する方法 Permutation Importance / Partial Dependence Plot  メモ PDPはモデルが学習されたあとに計算可能 た">
     
 
     
@@ -251,32 +251,39 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#pdpはモデルが学習されたあとに計算可能">PDPはモデルが学習されたあとに計算可能</a></li>
-<li><a href="#pdpの計算方法">PDPの計算方法</a></li>
-<li><a href="#タイタニックの例">タイタニックの例</a></li>
-<li><a href="#考察に関する議論">「考察」に関する議論</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#pdpはモデルが学習されたあとに計算可能" id="toc-pdpはモデルが学習されたあとに計算可能">PDPはモデルが学習されたあとに計算可能</a></li>
+<li><a href="#pdpの計算方法" id="toc-pdpの計算方法">PDPの計算方法</a></li>
+<li><a href="#タイタニックの例" id="toc-タイタニックの例">タイタニックの例</a></li>
+<li><a href="#考察に関する議論" id="toc-考察に関する議論">「考察」に関する議論</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://www.kaggle.com/dansbecker/partial-dependence-plots" target="_blank" rel="noopener">Kaggleのdansbecker partial-dependence-plots</a></li>
-<li><a href="https://linus-mk.hatenablog.com/entry/2018/10/07/222909" target="_blank" rel="noopener">機械学習モデルを解釈する方法 Permutation Importance / Partial Dependence Plot</a></li>
+<li><a href="https://www.kaggle.com/dansbecker/partial-dependence-plots" target="_blank" rel="noopener">Kaggleのdansbecker
+partial-dependence-plots</a></li>
+<li><a href="https://linus-mk.hatenablog.com/entry/2018/10/07/222909" target="_blank" rel="noopener">機械学習モデルを解釈する方法
+Permutation Importance / Partial Dependence Plot</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="pdpはモデルが学習されたあとに計算可能">PDPはモデルが学習されたあとに計算可能</span></h2>
 <p>ただし、様々なモデルに適用可能。</p>
 <h2><span id="pdpの計算方法">PDPの計算方法</span></h2>
 <p>以下のような感じ。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">my_plots = plot_partial_dependence(my_model,       </span><br><span class="line">                                   features=[0, 1, 2], # column numbers of plots we want to show</span><br><span class="line">                                   X=X,            # raw predictors data.</span><br><span class="line">                                   feature_names=[&apos;Distance&apos;, &apos;Landsize&apos;, &apos;BuildingArea&apos;], # labels on graphs</span><br><span class="line">                                   grid_resolution=10) # number of values to plot on x axis</span><br></pre></td></tr></table></figure></p>
-<p>注意点として挙げられていたのは、<code>grid_resolution</code>を細かくしたときに、 乱れたグラフが見られたとしても、その細かな挙動に対して文脈を考えすぎること。 どうしてもランダム性があるので、細かな挙動にいちいち気にしているとミスリードになる。</p>
-<p>なお、<code>partial_dependence</code>という関数を用いると、グラフを出力するのではなく、数値データそのものを得られる。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">my_plots2 = partial_dependence(my_model,       </span><br><span class="line">                                   target_variables=[0, 1, 2], # column numbers of plots we want to show</span><br><span class="line">                                   X=X,            # raw predictors data.</span><br><span class="line">                                   grid_resolution=10) # number of values to plot on x axis</span><br></pre></td></tr></table></figure></p>
+<p>注意点として挙げられていたのは、<code>grid_resolution</code>を細かくしたときに、
+乱れたグラフが見られたとしても、その細かな挙動に対して文脈を考えすぎること。
+どうしてもランダム性があるので、細かな挙動にいちいち気にしているとミスリードになる。</p>
+<p>なお、<code>partial_dependence</code>という関数を用いると、グラフを出力するのではなく、数値データそのものを得られる。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">my_plots2 = partial_dependence(my_model,       </span><br><span class="line">                                   target_variables=[0, 1, 2], # column numbers of plots we want to show</span><br><span class="line">                                   X=X,            # raw predictors data.</span><br><span class="line">                                   grid_resolution=10) # number of values to plot on x axis</span><br></pre></td></tr></table></figure></p>
 <p>なお、微妙にオプションが異なることに注意…。</p>
 <h2><span id="タイタニックの例">タイタニックの例</span></h2>
 <p>PDPを見ることで、年齢や支払い料金と生存結果の関係を解釈する例が記載されていた。</p>
 <h2><span id="考察に関する議論">「考察」に関する議論</span></h2>
-<p>PDPで得られた結果を考察すること自体について、議論があるようだ。 意味のある・なし、という点において。</p>
+<p>PDPで得られた結果を考察すること自体について、議論があるようだ。
+意味のある・なし、という点において。</p>
 
         
         </div>
@@ -287,7 +294,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/13/dansbecker-partial-dependence-plots/" data-id="cl2nztnpp00hu5xqirof1o0zs" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/13/dansbecker-partial-dependence-plots/" data-id="cl2o9pb9d00d918rzcwmqq703" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -538,5 +545,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -5,18 +5,18 @@
     
     <title>pipenvを試す | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ WSL上でのpipenv    参考  Pipenvことはじめ pyenv、pyenv-virtualenv、venv、Anaconda、Pipenv。私はPipenvを使う。 Pipenvを使ったPython開発まとめ pyenvのインストール手順 Pipenvことはじめ  メモ 上記の参考情報を見て試した。 WSL上でのpipenv まずOS標準のPython環境を汚さないた">
+    <meta name="description" content="参考 メモ  WSL上でのpipenv    参考  Pipenvことはじめ pyenv、pyenv-virtualenv、venv、Anaconda、Pipenv。私はPipenvを使う。 Pipenvを使ったPython開発まとめ pyenvのインストール手順 Pipenvことはじめ  メモ 上記の参考情報を見て試した。 WSL上でのpipenv まずOS標準のPython環境を汚さない">
 <meta name="keywords" content="Python,Pipenv">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pipenvを試す">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/10/22/pipenv/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ WSL上でのpipenv    参考  Pipenvことはじめ pyenv、pyenv-virtualenv、venv、Anaconda、Pipenv。私はPipenvを使う。 Pipenvを使ったPython開発まとめ pyenvのインストール手順 Pipenvことはじめ  メモ 上記の参考情報を見て試した。 WSL上でのpipenv まずOS標準のPython環境を汚さないた">
+<meta property="og:description" content="参考 メモ  WSL上でのpipenv    参考  Pipenvことはじめ pyenv、pyenv-virtualenv、venv、Anaconda、Pipenv。私はPipenvを使う。 Pipenvを使ったPython開発まとめ pyenvのインストール手順 Pipenvことはじめ  メモ 上記の参考情報を見て試した。 WSL上でのpipenv まずOS標準のPython環境を汚さない">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pipenvを試す">
-<meta name="twitter:description" content="参考 メモ WSL上でのpipenv    参考  Pipenvことはじめ pyenv、pyenv-virtualenv、venv、Anaconda、Pipenv。私はPipenvを使う。 Pipenvを使ったPython開発まとめ pyenvのインストール手順 Pipenvことはじめ  メモ 上記の参考情報を見て試した。 WSL上でのpipenv まずOS標準のPython環境を汚さないた">
+<meta name="twitter:description" content="参考 メモ  WSL上でのpipenv    参考  Pipenvことはじめ pyenv、pyenv-virtualenv、venv、Anaconda、Pipenv。私はPipenvを使う。 Pipenvを使ったPython開発まとめ pyenvのインストール手順 Pipenvことはじめ  メモ 上記の参考情報を見て試した。 WSL上でのpipenv まずOS標準のPython環境を汚さない">
     
 
     
@@ -251,9 +251,10 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#wsl上でのpipenv">WSL上でのpipenv</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#wsl上でのpipenv" id="toc-wsl上でのpipenv">WSL上でのpipenv</a></li>
 </ul></li>
 </ul>
 </div>
@@ -268,11 +269,15 @@ ga('send', 'pageview');
 <h1><span id="メモ">メモ</span></h1>
 <p>上記の参考情報を見て試した。</p>
 <h2><span id="wsl上でのpipenv">WSL上でのpipenv</span></h2>
-<p>まずOS標準のPython環境を汚さないため、pyenvを導入した。 導入手段は、 <a href="https://github.com/pyenv/pyenv#installation" target="_blank" rel="noopener">pyenvのインストール手順</a> を参照。</p>
+<p>まずOS標準のPython環境を汚さないため、pyenvを導入した。 導入手段は、
+<a href="https://github.com/pyenv/pyenv#installation" target="_blank" rel="noopener">pyenvのインストール手順</a>
+を参照。</p>
 <p>導入した後、pyenvを使ってPython3.7.5を導入する。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pyenv install 3.7.5</span><br><span class="line">$ pyenv global 3.7.5</span><br><span class="line">$ pip install pipenv</span><br></pre></td></tr></table></figure></p>
-<p>さて、ここでpipenvを使おうとしたらエラーが生じた。 以下の参考に、 libffi-devを導入してPythonを再インストールしたらうまくいった。</p>
+<p>さて、ここでpipenvを使おうとしたらエラーが生じた。 以下の参考に、
+libffi-devを導入してPythonを再インストールしたらうまくいった。</p>
 <p>https://stackoverflow.com/questions/27022373/python3-importerror-no-module-named-ctypes-when-using-value-from-module-mul</p>
-<p><a href="https://qiita.com/shinshin86/items/e11c1124e3e2e74556b8" target="_blank" rel="noopener">Pipenvことはじめ</a> に大まかな使い方が載っている。</p>
+<p><a href="https://qiita.com/shinshin86/items/e11c1124e3e2e74556b8" target="_blank" rel="noopener">Pipenvことはじめ</a>
+に大まかな使い方が載っている。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
         
@@ -284,7 +289,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/10/22/pipenv/" data-id="cl2nztnq300j05xqi7807495d" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/10/22/pipenv/" data-id="cl2o9pb9t00ea18rzsp5vpftb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -535,5 +540,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

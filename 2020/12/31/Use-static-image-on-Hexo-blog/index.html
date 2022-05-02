@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  Hexo 記事に画像を貼り付ける Global-Asset-Folder  メモ Hexo 記事に画像を貼り付ける を参考に、もともとCacooのリンクを使っていた箇所を すべてスタティックな画像を利用するようにした。 post_asset_folderを利用して、記事ごとの画像ディレクトリを利用することも考えたが、 画像はひとところに集まっていてほしいので、 Glo">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Use static image on Hexo blog">
 <meta name="twitter:description" content="参考 メモ   参考  Hexo 記事に画像を貼り付ける Global-Asset-Folder  メモ Hexo 記事に画像を貼り付ける を参考に、もともとCacooのリンクを使っていた箇所を すべてスタティックな画像を利用するようにした。 post_asset_folderを利用して、記事ごとの画像ディレクトリを利用することも考えたが、 画像はひとところに集まっていてほしいので、 Glo">
@@ -251,18 +251,24 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://bitto.jp/posts/%E6%8A%80%E8%A1%93/Hexo/hexo-add-image/" target="_blank" rel="noopener">Hexo 記事に画像を貼り付ける</a></li>
+<li><a href="https://bitto.jp/posts/%E6%8A%80%E8%A1%93/Hexo/hexo-add-image/" target="_blank" rel="noopener">Hexo
+記事に画像を貼り付ける</a></li>
 <li><a href="https://hexo.io/docs/asset-folders#Global-Asset-Folder" target="_blank" rel="noopener">Global-Asset-Folder</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://bitto.jp/posts/%E6%8A%80%E8%A1%93/Hexo/hexo-add-image/" target="_blank" rel="noopener">Hexo 記事に画像を貼り付ける</a> を参考に、もともとCacooのリンクを使っていた箇所を すべてスタティックな画像を利用するようにした。</p>
-<p>post_asset_folderを利用して、記事ごとの画像ディレクトリを利用することも考えたが、 画像はひとところに集まっていてほしいので、 <a href="https://hexo.io/docs/asset-folders#Global-Asset-Folder" target="_blank" rel="noopener">Global-Asset-Folder</a> を利用することにした。</p>
+<p><a href="https://bitto.jp/posts/%E6%8A%80%E8%A1%93/Hexo/hexo-add-image/" target="_blank" rel="noopener">Hexo
+記事に画像を貼り付ける</a>
+を参考に、もともとCacooのリンクを使っていた箇所を
+すべてスタティックな画像を利用するようにした。</p>
+<p>post_asset_folderを利用して、記事ごとの画像ディレクトリを利用することも考えたが、
+画像はひとところに集まっていてほしいので、 <a href="https://hexo.io/docs/asset-folders#Global-Asset-Folder" target="_blank" rel="noopener">Global-Asset-Folder</a>
+を利用することにした。</p>
 <p>なお、上記ブログでは</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">プロジェクトトップ/images/site</span><br></pre></td></tr></table></figure>
 <p>以下に画像を置き、</p>
@@ -284,7 +290,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Use-static-image-on-Hexo-blog/" data-id="cl2nztnp100ft5xqiwnzmgfn5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Use-static-image-on-Hexo-blog/" data-id="cl2o9pb8o00bi18rzz9be067i" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -535,5 +541,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

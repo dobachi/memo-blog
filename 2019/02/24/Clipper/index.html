@@ -5,21 +5,21 @@
     
     <title>Clipper | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ Clipper: A Low-Latency Online Prediction Serving System アーキ概要 モデル選択について TensorFlow Servingとの比較 ターゲットとなるアプリ チャレンジポイント アーキテクチャと大まかな処理フロー キャッシュ バッチ化 モデルコンテナ モデル選択層 信頼度とデフォルト動作 落伍者モデルの影響の軽減 ステートの">
+    <meta name="description" content="参考 メモ  Clipper: A Low-Latency Online Prediction Serving System  アーキ概要 モデル選択について TensorFlow Servingとの比較 ターゲットとなるアプリ チャレンジポイント アーキテクチャと大まかな処理フロー キャッシュ バッチ化 モデルコンテナ モデル選択層 信頼度とデフォルト動作 落伍者モデルの影響の軽減 ステー">
 <meta name="keywords" content="Machine Learning,Model Management,Clipper">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Clipper">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/02/24/Clipper/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ Clipper: A Low-Latency Online Prediction Serving System アーキ概要 モデル選択について TensorFlow Servingとの比較 ターゲットとなるアプリ チャレンジポイント アーキテクチャと大まかな処理フロー キャッシュ バッチ化 モデルコンテナ モデル選択層 信頼度とデフォルト動作 落伍者モデルの影響の軽減 ステートの">
+<meta property="og:description" content="参考 メモ  Clipper: A Low-Latency Online Prediction Serving System  アーキ概要 モデル選択について TensorFlow Servingとの比較 ターゲットとなるアプリ チャレンジポイント アーキテクチャと大まかな処理フロー キャッシュ バッチ化 モデルコンテナ モデル選択層 信頼度とデフォルト動作 落伍者モデルの影響の軽減 ステー">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/zzfwNAP58VNaHTod-B2159.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/zzfwNAP58VNaHTod-892FC.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/zzfwNAP58VNaHTod-22A04.png">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Clipper">
-<meta name="twitter:description" content="参考 メモ Clipper: A Low-Latency Online Prediction Serving System アーキ概要 モデル選択について TensorFlow Servingとの比較 ターゲットとなるアプリ チャレンジポイント アーキテクチャと大まかな処理フロー キャッシュ バッチ化 モデルコンテナ モデル選択層 信頼度とデフォルト動作 落伍者モデルの影響の軽減 ステートの">
+<meta name="twitter:description" content="参考 メモ  Clipper: A Low-Latency Online Prediction Serving System  アーキ概要 モデル選択について TensorFlow Servingとの比較 ターゲットとなるアプリ チャレンジポイント アーキテクチャと大まかな処理フロー キャッシュ バッチ化 モデルコンテナ モデル選択層 信頼度とデフォルト動作 落伍者モデルの影響の軽減 ステー">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/zzfwNAP58VNaHTod-B2159.png">
     
 
@@ -255,70 +255,90 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#clipper-a-low-latency-online-prediction-serving-system">Clipper: A Low-Latency Online Prediction Serving System</a><ul>
-<li><a href="#アーキ概要">アーキ概要</a></li>
-<li><a href="#モデル選択について">モデル選択について</a></li>
-<li><a href="#tensorflow-servingとの比較">TensorFlow Servingとの比較</a></li>
-<li><a href="#ターゲットとなるアプリ">ターゲットとなるアプリ</a></li>
-<li><a href="#チャレンジポイント">チャレンジポイント</a></li>
-<li><a href="#アーキテクチャと大まかな処理フロー">アーキテクチャと大まかな処理フロー</a></li>
-<li><a href="#キャッシュ">キャッシュ</a></li>
-<li><a href="#バッチ化">バッチ化</a></li>
-<li><a href="#モデルコンテナ">モデルコンテナ</a></li>
-<li><a href="#モデル選択層">モデル選択層</a></li>
-<li><a href="#信頼度とデフォルト動作">信頼度とデフォルト動作</a></li>
-<li><a href="#落伍者モデルの影響の軽減">落伍者モデルの影響の軽減</a></li>
-<li><a href="#ステートの管理">ステートの管理</a></li>
-<li><a href="#tensorflow-servingとの比較-1">TensorFlow Servingとの比較</a></li>
-<li><a href="#制約">制約</a></li>
-<li><a href="#類似技術">類似技術</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#clipper-a-low-latency-online-prediction-serving-system" id="toc-clipper-a-low-latency-online-prediction-serving-system">Clipper:
+A Low-Latency Online Prediction Serving System</a>
+<ul>
+<li><a href="#アーキ概要" id="toc-アーキ概要">アーキ概要</a></li>
+<li><a href="#モデル選択について" id="toc-モデル選択について">モデル選択について</a></li>
+<li><a href="#tensorflow-servingとの比較" id="toc-tensorflow-servingとの比較">TensorFlow Servingとの比較</a></li>
+<li><a href="#ターゲットとなるアプリ" id="toc-ターゲットとなるアプリ">ターゲットとなるアプリ</a></li>
+<li><a href="#チャレンジポイント" id="toc-チャレンジポイント">チャレンジポイント</a></li>
+<li><a href="#アーキテクチャと大まかな処理フロー" id="toc-アーキテクチャと大まかな処理フロー">アーキテクチャと大まかな処理フロー</a></li>
+<li><a href="#キャッシュ" id="toc-キャッシュ">キャッシュ</a></li>
+<li><a href="#バッチ化" id="toc-バッチ化">バッチ化</a></li>
+<li><a href="#モデルコンテナ" id="toc-モデルコンテナ">モデルコンテナ</a></li>
+<li><a href="#モデル選択層" id="toc-モデル選択層">モデル選択層</a></li>
+<li><a href="#信頼度とデフォルト動作" id="toc-信頼度とデフォルト動作">信頼度とデフォルト動作</a></li>
+<li><a href="#落伍者モデルの影響の軽減" id="toc-落伍者モデルの影響の軽減">落伍者モデルの影響の軽減</a></li>
+<li><a href="#ステートの管理" id="toc-ステートの管理">ステートの管理</a></li>
+<li><a href="#tensorflow-servingとの比較-1" id="toc-tensorflow-servingとの比較-1">TensorFlow
+Servingとの比較</a></li>
+<li><a href="#制約" id="toc-制約">制約</a></li>
+<li><a href="#類似技術" id="toc-類似技術">類似技術</a></li>
 </ul></li>
-<li><a href="#公式ドキュメント">公式ドキュメント</a><ul>
-<li><a href="#アーキテクチャ">アーキテクチャ</a></li>
-<li><a href="#モデル管理">モデル管理</a></li>
-<li><a href="#コンテナマネージャ">コンテナマネージャ</a></li>
-<li><a href="#apiドキュメント">APIドキュメント</a></li>
+<li><a href="#公式ドキュメント" id="toc-公式ドキュメント">公式ドキュメント</a>
+<ul>
+<li><a href="#アーキテクチャ" id="toc-アーキテクチャ">アーキテクチャ</a></li>
+<li><a href="#モデル管理" id="toc-モデル管理">モデル管理</a></li>
+<li><a href="#コンテナマネージャ" id="toc-コンテナマネージャ">コンテナマネージャ</a></li>
+<li><a href="#apiドキュメント" id="toc-apiドキュメント">APIドキュメント</a></li>
 </ul></li>
-<li><a href="#クライアントのサンプル">クライアントのサンプル</a><ul>
-<li><a href="#コネクションの生成とエンドポイント定義">コネクションの生成とエンドポイント定義</a></li>
-<li><a href="#推論">推論</a></li>
+<li><a href="#クライアントのサンプル" id="toc-クライアントのサンプル">クライアントのサンプル</a>
+<ul>
+<li><a href="#コネクションの生成とエンドポイント定義" id="toc-コネクションの生成とエンドポイント定義">コネクションの生成とエンドポイント定義</a></li>
+<li><a href="#推論" id="toc-推論">推論</a></li>
 </ul></li>
-<li><a href="#xgboostの例">XGBOOSTの例</a></li>
-<li><a href="#実装確認">実装確認</a><ul>
-<li><a href="#開発言語">開発言語</a></li>
-<li><a href="#コンテナの起動の流れを確認してみる">コンテナの起動の流れを確認してみる</a></li>
-<li><a href="#create_endpointメソッドを確認">create_endpointメソッドを確認</a></li>
+<li><a href="#xgboostの例" id="toc-xgboostの例">XGBOOSTの例</a></li>
+<li><a href="#実装確認" id="toc-実装確認">実装確認</a>
+<ul>
+<li><a href="#開発言語" id="toc-開発言語">開発言語</a></li>
+<li><a href="#コンテナの起動の流れを確認してみる" id="toc-コンテナの起動の流れを確認してみる">コンテナの起動の流れを確認してみる</a></li>
+<li><a href="#create_endpointメソッドを確認" id="toc-create_endpointメソッドを確認">create_endpointメソッドを確認</a></li>
 </ul></li>
-<li><a href="#動作確認">動作確認</a><ul>
-<li><a href="#クイックスタート">クイックスタート</a></li>
-<li><a href="#画像取扱のサンプル">画像取扱のサンプル</a></li>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a>
+<ul>
+<li><a href="#クイックスタート" id="toc-クイックスタート">クイックスタート</a></li>
+<li><a href="#画像取扱のサンプル" id="toc-画像取扱のサンプル">画像取扱のサンプル</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/detail/69861" target="_blank" rel="noopener">Strata NY 2018でのClipper</a></li>
+<li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/detail/69861" target="_blank" rel="noopener">Strata
+NY 2018でのClipper</a></li>
 <li><a href="https://rise.cs.berkeley.edu/projects/clipper/" target="_blank" rel="noopener">RISELabのページ</a></li>
 <li><a href="https://rise.cs.berkeley.edu/wp-content/uploads/2017/02/clipper_final.pdf" target="_blank" rel="noopener">Clipperの論文</a></li>
 <li><a href="https://www.slideshare.net/greenmidori83/ss-28443892" target="_blank" rel="noopener">バンディットアルゴリズムについての説明</a></li>
 <li><a href="https://github.com/ucbrise/clipper" target="_blank" rel="noopener">GitHubページ</a></li>
 <li><a href="http://clipper.ai/" target="_blank" rel="noopener">公式ウェブサイト</a></li>
-<li><a href="http://docs.clipper.ai/en/v0.3.0/" target="_blank" rel="noopener">clipper APIドキュメント</a></li>
+<li><a href="http://docs.clipper.ai/en/v0.3.0/" target="_blank" rel="noopener">clipper
+APIドキュメント</a></li>
 <li><a href="https://github.com/ucbrise/clipper/blob/develop/examples/basic_query/example_client.py" target="_blank" rel="noopener">example_client.py</a></li>
 <li><a href="http://clipper.ai/tutorials/xgboost_deployment/" target="_blank" rel="noopener">xgboost_deployment</a></li>
-<li><a href="http://clipper.ai/tutorials/container_managers/" target="_blank" rel="noopener">Container Managers</a></li>
-<li><a href="http://docs.clipper.ai/en/v0.3.0/" target="_blank" rel="noopener">clipper APIドキュメント</a></li>
+<li><a href="http://clipper.ai/tutorials/container_managers/" target="_blank" rel="noopener">Container
+Managers</a></li>
+<li><a href="http://docs.clipper.ai/en/v0.3.0/" target="_blank" rel="noopener">clipper
+APIドキュメント</a></li>
 <li><a href="https://github.com/ucbrise/clipper/blob/develop/examples/image_query/example.md" target="_blank" rel="noopener">image_query</a></li>
 <li><a href="https://github.com/ucbrise/clipper/blob/develop/examples/image_query/example.ipynb" target="_blank" rel="noopener">image_query/example.ipynb</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/detail/69861" target="_blank" rel="noopener">Strata NY 2018でのClipper</a> が講演のようだが、スライドが公開されていない。</p>
-<h2><span id="clipper-a-low-latency-online-prediction-serving-system">Clipper: A Low-Latency Online Prediction Serving System</span></h2>
-<p><a href="https://rise.cs.berkeley.edu/wp-content/uploads/2017/02/clipper_final.pdf" target="_blank" rel="noopener">Clipperの論文</a>によると、「A Low-Latency Online Prediction Serving System」と定義されている。 上記論文の図1を見るかぎり、モデルサービングを担い、複数の機械学習モデルをまとめ上げる「中層化」層の 役割も担うようだ。 また、モデル選択の機能、キャッシングなどの機能も含まれているようである。</p>
-<p>これまでの研究では、学習フェーズに焦点が当たることが多かったが、 この研究では推論フェーズに焦点を当てている。</p>
+<p><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/detail/69861" target="_blank" rel="noopener">Strata
+NY 2018でのClipper</a>
+が講演のようだが、スライドが公開されていない。</p>
+<h2><span id="clippera-low-latency-online-prediction-serving-system">Clipper:
+A Low-Latency Online Prediction Serving System</span></h2>
+<p><a href="https://rise.cs.berkeley.edu/wp-content/uploads/2017/02/clipper_final.pdf" target="_blank" rel="noopener">Clipperの論文</a>によると、「A
+Low-Latency Online Prediction Serving System」と定義されている。
+上記論文の図1を見るかぎり、モデルサービングを担い、複数の機械学習モデルをまとめ上げる「中層化」層の
+役割も担うようだ。
+また、モデル選択の機能、キャッシングなどの機能も含まれているようである。</p>
+<p>これまでの研究では、学習フェーズに焦点が当たることが多かったが、
+この研究では推論フェーズに焦点を当てている。</p>
 <h3><span id="アーキ概要">アーキ概要</span></h3>
 <ul>
 <li>モデル抽象化層</li>
@@ -326,9 +346,13 @@ ga('send', 'pageview');
 </ul>
 <p>論文Figure 1参照。</p>
 <h3><span id="モデル選択について">モデル選択について</span></h3>
-<p>複数の競合するモデルから得られる結果を扱い、動的にモデルを選択していく。 これにより、モデルの精度とロバストネスを高める。 またバンディットアルゴリズムを採用しており、複数のモデルの結果を組み合わせる。</p>
-<p>スループットとレイテンシを保つため、キャッシングやバッチ処理を採用。 所定の（？）レイテンシを保持しながら、スループットを高めるためにバッチ処理化するようだ。</p>
-<p>また、このあたりは、モデル抽象化層の上になりたっているから、 異なるフレームワーク発のモデルが含まれている場合でも動作するようである。</p>
+<p>複数の競合するモデルから得られる結果を扱い、動的にモデルを選択していく。
+これにより、モデルの精度とロバストネスを高める。
+またバンディットアルゴリズムを採用しており、複数のモデルの結果を組み合わせる。</p>
+<p>スループットとレイテンシを保つため、キャッシングやバッチ処理を採用。
+所定の（？）レイテンシを保持しながら、スループットを高めるためにバッチ処理化するようだ。</p>
+<p>また、このあたりは、モデル抽象化層の上になりたっているから、
+異なるフレームワーク発のモデルが含まれている場合でも動作するようである。</p>
 <h3><span id="tensorflow-servingとの比較">TensorFlow Servingとの比較</span></h3>
 <p>機能面で充実し、スループットやレイテンシの面でも有利。</p>
 <h3><span id="ターゲットとなるアプリ">ターゲットとなるアプリ</span></h3>
@@ -354,23 +378,40 @@ ga('send', 'pageview');
 </ul>
 <h3><span id="アーキテクチャと大まかな処理フロー">アーキテクチャと大まかな処理フロー</span></h3>
 <p><img src="/memo-blog/images/zzfwNAP58VNaHTod-B2159.png" alt="リクエストが届くまで"> <img src="/memo-blog/images/zzfwNAP58VNaHTod-892FC.png" alt="結果が帰る流れ"> <img src="/memo-blog/images/zzfwNAP58VNaHTod-22A04.png" alt="フィードバック"></p>
-<p>実際にはキューは、モデルの抽象化レイヤ側にあるようにも思う。 追って実装確認必要。</p>
+<p>実際にはキューは、モデルの抽象化レイヤ側にあるようにも思う。
+追って実装確認必要。</p>
 <h3><span id="キャッシュ">キャッシュ</span></h3>
-<p>頻度の高いクエリのキャッシュが有効なのはわかりやすいが、頻度の低いクエリの キャッシュも有効な面がある。 予測結果を使ったあとのフィードック（★要確認）はすぐに生じるからである。</p>
+<p>頻度の高いクエリのキャッシュが有効なのはわかりやすいが、頻度の低いクエリの
+キャッシュも有効な面がある。
+予測結果を使ったあとのフィードック（★要確認）はすぐに生じるからである。</p>
 <p>キャッシュはrequestとfetchのAPIを持ち、ノンブロッキングである。</p>
 <p>LRUポリシーを用いる。</p>
 <h3><span id="バッチ化">バッチ化</span></h3>
-<p>レイテンシに関するSLOを指定すると、それを守る範囲内で、 バッチ化を試みる。これによりスループットの向上を狙う。</p>
-<p>バッチ化で狙うのはRPCやメモリコピーの回数削減、 フレームワークのデータ並列の仕組みの活用。</p>
-<p>なお、バックオフを設けながら、バッチサイズを変えることで、 最適なバッチサイズを探す。 AIMD=Additive-Increase-Multiplicative-decrease に基づいてサイズ変更。</p>
-<p>また、キューに入っているバッチが少ないケースでは、 ある程度貯まるのを待ち、スループットを上げる工夫もする。</p>
+<p>レイテンシに関するSLOを指定すると、それを守る範囲内で、
+バッチ化を試みる。これによりスループットの向上を狙う。</p>
+<p>バッチ化で狙うのはRPCやメモリコピーの回数削減、
+フレームワークのデータ並列の仕組みの活用。</p>
+<p>なお、バックオフを設けながら、バッチサイズを変えることで、
+最適なバッチサイズを探す。
+AIMD=Additive-Increase-Multiplicative-decrease
+に基づいてサイズ変更。</p>
+<p>また、キューに入っているバッチが少ないケースでは、
+ある程度貯まるのを待ち、スループットを上げる工夫もする。</p>
 <h3><span id="モデルコンテナ">モデルコンテナ</span></h3>
-<p>C++、Java、Pythonの言語バインディングが提供されている。 各言語バインディングでラッパーを実装すれば良い。</p>
+<p>C++、Java、Pythonの言語バインディングが提供されている。
+各言語バインディングでラッパーを実装すれば良い。</p>
 <p>モデルコンテナのレプリカを作り、スケールアウトさせられる。</p>
 <h3><span id="モデル選択層">モデル選択層</span></h3>
-<p>アプリケーションのライフサイクル全体に渡り、 フィードバックを考慮しながら、複数のモデルを取り扱う。 これにより、一部のモデルが失敗しても問題ない。 また複数のモデルから得られた結果を統合することでaccuracyを向上させる。</p>
-<p>モデルへの選択の基本的なAPIは、select、combine、observe。 selectとcombineはそのままの意味だが、observeは、アプリケーションからの フィードバックを受取り、ステートを更新するために用いるAPIである。</p>
-<p>モデル選択については予めgeneralなアルゴリズムが実装されているが、 ユーザが実装することも可能。 ただし、計算量と精度はトレードオフになりがちなので注意。</p>
+<p>アプリケーションのライフサイクル全体に渡り、
+フィードバックを考慮しながら、複数のモデルを取り扱う。
+これにより、一部のモデルが失敗しても問題ない。
+また複数のモデルから得られた結果を統合することでaccuracyを向上させる。</p>
+<p>モデルへの選択の基本的なAPIは、select、combine、observe。
+selectとcombineはそのままの意味だが、observeは、アプリケーションからの
+フィードバックを受取り、ステートを更新するために用いるAPIである。</p>
+<p>モデル選択については予めgeneralなアルゴリズムが実装されているが、
+ユーザが実装することも可能。
+ただし、計算量と精度はトレードオフになりがちなので注意。</p>
 <ul>
 <li>バンディットアルゴリズム（多腕バンディット問題）
 <ul>
@@ -383,21 +424,36 @@ ga('send', 'pageview');
 <li>重み計算にはExp4（バンディットアルゴリズム）を利用</li>
 </ul></li>
 </ul>
-<p>なお、バンディットアルゴリズムについては <a href="https://www.slideshare.net/greenmidori83/ss-28443892" target="_blank" rel="noopener">バンディットアルゴリズムについての説明</a> などを参照されたし。</p>
+<p>なお、バンディットアルゴリズムについては <a href="https://www.slideshare.net/greenmidori83/ss-28443892" target="_blank" rel="noopener">バンディットアルゴリズムについての説明</a>
+などを参照されたし。</p>
 <h3><span id="信頼度とデフォルト動作">信頼度とデフォルト動作</span></h3>
-<p>モデルから得られた推測値の信頼度が定められた閾値よりも低い場合、 所定のデフォルト動作をさせられる。 複数のモデルを取り扱う場合、信頼度の指標としてそれらのモデルが 最終的な解を採用するかどうかとする方法が挙げられる。 要は、アンサンブルを利用する、ということである。</p>
+<p>モデルから得られた推測値の信頼度が定められた閾値よりも低い場合、
+所定のデフォルト動作をさせられる。
+複数のモデルを取り扱う場合、信頼度の指標としてそれらのモデルが
+最終的な解を採用するかどうかとする方法が挙げられる。
+要は、アンサンブルを利用する、ということである。</p>
 <h3><span id="落伍者モデルの影響の軽減">落伍者モデルの影響の軽減</span></h3>
-<p>アンサンブルの歳、モデル抽象化層でスケールアウトさせられる。 しかし弱点として、モデルの中に落伍者がいると、それに足を引っ張られレイテンシが悪化することである。（計算結果の取得が遅くなる）</p>
-<p>そこでClipperでは、モデル選択層で待ち時間（SLO）を設け、ベストエフォートで 結果をアグリゲートすることとした。</p>
+<p>アンサンブルの歳、モデル抽象化層でスケールアウトさせられる。
+しかし弱点として、モデルの中に落伍者がいると、それに足を引っ張られレイテンシが悪化することである。（計算結果の取得が遅くなる）</p>
+<p>そこでClipperでは、モデル選択層で待ち時間（SLO）を設け、ベストエフォートで
+結果をアグリゲートすることとした。</p>
 <h3><span id="ステートの管理">ステートの管理</span></h3>
-<p>ステート管理には現在の実装ではRedisを用いているようだ。 なお、DockerContainerMangerでは、外部のRedisサービスを利用することもできるし、 開発用に内部でRedisのDockerコンテナを起動させることもできる。</p>
+<p>ステート管理には現在の実装ではRedisを用いているようだ。
+なお、DockerContainerMangerでは、外部のRedisサービスを利用することもできるし、
+開発用に内部でRedisのDockerコンテナを起動させることもできる。</p>
 <p>内部的には、コンストラクタ引数にredis_ipを渡すかどうかで管理されているようだ。</p>
-<p>clipper_admin/clipper_admin/docker/docker_container_manager.py:77 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if redis_ip is None:</span><br><span class="line">    self.external_redis = False</span><br></pre></td></tr></table></figure></p>
+<p>clipper_admin/clipper_admin/docker/docker_container_manager.py:77
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if redis_ip is None:</span><br><span class="line">    self.external_redis = False</span><br></pre></td></tr></table></figure></p>
 <h3><span id="tensorflow-servingとの比較">TensorFlow Servingとの比較</span></h3>
-<p>TF Servingは、TFと密結合。 Clipper同様にスループット向上のための工夫が施されている。 バッチ化も行う。 ただし、基本的に1個のモデルで推論するようになっており、 アプリケーションからのフィードバックを受取り、 モデル選択するような仕組みは無い。</p>
+<p>TF Servingは、TFと密結合。
+Clipper同様にスループット向上のための工夫が施されている。
+バッチ化も行う。 ただし、基本的に1個のモデルで推論するようになっており、
+アプリケーションからのフィードバックを受取り、
+モデル選択するような仕組みは無い。</p>
 <p>TF Servingと比べると、多少スループットが劣るものの健闘。</p>
 <h3><span id="制約">制約</span></h3>
-<p>Clipperはモデルをブラックボックスとして扱うので、 モデル内に踏み込んだ最適化は行わない。</p>
+<p>Clipperはモデルをブラックボックスとして扱うので、
+モデル内に踏み込んだ最適化は行わない。</p>
 <h3><span id="類似技術">類似技術</span></h3>
 <ul>
 <li>TF Serving</li>
@@ -406,31 +462,53 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="公式ドキュメント">公式ドキュメント</span></h2>
 <h3><span id="アーキテクチャ">アーキテクチャ</span></h3>
-<p>http://clipper.ai/images/clipper-structure.png に公式ドキュメント上の構成イメージが記載されている。 論文と比較して、モデル選択層の部分が「Clipper Query Processor」と表現されているように見える。</p>
+<p>http://clipper.ai/images/clipper-structure.png
+に公式ドキュメント上の構成イメージが記載されている。
+論文と比較して、モデル選択層の部分が「Clipper Query
+Processor」と表現されているように見える。</p>
 <p>またClipperは、コンテナ群をオーケストレーションし、環境を構成する。</p>
-<p>またClipperは、実質的に「ファンクション・サーバ」であると考えられる。 実のところ、ファンクションは機械学習モデルでなくてもよい。 （公式ドキュメントのクイックスタートでも、簡単な四則演算をデプロイする例が載っている）</p>
+<p>またClipperは、実質的に「ファンクション・サーバ」であると考えられる。
+実のところ、ファンクションは機械学習モデルでなくてもよい。
+（公式ドキュメントのクイックスタートでも、簡単な四則演算をデプロイする例が載っている）</p>
 <h3><span id="モデル管理">モデル管理</span></h3>
-<p>モデルは、リストを入力し、値かJSONを出力する。 入力がリストなのは、機械学習モデルによってはデータ並列で処理し、性能向上を狙うものがあるため。</p>
-<p>またClipperはモデル管理のためのライブラリを提供する。 これにより、ある程度決まったモデルであれば、コンテナの作成やモデルの保存などを 自前で作り込む必要がない。 現在は以下の内容に対応する。</p>
+<p>モデルは、リストを入力し、値かJSONを出力する。
+入力がリストなのは、機械学習モデルによってはデータ並列で処理し、性能向上を狙うものがあるため。</p>
+<p>またClipperはモデル管理のためのライブラリを提供する。
+これにより、ある程度決まったモデルであれば、コンテナの作成やモデルの保存などを
+自前で作り込む必要がない。 現在は以下の内容に対応する。</p>
 <ul>
-<li>One to deploy arbitrary Python functions (within some constraints)</li>
-<li>One to deploy PySpark models along with pre- and post-processing logic</li>
+<li>One to deploy arbitrary Python functions (within some
+constraints)</li>
+<li>One to deploy PySpark models along with pre- and post-processing
+logic</li>
 <li>One to deploy R models</li>
 </ul>
 <p>アプリケーションとモデルの間は、必ずしも1対1でなくてもよい。</p>
-<p>参考） * http://clipper.ai/images/link_model.png * http://clipper.ai/images/update_model.png</p>
-<p>以上の通り、モデルをデプロイしながら、複数のモデルをアプリケーションにリンクして切り替えることができる。 例えばデプロイした新しいモデルが想定通り動作しなかったとき、もとのモデルに切り戻す、など。</p>
+<p>参考） * http://clipper.ai/images/link_model.png *
+http://clipper.ai/images/update_model.png</p>
+<p>以上の通り、モデルをデプロイしながら、複数のモデルをアプリケーションにリンクして切り替えることができる。
+例えばデプロイした新しいモデルが想定通り動作しなかったとき、もとのモデルに切り戻す、など。</p>
 <p>なお、モデルを登録するときには、いくつかの引数を渡す。</p>
 <ul>
 <li>入力型</li>
 <li>レイテンシのSLO（サービスレベルオブジェクト）</li>
 <li>デフォルトの出力</li>
 </ul>
-<p>さらに、 <code>ClipperConnection.set_num_replicas()</code> を用いて、モデルのレプリカ数を決められる。</p>
+<p>さらに、 <code>ClipperConnection.set_num_replicas()</code>
+を用いて、モデルのレプリカ数を決められる。</p>
 <h3><span id="コンテナマネージャ">コンテナマネージャ</span></h3>
-<p><a href="http://clipper.ai/tutorials/container_managers/" target="_blank" rel="noopener">Container Managers</a> によると、Dockerコンテナを自前のライブラリか、k8sでオーケストレーションすることが可能。 自前のライブラリは開発向けのようである。</p>
-<p>なお、ステートを保存するRedisもコンテナでローンチするようになっているが、 勝手にローンチしてくれるものはステートを永続化するようになっていない。 したがってコンテナが落ちるとステートが消える。 プロダクションのケースでは、きちんと可用性を考慮した構成で予めローンチしておくことが推奨されている。</p>
-<p>注意点として、2019/2/27時点でのClipperでは、クエリフロントエンドのオートスケールには対応していない。 これは、クエリフロントエンドとモデル抽象化層のコンテナの間を長命なコネクション（TCPコネクション）で 結んでいるからである。クエリフロントエンドをスケールアウトする時に、これをリバランスする機能が まだ存在していない。</p>
+<p><a href="http://clipper.ai/tutorials/container_managers/" target="_blank" rel="noopener">Container
+Managers</a>
+によると、Dockerコンテナを自前のライブラリか、k8sでオーケストレーションすることが可能。
+自前のライブラリは開発向けのようである。</p>
+<p>なお、ステートを保存するRedisもコンテナでローンチするようになっているが、
+勝手にローンチしてくれるものはステートを永続化するようになっていない。
+したがってコンテナが落ちるとステートが消える。
+プロダクションのケースでは、きちんと可用性を考慮した構成で予めローンチしておくことが推奨されている。</p>
+<p>注意点として、2019/2/27時点でのClipperでは、クエリフロントエンドのオートスケールには対応していない。
+これは、クエリフロントエンドとモデル抽象化層のコンテナの間を長命なコネクション（TCPコネクション）で
+結んでいるからである。クエリフロントエンドをスケールアウトする時に、これをリバランスする機能が
+まだ存在していない。</p>
 <h3><span id="apiドキュメント">APIドキュメント</span></h3>
 <h2><span id="クライアントのサンプル">クライアントのサンプル</span></h2>
 <p><a href="https://github.com/ucbrise/clipper/blob/develop/examples/basic_query/example_client.py" target="_blank" rel="noopener">example_client.py</a></p>
@@ -466,14 +544,19 @@ ga('send', 'pageview');
 <p>ContainerManager#start_clipperメソッドが中で呼ばれる。</p>
 <p>clipper_admin/clipper_admin/clipper_admin.py:123 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.cm.start_clipper(query_frontend_image, mgmt_frontend_image,</span><br><span class="line">                      frontend_exporter_image, cache_size,</span><br><span class="line">                      num_frontend_replicas)</span><br></pre></td></tr></table></figure></p>
 <p>clipper_admin/clipper_admin/container_manager.py:63 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class ContainerManager(object):</span><br><span class="line">    __metaclass__ = abc.ABCMeta</span><br><span class="line"></span><br><span class="line">    @abc.abstractmethod</span><br><span class="line">    def start_clipper(self, query_frontend_image, mgmt_frontend_image,</span><br></pre></td></tr></table></figure></p>
-<p>ContainerManagerは親クラスであり、KubernetesContainerManagerやDockerContainerManagerのstart_clipperが実行される。 例えばDockerContainerManagerを見てみる。</p>
+<p>ContainerManagerは親クラスであり、KubernetesContainerManagerやDockerContainerManagerのstart_clipperが実行される。
+例えばDockerContainerManagerを見てみる。</p>
 <p>Docker SDKを使い、docker networkを作る。</p>
-<p>clipper_admin/clipper_admin/docker/docker_container_manager.py:128 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">self.docker_client.networks.create(</span><br><span class="line">    self.docker_network, check_duplicate=True)</span><br></pre></td></tr></table></figure></p>
+<p>clipper_admin/clipper_admin/docker/docker_container_manager.py:128
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">self.docker_client.networks.create(</span><br><span class="line">    self.docker_network, check_duplicate=True)</span><br></pre></td></tr></table></figure></p>
 <p>Redisを起動する。</p>
-<p>clipper_admin/clipper_admin/docker/docker_container_manager.py:156 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">if not self.external_redis:</span><br><span class="line">    self.logger.info(&quot;Starting managed Redis instance in Docker&quot;)</span><br><span class="line">    self.redis_port = find_unbound_port(self.redis_port)</span><br><span class="line">    redis_labels = self.common_labels.copy()</span><br><span class="line">    redis_labels[CLIPPER_DOCKER_PORT_LABELS[&apos;redis&apos;]] = str(</span><br><span class="line">        self.redis_port)</span><br><span class="line">    redis_container = self.docker_client.containers.run(</span><br><span class="line">        &apos;redis:alpine&apos;,</span><br><span class="line">        &quot;redis-server --port %s&quot; % CLIPPER_INTERNAL_REDIS_PORT,</span><br><span class="line">        name=&quot;redis-&#123;&#125;&quot;.format(random.randint(</span><br><span class="line">            0, 100000)),  # generate a random name</span><br><span class="line">        ports=&#123;</span><br><span class="line">            &apos;%s/tcp&apos; % CLIPPER_INTERNAL_REDIS_PORT: self.redis_port</span><br><span class="line">        &#125;,</span><br><span class="line">        labels=redis_labels,</span><br><span class="line">        **self.extra_container_kwargs)</span><br><span class="line">    self.redis_ip = redis_container.name</span><br></pre></td></tr></table></figure></p>
+<p>clipper_admin/clipper_admin/docker/docker_container_manager.py:156
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">if not self.external_redis:</span><br><span class="line">    self.logger.info(&quot;Starting managed Redis instance in Docker&quot;)</span><br><span class="line">    self.redis_port = find_unbound_port(self.redis_port)</span><br><span class="line">    redis_labels = self.common_labels.copy()</span><br><span class="line">    redis_labels[CLIPPER_DOCKER_PORT_LABELS[&apos;redis&apos;]] = str(</span><br><span class="line">        self.redis_port)</span><br><span class="line">    redis_container = self.docker_client.containers.run(</span><br><span class="line">        &apos;redis:alpine&apos;,</span><br><span class="line">        &quot;redis-server --port %s&quot; % CLIPPER_INTERNAL_REDIS_PORT,</span><br><span class="line">        name=&quot;redis-&#123;&#125;&quot;.format(random.randint(</span><br><span class="line">            0, 100000)),  # generate a random name</span><br><span class="line">        ports=&#123;</span><br><span class="line">            &apos;%s/tcp&apos; % CLIPPER_INTERNAL_REDIS_PORT: self.redis_port</span><br><span class="line">        &#125;,</span><br><span class="line">        labels=redis_labels,</span><br><span class="line">        **self.extra_container_kwargs)</span><br><span class="line">    self.redis_ip = redis_container.name</span><br></pre></td></tr></table></figure></p>
 <p>マネジメントフロントエンドを起動。</p>
-<p>clipper_admin/clipper_admin/docker/docker_container_manager.py:168 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">mgmt_cmd = &quot;--redis_ip=&#123;redis_ip&#125; --redis_port=&#123;redis_port&#125;&quot;.format(</span><br><span class="line">    redis_ip=self.redis_ip, redis_port=CLIPPER_INTERNAL_REDIS_PORT)</span><br><span class="line">self.clipper_management_port = find_unbound_port(</span><br><span class="line">    self.clipper_management_port)</span><br><span class="line">mgmt_labels = self.common_labels.copy()</span><br><span class="line">mgmt_labels[CLIPPER_MGMT_FRONTEND_CONTAINER_LABEL] = &quot;&quot;</span><br><span class="line">mgmt_labels[CLIPPER_DOCKER_PORT_LABELS[&apos;management&apos;]] = str(</span><br><span class="line">    self.clipper_management_port)</span><br><span class="line">self.docker_client.containers.run(</span><br><span class="line">    mgmt_frontend_image,</span><br><span class="line">    mgmt_cmd,</span><br><span class="line">    name=&quot;mgmt_frontend-&#123;&#125;&quot;.format(random.randint(</span><br><span class="line">        0, 100000)),  # generate a random name</span><br><span class="line">    ports=&#123;</span><br><span class="line">        &apos;%s/tcp&apos; % CLIPPER_INTERNAL_MANAGEMENT_PORT:</span><br><span class="line">        self.clipper_management_port</span><br><span class="line">    &#125;,</span><br><span class="line">    labels=mgmt_labels,</span><br><span class="line">    **self.extra_container_kwargs)</span><br></pre></td></tr></table></figure></p>
-<p>なお、コンテナ起動のコマンドに、上記で起動された（もしくは外部のサービスとして与えられた）Redisの IPアドレス、ポート等の情報が渡されていることがわかる。</p>
+<p>clipper_admin/clipper_admin/docker/docker_container_manager.py:168
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">mgmt_cmd = &quot;--redis_ip=&#123;redis_ip&#125; --redis_port=&#123;redis_port&#125;&quot;.format(</span><br><span class="line">    redis_ip=self.redis_ip, redis_port=CLIPPER_INTERNAL_REDIS_PORT)</span><br><span class="line">self.clipper_management_port = find_unbound_port(</span><br><span class="line">    self.clipper_management_port)</span><br><span class="line">mgmt_labels = self.common_labels.copy()</span><br><span class="line">mgmt_labels[CLIPPER_MGMT_FRONTEND_CONTAINER_LABEL] = &quot;&quot;</span><br><span class="line">mgmt_labels[CLIPPER_DOCKER_PORT_LABELS[&apos;management&apos;]] = str(</span><br><span class="line">    self.clipper_management_port)</span><br><span class="line">self.docker_client.containers.run(</span><br><span class="line">    mgmt_frontend_image,</span><br><span class="line">    mgmt_cmd,</span><br><span class="line">    name=&quot;mgmt_frontend-&#123;&#125;&quot;.format(random.randint(</span><br><span class="line">        0, 100000)),  # generate a random name</span><br><span class="line">    ports=&#123;</span><br><span class="line">        &apos;%s/tcp&apos; % CLIPPER_INTERNAL_MANAGEMENT_PORT:</span><br><span class="line">        self.clipper_management_port</span><br><span class="line">    &#125;,</span><br><span class="line">    labels=mgmt_labels,</span><br><span class="line">    **self.extra_container_kwargs)</span><br></pre></td></tr></table></figure></p>
+<p>なお、コンテナ起動のコマンドに、上記で起動された（もしくは外部のサービスとして与えられた）Redisの
+IPアドレス、ポート等の情報が渡されていることがわかる。</p>
 <p>クエリフロントエンドの起動。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">self.docker_client.containers.run(</span><br><span class="line">    query_frontend_image,</span><br><span class="line">    query_cmd,</span><br><span class="line">    name=query_name,</span><br><span class="line">    ports=&#123;</span><br><span class="line">        &apos;%s/tcp&apos; % CLIPPER_INTERNAL_QUERY_PORT:</span><br><span class="line">        self.clipper_query_port,</span><br><span class="line">        &apos;%s/tcp&apos; % CLIPPER_INTERNAL_RPC_PORT: self.clipper_rpc_port</span><br><span class="line">    &#125;,</span><br><span class="line">    labels=query_labels,</span><br><span class="line">    **self.extra_container_kwargs)</span><br></pre></td></tr></table></figure></p>
 <p>その他、メトリクスのコンテナを起動する。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">run_metric_image(self.docker_client, metric_labels,</span><br><span class="line">                 self.prometheus_port, self.prom_config_path,</span><br><span class="line">                 self.extra_container_kwargs)</span><br></pre></td></tr></table></figure></p>
 <p>コンテナを起動したあとは、ポートの情報を更新する。</p>
@@ -484,30 +567,50 @@ ga('send', 'pageview');
 <p>基本的には、ClipperConnectionインスタンス、関数名、入力データのタイプ、関数を指定しながら利用する。</p>
 <p>メソッド内部の処理は以下のとおり。</p>
 <p>clipper_admin/clipper_admin/deployers/python.py:87 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">clipper_conn.register_application(name, input_type, default_output,</span><br><span class="line">                                  slo_micros)</span><br><span class="line">deploy_python_closure(clipper_conn, name, version, input_type, func,</span><br><span class="line">                      base_image, labels, registry, num_replicas,</span><br><span class="line">                      batch_size, pkgs_to_install)</span><br><span class="line"></span><br><span class="line">clipper_conn.link_model_to_app(name, name)</span><br></pre></td></tr></table></figure></p>
-<p>最初にregister_applicationメソッドで、アプリケーションを Clipperに登録する。 なお、<code>register_applicatoin</code> メソッドは、Clipperの マネジメントフロントエンドに対してリクエストを送る。</p>
+<p>最初にregister_applicationメソッドで、アプリケーションを
+Clipperに登録する。 なお、<code>register_applicatoin</code>
+メソッドは、Clipperの
+マネジメントフロントエンドに対してリクエストを送る。</p>
 <p>マネジメントフロントエンドのURLの指定は以下の通り。</p>
 <p>clipper_admin/clipper_admin/clipper_admin.py:201 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url = &quot;http://&#123;host&#125;/admin/add_app&quot;.format(</span><br><span class="line">    host=self.cm.get_admin_addr())</span><br></pre></td></tr></table></figure></p>
-<p>マネジメントフロントエンド自体は、 <code>\src\management\src\management_frontend.hpp</code> が自体と思われる。 以下の通り、エンドポイント <code>add_app</code> が定義されている。</p>
+<p>マネジメントフロントエンド自体は、
+<code>\src\management\src\management_frontend.hpp</code>
+が自体と思われる。 以下の通り、エンドポイント <code>add_app</code>
+が定義されている。</p>
 <p>src/management/src/management_frontend.hpp:52</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const std::string ADD_APPLICATION = ADMIN_PATH + &quot;/add_app$&quot;;</span><br></pre></td></tr></table></figure>
 <p>src/management/src/management_frontend.hpp:181 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server_.add_endpoint(</span><br><span class="line">    ADD_APPLICATION, &quot;POST&quot;,</span><br><span class="line">    [this](std::shared_ptr&lt;HttpServer::Response&gt; response,</span><br><span class="line">           std::shared_ptr&lt;HttpServer::Request&gt; request) &#123;</span><br><span class="line">      try &#123;</span><br><span class="line">        clipper::log_info(LOGGING_TAG_MANAGEMENT_FRONTEND,</span><br><span class="line">                          &quot;Add application POST request&quot;);</span><br></pre></td></tr></table></figure></p>
 <p>create_endopintの流れ確認に戻る。</p>
-<p>アプリケーションの登録が完了したあとは、<code>deploy_python_closure</code> メソッドを使って、</p>
+<p>アプリケーションの登録が完了したあとは、<code>deploy_python_closure</code>
+メソッドを使って、</p>
 <p>引数は以下の通り。</p>
 <p>clipper_admin/clipper_admin/deployers/python.py:96 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def deploy_python_closure(clipper_conn,</span><br><span class="line">                          name,</span><br><span class="line">                          version,</span><br><span class="line">                          input_type,</span><br><span class="line">                          func,</span><br><span class="line">                          base_image=&quot;default&quot;,</span><br><span class="line">                          labels=None,</span><br><span class="line">                          registry=None,</span><br><span class="line">                          num_replicas=1,</span><br><span class="line">                          batch_size=-1,</span><br><span class="line">                          pkgs_to_install=None):</span><br></pre></td></tr></table></figure></p>
-<p>このメソッドでは、最初に <code>save_python_function</code> を使って 関数をシリアライズする。</p>
+<p>このメソッドでは、最初に <code>save_python_function</code> を使って
+関数をシリアライズする。</p>
 <p>clipper_admin/clipper_admin/deployers/python.py:189 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">serialization_dir = save_python_function(name, func)</span><br></pre></td></tr></table></figure></p>
-<p>つづいて、Pyhonのバージョンに従いながらベースとなるイメージを選択する。 以下にPython3.6の場合を載せる。</p>
+<p>つづいて、Pyhonのバージョンに従いながらベースとなるイメージを選択する。
+以下にPython3.6の場合を載せる。</p>
 <p>clipper_admin/clipper_admin/deployers/python.py:205 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">elif py_minor_version == (3, 6):</span><br><span class="line">    logger.info(&quot;Using Python 3.6 base image&quot;)</span><br><span class="line">    base_image = &quot;&#123;&#125;/python36-closure-container:&#123;&#125;&quot;.format(</span><br><span class="line">        __registry__, __version__)</span><br></pre></td></tr></table></figure></p>
-<p><code>最後にClipperConnection#build_and_deploy_model</code>メソッドを使って 関数を含むコンテナイメージを作成する。</p>
+<p><code>最後にClipperConnection#build_and_deploy_model</code>メソッドを使って
+関数を含むコンテナイメージを作成する。</p>
 <p>clipper_admin/clipper_admin/deployers/python.py:220 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clipper_conn.build_and_deploy_model(</span><br><span class="line">    name, version, input_type, serialization_dir, base_image, labels,</span><br><span class="line">    registry, num_replicas, batch_size, pkgs_to_install)</span><br></pre></td></tr></table></figure></p>
 <p><code>build_and_deploy_model</code> メソッドは以下の通り。</p>
 <p>clipper_admin/clipper_admin/clipper_admin.py:352 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if not self.connected:</span><br><span class="line">    raise UnconnectedException()</span><br><span class="line">image = self.build_model(name, version, model_data_path, base_image,</span><br><span class="line">                         container_registry, pkgs_to_install)</span><br><span class="line">self.deploy_model(name, version, input_type, image, labels,</span><br><span class="line">                  num_replicas, batch_size)</span><br></pre></td></tr></table></figure></p>
-<p><code>build_model</code> メソッドでDockerイメージをビルドし、 レポジトリに登録する。</p>
-<p><code>deploy_model</code> メソッドで登録されたDockerイメージからコンテナを起動する。 このとき指定された個数だけコンテナを起動する。 なお、起動時には、抽象クラス <code>ContainerManager</code> の <code>deploy_model</code> メソッドが呼ばれる。 実際には具象クラスであるKubernetesContainerManagerやDockerContainerManagerクラスのメソッドが実行される。 ここに抽象化が施されていると考えられる。</p>
+<p><code>build_model</code> メソッドでDockerイメージをビルドし、
+レポジトリに登録する。</p>
+<p><code>deploy_model</code>
+メソッドで登録されたDockerイメージからコンテナを起動する。
+このとき指定された個数だけコンテナを起動する。
+なお、起動時には、抽象クラス <code>ContainerManager</code> の
+<code>deploy_model</code> メソッドが呼ばれる。
+実際には具象クラスであるKubernetesContainerManagerやDockerContainerManagerクラスのメソッドが実行される。
+ここに抽象化が施されていると考えられる。</p>
 <h2><span id="動作確認">動作確認</span></h2>
 <h3><span id="クイックスタート">クイックスタート</span></h3>
-<p><a href="http://clipper.ai/" target="_blank" rel="noopener">公式ウェブサイト</a> のクイックスタートの通り、実行してみる。 上記サイトでAnaconda上で環境構成するのを推奨する記述があったためそれに従う。 また、Pythonバージョンに指定があったので、指定された中で最も新しい3.6にした。</p>
+<p><a href="http://clipper.ai/" target="_blank" rel="noopener">公式ウェブサイト</a>
+のクイックスタートの通り、実行してみる。
+上記サイトでAnaconda上で環境構成するのを推奨する記述があったためそれに従う。
+また、Pythonバージョンに指定があったので、指定された中で最も新しい3.6にした。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install gcc</span><br><span class="line">$ conda create -n clipper python=3.6 python</span><br><span class="line">$ conda activate clipper</span><br><span class="line">$ conda install ipython</span><br><span class="line">$ pip install clipper_admin</span><br></pre></td></tr></table></figure>
 <p>ipythonを起動する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(clipper) $ ipython</span><br></pre></td></tr></table></figure>
@@ -515,7 +618,8 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from clipper_admin import ClipperConnection, DockerContainerManager</span><br><span class="line">clipper_conn = ClipperConnection(DockerContainerManager())</span><br><span class="line">clipper_conn.start_clipper()</span><br></pre></td></tr></table></figure>
 <p>結果の例</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">19-02-26:22:24:42 INFO     [docker_container_manager.py:119] Starting managed Redis instance in Docker</span><br><span class="line">19-02-26:22:26:50 INFO     [clipper_admin.py:126] Clipper is running</span><br></pre></td></tr></table></figure>
-<p>簡単な例を登録。これにより、エンドポイントが有効になるようだ。 実際の処理の登録は後ほど。</p>
+<p>簡単な例を登録。これにより、エンドポイントが有効になるようだ。
+実際の処理の登録は後ほど。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clipper_conn.register_application(name=&quot;hello-world&quot;, input_type=&quot;doubles&quot;, default_output=&quot;-1.0&quot;, slo_micros=100000)</span><br></pre></td></tr></table></figure>
 <p>登録処理は以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def feature_sum(xs):</span><br><span class="line">    return [str(sum(x)) for x in xs]</span><br></pre></td></tr></table></figure>
@@ -525,7 +629,8 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">19-02-26:22:30:59 INFO     [deployer_utils.py:44] Saving function to /tmp/clipper/tmp67eliqhx</span><br><span class="line">19-02-26:22:30:59 INFO     [deployer_utils.py:54] Serialized and supplied predict function</span><br><span class="line">19-02-26:22:30:59 INFO     [python.py:192] Python closure saved</span><br><span class="line">19-02-26:22:30:59 INFO     [python.py:206] Using Python 3.6 base image</span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">19-02-26:22:31:26 INFO     [docker_container_manager.py:257] Found 0 replicas for sum-model:1. Adding 1</span><br><span class="line">19-02-26:22:31:33 INFO     [clipper_admin.py:635] Successfully registered model sum-model:1</span><br><span class="line">19-02-26:22:31:33 INFO     [clipper_admin.py:553] Done deploying model sum-model:1.</span><br><span class="line">19-02-26:22:30:59 INFO     [clipper_admin.py:452] Building model Docker image with model data from /tmp/clipper/tmp67eliqhx</span><br></pre></td></tr></table></figure>
 <p>モデルをアプリケーションにリンクさせる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clipper_conn.link_model_to_app(app_name=&quot;hello-world&quot;, model_name=&quot;sum-model&quot;)</span><br></pre></td></tr></table></figure>
-<p>以上で、エンドポイント<code>http://localhost:1337/hello-world/predict</code>を用いて、 推論結果（計算結果）を受け取れるようになる。</p>
+<p>以上で、エンドポイント<code>http://localhost:1337/hello-world/predict</code>を用いて、
+推論結果（計算結果）を受け取れるようになる。</p>
 <p>curlで結果の取得</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST --header &quot;Content-Type:application/json&quot; -d &apos;&#123;&quot;input&quot;: [1.1, 2.2, 3.3]&#125;&apos; 127.0.0.1:1337/hello-world/predict</span><br></pre></td></tr></table></figure>
 <p>結果の例</p>
@@ -539,9 +644,16 @@ ga('send', 'pageview');
 <p>最後にコンテナを停止しておく。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clipper_conn.stop_all()</span><br></pre></td></tr></table></figure>
 <h3><span id="画像取扱のサンプル">画像取扱のサンプル</span></h3>
-<p><a href="https://github.com/ucbrise/clipper/blob/develop/examples/image_query/example.md" target="_blank" rel="noopener">image_query</a> の通りに実行してみる。 また、 上記のノートブックが <a href="https://github.com/ucbrise/clipper/blob/develop/examples/image_query/example.ipynb" target="_blank" rel="noopener">image_query/example.ipynb</a> にある。</p>
-<p>Clipperでは、REST APIでクエリが渡される。データはJSONにラップされて渡される。 そのため、ノートブック <a href="https://github.com/ucbrise/clipper/blob/develop/examples/image_query/example.ipynb" target="_blank" rel="noopener">image_query/example.ipynb</a> を見ると、 画像ファイルがバイト列で渡される場合と、BASE64でエンコードされて渡される場合の2種類の例が載っていた。</p>
-<p>この例では、画像のサイズを返すような関数を定義して使っているが、 渡された画像に何らかの判定処理を加えて戻り値を返すような関数を定義すればよいだろう。</p>
+<p><a href="https://github.com/ucbrise/clipper/blob/develop/examples/image_query/example.md" target="_blank" rel="noopener">image_query</a>
+の通りに実行してみる。 また、 上記のノートブックが <a href="https://github.com/ucbrise/clipper/blob/develop/examples/image_query/example.ipynb" target="_blank" rel="noopener">image_query/example.ipynb</a>
+にある。</p>
+<p>Clipperでは、REST
+APIでクエリが渡される。データはJSONにラップされて渡される。
+そのため、ノートブック <a href="https://github.com/ucbrise/clipper/blob/develop/examples/image_query/example.ipynb" target="_blank" rel="noopener">image_query/example.ipynb</a>
+を見ると、
+画像ファイルがバイト列で渡される場合と、BASE64でエンコードされて渡される場合の2種類の例が載っていた。</p>
+<p>この例では、画像のサイズを返すような関数を定義して使っているが、
+渡された画像に何らかの判定処理を加えて戻り値を返すような関数を定義すればよいだろう。</p>
 <p>また、例では、python_deployer#create_endpointメソッドが用いられている。</p>
 
         
@@ -553,7 +665,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/24/Clipper/" data-id="cl2nztnl0003k5xqit525m1d4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/24/Clipper/" data-id="cl2o9pbka01c118rzj86nt95l" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -804,5 +916,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

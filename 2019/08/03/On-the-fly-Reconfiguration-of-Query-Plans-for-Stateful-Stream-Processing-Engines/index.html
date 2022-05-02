@@ -5,22 +5,22 @@
     
     <title>On-the-fly Reconfiguration of Query Plans for Stateful Stream Processing Engines | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 1 Introduction 2 Background 2.1 Data Stream Processing 2.2 Apache Flink 2.3 Fault Tolerance and Checkpointing in Apache Flink  3 Protocol Description 3.2 Migration Protocol Description 3.3 Mo">
+    <meta name="description" content="参考 メモ  1 Introduction 2 Background  2.1 Data Stream Processing 2.2 Apache Flink 2.3 Fault Tolerance and Checkpointing in Apache Flink  3 Protocol Description  3.2 Migration Protocol Description 3.3">
 <meta name="keywords" content="Stream Processing,Paper">
 <meta property="og:type" content="article">
 <meta property="og:title" content="On-the-fly Reconfiguration of Query Plans for Stateful Stream Processing Engines">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/08/03/On-the-fly-Reconfiguration-of-Query-Plans-for-Stateful-Stream-Processing-Engines/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 1 Introduction 2 Background 2.1 Data Stream Processing 2.2 Apache Flink 2.3 Fault Tolerance and Checkpointing in Apache Flink  3 Protocol Description 3.2 Migration Protocol Description 3.3 Mo">
+<meta property="og:description" content="参考 メモ  1 Introduction 2 Background  2.1 Data Stream Processing 2.2 Apache Flink 2.3 Fault Tolerance and Checkpointing in Apache Flink  3 Protocol Description  3.2 Migration Protocol Description 3.3">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/39iYCq4GlQUG0dtA-77C78.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/39iYCq4GlQUG0dtA-35807.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/39iYCq4GlQUG0dtA-B9EC0.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/39iYCq4GlQUG0dtA-A7E67.png">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="On-the-fly Reconfiguration of Query Plans for Stateful Stream Processing Engines">
-<meta name="twitter:description" content="参考 メモ 1 Introduction 2 Background 2.1 Data Stream Processing 2.2 Apache Flink 2.3 Fault Tolerance and Checkpointing in Apache Flink  3 Protocol Description 3.2 Migration Protocol Description 3.3 Mo">
+<meta name="twitter:description" content="参考 メモ  1 Introduction 2 Background  2.1 Data Stream Processing 2.2 Apache Flink 2.3 Fault Tolerance and Checkpointing in Apache Flink  3 Protocol Description  3.2 Migration Protocol Description 3.3">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/39iYCq4GlQUG0dtA-77C78.png">
     
 
@@ -256,58 +256,97 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#introduction">1 Introduction</a></li>
-<li><a href="#background">2 Background</a><ul>
-<li><a href="#data-stream-processing">2.1 Data Stream Processing</a></li>
-<li><a href="#apache-flink">2.2 Apache Flink</a></li>
-<li><a href="#fault-tolerance-and-checkpointing-in-apache-flink">2.3 Fault Tolerance and Checkpointing in Apache Flink</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#introduction" id="toc-introduction">1
+Introduction</a></li>
+<li><a href="#background" id="toc-background">2 Background</a>
+<ul>
+<li><a href="#data-stream-processing" id="toc-data-stream-processing">2.1 Data Stream Processing</a></li>
+<li><a href="#apache-flink" id="toc-apache-flink">2.2 Apache
+Flink</a></li>
+<li><a href="#fault-tolerance-and-checkpointing-in-apache-flink" id="toc-fault-tolerance-and-checkpointing-in-apache-flink">2.3 Fault
+Tolerance and Checkpointing in Apache Flink</a></li>
 </ul></li>
-<li><a href="#protocol-description">3 Protocol Description</a><ul>
-<li><a href="#migration-protocol-description">3.2 Migration Protocol Description</a></li>
-<li><a href="#modification-protocols-description">3.3 Modification Protocols Description</a></li>
+<li><a href="#protocol-description" id="toc-protocol-description">3
+Protocol Description</a>
+<ul>
+<li><a href="#migration-protocol-description" id="toc-migration-protocol-description">3.2 Migration Protocol
+Description</a></li>
+<li><a href="#modification-protocols-description" id="toc-modification-protocols-description">3.3 Modification Protocols
+Description</a></li>
 </ul></li>
-<li><a href="#system-architecture">4 System Architecture</a><ul>
-<li><a href="#vanilla-components-overview">4.1 Vanilla Components Overview</a></li>
-<li><a href="#our-changes-on-the-coordinator-side">4.2 Our Changes on the Coordinator Side</a></li>
-<li><a href="#our-changes-on-the-worker-side">4.3 Our Changes on the Worker Side</a></li>
-<li><a href="#query-plan-modifications">4.4 Query Plan Modifications</a></li>
+<li><a href="#system-architecture" id="toc-system-architecture">4 System
+Architecture</a>
+<ul>
+<li><a href="#vanilla-components-overview" id="toc-vanilla-components-overview">4.1 Vanilla Components
+Overview</a></li>
+<li><a href="#our-changes-on-the-coordinator-side" id="toc-our-changes-on-the-coordinator-side">4.2 Our Changes on the
+Coordinator Side</a></li>
+<li><a href="#our-changes-on-the-worker-side" id="toc-our-changes-on-the-worker-side">4.3 Our Changes on the Worker
+Side</a></li>
+<li><a href="#query-plan-modifications" id="toc-query-plan-modifications">4.4 Query Plan Modifications</a></li>
 </ul></li>
-<li><a href="#protocol-implementation">5 Protocol Implementation</a><ul>
-<li><a href="#operator-migration">5.1 Operator Migration</a></li>
-<li><a href="#introduction-of-new-operators-1">5.2 Introduction of new Operators</a></li>
-<li><a href="#changing-the-operator-function">5.3 Changing the Operator Function</a></li>
+<li><a href="#protocol-implementation" id="toc-protocol-implementation">5 Protocol Implementation</a>
+<ul>
+<li><a href="#operator-migration" id="toc-operator-migration">5.1
+Operator Migration</a></li>
+<li><a href="#introduction-of-new-operators-1" id="toc-introduction-of-new-operators-1">5.2 Introduction of new
+Operators</a></li>
+<li><a href="#changing-the-operator-function" id="toc-changing-the-operator-function">5.3 Changing the Operator
+Function</a></li>
 </ul></li>
-<li><a href="#evaluation">6 Evaluation</a><ul>
-<li><a href="#workloads">6.3 Workloads</a></li>
-<li><a href="#migration-protocol-benchmark">6.4 Migration Protocol Benchmark</a></li>
-<li><a href="#introducing-new-operators-at-runtime">6.5 Introducing new operators at runtime</a></li>
-<li><a href="#replacing-the-operator-function-at-runtime">6.6 Replacing the operator function at runtime</a></li>
-<li><a href="#discussion">6.7 Discussion</a></li>
+<li><a href="#evaluation" id="toc-evaluation">6 Evaluation</a>
+<ul>
+<li><a href="#workloads" id="toc-workloads">6.3 Workloads</a></li>
+<li><a href="#migration-protocol-benchmark" id="toc-migration-protocol-benchmark">6.4 Migration Protocol
+Benchmark</a></li>
+<li><a href="#introducing-new-operators-at-runtime" id="toc-introducing-new-operators-at-runtime">6.5 Introducing new
+operators at runtime</a></li>
+<li><a href="#replacing-the-operator-function-at-runtime" id="toc-replacing-the-operator-function-at-runtime">6.6 Replacing the
+operator function at runtime</a></li>
+<li><a href="#discussion" id="toc-discussion">6.7 Discussion</a></li>
 </ul></li>
-<li><a href="#related-work">7 Related work</a></li>
+<li><a href="#related-work" id="toc-related-work">7 Related
+work</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://dl.gi.de/handle/20.500.12116/21739" target="_blank" rel="noopener">On-the-fly Reconfiguration of Query Plans for Stateful Stream Processing Engines</a></li>
+<li><a href="https://dl.gi.de/handle/20.500.12116/21739" target="_blank" rel="noopener">On-the-fly
+Reconfiguration of Query Plans for Stateful Stream Processing
+Engines</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>Bartnik, A., Del Monte, B., Rabl, T. &amp; Markl, V., らの論文。2019年。</p>
-<p>多くのストリーム処理エンジンが、データ量の変動に対して対応するためにクエリの再起動を必要とし、 ステートの再構成（再度の分散化？）にコストを必要とする点に着目し、新たな手法を提案。 Apache Flinkへのアドオンとして対応し、外部のトリガを用いてオペレータの置換を行えることを示した。</p>
-<p>Modificaton Coordinatorを導入し、RPC経由でメッセージ伝搬と同一の方法でModificationに関する情報を 各オペレータインスタンスに伝える。 またステートの保持にはCheckopintの仕組みを導入し、各オペレータインスタンスごとに ステートを永続化する。上流・下流オペレータはその状況を見ながら動作する。</p>
+<p>Bartnik, A., Del Monte, B., Rabl, T. &amp; Markl, V.,
+らの論文。2019年。</p>
+<p>多くのストリーム処理エンジンが、データ量の変動に対して対応するためにクエリの再起動を必要とし、
+ステートの再構成（再度の分散化？）にコストを必要とする点に着目し、新たな手法を提案。
+Apache
+Flinkへのアドオンとして対応し、外部のトリガを用いてオペレータの置換を行えることを示した。</p>
+<p>Modificaton
+Coordinatorを導入し、RPC経由でメッセージ伝搬と同一の方法でModificationに関する情報を
+各オペレータインスタンスに伝える。
+またステートの保持にはCheckopintの仕組みを導入し、各オペレータインスタンスごとに
+ステートを永続化する。上流・下流オペレータはその状況を見ながら動作する。</p>
 <p>多くの先行研究に対し、以下の点が特徴的であると言える。</p>
 <ul>
 <li>並列度の変更だけではなく、データフロー変更、オペレータの追加に対応</li>
 <li>ステートサイズが小さいケースに加え、大きい場合も考慮し実証</li>
-<li>ステートサイズが小さい場合で数秒、ステートサイズが大きい倍で数十秒のオーダで オペレータインスタンスのマイグレーション、オペレータの追加などに対応</li>
+<li>ステートサイズが小さい場合で数秒、ステートサイズが大きい倍で数十秒のオーダで
+オペレータインスタンスのマイグレーション、オペレータの追加などに対応</li>
 <li>Exactly onceセマンティクスを考慮</li>
 </ul>
 <h2><span id="1-introduction">1 Introduction</span></h2>
-<p>ストリームデータの流量について。 ソーシャルメディアの昼夜での差のように予測可能なものもあるが、 スポーツや天気の影響のように予測不可能なものもある。</p>
-<p>最近のSPE（Stream Processing Engine）は、実行中の設定変更に一部対応し始めているが、 基本的には設定変更のためには再実行が必要。 （ここではApache Flink、Apache Storm、Apache Sparkを例にとっている）</p>
+<p>ストリームデータの流量について。
+ソーシャルメディアの昼夜での差のように予測可能なものもあるが、
+スポーツや天気の影響のように予測不可能なものもある。</p>
+<p>最近のSPE（Stream Processing
+Engine）は、実行中の設定変更に一部対応し始めているが、
+基本的には設定変更のためには再実行が必要。 （ここではApache
+Flink、Apache Storm、Apache Sparkを例にとっている）</p>
 <p>そこで、提案手法では、実行中の設定変更を可能にする。</p>
 <ul>
 <li>ネットワークバッファのサイズ変更</li>
@@ -319,26 +358,46 @@ ga('send', 'pageview');
 <p>Apache Flinkに上記内容をプロトタイプし、動作を検証。</p>
 <h2><span id="2-background">2 Background</span></h2>
 <h3><span id="21-data-stream-processing">2.1 Data Stream Processing</span></h3>
-<p>近年のSPEのターゲットは、大量データの並列分散処理。 アプローチは2種類：マイクロバッチ、tuple-at-a-time。</p>
+<p>近年のSPEのターゲットは、大量データの並列分散処理。
+アプローチは2種類：マイクロバッチ、tuple-at-a-time。</p>
 <p>マイクロバッチはスループット重視。</p>
-<p>tuple-at-a-timeは入力レコードに対して、より細かな粒度での処理を可能にするが、 実際のところ物理レベルではバッチ処理のメカニズムを採用している。 <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>SPEでは、基本的にはデータフローの表現にDAGを利用。 Source、Processing、Sink、それをつなぐEdgeで構成される。 Processingノードはステートフル、ステートレスのどちらもあえりえる。</p>
+<p>tuple-at-a-timeは入力レコードに対して、より細かな粒度での処理を可能にするが、
+実際のところ物理レベルではバッチ処理のメカニズムを採用している。 <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>SPEでは、基本的にはデータフローの表現にDAGを利用。
+Source、Processing、Sink、それをつなぐEdgeで構成される。
+Processingノードはステートフル、ステートレスのどちらもあえりえる。</p>
 <h3><span id="22-apache-flink">2.2 Apache Flink</span></h3>
-<p>FlinkはParallelization Contract (PACT)プログラミングモデルを採用。 Flinkは投稿されたクエリをコンパイル（最適化含む）したうえで実行する。</p>
-<p>Flinkはパイプライニングとバッファリングに依存する。 オペレータがデータを送信するときにはバッファを使用しバッファが一杯になったら送るようになっている。 これによりレイテンシを抑えつつ、スループットを稼ぐ。</p>
-<p>Flinkはオペレータのフュージョンにも対応。 フュージョンされたオペレータはプッシュベースで通信する。</p>
+<p>FlinkはParallelization Contract (PACT)プログラミングモデルを採用。
+Flinkは投稿されたクエリをコンパイル（最適化含む）したうえで実行する。</p>
+<p>Flinkはパイプライニングとバッファリングに依存する。
+オペレータがデータを送信するときにはバッファを使用しバッファが一杯になったら送るようになっている。
+これによりレイテンシを抑えつつ、スループットを稼ぐ。</p>
+<p>Flinkはオペレータのフュージョンにも対応。
+フュージョンされたオペレータはプッシュベースで通信する。</p>
 <p>バックプレッシャもある。</p>
-<h3><span id="23-fault-tolerance-and-checkpointing-in-apache-flink">2.3 Fault Tolerance and Checkpointing in Apache Flink</span></h3>
-<p>チェックポイントは、状態情報を保存し、故障の際には復旧させる。 このおかげで、メッセージの送達保証の各セマンティクスを選択できるようになる。 また、セーブポイントのメカニズムを築くことになる。 これにより、計画的に停止、再起動させることができるようになる。</p>
-<p>Flinkの場合、セーブポイントから再開する際に、並列度を変えるだけではなく、 オペレータを追加・削除可能。</p>
-<p>定期的なチェックポイントにより、状態情報が保存される。 状態情報が小さい場合は性能影響は小さい。（逆もしかり）</p>
-<p>Flinkでは、プログラムエラーの際は実行を停止・再開し、最後にチェックポイントした 状態情報から再開する。 このとき、データソースはApache Kafkaのように再取得可能なものを想定している。 そうでないと、クエリの再開時にデータが一部失われることになる。</p>
+<h3><span id="23-faulttolerance-and-checkpointing-in-apache-flink">2.3 Fault
+Tolerance and Checkpointing in Apache Flink</span></h3>
+<p>チェックポイントは、状態情報を保存し、故障の際には復旧させる。
+このおかげで、メッセージの送達保証の各セマンティクスを選択できるようになる。
+また、セーブポイントのメカニズムを築くことになる。
+これにより、計画的に停止、再起動させることができるようになる。</p>
+<p>Flinkの場合、セーブポイントから再開する際に、並列度を変えるだけではなく、
+オペレータを追加・削除可能。</p>
+<p>定期的なチェックポイントにより、状態情報が保存される。
+状態情報が小さい場合は性能影響は小さい。（逆もしかり）</p>
+<p>Flinkでは、プログラムエラーの際は実行を停止・再開し、最後にチェックポイントした
+状態情報から再開する。 このとき、データソースはApache
+Kafkaのように再取得可能なものを想定している。
+そうでないと、クエリの再開時にデータが一部失われることになる。</p>
 <h2><span id="3-protocol-description">3 Protocol Description</span></h2>
 <h4><span id="31-system-model">3.1 System Model</span></h4>
 <figure>
-<img src="/memo-blog/images/39iYCq4GlQUG0dtA-77C78.png" alt=""><figcaption>システムの前提</figcaption>
+<img src="/memo-blog/images/39iYCq4GlQUG0dtA-77C78.png" alt="システムの前提">
+<figcaption aria-hidden="true">システムの前提</figcaption>
 </figure>
-<p>Operatorはそれぞれの並列度を持つ。 論理プランは、Source、Sink、Processing OperatorでDAGを構成する。 実際にSPE上で動作する物理プランをJobと呼ぶ。</p>
+<p>Operatorはそれぞれの並列度を持つ。
+論理プランは、Source、Sink、Processing OperatorでDAGを構成する。
+実際にSPE上で動作する物理プランをJobと呼ぶ。</p>
 <p>Operatorは</p>
 <ul>
 <li>単一の下流のOperatorにレコードを送る</li>
@@ -346,58 +405,111 @@ ga('send', 'pageview');
 <li>何らかのパーティションルールにより送る</li>
 </ul>
 <p>のいずれかの動作をする。</p>
-<p>CheckpointのためにMarkerも送る。 Markerは定期的か、ユーザ指定により送られる。 <code>i</code> は、<code>i</code>番目のCheckpointであることを示す。 内部通信経路でMarkerを受け取ったオペレータは、スナップショットを作成して下流のオペレータにMarkerを送る。 また、スナップショットは非同期的にバックグラウンドの永続化ストレージに保存される。</p>
-<p>ここで、SPEはExactly Onceでの処理を保証するものとする。 SPEはControllerとWorkerで構成される。</p>
-<h3><span id="32-migration-protocol-description">3.2 Migration Protocol Description</span></h3>
+<p>CheckpointのためにMarkerも送る。
+Markerは定期的か、ユーザ指定により送られる。 <code>i</code>
+は、<code>i</code>番目のCheckpointであることを示す。
+内部通信経路でMarkerを受け取ったオペレータは、スナップショットを作成して下流のオペレータにMarkerを送る。
+また、スナップショットは非同期的にバックグラウンドの永続化ストレージに保存される。</p>
+<p>ここで、SPEはExactly Onceでの処理を保証するものとする。
+SPEはControllerとWorkerで構成される。</p>
+<h3><span id="32-migration-protocoldescription">3.2 Migration Protocol
+Description</span></h3>
 <p>Modification Markerを送ることで、マイグレーションを開始する。 <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p>各Operatorは、eventualにMarkerを受けとり、マイグレーションに備えるが、 このとき枚グレート対象となるOperatorの上流・下流のOperatorにも影響することがポイント。 上流のOperatorは、バッファを駆使しつつ、Tupleの順序性を担保する。</p>
-<h3><span id="33-modification-protocols-description">3.3 Modification Protocols Description</span></h3>
-<p>Operatorをマイグレートするだけでなく、Operatorの追加、更新が可能。 ただし、その場合はUDFの配布が必要となる。</p>
-<h4><span id="331-introduction-of-new-operators">3.3.1 Introduction of New Operators</span></h4>
-<p>上流OperatorはMarkerを受け取るとバッファリングし始め、その旨下流に通知する。 すべての上流Operatorのバッファリングが開始されたら、新しいOperatorのインスタンスが起動する。 ただし、実際に起動させる前に、あらかじめUDFを配布しておく。 下流Operatorは、新しく起動されたOperatorに接続を試みる。</p>
+<p>各Operatorは、eventualにMarkerを受けとり、マイグレーションに備えるが、
+このとき枚グレート対象となるOperatorの上流・下流のOperatorにも影響することがポイント。
+上流のOperatorは、バッファを駆使しつつ、Tupleの順序性を担保する。</p>
+<h3><span id="33-modification-protocolsdescription">3.3 Modification Protocols
+Description</span></h3>
+<p>Operatorをマイグレートするだけでなく、Operatorの追加、更新が可能。
+ただし、その場合はUDFの配布が必要となる。</p>
+<h4><span id="331-introduction-of-newoperators">3.3.1 Introduction of New
+Operators</span></h4>
+<p>上流OperatorはMarkerを受け取るとバッファリングし始め、その旨下流に通知する。
+すべての上流Operatorのバッファリングが開始されたら、新しいOperatorのインスタンスが起動する。
+ただし、実際に起動させる前に、あらかじめUDFを配布しておく。
+下流Operatorは、新しく起動されたOperatorに接続を試みる。</p>
 <h2><span id="4-system-architecture">4 System Architecture</span></h2>
 <p>試したFlinkは1.3.2。 ★</p>
-<h3><span id="41-vanilla-components-overview">4.1 Vanilla Components Overview</span></h3>
-<p>まずクライアントがModification ControlメッセージをCoordinatorに送る。 CoordinatorはWorkerに当該情報をいきわたらせる。 このメッセージは、通常のデータとは異なり、RPCとして送られる。 ここではActorモデルに基づく。</p>
+<h3><span id="41-vanilla-componentsoverview">4.1 Vanilla Components
+Overview</span></h3>
+<p>まずクライアントがModification ControlメッセージをCoordinatorに送る。
+CoordinatorはWorkerに当該情報をいきわたらせる。
+このメッセージは、通常のデータとは異なり、RPCとして送られる。
+ここではActorモデルに基づく。</p>
 <p>Flinkの場合、2個のOperator間の通信はProducer/Consumer関係の下やり取りされる。</p>
 <p>各Operatorのインスタンスは、上流からデータを取得するための通信路に責任を持つ。</p>
 <figure>
-<img src="/memo-blog/images/39iYCq4GlQUG0dtA-35807.png" alt=""><figcaption>システムアーキテクチャのイメージ</figcaption>
+<img src="/memo-blog/images/39iYCq4GlQUG0dtA-35807.png" alt="システムアーキテクチャのイメージ">
+<figcaption aria-hidden="true">システムアーキテクチャのイメージ</figcaption>
 </figure>
-<h3><span id="42-our-changes-on-the-coordinator-side">4.2 Our Changes on the Coordinator Side</span></h3>
-<p>Modification Coordinatorは、Modificatoinに関する一切を取り仕切る。 バリデーションも含む。 例えば、現在走っているジョブに対して適用可能か？の面など。</p>
+<h3><span id="42-our-changes-on-thecoordinator-side">4.2 Our Changes on the
+Coordinator Side</span></h3>
+<p>Modification Coordinatorは、Modificatoinに関する一切を取り仕切る。
+バリデーションも含む。
+例えば、現在走っているジョブに対して適用可能か？の面など。</p>
 <p>Modificationの大まかな状態遷移は以下の通り。</p>
 <figure>
-<img src="/memo-blog/images/39iYCq4GlQUG0dtA-B9EC0.png" alt=""><figcaption>Modificationのステート</figcaption>
+<img src="/memo-blog/images/39iYCq4GlQUG0dtA-B9EC0.png" alt="Modificationのステート">
+<figcaption aria-hidden="true">Modificationのステート</figcaption>
 </figure>
 <p>Modificationに関係し、Taskの大まかな状態遷移は以下の通り。</p>
 <figure>
-<img src="/memo-blog/images/39iYCq4GlQUG0dtA-A7E67.png" alt=""><figcaption>Taskのステート</figcaption>
+<img src="/memo-blog/images/39iYCq4GlQUG0dtA-A7E67.png" alt="Taskのステート">
+<figcaption aria-hidden="true">Taskのステート</figcaption>
 </figure>
-<h3><span id="43-our-changes-on-the-worker-side">4.3 Our Changes on the Worker Side</span></h3>
-<p>オペレータ間の通信は、オペレータの関係に依存する。 例えば、同一マシンで動ているProducerインスタンスとConsumerインスタンスの場合はメモリを使ってデータをやり取りする。 一方、異なるマシンで動ている場合はネットワーク通信を挟む。</p>
-<p>さて、Modificationが生じた場合、新しいConsumerが動き始めるまで、上流のインスタンスはバッファリングしないといけない。 提案手法では、ディスクへのスピル機能を含むバッファリングの仕組みを提案。それ専用のキューを設けることとした。</p>
+<h3><span id="43-our-changes-on-the-workerside">4.3 Our Changes on the Worker
+Side</span></h3>
+<p>オペレータ間の通信は、オペレータの関係に依存する。
+例えば、同一マシンで動ているProducerインスタンスとConsumerインスタンスの場合はメモリを使ってデータをやり取りする。
+一方、異なるマシンで動ている場合はネットワーク通信を挟む。</p>
+<p>さて、Modificationが生じた場合、新しいConsumerが動き始めるまで、上流のインスタンスはバッファリングしないといけない。
+提案手法では、ディスクへのスピル機能を含むバッファリングの仕組みを提案。それ専用のキューを設けることとした。</p>
 <h3><span id="44-query-plan-modifications">4.4 Query Plan Modifications</span></h3>
-<p>あるOperatorがModificationを実現するには、上流と下流のOperatorの合わせた対応も必要。 そこでModification CoordinatorがModificationメッセージに、関連情報全体を載せ、RPCを使って各Operatorに伝搬する。</p>
+<p>あるOperatorがModificationを実現するには、上流と下流のOperatorの合わせた対応も必要。
+そこでModification
+CoordinatorがModificationメッセージに、関連情報全体を載せ、RPCを使って各Operatorに伝搬する。</p>
 <h4><span id="441-upstream-operators">4.4.1 Upstream Operators</span></h4>
-<p>Checkpointの間、上流から下流に向けて、Checkpointマーカーを直列に並べることで 故障耐性を実現する。 各オペレータは上流からのマーカーがそろうまでバッファリングを続ける。</p>
-<p>もしオペレータをマイグレートしようとすると、このバッファもマイグレートする必要がある。 しかしこのバッファインの仕組みは、内部的な機能ではない（★要確認）ため、一定の手続きが必要。 Modificationメッセージには次のCheckpointのIDが含まれている。 このIDに該当するCheckpointが発動されたときには、マイグレート対象のオペレータの上流オペレータは CheckpointバリアのメッセージをModificationメッセージと一緒に送る。 このイベント情報は、上流オペレータがレコードをストレージにフラッシュしていることを下流に示すものとなる。 また、これを通じて、マイグレート対象となるオペレータと上流オペレータの間には仕掛中のレコードがないことを確認できる。</p>
-<p>以上を踏まえると、Modificationを安全に進めるためには、Checkpointを待つことになる。 Checkpointインターバルは様々な要因で決まるが、例えばオペレータ数とステートの大きさに依存する。 ステートが大きく、Checkpointインターバルが大きい場合は、それだけModification開始を待たなくてはならない、ということである。</p>
-<h4><span id="442-target-and-downstream-operators">4.4.2 Target and Downstream Operators</span></h4>
+<p>Checkpointの間、上流から下流に向けて、Checkpointマーカーを直列に並べることで
+故障耐性を実現する。
+各オペレータは上流からのマーカーがそろうまでバッファリングを続ける。</p>
+<p>もしオペレータをマイグレートしようとすると、このバッファもマイグレートする必要がある。
+しかしこのバッファインの仕組みは、内部的な機能ではない（★要確認）ため、一定の手続きが必要。
+Modificationメッセージには次のCheckpointのIDが含まれている。
+このIDに該当するCheckpointが発動されたときには、マイグレート対象のオペレータの上流オペレータは
+CheckpointバリアのメッセージをModificationメッセージと一緒に送る。
+このイベント情報は、上流オペレータがレコードをストレージにフラッシュしていることを下流に示すものとなる。
+また、これを通じて、マイグレート対象となるオペレータと上流オペレータの間には仕掛中のレコードがないことを確認できる。</p>
+<p>以上を踏まえると、Modificationを安全に進めるためには、Checkpointを待つことになる。
+Checkpointインターバルは様々な要因で決まるが、例えばオペレータ数とステートの大きさに依存する。
+ステートが大きく、Checkpointインターバルが大きい場合は、それだけModification開始を待たなくてはならない、ということである。</p>
+<h4><span id="442-target-and-downstreamoperators">4.4.2 Target and Downstream
+Operators</span></h4>
 <p>下流のオペレータは、基本的には上流のオペレータの新しい情報を待つのみ。</p>
 <h2><span id="5-protocol-implementation">5 Protocol Implementation</span></h2>
 <h3><span id="51-operator-migration">5.1 Operator Migration</span></h3>
-<p>Modification Coordinatorがトリガーとなるメッセージをソースオペレータから発出。 対象オペレータに加え、上流オペレータも特定する。（上流オペレータは、レコードをディスクにスピルする）</p>
-<p>オペレータはcheckpointのマーカを待つ。 Checkpoint Coordinatorがマーカを発出し、マイグレート対象のオペレータの上流オペレータは 送信を止める。</p>
-<p>各オペレータはPausing状態に移行するとともに、現在の状態情報をModification Coordinatorに送る。</p>
+<p>Modification
+Coordinatorがトリガーとなるメッセージをソースオペレータから発出。
+対象オペレータに加え、上流オペレータも特定する。（上流オペレータは、レコードをディスクにスピルする）</p>
+<p>オペレータはcheckpointのマーカを待つ。 Checkpoint
+Coordinatorがマーカを発出し、マイグレート対象のオペレータの上流オペレータは
+送信を止める。</p>
+<p>各オペレータはPausing状態に移行するとともに、現在の状態情報をModification
+Coordinatorに送る。</p>
 <p>さらに、下流のオペレータに新しいロケーションを伝える。</p>
-<p>各オペレータがPaused状態に移行。 すべてのオペレータがPaused状態に移行したら、オペレータを再起動する。</p>
-<p>その後、Modification Coordinatorが状態ロケーション？をアタッチし、タスクを実行開始する。</p>
+<p>各オペレータがPaused状態に移行。
+すべてのオペレータがPaused状態に移行したら、オペレータを再起動する。</p>
+<p>その後、Modification
+Coordinatorが状態ロケーション？をアタッチし、タスクを実行開始する。</p>
 <p>提案手法では、FlinkのCheckpointの仕組みを使用し、各オペレータの状態情報を取得し、アサインする。</p>
-<h3><span id="52-introduction-of-new-operators">5.2 Introduction of new Operators</span></h3>
-<p>オペレータのModificationと同様の流れで、新しいオペレーションの挿入にも対応する。 上流のオペレータがスピルした後、新しいオペレータが挿入される。 デプロイのペイロードには、コンパイル済のコードが含まれる。</p>
-<h3><span id="53-changing-the-operator-function">5.3 Changing the Operator Function</span></h3>
-<p>Modification CoordinatorがModificationメッセージと一緒に、 新しいUDFを配布する。 Task Managerは非同期的にUFDを取得する。</p>
+<h3><span id="52-introduction-of-newoperators">5.2 Introduction of new
+Operators</span></h3>
+<p>オペレータのModificationと同様の流れで、新しいオペレーションの挿入にも対応する。
+上流のオペレータがスピルした後、新しいオペレータが挿入される。
+デプロイのペイロードには、コンパイル済のコードが含まれる。</p>
+<h3><span id="53-changing-the-operatorfunction">5.3 Changing the Operator
+Function</span></h3>
+<p>Modification CoordinatorがModificationメッセージと一緒に、
+新しいUDFを配布する。 Task Managerは非同期的にUFDを取得する。</p>
 <p>またcallbackを用いて、グローバルCheckpointが完了したときに、新しいUDFを用いるようにする。</p>
 <h2><span id="6-evaluation">6 Evaluation</span></h2>
 <p>ここから先は評価となるが、ここではポイントのみ紹介する。</p>
@@ -405,68 +517,100 @@ ga('send', 'pageview');
 <p>3種類のワークロード、</p>
 <ul>
 <li>小さなステートの場合を確認するため、要素数をカウントするワークロード（SMQ）</li>
-<li>大きなステートの場合を確認するため、Nexmarkベンチマーク <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> のクエリ8（NBQ8）。（オンラインオークションのワークロード）</li>
+<li>大きなステートの場合を確認するため、Nexmarkベンチマーク <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+のクエリ8（NBQ8）。（オンラインオークションのワークロード）</li>
 <li>上記SMQ、NBQ8についてオペレータのマイグレートを実施</li>
 </ul>
-<p>2個めのワークロードではステートサイズが大きいので、インクリメンタルCheckpointを利用。 Flinkの場合は、埋め込みのRocksDB。</p>
-<h3><span id="64-migration-protocol-benchmark">6.4 Migration Protocol Benchmark</span></h3>
-<h4><span id="641-stateful-map-job-performance-drill-down">6.4.1 Stateful Map Job Performance Drill Down</span></h4>
+<p>2個めのワークロードではステートサイズが大きいので、インクリメンタルCheckpointを利用。
+Flinkの場合は、埋め込みのRocksDB。</p>
+<h3><span id="64-migration-protocolbenchmark">6.4 Migration Protocol
+Benchmark</span></h3>
+<h4><span id="641-stateful-map-jobperformance-drill-down">6.4.1 Stateful Map Job
+Performance Drill Down</span></h4>
 <p>レイテンシで見るとスパイクが生じるのは、ストリーム処理のジョブがリスタートするタイミング。</p>
-<p>オペレータのMigration中、1度3500msecのレイテンシのスパイクが生じた。 またコミュニケーションオーバヘッドもあるようだ。</p>
+<p>オペレータのMigration中、1度3500msecのレイテンシのスパイクが生じた。
+またコミュニケーションオーバヘッドもあるようだ。</p>
 <p>概ね、秒オーダ。</p>
-<h4><span id="642-nexmark-benchmark-performance-drill-down">6.4.2 Nexmark Benchmark Performance Drill Down</span></h4>
+<h4><span id="642-nexmarkbenchmark-performance-drill-down">6.4.2 Nexmark
+Benchmark Performance Drill Down</span></h4>
 <p>概ね、100～200秒オーダ。</p>
 <p>ステートサイズは全部で13.5GBで、そのうち2.7GBがステート用のバックエンドに格納され、再現された。</p>
 <p>80個のジェネレータのスループットは、Migration発生時も大きくは変わらなかった。</p>
-<h3><span id="65-introducing-new-operators-at-runtime">6.5 Introducing new operators at runtime</span></h3>
+<h3><span id="65-introducing-newoperators-at-runtime">6.5 Introducing new
+operators at runtime</span></h3>
 <p>SMQのワークロードを用いた検証。 概ね、秒オーダ。</p>
-<h3><span id="66-replacing-the-operator-function-at-runtime">6.6 Replacing the operator function at runtime</span></h3>
+<h3><span id="66-replacing-theoperator-function-at-runtime">6.6 Replacing the
+operator function at runtime</span></h3>
 <p>SMQのワークロードを用いた検証。 概ね、秒オーダ。</p>
 <p>スループットへの影響は小さい。</p>
 <h3><span id="67-discussion">6.7 Discussion</span></h3>
-<p>Checkpointの同期は課題になりがち。 ステートのサイズが小さいときは高頻度で同期も可能かもしれないが、大きいときは頻度高くCheckpointすると、処理に影響が出る。 例えばステートサイズが小さい時には6秒以内にModificationを開始できたが、大きい時には60秒程度になった。</p>
+<p>Checkpointの同期は課題になりがち。
+ステートのサイズが小さいときは高頻度で同期も可能かもしれないが、大きいときは頻度高くCheckpointすると、処理に影響が出る。
+例えばステートサイズが小さい時には6秒以内にModificationを開始できたが、大きい時には60秒程度になった。</p>
 <p>NBQ8の場合、従来のシャットダウンを伴うsavepointの仕組みと比べ、性能上の改善が見られた。</p>
-<p>データソースが永続的であれば再取得することでExactly Onceを実現する。</p>
+<p>データソースが永続的であれば再取得することでExactly
+Onceを実現する。</p>
 <p>実行中のジョブに対し、新しいオペレータを挿入することもできた。概ね10秒程度。</p>
-<p>オペレータの関数を変更することもできた。概ね9秒程度。 これを突き詰めていくと、内部・外部状態に応じて挙動を変える、ということもできるようになるはず。</p>
-<p>★補足： とはいえ、そのような挙動変更は、最初からUDF内に組み込んでおくべきとも考える。（普通に条件文を内部に入れておけば？と） 条件分岐が問題になるほどシビアなレイテンシ要求があるユースケースで、ここで挙げられているようなストリーム処理エンジンを使うとは思えない。 ★補足終わり：</p>
+<p>オペレータの関数を変更することもできた。概ね9秒程度。
+これを突き詰めていくと、内部・外部状態に応じて挙動を変える、ということもできるようになるはず。</p>
+<p>★補足：
+とはいえ、そのような挙動変更は、最初からUDF内に組み込んでおくべきとも考える。（普通に条件文を内部に入れておけば？と）
+条件分岐が問題になるほどシビアなレイテンシ要求があるユースケースで、ここで挙げられているようなストリーム処理エンジンを使うとは思えない。
+★補足終わり：</p>
 <h2><span id="7-related-work">7 Related work</span></h2>
 <p>★補足：特に気になった関連研究を以下に並べる。</p>
 <ul>
-<li>Schneider, S.; Hirzel, M.; Gedik, B.; Wu, K.: Auto-parallelizing stateful distributed streaming applications. ACM PACT, 2012.
+<li>Schneider, S.; Hirzel, M.; Gedik, B.; Wu, K.: Auto-parallelizing
+stateful distributed streaming applications. ACM PACT, 2012.
 <ul>
 <li>並列度の変更に関する先行研究</li>
-<li>本論文の提案手法では、大きなステートサイズの際のexactly onceを対象としている点が異なる</li>
+<li>本論文の提案手法では、大きなステートサイズの際のexactly
+onceを対象としている点が異なる</li>
 </ul></li>
-<li>Wu, Y.; Tan, K. L.: ChronoStream: Elastic stateful stream computation in the cloud. IEEE ICDE, 2015.
+<li>Wu, Y.; Tan, K. L.: ChronoStream: Elastic stateful stream
+computation in the cloud. IEEE ICDE, 2015.
 <ul>
 <li>弾力性の実現に関する先行研究</li>
 <li>ただし別の論文の指摘によると、同期に関する課題がある</li>
 <li>データフロー変更には対応していない。あくまでオペレータのマイグレーションのみ。</li>
 </ul></li>
-<li>Heinze, T.; Pappalardo, V.; Jerzak, Z.; Fetzer, C.: Auto-scaling techniques for elastic data stream processing. In: IEEE ICDE Workshops. 2014. および、 Heinze, T.; Ji, Y.; Roediger, L.; Pappalardo, V.; Meister, A.; Jerzak, Z.; Fetzer, C.: FUGU: Elastic Data Stream Processing with Latency Constraints. IEEE Data Eng. Bull., 2015.
+<li>Heinze, T.; Pappalardo, V.; Jerzak, Z.; Fetzer, C.: Auto-scaling
+techniques for elastic data stream processing. In: IEEE ICDE Workshops.
+2014. および、 Heinze, T.; Ji, Y.; Roediger, L.; Pappalardo, V.;
+Meister, A.; Jerzak, Z.; Fetzer, C.: FUGU: Elastic Data Stream
+Processing with Latency Constraints. IEEE Data Eng. Bull., 2015.
 <ul>
 <li>オートスケールのタイミングを判断する。オンライン機械学習を利用。</li>
 <li>簡単なマイグレーションのシナリオを想定。</li>
 </ul></li>
-<li>Nasir, M.; Morales, G.; Kourtellis, N.; Serafini, M.: When Two Choices Are not Enough: Balancing at Scale in Distributed Stream Processing. CoRR, abs/1510.05714, 2015.
+<li>Nasir, M.; Morales, G.; Kourtellis, N.; Serafini, M.: When Two
+Choices Are not Enough: Balancing at Scale in Distributed Stream
+Processing. CoRR, abs/1510.05714, 2015.
 <ul>
 <li>並列度の調整に関する先行研究</li>
 <li>特にホットキーが存在する場合、そこにオペレータインスタンスを割り当てるように動く。</li>
 <li>データフロー変更などには対応しない。</li>
 </ul></li>
-<li>Mai, L.; Zeng, K.; Potharaju, R.; Xu, L.; Venkataraman, S.; Costa, P.; Kim, T.; Muthukrishnan, S.; Kuppa, V.; Dhulipalla, S.; Rao, S.: Chi: A Scalable and Programmable Control Plane for Distributed Stream Processing Systems. VLDB, 2018.
+<li>Mai, L.; Zeng, K.; Potharaju, R.; Xu, L.; Venkataraman, S.; Costa,
+P.; Kim, T.; Muthukrishnan, S.; Kuppa, V.; Dhulipalla, S.; Rao, S.: Chi:
+A Scalable and Programmable Control Plane for Distributed Stream
+Processing Systems. VLDB, 2018.
 <ul>
 <li>本論文で扱っているのに近い</li>
 <li>ただしステートサイズが大きなケースは対象としていない</li>
 </ul></li>
 </ul>
-<section class="footnotes" role="doc-endnotes">
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1" role="doc-endnote"><p>Carbone, P.; Ewen, S.; Fora, G.; Haridi, S.; Richter, S.; Tzoumas, K.: State Management in Apache Flink: Consistent Stateful Distributed Stream Processing. VLDB, 2017.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>Del Monte, B.: Efficient Migration of Very Large Distributed State for Scalable Stream Processing. VLDB PhD Workshop, 2017.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Tucker, P.; Tufte, K.; Papadimos, V.; Maier, D.: NEXMark - A Benchmark for Queries over Data Streams. 2018.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>Carbone, P.; Ewen, S.; Fora, G.;
+Haridi, S.; Richter, S.; Tzoumas, K.: State Management in Apache Flink:
+Consistent Stateful Distributed Stream Processing. VLDB, 2017.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Del Monte, B.: Efficient Migration of
+Very Large Distributed State for Scalable Stream Processing. VLDB PhD
+Workshop, 2017.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Tucker, P.; Tufte, K.; Papadimos, V.;
+Maier, D.: NEXMark - A Benchmark for Queries over Data Streams. 2018.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -479,7 +623,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/03/On-the-fly-Reconfiguration-of-Query-Plans-for-Stateful-Stream-Processing-Engines/" data-id="cl2nztnne00az5xqi0ewfalzt" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/03/On-the-fly-Reconfiguration-of-Query-Plans-for-Stateful-Stream-Processing-Engines/" data-id="cl2o9pbim019118rzswun6ehs" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -730,5 +874,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

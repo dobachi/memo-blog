@@ -5,18 +5,18 @@
     
     <title>Seleniumを試してみる | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 環境構築 便利な情報源 Selenium関連 おまけ     参考  【超便利】PythonとSeleniumでブラウザを自動操作する方法まとめ ブラウザのヘッドレスモードでスクショ 【WSL】にFirefox&amp;amp;Google-Chromeをインストールする方法！ geckodriver geckodriver-v0.26.0-linux64.tar.gz Pythonから">
+    <meta name="description" content="参考 メモ  環境構築 便利な情報源  Selenium関連 おまけ     参考  【超便利】PythonとSeleniumでブラウザを自動操作する方法まとめ ブラウザのヘッドレスモードでスクショ 【WSL】にFirefox&amp;amp;Google-Chromeをインストールする方法！ geckodriver geckodriver-v0.26.0-linux64.tar.gz Python">
 <meta name="keywords" content="Python,Slenium">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Seleniumを試してみる">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/10/19/Selenium/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 環境構築 便利な情報源 Selenium関連 おまけ     参考  【超便利】PythonとSeleniumでブラウザを自動操作する方法まとめ ブラウザのヘッドレスモードでスクショ 【WSL】にFirefox&amp;amp;Google-Chromeをインストールする方法！ geckodriver geckodriver-v0.26.0-linux64.tar.gz Pythonから">
+<meta property="og:description" content="参考 メモ  環境構築 便利な情報源  Selenium関連 おまけ     参考  【超便利】PythonとSeleniumでブラウザを自動操作する方法まとめ ブラウザのヘッドレスモードでスクショ 【WSL】にFirefox&amp;amp;Google-Chromeをインストールする方法！ geckodriver geckodriver-v0.26.0-linux64.tar.gz Python">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Seleniumを試してみる">
-<meta name="twitter:description" content="参考 メモ 環境構築 便利な情報源 Selenium関連 おまけ     参考  【超便利】PythonとSeleniumでブラウザを自動操作する方法まとめ ブラウザのヘッドレスモードでスクショ 【WSL】にFirefox&amp;amp;Google-Chromeをインストールする方法！ geckodriver geckodriver-v0.26.0-linux64.tar.gz Pythonから">
+<meta name="twitter:description" content="参考 メモ  環境構築 便利な情報源  Selenium関連 おまけ     参考  【超便利】PythonとSeleniumでブラウザを自動操作する方法まとめ ブラウザのヘッドレスモードでスクショ 【WSL】にFirefox&amp;amp;Google-Chromeをインストールする方法！ geckodriver geckodriver-v0.26.0-linux64.tar.gz Python">
     
 
     
@@ -251,12 +251,14 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#環境構築">環境構築</a></li>
-<li><a href="#便利な情報源">便利な情報源</a><ul>
-<li><a href="#selenium関連">Selenium関連</a></li>
-<li><a href="#おまけ">おまけ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#環境構築" id="toc-環境構築">環境構築</a></li>
+<li><a href="#便利な情報源" id="toc-便利な情報源">便利な情報源</a>
+<ul>
+<li><a href="#selenium関連" id="toc-selenium関連">Selenium関連</a></li>
+<li><a href="#おまけ" id="toc-おまけ">おまけ</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -270,19 +272,31 @@ ga('send', 'pageview');
 <li><a href="https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz" target="_blank" rel="noopener">geckodriver-v0.26.0-linux64.tar.gz</a></li>
 <li><a href="https://qiita.com/koikeke0911/items/e9c9516e919875e1cf55" target="_blank" rel="noopener">PythonからSeleniumを使ってFirefoxを操作してみる</a></li>
 <li><a href="https://github.com/dobachi/selenium_getting_started" target="_blank" rel="noopener">selenium_getting_started</a></li>
-<li><a href="https://qiita.com/kinpira/items/383b0fbee6bf229ea03d" target="_blank" rel="noopener">PythonでSeleniumを使ってスクレイピング (基礎)</a></li>
+<li><a href="https://qiita.com/kinpira/items/383b0fbee6bf229ea03d" target="_blank" rel="noopener">PythonでSeleniumを使ってスクレイピング
+(基礎)</a></li>
 <li><a href="https://qiita.com/VA_nakatsu/items/0095755dc48ad7e86e2f" target="_blank" rel="noopener">Seleniumで要素を選択する方法まとめ</a></li>
-<li><a href="https://kurozumi.github.io/selenium-python/locating-elements.html" target="_blank" rel="noopener">4. 要素を見つける</a></li>
+<li><a href="https://kurozumi.github.io/selenium-python/locating-elements.html" target="_blank" rel="noopener">4.
+要素を見つける</a></li>
 <li><a href="https://tonari-it.com/python-beautiful-soup-html-parse/" target="_blank" rel="noopener">Pythonで取得したWebページのHTMLを解析するはじめの一歩</a></li>
 <li><a href="https://qiita.com/uguisuheiankyo/items/cec03891a86dfda12c9a" target="_blank" rel="noopener">Seleniumで待機処理するお話</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>日常生活の簡単化のために使用。 <a href="https://tanuhack.com/selenium/#i-3" target="_blank" rel="noopener">【超便利】PythonとSeleniumでブラウザを自動操作する方法まとめ</a> を試す。</p>
+<p>日常生活の簡単化のために使用。 <a href="https://tanuhack.com/selenium/#i-3" target="_blank" rel="noopener">【超便利】PythonとSeleniumでブラウザを自動操作する方法まとめ</a>
+を試す。</p>
 <h2><span id="環境構築">環境構築</span></h2>
-<p>Condaを使って環境を作り、seleniumをインストールした。 WebDriverは自分の環境に合わせて、Chrome77向けのものを使用したかっただが、 WSLでChromeを使おうとすると、--no-sandboxをつけないと行けないようだ。 詳しくは、 <a href="https://ptsv.jp/2019/04/07/ブラウザのヘッドレスモードでスクショ/" target="_blank" rel="noopener">ブラウザのヘッドレスモードでスクショ</a> 及び <a href="https://nakomii.hatenablog.com/entry/wsl_ubuntu" target="_blank" rel="noopener">【WSL】にFirefox&amp;Google-Chromeをインストールする方法！</a> を参照。</p>
-<p><a href="https://github.com/mozilla/geckodriver/releases" target="_blank" rel="noopener">geckodriver</a> を使うことにした。</p>
-<p>また、当初は <a href="https://tanuhack.com/selenium/#i-3" target="_blank" rel="noopener">【超便利】PythonとSeleniumでブラウザを自動操作する方法まとめ</a> を参考にしようとしたが、 途中から <a href="https://qiita.com/koikeke0911/items/e9c9516e919875e1cf55" target="_blank" rel="noopener">PythonからSeleniumを使ってFirefoxを操作してみる</a> を参考にした。</p>
-<p>動作確認ログは、 <a href="https://github.com/dobachi/selenium_getting_started" target="_blank" rel="noopener">selenium_getting_started</a> を参照。</p>
+<p>Condaを使って環境を作り、seleniumをインストールした。
+WebDriverは自分の環境に合わせて、Chrome77向けのものを使用したかっただが、
+WSLでChromeを使おうとすると、--no-sandboxをつけないと行けないようだ。
+詳しくは、 <a href="https://ptsv.jp/2019/04/07/ブラウザのヘッドレスモードでスクショ/" target="_blank" rel="noopener">ブラウザのヘッドレスモードでスクショ</a>
+及び <a href="https://nakomii.hatenablog.com/entry/wsl_ubuntu" target="_blank" rel="noopener">【WSL】にFirefox&amp;Google-Chromeをインストールする方法！</a>
+を参照。</p>
+<p><a href="https://github.com/mozilla/geckodriver/releases" target="_blank" rel="noopener">geckodriver</a>
+を使うことにした。</p>
+<p>また、当初は <a href="https://tanuhack.com/selenium/#i-3" target="_blank" rel="noopener">【超便利】PythonとSeleniumでブラウザを自動操作する方法まとめ</a>
+を参考にしようとしたが、 途中から <a href="https://qiita.com/koikeke0911/items/e9c9516e919875e1cf55" target="_blank" rel="noopener">PythonからSeleniumを使ってFirefoxを操作してみる</a>
+を参考にした。</p>
+<p>動作確認ログは、 <a href="https://github.com/dobachi/selenium_getting_started" target="_blank" rel="noopener">selenium_getting_started</a>
+を参照。</p>
 <h2><span id="便利な情報源">便利な情報源</span></h2>
 <h3><span id="selenium関連">Selenium関連</span></h3>
 <ul>
@@ -299,7 +313,8 @@ ga('send', 'pageview');
 <li>WSLにブラウザを導入する例</li>
 <li>Chromeでの苦労についても触れられている</li>
 </ul></li>
-<li><a href="https://qiita.com/kinpira/items/383b0fbee6bf229ea03d" target="_blank" rel="noopener">PythonでSeleniumを使ってスクレイピング (基礎)</a>
+<li><a href="https://qiita.com/kinpira/items/383b0fbee6bf229ea03d" target="_blank" rel="noopener">PythonでSeleniumを使ってスクレイピング
+(基礎)</a>
 <ul>
 <li>スクレイピングの面で使いそうな基本機能の説明</li>
 </ul></li>
@@ -308,7 +323,8 @@ ga('send', 'pageview');
 <li>要素選択の基本的な例</li>
 <li>汎用性が高いXPathを使う例も記載</li>
 </ul></li>
-<li><a href="https://kurozumi.github.io/selenium-python/locating-elements.html" target="_blank" rel="noopener">4. 要素を見つける</a>
+<li><a href="https://kurozumi.github.io/selenium-python/locating-elements.html" target="_blank" rel="noopener">4.
+要素を見つける</a>
 <ul>
 <li>上記のXPathを使う例なども含め、網羅的に記載されている。</li>
 </ul></li>
@@ -321,7 +337,8 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://tonari-it.com/python-beautiful-soup-html-parse/" target="_blank" rel="noopener">Pythonで取得したWebページのHTMLを解析するはじめの一歩</a>
 <ul>
-<li>おそらくBeautiful SoupによるHTML解析も伴うことが多いだろう、ということで。</li>
+<li>おそらくBeautiful
+SoupによるHTML解析も伴うことが多いだろう、ということで。</li>
 </ul></li>
 </ul>
 <!-- vim: set tw=0 ts=4 sw=4: -->
@@ -335,7 +352,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/10/19/Selenium/" data-id="cl2nztnnz00cw5xqi7zem3s9p" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/10/19/Selenium/" data-id="cl2o9pb7v009818rz7u53mjuz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -586,5 +603,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -5,18 +5,18 @@
     
     <title>CDC Kafka and master table cache | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ やりたいこと RDBMSからのデータ取り込み JDBC Kafka Connector 更新時間とユニークIDを利用したキャプチャ Kafka Connect  Kafka Stramsでテーブルに変換 GlobalKTableへの読み込み     過去の古いメモを少し細くしてアップロード。 参考  KafkaConnectを試す その2 No More Silos: How t">
-<meta name="keywords" content="Kafka,CDC,RDBMS,Kafka Connect">
+    <meta name="description" content="参考 メモ  やりたいこと RDBMSからのデータ取り込み  JDBC Kafka Connector 更新時間とユニークIDを利用したキャプチャ Kafka Connect  Kafka Stramsでテーブルに変換  GlobalKTableへの読み込み     過去の古いメモを少し細くしてアップロード。 参考  KafkaConnectを試す その2 No More Silos: Ho">
+<meta name="keywords" content="Kafka,RDBMS,CDC,Kafka Connect">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CDC Kafka and master table cache">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/01/25/CDC-Kafka-and-master-table-cache/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ やりたいこと RDBMSからのデータ取り込み JDBC Kafka Connector 更新時間とユニークIDを利用したキャプチャ Kafka Connect  Kafka Stramsでテーブルに変換 GlobalKTableへの読み込み     過去の古いメモを少し細くしてアップロード。 参考  KafkaConnectを試す その2 No More Silos: How t">
+<meta property="og:description" content="参考 メモ  やりたいこと RDBMSからのデータ取り込み  JDBC Kafka Connector 更新時間とユニークIDを利用したキャプチャ Kafka Connect  Kafka Stramsでテーブルに変換  GlobalKTableへの読み込み     過去の古いメモを少し細くしてアップロード。 参考  KafkaConnectを試す その2 No More Silos: Ho">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CDC Kafka and master table cache">
-<meta name="twitter:description" content="参考 メモ やりたいこと RDBMSからのデータ取り込み JDBC Kafka Connector 更新時間とユニークIDを利用したキャプチャ Kafka Connect  Kafka Stramsでテーブルに変換 GlobalKTableへの読み込み     過去の古いメモを少し細くしてアップロード。 参考  KafkaConnectを試す その2 No More Silos: How t">
+<meta name="twitter:description" content="参考 メモ  やりたいこと RDBMSからのデータ取り込み  JDBC Kafka Connector 更新時間とユニークIDを利用したキャプチャ Kafka Connect  Kafka Stramsでテーブルに変換  GlobalKTableへの読み込み     過去の古いメモを少し細くしてアップロード。 参考  KafkaConnectを試す その2 No More Silos: Ho">
     
 
     
@@ -251,16 +251,21 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#やりたいこと">やりたいこと</a></li>
-<li><a href="#rdbmsからのデータ取り込み">RDBMSからのデータ取り込み</a><ul>
-<li><a href="#jdbc-kafka-connector">JDBC Kafka Connector</a></li>
-<li><a href="#更新時間とユニークidを利用したキャプチャ">更新時間とユニークIDを利用したキャプチャ</a></li>
-<li><a href="#kafka-connect">Kafka Connect</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#やりたいこと" id="toc-やりたいこと">やりたいこと</a></li>
+<li><a href="#rdbmsからのデータ取り込み" id="toc-rdbmsからのデータ取り込み">RDBMSからのデータ取り込み</a>
+<ul>
+<li><a href="#jdbc-kafka-connector" id="toc-jdbc-kafka-connector">JDBC
+Kafka Connector</a></li>
+<li><a href="#更新時間とユニークidを利用したキャプチャ" id="toc-更新時間とユニークidを利用したキャプチャ">更新時間とユニークIDを利用したキャプチャ</a></li>
+<li><a href="#kafka-connect" id="toc-kafka-connect">Kafka
+Connect</a></li>
 </ul></li>
-<li><a href="#kafka-stramsでテーブルに変換">Kafka Stramsでテーブルに変換</a><ul>
-<li><a href="#globalktableへの読み込み">GlobalKTableへの読み込み</a></li>
+<li><a href="#kafka-stramsでテーブルに変換" id="toc-kafka-stramsでテーブルに変換">Kafka Stramsでテーブルに変換</a>
+<ul>
+<li><a href="#globalktableへの読み込み" id="toc-globalktableへの読み込み">GlobalKTableへの読み込み</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -268,32 +273,55 @@ ga('send', 'pageview');
 <p>過去の古いメモを少し細くしてアップロード。</p>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://tutuz-tech.hatenablog.com/entry/2019/03/21/000835" target="_blank" rel="noopener">KafkaConnectを試す その2</a></li>
-<li><a href="https://www.confluent.io/blog/no-more-silos-how-to-integrate-your-databases-with-apache-kafka-and-cdc/" target="_blank" rel="noopener">No More Silos: How to Integrate Your Databases with Apache Kafka and CDC</a></li>
-<li><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/index.html" target="_blank" rel="noopener">JDBC Connector (Source and Sink) for Confluent Platform</a></li>
-<li><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#prerequisites" target="_blank" rel="noopener">JDBC Connector Prerequisites</a></li>
-<li><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#incremental-query-modes" target="_blank" rel="noopener">JDBC Connector Incremental Query Modes</a></li>
-<li><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#message-keys" target="_blank" rel="noopener">JDBC Connector Message Keys</a></li>
-<li><a href="https://docs.confluent.io/current/installation/installing_cp/deb-ubuntu.html#systemd-ubuntu-debian-install" target="_blank" rel="noopener">Confluent PlatformのUbuntuへのインストール手順</a></li>
-<li><a href="https://docs.confluent.io/current/cli/installing.html" target="_blank" rel="noopener">Confluent CLIのインストール手順</a></li>
+<li><a href="https://tutuz-tech.hatenablog.com/entry/2019/03/21/000835" target="_blank" rel="noopener">KafkaConnectを試す
+その2</a></li>
+<li><a href="https://www.confluent.io/blog/no-more-silos-how-to-integrate-your-databases-with-apache-kafka-and-cdc/" target="_blank" rel="noopener">No
+More Silos: How to Integrate Your Databases with Apache Kafka and
+CDC</a></li>
+<li><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/index.html" target="_blank" rel="noopener">JDBC
+Connector (Source and Sink) for Confluent Platform</a></li>
+<li><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#prerequisites" target="_blank" rel="noopener">JDBC
+Connector Prerequisites</a></li>
+<li><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#incremental-query-modes" target="_blank" rel="noopener">JDBC
+Connector Incremental Query Modes</a></li>
+<li><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#message-keys" target="_blank" rel="noopener">JDBC
+Connector Message Keys</a></li>
+<li><a href="https://docs.confluent.io/current/installation/installing_cp/deb-ubuntu.html#systemd-ubuntu-debian-install" target="_blank" rel="noopener">Confluent
+PlatformのUbuntuへのインストール手順</a></li>
+<li><a href="https://docs.confluent.io/current/cli/installing.html" target="_blank" rel="noopener">Confluent
+CLIのインストール手順</a></li>
 <li><a href="https://open-groove.net/postgresql/update-timestamp-function/" target="_blank" rel="noopener">PostgreSQLで更新時のtimestampをアップデートするには</a></li>
-<li><a href="http://www.abe-tatsuya.com/web_prog/postgresql/seaquence.php" target="_blank" rel="noopener">PostgreSQL で連番の数字のフィールドを作る方法 (sequence について)</a></li>
-<li><a href="http://developpp.blog.jp/archives/8224244.html" target="_blank" rel="noopener">postgres - シーケンス　inser時に自動採番</a></li>
-<li><a href="https://github.com/confluentinc/kafka-streams-examples#available-examples" target="_blank" rel="noopener">Kafka Streams例</a></li>
+<li><a href="http://www.abe-tatsuya.com/web_prog/postgresql/seaquence.php" target="_blank" rel="noopener">PostgreSQL
+で連番の数字のフィールドを作る方法 (sequence について)</a></li>
+<li><a href="http://developpp.blog.jp/archives/8224244.html" target="_blank" rel="noopener">postgres -
+シーケンス　inser時に自動採番</a></li>
+<li><a href="https://github.com/confluentinc/kafka-streams-examples#available-examples" target="_blank" rel="noopener">Kafka
+Streams例</a></li>
 <li><a href="https://github.com/confluentinc/kafka-streams-examples/blob/5.4.0-post/src/main/java/io/confluent/examples/streams/GlobalKTablesExample.java" target="_blank" rel="noopener">GlobalKTablesExample.java</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="やりたいこと">やりたいこと</span></h2>
-<p>マスタデータを格納しているRDBMSからKafkaにデータを取り込み、 KTableとしてキャッシュしたうえで、ストリームデータとJoinする。</p>
+<p>マスタデータを格納しているRDBMSからKafkaにデータを取り込み、
+KTableとしてキャッシュしたうえで、ストリームデータとJoinする。</p>
 <h2><span id="rdbmsからのデータ取り込み">RDBMSからのデータ取り込み</span></h2>
-<p><a href="https://tutuz-tech.hatenablog.com/entry/2019/03/21/000835" target="_blank" rel="noopener">KafkaConnectを試す その2</a> や <a href="https://www.confluent.io/blog/no-more-silos-how-to-integrate-your-databases-with-apache-kafka-and-cdc/" target="_blank" rel="noopener">No More Silos: How to Integrate Your Databases with Apache Kafka and CDC</a> を 参考に、Kafka Connectのjdbcコネクタを使用してみようと思った。</p>
-<p>しかしこの例で載っているのは、差分取り込みのためにシーケンシャルなIDを持つカラムが必要であることが要件を満たさないかも、と思った。 やりたいのは、Updateも含むChange Data Capture。</p>
+<p><a href="https://tutuz-tech.hatenablog.com/entry/2019/03/21/000835" target="_blank" rel="noopener">KafkaConnectを試す
+その2</a> や <a href="https://www.confluent.io/blog/no-more-silos-how-to-integrate-your-databases-with-apache-kafka-and-cdc/" target="_blank" rel="noopener">No
+More Silos: How to Integrate Your Databases with Apache Kafka and
+CDC</a> を 参考に、Kafka
+Connectのjdbcコネクタを使用してみようと思った。</p>
+<p>しかしこの例で載っているのは、差分取り込みのためにシーケンシャルなIDを持つカラムが必要であることが要件を満たさないかも、と思った。
+やりたいのは、Updateも含むChange Data Capture。</p>
 <p>test_db.json 内の該当箇所は以下の通り。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(snip)</span><br><span class="line">    "mode" : "incrementing",</span><br><span class="line">    "incrementing.column.name" : "seq",</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
-<p>ということで、 <a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/index.html" target="_blank" rel="noopener">JDBC Connector (Source and Sink) for Confluent Platform</a> を確認してみた。 結論としては、更新時間とユニークIDを使うモードを利用すると良さそうだ。</p>
+<p>ということで、 <a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/index.html" target="_blank" rel="noopener">JDBC
+Connector (Source and Sink) for Confluent Platform</a> を確認してみた。
+結論としては、更新時間とユニークIDを使うモードを利用すると良さそうだ。</p>
 <h3><span id="jdbc-kafka-connector">JDBC Kafka Connector</span></h3>
-<p><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#prerequisites" target="_blank" rel="noopener">JDBC Connector Prerequisites</a> によると、 Kafka と Schema Registryがあればよさそうだ。</p>
-<p><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#incremental-query-modes" target="_blank" rel="noopener">JDBC Connector Incremental Query Modes</a> によると、モードは以下の通り。</p>
+<p><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#prerequisites" target="_blank" rel="noopener">JDBC
+Connector Prerequisites</a> によると、 Kafka と Schema
+Registryがあればよさそうだ。</p>
+<p><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#incremental-query-modes" target="_blank" rel="noopener">JDBC
+Connector Incremental Query Modes</a> によると、モードは以下の通り。</p>
 <ul>
 <li>Incrementing Column
 <ul>
@@ -303,19 +331,25 @@ ga('send', 'pageview');
 <li>Timestamp Column
 <ul>
 <li>更新時間のカラムを持つことを前提としたモード</li>
-<li>更新時間はユニークではないことを起因とした注意点がある。 同一時刻に2個のレコードが更新された場合、もし1個目のレコードが処理されたあとに障害が生じたとしたら、 復旧時にもう1個のレコードが処理されないことが起こりうる。</li>
+<li>更新時間はユニークではないことを起因とした注意点がある。
+同一時刻に2個のレコードが更新された場合、もし1個目のレコードが処理されたあとに障害が生じたとしたら、
+復旧時にもう1個のレコードが処理されないことが起こりうる。</li>
 <li>疑問点：処理後に「処理済みTimestamp」を更新できないのだろうか</li>
 </ul></li>
 <li>Timestamp and Incrementing Columns
 <ul>
 <li>更新時刻カラム、ユニークIDカラムの両方を前提としたモード</li>
-<li>先のTimestamp Columnモードで問題となった、同一時刻に複数レコードが生成された場合における、 部分的なキャプチャ失敗を防ぐことができる。</li>
+<li>先のTimestamp
+Columnモードで問題となった、同一時刻に複数レコードが生成された場合における、
+部分的なキャプチャ失敗を防ぐことができる。</li>
 <li>確認点：先に更新時刻を見て、ユニークIDで確認するのだろうか。だとしたら、更新もキャプチャできそう。</li>
 </ul></li>
 <li>Custom Query
 <ul>
 <li>クエリを用いてフィルタされた結果をキャプチャするモード</li>
-<li>Incrementing Column、Timestamp Columnなどと比べ、オフセットをトラックしないので、 クエリ自身がオフセットをトラックするのと同等の処理内容になっていないと行けない。</li>
+<li>Incrementing Column、Timestamp
+Columnなどと比べ、オフセットをトラックしないので、
+クエリ自身がオフセットをトラックするのと同等の処理内容になっていないと行けない。</li>
 </ul></li>
 <li>Bulk
 <ul>
@@ -325,40 +359,67 @@ ga('send', 'pageview');
 </ul></li>
 </ul>
 <p>当然だが、必要に応じて元のRDBMS側でインデックスが貼られていないとならない。</p>
-<p>timestamp.delay.interval.ms 設定を使い、更新時刻に対し、実際に取り込むタイミングを遅延させられる。 これはトランザクションを伴うときに、一連のレコードが更新されるのを待つための機能。</p>
-<p>なお、 <a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#message-keys" target="_blank" rel="noopener">JDBC Connector Message Keys</a> によると、レコードの値や特定のカラムから、Kafkaメッセージのキーを生成できる。</p>
+<p>timestamp.delay.interval.ms
+設定を使い、更新時刻に対し、実際に取り込むタイミングを遅延させられる。
+これはトランザクションを伴うときに、一連のレコードが更新されるのを待つための機能。</p>
+<p>なお、 <a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#message-keys" target="_blank" rel="noopener">JDBC
+Connector Message Keys</a>
+によると、レコードの値や特定のカラムから、Kafkaメッセージのキーを生成できる。</p>
 <h3><span id="更新時間とユニークidを利用したキャプチャ">更新時間とユニークIDを利用したキャプチャ</span></h3>
-<p><a href="https://www.confluent.io/blog/no-more-silos-how-to-integrate-your-databases-with-apache-kafka-and-cdc/" target="_blank" rel="noopener">No More Silos: How to Integrate Your Databases with Apache Kafka and CDC</a> のあたりを参考に、 別のモードを使って試してみる。</p>
-<p>まずはKafka環境を構築するが、ここでは簡単化のためにConfluent Platformを用いることとした。 <a href="https://docs.confluent.io/current/installation/installing_cp/deb-ubuntu.html#systemd-ubuntu-debian-install" target="_blank" rel="noopener">Confluent PlatformのUbuntuへのインストール手順</a> あたりを参考にすすめると良い。 また、 <code>confluent</code> コマンドがあると楽なので、 <a href="https://docs.confluent.io/current/cli/installing.html" target="_blank" rel="noopener">Confluent CLIのインストール手順</a> を参考にインストールしておく。</p>
+<p><a href="https://www.confluent.io/blog/no-more-silos-how-to-integrate-your-databases-with-apache-kafka-and-cdc/" target="_blank" rel="noopener">No
+More Silos: How to Integrate Your Databases with Apache Kafka and
+CDC</a> のあたりを参考に、 別のモードを使って試してみる。</p>
+<p>まずはKafka環境を構築するが、ここでは簡単化のためにConfluent
+Platformを用いることとした。 <a href="https://docs.confluent.io/current/installation/installing_cp/deb-ubuntu.html#systemd-ubuntu-debian-install" target="_blank" rel="noopener">Confluent
+PlatformのUbuntuへのインストール手順</a> あたりを参考にすすめると良い。
+また、 <code>confluent</code> コマンドがあると楽なので、 <a href="https://docs.confluent.io/current/cli/installing.html" target="_blank" rel="noopener">Confluent
+CLIのインストール手順</a> を参考にインストールしておく。</p>
 <p>インストールしたら、シングルモードでKafka環境を起動しておく。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ confluent <span class="built_in">local</span> start</span><br></pre></td></tr></table></figure>
-<p><a href="https://tutuz-tech.hatenablog.com/entry/2019/03/21/000835" target="_blank" rel="noopener">KafkaConnectを試す その2</a> あたりを参考に、Kafkaと同一マシンにPostgreSQLの環境を構築しておく。</p>
+<p><a href="https://tutuz-tech.hatenablog.com/entry/2019/03/21/000835" target="_blank" rel="noopener">KafkaConnectを試す
+その2</a>
+あたりを参考に、Kafkaと同一マシンにPostgreSQLの環境を構築しておく。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install -y postgresql</span><br><span class="line">$ sudo vim /etc/postgresql/10/main/postgresql.conf</span><br><span class="line">$ sudo cp /usr/share/postgresql/10/pg_hba.conf&#123;.sample,&#125;</span><br><span class="line">$ sudo vim /usr/share/postgresql/10/pg_hba.conf</span><br><span class="line">$ sudo systemctl restart postgresql</span><br></pre></td></tr></table></figure>
-<p>/etc/postgresql/10/main/postgresql.conf に追加する内容は以下の通り。</p>
+<p>/etc/postgresql/10/main/postgresql.conf
+に追加する内容は以下の通り。</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">listen_addresses</span> = <span class="string">'*'</span></span><br></pre></td></tr></table></figure>
 <p>/usr/share/postgresql/10/pg_hba.conf に追加する内容は以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># PostgreSQL Client Authentication Configuration File</span><br><span class="line"># ===================================================</span><br><span class="line">local all all                trust</span><br><span class="line">host  all all 127.0.0.1/32 trust</span><br></pre></td></tr></table></figure>
 <p>Kakfa用のデータベースとテーブルを作る。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ psql -c <span class="string">"alter user postgres with password 'kafkatest'"</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres psql -U postgres -W -c <span class="string">"CREATE DATABASE testdb"</span>;</span><br><span class="line">Password <span class="keyword">for</span> user postgres:</span><br></pre></td></tr></table></figure>
-<p>テーブルを作る際、Timestampとインクリメンタルな値を使ったデータキャプチャを実現するためのカラムを含むようにする。 <a href="https://open-groove.net/postgresql/update-timestamp-function/" target="_blank" rel="noopener">PostgreSQLで更新時のtimestampをアップデートするには</a> 、 <a href="http://www.abe-tatsuya.com/web_prog/postgresql/seaquence.php" target="_blank" rel="noopener">PostgreSQL で連番の数字のフィールドを作る方法 (sequence について)</a> 、 <a href="http://developpp.blog.jp/archives/8224244.html" target="_blank" rel="noopener">postgres - シーケンス　inser時に自動採番</a> あたりを参考とする。</p>
-<p>以下、テーブルを作り、ユニークID用のシーケンスを作り、タイムスタンプを作る流れ。 タイムスタンプはレコード更新時に合わせて更新されるようにトリガを設定する。</p>
+<p>テーブルを作る際、Timestampとインクリメンタルな値を使ったデータキャプチャを実現するためのカラムを含むようにする。
+<a href="https://open-groove.net/postgresql/update-timestamp-function/" target="_blank" rel="noopener">PostgreSQLで更新時のtimestampをアップデートするには</a>
+、 <a href="http://www.abe-tatsuya.com/web_prog/postgresql/seaquence.php" target="_blank" rel="noopener">PostgreSQL
+で連番の数字のフィールドを作る方法 (sequence について)</a> 、 <a href="http://developpp.blog.jp/archives/8224244.html" target="_blank" rel="noopener">postgres -
+シーケンス　inser時に自動採番</a> あたりを参考とする。</p>
+<p>以下、テーブルを作り、ユニークID用のシーケンスを作り、タイムスタンプを作る流れ。
+タイムスタンプはレコード更新時に合わせて更新されるようにトリガを設定する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres psql -U postgres testdb</span><br></pre></td></tr></table></figure>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> test_table (</span><br><span class="line">    seq <span class="built_in">SERIAL</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">    ts <span class="keyword">timestamp</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">now</span>(),</span><br><span class="line">    item <span class="built_in">varchar</span>(<span class="number">256</span>),</span><br><span class="line">    price <span class="built_in">integer</span>,</span><br><span class="line">    <span class="keyword">category</span> <span class="built_in">varchar</span>(<span class="number">256</span>)</span><br><span class="line">);</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> set_update_time() <span class="keyword">RETURNS</span> <span class="keyword">OPAQUE</span> <span class="keyword">AS</span> <span class="string">'</span></span><br><span class="line"><span class="string">  begin</span></span><br><span class="line"><span class="string">    new.ts := ''now'';</span></span><br><span class="line"><span class="string">    return new;</span></span><br><span class="line"><span class="string">  end;</span></span><br><span class="line"><span class="string">'</span> <span class="keyword">LANGUAGE</span> <span class="string">'plpgsql'</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> update_tri <span class="keyword">BEFORE</span> <span class="keyword">UPDATE</span> <span class="keyword">ON</span> test_table <span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="keyword">ROW</span></span><br><span class="line">  <span class="keyword">EXECUTE</span> <span class="keyword">PROCEDURE</span> set_update_time();</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> connectuser <span class="keyword">WITH</span> <span class="keyword">password</span> <span class="string">'connectuser'</span>;</span><br><span class="line"><span class="keyword">GRANT</span> ALL <span class="keyword">ON</span> test_table <span class="keyword">TO</span> connectuser;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_table(item, price, <span class="keyword">category</span>) <span class="keyword">VALUES</span> (<span class="string">'apple'</span>, <span class="number">400</span>, <span class="string">'fruit'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_table(item, price, <span class="keyword">category</span>) <span class="keyword">VALUES</span> (<span class="string">'banana'</span>, <span class="number">160</span>, <span class="string">'fruit'</span>);</span><br><span class="line"><span class="keyword">UPDATE</span> test_table <span class="keyword">SET</span> item=<span class="string">'orange'</span>, price=<span class="number">100</span> <span class="keyword">where</span> seq = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_table(item, price, <span class="keyword">category</span>) <span class="keyword">VALUES</span> (<span class="string">'banana'</span>, <span class="number">200</span>, <span class="string">'fruit'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_table(item, price, <span class="keyword">category</span>) <span class="keyword">VALUES</span> (<span class="string">'pork'</span>, <span class="number">400</span>, <span class="string">'meet'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_table(item, price, <span class="keyword">category</span>) <span class="keyword">VALUES</span> (<span class="string">'beef'</span>, <span class="number">800</span>, <span class="string">'meet'</span>);</span><br></pre></td></tr></table></figure>
 <p>以下のような結果が得られるはずである。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">testdb=# SELECT * FROM test_table;</span><br><span class="line"> seq |             ts             |  item  | price | category</span><br><span class="line">-----+----------------------------+--------+-------+----------</span><br><span class="line">   1 | 2020-02-02 13:31:12.065458 | apple  |   400 | fruit</span><br><span class="line">   2 | 2020-02-02 13:31:49.220178 | orange |   100 | fruit</span><br><span class="line">   3 | 2020-02-02 13:32:32.324241 | banana |   200 | fruit</span><br><span class="line">   4 | 2020-02-02 13:33:06.560747 | pork   |   400 | meet</span><br><span class="line">   5 | 2020-02-02 13:33:06.561966 | beef   |   800 | meet</span><br><span class="line">(5 rows)</span><br></pre></td></tr></table></figure>
 <h3><span id="kafka-connect">Kafka Connect</span></h3>
-<p><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#incremental-query-modes" target="_blank" rel="noopener">JDBC Connector Incremental Query Modes</a> を参考に、タイムスタンプ＋インクリメンティングモードを用いる。</p>
+<p><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html#incremental-query-modes" target="_blank" rel="noopener">JDBC
+Connector Incremental Query Modes</a>
+を参考に、タイムスタンプ＋インクリメンティングモードを用いる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; EOF &gt; test_db.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;load-test-table&quot;,</span><br><span class="line">  &quot;config&quot;: &#123;</span><br><span class="line">    &quot;connector.class&quot;: &quot;io.confluent.connect.jdbc.JdbcSourceConnector&quot;, </span><br><span class="line">    &quot;connection.url&quot; : &quot;jdbc:postgresql://localhost:5432/testdb&quot;,</span><br><span class="line">    &quot;connection.user&quot; : &quot;connectuser&quot;,</span><br><span class="line">    &quot;connection.password&quot; : &quot;connectuser&quot;,</span><br><span class="line">    &quot;mode&quot; : &quot;timestamp+incrementing&quot;,</span><br><span class="line">    &quot;incrementing.column.name&quot; : &quot;seq&quot;,</span><br><span class="line">    &quot;timestamp.column.name&quot; : &quot;ts&quot;,</span><br><span class="line">    &quot;table.whitelist&quot; : &quot;test_table&quot;,</span><br><span class="line">    &quot;topic.prefix&quot; : &quot;db_&quot;,</span><br><span class="line">    &quot;tasks.max&quot; : &quot;1&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">$ curl -X DELETE http://localhost:8083/connectors/load-test-table</span><br><span class="line">$ curl -X POST -H &quot;Content-Type: application/json&quot; http://localhost:8083/connectors -d @test_db.json</span><br><span class="line">$ curl http://localhost:8083/connectors</span><br></pre></td></tr></table></figure>
-<p>上記コネクタでは、KafkaにAvro形式で書き込むので、 <code>kafka-avro-console-consumer</code>で確認する。</p>
+<p>上記コネクタでは、KafkaにAvro形式で書き込むので、
+<code>kafka-avro-console-consumer</code>で確認する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic db_test_table --from-beginning</span><br></pre></td></tr></table></figure>
-<p>上記を起動した後、PostgreSQL側で適当にレコードを挿入・更新すると、 以下のような内容がコンソールコンシューマの出力に表示される。</p>
-<p>変化がキャプチャされて取り込まれることがわかる。 挿入だけではなく、更新したものも取り込まれる。メッセージには、シーケンスとタイムスタンプの療法が含まれている。</p>
+<p>上記を起動した後、PostgreSQL側で適当にレコードを挿入・更新すると、
+以下のような内容がコンソールコンシューマの出力に表示される。</p>
+<p>変化がキャプチャされて取り込まれることがわかる。
+挿入だけではなく、更新したものも取り込まれる。メッセージには、シーケンスとタイムスタンプの療法が含まれている。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;seq&quot;:1,&quot;ts&quot;:1580650272065,&quot;item&quot;:&#123;&quot;string&quot;:&quot;apple&quot;&#125;,&quot;price&quot;:&#123;&quot;int&quot;:400&#125;,&quot;category&quot;:&#123;&quot;string&quot;:&quot;fruit&quot;&#125;&#125;</span><br><span class="line">&#123;&quot;seq&quot;:2,&quot;ts&quot;:1580650296666,&quot;item&quot;:&#123;&quot;string&quot;:&quot;banana&quot;&#125;,&quot;price&quot;:&#123;&quot;int&quot;:160&#125;,&quot;category&quot;:&#123;&quot;string&quot;:&quot;fruit&quot;&#125;&#125;</span><br><span class="line">&#123;&quot;seq&quot;:2,&quot;ts&quot;:1580650309220,&quot;item&quot;:&#123;&quot;string&quot;:&quot;orange&quot;&#125;,&quot;price&quot;:&#123;&quot;int&quot;:100&#125;,&quot;category&quot;:&#123;&quot;string&quot;:&quot;fruit&quot;&#125;&#125;</span><br><span class="line">&#123;&quot;seq&quot;:3,&quot;ts&quot;:1580650352324,&quot;item&quot;:&#123;&quot;string&quot;:&quot;banana&quot;&#125;,&quot;price&quot;:&#123;&quot;int&quot;:200&#125;,&quot;category&quot;:&#123;&quot;string&quot;:&quot;fruit&quot;&#125;&#125;</span><br><span class="line">&#123;&quot;seq&quot;:4,&quot;ts&quot;:1580650386560,&quot;item&quot;:&#123;&quot;string&quot;:&quot;pork&quot;&#125;,&quot;price&quot;:&#123;&quot;int&quot;:400&#125;,&quot;category&quot;:&#123;&quot;string&quot;:&quot;meet&quot;&#125;&#125;</span><br><span class="line">&#123;&quot;seq&quot;:5,&quot;ts&quot;:1580650386561,&quot;item&quot;:&#123;&quot;string&quot;:&quot;beef&quot;&#125;,&quot;price&quot;:&#123;&quot;int&quot;:800&#125;,&quot;category&quot;:&#123;&quot;string&quot;:&quot;meet&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
 <h2><span id="kafka-stramsでテーブルに変換">Kafka Stramsでテーブルに変換</span></h2>
-<p>上記の通り、RDBMSからデータを取り込んだものに対し、 マスタテーブルとして使うため、KTableに変換してみる。</p>
+<p>上記の通り、RDBMSからデータを取り込んだものに対し、
+マスタテーブルとして使うため、KTableに変換してみる。</p>
 <h3><span id="globalktableへの読み込み">GlobalKTableへの読み込み</span></h3>
-<p><a href="https://github.com/confluentinc/kafka-streams-examples#available-examples" target="_blank" rel="noopener">Kafka Streams例</a> あたりを参考にする。 特に、 <a href="https://github.com/confluentinc/kafka-streams-examples/blob/5.4.0-post/src/main/java/io/confluent/examples/streams/GlobalKTablesExample.java" target="_blank" rel="noopener">GlobalKTablesExample.java</a> あたりが参考になるかと思う。 今回は、上記レポジトリをベースに少しいじって、本例向けのサンプルアプリを作る。</p>
+<p><a href="https://github.com/confluentinc/kafka-streams-examples#available-examples" target="_blank" rel="noopener">Kafka
+Streams例</a> あたりを参考にする。 特に、 <a href="https://github.com/confluentinc/kafka-streams-examples/blob/5.4.0-post/src/main/java/io/confluent/examples/streams/GlobalKTablesExample.java" target="_blank" rel="noopener">GlobalKTablesExample.java</a>
+あたりが参考になるかと思う。
+今回は、上記レポジトリをベースに少しいじって、本例向けのサンプルアプリを作る。</p>
 <p>[WIP]</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -371,7 +432,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/01/25/CDC-Kafka-and-master-table-cache/" data-id="cl2nztnkp002x5xqi3zk7vi4f" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/01/25/CDC-Kafka-and-master-table-cache/" data-id="cl2o9pbg7013s18rzc40qr3ov" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -622,5 +683,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

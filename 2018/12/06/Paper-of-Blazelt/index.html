@@ -5,18 +5,18 @@
     
     <title>BlazeItの論文 | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 論文の概要 動画の活用への期待が高まっている？ 課題感 BlazeItの構成 ユースケース システム概要 設定 フィルタ 特化NN フィルタのブートストラップ 現時点での制約  FrameQL FrameQLのスキーマ FCOUNT いくつかの例  クエリ実行の概要 aggregationの最適化 サンプリングについて補足 Control Variateについて補足 Optimizin">
+    <meta name="description" content="参考 論文の概要  動画の活用への期待が高まっている？ 課題感 BlazeItの構成 ユースケース システム概要  設定 フィルタ 特化NN フィルタのブートストラップ 現時点での制約  FrameQL  FrameQLのスキーマ FCOUNT いくつかの例  クエリ実行の概要 aggregationの最適化  サンプリングについて補足 Control Variateについて補足 Optim">
 <meta name="keywords" content="Machine Learning,Video Processing,BlazeIt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BlazeItの論文">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/12/06/Paper-of-Blazelt/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 論文の概要 動画の活用への期待が高まっている？ 課題感 BlazeItの構成 ユースケース システム概要 設定 フィルタ 特化NN フィルタのブートストラップ 現時点での制約  FrameQL FrameQLのスキーマ FCOUNT いくつかの例  クエリ実行の概要 aggregationの最適化 サンプリングについて補足 Control Variateについて補足 Optimizin">
+<meta property="og:description" content="参考 論文の概要  動画の活用への期待が高まっている？ 課題感 BlazeItの構成 ユースケース システム概要  設定 フィルタ 特化NN フィルタのブートストラップ 現時点での制約  FrameQL  FrameQLのスキーマ FCOUNT いくつかの例  クエリ実行の概要 aggregationの最適化  サンプリングについて補足 Control Variateについて補足 Optim">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BlazeItの論文">
-<meta name="twitter:description" content="参考 論文の概要 動画の活用への期待が高まっている？ 課題感 BlazeItの構成 ユースケース システム概要 設定 フィルタ 特化NN フィルタのブートストラップ 現時点での制約  FrameQL FrameQLのスキーマ FCOUNT いくつかの例  クエリ実行の概要 aggregationの最適化 サンプリングについて補足 Control Variateについて補足 Optimizin">
+<meta name="twitter:description" content="参考 論文の概要  動画の活用への期待が高まっている？ 課題感 BlazeItの構成 ユースケース システム概要  設定 フィルタ 特化NN フィルタのブートストラップ 現時点での制約  FrameQL  FrameQLのスキーマ FCOUNT いくつかの例  クエリ実行の概要 aggregationの最適化  サンプリングについて補足 Control Variateについて補足 Optim">
     
 
     
@@ -251,40 +251,47 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#論文の概要">論文の概要</a><ul>
-<li><a href="#動画の活用への期待が高まっている">動画の活用への期待が高まっている？</a></li>
-<li><a href="#課題感">課題感</a></li>
-<li><a href="#blazeitの構成">BlazeItの構成</a></li>
-<li><a href="#ユースケース">ユースケース</a></li>
-<li><a href="#システム概要">システム概要</a><ul>
-<li><a href="#設定">設定</a></li>
-<li><a href="#フィルタ">フィルタ</a></li>
-<li><a href="#特化nn">特化NN</a></li>
-<li><a href="#フィルタのブートストラップ">フィルタのブートストラップ</a></li>
-<li><a href="#現時点での制約">現時点での制約</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#論文の概要" id="toc-論文の概要">論文の概要</a>
+<ul>
+<li><a href="#動画の活用への期待が高まっている" id="toc-動画の活用への期待が高まっている">動画の活用への期待が高まっている？</a></li>
+<li><a href="#課題感" id="toc-課題感">課題感</a></li>
+<li><a href="#blazeitの構成" id="toc-blazeitの構成">BlazeItの構成</a></li>
+<li><a href="#ユースケース" id="toc-ユースケース">ユースケース</a></li>
+<li><a href="#システム概要" id="toc-システム概要">システム概要</a>
+<ul>
+<li><a href="#設定" id="toc-設定">設定</a></li>
+<li><a href="#フィルタ" id="toc-フィルタ">フィルタ</a></li>
+<li><a href="#特化nn" id="toc-特化nn">特化NN</a></li>
+<li><a href="#フィルタのブートストラップ" id="toc-フィルタのブートストラップ">フィルタのブートストラップ</a></li>
+<li><a href="#現時点での制約" id="toc-現時点での制約">現時点での制約</a></li>
 </ul></li>
-<li><a href="#frameql">FrameQL</a><ul>
-<li><a href="#frameqlのスキーマ">FrameQLのスキーマ</a></li>
-<li><a href="#fcount">FCOUNT</a></li>
-<li><a href="#いくつかの例">いくつかの例</a></li>
+<li><a href="#frameql" id="toc-frameql">FrameQL</a>
+<ul>
+<li><a href="#frameqlのスキーマ" id="toc-frameqlのスキーマ">FrameQLのスキーマ</a></li>
+<li><a href="#fcount" id="toc-fcount">FCOUNT</a></li>
+<li><a href="#いくつかの例" id="toc-いくつかの例">いくつかの例</a></li>
 </ul></li>
-<li><a href="#クエリ実行の概要">クエリ実行の概要</a></li>
-<li><a href="#aggregationの最適化">aggregationの最適化</a><ul>
-<li><a href="#サンプリングについて補足">サンプリングについて補足</a></li>
-<li><a href="#control-variateについて補足">Control Variateについて補足</a></li>
-<li><a href="#optimizing-scrubbing-queriesについての補足">Optimizing Scrubbing Queriesについての補足</a></li>
-<li><a href="#コンテントベースのselection">コンテントベースのSelection</a></li>
+<li><a href="#クエリ実行の概要" id="toc-クエリ実行の概要">クエリ実行の概要</a></li>
+<li><a href="#aggregationの最適化" id="toc-aggregationの最適化">aggregationの最適化</a>
+<ul>
+<li><a href="#サンプリングについて補足" id="toc-サンプリングについて補足">サンプリングについて補足</a></li>
+<li><a href="#control-variateについて補足" id="toc-control-variateについて補足">Control
+Variateについて補足</a></li>
+<li><a href="#optimizing-scrubbing-queriesについての補足" id="toc-optimizing-scrubbing-queriesについての補足">Optimizing Scrubbing
+Queriesについての補足</a></li>
+<li><a href="#コンテントベースのselection" id="toc-コンテントベースのselection">コンテントベースのSelection</a></li>
 </ul></li>
-<li><a href="#実装">実装</a></li>
-<li><a href="#その他調べておきたいこと">その他調べておきたいこと</a></li>
+<li><a href="#実装" id="toc-実装">実装</a></li>
+<li><a href="#その他調べておきたいこと" id="toc-その他調べておきたいこと">その他調べておきたいこと</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
 <li><a href="https://arxiv.org/abs/1805.01046" target="_blank" rel="noopener">論文</a></li>
-<li><a href="http://blog.s21g.com/articles/672" target="_blank" rel="noopener">Control Variateについての解説記事</a></li>
+<li><a href="http://blog.s21g.com/articles/672" target="_blank" rel="noopener">Control
+Variateについての解説記事</a></li>
 <li><a href="https://github.com/stanford-futuredata/blazeit" target="_blank" rel="noopener">GitHub</a></li>
 </ul>
 <h1><span id="論文の概要">論文の概要</span></h1>
@@ -303,9 +310,15 @@ ga('send', 'pageview');
 <p>これらを人手で確認するのは費用対効果が悪い。</p>
 <p>既存手法としては、物体検知手法が挙げられる。</p>
 <h2><span id="課題感">課題感</span></h2>
-<p>深層学習を使ったビジュアルデータの処理において、 GPUを使ったとしても高いfpsでの実時間処理が難しい。 state-of-artな物体検知手法Mask R-CNNですら、3fpsである。</p>
-<p>またそれらの処理を実装するときには低レベルのライブラリ（例：OpenCV、Caffe2、Detectron）を使って 複雑な実装を施さないといけない。</p>
-<p>なお、ビデオ処理の最適化の既存の研究はあるが、 それらは単一の機能を最適化するものである。 BlazeItは、Declarativeなクエリ言語を使って処理を記述し、さらに 最適化された処理のパイプラインを生成する。</p>
+<p>深層学習を使ったビジュアルデータの処理において、
+GPUを使ったとしても高いfpsでの実時間処理が難しい。
+state-of-artな物体検知手法Mask R-CNNですら、3fpsである。</p>
+<p>またそれらの処理を実装するときには低レベルのライブラリ（例：OpenCV、Caffe2、Detectron）を使って
+複雑な実装を施さないといけない。</p>
+<p>なお、ビデオ処理の最適化の既存の研究はあるが、
+それらは単一の機能を最適化するものである。
+BlazeItは、Declarativeなクエリ言語を使って処理を記述し、さらに
+最適化された処理のパイプラインを生成する。</p>
 <h2><span id="blazeitの構成">BlazeItの構成</span></h2>
 <ul>
 <li>FrameQL</li>
@@ -319,13 +332,15 @@ ga('send', 'pageview');
 </ul></li>
 <li>Scrubbing
 <ul>
-<li>稀に登場する物体を効率的に検知するため、 特化したNNのconfidence scoreを使う。</li>
+<li>稀に登場する物体を効率的に検知するため、 特化したNNのconfidence
+scoreを使う。</li>
 <li>サンプリングにバイアスをかける</li>
 </ul></li>
 <li>Selection
 <ul>
 <li>クエリの内容に応じていくつかのフィルタリングを組み合わせる</li>
-<li>NoScopeラベルベース、コンテンツベース、スキップ（サブサンプリング）、 クロッピング</li>
+<li>NoScopeラベルベース、コンテンツベース、スキップ（サブサンプリング）、
+クロッピング</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -336,7 +351,8 @@ ga('send', 'pageview');
 <li>探す: 動画の中で鳥が沢山飛んでいる瞬間を探す、など</li>
 </ul>
 <p>特に動画が多く、全部に対して物体検知を行うのは非現実的なケースが適切。</p>
-<p>ただし一部のデータに関しては、学習データとしてラベル付けされていることを前提とする。 ★重要</p>
+<p>ただし一部のデータに関しては、学習データとしてラベル付けされていることを前提とする。
+★重要</p>
 <p>具体例:</p>
 <ul>
 <li>都市計画
@@ -366,11 +382,17 @@ ga('send', 'pageview');
 <li>フレーム跨りの物体検知</li>
 <li>UDF</li>
 </ul>
-<p>例えばフレーム跨りで物体を検知するときに、車のナンバープレートを使う、など 独自のロジックの差し込みが可能。</p>
+<p>例えばフレーム跨りで物体を検知するときに、車のナンバープレートを使う、など
+独自のロジックの差し込みが可能。</p>
 <h3><span id="フィルタ">フィルタ</span></h3>
-<p>BlazeItのフィルタは確率的動作。 特化されたNNは、すべてのフレームにおいて精度が高いわけではない。 そこで、オプティマイザはエラーレートを参考にしつつプランを立てる。</p>
+<p>BlazeItのフィルタは確率的動作。
+特化されたNNは、すべてのフレームにおいて精度が高いわけではない。
+そこで、オプティマイザはエラーレートを参考にしつつプランを立てる。</p>
 <h3><span id="特化nn">特化NN</span></h3>
-<p>大きなNNの代わりに用いることができる単純化されたNN。 高速な計算が特徴。 既存研究ではバイナリ検知が主だったが、BlazeItの研究では カウントや多クラス分類に発展させた。</p>
+<p>大きなNNの代わりに用いることができる単純化されたNN。
+高速な計算が特徴。
+既存研究ではバイナリ検知が主だったが、BlazeItの研究では
+カウントや多クラス分類に発展させた。</p>
 <h3><span id="フィルタのブートストラップ">フィルタのブートストラップ</span></h3>
 <p>少量のラベル付け済みデータを用いる。</p>
 <h3><span id="現時点での制約">現時点での制約</span></h3>
@@ -380,8 +402,12 @@ ga('send', 'pageview');
 <li>物体検知が物体検知手法に依存：もし特別なことをさせたいならUDFを使用</li>
 </ul>
 <h2><span id="frameql">FrameQL</span></h2>
-<p>ビデオを関係とみなし、selection、projection、aggregation（など関係に対するオペレーション）を可能とする。 テーブルのようなスキーマを提供することで、背景となる深層学習等の技術の専門家である必要なく、SQLが分かれば処理を記述可能とする。 また物体検知やフレーム間でのトラッキングロジックは、ユーザが独自のものを指定可能。 BlazeItはそれに応じて、スキーマを選択する。</p>
-<p>シンタックスシュガーがあるが、それはBlinkDBと同じようなもののようだ。 ※BlinkDB由来、ということでUCBの流れを改めて感じる…</p>
+<p>ビデオを関係とみなし、selection、projection、aggregation（など関係に対するオペレーション）を可能とする。
+テーブルのようなスキーマを提供することで、背景となる深層学習等の技術の専門家である必要なく、SQLが分かれば処理を記述可能とする。
+また物体検知やフレーム間でのトラッキングロジックは、ユーザが独自のものを指定可能。
+BlazeItはそれに応じて、スキーマを選択する。</p>
+<p>シンタックスシュガーがあるが、それはBlinkDBと同じようなもののようだ。
+※BlinkDB由来、ということでUCBの流れを改めて感じる…</p>
 <h3><span id="frameqlのスキーマ">FrameQLのスキーマ</span></h3>
 <ul>
 <li>timestamp: オブジェクトのタイムスタンプ</li>
@@ -396,7 +422,8 @@ ga('send', 'pageview');
 <h3><span id="いくつかの例">いくつかの例</span></h3>
 <p>論文上はいくつかのFrameQLの例が載っている。</p>
 <h2><span id="クエリ実行の概要">クエリ実行の概要</span></h2>
-<p>BlazeItにはFrameQLに基づいて処理を実行する際に最適化が行われる。 例えば、物体検知は計算コストが高いので、できるだけ減らそうとする。</p>
+<p>BlazeItにはFrameQLに基づいて処理を実行する際に最適化が行われる。
+例えば、物体検知は計算コストが高いので、できるだけ減らそうとする。</p>
 <p>aggregation、scrubbing、content-based selectionに関する最適化。</p>
 <h2><span id="aggregationの最適化">aggregationの最適化</span></h2>
 <p>最適化の方向性は以下の3点</p>
@@ -406,19 +433,29 @@ ga('send', 'pageview');
 <li>特化NNを用いたControl Variate</li>
 </ul>
 <p>BlazeItは最初に最適化の種類を特定する。</p>
-<p>まず学習データが十分にあるかどうか。もしなければAQPを用いる。 またアダプティブなサンプリング手法も用いる。（例: オンラインアグリゲーション、BlinkDB）</p>
+<p>まず学習データが十分にあるかどうか。もしなければAQPを用いる。
+またアダプティブなサンプリング手法も用いる。（例:
+オンラインアグリゲーション、BlinkDB）</p>
 <p>十分にデータがあれば特化NNを用いる。</p>
 <h3><span id="サンプリングについて補足">サンプリングについて補足</span></h3>
-<p>所定の（詳しくは論文参照）サンプル数から始め、 所定の基準に達するまでサンプル数を増やしていく。</p>
+<p>所定の（詳しくは論文参照）サンプル数から始め、
+所定の基準に達するまでサンプル数を増やしていく。</p>
 <h3><span id="control-variateについて補足">Control Variateについて補足</span></h3>
-<p>Control Variateについては、 <a href="http://blog.s21g.com/articles/672" target="_blank" rel="noopener">Control Variateについての解説記事</a> などを参照。</p>
-<h3><span id="optimizing-scrubbing-queriesについての補足">Optimizing Scrubbing Queriesについての補足</span></h3>
-<p>分析者はレアなシーンこそ検索したくなるものだが、 そうするとすべてのフレームに対し、物体検知をしないといけない。（そしてそれは遅い）</p>
+<p>Control Variateについては、 <a href="http://blog.s21g.com/articles/672" target="_blank" rel="noopener">Control
+Variateについての解説記事</a> などを参照。</p>
+<h3><span id="optimizing-scrubbingqueriesについての補足">Optimizing Scrubbing
+Queriesについての補足</span></h3>
+<p>分析者はレアなシーンこそ検索したくなるものだが、
+そうするとすべてのフレームに対し、物体検知をしないといけない。（そしてそれは遅い）</p>
 <p>「レアイベントシミュレーション」と特化NNを組み合わせる。</p>
-<p>複数の対象（例：バスと車）を検知する特化NNを <em>それぞれ</em> 用いる。 もし「バス1台、車3台」のような条件の時にはアンドをとって用いる。</p>
+<p>複数の対象（例：バスと車）を検知する特化NNを <em>それぞれ</em>
+用いる。
+もし「バス1台、車3台」のような条件の時にはアンドをとって用いる。</p>
 <h3><span id="コンテントベースのselection">コンテントベースのSelection</span></h3>
-<p>フィルタを使って検知処理を動かす前にフィルタする。 ラベルベース、コンテントベース、テンポラル、スペーシャル。</p>
-<p>BlazeItはクエリからどのフィルタを使うべきかを推測する。 またユーザの期待するフレーム数に応じて、サンプリングレートを変える。</p>
+<p>フィルタを使って検知処理を動かす前にフィルタする。
+ラベルベース、コンテントベース、テンポラル、スペーシャル。</p>
+<p>BlazeItはクエリからどのフィルタを使うべきかを推測する。
+またユーザの期待するフレーム数に応じて、サンプリングレートを変える。</p>
 <h2><span id="実装">実装</span></h2>
 <p>既存のプロダクトを活用して作られている箇所とスクラッチで実装した箇所があるようだ。</p>
 <ul>
@@ -446,7 +483,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/06/Paper-of-Blazelt/" data-id="cl2nztnni00be5xqikqis8mlg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/06/Paper-of-Blazelt/" data-id="cl2o9pbh2015718rz6bnec9rw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -697,5 +734,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

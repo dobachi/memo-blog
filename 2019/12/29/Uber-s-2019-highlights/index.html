@@ -5,18 +5,18 @@
     
     <title>Uber&#39;s 2019 highlights | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ Ludwig AresDB QUIC導入 Kotlinの性能調査 グラフ処理と機械学習を用いたUber Eatsの改善 Uber’s Data Platform in 2019: Transforming Information to Intelligence    参考  Year in Review: 2019 Highlights from the Uber Enginee">
+    <meta name="description" content="参考 メモ  Ludwig AresDB QUIC導入 Kotlinの性能調査 グラフ処理と機械学習を用いたUber Eatsの改善 Uber’s Data Platform in 2019: Transforming Information to Intelligence    参考  Year in Review: 2019 Highlights from the Uber Engine">
 <meta name="keywords" content="Uber">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Uber&#39;s 2019 highlights">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/12/29/Uber-s-2019-highlights/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ Ludwig AresDB QUIC導入 Kotlinの性能調査 グラフ処理と機械学習を用いたUber Eatsの改善 Uber’s Data Platform in 2019: Transforming Information to Intelligence    参考  Year in Review: 2019 Highlights from the Uber Enginee">
+<meta property="og:description" content="参考 メモ  Ludwig AresDB QUIC導入 Kotlinの性能調査 グラフ処理と機械学習を用いたUber Eatsの改善 Uber’s Data Platform in 2019: Transforming Information to Intelligence    参考  Year in Review: 2019 Highlights from the Uber Engine">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Uber&#39;s 2019 highlights">
-<meta name="twitter:description" content="参考 メモ Ludwig AresDB QUIC導入 Kotlinの性能調査 グラフ処理と機械学習を用いたUber Eatsの改善 Uber’s Data Platform in 2019: Transforming Information to Intelligence    参考  Year in Review: 2019 Highlights from the Uber Enginee">
+<meta name="twitter:description" content="参考 メモ  Ludwig AresDB QUIC導入 Kotlinの性能調査 グラフ処理と機械学習を用いたUber Eatsの改善 Uber’s Data Platform in 2019: Transforming Information to Intelligence    参考  Year in Review: 2019 Highlights from the Uber Engine">
     
 
     
@@ -251,47 +251,62 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#ludwig">Ludwig</a></li>
-<li><a href="#aresdb">AresDB</a></li>
-<li><a href="#quic導入">QUIC導入</a></li>
-<li><a href="#kotlinの性能調査">Kotlinの性能調査</a></li>
-<li><a href="#グラフ処理と機械学習を用いたuber-eatsの改善">グラフ処理と機械学習を用いたUber Eatsの改善</a></li>
-<li><a href="#ubers-data-platform-in-2019-transforming-information-to-intelligence">Uber’s Data Platform in 2019: Transforming Information to Intelligence</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#ludwig" id="toc-ludwig">Ludwig</a></li>
+<li><a href="#aresdb" id="toc-aresdb">AresDB</a></li>
+<li><a href="#quic導入" id="toc-quic導入">QUIC導入</a></li>
+<li><a href="#kotlinの性能調査" id="toc-kotlinの性能調査">Kotlinの性能調査</a></li>
+<li><a href="#グラフ処理と機械学習を用いたuber-eatsの改善" id="toc-グラフ処理と機械学習を用いたuber-eatsの改善">グラフ処理と機械学習を用いたUber
+Eatsの改善</a></li>
+<li><a href="#ubers-data-platform-in-2019-transforming-information-to-intelligence" id="toc-ubers-data-platform-in-2019-transforming-information-to-intelligence">Uber’s
+Data Platform in 2019: Transforming Information to Intelligence</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://eng.uber.com/2019-highlights/" target="_blank" rel="noopener">Year in Review: 2019 Highlights from the Uber Engineering Blog</a></li>
-<li><a href="https://eng.uber.com/introducing-ludwig/" target="_blank" rel="noopener">Introducing Ludwig, a Code-Free Deep Learning Toolbox</a></li>
-<li><a href="https://eng.uber.com/uber-data-platform-2019/" target="_blank" rel="noopener">Uber’s Data Platform in 2019 Transforming Information to Intelligence</a></li>
+<li><a href="https://eng.uber.com/2019-highlights/" target="_blank" rel="noopener">Year in Review: 2019
+Highlights from the Uber Engineering Blog</a></li>
+<li><a href="https://eng.uber.com/introducing-ludwig/" target="_blank" rel="noopener">Introducing
+Ludwig, a Code-Free Deep Learning Toolbox</a></li>
+<li><a href="https://eng.uber.com/uber-data-platform-2019/" target="_blank" rel="noopener">Uber’s Data
+Platform in 2019 Transforming Information to Intelligence</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="ludwig">Ludwig</span></h2>
 <p>モデル開発と比較を単純にするために作られたソフトウェア。</p>
-<p>詳しくは、 <a href="https://eng.uber.com/introducing-ludwig/" target="_blank" rel="noopener">Introducing Ludwig, a Code-Free Deep Learning Toolbox</a> を参照。</p>
+<p>詳しくは、 <a href="https://eng.uber.com/introducing-ludwig/" target="_blank" rel="noopener">Introducing Ludwig, a
+Code-Free Deep Learning Toolbox</a> を参照。</p>
 <h2><span id="aresdb">AresDB</span></h2>
 <p>GPUを活用した処理エンジン。</p>
 <h2><span id="quic導入">QUIC導入</span></h2>
 <p>TCPとHTTP/2の置き換え。</p>
 <h2><span id="kotlinの性能調査">Kotlinの性能調査</span></h2>
 <p>Javaとの比較など。かなり細かく調査したようだ（まだ読んでいない）</p>
-<h2><span id="グラフ処理と機械学習を用いたuber-eatsの改善">グラフ処理と機械学習を用いたUber Eatsの改善</span></h2>
-<p>グラフ構造に基づいた機械学習により、 レコメンデーションの効果を向上させる取り組みについて。</p>
-<h2><span id="ubers-data-platform-in-2019-transforming-information-to-intelligence">Uber’s Data Platform in 2019: Transforming Information to Intelligence</span></h2>
-<p><a href="https://eng.uber.com/uber-data-platform-2019/" target="_blank" rel="noopener">Uber’s Data Platform in 2019 Transforming Information to Intelligence</a></p>
+<h2><span id="グラフ処理と機械学習を用いたubereatsの改善">グラフ処理と機械学習を用いたUber
+Eatsの改善</span></h2>
+<p>グラフ構造に基づいた機械学習により、
+レコメンデーションの効果を向上させる取り組みについて。</p>
+<h2><span id="ubersdata-platform-in-2019-transforming-information-to-intelligence">Uber’s
+Data Platform in 2019: Transforming Information to Intelligence</span></h2>
+<p><a href="https://eng.uber.com/uber-data-platform-2019/" target="_blank" rel="noopener">Uber’s Data
+Platform in 2019 Transforming Information to Intelligence</a></p>
 <p>UberでもData Platformという言い方をするようだ。</p>
-<p>データの用途は、スクーターの位置情報や店舗の最新メニューをトラックするだけではない。 トレンドを把握することなどにも用いられる。</p>
+<p>データの用途は、スクーターの位置情報や店舗の最新メニューをトラックするだけではない。
+トレンドを把握することなどにも用いられる。</p>
 <p>データの鮮度の品質は大事。</p>
 <p>リアルタイムの処理のニーズ・仕組み、ヒストリカルなデータの処理のニーズ・仕組み。両方ある。</p>
 <p>補足）それぞれがあることを前提とした最適化を施すことが前提となっているようだ。</p>
-<p>データがどこから来たのかをトラックする。 Uberの内部プロダクト uLineageにて実現。</p>
-<p>Apache HBaseをグローバルインデックスとして利用。 これにより、高いスケーラビリティ、強い一貫性、水平方向へのスケーラビリティを獲得する。</p>
+<p>データがどこから来たのかをトラックする。 Uberの内部プロダクト
+uLineageにて実現。</p>
+<p>Apache HBaseをグローバルインデックスとして利用。
+これにより、高いスケーラビリティ、強い一貫性、水平方向へのスケーラビリティを獲得する。</p>
 <p>DBEventsというプロダクトで、CDCを実現する。</p>
 <p>トラブルシュートとプロアクティブな防止。</p>
-<p>もしリアルタイムにデータ分析できれば、例えば利用者にドライバ替わり当たらず一定時間を過ぎてしまったケースを発見し、 オペレーションチームが助けられるかもしれない。</p>
+<p>もしリアルタイムにデータ分析できれば、例えば利用者にドライバ替わり当たらず一定時間を過ぎてしまったケースを発見し、
+オペレーションチームが助けられるかもしれない。</p>
 <p>AresDB、Apache Pinotなど。★要確認</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -304,7 +319,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/12/29/Uber-s-2019-highlights/" data-id="cl2nztnou00f85xqiamitt3fb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/12/29/Uber-s-2019-highlights/" data-id="cl2o9pb8e00au18rzgvptzav5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -555,5 +570,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

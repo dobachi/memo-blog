@@ -5,13 +5,13 @@
     
     <title>Pinot: Enabling Real-time Analytics Applications | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ オンライン分析のアーキテクチャ ユースケース ワークフロー 分散処理とIngestion 分散処理とクエリルーティング リアルタイムサーバとオフラインサーバ  アーキテクチャの特徴 インデックス（Cube）の特徴  性能特性 Druidとの簡単な比較  Star-Tree Indexについて    参考  Pinot Enabling Real-time Analytics Ap">
+    <meta name="description" content="参考 メモ  オンライン分析のアーキテクチャ ユースケース ワークフロー  分散処理とIngestion 分散処理とクエリルーティング リアルタイムサーバとオフラインサーバ  アーキテクチャの特徴  インデックス（Cube）の特徴  性能特性  Druidとの簡単な比較  Star-Tree Indexについて    参考  Pinot Enabling Real-time Analytic">
 <meta name="keywords" content="Pinot,LinkedIn,OLAP,Query Engine,Druid">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pinot: Enabling Real-time Analytics Applications">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/01/01/Pinot-Enabling-Real-time-Analytics-Applications/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ オンライン分析のアーキテクチャ ユースケース ワークフロー 分散処理とIngestion 分散処理とクエリルーティング リアルタイムサーバとオフラインサーバ  アーキテクチャの特徴 インデックス（Cube）の特徴  性能特性 Druidとの簡単な比較  Star-Tree Indexについて    参考  Pinot Enabling Real-time Analytics Ap">
+<meta property="og:description" content="参考 メモ  オンライン分析のアーキテクチャ ユースケース ワークフロー  分散処理とIngestion 分散処理とクエリルーティング リアルタイムサーバとオフラインサーバ  アーキテクチャの特徴  インデックス（Cube）の特徴  性能特性  Druidとの簡単な比較  Star-Tree Indexについて    参考  Pinot Enabling Real-time Analytic">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/knsEuAFXXibxOWVc-F9493.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/knsEuAFXXibxOWVc-06740.png">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/knsEuAFXXibxOWVc-C0381.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/knsEuAFXXibxOWVc-3ACC9.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/knsEuAFXXibxOWVc-FBA32.png">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pinot: Enabling Real-time Analytics Applications">
-<meta name="twitter:description" content="参考 メモ オンライン分析のアーキテクチャ ユースケース ワークフロー 分散処理とIngestion 分散処理とクエリルーティング リアルタイムサーバとオフラインサーバ  アーキテクチャの特徴 インデックス（Cube）の特徴  性能特性 Druidとの簡単な比較  Star-Tree Indexについて    参考  Pinot Enabling Real-time Analytics Ap">
+<meta name="twitter:description" content="参考 メモ  オンライン分析のアーキテクチャ ユースケース ワークフロー  分散処理とIngestion 分散処理とクエリルーティング リアルタイムサーバとオフラインサーバ  アーキテクチャの特徴  インデックス（Cube）の特徴  性能特性  Druidとの簡単な比較  Star-Tree Indexについて    参考  Pinot Enabling Real-time Analytic">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/knsEuAFXXibxOWVc-F9493.png">
     
 
@@ -262,29 +262,35 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#オンライン分析のアーキテクチャ">オンライン分析のアーキテクチャ</a></li>
-<li><a href="#ユースケース">ユースケース</a></li>
-<li><a href="#ワークフロー">ワークフロー</a><ul>
-<li><a href="#分散処理とingestion">分散処理とIngestion</a></li>
-<li><a href="#分散処理とクエリルーティング">分散処理とクエリルーティング</a></li>
-<li><a href="#リアルタイムサーバとオフラインサーバ">リアルタイムサーバとオフラインサーバ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#オンライン分析のアーキテクチャ" id="toc-オンライン分析のアーキテクチャ">オンライン分析のアーキテクチャ</a></li>
+<li><a href="#ユースケース" id="toc-ユースケース">ユースケース</a></li>
+<li><a href="#ワークフロー" id="toc-ワークフロー">ワークフロー</a>
+<ul>
+<li><a href="#分散処理とingestion" id="toc-分散処理とingestion">分散処理とIngestion</a></li>
+<li><a href="#分散処理とクエリルーティング" id="toc-分散処理とクエリルーティング">分散処理とクエリルーティング</a></li>
+<li><a href="#リアルタイムサーバとオフラインサーバ" id="toc-リアルタイムサーバとオフラインサーバ">リアルタイムサーバとオフラインサーバ</a></li>
 </ul></li>
-<li><a href="#アーキテクチャの特徴">アーキテクチャの特徴</a><ul>
-<li><a href="#インデックスcubeの特徴">インデックス（Cube）の特徴</a></li>
+<li><a href="#アーキテクチャの特徴" id="toc-アーキテクチャの特徴">アーキテクチャの特徴</a>
+<ul>
+<li><a href="#インデックスcubeの特徴" id="toc-インデックスcubeの特徴">インデックス（Cube）の特徴</a></li>
 </ul></li>
-<li><a href="#性能特性">性能特性</a><ul>
-<li><a href="#druidとの簡単な比較">Druidとの簡単な比較</a></li>
+<li><a href="#性能特性" id="toc-性能特性">性能特性</a>
+<ul>
+<li><a href="#druidとの簡単な比較" id="toc-druidとの簡単な比較">Druidとの簡単な比較</a></li>
 </ul></li>
-<li><a href="#star-tree-indexについて">Star-Tree Indexについて</a></li>
+<li><a href="#star-tree-indexについて" id="toc-star-tree-indexについて">Star-Tree Indexについて</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://www.slideshare.net/seunghyunlee1460/pinot-enabling-realtime-analytics-applications-linkedins-scale" target="_blank" rel="noopener">Pinot Enabling Real-time Analytics Applications atLinkedIn's Scale</a></li>
-<li><a href="https://engineering.linkedin.com/blog/2019/06/star-tree-index--powering-fast-aggregations-on-pinot" target="_blank" rel="noopener">Star-Tree Index Powering Fast Aggregations on Pinot</a></li>
+<li><a href="https://www.slideshare.net/seunghyunlee1460/pinot-enabling-realtime-analytics-applications-linkedins-scale" target="_blank" rel="noopener">Pinot
+Enabling Real-time Analytics Applications atLinkedIn's Scale</a></li>
+<li><a href="https://engineering.linkedin.com/blog/2019/06/star-tree-index--powering-fast-aggregations-on-pinot" target="_blank" rel="noopener">Star-Tree
+Index Powering Fast Aggregations on Pinot</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="オンライン分析のアーキテクチャ">オンライン分析のアーキテクチャ</span></h2>
@@ -306,10 +312,12 @@ ga('send', 'pageview');
 </ul>
 <p>レイテンシと柔軟性のトレードオフの関係：</p>
 <figure>
-<img src="/memo-blog/images/knsEuAFXXibxOWVc-F9493.png" alt=""><figcaption>Latency vs. Flexibility</figcaption>
+<img src="/memo-blog/images/knsEuAFXXibxOWVc-F9493.png" alt="Latency vs. Flexibility">
+<figcaption aria-hidden="true">Latency vs. Flexibility</figcaption>
 </figure>
 <figure>
-<img src="/memo-blog/images/knsEuAFXXibxOWVc-06740.png" alt=""><figcaption>「Who View」のアーキテクチャ</figcaption>
+<img src="/memo-blog/images/knsEuAFXXibxOWVc-06740.png" alt="「Who View」のアーキテクチャ">
+<figcaption aria-hidden="true">「Who View」のアーキテクチャ</figcaption>
 </figure>
 <h2><span id="ユースケース">ユースケース</span></h2>
 <ul>
@@ -332,63 +340,85 @@ ga('send', 'pageview');
 <li>Weibo</li>
 <li>factual</li>
 </ul>
-<p>あたりが利用しているようだ。 Uberは、自身の技術ブログでも触れていた。</p>
+<p>あたりが利用しているようだ。
+Uberは、自身の技術ブログでも触れていた。</p>
 <h2><span id="ワークフロー">ワークフロー</span></h2>
 <figure>
-<img src="/memo-blog/images/knsEuAFXXibxOWVc-60564.png" alt=""><figcaption>ワークフロー概要</figcaption>
+<img src="/memo-blog/images/knsEuAFXXibxOWVc-60564.png" alt="ワークフロー概要">
+<figcaption aria-hidden="true">ワークフロー概要</figcaption>
 </figure>
-<p>Pinotは、原則としてPre Aggregation、Pre Cubeを前提とする仕組みなので、 スキーマの定義が非常に重要。</p>
+<p>Pinotは、原則としてPre Aggregation、Pre
+Cubeを前提とする仕組みなので、 スキーマの定義が非常に重要。</p>
 <h3><span id="分散処理とingestion">分散処理とIngestion</span></h3>
-<p>またバッチとストリーム両方に対応しているので、 それぞれデータ入力（Ingestion）を定義する。</p>
+<p>またバッチとストリーム両方に対応しているので、
+それぞれデータ入力（Ingestion）を定義する。</p>
 <p>データはセグメントに分けられ、サーバに分配される。</p>
 <figure>
-<img src="/memo-blog/images/knsEuAFXXibxOWVc-87FDA.png" alt=""><figcaption>Segment Assignment</figcaption>
+<img src="/memo-blog/images/knsEuAFXXibxOWVc-87FDA.png" alt="Segment Assignment">
+<figcaption aria-hidden="true">Segment Assignment</figcaption>
 </figure>
 <h3><span id="分散処理とクエリルーティング">分散処理とクエリルーティング</span></h3>
 <p>セグメントに基づき、Brokerによりルーティングされる。</p>
 <h3><span id="リアルタイムサーバとオフラインサーバ">リアルタイムサーバとオフラインサーバ</span></h3>
-<p>ストリームから取り込んだデータとバッチで取り込んだデータは、 共通のスキーマを用いることになる。</p>
+<p>ストリームから取り込んだデータとバッチで取り込んだデータは、
+共通のスキーマを用いることになる。</p>
 <p>したがって、統一的にクエリできる？</p>
 <h2><span id="アーキテクチャの特徴">アーキテクチャの特徴</span></h2>
 <h3><span id="インデックスcubeの特徴">インデックス（Cube）の特徴</span></h3>
 <p>Scan、Inverted Index、Sorted Index、Star-Tree Indexを併用可能。</p>
 <figure>
-<img src="/memo-blog/images/knsEuAFXXibxOWVc-BC4AB.png" alt=""><figcaption>データ処理上の工夫</figcaption>
+<img src="/memo-blog/images/knsEuAFXXibxOWVc-BC4AB.png" alt="データ処理上の工夫">
+<figcaption aria-hidden="true">データ処理上の工夫</figcaption>
 </figure>
-<p>比較対象として、Druidがよく挙げられているが、Sorted Index、Star-Tree Indexがポイント。</p>
-<p>カラムナデータフォーマットを用いるのは前提。 それに加え、Dictionary Encodeing、Bit Compressionを使ってデータ構造に基づいた圧縮を採用。</p>
+<p>比較対象として、Druidがよく挙げられているが、Sorted Index、Star-Tree
+Indexがポイント。</p>
+<p>カラムナデータフォーマットを用いるのは前提。 それに加え、Dictionary
+Encodeing、Bit Compressionを使ってデータ構造に基づいた圧縮を採用。</p>
 <h4><span id="inverted-index">Inverted Index</span></h4>
 <p>転置インデックスを作っておく、という定番手法。</p>
 <h4><span id="sorted-index">Sorted Index</span></h4>
-<p>予め、Dimensionに基づいてソートしておくことで、 フィルタする際にスキャン量を減らしながら、かつデータアクセスを効率化。</p>
+<p>予め、Dimensionに基づいてソートしておくことで、
+フィルタする際にスキャン量を減らしながら、かつデータアクセスを効率化。</p>
 <figure>
-<img src="/memo-blog/images/knsEuAFXXibxOWVc-7C19E.png" alt=""><figcaption>Sroted Indexの特徴</figcaption>
+<img src="/memo-blog/images/knsEuAFXXibxOWVc-7C19E.png" alt="Sroted Indexの特徴">
+<figcaption aria-hidden="true">Sroted Indexの特徴</figcaption>
 </figure>
 <h4><span id="star-tree-index">Star-Tree Index</span></h4>
-<p>すべてをCube化するとデータ保持のスペースが大量に必要になる。 そこで部分的にCube化する。 ★要確認</p>
+<p>すべてをCube化するとデータ保持のスペースが大量に必要になる。
+そこで部分的にCube化する。 ★要確認</p>
 <figure>
-<img src="/memo-blog/images/knsEuAFXXibxOWVc-EE192.png" alt=""><figcaption>Star-Tree Indexの特徴</figcaption>
+<img src="/memo-blog/images/knsEuAFXXibxOWVc-EE192.png" alt="Star-Tree Indexの特徴">
+<figcaption aria-hidden="true">Star-Tree Indexの特徴</figcaption>
 </figure>
 <h2><span id="性能特性">性能特性</span></h2>
 <h3><span id="druidとの簡単な比較">Druidとの簡単な比較</span></h3>
 <p>Druidと簡易的に比較した結果が載っている。</p>
 <p>まずは、レイテンシの小ささが求められるインタラクティブな分析における性能特徴：</p>
 <figure>
-<img src="/memo-blog/images/knsEuAFXXibxOWVc-C0381.png" alt=""><figcaption>Druidとの簡易比較</figcaption>
+<img src="/memo-blog/images/knsEuAFXXibxOWVc-C0381.png" alt="Druidとの簡易比較">
+<figcaption aria-hidden="true">Druidとの簡易比較</figcaption>
 </figure>
-<p>ミリ秒単位での分析を取り扱うことに関してDruidと共通だが、 各種インデックスのおかげか、Druidよりもパーセンタイルベースの比較で レイテンシが小さいとされている。</p>
+<p>ミリ秒単位での分析を取り扱うことに関してDruidと共通だが、
+各種インデックスのおかげか、Druidよりもパーセンタイルベースの比較で
+レイテンシが小さいとされている。</p>
 <p>つづいて、あらかじめ定義されたクエリを大量にさばくユースケース：</p>
 <figure>
-<img src="/memo-blog/images/knsEuAFXXibxOWVc-3ACC9.png" alt=""><figcaption>Druidとの簡易比較2</figcaption>
+<img src="/memo-blog/images/knsEuAFXXibxOWVc-3ACC9.png" alt="Druidとの簡易比較2">
+<figcaption aria-hidden="true">Druidとの簡易比較2</figcaption>
 </figure>
-<p>レイテンシを小さく保ったまま、高いQPSを実現していることを 示すグラフが載っている。 この辺りは、工夫として載っていた各種インデックスを予め定義していることが強く効きそうだ。</p>
+<p>レイテンシを小さく保ったまま、高いQPSを実現していることを
+示すグラフが載っている。
+この辺りは、工夫として載っていた各種インデックスを予め定義していることが強く効きそうだ。</p>
 <p>続いて異常検知ユースケースの例：</p>
 <figure>
-<img src="/memo-blog/images/knsEuAFXXibxOWVc-FBA32.png" alt=""><figcaption>Druidとの簡易比較3</figcaption>
+<img src="/memo-blog/images/knsEuAFXXibxOWVc-FBA32.png" alt="Druidとの簡易比較3">
+<figcaption aria-hidden="true">Druidとの簡易比較3</figcaption>
 </figure>
-<p>データがSkewしていることが強調されているが、その意図はもう少し読み解く必要がありそう。 ★要確認</p>
+<p>データがSkewしていることが強調されているが、その意図はもう少し読み解く必要がありそう。
+★要確認</p>
 <h2><span id="star-tree-indexについて">Star-Tree Indexについて</span></h2>
-<p><a href="https://engineering.linkedin.com/blog/2019/06/star-tree-index--powering-fast-aggregations-on-pinot" target="_blank" rel="noopener">Star-Tree Index Powering Fast Aggregations on Pinot</a> に記載あり。</p>
+<p><a href="https://engineering.linkedin.com/blog/2019/06/star-tree-index--powering-fast-aggregations-on-pinot" target="_blank" rel="noopener">Star-Tree
+Index Powering Fast Aggregations on Pinot</a> に記載あり。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -400,7 +430,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/01/01/Pinot-Enabling-Real-time-Analytics-Applications/" data-id="cl2nztnng00b75xqiiihfnqst" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/01/01/Pinot-Enabling-Real-time-Analytics-Applications/" data-id="cl2o9pb7b007y18rzw606h1eh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -651,5 +681,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

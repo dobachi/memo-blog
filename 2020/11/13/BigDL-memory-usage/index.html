@@ -5,19 +5,19 @@
     
     <title>BigDL memory usage | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 前提 Spark起動 サンプルを動かす サンプルの中身 Trainクラス Optimizerの種類     参考  Download Issue-3070 use pre-bulid libs bigdl-SPARK_2.4 Run Examples Lenet Train LeNet Example  メモ 前提 Download によると、Sparkは2.4系まで対応している">
+    <meta name="description" content="参考 メモ  前提 Spark起動 サンプルを動かす サンプルの中身  Trainクラス Optimizerの種類     参考  Download Issue-3070 use pre-bulid libs bigdl-SPARK_2.4 Run Examples Lenet Train LeNet Example  メモ 前提 Download によると、Sparkは2.4系まで対応して">
 <meta name="keywords" content="BigDL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BigDL memory usage">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/11/13/BigDL-memory-usage/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 前提 Spark起動 サンプルを動かす サンプルの中身 Trainクラス Optimizerの種類     参考  Download Issue-3070 use pre-bulid libs bigdl-SPARK_2.4 Run Examples Lenet Train LeNet Example  メモ 前提 Download によると、Sparkは2.4系まで対応している">
+<meta property="og:description" content="参考 メモ  前提 Spark起動 サンプルを動かす サンプルの中身  Trainクラス Optimizerの種類     参考  Download Issue-3070 use pre-bulid libs bigdl-SPARK_2.4 Run Examples Lenet Train LeNet Example  メモ 前提 Download によると、Sparkは2.4系まで対応して">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/p5b0S1PrMD3x9YMp-31A2F.png">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.441Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BigDL memory usage">
-<meta name="twitter:description" content="参考 メモ 前提 Spark起動 サンプルを動かす サンプルの中身 Trainクラス Optimizerの種類     参考  Download Issue-3070 use pre-bulid libs bigdl-SPARK_2.4 Run Examples Lenet Train LeNet Example  メモ 前提 Download によると、Sparkは2.4系まで対応している">
+<meta name="twitter:description" content="参考 メモ  前提 Spark起動 サンプルを動かす サンプルの中身  Trainクラス Optimizerの種類     参考  Download Issue-3070 use pre-bulid libs bigdl-SPARK_2.4 Run Examples Lenet Train LeNet Example  メモ 前提 Download によると、Sparkは2.4系まで対応して">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/p5b0S1PrMD3x9YMp-31A2F.png">
     
 
@@ -253,14 +253,16 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#前提">前提</a></li>
-<li><a href="#spark起動">Spark起動</a></li>
-<li><a href="#サンプルを動かす">サンプルを動かす</a></li>
-<li><a href="#サンプルの中身">サンプルの中身</a><ul>
-<li><a href="#trainクラス">Trainクラス</a></li>
-<li><a href="#optimizerの種類">Optimizerの種類</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#前提" id="toc-前提">前提</a></li>
+<li><a href="#spark起動" id="toc-spark起動">Spark起動</a></li>
+<li><a href="#サンプルを動かす" id="toc-サンプルを動かす">サンプルを動かす</a></li>
+<li><a href="#サンプルの中身" id="toc-サンプルの中身">サンプルの中身</a>
+<ul>
+<li><a href="#trainクラス" id="toc-trainクラス">Trainクラス</a></li>
+<li><a href="#optimizerの種類" id="toc-optimizerの種類">Optimizerの種類</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -269,39 +271,51 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://bigdl-project.github.io/master/#release-download/" target="_blank" rel="noopener">Download</a></li>
 <li><a href="https://github.com/intel-analytics/BigDL/issues/3070" target="_blank" rel="noopener">Issue-3070</a></li>
-<li><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/install-pre-built/" target="_blank" rel="noopener">use pre-bulid libs</a></li>
+<li><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/install-pre-built/" target="_blank" rel="noopener">use
+pre-bulid libs</a></li>
 <li><a href="https://search.maven.org/artifact/com.intel.analytics.bigdl/bigdl-SPARK_2.4/0.11.1/jar" target="_blank" rel="noopener">bigdl-SPARK_2.4</a></li>
 <li><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/run/" target="_blank" rel="noopener">Run</a></li>
 <li><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/examples/" target="_blank" rel="noopener">Examples</a></li>
-<li><a href="https://github.com/intel-analytics/BigDL/blob/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet/Train.scala" target="_blank" rel="noopener">Lenet Train</a></li>
-<li><a href="https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet" target="_blank" rel="noopener">LeNet Example</a></li>
+<li><a href="https://github.com/intel-analytics/BigDL/blob/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet/Train.scala" target="_blank" rel="noopener">Lenet
+Train</a></li>
+<li><a href="https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet" target="_blank" rel="noopener">LeNet
+Example</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="前提">前提</span></h2>
-<p><a href="https://bigdl-project.github.io/master/#release-download/" target="_blank" rel="noopener">Download</a> によると、Sparkは2.4系まで対応しているようだ。 <a href="https://github.com/intel-analytics/BigDL/issues/3070" target="_blank" rel="noopener">Issue-3070</a> によると、Spark3対応も進んでいるようだ。</p>
+<p><a href="https://bigdl-project.github.io/master/#release-download/" target="_blank" rel="noopener">Download</a>
+によると、Sparkは2.4系まで対応しているようだ。 <a href="https://github.com/intel-analytics/BigDL/issues/3070" target="_blank" rel="noopener">Issue-3070</a>
+によると、Spark3対応も進んでいるようだ。</p>
 <h2><span id="spark起動">Spark起動</span></h2>
-<p><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/run/" target="_blank" rel="noopener">Run</a> で記載の通り、以下のように起動した。</p>
+<p><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/run/" target="_blank" rel="noopener">Run</a>
+で記載の通り、以下のように起動した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ export SPARK_HOME=/usr/local/spark/default</span><br><span class="line">$ export BIGDL_HOME=/usr/local/bigdl/default</span><br><span class="line">$ $&#123;BIGDL_HOME&#125;/bin/spark-shell-with-bigdl.sh --master local[*]</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; import com.intel.analytics.bigdl.utils.Engine</span><br><span class="line">scala&gt; Engine.init</span><br></pre></td></tr></table></figure>
 <p>とりあえず初期化までは動いた。</p>
 <h2><span id="サンプルを動かす">サンプルを動かす</span></h2>
-<p><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/examples/" target="_blank" rel="noopener">Examples</a> に記載のサンプルを動かす。 <a href="https://github.com/intel-analytics/BigDL/blob/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet/Train.scala" target="_blank" rel="noopener">LeNet Train</a> にあるLeNetの例が良さそう。</p>
+<p><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/examples/" target="_blank" rel="noopener">Examples</a>
+に記載のサンプルを動かす。 <a href="https://github.com/intel-analytics/BigDL/blob/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet/Train.scala" target="_blank" rel="noopener">LeNet
+Train</a> にあるLeNetの例が良さそう。</p>
 <p>MNISTの画像をダウンロードして、展開した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir ~/tmp</span><br><span class="line">$ cd ~/tmp</span><br><span class="line">$ wget http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz</span><br><span class="line">$ wget http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz</span><br><span class="line">$ wget http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz</span><br><span class="line">$ wget http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz</span><br><span class="line">$ gunzip *.gz</span><br></pre></td></tr></table></figure>
 <p>展開したディレクトリを指定しながら、LeNetの学習を実行。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ spark-submit \</span><br><span class="line">  --master local[6] \</span><br><span class="line">  --driver-class-path $&#123;BIGDL_HOME&#125;/lib/bigdl-SPARK_2.4-0.11.1-jar-with-dependencies.jar \</span><br><span class="line">  --class com.intel.analytics.bigdl.models.lenet.Train \</span><br><span class="line">  $&#123;BIGDL_HOME&#125;/lib/bigdl-SPARK_2.4-0.11.1-jar-with-dependencies.jar \</span><br><span class="line">  -f $HOME/tmp \</span><br><span class="line">  -b 12 \</span><br><span class="line">  --checkpoint ./model</span><br></pre></td></tr></table></figure>
 <p>実行中の様子は以下の通り。</p>
 <figure>
-<img src="/memo-blog/images/p5b0S1PrMD3x9YMp-31A2F.png" alt=""><figcaption>ヒストリのキャプチャ</figcaption>
+<img src="/memo-blog/images/p5b0S1PrMD3x9YMp-31A2F.png" alt="ヒストリのキャプチャ">
+<figcaption aria-hidden="true">ヒストリのキャプチャ</figcaption>
 </figure>
 <p>今回はローカルモードで実行したが、入力された学習データと同様のサイズのキャッシュがメモリ上に展開されていることがわかる。</p>
 <h2><span id="サンプルの中身">サンプルの中身</span></h2>
 <p>2020/11/15時点のmasterブランチを確認する。</p>
 <h3><span id="trainクラス">Trainクラス</span></h3>
-<p>上記サンプルで実行されているTrainを見る。 モデルを定義している箇所は以下の通り。</p>
+<p>上記サンプルで実行されているTrainを見る。
+モデルを定義している箇所は以下の通り。</p>
 <p>com/intel/analytics/bigdl/models/lenet/Train.scala:48</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> model = <span class="keyword">if</span> (param.modelSnapshot.isDefined) &#123;</span><br><span class="line">  <span class="type">Module</span>.load[<span class="type">Float</span>](param.modelSnapshot.get)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (param.graphModel) &#123;</span><br><span class="line">    <span class="type">LeNet5</span>.graph(classNum = <span class="number">10</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="type">Engine</span>.getEngineType() <span class="keyword">match</span> &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="type">MklBlas</span> =&gt; <span class="type">LeNet5</span>(<span class="number">10</span>)</span><br><span class="line">      <span class="keyword">case</span> <span class="type">MklDnn</span> =&gt; <span class="type">LeNet5</span>.dnnGraph(param.batchSize / <span class="type">Engine</span>.nodeNumber(), <span class="number">10</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Modelインスタンスは以下の通り、Optimizerオブジェクトに渡され、 データセットに合わせたOptimizerが返される。 （例：データセットが分散データセットかどうか、など）</p>
+<p>Modelインスタンスは以下の通り、Optimizerオブジェクトに渡され、
+データセットに合わせたOptimizerが返される。
+（例：データセットが分散データセットかどうか、など）</p>
 <p>com/intel/analytics/bigdl/models/lenet/Train.scala:83</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> optimizer = <span class="type">Optimizer</span>(</span><br><span class="line">  model = model,</span><br><span class="line">  dataset = trainSet,</span><br><span class="line">  criterion = criterion)</span><br></pre></td></tr></table></figure>
 <p>参考までに、Optimizerの種類と判定の処理は以下の通り。</p>
@@ -318,33 +332,59 @@ ga('send', 'pageview');
 <li>LocalOptimizer</li>
 </ul>
 <h4><span id="distrioptimizer">DistriOptimizer</span></h4>
-<p>ひとまずメモリ使用に関連する箇所ということで、入力データの準備の処理を確認する。 <code>com.intel.analytics.bigdl.optim.DistriOptimizer#optimize</code> メソッドには 以下のような箇所がある。</p>
+<p>ひとまずメモリ使用に関連する箇所ということで、入力データの準備の処理を確認する。
+<code>com.intel.analytics.bigdl.optim.DistriOptimizer#optimize</code>
+メソッドには 以下のような箇所がある。</p>
 <p>com/intel/analytics/bigdl/optim/DistriOptimizer.scala:870</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prepareInput()</span><br></pre></td></tr></table></figure>
-<p>これは <code>com.intel.analytics.bigdl.optim.DistriOptimizer#prepareInput</code> メソッドであり、 内部的に <code>com.intel.analytics.bigdl.optim.AbstractOptimizer#prepareInput</code> メソッドを呼び出し、 入力データをSparkのキャッシュに載せるように処理する。</p>
+<p>これは
+<code>com.intel.analytics.bigdl.optim.DistriOptimizer#prepareInput</code>
+メソッドであり、 内部的に
+<code>com.intel.analytics.bigdl.optim.AbstractOptimizer#prepareInput</code>
+メソッドを呼び出し、
+入力データをSparkのキャッシュに載せるように処理する。</p>
 <p>com/intel/analytics/bigdl/optim/DistriOptimizer.scala:808</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!dataset.toDistributed().isCached) &#123;</span><br><span class="line">  <span class="type">DistriOptimizer</span>.logger.info(<span class="string">"caching training rdd ..."</span>)</span><br><span class="line">  <span class="type">DistriOptimizer</span>.prepareInput(<span class="keyword">this</span>.dataset, <span class="keyword">this</span>.validationDataSet)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>キャシュに載せると箇所は以下の通り。</p>
 <p>com/intel/analytics/bigdl/optim/AbstractOptimizer.scala:279</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span>[bigdl] <span class="function"><span class="keyword">def</span> <span class="title">prepareInput</span></span>[<span class="type">T</span>: <span class="type">ClassTag</span>](dataset: <span class="type">DataSet</span>[<span class="type">MiniBatch</span>[<span class="type">T</span>]],</span><br><span class="line">  validationDataSet: <span class="type">Option</span>[<span class="type">DataSet</span>[<span class="type">MiniBatch</span>[<span class="type">T</span>]]]): <span class="type">Unit</span> = &#123;</span><br><span class="line">  dataset.asInstanceOf[<span class="type">DistributedDataSet</span>[<span class="type">MiniBatch</span>[<span class="type">T</span>]]].cache()</span><br><span class="line">  <span class="keyword">if</span> (validationDataSet.isDefined) &#123;</span><br><span class="line">    validationDataSet.get.toDistributed().cache()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上記の <code>DistributedDataSet</code> の <code>chache</code> メソッドは以下の通り。</p>
+<p>上記の <code>DistributedDataSet</code> の <code>chache</code>
+メソッドは以下の通り。</p>
 <p>com/intel/analytics/bigdl/dataset/DataSet.scala:216</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cache</span></span>(): <span class="type">Unit</span> = &#123;</span><br><span class="line">  <span class="keyword">if</span> (originRDD() != <span class="literal">null</span>) &#123;</span><br><span class="line">    originRDD().count()</span><br><span class="line">  &#125;</span><br><span class="line">  isCached = <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>originRDD</code> の戻り値に対して、<code>count</code> を読んでいる。 ここで <code>count</code> を呼ぶのは、入力データである <code>originRDD</code> の戻り値に入っているRDDをメモリ上にマテリアライズするためである。</p>
-<p><code>count</code> を呼ぶだけでマテリアライズできるのは、予め入力データを定義したときに Spark RDDの <code>cache</code> を利用してキャッシュ化することを指定されているからである。 今回の例では、Optimizerオブジェクトのapplyを利用する際に渡されるデータセット <code>trainSet</code> を 定義する際に予め <code>cache</code> が呼ばれる。</p>
+<p><code>originRDD</code> の戻り値に対して、<code>count</code>
+を読んでいる。 ここで <code>count</code> を呼ぶのは、入力データである
+<code>originRDD</code>
+の戻り値に入っているRDDをメモリ上にマテリアライズするためである。</p>
+<p><code>count</code>
+を呼ぶだけでマテリアライズできるのは、予め入力データを定義したときに
+Spark RDDの <code>cache</code>
+を利用してキャッシュ化することを指定されているからである。
+今回の例では、Optimizerオブジェクトのapplyを利用する際に渡されるデータセット
+<code>trainSet</code> を 定義する際に予め <code>cache</code>
+が呼ばれる。</p>
 <p>com/intel/analytics/bigdl/models/lenet/Train.scala:79</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> trainSet = <span class="type">DataSet</span>.array(load(trainData, trainLabel), sc) -&gt;</span><br><span class="line">  <span class="type">BytesToGreyImg</span>(<span class="number">28</span>, <span class="number">28</span>) -&gt; <span class="type">GreyImgNormalizer</span>(trainMean, trainStd) -&gt; <span class="type">GreyImgToBatch</span>(</span><br><span class="line">  param.batchSize)</span><br></pre></td></tr></table></figure>
-<p><code>trainSet</code> を定義する際、 <code>com.intel.analytics.bigdl.dataset.DataSet$#array(T[], org.apache.spark.SparkContext)</code> メソッドが 呼ばれるのだが、その中で以下のように Sparkの <code>RDD#cache</code> が呼ばれていることがわかる。</p>
+<p><code>trainSet</code> を定義する際、
+<code>com.intel.analytics.bigdl.dataset.DataSet$#array(T[], org.apache.spark.SparkContext)</code>
+メソッドが 呼ばれるのだが、その中で以下のように Sparkの
+<code>RDD#cache</code> が呼ばれていることがわかる。</p>
 <p>com/intel/analytics/bigdl/dataset/DataSet.scala:343</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">array</span></span>[<span class="type">T</span>: <span class="type">ClassTag</span>](localData: <span class="type">Array</span>[<span class="type">T</span>], sc: <span class="type">SparkContext</span>): <span class="type">DistributedDataSet</span>[<span class="type">T</span>] = &#123;</span><br><span class="line">  <span class="keyword">val</span> nodeNumber = <span class="type">Engine</span>.nodeNumber()</span><br><span class="line">  <span class="keyword">new</span> <span class="type">CachedDistriDataSet</span>[<span class="type">T</span>](</span><br><span class="line">    sc.parallelize(localData, nodeNumber)</span><br><span class="line">      <span class="comment">// Keep this line, or the array will be send to worker every time</span></span><br><span class="line">      .coalesce(nodeNumber, <span class="literal">true</span>)</span><br><span class="line">      .mapPartitions(iter =&gt; &#123;</span><br><span class="line">        <span class="type">Iterator</span>.single(iter.toArray)</span><br><span class="line">      &#125;).setName(<span class="string">"cached dataset"</span>)</span><br><span class="line">      .cache()</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>以下、一例。</p>
-<p>具体的には、Optimizerのインスタンスを生成するための <code>apply</code> メソッドはいくつかあるが、 以下のように引数にデータセットを指定する箇所がある。（再掲）</p>
+<p>具体的には、Optimizerのインスタンスを生成するための
+<code>apply</code> メソッドはいくつかあるが、
+以下のように引数にデータセットを指定する箇所がある。（再掲）</p>
 <p>com/intel/analytics/bigdl/optim/Optimizer.scala:619</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_dataset = (<span class="type">DataSet</span>.rdd(sampleRDD) -&gt;</span><br></pre></td></tr></table></figure>
-<p>ここで用いられている <code>com.intel.analytics.bigdl.dataset.DataSet#rdd</code> メソッドは以下の通り。</p>
+<p>ここで用いられている
+<code>com.intel.analytics.bigdl.dataset.DataSet#rdd</code>
+メソッドは以下の通り。</p>
 <p>com/intel/analytics/bigdl/dataset/DataSet.scala:363</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rdd</span></span>[<span class="type">T</span>: <span class="type">ClassTag</span>](data: <span class="type">RDD</span>[<span class="type">T</span>], partitionNum: <span class="type">Int</span> = <span class="type">Engine</span>.nodeNumber()</span><br><span class="line">  ): <span class="type">DistributedDataSet</span>[<span class="type">T</span>] = &#123;</span><br><span class="line">  <span class="keyword">new</span> <span class="type">CachedDistriDataSet</span>[<span class="type">T</span>](</span><br><span class="line">    data.coalesce(partitionNum, <span class="literal">true</span>)</span><br><span class="line">      .mapPartitions(iter =&gt; &#123;</span><br><span class="line">        <span class="type">Iterator</span>.single(iter.toArray)</span><br><span class="line">      &#125;).setName(<span class="string">"cached dataset"</span>)</span><br><span class="line">      .cache()</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>com.intel.analytics.bigdl.dataset.CachedDistriDataSet#CachedDistriDataSet</code> のコンストラクタ引数に、 <code>org.apache.spark.rdd.RDD#cache</code> を用いてキャッシュ化することを指定したRDDを渡していることがわかる。</p>
+<p><code>com.intel.analytics.bigdl.dataset.CachedDistriDataSet#CachedDistriDataSet</code>
+のコンストラクタ引数に、 <code>org.apache.spark.rdd.RDD#cache</code>
+を用いてキャッシュ化することを指定したRDDを渡していることがわかる。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -356,7 +396,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/11/13/BigDL-memory-usage/" data-id="cl2nztnkg00295xqisxs16p5t" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/11/13/BigDL-memory-usage/" data-id="cl2o9pbg3013k18rzcwqw9xhq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -607,5 +647,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -5,18 +5,18 @@
     
     <title>Manage the flow of hexo documentation with CircleCI | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ HexoでPandasレンダラーを使うために最新版PandocをインストールしたDockerイメージを用意 HexoをCircleCIでビルドするための設定ファイルの作成 CircleCI上でプロジェクトを作る GitHubへのPush用のSSH鍵を登録する    参考  LaTeXファイルをGithubにpushしたらCircle CIでPDF生成するようにした Hexoのレン">
+    <meta name="description" content="参考 メモ  HexoでPandasレンダラーを使うために最新版PandocをインストールしたDockerイメージを用意 HexoをCircleCIでビルドするための設定ファイルの作成 CircleCI上でプロジェクトを作る GitHubへのPush用のSSH鍵を登録する    参考  LaTeXファイルをGithubにpushしたらCircle CIでPDF生成するようにした Hexoのレ">
 <meta name="keywords" content="Hexo,CircleCI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Manage the flow of hexo documentation with CircleCI">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/08/23/Manage-the-flow-of-hexo-documentation-with-CircleCI/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ HexoでPandasレンダラーを使うために最新版PandocをインストールしたDockerイメージを用意 HexoをCircleCIでビルドするための設定ファイルの作成 CircleCI上でプロジェクトを作る GitHubへのPush用のSSH鍵を登録する    参考  LaTeXファイルをGithubにpushしたらCircle CIでPDF生成するようにした Hexoのレン">
+<meta property="og:description" content="参考 メモ  HexoでPandasレンダラーを使うために最新版PandocをインストールしたDockerイメージを用意 HexoをCircleCIでビルドするための設定ファイルの作成 CircleCI上でプロジェクトを作る GitHubへのPush用のSSH鍵を登録する    参考  LaTeXファイルをGithubにpushしたらCircle CIでPDF生成するようにした Hexoのレ">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Manage the flow of hexo documentation with CircleCI">
-<meta name="twitter:description" content="参考 メモ HexoでPandasレンダラーを使うために最新版PandocをインストールしたDockerイメージを用意 HexoをCircleCIでビルドするための設定ファイルの作成 CircleCI上でプロジェクトを作る GitHubへのPush用のSSH鍵を登録する    参考  LaTeXファイルをGithubにpushしたらCircle CIでPDF生成するようにした Hexoのレン">
+<meta name="twitter:description" content="参考 メモ  HexoでPandasレンダラーを使うために最新版PandocをインストールしたDockerイメージを用意 HexoをCircleCIでビルドするための設定ファイルの作成 CircleCI上でプロジェクトを作る GitHubへのPush用のSSH鍵を登録する    参考  LaTeXファイルをGithubにpushしたらCircle CIでPDF生成するようにした Hexoのレ">
     
 
     
@@ -251,40 +251,61 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#hexoでpandasレンダラーを使うために最新版pandocをインストールしたdockerイメージを用意">HexoでPandasレンダラーを使うために最新版PandocをインストールしたDockerイメージを用意</a></li>
-<li><a href="#hexoをcircleciでビルドするための設定ファイルの作成">HexoをCircleCIでビルドするための設定ファイルの作成</a></li>
-<li><a href="#circleci上でプロジェクトを作る">CircleCI上でプロジェクトを作る</a></li>
-<li><a href="#githubへのpush用のssh鍵を登録する">GitHubへのPush用のSSH鍵を登録する</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#hexoでpandasレンダラーを使うために最新版pandocをインストールしたdockerイメージを用意" id="toc-hexoでpandasレンダラーを使うために最新版pandocをインストールしたdockerイメージを用意">HexoでPandasレンダラーを使うために最新版PandocをインストールしたDockerイメージを用意</a></li>
+<li><a href="#hexoをcircleciでビルドするための設定ファイルの作成" id="toc-hexoをcircleciでビルドするための設定ファイルの作成">HexoをCircleCIでビルドするための設定ファイルの作成</a></li>
+<li><a href="#circleci上でプロジェクトを作る" id="toc-circleci上でプロジェクトを作る">CircleCI上でプロジェクトを作る</a></li>
+<li><a href="#githubへのpush用のssh鍵を登録する" id="toc-githubへのpush用のssh鍵を登録する">GitHubへのPush用のSSH鍵を登録する</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="http://jackale.hateblo.jp/entry/2018/01/14/000709" target="_blank" rel="noopener">LaTeXファイルをGithubにpushしたらCircle CIでPDF生成するようにした</a></li>
+<li><a href="http://jackale.hateblo.jp/entry/2018/01/14/000709" target="_blank" rel="noopener">LaTeXファイルをGithubにpushしたらCircle
+CIでPDF生成するようにした</a></li>
 <li><a href="https://qiita.com/sky_y/items/7c29909c5cffa28b23d8" target="_blank" rel="noopener">HexoのレンダリングエンジンとしてPandocを使う</a></li>
 <li><a href="https://github.com/phoenixcw/hexo-renderer-mathjax/blob/master/lib/mathjax.html#L15" target="_blank" rel="noopener">mathjax.html</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="hexoでpandasレンダラーを使うために最新版pandocをインストールしたdockerイメージを用意">HexoでPandasレンダラーを使うために最新版PandocをインストールしたDockerイメージを用意</span></h2>
-<p>ドキュメント等では、circleciのDockerイメージを使うことが記載されているが、 ここでは予め最新版Pandocをインストールしておきたかったので、circleciのDockerイメージをベースにしつつ、 インストーラをwget、dpkgでインストールしたDockerイメージを自作して利用した。</p>
+<p>ドキュメント等では、circleciのDockerイメージを使うことが記載されているが、
+ここでは予め最新版Pandocをインストールしておきたかったので、circleciのDockerイメージをベースにしつつ、
+インストーラをwget、dpkgでインストールしたDockerイメージを自作して利用した。</p>
 <p>Dockerfileは以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM circleci/node:8.10.0</span><br><span class="line"></span><br><span class="line">RUN wget -P /tmp https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb</span><br><span class="line"></span><br><span class="line">RUN sudo dpkg -i /tmp/pandoc-2.7.3-1-amd64.deb</span><br></pre></td></tr></table></figure>
-<p>今回は、これを使って作ったDockerイメージを、予めDocker Hubに登録しておく。 ここでは <code>hoge/fuga:1.0</code> と登録したものとする。</p>
+<p>今回は、これを使って作ったDockerイメージを、予めDocker
+Hubに登録しておく。 ここでは <code>hoge/fuga:1.0</code>
+と登録したものとする。</p>
 <h2><span id="hexoをcircleciでビルドするための設定ファイルの作成">HexoをCircleCIでビルドするための設定ファイルの作成</span></h2>
-<p>上記で作ったDockerイメージを使う、以下のようなCircleCi設定ファイルを作り、 Hexoプロジェクトのトップディレクトリ以下 <code>.circleci/config.yml</code> に保存する。</p>
+<p>上記で作ったDockerイメージを使う、以下のようなCircleCi設定ファイルを作り、
+Hexoプロジェクトのトップディレクトリ以下
+<code>.circleci/config.yml</code> に保存する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">defaults: &amp;defaults </span><br><span class="line">  docker:</span><br><span class="line">    - image: hoge/fuga:1.0</span><br><span class="line">      environment:</span><br><span class="line">        TZ: Asia/Tokyo</span><br><span class="line">  working_directory: ~/work</span><br><span class="line"></span><br><span class="line">version: 2</span><br><span class="line">jobs:</span><br><span class="line">  build:</span><br><span class="line">    &lt;&lt;: *defaults</span><br><span class="line">    steps:</span><br><span class="line">      - checkout</span><br><span class="line">      - run: git submodule init</span><br><span class="line">      - run: git submodule update</span><br><span class="line">      - run: npm install --save</span><br><span class="line">      - run: node_modules/.bin/hexo clean</span><br><span class="line">      - run: sed -i -e &quot;s#http://cdn.mathjax.org/mathjax#https://cdn.mathjax.org/mathjax#&quot; node_modules/hexo-renderer-mathjax/mathjax.html </span><br><span class="line">      - run: cat node_modules/hexo-renderer-mathjax/mathjax.html</span><br><span class="line">      - run: node_modules/.bin/hexo generate</span><br><span class="line">      - run: git config --global user.name &lt;your name&gt;</span><br><span class="line">      - run: git config --global user.email &lt;your email address&gt;</span><br><span class="line">      - run: node_modules/.bin/hexo deploy</span><br><span class="line">      - persist_to_workspace:</span><br><span class="line">          root: .</span><br><span class="line">          paths: [ &apos;*&apos; ]</span><br></pre></td></tr></table></figure>
-<p>上記 <code>config.yml</code> は、今後の拡張性を踏まえて記載してあるので、やや冗長な表現になっている。</p>
+<p>上記 <code>config.yml</code>
+は、今後の拡張性を踏まえて記載してあるので、やや冗長な表現になっている。</p>
 <p>なお、</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- run: sed -i -e &quot;s#http://cdn.mathjax.org/mathjax#https://cdn.mathjax.org/mathjax#&quot; node_modules/hexo-renderer-mathjax/mathjax.html</span><br></pre></td></tr></table></figure>
-<p>としている箇所があるが、これは現在の <code>hexo-renderer-mathjax</code> をインストールすると、httpsではなくhttpを使用するようになっており、 結果としてgithub.ioでサイト公開するとmathjax部分が意図通りに表示されないからである。 <a href="https://qiita.com/sky_y/items/7c29909c5cffa28b23d8" target="_blank" rel="noopener">HexoのレンダリングエンジンとしてPandocを使う</a> にもその旨説明がある。 <a href="https://github.com/phoenixcw/hexo-renderer-mathjax/blob/master/lib/mathjax.html#L15" target="_blank" rel="noopener">mathjax.html</a> を見る限り、GitHub上のmasterブランチでは修正済みのようだ。</p>
+<p>としている箇所があるが、これは現在の
+<code>hexo-renderer-mathjax</code>
+をインストールすると、httpsではなくhttpを使用するようになっており、
+結果としてgithub.ioでサイト公開するとmathjax部分が意図通りに表示されないからである。
+<a href="https://qiita.com/sky_y/items/7c29909c5cffa28b23d8" target="_blank" rel="noopener">HexoのレンダリングエンジンとしてPandocを使う</a>
+にもその旨説明がある。 <a href="https://github.com/phoenixcw/hexo-renderer-mathjax/blob/master/lib/mathjax.html#L15" target="_blank" rel="noopener">mathjax.html</a>
+を見る限り、GitHub上のmasterブランチでは修正済みのようだ。</p>
 <h2><span id="circleci上でプロジェクトを作る">CircleCI上でプロジェクトを作る</span></h2>
-<p>GitHubアカウントを連携している場合、既存のレポジトリが見えるので、 プロジェクトを作成する。</p>
+<p>GitHubアカウントを連携している場合、既存のレポジトリが見えるので、
+プロジェクトを作成する。</p>
 <h2><span id="githubへのpush用のssh鍵を登録する">GitHubへのPush用のSSH鍵を登録する</span></h2>
-<p><a href="http://jackale.hateblo.jp/entry/2018/01/14/000709" target="_blank" rel="noopener">LaTeXファイルをGithubにpushしたらCircle CIでPDF生成するようにした</a> あたりを参考に、SSH鍵の登録を実施。 プロジェクトの設定から、「Checkout SSH keys」を開き、「Add user key」から鍵を生成→登録した。</p>
+<p><a href="http://jackale.hateblo.jp/entry/2018/01/14/000709" target="_blank" rel="noopener">LaTeXファイルをGithubにpushしたらCircle
+CIでPDF生成するようにした</a> あたりを参考に、SSH鍵の登録を実施。
+プロジェクトの設定から、「Checkout SSH keys」を開き、「Add user
+key」から鍵を生成→登録した。</p>
 <p>GitHub側のアカウント設定から鍵が登録されたことが確認できる。</p>
-<p>以上で手順終了。 ブログを追記して、プロジェクトにpushするとCircleCIがhexo generateし、hexo deployするようになる。</p>
+<p>以上で手順終了。
+ブログを追記して、プロジェクトにpushするとCircleCIがhexo
+generateし、hexo deployするようになる。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
         
@@ -296,7 +317,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/23/Manage-the-flow-of-hexo-documentation-with-CircleCI/" data-id="cl2nztnn0009s5xqixtd2lu4w" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/23/Manage-the-flow-of-hexo-documentation-with-CircleCI/" data-id="cl2o9pb6r006w18rzbqcuywq5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -547,5 +568,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

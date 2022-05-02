@@ -5,18 +5,18 @@
     
     <title>Create projects includes sbt launcher | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ Coursierプロジェクト （補足）sbt-launcher-packageプロジェクト （補足）launcherプロジェクト    参考  launcher sbt-launcher-package Coursier を使って最速でScalaの開発環境を整える csのインストール  メモ プロジェクト内に、sbt自体を含めてクローンしただけでビルドできるようにしたい、という動">
+    <meta name="description" content="参考 メモ  Coursierプロジェクト （補足）sbt-launcher-packageプロジェクト （補足）launcherプロジェクト    参考  launcher sbt-launcher-package Coursier を使って最速でScalaの開発環境を整える csのインストール  メモ プロジェクト内に、sbt自体を含めてクローンしただけでビルドできるようにしたい、という">
 <meta name="keywords" content="SBT,Scala">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Create projects includes sbt launcher">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/12/07/Create-project-includes-sbt-launcher/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ Coursierプロジェクト （補足）sbt-launcher-packageプロジェクト （補足）launcherプロジェクト    参考  launcher sbt-launcher-package Coursier を使って最速でScalaの開発環境を整える csのインストール  メモ プロジェクト内に、sbt自体を含めてクローンしただけでビルドできるようにしたい、という動">
+<meta property="og:description" content="参考 メモ  Coursierプロジェクト （補足）sbt-launcher-packageプロジェクト （補足）launcherプロジェクト    参考  launcher sbt-launcher-package Coursier を使って最速でScalaの開発環境を整える csのインストール  メモ プロジェクト内に、sbt自体を含めてクローンしただけでビルドできるようにしたい、という">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Create projects includes sbt launcher">
-<meta name="twitter:description" content="参考 メモ Coursierプロジェクト （補足）sbt-launcher-packageプロジェクト （補足）launcherプロジェクト    参考  launcher sbt-launcher-package Coursier を使って最速でScalaの開発環境を整える csのインストール  メモ プロジェクト内に、sbt自体を含めてクローンしただけでビルドできるようにしたい、という動">
+<meta name="twitter:description" content="参考 メモ  Coursierプロジェクト （補足）sbt-launcher-packageプロジェクト （補足）launcherプロジェクト    参考  launcher sbt-launcher-package Coursier を使って最速でScalaの開発環境を整える csのインストール  メモ プロジェクト内に、sbt自体を含めてクローンしただけでビルドできるようにしたい、という">
     
 
     
@@ -251,11 +251,12 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#coursierプロジェクト">Coursierプロジェクト</a></li>
-<li><a href="#補足sbt-launcher-packageプロジェクト">（補足）sbt-launcher-packageプロジェクト</a></li>
-<li><a href="#補足launcherプロジェクト">（補足）launcherプロジェクト</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#coursierプロジェクト" id="toc-coursierプロジェクト">Coursierプロジェクト</a></li>
+<li><a href="#補足sbt-launcher-packageプロジェクト" id="toc-補足sbt-launcher-packageプロジェクト">（補足）sbt-launcher-packageプロジェクト</a></li>
+<li><a href="#補足launcherプロジェクト" id="toc-補足launcherプロジェクト">（補足）launcherプロジェクト</a></li>
 </ul></li>
 </ul>
 </div>
@@ -263,18 +264,22 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://github.com/sbt/launcher" target="_blank" rel="noopener">launcher</a></li>
 <li><a href="https://github.com/sbt/sbt-launcher-package" target="_blank" rel="noopener">sbt-launcher-package</a></li>
-<li><a href="https://nomadblacky.hatenablog.com/entry/2020/03/22/164815" target="_blank" rel="noopener">Coursier を使って最速でScalaの開発環境を整える</a></li>
+<li><a href="https://nomadblacky.hatenablog.com/entry/2020/03/22/164815" target="_blank" rel="noopener">Coursier
+を使って最速でScalaの開発環境を整える</a></li>
 <li><a href="https://get-coursier.io/docs/cli-installation" target="_blank" rel="noopener">csのインストール</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>プロジェクト内に、sbt自体を含めてクローンしただけでビルドできるようにしたい、という動機。 現時点ではCoursierプロジェクトが汎用性※が高く便利であると、個人的には感じた。</p>
+<p>プロジェクト内に、sbt自体を含めてクローンしただけでビルドできるようにしたい、という動機。
+現時点ではCoursierプロジェクトが汎用性※が高く便利であると、個人的には感じた。</p>
 <p>※ここでは、多くの環境で実行可能で、様々なツールを一度にセットアップ可能という意味。</p>
 <h2><span id="coursierプロジェクト">Coursierプロジェクト</span></h2>
-<p><a href="https://nomadblacky.hatenablog.com/entry/2020/03/22/164815" target="_blank" rel="noopener">Coursier を使って最速でScalaの開発環境を整える</a> のブログに記載されているとおり、 Scala開発環境を簡単に整えられる。</p>
+<p><a href="https://nomadblacky.hatenablog.com/entry/2020/03/22/164815" target="_blank" rel="noopener">Coursier
+を使って最速でScalaの開発環境を整える</a>
+のブログに記載されているとおり、 Scala開発環境を簡単に整えられる。</p>
 <p>ひとまずDocker内で試す。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo docker pull ubuntu:18.04</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo docker run -rm -it -d --name ubu ubuntu:18.04</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo docker <span class="built_in">exec</span> -it ubu /bin/bash</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo docker pull ubuntu:18.04</span><br><span class="line"><span class="meta">$</span> sudo docker run -rm -it -d --name ubu ubuntu:18.04</span><br><span class="line"><span class="meta">$</span> sudo docker exec -it ubu /bin/bash</span><br></pre></td></tr></table></figure>
 <p>Dockerコンテナ内でインストール。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> apt update</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> apt install -y curl</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> curl -fLo cs https://git.io/coursier-cli-linux &amp;&amp;</span></span><br><span class="line">     chmod +x cs &amp;&amp;</span><br><span class="line">     ./cs</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> apt update</span><br><span class="line"><span class="meta">#</span> apt install -y curl</span><br><span class="line"><span class="meta">#</span> curl -fLo cs https://git.io/coursier-cli-linux &amp;&amp;</span><br><span class="line">     chmod +x cs &amp;&amp;</span><br><span class="line">     ./cs</span><br></pre></td></tr></table></figure>
 <p>結果として以下がインストールされた様子。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Checking if the standard Scala applications are installed</span><br><span class="line">  Installed ammonite</span><br><span class="line">  Installed cs</span><br><span class="line">  Installed coursier</span><br><span class="line">  Installed scala</span><br><span class="line">  Installed scalac</span><br><span class="line">  Installed sbt</span><br><span class="line">  Installed sbtn</span><br><span class="line">  Installed scalafmt</span><br></pre></td></tr></table></figure>
 <p><code>~/.profile</code>に環境変数等がまとまっているので有効化する。</p>
@@ -283,9 +288,11 @@ ga('send', 'pageview');
 <p>なお、参考までに上記でダウンロードしたcsコマンドは以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">$ ./cs setup --help</span><br><span class="line">Command: setup</span><br><span class="line">Usage: cs setup</span><br><span class="line">  --jvm  &lt;string?&gt;</span><br><span class="line">  --jvm-dir  &lt;string?&gt;</span><br><span class="line">  --system-jvm  &lt;bool?&gt;</span><br><span class="line">  --local-only  &lt;bool&gt;</span><br><span class="line">  --update  &lt;bool&gt;</span><br><span class="line">  --jvm-index  &lt;string?&gt;</span><br><span class="line">  --graalvm-home  &lt;string?&gt;</span><br><span class="line">  --graalvm-option  &lt;string*&gt;</span><br><span class="line">  --graalvm-default-version  &lt;string?&gt;</span><br><span class="line">  --install-dir | --dir  &lt;string?&gt;</span><br><span class="line">  --install-platform  &lt;string?&gt;</span><br><span class="line">        Platform for prebuilt binaries (e.g. &quot;x86_64-pc-linux&quot;, &quot;x86_64-apple-darwin&quot;, &quot;x86_64-pc-win32&quot;)</span><br><span class="line">  --install-prefer-prebuilt  &lt;bool&gt;</span><br><span class="line">  --only-prebuilt  &lt;bool&gt;</span><br><span class="line">        Require prebuilt artifacts for native applications, don&apos;t try to build native executable ourselves</span><br><span class="line">  --repository | -r  &lt;maven|sonatype:$repo|ivy2local|bintray:$org/$repo|bintray-ivy:$org/$repo|typesafe:ivy-$repo|typesafe:$repo|sbt-plugin:$repo|ivy:$pattern&gt;</span><br><span class="line">        Repository - for multiple repositories, separate with comma and/or add this option multiple times (e.g. -r central,ivy2local -r sonatype:snapshots, or equivalently -r central,ivy2local,sonatype:snapshots)</span><br><span class="line">  --default-repositories  &lt;bool&gt;</span><br><span class="line">  --proguarded  &lt;bool?&gt;</span><br><span class="line">  --channel  &lt;org:name&gt;</span><br><span class="line">        Channel for apps</span><br><span class="line">  --default-channels  &lt;bool&gt;</span><br><span class="line">        Add default channels</span><br><span class="line">  --contrib  &lt;bool&gt;</span><br><span class="line">        Add contrib channel</span><br><span class="line">  --file-channels  &lt;bool&gt;</span><br><span class="line">        Add channels read from the configuration directory</span><br><span class="line">  --cache  &lt;string?&gt;</span><br><span class="line">        Cache directory (defaults to environment variable COURSIER_CACHE, or ~/.cache/coursier/v1 on Linux and ~/Library/Caches/Coursier/v1 on Mac)</span><br><span class="line">  --mode | -m  &lt;offline|update-changing|update|missing|force&gt;</span><br><span class="line">        Download mode (default: missing, that is fetch things missing from cache)</span><br><span class="line">  --ttl | -l  &lt;duration&gt;</span><br><span class="line">        TTL duration (e.g. &quot;24 hours&quot;)</span><br><span class="line">  --parallel | -n  &lt;int&gt;</span><br><span class="line">        Maximum number of parallel downloads (default: 6)</span><br><span class="line">  --checksum  &lt;checksum1,checksum2,...&gt;</span><br><span class="line">        Checksum types to check - end with none to allow for no checksum validation if no checksum is available, example: SHA-256,SHA-1,none</span><br><span class="line">  --retry-count  &lt;int&gt;</span><br><span class="line">        Retry limit for Checksum error when fetching a file</span><br><span class="line">  --cache-file-artifacts | --cfa  &lt;bool&gt;</span><br><span class="line">        Flag that specifies if a local artifact should be cached.</span><br><span class="line">  --follow-http-to-https-redirect  &lt;bool&gt;</span><br><span class="line">        Whether to follow http to https redirections</span><br><span class="line">  --credentials  &lt;host(realm) user:pass|host user:pass&gt;</span><br><span class="line">        Credentials to be used when fetching metadata or artifacts. Specify multiple times to pass multiple credentials. Alternatively, use the COURSIER_CREDENTIALS environment variable</span><br><span class="line">  --credential-file  &lt;string*&gt;</span><br><span class="line">        Path to credential files to read credentials from</span><br><span class="line">  --use-env-credentials  &lt;bool&gt;</span><br><span class="line">        Whether to read credentials from COURSIER_CREDENTIALS (env) or coursier.credentials (Java property), along those passed with --credentials and --credential-file</span><br><span class="line">  --quiet | -q  &lt;counter&gt;</span><br><span class="line">        Quiet output</span><br><span class="line">  --verbose | -v  &lt;counter&gt;</span><br><span class="line">        Increase verbosity (specify several times to increase more)</span><br><span class="line">  --progress | -P  &lt;bool&gt;</span><br><span class="line">        Force display of progress bars</span><br><span class="line">  --env  &lt;bool&gt;</span><br><span class="line">  --user-home  &lt;string?&gt;</span><br><span class="line">  --banner  &lt;bool?&gt;</span><br><span class="line">  --yes | -y  &lt;bool?&gt;</span><br><span class="line">  --try-revert  &lt;bool&gt;</span><br><span class="line">  --apps  &lt;string*&gt;</span><br></pre></td></tr></table></figure>
 <h2><span id="補足sbt-launcher-packageプロジェクト">（補足）sbt-launcher-packageプロジェクト</span></h2>
-<p><a href="https://github.com/sbt/sbt-launcher-package" target="_blank" rel="noopener">sbt-launcher-package</a> をビルドすることでSBTランチャーを提供できそうだった。</p>
+<p><a href="https://github.com/sbt/sbt-launcher-package" target="_blank" rel="noopener">sbt-launcher-package</a>
+をビルドすることでSBTランチャーを提供できそうだった。</p>
 <h2><span id="補足launcherプロジェクト">（補足）launcherプロジェクト</span></h2>
-<p>https://github.com/sbt/launcher/blob/1.x/.java-version にも記載されているとおり、 JDK7系にしか公式に対応していなかった。</p>
+<p>https://github.com/sbt/launcher/blob/1.x/.java-version
+にも記載されているとおり、 JDK7系にしか公式に対応していなかった。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -297,7 +304,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/07/Create-project-includes-sbt-launcher/" data-id="cl2nztnky003f5xqivrs2s9ld" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/07/Create-project-includes-sbt-launcher/" data-id="cl2o9pb52002h18rzwofs19d2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -548,5 +555,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

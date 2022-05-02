@@ -5,13 +5,13 @@
     
     <title>Data Platform for Machine Learning | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ Abstract Introduction Motivation 関連研究  SYSTEM ARCHITECTURE AND DESIGN FUTURE WORK    参考  Data Platform for Machine Learning  メモ Data Platform for Machine Learning を読んでみた。個人的要約メモを以下に記載する。 Abst">
+    <meta name="description" content="参考 メモ  Abstract Introduction Motivation  関連研究  SYSTEM ARCHITECTURE AND DESIGN FUTURE WORK    参考  Data Platform for Machine Learning  メモ Data Platform for Machine Learning を読んでみた。個人的要約メモを以下に記載する。 Ab">
 <meta name="keywords" content="Machine Learning,Data Platform,Apple">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Data Platform for Machine Learning">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/12/10/Data-Platform-for-Machine-Learning/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ Abstract Introduction Motivation 関連研究  SYSTEM ARCHITECTURE AND DESIGN FUTURE WORK    参考  Data Platform for Machine Learning  メモ Data Platform for Machine Learning を読んでみた。個人的要約メモを以下に記載する。 Abst">
+<meta property="og:description" content="参考 メモ  Abstract Introduction Motivation  関連研究  SYSTEM ARCHITECTURE AND DESIGN FUTURE WORK    参考  Data Platform for Machine Learning  メモ Data Platform for Machine Learning を読んでみた。個人的要約メモを以下に記載する。 Ab">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/TONgBD4x5eOJ8feJ-DBB32.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/TONgBD4x5eOJ8feJ-6B2FF.png">
@@ -24,10 +24,10 @@
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/TONgBD4x5eOJ8feJ-5A135.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/TONgBD4x5eOJ8feJ-9F12D.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/TONgBD4x5eOJ8feJ-53BE5.png">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Data Platform for Machine Learning">
-<meta name="twitter:description" content="参考 メモ Abstract Introduction Motivation 関連研究  SYSTEM ARCHITECTURE AND DESIGN FUTURE WORK    参考  Data Platform for Machine Learning  メモ Data Platform for Machine Learning を読んでみた。個人的要約メモを以下に記載する。 Abst">
+<meta name="twitter:description" content="参考 メモ  Abstract Introduction Motivation  関連研究  SYSTEM ARCHITECTURE AND DESIGN FUTURE WORK    参考  Data Platform for Machine Learning  メモ Data Platform for Machine Learning を読んでみた。個人的要約メモを以下に記載する。 Ab">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/TONgBD4x5eOJ8feJ-DBB32.png">
     
 
@@ -263,28 +263,38 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#abstract">Abstract</a></li>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#motivation">Motivation</a><ul>
-<li><a href="#関連研究">関連研究</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#abstract" id="toc-abstract">Abstract</a></li>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#motivation" id="toc-motivation">Motivation</a>
+<ul>
+<li><a href="#関連研究" id="toc-関連研究">関連研究</a></li>
 </ul></li>
-<li><a href="#system-architecture-and-design">SYSTEM ARCHITECTURE AND DESIGN</a></li>
-<li><a href="#future-work">FUTURE WORK</a></li>
+<li><a href="#system-architecture-and-design" id="toc-system-architecture-and-design">SYSTEM ARCHITECTURE AND
+DESIGN</a></li>
+<li><a href="#future-work" id="toc-future-work">FUTURE WORK</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://dl.acm.org/citation.cfm?id=3314050" target="_blank" rel="noopener">Data Platform for Machine Learning</a></li>
+<li><a href="https://dl.acm.org/citation.cfm?id=3314050" target="_blank" rel="noopener">Data Platform
+for Machine Learning</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://dl.acm.org/citation.cfm?id=3314050" target="_blank" rel="noopener">Data Platform for Machine Learning</a> を読んでみた。個人的要約メモを以下に記載する。</p>
+<p><a href="https://dl.acm.org/citation.cfm?id=3314050" target="_blank" rel="noopener">Data Platform
+for Machine Learning</a>
+を読んでみた。個人的要約メモを以下に記載する。</p>
 <h2><span id="abstract">Abstract</span></h2>
 <p>これまでは数学的な試行錯誤（ここでは機械学習も含んでそう表現していると思われる）に適したデータプラットフォーム（データを保持し、サーブする仕組み、と解釈）がなかった。</p>
-<p>既存のデータプラットフォームの課題はいくつかある。 いずれにせよ、データ管理の負荷はユーザビリティを下げる。 また、昨今求められるコンプライアンス機能（例：terms of use、privacy measure、auditなど）を すべて利用できるわけではない。</p>
-<p>本論文では、Machine Learning Data Platform（MLdp）に求められるものをまとめ、Appleにおける経験とソリューションを紹介し、将来のアクションを紹介する。</p>
+<p>既存のデータプラットフォームの課題はいくつかある。
+いずれにせよ、データ管理の負荷はユーザビリティを下げる。
+また、昨今求められるコンプライアンス機能（例：terms of use、privacy
+measure、auditなど）を すべて利用できるわけではない。</p>
+<p>本論文では、Machine Learning Data
+Platform（MLdp）に求められるものをまとめ、Appleにおける経験とソリューションを紹介し、将来のアクションを紹介する。</p>
 <h2><span id="introduction">Introduction</span></h2>
 <p>MLdp = Machine Learningのためのデータ管理システム</p>
 <h2><span id="motivation">Motivation</span></h2>
@@ -299,9 +309,11 @@ ga('send', 'pageview');
 <li>finally deployment</li>
 </ul>
 <p>（補足）Appleにおけるワークフローのアブストラクションの考え方が分かるので参考として</p>
-<p>強い課題感：サイロ化されたデータストア、サイロ化された知見・アクティビティ ★重要</p>
+<p>強い課題感：サイロ化されたデータストア、サイロ化された知見・アクティビティ
+★重要</p>
 <figure>
-<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-DBB32.png" alt=""><figcaption>サイロ化されたストアとアクティビティのイメージ</figcaption>
+<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-DBB32.png" alt="サイロ化されたストアとアクティビティのイメージ">
+<figcaption aria-hidden="true">サイロ化されたストアとアクティビティのイメージ</figcaption>
 </figure>
 <p>3種類の動機</p>
 <ul>
@@ -316,8 +328,11 @@ ga('send', 'pageview');
 <li>データサイエンティスト</li>
 <li>Legal Team</li>
 </ul>
-<p>（補足）よく聞くのは、データサイエンティスト、データエンジニアだが、ここでは、 MLエンジニア、ソフトウェアエンジニア、Legal Teamが挙げられているのが特徴的。</p>
-<p>MLでは、データはトラックされること、バージョン管理されることが必要 ★重要</p>
+<p>（補足）よく聞くのは、データサイエンティスト、データエンジニアだが、ここでは、
+MLエンジニア、ソフトウェアエンジニア、Legal
+Teamが挙げられているのが特徴的。</p>
+<p>MLでは、データはトラックされること、バージョン管理されることが必要
+★重要</p>
 <p>MLdpが満たすべき要件 ★重要</p>
 <ul>
 <li>以下の2種類のデータに対するコンセプチャルな表現方法
@@ -343,7 +358,8 @@ ga('send', 'pageview');
 <li>データ、特徴量エンジニアリングのためのDSL</li>
 <li>著名なMLフレームワークへのインターフェース
 <ul>
-<li>著名なMLフレームワークでは独自のデータ表現をもっているが、一方でMLdpでは フレームワークをまたいだ共通的なデータ表現が必要、など</li>
+<li>著名なMLフレームワークでは独自のデータ表現をもっているが、一方でMLdpでは
+フレームワークをまたいだ共通的なデータ表現が必要、など</li>
 <li>データ型も多様である</li>
 </ul></li>
 <li>データセンタ、エッジの両方への対応。
@@ -359,15 +375,19 @@ ga('send', 'pageview');
 <li>コンプライアンスãプライバシーの考慮</li>
 </ul>
 <figure>
-<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-6B2FF.png" alt=""><figcaption>MLプラットフォームのエコシステム一覧</figcaption>
+<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-6B2FF.png" alt="MLプラットフォームのエコシステム一覧">
+<figcaption aria-hidden="true">MLプラットフォームのエコシステム一覧</figcaption>
 </figure>
 <p>3Vの話</p>
 <h3><span id="関連研究">関連研究</span></h3>
 <p>（ここでは一旦省略）</p>
-<h2><span id="system-architecture-and-design">SYSTEM ARCHITECTURE AND DESIGN</span></h2>
-<p>アーキテクチャは、コントロールプレーン、データプレーンによる構成。 ★重要</p>
+<h2><span id="system-architecture-anddesign">SYSTEM ARCHITECTURE AND
+DESIGN</span></h2>
+<p>アーキテクチャは、コントロールプレーン、データプレーンによる構成。
+★重要</p>
 <figure>
-<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-50438.png" alt=""><figcaption>MLdpのアーキテクチャ概要</figcaption>
+<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-50438.png" alt="MLdpのアーキテクチャ概要">
+<figcaption aria-hidden="true">MLdpのアーキテクチャ概要</figcaption>
 </figure>
 <p>各コンポーネントの特徴 ★重要</p>
 <ul>
@@ -396,7 +416,8 @@ ga('send', 'pageview');
 <li>学習タスクのためのキャッシュ</li>
 </ul></li>
 </ul>
-<p>4種類のデータセット：dataset, annotation, split, and package に分けて考える。 ★重要</p>
+<p>4種類のデータセット：dataset, annotation, split, and package
+に分けて考える。 ★重要</p>
 <ul>
 <li>dataset:
 <ul>
@@ -413,12 +434,19 @@ ga('send', 'pageview');
 </ul></li>
 <li>package:
 <ul>
-<li>dataset / split、annotationを組み合わせた仮想的なまとまり。 再現性担保のため、学習セットをまとめて管理するために利用。</li>
+<li>dataset / split、annotationを組み合わせた仮想的なまとまり。
+再現性担保のため、学習セットをまとめて管理するために利用。</li>
 </ul></li>
 </ul>
 <p>以下補足。</p>
-<p>datasetに対し、annotationやsplitは「weak object」。つまり、それ単体では存在しない。 annotationやsplitをdatasetとは別に管理することメリットは「multifold」である。 annotationもsplitもdatasetを変更せずに変更可能である。 annotationは個別のコンプライアンスポリシーを持つことがある。</p>
-<p>バージョンの表現 -&gt; <code>&lt;schema&gt;.&lt;revision&gt;.&lt;patch&gt;</code> ★重要 これにより、スキーマ変更あり・なしを明示しながら、バージョン管理を可能とする。</p>
+<p>datasetに対し、annotationやsplitは「weak
+object」。つまり、それ単体では存在しない。
+annotationやsplitをdatasetとは別に管理することメリットは「multifold」である。
+annotationもsplitもdatasetを変更せずに変更可能である。
+annotationは個別のコンプライアンスポリシーを持つことがある。</p>
+<p>バージョンの表現 -&gt;
+<code>&lt;schema&gt;.&lt;revision&gt;.&lt;patch&gt;</code> ★重要
+これにより、スキーマ変更あり・なしを明示しながら、バージョン管理を可能とする。</p>
 <p>バージョン管理はユーザが明示的に行う。 ★重要</p>
 <p>MLプロジェクト間でのデータシェアにおいて以下を実現。 ★重要</p>
 <ul>
@@ -434,39 +462,52 @@ ga('send', 'pageview');
 <li>archived</li>
 <li>purged</li>
 </ul>
-<p>publishされたデータはイミュータブルになる。 ★重要 これは再現性を担保するため。</p>
+<p>publishされたデータはイミュータブルになる。 ★重要
+これは再現性を担保するため。</p>
 <p>（補足）このオブジェクトのライフサイクルは、S3等のパブリッククラウドのオブジェクトストレージの機能と相性が良さそう。</p>
 <p>MLdpでは、表形式のデータ表現を採用。 ★重要</p>
-<p>カラムナ表現により、圧縮効率やIO効率の改善だけではなく、 カラムの追加削除にも対応しやすくなる。</p>
-<p>Spark RDD、DataFrame、Apache DataFrame、Pandas、R DataFrameなどと互換性あり。</p>
+<p>カラムナ表現により、圧縮効率やIO効率の改善だけではなく、
+カラムの追加削除にも対応しやすくなる。</p>
+<p>Spark RDD、DataFrame、Apache DataFrame、Pandas、R
+DataFrameなどと互換性あり。</p>
 <p>MLdpではファイルはバイト列として扱う。</p>
-<p>またファイルに対して、ストリーム形式でのアクセスも可能とする。 ★重要</p>
-<p>データアクセスのインタフェースのうち、ハイレベルAPIはサーバサイドのバッチ処理向き。つまり前処理などに適している。 ローレベルAPIは各種フレームワークとの連係向き。</p>
-<p>クライアントでのデータ利用のため、MLdpはキャッシュ機能を持つ。 ★重要 （補足）このあたり、Appleだからこそ必要であり、一般企業は果たして必要だろうか。</p>
+<p>またファイルに対して、ストリーム形式でのアクセスも可能とする。
+★重要</p>
+<p>データアクセスのインタフェースのうち、ハイレベルAPIはサーバサイドのバッチ処理向き。つまり前処理などに適している。
+ローレベルAPIは各種フレームワークとの連係向き。</p>
+<p>クライアントでのデータ利用のため、MLdpはキャッシュ機能を持つ。 ★重要
+（補足）このあたり、Appleだからこそ必要であり、一般企業は果たして必要だろうか。</p>
 <p>SQLライクなインタフェースを提供。（その他のDSLもあるようだ）</p>
 <p>現在、Pythonと連係可能</p>
 <figure>
-<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-D69F1.png" alt=""><figcaption>入力となるデータの例</figcaption>
+<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-D69F1.png" alt="入力となるデータの例">
+<figcaption aria-hidden="true">入力となるデータの例</figcaption>
 </figure>
 <figure>
-<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-BDA3B.png" alt=""><figcaption>データセット定義のクエリ例</figcaption>
+<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-BDA3B.png" alt="データセット定義のクエリ例">
+<figcaption aria-hidden="true">データセット定義のクエリ例</figcaption>
 </figure>
 <figure>
-<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-65752.png" alt=""><figcaption>既存モデルを読み込んで推論するクエリ例</figcaption>
+<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-65752.png" alt="既存モデルを読み込んで推論するクエリ例">
+<figcaption aria-hidden="true">既存モデルを読み込んで推論するクエリ例</figcaption>
 </figure>
 <p>MLのデータセットは、複数のファイルをまとめ、MLモデルから扱うことがある。</p>
-<p>MLdpをマウントして扱うことができる。 いまのところクライアントサイドのシンプルなキャッシュ機構を有している。</p>
+<p>MLdpをマウントして扱うことができる。
+いまのところクライアントサイドのシンプルなキャッシュ機構を有している。</p>
 <p>またエッジでの利用を想定し、REST APIも提供。</p>
 <figure>
-<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-DBF28.png" alt=""><figcaption>MLdpをマウントしPATHに対して画像処理するクエリ例</figcaption>
+<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-DBF28.png" alt="MLdpをマウントしPATHに対して画像処理するクエリ例">
+<figcaption aria-hidden="true">MLdpをマウントしPATHに対して画像処理するクエリ例</figcaption>
 </figure>
 <p>セカンダリインデックスも利用可能。</p>
 <figure>
-<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-CC776.png" alt=""><figcaption>セカンダリインデックスを使い、求める画像のみを扱うクエリ例</figcaption>
+<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-CC776.png" alt="セカンダリインデックスを使い、求める画像のみを扱うクエリ例">
+<figcaption aria-hidden="true">セカンダリインデックスを使い、求める画像のみを扱うクエリ例</figcaption>
 </figure>
 <p>分散学習のためのスプリットを生成することもできる。</p>
 <figure>
-<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-5A135.png" alt=""><figcaption>MLdpをマウントし、TFの機能を使ってスライスを作成</figcaption>
+<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-5A135.png" alt="MLdpをマウントし、TFの機能を使ってスライスを作成">
+<figcaption aria-hidden="true">MLdpをマウントし、TFの機能を使ってスライスを作成</figcaption>
 </figure>
 <p>ストレージレイヤのデザインのポイントは以下の通り。</p>
 <ul>
@@ -474,34 +515,51 @@ ga('send', 'pageview');
 <li>スケーラビリティを持ち、バージョン管理可能であり、バージョン間の差分をトラックできる</li>
 <li>ダイナミックレンジクエリ、ポイントクエリに対応し、ストリームI/Oアクセスも可能</li>
 </ul>
-<p>in-flightのデータ保持にはKVSを使用し、高頻度での並列での書き込みに対応する。 ★重要 スナップショットが取られ、クラウドストレージ上に置かれる。 ★重要</p>
+<p>in-flightのデータ保持にはKVSを使用し、高頻度での並列での書き込みに対応する。
+★重要 スナップショットが取られ、クラウドストレージ上に置かれる。
+★重要</p>
 <p>おかれたデータは読み取りに最適化されたものになる。</p>
-<p>スナップショットに対する変更は、新しいスナップショットとなって書き込まれる（論文ではcurateされた、と表現されていた）。 つまり、スナップショットはイミュータブルな扱いとなる。</p>
+<p>スナップショットに対する変更は、新しいスナップショットとなって書き込まれる（論文ではcurateされた、と表現されていた）。
+つまり、スナップショットはイミュータブルな扱いとなる。</p>
 <p>in-flightのデータとcurateされたデータをつなぐサブシステムを論文ではdata-pipeと呼ぶ。</p>
-<p>MLdpでは複数のデータストアを取り扱うが、ユニファイドなアクセス手段を提供する。 ★重要</p>
-<p>in-flightのデータストアは頻繁に更新されるため、それをそのまま機械学習の入力データに することはあまりない。というのも、再現性を担保するのが難しいからだ。</p>
-<p>MLdpではデータをパーティション化して保存するが、パーティションキーはユーザが 直接指定するわけではない。 その代わりソートキーを指定する。 ただし、ソートキーが指定されなかった場合は、システムがハッシュをキーに割り当て パーティションを構成するようにする。</p>
+<p>MLdpでは複数のデータストアを取り扱うが、ユニファイドなアクセス手段を提供する。
+★重要</p>
+<p>in-flightのデータストアは頻繁に更新されるため、それをそのまま機械学習の入力データに
+することはあまりない。というのも、再現性を担保するのが難しいからだ。</p>
+<p>MLdpではデータをパーティション化して保存するが、パーティションキーはユーザが
+直接指定するわけではない。 その代わりソートキーを指定する。
+ただし、ソートキーが指定されなかった場合は、システムがハッシュをキーに割り当て
+パーティションを構成するようにする。</p>
 <p>パーティションは複数のブロックで構成される。</p>
-<p>データの変更が少ないケースでは、バージョン間で多くのブロックを共有できる。 copy-on-writeで変更のあったブロックが生成される。</p>
+<p>データの変更が少ないケースでは、バージョン間で多くのブロックを共有できる。
+copy-on-writeで変更のあったブロックが生成される。</p>
 <figure>
-<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-9F12D.png" alt=""><figcaption>パーティションとブロック</figcaption>
+<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-9F12D.png" alt="パーティションとブロック">
+<figcaption aria-hidden="true">パーティションとブロック</figcaption>
 </figure>
 <p>（感想）多くの分散ファイルシステムで見られる構成。</p>
-<p>このブロックで構成することで、MLdpのクライアントは興味のあるブロックにだけアクセスすればよくなる。 またブロックに対するストリームI/Oも可能なので、MLフレームワークからストリームI/Oでアクセスできる。</p>
+<p>このブロックで構成することで、MLdpのクライアントは興味のあるブロックにだけアクセスすればよくなる。
+またブロックに対するストリームI/Oも可能なので、MLフレームワークからストリームI/Oでアクセスできる。</p>
 <p>インデックスもある。そのためブロック単位でのスキャンも可能だし、インデックスに基づくピンポイントでの検索も可能。</p>
 <p>セカンダリインデックスの仕組みもある。 ★重要</p>
 <figure>
-<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-53BE5.png" alt=""><figcaption>セカンダリインデックスの仕組み</figcaption>
+<img src="/memo-blog/images/TONgBD4x5eOJ8feJ-53BE5.png" alt="セカンダリインデックスの仕組み">
+<figcaption aria-hidden="true">セカンダリインデックスの仕組み</figcaption>
 </figure>
 <p>セカンダリインデックスを用いて、各ブロック内のレコードを取りに行くことになる。</p>
-<p>MLの計算クラスタにはキャッシュの仕組みが組み込まれており、 透過的に利用できるようになっている。 データアクセスし、もしキャッシュヒットしたら、キャッシュからデータを返す。 キャッシュシステムが停止している場合は、通常のデータアクセスにフォールバックする。</p>
+<p>MLの計算クラスタにはキャッシュの仕組みが組み込まれており、
+透過的に利用できるようになっている。
+データアクセスし、もしキャッシュヒットしたら、キャッシュからデータを返す。
+キャッシュシステムが停止している場合は、通常のデータアクセスにフォールバックする。</p>
 <p>キャッシュシステムの目的は、レイテンシの低減とReadのスケールアウト。</p>
 <p>キャッシュはイミュータブルデータを対象とし、読み取り専用。この単純化のおかげで、結果一貫性などに伴う異常を排除。</p>
 <h2><span id="future-work">FUTURE WORK</span></h2>
 <p>将来の課題：データ探索性、システム改善、エコシステムインテグレーション。</p>
 <p>データ分析者は、適切なデータを探す。 human-in-the-loop。</p>
-<p>カタログは知っている情報を探し当てるもの。データ探索は知らない情報を明らかにすること。両者は異なる。 データ探索の活動はそれ自体が機械学習タスクであることもある。</p>
-<p>この手のデータ探索はドメインスペシフィックではあるが、共通的な？システム要件もある。 例えばコンピュータビジョンなど。</p>
+<p>カタログは知っている情報を探し当てるもの。データ探索は知らない情報を明らかにすること。両者は異なる。
+データ探索の活動はそれ自体が機械学習タスクであることもある。</p>
+<p>この手のデータ探索はドメインスペシフィックではあるが、共通的な？システム要件もある。
+例えばコンピュータビジョンなど。</p>
 <p>ヘテロジーニアスなデータフォーマットをユニファイドな表現に変換できるようにしたい。</p>
 <p>システム的な改善に関する2種類の観点：</p>
 <ul>
@@ -509,11 +567,14 @@ ga('send', 'pageview');
 <li>human-in-the-loopを減らす</li>
 </ul>
 <p>インテントベースのキャッシュを開発したい。つまり、明示的にキャッシュ化するのではなく、頻繁に利用されるデータをキャッシュするようにする、など。</p>
-<p>プリフェッチの改善、ローカルバッファリングも改善ネタ。 しかし学習の際にランダマイズが必要なのが難しいところ。</p>
+<p>プリフェッチの改善、ローカルバッファリングも改善ネタ。
+しかし学習の際にランダマイズが必要なのが難しいところ。</p>
 <p>Spark等との連携も課題。</p>
-<p>各フレームワークは独自のデータ保持方式を持っている。 MLdpを利用しやすいようにしたい。できるだけユーザコードを変更せずに利用できるようにしたい。</p>
+<p>各フレームワークは独自のデータ保持方式を持っている。
+MLdpを利用しやすいようにしたい。できるだけユーザコードを変更せずに利用できるようにしたい。</p>
 <p>データ保持方式に大きく分けて2種類：</p>
-<p>" MLdpの独自の方式を採用し、都度変換する。 " もうひとつはTFRecordなどのフレームワークネイティブの方式を採用すること</p>
+<p>" MLdpの独自の方式を採用し、都度変換する。 "
+もうひとつはTFRecordなどのフレームワークネイティブの方式を採用すること</p>
 <p>一長一短。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
@@ -526,7 +587,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/12/10/Data-Platform-for-Machine-Learning/" data-id="cl2nztnl1003o5xqi3t8kdq82" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/12/10/Data-Platform-for-Machine-Learning/" data-id="cl2o9pbgc014018rz75mt51zd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -777,5 +838,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

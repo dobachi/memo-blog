@@ -5,18 +5,18 @@
     
     <title>vagrant-libvirt on Ubuntu18 | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 手順 必要パッケージのインストール Vagrantのプラグイン追加 Vagrantfileの作成 ストレージプールdefaultの不在に関連したエラー Vagrant BoxのダウンロードURLに関連したエラー    参考  vagrant-libvirt デフォルトプールに関するエラーの情報 libvirtでストレージプールを作成 VagrantのダウンロードURL関連エラーの情報">
+    <meta name="description" content="参考 手順  必要パッケージのインストール Vagrantのプラグイン追加 Vagrantfileの作成 ストレージプールdefaultの不在に関連したエラー Vagrant BoxのダウンロードURLに関連したエラー    参考  vagrant-libvirt デフォルトプールに関するエラーの情報 libvirtでストレージプールを作成 VagrantのダウンロードURL関連エラーの情報">
 <meta name="keywords" content="KVM,Vagrant,libvirt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vagrant-libvirt on Ubuntu18">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/11/17/vagrant-libvirt-on-Ubuntu18/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 手順 必要パッケージのインストール Vagrantのプラグイン追加 Vagrantfileの作成 ストレージプールdefaultの不在に関連したエラー Vagrant BoxのダウンロードURLに関連したエラー    参考  vagrant-libvirt デフォルトプールに関するエラーの情報 libvirtでストレージプールを作成 VagrantのダウンロードURL関連エラーの情報">
+<meta property="og:description" content="参考 手順  必要パッケージのインストール Vagrantのプラグイン追加 Vagrantfileの作成 ストレージプールdefaultの不在に関連したエラー Vagrant BoxのダウンロードURLに関連したエラー    参考  vagrant-libvirt デフォルトプールに関するエラーの情報 libvirtでストレージプールを作成 VagrantのダウンロードURL関連エラーの情報">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vagrant-libvirt on Ubuntu18">
-<meta name="twitter:description" content="参考 手順 必要パッケージのインストール Vagrantのプラグイン追加 Vagrantfileの作成 ストレージプールdefaultの不在に関連したエラー Vagrant BoxのダウンロードURLに関連したエラー    参考  vagrant-libvirt デフォルトプールに関するエラーの情報 libvirtでストレージプールを作成 VagrantのダウンロードURL関連エラーの情報">
+<meta name="twitter:description" content="参考 手順  必要パッケージのインストール Vagrantのプラグイン追加 Vagrantfileの作成 ストレージプールdefaultの不在に関連したエラー Vagrant BoxのダウンロードURLに関連したエラー    参考  vagrant-libvirt デフォルトプールに関するエラーの情報 libvirtでストレージプールを作成 VagrantのダウンロードURL関連エラーの情報">
     
 
     
@@ -251,13 +251,15 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#手順">手順</a><ul>
-<li><a href="#必要パッケージのインストール">必要パッケージのインストール</a></li>
-<li><a href="#vagrantのプラグイン追加">Vagrantのプラグイン追加</a></li>
-<li><a href="#vagrantfileの作成">Vagrantfileの作成</a></li>
-<li><a href="#ストレージプールdefaultの不在に関連したエラー">ストレージプールdefaultの不在に関連したエラー</a></li>
-<li><a href="#vagrant-boxのダウンロードurlに関連したエラー">Vagrant BoxのダウンロードURLに関連したエラー</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#手順" id="toc-手順">手順</a>
+<ul>
+<li><a href="#必要パッケージのインストール" id="toc-必要パッケージのインストール">必要パッケージのインストール</a></li>
+<li><a href="#vagrantのプラグイン追加" id="toc-vagrantのプラグイン追加">Vagrantのプラグイン追加</a></li>
+<li><a href="#vagrantfileの作成" id="toc-vagrantfileの作成">Vagrantfileの作成</a></li>
+<li><a href="#ストレージプールdefaultの不在に関連したエラー" id="toc-ストレージプールdefaultの不在に関連したエラー">ストレージプールdefaultの不在に関連したエラー</a></li>
+<li><a href="#vagrant-boxのダウンロードurlに関連したエラー" id="toc-vagrant-boxのダウンロードurlに関連したエラー">Vagrant
+BoxのダウンロードURLに関連したエラー</a></li>
 </ul></li>
 </ul>
 </div>
@@ -270,7 +272,9 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="手順">手順</span></h1>
 <h2><span id="必要パッケージのインストール">必要パッケージのインストール</span></h2>
-<p>最初に手順通り、vagrantをインストールしておく。 <a href="https://github.com/vagrant-libvirt/vagrant-libvirt" target="_blank" rel="noopener">vagrant-libvirt</a> によると、upstreamを 用いることが推奨されているので、ここではあえて1.8系を用いることにする。</p>
+<p>最初に手順通り、vagrantをインストールしておく。 <a href="https://github.com/vagrant-libvirt/vagrant-libvirt" target="_blank" rel="noopener">vagrant-libvirt</a>
+によると、upstreamを
+用いることが推奨されているので、ここではあえて1.8系を用いることにする。</p>
 <h2><span id="vagrantのプラグイン追加">Vagrantのプラグイン追加</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install gdebi  # 念のため依存関係を解決しながらdebをインストールするため</span><br><span class="line">$ cd ~/Downloads</span><br><span class="line">$ wget https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_x86_64.deb</span><br><span class="line">$ sudo gdebi vagrant_1.8.7_x86_64.deb</span><br></pre></td></tr></table></figure>
 <p>続いてソースリストでdeb-srcを有効化する。 diffは以下の通り。</p>
@@ -285,12 +289,16 @@ ga('send', 'pageview');
 <h2><span id="ストレージプールdefaultの不在に関連したエラー">ストレージプールdefaultの不在に関連したエラー</span></h2>
 <p>このとき、</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">There was error while creating libvirt storage pool: Call to virStoragePoolDefineXML failed: operation failed: Storage source conflict with pool: &apos;images&apos;</span><br></pre></td></tr></table></figure>
-<p>のようなエラーが生じたが、これは <a href="https://github.com/vagrant-libvirt/vagrant-libvirt/issues/184" target="_blank" rel="noopener">デフォルトプールに関するエラーの情報</a> に掲載の課題のようだ。 <a href="https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/virtualization_administration_guide/ch13s03s03" target="_blank" rel="noopener">libvirtでストレージプールを作成</a> を参考に、ストレージプールを作成する。</p>
+<p>のようなエラーが生じたが、これは <a href="https://github.com/vagrant-libvirt/vagrant-libvirt/issues/184" target="_blank" rel="noopener">デフォルトプールに関するエラーの情報</a>
+に掲載の課題のようだ。 <a href="https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/virtualization_administration_guide/ch13s03s03" target="_blank" rel="noopener">libvirtでストレージプールを作成</a>
+を参考に、ストレージプールを作成する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo virsh pool-define-as default dir --target /var/lib/libvirt/default</span><br><span class="line">$ sudo virsh pool-build default</span><br><span class="line">$ sudo virsh pool-start default</span><br><span class="line">$ sudo virsh pool-autostart default</span><br></pre></td></tr></table></figure>
-<h2><span id="vagrant-boxのダウンロードurlに関連したエラー">Vagrant BoxのダウンロードURLに関連したエラー</span></h2>
+<h2><span id="vagrantboxのダウンロードurlに関連したエラー">Vagrant
+BoxのダウンロードURLに関連したエラー</span></h2>
 <p>つづいて、<code>vagrant up --provider=libvirt</code>しようとしたら、以下のエラーが生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">The box &apos;centos/7&apos; could not be found or</span><br><span class="line">could not be accessed in the remote catalog. If this is a private</span><br><span class="line">box on HashiCorp&apos;s Atlas, please verify you&apos;re logged in via</span><br><span class="line">`vagrant login`. Also, please double-check the name. The expanded</span><br><span class="line">URL and error message are shown below:</span><br><span class="line"></span><br><span class="line">URL: [&quot;https://atlas.hashicorp.com/centos/7&quot;]</span><br><span class="line">Error: The requested URL returned error: 404 Not Found</span><br></pre></td></tr></table></figure>
-<p><a href="https://github.com/hashicorp/vagrant/issues/9442" target="_blank" rel="noopener">VagrantのダウンロードURL関連エラーの情報</a> に記載の通り、いったん</p>
+<p><a href="https://github.com/hashicorp/vagrant/issues/9442" target="_blank" rel="noopener">VagrantのダウンロードURL関連エラーの情報</a>
+に記載の通り、いったん</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vagrant::DEFAULT_SERVER_URL.replace(&apos;https://vagrantcloud.com&apos;)</span><br></pre></td></tr></table></figure>
 <p>の記載をVagrantfileの先頭に記載する、というワークアラウンドを取り入れることにした。</p>
 
@@ -303,7 +311,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/17/vagrant-libvirt-on-Ubuntu18/" data-id="cl2nztnqg00ju5xqikc253ct1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/17/vagrant-libvirt-on-Ubuntu18/" data-id="cl2o9pbhd015q18rzi7laohhj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -554,5 +562,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

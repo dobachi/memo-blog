@@ -5,18 +5,18 @@
     
     <title>Automagicaを試してみる | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 総合的感想 Getting startedを試す 環境構築 Example 1の実行     参考  Automagicaの公式ドキュメント AutomagicaのGetting started Example 1  メモ 総合的感想 用途ごとに個別に開発されているライブラリを統合して使えるのは便利。エントリポイントが統一化され、 from automagica import *">
+    <meta name="description" content="参考 メモ  総合的感想 Getting startedを試す  環境構築 Example 1の実行     参考  Automagicaの公式ドキュメント AutomagicaのGetting started Example 1  メモ 総合的感想 用途ごとに個別に開発されているライブラリを統合して使えるのは便利。エントリポイントが統一化され、 from automagica import">
 <meta name="keywords" content="Python,Automagica,RPA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Automagicaを試してみる">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/10/22/Automagica/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 総合的感想 Getting startedを試す 環境構築 Example 1の実行     参考  Automagicaの公式ドキュメント AutomagicaのGetting started Example 1  メモ 総合的感想 用途ごとに個別に開発されているライブラリを統合して使えるのは便利。エントリポイントが統一化され、 from automagica import *">
+<meta property="og:description" content="参考 メモ  総合的感想 Getting startedを試す  環境構築 Example 1の実行     参考  Automagicaの公式ドキュメント AutomagicaのGetting started Example 1  メモ 総合的感想 用途ごとに個別に開発されているライブラリを統合して使えるのは便利。エントリポイントが統一化され、 from automagica import">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.441Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Automagicaを試してみる">
-<meta name="twitter:description" content="参考 メモ 総合的感想 Getting startedを試す 環境構築 Example 1の実行     参考  Automagicaの公式ドキュメント AutomagicaのGetting started Example 1  メモ 総合的感想 用途ごとに個別に開発されているライブラリを統合して使えるのは便利。エントリポイントが統一化され、 from automagica import *">
+<meta name="twitter:description" content="参考 メモ  総合的感想 Getting startedを試す  環境構築 Example 1の実行     参考  Automagicaの公式ドキュメント AutomagicaのGetting started Example 1  メモ 総合的感想 用途ごとに個別に開発されているライブラリを統合して使えるのは便利。エントリポイントが統一化され、 from automagica import">
     
 
     
@@ -251,12 +251,15 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#総合的感想">総合的感想</a></li>
-<li><a href="#getting-startedを試す">Getting startedを試す</a><ul>
-<li><a href="#環境構築">環境構築</a></li>
-<li><a href="#example-1の実行">Example 1の実行</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#総合的感想" id="toc-総合的感想">総合的感想</a></li>
+<li><a href="#getting-startedを試す" id="toc-getting-startedを試す">Getting startedを試す</a>
+<ul>
+<li><a href="#環境構築" id="toc-環境構築">環境構築</a></li>
+<li><a href="#example-1の実行" id="toc-example-1の実行">Example
+1の実行</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -264,12 +267,17 @@ ga('send', 'pageview');
 <h1><span id="参考">参考</span></h1>
 <ul>
 <li><a href="https://automagica.readthedocs.io/" target="_blank" rel="noopener">Automagicaの公式ドキュメント</a></li>
-<li><a href="https://automagica.readthedocs.io/#getting-started" target="_blank" rel="noopener">AutomagicaのGetting started</a></li>
-<li><a href="https://automagica.readthedocs.io/#example-1" target="_blank" rel="noopener">Example 1</a></li>
+<li><a href="https://automagica.readthedocs.io/#getting-started" target="_blank" rel="noopener">AutomagicaのGetting
+started</a></li>
+<li><a href="https://automagica.readthedocs.io/#example-1" target="_blank" rel="noopener">Example
+1</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="総合的感想">総合的感想</span></h2>
-<p>用途ごとに個別に開発されているライブラリを統合して使えるのは便利。エントリポイントが統一化され、 <code>from automagica import *</code> ですべての機能が使えるのは画期的である。 しかし以下の点は少し課題を感じた。</p>
+<p>用途ごとに個別に開発されているライブラリを統合して使えるのは便利。エントリポイントが統一化され、
+<code>from automagica import *</code>
+ですべての機能が使えるのは画期的である。
+しかし以下の点は少し課題を感じた。</p>
 <ul>
 <li>ユーザ目線で似たもの同士に感じる機能に関し、APIが異なる
 <ul>
@@ -278,8 +286,13 @@ ga('send', 'pageview');
 </ul></li>
 <li>内部的に用いられているライブラリのAPIを直接利用したいケースがあるが少しわかりづらい
 <ul>
-<li>Automagicaが提供しているAPIよりも、内部的に用いられている元ネタのライブラリのAPIの方が機能豊富（少なくとも <code>docx</code> ライブラリはそうだと思う）</li>
-<li>ということから、まずはAutomagicaのAPIを基本として使用しつつ、必要に応じて内部で用いられているライブラリのAPIを直接利用するのが良さそう。 実際に <code>OpenWordDocument</code> メソッドの戻り値は <code>docx.Document</code> クラスのインスタンス。 しかし1個目の課題と関連するが、その使い方を想起させるドキュメントやAPI仕様に見えない。 Word activities以外ではどうなのか、は、細かくは未確認。</li>
+<li>Automagicaが提供しているAPIよりも、内部的に用いられている元ネタのライブラリのAPIの方が機能豊富（少なくとも
+<code>docx</code> ライブラリはそうだと思う）</li>
+<li>ということから、まずはAutomagicaのAPIを基本として使用しつつ、必要に応じて内部で用いられているライブラリのAPIを直接利用するのが良さそう。
+実際に <code>OpenWordDocument</code> メソッドの戻り値は
+<code>docx.Document</code> クラスのインスタンス。
+しかし1個目の課題と関連するが、その使い方を想起させるドキュメントやAPI仕様に見えない。
+Word activities以外ではどうなのか、は、細かくは未確認。</li>
 </ul></li>
 <li>ドキュメントにバグがちらほら見られるのと、ドキュメント化されていない機能がある。
 <ul>
@@ -288,20 +301,32 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="getting-startedを試す">Getting startedを試す</span></h2>
 <h3><span id="環境構築">環境構築</span></h3>
-<p><a href="https://automagica.readthedocs.io/#getting-started" target="_blank" rel="noopener">AutomagicaのGetting started</a> を参考にしつつ、動かしてみる。 Anacondaにはパッケージが含まれていなかった（conda-forge含む）のでpipenvを使って環境づくり。</p>
+<p><a href="https://automagica.readthedocs.io/#getting-started" target="_blank" rel="noopener">AutomagicaのGetting
+started</a> を参考にしつつ、動かしてみる。
+Anacondaにはパッケージが含まれていなかった（conda-forge含む）のでpipenvを使って環境づくり。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; pipenv.exe --python 3.7</span><br><span class="line">&gt; pipenv.exe install jupyter</span><br><span class="line">&gt; pipenv.exe install https://github.com/OakwoodAI/automagica/tarball/master</span><br></pre></td></tr></table></figure>
-<p>なお、Python3.8系では依存関係上の問題が生じたので、いったん切り分けも兼ねて3.7で環境構築している。 <a href="https://automagica.readthedocs.io/#getting-started" target="_blank" rel="noopener">AutomagicaのGetting started</a> では、Tesseract4のインストールもオプションとして示されていたが、いったん保留とする。</p>
+<p>なお、Python3.8系では依存関係上の問題が生じたので、いったん切り分けも兼ねて3.7で環境構築している。
+<a href="https://automagica.readthedocs.io/#getting-started" target="_blank" rel="noopener">AutomagicaのGetting
+started</a>
+では、Tesseract4のインストールもオプションとして示されていたが、いったん保留とする。</p>
 <h3><span id="example-1の実行">Example 1の実行</span></h3>
-<p><a href="https://automagica.readthedocs.io/#example-1" target="_blank" rel="noopener">Example 1</a> に載っていた例を動かそうとしたが、一部エラーが生じたので手直しして実行した。</p>
+<p><a href="https://automagica.readthedocs.io/#example-1" target="_blank" rel="noopener">Example 1</a>
+に載っていた例を動かそうとしたが、一部エラーが生じたので手直しして実行した。</p>
 <p>エラー生じた箇所1：</p>
 <p>ドキュメント上は、以下のとおり。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lookup_terms.append(ExcelReadCell(excel_path, 2, col))</span><br></pre></td></tr></table></figure></p>
-<p>しかし、行と列の番号で指定するAPIは、 <code>ExcelReadRowCol</code> である。 また、例に示されていたエクセルでは1行目に検索対象文字列が含まれているため、第2引数は <code>2</code> ではなく、 <code>1</code> である。 したがって、</p>
+<p>しかし、行と列の番号で指定するAPIは、 <code>ExcelReadRowCol</code>
+である。
+また、例に示されていたエクセルでは1行目に検索対象文字列が含まれているため、第2引数は
+<code>2</code> ではなく、 <code>1</code> である。 したがって、</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lookup_terms.append(ExcelReadRowCol(excel_path, 1, col))</span><br></pre></td></tr></table></figure>
-<p>とした。 なお、ExcelReadCellメソッド、ExcelReadRowColメソッドの実装は以下の通り。（2019/10/24現在）</p>
+<p>とした。
+なお、ExcelReadCellメソッド、ExcelReadRowColメソッドの実装は以下の通り。（2019/10/24現在）</p>
 <p>automagica/activities.py:639 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def ExcelReadCell(path, cell=&quot;A1&quot;, sheet=None):</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    Read a cell from an Excel file and return its value.</span><br><span class="line">    Make sure you enter a valid path e.g. &quot;C:\\Users\\Bob\\Desktop\\RPA Examples\\data.xlsx&quot;.</span><br><span class="line">    The cell you want to read needs to be defined by a cell name e.g. &quot;A2&quot;. The third variable </span><br><span class="line">    is a string with the name of the sheet that needs to be read. If omitted, the </span><br><span class="line">    function reads the entered cell of the active sheet.</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    workbook = load_workbook(path)</span><br><span class="line">    if sheet:</span><br><span class="line">        worksheet = workbook.get_sheet_by_name(sheet)</span><br><span class="line">    else:</span><br><span class="line">        worksheet = workbook.active</span><br><span class="line"></span><br><span class="line">    return worksheet[cell].value</span><br></pre></td></tr></table></figure></p>
 <p>automagica/activities.py:656 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def ExcelReadRowCol(path, r=1, c=1, sheet=None):</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    Read a Cell from an Excel file and return its value.</span><br><span class="line">    Make sure you enter a valid path e.g. &quot;C:\\Users\\Bob\\Desktop\\RPA Examples\\data.xlsx&quot;.</span><br><span class="line">    The cell you want to read needs to be row and a column. E.g. r = 2 and c = 3 refers to cell C3. </span><br><span class="line">    The third variable needs to be a string with the name of the sheet that needs to be read. </span><br><span class="line">    If omitted, the function reads the entered cell of the active sheet. First row is defined </span><br><span class="line">    row number 1 and first column is defined column number 1.</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    workbook = load_workbook(path)</span><br><span class="line">    if sheet:</span><br><span class="line">        worksheet = workbook.get_sheet_by_name(sheet)</span><br><span class="line">    else:</span><br><span class="line">        worksheet = workbook.active</span><br><span class="line"></span><br><span class="line">    return worksheet.cell(row=r, column=c).value</span><br></pre></td></tr></table></figure></p>
 <p>エラーが生じた箇所2：</p>
-<p>ドキュメント上では、読み込んだ文字列のリストをそのまま使っているが、 そのままではリスト後半に <code>None</code> が混ざることがある。 そこで、リストをフィルタするようにした。</p>
+<p>ドキュメント上では、読み込んだ文字列のリストをそのまま使っているが、
+そのままではリスト後半に <code>None</code> が混ざることがある。
+そこで、リストをフィルタするようにした。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lookup_terms = list(filter(lambda x: x is not None, lookup_terms))</span><br></pre></td></tr></table></figure>
 <p>エラーが生じた箇所3：</p>
 <p>ドキュメント上では、以下の通り。</p>
@@ -320,7 +345,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/10/22/Automagica/" data-id="cl2nztnka001z5xqioag4p18w" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/10/22/Automagica/" data-id="cl2o9pb4n001i18rz5wxv48aj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -571,5 +596,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

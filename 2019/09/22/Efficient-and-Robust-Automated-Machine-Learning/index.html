@@ -5,18 +5,18 @@
     
     <title>Efficient and Robust Automated Machine Learning | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 論文メモ 概要 1. Introduction 2 AutoML as a CASH problem 3 New methods for increasing efﬁciency and robustness of AutoML 5 Comparing AUTO-SKLEARN to AUTO-WEKA and HYPEROPT-SKLEARN 6 Evaluation of the">
+    <meta name="description" content="参考 論文メモ  概要 1. Introduction 2 AutoML as a CASH problem 3 New methods for increasing efﬁciency and robustness of AutoML 5 Comparing AUTO-SKLEARN to AUTO-WEKA and HYPEROPT-SKLEARN 6 Evaluation of the">
 <meta name="keywords" content="Machine Learning,AutoML,Machine Learning Lifecycle&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Efficient and Robust Automated Machine Learning">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/09/22/Efficient-and-Robust-Automated-Machine-Learning/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 論文メモ 概要 1. Introduction 2 AutoML as a CASH problem 3 New methods for increasing efﬁciency and robustness of AutoML 5 Comparing AUTO-SKLEARN to AUTO-WEKA and HYPEROPT-SKLEARN 6 Evaluation of the">
+<meta property="og:description" content="参考 論文メモ  概要 1. Introduction 2 AutoML as a CASH problem 3 New methods for increasing efﬁciency and robustness of AutoML 5 Comparing AUTO-SKLEARN to AUTO-WEKA and HYPEROPT-SKLEARN 6 Evaluation of the">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Efficient and Robust Automated Machine Learning">
-<meta name="twitter:description" content="参考 論文メモ 概要 1. Introduction 2 AutoML as a CASH problem 3 New methods for increasing efﬁciency and robustness of AutoML 5 Comparing AUTO-SKLEARN to AUTO-WEKA and HYPEROPT-SKLEARN 6 Evaluation of the">
+<meta name="twitter:description" content="参考 論文メモ  概要 1. Introduction 2 AutoML as a CASH problem 3 New methods for increasing efﬁciency and robustness of AutoML 5 Comparing AUTO-SKLEARN to AUTO-WEKA and HYPEROPT-SKLEARN 6 Evaluation of the">
     
 
     
@@ -251,30 +251,39 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#論文メモ">論文メモ</a><ul>
-<li><a href="#概要">概要</a></li>
-<li><a href="#introduction">1. Introduction</a></li>
-<li><a href="#automl-as-a-cash-problem">2 AutoML as a CASH problem</a></li>
-<li><a href="#new-methods-for-increasing-efﬁciency-and-robustness-of-automl">3 New methods for increasing efﬁciency and robustness of AutoML</a></li>
-<li><a href="#comparing-auto-sklearn-to-auto-weka-and-hyperopt-sklearn">5 Comparing AUTO-SKLEARN to AUTO-WEKA and HYPEROPT-SKLEARN</a></li>
-<li><a href="#evaluation-of-the-proposed-automl-improvements">6 Evaluation of the proposed AutoML improvements</a></li>
-<li><a href="#detailed-analysis-of-auto-sklearn-components">7 Detailed analysis of AUTO-SKLEARN components</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#論文メモ" id="toc-論文メモ">論文メモ</a>
+<ul>
+<li><a href="#概要" id="toc-概要">概要</a></li>
+<li><a href="#introduction" id="toc-introduction">1.
+Introduction</a></li>
+<li><a href="#automl-as-a-cash-problem" id="toc-automl-as-a-cash-problem">2 AutoML as a CASH problem</a></li>
+<li><a href="#new-methods-for-increasing-efﬁciency-and-robustness-of-automl" id="toc-new-methods-for-increasing-efﬁciency-and-robustness-of-automl">3
+New methods for increasing efﬁciency and robustness of AutoML</a></li>
+<li><a href="#comparing-auto-sklearn-to-auto-weka-and-hyperopt-sklearn" id="toc-comparing-auto-sklearn-to-auto-weka-and-hyperopt-sklearn">5
+Comparing AUTO-SKLEARN to AUTO-WEKA and HYPEROPT-SKLEARN</a></li>
+<li><a href="#evaluation-of-the-proposed-automl-improvements" id="toc-evaluation-of-the-proposed-automl-improvements">6 Evaluation of
+the proposed AutoML improvements</a></li>
+<li><a href="#detailed-analysis-of-auto-sklearn-components" id="toc-detailed-analysis-of-auto-sklearn-components">7 Detailed
+analysis of AUTO-SKLEARN components</a></li>
 </ul></li>
-<li><a href="#動作確認">動作確認</a><ul>
-<li><a href="#依存ライブラリのインストール">依存ライブラリのインストール</a></li>
-<li><a href="#pipenv使って環境構築">pipenv使って環境構築</a></li>
-<li><a href="#依存関係とパッケージをインストールしようとしたらエラーで試行錯誤">依存関係とパッケージをインストールしようとしたらエラーで試行錯誤</a></li>
-<li><a href="#依存関係のインストールとパッケージのインストール2度め">依存関係のインストールとパッケージのインストール（2度め）</a><ul>
-<li><a href="#参考centos7ではswig3をインストールすること">参考）CentOS7ではSwig3をインストールすること</a></li>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a>
+<ul>
+<li><a href="#依存ライブラリのインストール" id="toc-依存ライブラリのインストール">依存ライブラリのインストール</a></li>
+<li><a href="#pipenv使って環境構築" id="toc-pipenv使って環境構築">pipenv使って環境構築</a></li>
+<li><a href="#依存関係とパッケージをインストールしようとしたらエラーで試行錯誤" id="toc-依存関係とパッケージをインストールしようとしたらエラーで試行錯誤">依存関係とパッケージをインストールしようとしたらエラーで試行錯誤</a></li>
+<li><a href="#依存関係のインストールとパッケージのインストール2度め" id="toc-依存関係のインストールとパッケージのインストール2度め">依存関係のインストールとパッケージのインストール（2度め）</a>
+<ul>
+<li><a href="#参考centos7ではswig3をインストールすること" id="toc-参考centos7ではswig3をインストールすること">参考）CentOS7ではSwig3をインストールすること</a></li>
 </ul></li>
-<li><a href="#メモリエラー">メモリエラー</a></li>
+<li><a href="#メモリエラー" id="toc-メモリエラー">メモリエラー</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="http://papers.nips.cc/paper/5872-efficient-and-robust-automated-machine-learning.pdf" target="_blank" rel="noopener">Efficient and Robust Automated Machine Learning</a></li>
+<li><a href="http://papers.nips.cc/paper/5872-efficient-and-robust-automated-machine-learning.pdf" target="_blank" rel="noopener">Efficient
+and Robust Automated Machine Learning</a></li>
 <li><a href="https://papers.nips.cc/paper/5872-efficient-and-robust-automated-machine-learning" target="_blank" rel="noopener">NIPS</a></li>
 <li><a href="https://www.openml.org/" target="_blank" rel="noopener">OpenML</a></li>
 <li><a href="https://github.com/automl/auto-sklearn" target="_blank" rel="noopener">auto-sklearnのGitHub</a></li>
@@ -284,7 +293,10 @@ ga('send', 'pageview');
 <h1><span id="論文メモ">論文メモ</span></h1>
 <p>気になったところをメモする。</p>
 <h2><span id="概要">概要</span></h2>
-<p>いわゆるAutoMLの一種。 特徴量処理、アルゴリズム選択、ハイパーパラメータチューニングを実施。 さらに、メタ学習とアンサンブル構成も改善として対応。 scikit-learnベースのAutoML。</p>
+<p>いわゆるAutoMLの一種。
+特徴量処理、アルゴリズム選択、ハイパーパラメータチューニングを実施。
+さらに、メタ学習とアンサンブル構成も改善として対応。
+scikit-learnベースのAutoML。</p>
 <p>auto-sklearnと呼ぶ。</p>
 <p>GitHub上にソースコードが公開されている。</p>
 <p>同様のデータセットに対する過去の性能を考慮し、アンサンブルを構成する。</p>
@@ -304,55 +316,76 @@ ga('send', 'pageview');
 <li>数多くのデータセットで実験</li>
 </ul>
 <h2><span id="2-automl-as-a-cash-problem">2 AutoML as a CASH problem</span></h2>
-<p>ここで扱う課題をCombined Algorithm Selection and Hyperparameter optimization (CASH) と呼ぶ。</p>
+<p>ここで扱う課題をCombined Algorithm Selection and Hyperparameter
+optimization (CASH) と呼ぶ。</p>
 <p>ポイントは、</p>
 <ul>
 <li>ひとつの機械学習手法がすべてのデータセットに対して有効ではない</li>
 <li>機械学習手法によってはハイパーパラメータチューニングが必要</li>
 </ul>
 <p>ということ。 それらを単一の最適化問題として数式化できる。</p>
-<p>Auto-wekaで用いられたツリーベースのベイジアン最適化は、ガウシアンプロセスモデルを用いる。 低次元の数値型のハイパパラメータには有効。 しかし、ツリーベースのアルゴリズムは高次元で離散値にも対応可能。 Hyperopt-sklearnのAutoMLシステムで用いられている。</p>
+<p>Auto-wekaで用いられたツリーベースのベイジアン最適化は、ガウシアンプロセスモデルを用いる。
+低次元の数値型のハイパパラメータには有効。
+しかし、ツリーベースのアルゴリズムは高次元で離散値にも対応可能。
+Hyperopt-sklearnのAutoMLシステムで用いられている。</p>
 <p>提案手法では、ランダムフォレストベースのSMACを採用。</p>
-<h2><span id="3-new-methods-for-increasing-efficiency-and-robustness-of-automl">3 New methods for increasing efﬁciency and robustness of AutoML</span></h2>
+<h2><span id="3new-methods-for-increasing-efficiency-and-robustness-of-automl">3
+New methods for increasing efﬁciency and robustness of AutoML</span></h2>
 <p>提案手法のポイント</p>
 <ul>
 <li>ベイジアン最適化のウォームスタート</li>
 <li>アンサンブル構築の自動化</li>
 </ul>
 <p>まずウォームスタートについて。</p>
-<p>メタ学習は素早いが粗い。ベイジアン最適化はスタートが遅いが精度が高い。 これを組み合わせる。</p>
+<p>メタ学習は素早いが粗い。ベイジアン最適化はスタートが遅いが精度が高い。
+これを組み合わせる。</p>
 <p>既存手法でも同様の試みがあったが、複雑な機械学習モデルや多次元のパラメータには適用されていない？</p>
 <p><a href="https://www.openml.org/" target="_blank" rel="noopener">OpenML</a> を利用し、メタ学習。</p>
 <p>つづいてアンサンブル構築について。</p>
-<p>単一の結果を用いるよりも、アンサンブルを組んだほうが良い。 アンサンブル構成の際には重みを用いる。重みの学習にはいくつかの手法を試した。 Caruana et al. のensemble selectionを利用。</p>
-<h2><span id="5-comparing-auto-sklearn-to-auto-weka-and-hyperopt-sklearn">5 Comparing AUTO-SKLEARN to AUTO-WEKA and HYPEROPT-SKLEARN</span></h2>
-<p>AUTO-SKLEARNをそれぞれ既存手法であるAUTO-WEKAとHYPEROPT-SKLEARNと比較。 （エラーレート？で比較）</p>
-<p>AUTO-WEKAに比べて概ね良好。 一方HYPEROPT-SKLEARNは正常に動かないことがあった。</p>
-<h2><span id="6-evaluation-of-the-proposed-automl-improvements">6 Evaluation of the proposed AutoML improvements</span></h2>
-<p>OpenMLレポジトリのデータを使って、パフォーマンスの一般性を確認。 テキスト分類、数字や文字の認識、遺伝子やRNAの分類、広告、望遠鏡データの小片分析、組織からのがん細胞検知。</p>
+<p>単一の結果を用いるよりも、アンサンブルを組んだほうが良い。
+アンサンブル構成の際には重みを用いる。重みの学習にはいくつかの手法を試した。
+Caruana et al. のensemble selectionを利用。</p>
+<h2><span id="5comparing-auto-sklearn-to-auto-weka-and-hyperopt-sklearn">5
+Comparing AUTO-SKLEARN to AUTO-WEKA and HYPEROPT-SKLEARN</span></h2>
+<p>AUTO-SKLEARNをそれぞれ既存手法であるAUTO-WEKAとHYPEROPT-SKLEARNと比較。
+（エラーレート？で比較）</p>
+<p>AUTO-WEKAに比べて概ね良好。
+一方HYPEROPT-SKLEARNは正常に動かないことがあった。</p>
+<h2><span id="6-evaluation-ofthe-proposed-automl-improvements">6 Evaluation of
+the proposed AutoML improvements</span></h2>
+<p>OpenMLレポジトリのデータを使って、パフォーマンスの一般性を確認。
+テキスト分類、数字や文字の認識、遺伝子やRNAの分類、広告、望遠鏡データの小片分析、組織からのがん細胞検知。</p>
 <p>メタ学習あり・なし、アンサンブル構成あり・なしで動作確認。</p>
-<h2><span id="7-detailed-analysis-of-auto-sklearn-components">7 Detailed analysis of AUTO-SKLEARN components</span></h2>
+<h2><span id="7-detailedanalysis-of-auto-sklearn-components">7 Detailed
+analysis of AUTO-SKLEARN components</span></h2>
 <p>ひとつひとつの手法を解析するのは時間がかかりすぎた。</p>
-<p>ランダムフォレスト系統、AdaBoost、Gradient boostingがもっともロバストだった。 一方、SVMが特定のデータセットで性能高かった。</p>
+<p>ランダムフォレスト系統、AdaBoost、Gradient
+boostingがもっともロバストだった。
+一方、SVMが特定のデータセットで性能高かった。</p>
 <p>どのモデルも、すべてのケースで性能が高いわけではない。</p>
 <p>個別の前処理に対して比較してみても、AUTO-SKLEARNは良かった。</p>
 <h1><span id="動作確認">動作確認</span></h1>
 <h2><span id="依存ライブラリのインストール">依存ライブラリのインストール</span></h2>
-<p><a href="https://automl.github.io/auto-sklearn/master/" target="_blank" rel="noopener">auto-sklearnのドキュメント</a> を参考に動かしてみる。</p>
+<p><a href="https://automl.github.io/auto-sklearn/master/" target="_blank" rel="noopener">auto-sklearnのドキュメント</a>
+を参考に動かしてみる。</p>
 <p>予め、ビルドツールをインストールしておく。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install build-essential swig</span><br></pre></td></tr></table></figure>
 <h2><span id="pipenv使って環境構築">pipenv使って環境構築</span></h2>
 <p>pipenvを使って、おためし用の環境を作る。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv --python 3.7</span><br></pre></td></tr></table></figure>
 <h2><span id="依存関係とパッケージをインストールしようとしたらエラーで試行錯誤">依存関係とパッケージをインストールしようとしたらエラーで試行錯誤</span></h2>
-<p>今回はpipenvを使うので、公式手順を少し修正して実行。（pip -&gt; pipenvとした）</p>
+<p>今回はpipenvを使うので、公式手順を少し修正して実行。（pip -&gt;
+pipenvとした）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://raw.githubusercontent.com/automl/auto-sklearn/master/requirements.txt | xargs -n 1 -L 1 pipenv install</span><br></pre></td></tr></table></figure>
 <p>なお、requirementsの中身は以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">setuptools</span><br><span class="line">nose</span><br><span class="line">Cython</span><br><span class="line"></span><br><span class="line">numpy&gt;=1.9.0</span><br><span class="line">scipy&gt;=0.14.1</span><br><span class="line"></span><br><span class="line">scikit-learn&gt;=0.21.0,&lt;0.22</span><br><span class="line"></span><br><span class="line">lockfile</span><br><span class="line">joblib</span><br><span class="line">psutil</span><br><span class="line">pyyaml</span><br><span class="line">liac-arff</span><br><span class="line">pandas</span><br><span class="line"></span><br><span class="line">ConfigSpace&gt;=0.4.0,&lt;0.5</span><br><span class="line">pynisher&gt;=0.4.2</span><br><span class="line">pyrfr&gt;=0.7,&lt;0.9</span><br><span class="line">smac==0.8</span><br></pre></td></tr></table></figure>
 <p>論文の通り、SMACが使われるようだ。</p>
-<p>つづいて、auto-sklearn自体をインストール。 （最初から、これを実行するのではだめなのだろうか？勝手に依存関係を解決してくれるのでは？）</p>
+<p>つづいて、auto-sklearn自体をインストール。
+（最初から、これを実行するのではだめなのだろうか？勝手に依存関係を解決してくれるのでは？）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv run pip install auto-sklearn</span><br></pre></td></tr></table></figure>
-<p>なお、最初に <code>pipenv install auto-sklearn</code> していたのだがエラーで失敗したので、上記のようにvirtualenv環境下でpipインストールすることにした。 エラー内容は以下の通り。</p>
+<p>なお、最初に <code>pipenv install auto-sklearn</code>
+していたのだがエラーで失敗したので、上記のようにvirtualenv環境下でpipインストールすることにした。
+エラー内容は以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">[pipenv.exceptions.ResolutionFailure]:       req_dir=requirements_dir</span><br><span class="line">[pipenv.exceptions.ResolutionFailure]:   File &quot;/home/dobachi/.pyenv/versions/3.7.5/lib/python3.7/site-packages/pipenv/utils.py&quot;, line 726, in resolve_deps</span><br><span class="line">[pipenv.exceptions.ResolutionFailure]:       req_dir=req_dir,</span><br><span class="line">[pipenv.exceptions.ResolutionFailure]:   File &quot;/home/dobachi/.pyenv/versions/3.7.5/lib/python3.7/site-packages/pipenv/utils.py&quot;, line 480, in actually_resolve_deps</span><br><span class="line">[pipenv.exceptions.ResolutionFailure]:       resolved_tree = resolver.resolve()</span><br><span class="line">[pipenv.exceptions.ResolutionFailure]:   File &quot;/home/dobachi/.pyenv/versions/3.7.5/lib/python3.7/site-packages/pipenv/utils.py&quot;, line 395, in resolve</span><br><span class="line">[pipenv.exceptions.ResolutionFailure]:       raise ResolutionFailure(message=str(e))</span><br><span class="line">[pipenv.exceptions.ResolutionFailure]:       pipenv.exceptions.ResolutionFailure: ERROR: ERROR: Could not find a version that matches scikit-learn&lt;0.20,&lt;0.22,&gt;=0.18.0,&gt;=0.19,&gt;=0.21.0</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <p>作業効率を考え、Jupyterをインストールしておく。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv install jupyter</span><br></pre></td></tr></table></figure>
@@ -360,11 +393,19 @@ ga('send', 'pageview');
 <p>以下を実行したらエラーが出た。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import autosklearn.classification</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ModuleNotFoundError: No module named &apos;_bz2&apos;</span><br></pre></td></tr></table></figure>
-<p><a href="https://qiita.com/kizashi1122/items/2a0abcbfab99fecf16c6" target="_blank" rel="noopener">scikit-learn で No module named '_bz2' というエラーがでる問題</a> の通り、 bzip2に関する開発ライブラリが足りていない、ということらしい。 パッケージをインストールし、Pythonを再インストール。pipenvのvirtualenv環境も削除。 その後、pipenvで環境を再構築。</p>
+<p><a href="https://qiita.com/kizashi1122/items/2a0abcbfab99fecf16c6" target="_blank" rel="noopener">scikit-learn
+で No module named '_bz2' というエラーがでる問題</a> の通り、
+bzip2に関する開発ライブラリが足りていない、ということらしい。
+パッケージをインストールし、Pythonを再インストール。pipenvのvirtualenv環境も削除。
+その後、pipenvで環境を再構築。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install libbz2-dev</span><br><span class="line">$ pyenv install 3.7.5</span><br><span class="line">$ pipenv --rm</span><br><span class="line">$ pipenv install</span><br></pre></td></tr></table></figure>
-<p>なお、sklearnのバージョンでやはり失敗する？ よくみたら、pypiから2019/11/1時点でインストールできるライブラリは0.5.2であるが、 公式ドキュメントは0.6.0がリリースされているように見えた。 また対応するscikit-learnのバージョンが変わっている…。</p>
+<p>なお、sklearnのバージョンでやはり失敗する？
+よくみたら、pypiから2019/11/1時点でインストールできるライブラリは0.5.2であるが、
+公式ドキュメントは0.6.0がリリースされているように見えた。
+また対応するscikit-learnのバージョンが変わっている…。</p>
 <h2><span id="依存関係のインストールとパッケージのインストール2度め">依存関係のインストールとパッケージのインストール（2度め）</span></h2>
-<p>致し方ないので、依存関係のライブラリはpipenvのPipfileからインストールし、 auto-sklearnはGitHubからダウンロードしたmasterブランチ一式をインストールすることにした。</p>
+<p>致し方ないので、依存関係のライブラリはpipenvのPipfileからインストールし、
+auto-sklearnはGitHubからダウンロードしたmasterブランチ一式をインストールすることにした。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv install</span><br><span class="line">$ pipenv install ~/Downloads.win/auto-sklearn-master.zip</span><br></pre></td></tr></table></figure>
 <p>改めてJupyter notebookを起動</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv run jupyter notebook</span><br></pre></td></tr></table></figure>
@@ -381,7 +422,8 @@ ga('send', 'pageview');
 <p>実行したらPCのCPUが100%に張り付いた！</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">y_hat = automl.predict(X_test)</span><br><span class="line">print(&quot;Accuracy score&quot;, sklearn.metrics.accuracy_score(y_test, y_hat))</span><br></pre></td></tr></table></figure>
 <h3><span id="参考centos7ではswig3をインストールすること">参考）CentOS7ではSwig3をインストールすること</span></h3>
-<p>CentOSで依存関係をインストールするときには、 <code>swig</code> ではなく <code>swig3</code> を対象とすること。</p>
+<p>CentOSで依存関係をインストールするときには、 <code>swig</code>
+ではなく <code>swig3</code> を対象とすること。</p>
 <p>でないと、以下のようなエラーが生じる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">----------------------------------------&apos;, &apos;ERROR: Command errored out with exit status 1: /home/centos/.local/share/virtualenvs/auto-sklearn-example-hzZc_yaE/bin/python3.7m -u -c \&apos;import sys, setuptools, tokenize; sys.argv[0] = \&apos;&quot;\&apos;&quot;\&apos;/tmp/pip-install-53cbwkis/pyrfr/setup.py\&apos;&quot;\&apos;&quot;\&apos;; __file__=\&apos;&quot;\&apos;&quot;\&apos;/tmp/pip-install-53cbwkis/pyrfr/setup.py\&apos;&quot;\&apos;&quot;\&apos;;f=getattr(tokenize, \&apos;&quot;\&apos;&quot;\&apos;open\&apos;&quot;\&apos;&quot;\&apos;, open)(__file__);code=f.read().replace(\&apos;&quot;\&apos;&quot;\&apos;\\r\\n\&apos;&quot;\&apos;&quot;\&apos;, \&apos;&quot;\&apos;&quot;\&apos;\\n\&apos;&quot;\&apos;&quot;\&apos;);f.close();exec(compile(code, __file__, \&apos;&quot;\&apos;&quot;\&apos;exec\&apos;&quot;\&apos;&quot;\&apos;))\&apos; install --record /tmp/pip-record-udozwz5v/install-record.txt --single-version-externally-managed --compile --install-headers /home/centos/.local/share/virtualenvs/auto-sklearn-example-hzZc_yaE/include/site/python3.7/pyrfr Check the logs for full command output.&apos;]</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <h2><span id="メモリエラー">メモリエラー</span></h2>
@@ -399,7 +441,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/09/22/Efficient-and-Robust-Automated-Machine-Learning/" data-id="cl2nztnlc004l5xqipep2c7if" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/09/22/Efficient-and-Robust-Automated-Machine-Learning/" data-id="cl2o9pbgl014f18rzbl0puug3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -650,5 +692,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

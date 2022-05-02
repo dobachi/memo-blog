@@ -5,18 +5,18 @@
     
     <title>Getting started Spark on k8s | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="メモ 基本的な流れ ビルド 実行 （補足）ビルドされたイメージを起動して内容確認 （補足）Minikube使う場合のリソース設定についての注意事項  （補足）Kubernetes環境 （補足）ボリュームのマウントについて （補足）上記例ではサービスアカウントを作成しているが・・・  参考   メモ このメモは、Spark3.2.0をKubernetes上で動かすことを簡単に紹介するものである">
+    <meta name="description" content="メモ  基本的な流れ  ビルド 実行 （補足）ビルドされたイメージを起動して内容確認 （補足）Minikube使う場合のリソース設定についての注意事項  （補足）Kubernetes環境 （補足）ボリュームのマウントについて （補足）上記例ではサービスアカウントを作成しているが・・・  参考   メモ このメモは、Spark3.2.0をKubernetes上で動かすことを簡単に紹介するもので">
 <meta name="keywords" content="Apache Spark,Kubernetes">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Getting started Spark on k8s">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2022/01/07/Getting-started-Spark-on-k8s/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="メモ 基本的な流れ ビルド 実行 （補足）ビルドされたイメージを起動して内容確認 （補足）Minikube使う場合のリソース設定についての注意事項  （補足）Kubernetes環境 （補足）ボリュームのマウントについて （補足）上記例ではサービスアカウントを作成しているが・・・  参考   メモ このメモは、Spark3.2.0をKubernetes上で動かすことを簡単に紹介するものである">
+<meta property="og:description" content="メモ  基本的な流れ  ビルド 実行 （補足）ビルドされたイメージを起動して内容確認 （補足）Minikube使う場合のリソース設定についての注意事項  （補足）Kubernetes環境 （補足）ボリュームのマウントについて （補足）上記例ではサービスアカウントを作成しているが・・・  参考   メモ このメモは、Spark3.2.0をKubernetes上で動かすことを簡単に紹介するもので">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Getting started Spark on k8s">
-<meta name="twitter:description" content="メモ 基本的な流れ ビルド 実行 （補足）ビルドされたイメージを起動して内容確認 （補足）Minikube使う場合のリソース設定についての注意事項  （補足）Kubernetes環境 （補足）ボリュームのマウントについて （補足）上記例ではサービスアカウントを作成しているが・・・  参考   メモ このメモは、Spark3.2.0をKubernetes上で動かすことを簡単に紹介するものである">
+<meta name="twitter:description" content="メモ  基本的な流れ  ビルド 実行 （補足）ビルドされたイメージを起動して内容確認 （補足）Minikube使う場合のリソース設定についての注意事項  （補足）Kubernetes環境 （補足）ボリュームのマウントについて （補足）上記例ではサービスアカウントを作成しているが・・・  参考   メモ このメモは、Spark3.2.0をKubernetes上で動かすことを簡単に紹介するもので">
     
 
     
@@ -251,62 +251,85 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#基本的な流れ">基本的な流れ</a><ul>
-<li><a href="#ビルド">ビルド</a></li>
-<li><a href="#実行">実行</a></li>
-<li><a href="#補足ビルドされたイメージを起動して内容確認">（補足）ビルドされたイメージを起動して内容確認</a></li>
-<li><a href="#補足minikube使う場合のリソース設定についての注意事項">（補足）Minikube使う場合のリソース設定についての注意事項</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#基本的な流れ" id="toc-基本的な流れ">基本的な流れ</a>
+<ul>
+<li><a href="#ビルド" id="toc-ビルド">ビルド</a></li>
+<li><a href="#実行" id="toc-実行">実行</a></li>
+<li><a href="#補足ビルドされたイメージを起動して内容確認" id="toc-補足ビルドされたイメージを起動して内容確認">（補足）ビルドされたイメージを起動して内容確認</a></li>
+<li><a href="#補足minikube使う場合のリソース設定についての注意事項" id="toc-補足minikube使う場合のリソース設定についての注意事項">（補足）Minikube使う場合のリソース設定についての注意事項</a></li>
 </ul></li>
-<li><a href="#補足kubernetes環境">（補足）Kubernetes環境</a></li>
-<li><a href="#補足ボリュームのマウントについて">（補足）ボリュームのマウントについて</a></li>
-<li><a href="#補足上記例ではサービスアカウントを作成しているが">（補足）上記例ではサービスアカウントを作成しているが・・・</a></li>
+<li><a href="#補足kubernetes環境" id="toc-補足kubernetes環境">（補足）Kubernetes環境</a></li>
+<li><a href="#補足ボリュームのマウントについて" id="toc-補足ボリュームのマウントについて">（補足）ボリュームのマウントについて</a></li>
+<li><a href="#補足上記例ではサービスアカウントを作成しているが" id="toc-補足上記例ではサービスアカウントを作成しているが">（補足）上記例ではサービスアカウントを作成しているが・・・</a></li>
 </ul></li>
-<li><a href="#参考">参考</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
 </ul>
 </div>
 <h1><span id="メモ">メモ</span></h1>
-<p>このメモは、Spark3.2.0をKubernetes上で動かすことを簡単に紹介するものである。 なお、日本語での説明としては、 <a href="https://www.slideshare.net/nttdata-tech/apache-spark-kubernetes-osc2021-online-hiroshima-nttdata" target="_blank" rel="noopener">Apache Spark on Kubernetes入門（Open Source Conference 2021 Online Hiroshima 発表資料）</a> がとても分かりやすいので参考になる。</p>
+<p>このメモは、Spark3.2.0をKubernetes上で動かすことを簡単に紹介するものである。
+なお、日本語での説明としては、 <a href="https://www.slideshare.net/nttdata-tech/apache-spark-kubernetes-osc2021-online-hiroshima-nttdata" target="_blank" rel="noopener">Apache
+Spark on Kubernetes入門（Open Source Conference 2021 Online Hiroshima
+発表資料）</a> がとても分かりやすいので参考になる。</p>
 <h2><span id="基本的な流れ">基本的な流れ</span></h2>
-<p>公式の <a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html" target="_blank" rel="noopener">Running Spark on Kubernetes</a> の通りでよい。</p>
+<p>公式の <a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html" target="_blank" rel="noopener">Running
+Spark on Kubernetes</a> の通りでよい。</p>
 <h3><span id="ビルド">ビルド</span></h3>
-<p>まずは、パッケージに含まれているDockerfileを利用して、Dockerイメージを自分でビルドする。 今回はMinikube環境で動かしているので <code>-m</code> オプションを利用した。</p>
+<p>まずは、パッケージに含まれているDockerfileを利用して、Dockerイメージを自分でビルドする。
+今回はMinikube環境で動かしているので <code>-m</code>
+オプションを利用した。</p>
 <p>簡易的な例</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/docker-image-tool.sh -m -t testing build</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> /opt/spark/default/bin/docker-image-tool.sh -m -t testing build</span><br></pre></td></tr></table></figure>
 <p>Minikube内のDockerでイメージ一覧を確認すると以下の通り。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">eval</span> $(minikube -p minikube docker-env)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker images</span></span><br><span class="line">REPOSITORY                                TAG           IMAGE ID       CREATED          SIZE</span><br><span class="line">spark                                     testing       e19cebbf23e7   44 minutes ago   602MB</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> eval $(minikube -p minikube docker-env)</span><br><span class="line"><span class="meta">$</span> docker images</span><br><span class="line">REPOSITORY                                TAG           IMAGE ID       CREATED          SIZE</span><br><span class="line">spark                                     testing       e19cebbf23e7   44 minutes ago   602MB</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <h3><span id="実行">実行</span></h3>
 <p>サービスアカウントを作る。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> minikube kubectl -- create serviceaccount spark</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> minikube kubectl -- create clusterrolebinding spark-role --clusterrole=edit --serviceaccount=default:spark --namespace=default</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> minikube kubectl -- get serviceaccount</span></span><br><span class="line">NAME      SECRETS   AGE</span><br><span class="line">default   1         179m</span><br><span class="line">spark     1         2m39s</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> minikube kubectl -- create serviceaccount spark</span><br><span class="line"><span class="meta">$</span> minikube kubectl -- create clusterrolebinding spark-role --clusterrole=edit --serviceaccount=default:spark --namespace=default</span><br><span class="line"><span class="meta">$</span> minikube kubectl -- get serviceaccount</span><br><span class="line">NAME      SECRETS   AGE</span><br><span class="line">default   1         179m</span><br><span class="line">spark     1         2m39s</span><br></pre></td></tr></table></figure>
 <p>実行は以下の通り。先ほど作ったサービスアカウントを使用するようにする。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-submit --master k8s://https://192.168.49.2:8443 --deploy-mode cluster --name pi --class org.apache.spark.examples.SparkPi --conf spark.executor.instances=2 --conf spark.kubernetes.container.image=spark:testing --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark <span class="built_in">local</span>:///opt/spark/examples/jars/spark-examples_2.12-3.2.0.jar</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> /opt/spark/default/bin/spark-submit --master k8s://https://192.168.49.2:8443 --deploy-mode cluster --name pi --class org.apache.spark.examples.SparkPi --conf spark.executor.instances=2 --conf spark.kubernetes.container.image=spark:testing --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark local:///opt/spark/examples/jars/spark-examples_2.12-3.2.0.jar</span><br></pre></td></tr></table></figure>
 <p>なお、今回はMinikube上で実行しており、Jarファイルとして指定するのはMinikube内で起動したドライバのコンテナ内のローカルファイルシステムパスである。試しに、当該近店をアタッチして起動するとわかる。</p>
 <p>ドライバのログを確認する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> minikube kubectl -- logs pi-43bff77e450bdba3-driver</span></span><br><span class="line">(snip)</span><br><span class="line">22/01/10 17:32:02 INFO TaskSchedulerImpl: Killing all running tasks in stage 0: Stage finished</span><br><span class="line">22/01/10 17:32:02 INFO DAGScheduler: Job 0 finished: reduce at SparkPi.scala:38, took 0.824388 s</span><br><span class="line">Pi is roughly 3.142475712378562</span><br><span class="line">22/01/10 17:32:02 INFO SparkUI: Stopped Spark web UI at http://pi-43bff77e450bdba3-driver-svc.default.svc:4040</span><br><span class="line">22/01/10 17:32:02 INFO KubernetesClusterSchedulerBackend: Shutting down all executors</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> minikube kubectl -- logs pi-43bff77e450bdba3-driver</span><br><span class="line">(snip)</span><br><span class="line">22/01/10 17:32:02 INFO TaskSchedulerImpl: Killing all running tasks in stage 0: Stage finished</span><br><span class="line">22/01/10 17:32:02 INFO DAGScheduler: Job 0 finished: reduce at SparkPi.scala:38, took 0.824388 s</span><br><span class="line">Pi is roughly 3.142475712378562</span><br><span class="line">22/01/10 17:32:02 INFO SparkUI: Stopped Spark web UI at http://pi-43bff77e450bdba3-driver-svc.default.svc:4040</span><br><span class="line">22/01/10 17:32:02 INFO KubernetesClusterSchedulerBackend: Shutting down all executors</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <p>pi計算の結果がログに出力されているのがわかる。</p>
 <h3><span id="補足ビルドされたイメージを起動して内容確認">（補足）ビルドされたイメージを起動して内容確認</span></h3>
 <p>以下は、MinikubeのDockerを利用しビルドしたイメージのコンテナを起動して、シェルをアタッチした例。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">eval</span> $(minikube -p minikube docker-env)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -it --rm spark:testing /bin/bash</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> eval $(minikube -p minikube docker-env)</span><br><span class="line"><span class="meta">$</span> docker run -it --rm spark:testing /bin/bash</span><br></pre></td></tr></table></figure>
 <h3><span id="補足minikube使う場合のリソース設定についての注意事項">（補足）Minikube使う場合のリソース設定についての注意事項</span></h3>
-<p><a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html#prerequisites" target="_blank" rel="noopener">Prerequisites</a> の通り、Minikube等を使うようであれば、リソースに対して注意がある。 以下、Minikube立ち上げ例。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> minikube start --memory=<span class="string">'4g'</span> --cpus=3</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html#prerequisites" target="_blank" rel="noopener">Prerequisites</a>
+の通り、Minikube等を使うようであれば、リソースに対して注意がある。
+以下、Minikube立ち上げ例。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> minikube start --memory='4g' --cpus=3</span><br></pre></td></tr></table></figure>
 <h2><span id="補足kubernetes環境">（補足）Kubernetes環境</span></h2>
 <p>動作確認のためには、Kubernetes環境が必要である。</p>
-<p><a href="https://minikube.sigs.k8s.io/docs/start/" target="_blank" rel="noopener">minikube start</a> あたりを参考に環境構築しておくこと。</p>
+<p><a href="https://minikube.sigs.k8s.io/docs/start/" target="_blank" rel="noopener">minikube start</a>
+あたりを参考に環境構築しておくこと。</p>
 <h2><span id="補足ボリュームのマウントについて">（補足）ボリュームのマウントについて</span></h2>
-<p><a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html#volume-mounts" target="_blank" rel="noopener">volume-mounts</a> の通り、DriverやExecutorのPodにボリュームをマウントできるのだが、 HostPathに関するリスクがあるようだ。 <a href="https://kubernetes.io/docs/concepts/storage/volumes/#hostpath" target="_blank" rel="noopener">KubernetesのhostPathについて</a> を参照。</p>
+<p><a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html#volume-mounts" target="_blank" rel="noopener">volume-mounts</a>
+の通り、DriverやExecutorのPodにボリュームをマウントできるのだが、
+HostPathに関するリスクがあるようだ。 <a href="https://kubernetes.io/docs/concepts/storage/volumes/#hostpath" target="_blank" rel="noopener">KubernetesのhostPathについて</a>
+を参照。</p>
 <h2><span id="補足上記例ではサービスアカウントを作成しているが">（補足）上記例ではサービスアカウントを作成しているが・・・</span></h2>
-<p>もし <code>default</code> サービスアカウントを利用すると以下に記載されたのと同様のエラーを生じる。</p>
-<p><a href="https://stackoverflow.com/questions/55498702/how-to-fix-forbiddenconfigured-service-account-doesnt-have-access-with-spark" target="_blank" rel="noopener">How to fix "Forbidden!Configured service account doesn't have access" with Spark on Kubernetes?</a></p>
+<p>もし <code>default</code>
+サービスアカウントを利用すると以下に記載されたのと同様のエラーを生じる。</p>
+<p><a href="https://stackoverflow.com/questions/55498702/how-to-fix-forbiddenconfigured-service-account-doesnt-have-access-with-spark" target="_blank" rel="noopener">How
+to fix "Forbidden!Configured service account doesn't have access" with
+Spark on Kubernetes?</a></p>
 <p>そこで、あらかじめサービスアカウントを作成して使うようにした。</p>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html" target="_blank" rel="noopener">Running Spark on Kubernetes</a></li>
+<li><a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html" target="_blank" rel="noopener">Running
+Spark on Kubernetes</a></li>
 <li><a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html#volume-mounts" target="_blank" rel="noopener">volume-mounts</a></li>
 <li><a href="https://kubernetes.io/docs/concepts/storage/volumes/#hostpath" target="_blank" rel="noopener">KubernetesのhostPathについて</a></li>
-<li><a href="https://minikube.sigs.k8s.io/docs/start/" target="_blank" rel="noopener">minikube start</a></li>
-<li><a href="https://www.slideshare.net/nttdata-tech/apache-spark-kubernetes-osc2021-online-hiroshima-nttdata" target="_blank" rel="noopener">Apache Spark on Kubernetes入門（Open Source Conference 2021 Online Hiroshima 発表資料）</a></li>
-<li><a href="https://stackoverflow.com/questions/55498702/how-to-fix-forbiddenconfigured-service-account-doesnt-have-access-with-spark" target="_blank" rel="noopener">How to fix "Forbidden!Configured service account doesn't have access" with Spark on Kubernetes?</a></li>
+<li><a href="https://minikube.sigs.k8s.io/docs/start/" target="_blank" rel="noopener">minikube
+start</a></li>
+<li><a href="https://www.slideshare.net/nttdata-tech/apache-spark-kubernetes-osc2021-online-hiroshima-nttdata" target="_blank" rel="noopener">Apache
+Spark on Kubernetes入門（Open Source Conference 2021 Online Hiroshima
+発表資料）</a></li>
+<li><a href="https://stackoverflow.com/questions/55498702/how-to-fix-forbiddenconfigured-service-account-doesnt-have-access-with-spark" target="_blank" rel="noopener">How
+to fix "Forbidden!Configured service account doesn't have access" with
+Spark on Kubernetes?</a></li>
 </ul>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -319,7 +342,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Getting-started-Spark-on-k8s/" data-id="cl2nztnlp005p5xqinpfcsjyx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Getting-started-Spark-on-k8s/" data-id="cl2o9pb5n003w18rzkm9fj2n6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -570,5 +593,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

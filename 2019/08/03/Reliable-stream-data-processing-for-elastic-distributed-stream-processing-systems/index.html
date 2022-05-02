@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  Reliable stream data processing for elastic distributed stream processing systems  メモ Reliable stream data processing for elastic distributed stream processing systems では、 弾力性を有するストリーム処">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Reliable stream data processing for elastic distributed stream processing systems">
 <meta name="twitter:description" content="参考 メモ   参考  Reliable stream data processing for elastic distributed stream processing systems  メモ Reliable stream data processing for elastic distributed stream processing systems では、 弾力性を有するストリーム処">
@@ -251,16 +251,21 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://link.springer.com/article/10.1007/s10586-019-02939-9" target="_blank" rel="noopener">Reliable stream data processing for elastic distributed stream processing systems</a></li>
+<li><a href="https://link.springer.com/article/10.1007/s10586-019-02939-9" target="_blank" rel="noopener">Reliable
+stream data processing for elastic distributed stream processing
+systems</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://link.springer.com/article/10.1007/s10586-019-02939-9" target="_blank" rel="noopener">Reliable stream data processing for elastic distributed stream processing systems</a> では、 弾力性を有するストリーム処理エンジン（Distributed Stream Processing System: DSPS）の さらなる課題について触れている。</p>
+<p><a href="https://link.springer.com/article/10.1007/s10586-019-02939-9" target="_blank" rel="noopener">Reliable
+stream data processing for elastic distributed stream processing
+systems</a> では、 弾力性を有するストリーム処理エンジン（Distributed
+Stream Processing System: DSPS）の さらなる課題について触れている。</p>
 <ul>
 <li>動的にオペレータがスケールアップ、ダウンする中で、データのバックアップの一貫性を保つ故障耐性が必要がある</li>
 <li>チェックポイントへのロールバックが、直近のオートスケール調整を元に戻らせる可能性がある</li>
@@ -276,7 +281,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/03/Reliable-stream-data-processing-for-elastic-distributed-stream-processing-systems/" data-id="cl2nztnnq00c45xqi3v35a4vz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/03/Reliable-stream-data-processing-for-elastic-distributed-stream-processing-systems/" data-id="cl2o9pb7m008r18rzbstib7nj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -527,5 +532,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

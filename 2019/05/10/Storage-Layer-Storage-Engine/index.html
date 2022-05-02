@@ -5,18 +5,18 @@
     
     <title>Storage Layer ? Storage Engine ? | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 データベースエンジン あるいは ストレージエンジン Apache Parquet Delta Lake Apache Hudi Alluxio AWS Aurora Apache HBase Apache Kudu  メモ 動機 どういうユースケースを想定するか？ どういう特徴を持つストレージを探るか？ データベースエンジン あるいは ストレージエンジン Apache Parquet">
+    <meta name="description" content="参考  データベースエンジン あるいは ストレージエンジン Apache Parquet Delta Lake Apache Hudi Alluxio AWS Aurora Apache HBase Apache Kudu  メモ  動機 どういうユースケースを想定するか？ どういう特徴を持つストレージを探るか？ データベースエンジン あるいは ストレージエンジン Apache Parque">
 <meta name="keywords" content="Storage Layer,Storage Engine">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Storage Layer ? Storage Engine ?">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/05/10/Storage-Layer-Storage-Engine/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 データベースエンジン あるいは ストレージエンジン Apache Parquet Delta Lake Apache Hudi Alluxio AWS Aurora Apache HBase Apache Kudu  メモ 動機 どういうユースケースを想定するか？ どういう特徴を持つストレージを探るか？ データベースエンジン あるいは ストレージエンジン Apache Parquet">
+<meta property="og:description" content="参考  データベースエンジン あるいは ストレージエンジン Apache Parquet Delta Lake Apache Hudi Alluxio AWS Aurora Apache HBase Apache Kudu  メモ  動機 どういうユースケースを想定するか？ どういう特徴を持つストレージを探るか？ データベースエンジン あるいは ストレージエンジン Apache Parque">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Storage Layer ? Storage Engine ?">
-<meta name="twitter:description" content="参考 データベースエンジン あるいは ストレージエンジン Apache Parquet Delta Lake Apache Hudi Alluxio AWS Aurora Apache HBase Apache Kudu  メモ 動機 どういうユースケースを想定するか？ どういう特徴を持つストレージを探るか？ データベースエンジン あるいは ストレージエンジン Apache Parquet">
+<meta name="twitter:description" content="参考  データベースエンジン あるいは ストレージエンジン Apache Parquet Delta Lake Apache Hudi Alluxio AWS Aurora Apache HBase Apache Kudu  メモ  動機 どういうユースケースを想定するか？ どういう特徴を持つストレージを探るか？ データベースエンジン あるいは ストレージエンジン Apache Parque">
     
 
     
@@ -251,33 +251,42 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#データベースエンジン-あるいは-ストレージエンジン">データベースエンジン あるいは ストレージエンジン</a></li>
-<li><a href="#apache-parquet">Apache Parquet</a></li>
-<li><a href="#delta-lake">Delta Lake</a></li>
-<li><a href="#apache-hudi">Apache Hudi</a></li>
-<li><a href="#alluxio">Alluxio</a></li>
-<li><a href="#aws-aurora">AWS Aurora</a></li>
-<li><a href="#apache-hbase">Apache HBase</a></li>
-<li><a href="#apache-kudu">Apache Kudu</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#データベースエンジン-あるいは-ストレージエンジン" id="toc-データベースエンジン-あるいは-ストレージエンジン">データベースエンジン
+あるいは ストレージエンジン</a></li>
+<li><a href="#apache-parquet" id="toc-apache-parquet">Apache
+Parquet</a></li>
+<li><a href="#delta-lake" id="toc-delta-lake">Delta Lake</a></li>
+<li><a href="#apache-hudi" id="toc-apache-hudi">Apache Hudi</a></li>
+<li><a href="#alluxio" id="toc-alluxio">Alluxio</a></li>
+<li><a href="#aws-aurora" id="toc-aws-aurora">AWS Aurora</a></li>
+<li><a href="#apache-hbase" id="toc-apache-hbase">Apache HBase</a></li>
+<li><a href="#apache-kudu" id="toc-apache-kudu">Apache Kudu</a></li>
 </ul></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#動機">動機</a></li>
-<li><a href="#どういうユースケースを想定するか">どういうユースケースを想定するか？</a></li>
-<li><a href="#どういう特徴を持つストレージを探るか">どういう特徴を持つストレージを探るか？</a></li>
-<li><a href="#データベースエンジン-あるいは-ストレージエンジン-1">データベースエンジン あるいは ストレージエンジン</a></li>
-<li><a href="#apache-parquet-1">Apache Parquet</a></li>
-<li><a href="#delta-lake-1">Delta Lake</a></li>
-<li><a href="#apache-hudi-1">Apache Hudi</a></li>
-<li><a href="#alluxio-1">Alluxio</a></li>
-<li><a href="#aws-auroraのバックエンドストレージもしくはストレージエンジン">AWS Auroraのバックエンドストレージ（もしくはストレージエンジン）</a></li>
-<li><a href="#apache-hbase-1">Apache HBase</a></li>
-<li><a href="#apache-kudu-1">Apache Kudu</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#動機" id="toc-動機">動機</a></li>
+<li><a href="#どういうユースケースを想定するか" id="toc-どういうユースケースを想定するか">どういうユースケースを想定するか？</a></li>
+<li><a href="#どういう特徴を持つストレージを探るか" id="toc-どういう特徴を持つストレージを探るか">どういう特徴を持つストレージを探るか？</a></li>
+<li><a href="#データベースエンジン-あるいは-ストレージエンジン-1" id="toc-データベースエンジン-あるいは-ストレージエンジン-1">データベースエンジン
+あるいは ストレージエンジン</a></li>
+<li><a href="#apache-parquet-1" id="toc-apache-parquet-1">Apache
+Parquet</a></li>
+<li><a href="#delta-lake-1" id="toc-delta-lake-1">Delta Lake</a></li>
+<li><a href="#apache-hudi-1" id="toc-apache-hudi-1">Apache Hudi</a></li>
+<li><a href="#alluxio-1" id="toc-alluxio-1">Alluxio</a></li>
+<li><a href="#aws-auroraのバックエンドストレージもしくはストレージエンジン" id="toc-aws-auroraのバックエンドストレージもしくはストレージエンジン">AWS
+Auroraのバックエンドストレージ（もしくはストレージエンジン）</a></li>
+<li><a href="#apache-hbase-1" id="toc-apache-hbase-1">Apache
+HBase</a></li>
+<li><a href="#apache-kudu-1" id="toc-apache-kudu-1">Apache Kudu</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
-<h2><span id="データベースエンジン-あるいは-ストレージエンジン">データベースエンジン あるいは ストレージエンジン</span></h2>
+<h2><span id="データベースエンジンあるいは-ストレージエンジン">データベースエンジン
+あるいは ストレージエンジン</span></h2>
 <ul>
 <li><a href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3" target="_blank" rel="noopener">jp.wikipediaのデータベースエンジン</a></li>
 <li><a href="https://dev.mysql.com/doc/refman/5.6/ja/storage-engines.html" target="_blank" rel="noopener">MySQLの代替ストレージエンジン</a></li>
@@ -293,7 +302,8 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="apache-hudi">Apache Hudi</span></h2>
 <ul>
-<li><a href="https://hudi.incubator.apache.org/" target="_blank" rel="noopener">Apache Hudiの公式ウェブサイト</a></li>
+<li><a href="https://hudi.incubator.apache.org/" target="_blank" rel="noopener">Apache
+Hudiの公式ウェブサイト</a></li>
 <li><a href="https://hudi.incubator.apache.org/images/hudi_intro_1.png" target="_blank" rel="noopener">Hudiのイメージを表す図</a></li>
 </ul>
 <h2><span id="alluxio">Alluxio</span></h2>
@@ -311,12 +321,14 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="apache-kudu">Apache Kudu</span></h2>
 <ul>
-<li><a href="https://kudu.apache.org/" target="_blank" rel="noopener">Apache Kuduの公式ウェブサイト</a></li>
+<li><a href="https://kudu.apache.org/" target="_blank" rel="noopener">Apache
+Kuduの公式ウェブサイト</a></li>
 <li><a href="https://www.slideshare.net/Cloudera_jp/apache-kududb-dbts2017" target="_blank" rel="noopener">DBテックショーでのKudu説明</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="動機">動機</span></h2>
-<p>単にPut、Getするだけではなく、例えばデータを内部的に構造化したり、トランザクションに対応したりする機能を持つ ストレージ機能のことをなんと呼べば良いのかを考えてみる。</p>
+<p>単にPut、Getするだけではなく、例えばデータを内部的に構造化したり、トランザクションに対応したりする機能を持つ
+ストレージ機能のことをなんと呼べば良いのかを考えてみる。</p>
 <h2><span id="どういうユースケースを想定するか">どういうユースケースを想定するか？</span></h2>
 <ul>
 <li>データがストリームとして届く
@@ -338,7 +350,8 @@ ga('send', 'pageview');
 <ul>
 <li>補足：POSIXでなくてもよい？</li>
 </ul></li>
-<li>大規模データを扱える。スケーラビリティを有する。 大規模の種類には、サイズが大きいこと、件数が多いことの両方の特徴がありえる
+<li>大規模データを扱える。スケーラビリティを有する。
+大規模の種類には、サイズが大きいこと、件数が多いことの両方の特徴がありえる
 <ul>
 <li>データを高効率で圧縮できることは重要そう</li>
 </ul></li>
@@ -348,9 +361,12 @@ ga('send', 'pageview');
 <ul>
 <li>トランザクションに対応
 <ul>
-<li>ストリーム処理の出力先として用いる場合、Exactly Onceセマンティクスを 達成するためには出力先ストレージ側でトランザクション対応していることで ストリーム処理アプリケーションをシンプルにできる、はず</li>
+<li>ストリーム処理の出力先として用いる場合、Exactly Onceセマンティクスを
+達成するためには出力先ストレージ側でトランザクション対応していることで
+ストリーム処理アプリケーションをシンプルにできる、はず</li>
 </ul></li>
-<li>ストリームデータを効率的に永続化し、オンデマンドの分析向けにバックエンドで変換。 あるいは分析向けにストア可能
+<li>ストリームデータを効率的に永続化し、オンデマンドの分析向けにバックエンドで変換。
+あるいは分析向けにストア可能
 <ul>
 <li>高頻度での書き込み + 一括での読み出し</li>
 </ul></li>
@@ -365,25 +381,39 @@ ga('send', 'pageview');
 <li>更新のあるデータについて、過去のデータも取り出せる</li>
 </ul></li>
 </ul>
-<h2><span id="データベースエンジン-あるいは-ストレージエンジン">データベースエンジン あるいは ストレージエンジン</span></h2>
-<p><a href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3" target="_blank" rel="noopener">jp.wikipediaのデータベースエンジン</a> によると、</p>
+<h2><span id="データベースエンジンあるいは-ストレージエンジン">データベースエンジン
+あるいは ストレージエンジン</span></h2>
+<p><a href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3" target="_blank" rel="noopener">jp.wikipediaのデータベースエンジン</a>
+によると、</p>
 <blockquote>
-<p>データベース管理システム (DBMS)がデータベースに対しデータを 挿入、抽出、更新および削除(CRUD参照)するために使用する基礎となる ソフトウェア部品</p>
+<p>データベース管理システム (DBMS)がデータベースに対しデータを
+挿入、抽出、更新および削除(CRUD参照)するために使用する基礎となる
+ソフトウェア部品</p>
 </blockquote>
 <p>とある。</p>
-<p>MySQLの場合には、　<a href="https://dev.mysql.com/doc/refman/5.6/ja/storage-engines.html" target="_blank" rel="noopener">MySQLの代替ストレージエンジン</a> に載っているようなものが該当する。 なお、デフォルトはInnoDB。 <a href="https://dev.mysql.com/doc/refman/5.6/ja/innodb-introduction.html" target="_blank" rel="noopener">InnoDBイントロダクション</a> に「表 14.1 InnoDB ストレージエンジンの機能」という項目がある。 インデックス、キャッシュ、トランザクション、バックアップ・リカバリ、レプリケーション、 圧縮、地理空間情報の取扱、暗号化対応などが大まかに挙げられる。</p>
+<p>MySQLの場合には、　<a href="https://dev.mysql.com/doc/refman/5.6/ja/storage-engines.html" target="_blank" rel="noopener">MySQLの代替ストレージエンジン</a>
+に載っているようなものが該当する。 なお、デフォルトはInnoDB。 <a href="https://dev.mysql.com/doc/refman/5.6/ja/innodb-introduction.html" target="_blank" rel="noopener">InnoDBイントロダクション</a>
+に「表 14.1 InnoDB ストレージエンジンの機能」という項目がある。
+インデックス、キャッシュ、トランザクション、バックアップ・リカバリ、レプリケーション、
+圧縮、地理空間情報の取扱、暗号化対応などが大まかに挙げられる。</p>
 <h2><span id="apache-parquet">Apache Parquet</span></h2>
-<p><a href="https://parquet.apache.org/" target="_blank" rel="noopener">Parquetの公式ウェブサイト</a> によると以下のように定義されている。</p>
+<p><a href="https://parquet.apache.org/" target="_blank" rel="noopener">Parquetの公式ウェブサイト</a>
+によると以下のように定義されている。</p>
 <blockquote>
-<p>Apache Parquet is a columnar storage format available to any project in the Hadoop ecosystem, regardless of the choice of data processing framework, data model or programming language.</p>
+<p>Apache Parquet is a columnar storage format available to any project
+in the Hadoop ecosystem, regardless of the choice of data processing
+framework, data model or programming language.</p>
 </blockquote>
 <p>ストレージフォーマット単体でも、バッチ処理向けにはある程度有用であると考えられる。</p>
 <h2><span id="delta-lake">Delta Lake</span></h2>
-<p><a href="https://delta.io/" target="_blank" rel="noopener">Delta Lake公式ウェブサイト</a> には、以下のような定義が記載されている。</p>
+<p><a href="https://delta.io/" target="_blank" rel="noopener">Delta Lake公式ウェブサイト</a>
+には、以下のような定義が記載されている。</p>
 <blockquote>
-<p>Delta Lake is an open-source storage layer that brings ACID transactions to Apache Spark™ and big data workloads.</p>
+<p>Delta Lake is an open-source storage layer that brings ACID
+transactions to Apache Spark™ and big data workloads.</p>
 </blockquote>
-<p>またウェブサイトには、「Key Features」が挙げられている。2019/05/10時点では以下の通り。</p>
+<p>またウェブサイトには、「Key
+Features」が挙げられている。2019/05/10時点では以下の通り。</p>
 <ul>
 <li>ACID Transactions</li>
 <li>Scalable Metadata Handling</li>
@@ -394,11 +424,15 @@ ga('send', 'pageview');
 <li>Schema Evolution</li>
 <li>100% Compatible with Apache Spark API</li>
 </ul>
-<p>データベースの「データベースエンジン」、「ストレージエンジン」とは異なる特徴を有することから、 定義上も「Storage Layer」と読んでいるのだろうか。</p>
+<p>データベースの「データベースエンジン」、「ストレージエンジン」とは異なる特徴を有することから、
+定義上も「Storage Layer」と読んでいるのだろうか。</p>
 <h2><span id="apache-hudi">Apache Hudi</span></h2>
-<p><a href="https://hudi.incubator.apache.org/" target="_blank" rel="noopener">Apache Hudiの公式ウェブサイト</a> によると、</p>
+<p><a href="https://hudi.incubator.apache.org/" target="_blank" rel="noopener">Apache
+Hudiの公式ウェブサイト</a> によると、</p>
 <blockquote>
-<p>Hudi (pronounced “Hoodie”) ingests &amp; manages storage of large analytical datasets over DFS (HDFS or cloud stores) and provides three logical views for query access.</p>
+<p>Hudi (pronounced “Hoodie”) ingests &amp; manages storage of large
+analytical datasets over DFS (HDFS or cloud stores) and provides three
+logical views for query access.</p>
 </blockquote>
 <p>とのこと。</p>
 <p>また特徴としては、2019/05/10現在</p>
@@ -407,15 +441,20 @@ ga('send', 'pageview');
 <li>Incremental View</li>
 <li>Near-Real time Table</li>
 </ul>
-<p>が挙げられていた。 なお、機能をイメージするには、 <a href="https://hudi.incubator.apache.org/images/hudi_intro_1.png" target="_blank" rel="noopener">Hudiのイメージを表す図</a> がちょうどよい。</p>
+<p>が挙げられていた。 なお、機能をイメージするには、 <a href="https://hudi.incubator.apache.org/images/hudi_intro_1.png" target="_blank" rel="noopener">Hudiのイメージを表す図</a>
+がちょうどよい。</p>
 <p>Apache Hudiでは、「XXなYYである」のような定義は挙げられていない。</p>
 <h2><span id="alluxio">Alluxio</span></h2>
 <p>ストレージそのものというより、ストレージの抽象化や透過的アクセスの仕組みとして考えられる。</p>
-<p><a href="https://www.alluxio.io/" target="_blank" rel="noopener">Alluxio公式ウェブサイト</a> には以下のように定義されている。</p>
+<p><a href="https://www.alluxio.io/" target="_blank" rel="noopener">Alluxio公式ウェブサイト</a>
+には以下のように定義されている。</p>
 <blockquote>
-<p>Data orchestration for analytics and machine learning in the cloud</p>
+<p>Data orchestration for analytics and machine learning in the
+cloud</p>
 </blockquote>
-<p><a href="https://www.alluxio.io/" target="_blank" rel="noopener">Alluxio公式ウェブサイト</a> には、「KEY TECHNICAL FEATURES」というのが記載されている。 気になったものを列挙すると以下の通り。</p>
+<p><a href="https://www.alluxio.io/" target="_blank" rel="noopener">Alluxio公式ウェブサイト</a>
+には、「KEY TECHNICAL FEATURES」というのが記載されている。
+気になったものを列挙すると以下の通り。</p>
 <ul>
 <li>Compute
 <ul>
@@ -434,47 +473,74 @@ ga('send', 'pageview');
 <li>Monitoring and management</li>
 </ul></li>
 </ul>
-<h2><span id="aws-auroraのバックエンドストレージもしくはストレージエンジン">AWS Auroraのバックエンドストレージ（もしくはストレージエンジン）</span></h2>
-<p><a href="https://qiita.com/kumagi/items/67f9ac0fb4e6f70c056d" target="_blank" rel="noopener">kumagiさんの解説記事</a> あたりが入り口としてとてもわかり易い。 また、元ネタは、 <a href="https://dl.acm.org/citation.cfm?id=3056101" target="_blank" rel="noopener">ACMライブラリの論文</a> あたりか。</p>
-<p>語弊を恐れずにいえば、上記でも触れられていたとおり、「Redo-logリプレイ機能付き分散ストレージ」という 名前が妥当だろうか。</p>
+<h2><span id="awsauroraのバックエンドストレージもしくはストレージエンジン">AWS
+Auroraのバックエンドストレージ（もしくはストレージエンジン）</span></h2>
+<p><a href="https://qiita.com/kumagi/items/67f9ac0fb4e6f70c056d" target="_blank" rel="noopener">kumagiさんの解説記事</a>
+あたりが入り口としてとてもわかり易い。 また、元ネタは、 <a href="https://dl.acm.org/citation.cfm?id=3056101" target="_blank" rel="noopener">ACMライブラリの論文</a>
+あたりか。</p>
+<p>語弊を恐れずにいえば、上記でも触れられていたとおり、「Redo-logリプレイ機能付き分散ストレージ」という
+名前が妥当だろうか。</p>
 <h2><span id="apache-hbase">Apache HBase</span></h2>
-<p><a href="https://hbase.apache.org/" target="_blank" rel="noopener">HBaseの公式ウェブサイト</a> によると、</p>
+<p><a href="https://hbase.apache.org/" target="_blank" rel="noopener">HBaseの公式ウェブサイト</a>
+によると、</p>
 <blockquote>
-<p>Apache HBase is the Hadoop database, a distributed, scalable, big data store.</p>
+<p>Apache HBase is the Hadoop database, a distributed, scalable, big
+data store.</p>
 </blockquote>
-<p>のように定義されている。 また、挙げられていた特徴は以下のとおり。（2019/05/12現在）</p>
+<p>のように定義されている。
+また、挙げられていた特徴は以下のとおり。（2019/05/12現在）</p>
 <ul>
 <li>Linear and modular scalability.</li>
 <li>Strictly consistent reads and writes.</li>
 <li>Automatic and configurable sharding of tables</li>
 <li>Automatic failover support between RegionServers.</li>
-<li>Convenient base classes for backing Hadoop MapReduce jobs with Apache HBase tables.</li>
+<li>Convenient base classes for backing Hadoop MapReduce jobs with
+Apache HBase tables.</li>
 <li>Easy to use Java API for client access.</li>
 <li>Block cache and Bloom Filters for real-time queries.</li>
 <li>Query predicate push down via server side Filters</li>
-<li>Thrift gateway and a REST-ful Web service that supports XML, Protobuf, and binary data encoding options</li>
+<li>Thrift gateway and a REST-ful Web service that supports XML,
+Protobuf, and binary data encoding options</li>
 <li>Extensible jruby-based (JIRB) shell</li>
-<li>Support for exporting metrics via the Hadoop metrics subsystem to files or Ganglia; or via JMX</li>
+<li>Support for exporting metrics via the Hadoop metrics subsystem to
+files or Ganglia; or via JMX</li>
 </ul>
-<p>いわゆるスケールアウト可能なKVSだが、これを分析向けのストレージとして用いる選択肢もありえる。 ただし、いわゆるカラムナフォーマットでデータを扱うわけではない点と、 サービスを運用する必要がある点は懸念すべき点である。</p>
+<p>いわゆるスケールアウト可能なKVSだが、これを分析向けのストレージとして用いる選択肢もありえる。
+ただし、いわゆるカラムナフォーマットでデータを扱うわけではない点と、
+サービスを運用する必要がある点は懸念すべき点である。</p>
 <h2><span id="apache-kudu">Apache Kudu</span></h2>
-<p><a href="https://kudu.apache.org/" target="_blank" rel="noopener">Apache Kuduの公式ウェブサイト</a> を見ると、以下のように定義されている。</p>
+<p><a href="https://kudu.apache.org/" target="_blank" rel="noopener">Apache Kuduの公式ウェブサイト</a>
+を見ると、以下のように定義されている。</p>
 <blockquote>
-<p>A new addition to the open source Apache Hadoop ecosystem, Apache Kudu completes Hadoop's storage layer to enable fast analytics on fast data.</p>
+<p>A new addition to the open source Apache Hadoop ecosystem, Apache
+Kudu completes Hadoop's storage layer to enable fast analytics on fast
+data.</p>
 </blockquote>
 <p>またKuduの利点は以下のように記載されている。</p>
 <ul>
 <li>Fast processing of OLAP workloads.</li>
-<li>Integration with MapReduce, Spark and other Hadoop ecosystem components.</li>
-<li>Tight integration with Apache Impala, making it a good, mutable alternative to using HDFS with Apache Parquet.</li>
-<li>Strong but flexible consistency model, allowing you to choose consistency requirements on a per-request basis, including the option for strict-serializable consistency.</li>
-<li>Strong performance for running sequential and random workloads simultaneously.</li>
+<li>Integration with MapReduce, Spark and other Hadoop ecosystem
+components.</li>
+<li>Tight integration with Apache Impala, making it a good, mutable
+alternative to using HDFS with Apache Parquet.</li>
+<li>Strong but flexible consistency model, allowing you to choose
+consistency requirements on a per-request basis, including the option
+for strict-serializable consistency.</li>
+<li>Strong performance for running sequential and random workloads
+simultaneously.</li>
 <li>Easy to administer and manage.</li>
-<li>High availability. Tablet Servers and Masters use the Raft Consensus Algorithm, which ensures that as long as more than half the total number of replicas is available, the tablet is available for reads and writes. For instance, if 2 out of 3 replicas or 3 out of 5 replicas are available, the tablet is available.</li>
-<li>Reads can be serviced by read-only follower tablets, even in the event of a leader tablet failure.</li>
+<li>High availability. Tablet Servers and Masters use the Raft Consensus
+Algorithm, which ensures that as long as more than half the total number
+of replicas is available, the tablet is available for reads and writes.
+For instance, if 2 out of 3 replicas or 3 out of 5 replicas are
+available, the tablet is available.</li>
+<li>Reads can be serviced by read-only follower tablets, even in the
+event of a leader tablet failure.</li>
 <li>Structured data model.</li>
 </ul>
-<p>クエリエンジンImpalaと連係することを想定されている。 また、「ストレージレイヤ」という呼び方が、Delta Lake同様に用いられている。</p>
+<p>クエリエンジンImpalaと連係することを想定されている。
+また、「ストレージレイヤ」という呼び方が、Delta
+Lake同様に用いられている。</p>
 
         
         </div>
@@ -485,7 +551,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/05/10/Storage-Layer-Storage-Engine/" data-id="cl2nztnoi00eb5xqite9ydag0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/05/10/Storage-Layer-Storage-Engine/" data-id="cl2o9pbhb015m18rz9jkketae" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -736,5 +802,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

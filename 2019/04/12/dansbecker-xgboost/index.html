@@ -5,18 +5,18 @@
     
     <title>dansbecker/xgboost | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ チューニングパラメータ    参考  Kaggleのdansbecker xgboost XGBoostの主な特徴と理論の概要 XGBoostの概要  この説明がわかりやすい   メモ XGBoost自体については、XGBoostの概要がわかりやすい。 チューニングパラメータ  n_estimators  大きさは100〜1000の間の値を用いることが多い  early_stop">
+    <meta name="description" content="参考 メモ  チューニングパラメータ    参考  Kaggleのdansbecker xgboost XGBoostの主な特徴と理論の概要 XGBoostの概要  この説明がわかりやすい   メモ XGBoost自体については、XGBoostの概要がわかりやすい。 チューニングパラメータ  n_estimators  大きさは100〜1000の間の値を用いることが多い  early_sto">
 <meta name="keywords" content="Machine Learning,Kaggle,Model,XGBoost">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dansbecker&#x2F;xgboost">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/04/12/dansbecker-xgboost/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ チューニングパラメータ    参考  Kaggleのdansbecker xgboost XGBoostの主な特徴と理論の概要 XGBoostの概要  この説明がわかりやすい   メモ XGBoost自体については、XGBoostの概要がわかりやすい。 チューニングパラメータ  n_estimators  大きさは100〜1000の間の値を用いることが多い  early_stop">
+<meta property="og:description" content="参考 メモ  チューニングパラメータ    参考  Kaggleのdansbecker xgboost XGBoostの主な特徴と理論の概要 XGBoostの概要  この説明がわかりやすい   メモ XGBoost自体については、XGBoostの概要がわかりやすい。 チューニングパラメータ  n_estimators  大きさは100〜1000の間の値を用いることが多い  early_sto">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dansbecker&#x2F;xgboost">
-<meta name="twitter:description" content="参考 メモ チューニングパラメータ    参考  Kaggleのdansbecker xgboost XGBoostの主な特徴と理論の概要 XGBoostの概要  この説明がわかりやすい   メモ XGBoost自体については、XGBoostの概要がわかりやすい。 チューニングパラメータ  n_estimators  大きさは100〜1000の間の値を用いることが多い  early_stop">
+<meta name="twitter:description" content="参考 メモ  チューニングパラメータ    参考  Kaggleのdansbecker xgboost XGBoostの主な特徴と理論の概要 XGBoostの概要  この説明がわかりやすい   メモ XGBoost自体については、XGBoostの概要がわかりやすい。 チューニングパラメータ  n_estimators  大きさは100〜1000の間の値を用いることが多い  early_sto">
     
 
     
@@ -251,15 +251,17 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#チューニングパラメータ">チューニングパラメータ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#チューニングパラメータ" id="toc-チューニングパラメータ">チューニングパラメータ</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://www.kaggle.com/dansbecker/xgboost" target="_blank" rel="noopener">Kaggleのdansbecker xgboost</a></li>
+<li><a href="https://www.kaggle.com/dansbecker/xgboost" target="_blank" rel="noopener">Kaggleのdansbecker
+xgboost</a></li>
 <li><a href="https://qiita.com/yh0sh/items/1df89b12a8dcd15bd5aa" target="_blank" rel="noopener">XGBoostの主な特徴と理論の概要</a></li>
 <li><a href="http://kefism.hatenablog.com/entry/2017/06/11/182959" target="_blank" rel="noopener">XGBoostの概要</a>
 <ul>
@@ -276,7 +278,8 @@ ga('send', 'pageview');
 </ul></li>
 <li><code>early_stopping_rounds</code>
 <ul>
-<li><code>n_estimators</code> を大きめにしておいて、本パラメータで学習を止めるのが良さそう</li>
+<li><code>n_estimators</code>
+を大きめにしておいて、本パラメータで学習を止めるのが良さそう</li>
 </ul></li>
 <li><code>learning_rate</code>
 <ul>
@@ -297,7 +300,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/12/dansbecker-xgboost/" data-id="cl2nztnpn00hq5xqio41kyn0k" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/12/dansbecker-xgboost/" data-id="cl2o9pb9g00de18rzvghbzmln" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -548,5 +551,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

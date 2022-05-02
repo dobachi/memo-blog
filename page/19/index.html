@@ -250,9 +250,11 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#sx-auroraの物理構成の解説-記事に記載された感想の抜粋">SX-Auroraの物理構成の解説 記事に記載された感想の抜粋</a></li>
-<li><a href="#necとホートンワークスの協業-記事でのポイント">NECとホートンワークスの協業 記事でのポイント</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#sx-auroraの物理構成の解説-記事に記載された感想の抜粋" id="toc-sx-auroraの物理構成の解説-記事に記載された感想の抜粋">SX-Auroraの物理構成の解説
+記事に記載された感想の抜粋</a></li>
+<li><a href="#necとホートンワークスの協業-記事でのポイント" id="toc-necとホートンワークスの協業-記事でのポイント">NECとホートンワークスの協業
+記事でのポイント</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -261,20 +263,32 @@ ga('send', 'pageview');
 <li><a href="https://jpn.nec.com/rd/technologies/vectorprocessor/index.html" target="_blank" rel="noopener">SX-Auroraの簡単な紹介</a></li>
 <li><a href="https://news.mynavi.jp/article/nec_aurora_tsubasa-3/" target="_blank" rel="noopener">SX-Auroraの物理構成の解説</a></li>
 </ul>
-<h1><span id="sx-auroraの物理構成の解説-記事に記載された感想の抜粋">SX-Auroraの物理構成の解説 記事に記載された感想の抜粋</span></h1>
-<p><a href="https://news.mynavi.jp/article/nec_aurora_tsubasa-3/" target="_blank" rel="noopener">SX-Auroraの物理構成の解説</a> に記載されていた考察を転記する。</p>
+<h1><span id="sx-auroraの物理構成の解説記事に記載された感想の抜粋">SX-Auroraの物理構成の解説
+記事に記載された感想の抜粋</span></h1>
+<p><a href="https://news.mynavi.jp/article/nec_aurora_tsubasa-3/" target="_blank" rel="noopener">SX-Auroraの物理構成の解説</a>
+に記載されていた考察を転記する。</p>
 <blockquote>
-<p>一方、DGEMMではSX-Aurora TSUBASAはXeonの1.2倍程度の性能であり、V100が3.5程度であるのに比べて性能が低い。これはV100の方がピークFlopsが高いことが効いているのではないかと思われる。一方、Perf/WではSX-Aurora TSUBASAやV100は高い効率を示している。これは演算性能の割に消費電力が低いためと思われる。</p>
+<p>一方、DGEMMではSX-Aurora
+TSUBASAはXeonの1.2倍程度の性能であり、V100が3.5程度であるのに比べて性能が低い。これはV100の方がピークFlopsが高いことが効いているのではないかと思われる。一方、Perf/WではSX-Aurora
+TSUBASAやV100は高い効率を示している。これは演算性能の割に消費電力が低いためと思われる。</p>
 </blockquote>
 <blockquote>
-<p>まとめであるが、SX-Aurora TSUBASAはAuroraアーキテクチャに基づく新しいスパコンの製品ラインである。従来のように独自のプロセサを作るのではなく、x86/Linuxの環境にベクタ処理を付加した形になっている。</p>
+<p>まとめであるが、SX-Aurora
+TSUBASAはAuroraアーキテクチャに基づく新しいスパコンの製品ラインである。従来のように独自のプロセサを作るのではなく、x86/Linuxの環境にベクタ処理を付加した形になっている。</p>
 </blockquote>
 <blockquote>
-<p>チップサイズの比較はともかく、NVIDIAのV100を16個搭載するDGX-2は約40万ドルで、V100 1個当たり250万円程度である。これに対して、SX-Aurora TSUBASAは、NECの発表では1VEのA100が170万円～、64VEのA500が1億2000万円～となっており、VE 1個あたり200万円弱である。これだけを見ると、NECの方が2割程度安いことになる。</p>
-<p>しかし、これはいわゆる定価であり、実際のビジネスでは、これからどれだけ値引きされるのかは分からない。 Post-K(ポスト「京」)のような国家プロジェクトの無いNECがスパコンを開発するのは大変であるが、SX-Aurora TSUBASAはx86サーバにベクタエンジンを付けるという面白い切り口で挑んでいる。成功を祈る。</p>
+<p>チップサイズの比較はともかく、NVIDIAのV100を16個搭載するDGX-2は約40万ドルで、V100
+1個当たり250万円程度である。これに対して、SX-Aurora
+TSUBASAは、NECの発表では1VEのA100が170万円～、64VEのA500が1億2000万円～となっており、VE
+1個あたり200万円弱である。これだけを見ると、NECの方が2割程度安いことになる。</p>
+<p>しかし、これはいわゆる定価であり、実際のビジネスでは、これからどれだけ値引きされるのかは分からない。
+Post-K(ポスト「京」)のような国家プロジェクトの無いNECがスパコンを開発するのは大変であるが、SX-Aurora
+TSUBASAはx86サーバにベクタエンジンを付けるという面白い切り口で挑んでいる。成功を祈る。</p>
 </blockquote>
-<h1><span id="necとホートンワークスの協業-記事でのポイント">NECとホートンワークスの協業 記事でのポイント</span></h1>
-<p>現在はYARN対応がポイントのようだ。 共同研究成果は、OSSとして公開するつもりのようだ。</p>
+<h1><span id="necとホートンワークスの協業記事でのポイント">NECとホートンワークスの協業
+記事でのポイント</span></h1>
+<p>現在はYARN対応がポイントのようだ。
+共同研究成果は、OSSとして公開するつもりのようだ。</p>
 
         
         </div>
@@ -285,7 +299,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/23/Aurora-Frovedis/" data-id="cl2nztnk8001t5xqi8a2i5hnx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/23/Aurora-Frovedis/" data-id="cl2o9pb4j001b18rzd6odehn0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -406,9 +420,9 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
-<li><a href="#sparkでのvirtualenv対応">Sparkでのvirtualenv対応</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
+<li><a href="#sparkでのvirtualenv対応" id="toc-sparkでのvirtualenv対応">Sparkでのvirtualenv対応</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -416,21 +430,27 @@ ga('send', 'pageview');
 <li><a href="https://community.hortonworks.com/questions/184869/getting-error-in-python3-kernel-for-pyspark-with-h.html" target="_blank" rel="noopener">Hortonworksのコミュニティによる情報</a></li>
 <li><a href="https://stackoverflow.com/questions/52874985/how-to-enable-python3-support-on-hdp-2-6" target="_blank" rel="noopener">2to3を用いる方法の記事</a></li>
 <li><a href="https://community.hortonworks.com/articles/104949/using-virtualenv-with-pyspark-1.html" target="_blank" rel="noopener">HortonworkによるSparkのvirtualenv対応</a></li>
-<li><a href="https://issues.apache.org/jira/browse/SPARK-13587" target="_blank" rel="noopener">SPARK-13587: Support virtualenv in PySpark</a></li>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-13587" target="_blank" rel="noopener">SPARK-13587:
+Support virtualenv in PySpark</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>以下のようなコマンドでPython3のipythonをドライバのPythonとして指定しながら起動したところ、 エラーを生じた。</p>
+<p>以下のようなコマンドでPython3のipythonをドライバのPythonとして指定しながら起動したところ、
+エラーを生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ pyspark --master yarn --conf spark.pyspark.driver.python=ipython</span><br><span class="line"></span><br><span class="line">$ ipython --version</span><br><span class="line">7.1.1</span><br><span class="line">$ python --version</span><br><span class="line">Python 3.6.7 :: Anaconda, Inc.</span><br></pre></td></tr></table></figure>
 <p>エラー内容は以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">18/11/18 12:30:09 WARN ScriptBasedMapping: Exception running /etc/hadoop/conf/topology_script.py 192.168.33.83</span><br><span class="line">ExitCodeException exitCode=1:   File &quot;/etc/hadoop/conf/topology_script.py&quot;, line 63</span><br><span class="line">    print rack</span><br><span class="line">             ^</span><br><span class="line">SyntaxError: Missing parentheses in call to &apos;print&apos;. Did you mean print(rack)?</span><br><span class="line"></span><br><span class="line">        at org.apache.hadoop.util.Shell.runCommand(Shell.java:954)</span><br><span class="line">        at org.apache.hadoop.util.Shell.run(Shell.java:855)</span><br><span class="line">        at org.apache.hadoop.util.Shell$ShellCommandExecutor.execute(Shell.java:1163)</span><br><span class="line">        at org.apache.hadoop.net.ScriptBasedMapping$RawScriptBasedMapping.runResolveComman</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
-<p><a href="https://community.hortonworks.com/questions/184869/getting-error-in-python3-kernel-for-pyspark-with-h.html" target="_blank" rel="noopener">Hortonworksのコミュニティによる情報</a>によると、Python2系しか対応していないというが、本当かどうか確認が必要。 同様のことを指摘している記事として<a href="https://stackoverflow.com/questions/52874985/how-to-enable-python3-support-on-hdp-2-6" target="_blank" rel="noopener">2to3を用いる方法の記事</a>が挙げられるが、そこでは</p>
+<p><a href="https://community.hortonworks.com/questions/184869/getting-error-in-python3-kernel-for-pyspark-with-h.html" target="_blank" rel="noopener">Hortonworksのコミュニティによる情報</a>によると、Python2系しか対応していないというが、本当かどうか確認が必要。
+同様のことを指摘している記事として<a href="https://stackoverflow.com/questions/52874985/how-to-enable-python3-support-on-hdp-2-6" target="_blank" rel="noopener">2to3を用いる方法の記事</a>が挙げられるが、そこでは</p>
 <ul>
 <li>/usr/bin/hdp-select</li>
 <li>/etc/hadoop/conf/topology_script.py</li>
 </ul>
-<p>の2ファイルがPython2でしか動作しない内容で記載されているようだ。 ためしに<code>/usr/bin/hdp-select</code>をのぞいてみたら、確かにPython2系に限定された実装の箇所がチラホラ見受けられた。</p>
+<p>の2ファイルがPython2でしか動作しない内容で記載されているようだ。
+ためしに<code>/usr/bin/hdp-select</code>をのぞいてみたら、確かにPython2系に限定された実装の箇所がチラホラ見受けられた。</p>
 <h1><span id="sparkでのvirtualenv対応">Sparkでのvirtualenv対応</span></h1>
-<p><a href="https://issues.apache.org/jira/browse/SPARK-13587" target="_blank" rel="noopener">SPARK-13587: Support virtualenv in PySpark</a>でHortonworkの人中心に議論されており、 ターゲットバージョンは3.0.1とされている。</p>
+<p><a href="https://issues.apache.org/jira/browse/SPARK-13587" target="_blank" rel="noopener">SPARK-13587:
+Support virtualenv in PySpark</a>でHortonworkの人中心に議論されており、
+ターゲットバージョンは3.0.1とされている。</p>
 <p><a href="https://community.hortonworks.com/articles/104949/using-virtualenv-with-pyspark-1.html" target="_blank" rel="noopener">HortonworkによるSparkのvirtualenv対応</a>に記載の方法は、Hortonworksの独自拡張なのか。</p>
 
         
@@ -442,7 +462,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/18/Error-using-Python3-on-HDP2-6/" data-id="cl2nztnlf004r5xqii9vlx5qc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/18/Error-using-Python3-on-HDP2-6/" data-id="cl2o9pb5c003618rz2y5rvjrv" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -563,8 +583,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -572,7 +592,8 @@ ga('send', 'pageview');
 <li><a href="https://community.hortonworks.com/articles/188269/javapython-updates-and-ambari-agent-tls-settings.html" target="_blank" rel="noopener">解決手段の記載された記事</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>基本的に、 <a href="https://community.hortonworks.com/articles/188269/javapython-updates-and-ambari-agent-tls-settings.html" target="_blank" rel="noopener">解決手段の記載された記事</a> の手順で問題なかった。</p>
+<p>基本的に、 <a href="https://community.hortonworks.com/articles/188269/javapython-updates-and-ambari-agent-tls-settings.html" target="_blank" rel="noopener">解決手段の記載された記事</a>
+の手順で問題なかった。</p>
 
         
         </div>
@@ -583,7 +604,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/17/Ambari-SSL-Error/" data-id="cl2nztnk5001k5xqim5kxa6zj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/17/Ambari-SSL-Error/" data-id="cl2o9pb4h001618rzbqkknzd2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -704,13 +725,15 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#手順">手順</a><ul>
-<li><a href="#必要パッケージのインストール">必要パッケージのインストール</a></li>
-<li><a href="#vagrantのプラグイン追加">Vagrantのプラグイン追加</a></li>
-<li><a href="#vagrantfileの作成">Vagrantfileの作成</a></li>
-<li><a href="#ストレージプールdefaultの不在に関連したエラー">ストレージプールdefaultの不在に関連したエラー</a></li>
-<li><a href="#vagrant-boxのダウンロードurlに関連したエラー">Vagrant BoxのダウンロードURLに関連したエラー</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#手順" id="toc-手順">手順</a>
+<ul>
+<li><a href="#必要パッケージのインストール" id="toc-必要パッケージのインストール">必要パッケージのインストール</a></li>
+<li><a href="#vagrantのプラグイン追加" id="toc-vagrantのプラグイン追加">Vagrantのプラグイン追加</a></li>
+<li><a href="#vagrantfileの作成" id="toc-vagrantfileの作成">Vagrantfileの作成</a></li>
+<li><a href="#ストレージプールdefaultの不在に関連したエラー" id="toc-ストレージプールdefaultの不在に関連したエラー">ストレージプールdefaultの不在に関連したエラー</a></li>
+<li><a href="#vagrant-boxのダウンロードurlに関連したエラー" id="toc-vagrant-boxのダウンロードurlに関連したエラー">Vagrant
+BoxのダウンロードURLに関連したエラー</a></li>
 </ul></li>
 </ul>
 </div>
@@ -723,7 +746,9 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="手順">手順</span></h1>
 <h2><span id="必要パッケージのインストール">必要パッケージのインストール</span></h2>
-<p>最初に手順通り、vagrantをインストールしておく。 <a href="https://github.com/vagrant-libvirt/vagrant-libvirt" target="_blank" rel="noopener">vagrant-libvirt</a> によると、upstreamを 用いることが推奨されているので、ここではあえて1.8系を用いることにする。</p>
+<p>最初に手順通り、vagrantをインストールしておく。 <a href="https://github.com/vagrant-libvirt/vagrant-libvirt" target="_blank" rel="noopener">vagrant-libvirt</a>
+によると、upstreamを
+用いることが推奨されているので、ここではあえて1.8系を用いることにする。</p>
 <h2><span id="vagrantのプラグイン追加">Vagrantのプラグイン追加</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install gdebi  # 念のため依存関係を解決しながらdebをインストールするため</span><br><span class="line">$ cd ~/Downloads</span><br><span class="line">$ wget https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_x86_64.deb</span><br><span class="line">$ sudo gdebi vagrant_1.8.7_x86_64.deb</span><br></pre></td></tr></table></figure>
 <p>続いてソースリストでdeb-srcを有効化する。 diffは以下の通り。</p>
@@ -738,12 +763,16 @@ ga('send', 'pageview');
 <h2><span id="ストレージプールdefaultの不在に関連したエラー">ストレージプールdefaultの不在に関連したエラー</span></h2>
 <p>このとき、</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">There was error while creating libvirt storage pool: Call to virStoragePoolDefineXML failed: operation failed: Storage source conflict with pool: &apos;images&apos;</span><br></pre></td></tr></table></figure>
-<p>のようなエラーが生じたが、これは <a href="https://github.com/vagrant-libvirt/vagrant-libvirt/issues/184" target="_blank" rel="noopener">デフォルトプールに関するエラーの情報</a> に掲載の課題のようだ。 <a href="https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/virtualization_administration_guide/ch13s03s03" target="_blank" rel="noopener">libvirtでストレージプールを作成</a> を参考に、ストレージプールを作成する。</p>
+<p>のようなエラーが生じたが、これは <a href="https://github.com/vagrant-libvirt/vagrant-libvirt/issues/184" target="_blank" rel="noopener">デフォルトプールに関するエラーの情報</a>
+に掲載の課題のようだ。 <a href="https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/virtualization_administration_guide/ch13s03s03" target="_blank" rel="noopener">libvirtでストレージプールを作成</a>
+を参考に、ストレージプールを作成する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo virsh pool-define-as default dir --target /var/lib/libvirt/default</span><br><span class="line">$ sudo virsh pool-build default</span><br><span class="line">$ sudo virsh pool-start default</span><br><span class="line">$ sudo virsh pool-autostart default</span><br></pre></td></tr></table></figure>
-<h2><span id="vagrant-boxのダウンロードurlに関連したエラー">Vagrant BoxのダウンロードURLに関連したエラー</span></h2>
+<h2><span id="vagrantboxのダウンロードurlに関連したエラー">Vagrant
+BoxのダウンロードURLに関連したエラー</span></h2>
 <p>つづいて、<code>vagrant up --provider=libvirt</code>しようとしたら、以下のエラーが生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">The box &apos;centos/7&apos; could not be found or</span><br><span class="line">could not be accessed in the remote catalog. If this is a private</span><br><span class="line">box on HashiCorp&apos;s Atlas, please verify you&apos;re logged in via</span><br><span class="line">`vagrant login`. Also, please double-check the name. The expanded</span><br><span class="line">URL and error message are shown below:</span><br><span class="line"></span><br><span class="line">URL: [&quot;https://atlas.hashicorp.com/centos/7&quot;]</span><br><span class="line">Error: The requested URL returned error: 404 Not Found</span><br></pre></td></tr></table></figure>
-<p><a href="https://github.com/hashicorp/vagrant/issues/9442" target="_blank" rel="noopener">VagrantのダウンロードURL関連エラーの情報</a> に記載の通り、いったん</p>
+<p><a href="https://github.com/hashicorp/vagrant/issues/9442" target="_blank" rel="noopener">VagrantのダウンロードURL関連エラーの情報</a>
+に記載の通り、いったん</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vagrant::DEFAULT_SERVER_URL.replace(&apos;https://vagrantcloud.com&apos;)</span><br></pre></td></tr></table></figure>
 <p>の記載をVagrantfileの先頭に記載する、というワークアラウンドを取り入れることにした。</p>
 
@@ -756,7 +785,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/17/vagrant-libvirt-on-Ubuntu18/" data-id="cl2nztnqg00ju5xqikc253ct1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/17/vagrant-libvirt-on-Ubuntu18/" data-id="cl2o9pbhd015q18rzi7laohhj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -877,12 +906,13 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#手順">手順</a><ul>
-<li><a href="#パッケージインストール">パッケージインストール</a></li>
-<li><a href="#イメージの準備">イメージの準備</a></li>
-<li><a href="#インストール">インストール</a></li>
-<li><a href="#ゲスト側のconsole設定">ゲスト側のconsole設定</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#手順" id="toc-手順">手順</a>
+<ul>
+<li><a href="#パッケージインストール" id="toc-パッケージインストール">パッケージインストール</a></li>
+<li><a href="#イメージの準備" id="toc-イメージの準備">イメージの準備</a></li>
+<li><a href="#インストール" id="toc-インストール">インストール</a></li>
+<li><a href="#ゲスト側のconsole設定" id="toc-ゲスト側のconsole設定">ゲスト側のconsole設定</a></li>
 </ul></li>
 </ul>
 </div>
@@ -911,16 +941,20 @@ ga('send', 'pageview');
 <p>参考までにイメージからインストールするのは以下の通り。（未動作確認）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo virt-install -n test -r 512 \</span><br><span class="line">--disk path=/var/lib/libvirt/images/test.img,bus=virtio,size=4 -c \</span><br><span class="line">~/Downloads/ubuntu-18.04.1-live-server-amd64.iso --network network=default,model=virtio \</span><br><span class="line">--graphics none \</span><br><span class="line">  --extra-args &apos;console=ttyS0,115200n8 serial&apos;</span><br></pre></td></tr></table></figure>
 <h2><span id="ゲスト側のconsole設定">ゲスト側のconsole設定</span></h2>
-<p><code>virsh console</code> でコンソールに接続できるよう、SSHで接続して設定する。 <a href="https://kernhack.hatenablog.com/entry/2015/07/18/154414" target="_blank" rel="noopener">VMのIPアドレス確認</a> を参考に、IPアドレスを確認する。</p>
+<p><code>virsh console</code>
+でコンソールに接続できるよう、SSHで接続して設定する。 <a href="https://kernhack.hatenablog.com/entry/2015/07/18/154414" target="_blank" rel="noopener">VMのIPアドレス確認</a>
+を参考に、IPアドレスを確認する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~$ sudo virsh net-dhcp-leases default</span><br><span class="line"> Expiry Time          MAC address        Protocol  IP address                Hostname        Client ID or DUID</span><br><span class="line">-------------------------------------------------------------------------------------------------------------------</span><br><span class="line"> 2018-11-17 03:08:52  52:54:00:b0:68:26  ipv4      192.168.122.193/24        ubuntu1804      ff:32:39:f9:b5:00:02:00:00:ab:11:97:79:8b:63:02:9c:d8:07</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.hiroom2.com/2018/04/30/ubuntu-1804-serial-console-ja/" target="_blank" rel="noopener">ゲストOSにおけるコンソール設定</a> に従って設定する。</p>
+<p><a href="https://www.hiroom2.com/2018/04/30/ubuntu-1804-serial-console-ja/" target="_blank" rel="noopener">ゲストOSにおけるコンソール設定</a>
+に従って設定する。</p>
 <p>まず <code>/etc/default/grub</code> を修正する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">$ sudo echo &gt; /etc/default/grub &lt;&lt; EOL</span><br><span class="line">  # If you change this file, run &apos;update-grub&apos; afterwards to update</span><br><span class="line">  # /boot/grub/grub.cfg.</span><br><span class="line">  # For full documentation of the options in this file, see:</span><br><span class="line">  #   info -f grub -n &apos;Simple configuration&apos;</span><br><span class="line">  </span><br><span class="line">  GRUB_DEFAULT=0</span><br><span class="line">  GRUB_TIMEOUT_STYLE=hidden</span><br><span class="line">  GRUB_TIMEOUT=10</span><br><span class="line">  GRUB_DISTRIBUTOR=`lsb_release -i -s 2&gt; /dev/null || echo Debian`</span><br><span class="line">  GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash&quot;</span><br><span class="line">  GRUB_CMDLINE_LINUX=&quot;console=tty1 console=ttyS0,115200&quot;</span><br><span class="line">  </span><br><span class="line">  # Uncomment to enable BadRAM filtering, modify to suit your needs</span><br><span class="line">  # This works with Linux (no patch required) and with any kernel that obtains</span><br><span class="line">  # the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)</span><br><span class="line">  #GRUB_BADRAM=&quot;0x01234567,0xfefefefe,0x89abcdef,0xefefefef&quot;</span><br><span class="line">  </span><br><span class="line">  # Uncomment to disable graphical terminal (grub-pc only)</span><br><span class="line">  #GRUB_TERMINAL=console</span><br><span class="line">  </span><br><span class="line">  # The resolution used on graphical terminal</span><br><span class="line">  # note that you can use only modes which your graphic card supports via VBE</span><br><span class="line">  # you can see them in real GRUB with the command `vbeinfo&apos;</span><br><span class="line">  #GRUB_GFXMODE=640x480</span><br><span class="line">  </span><br><span class="line">  # Uncomment if you don&apos;t want GRUB to pass &quot;root=UUID=xxx&quot; parameter to Linux</span><br><span class="line">  #GRUB_DISABLE_LINUX_UUID=true</span><br><span class="line">  </span><br><span class="line">  # Uncomment to disable generation of recovery mode menu entries</span><br><span class="line">  #GRUB_DISABLE_RECOVERY=&quot;true&quot;</span><br><span class="line">  </span><br><span class="line">  # Uncomment to get a beep at grub start</span><br><span class="line">  #GRUB_INIT_TUNE=&quot;480 440 1&quot;</span><br><span class="line">  #GRUB_TERMINAL=serial</span><br><span class="line">  GRUB_TERMINAL=&quot;console serial&quot;</span><br><span class="line">  GRUB_SERIAL_COMMAND=&quot;serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1&quot;</span><br><span class="line">  EOL</span><br></pre></td></tr></table></figure>
 <p>grubの設定ファイルを再生成する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
 <p>rebootする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure>
-<p>reboot後に<code>virsh console &lt;VM名&gt;</code>でアクセスすればコンソールに接続できる。 抜けるときは、Ctrl + ]もしくはCtrl + 5。</p>
+<p>reboot後に<code>virsh console &lt;VM名&gt;</code>でアクセスすればコンソールに接続できる。
+抜けるときは、Ctrl + ]もしくはCtrl + 5。</p>
 
         
         </div>
@@ -931,7 +965,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/16/KVM-on-Ubuntu18/" data-id="cl2nztnmh00805xqibdv8w8az" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/16/KVM-on-Ubuntu18/" data-id="cl2o9pb6c005l18rzdkdeo1dt" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1052,8 +1086,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#方法">方法</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#方法" id="toc-方法">方法</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -1061,7 +1095,8 @@ ga('send', 'pageview');
 <li><a href="https://stackoverflow.com/questions/46120213/import-current-hexo-blog-to-new-pc" target="_blank" rel="noopener">関連する記事</a></li>
 </ul>
 <h1><span id="方法">方法</span></h1>
-<p><a href="https://stackoverflow.com/questions/46120213/import-current-hexo-blog-to-new-pc" target="_blank" rel="noopener">関連する記事</a> に記載された通り、extend_dirsを指定すればよい。 以下のようにした。</p>
+<p><a href="https://stackoverflow.com/questions/46120213/import-current-hexo-blog-to-new-pc" target="_blank" rel="noopener">関連する記事</a>
+に記載された通り、extend_dirsを指定すればよい。 以下のようにした。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  - type: git</span><br><span class="line">    repo: &lt;git repository url&gt;</span><br><span class="line">    branch: gh-pages</span><br><span class="line">    extend_dirs: source</span><br></pre></td></tr></table></figure>
 
         
@@ -1073,7 +1108,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/03/hexo-deploy-sources/" data-id="cl2nztnpt00i95xqinib7ausq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/03/hexo-deploy-sources/" data-id="cl2o9pb9i00dl18rz19elg581" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1194,33 +1229,51 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考情報">参考情報</a></li>
-<li><a href="#全体の傾向">全体の傾向</a></li>
-<li><a href="#気になった論文リスト">気になった論文リスト</a><ul>
-<li><a href="#l1-scientific-data-management">L1 Scientific Data Management</a></li>
-<li><a href="#l3-semantic-based-data-mining">L3 Semantic-based Data Mining</a></li>
-<li><a href="#l4-big-data-applications-machine-learning">L4 Big Data Applications: Machine Learning</a></li>
-<li><a href="#l5-novel-theoretical-models-for-big-data">L5 Novel Theoretical Models for Big Data</a></li>
-<li><a href="#l6-big-data-analytics-frameworks">L6 Big Data Analytics Frameworks</a></li>
-<li><a href="#l9-recommendation-systems-and-stream-data-management">L9 Recommendation Systems and Stream Data Management</a></li>
-<li><a href="#l11-big-data-applications-industry-and-business">L11 Big Data Applications: Industry and Business</a></li>
-<li><a href="#l12-big-data-applications-health-science-discovery">L12 Big Data Applications: Health &amp; Science Discovery</a></li>
-<li><a href="#l14-hpc-platforms-for-big-data">L14 HPC Platforms for Big Data</a></li>
-<li><a href="#l17-big-data-applications-deep-learning">L17 Big Data Applications: Deep Learning</a></li>
-<li><a href="#l18-mobile-and-iot-data">L18 Mobile and IoT Data</a></li>
-<li><a href="#l22-privacy-and-security">L22 Privacy and Security</a></li>
-<li><a href="#s1-big-data-infrastructure-1">S1 Big Data Infrastructure (1)</a></li>
-<li><a href="#s5-big-data-infrastructure-2">S5 Big Data Infrastructure (2)</a></li>
-<li><a href="#s6-big-data-applications-2">S6 Big Data Applications (2)</a></li>
-<li><a href="#s12-recommendation-systems-stream-data-mining">S12 Recommendation Systems &amp; Stream Data Mining</a></li>
-<li><a href="#ig-regular3-big-data-platforms-frameworks">I&amp;G Regular3: Big Data Platforms &amp; Frameworks</a></li>
-<li><a href="#ig-short3-big-data-algorithms-systems-2">I&amp;G Short3: Big Data Algorithms &amp; Systems (2)</a></li>
+<li><a href="#参考情報" id="toc-参考情報">参考情報</a></li>
+<li><a href="#全体の傾向" id="toc-全体の傾向">全体の傾向</a></li>
+<li><a href="#気になった論文リスト" id="toc-気になった論文リスト">気になった論文リスト</a>
+<ul>
+<li><a href="#l1-scientific-data-management" id="toc-l1-scientific-data-management">L1 Scientific Data
+Management</a></li>
+<li><a href="#l3-semantic-based-data-mining" id="toc-l3-semantic-based-data-mining">L3 Semantic-based Data
+Mining</a></li>
+<li><a href="#l4-big-data-applications-machine-learning" id="toc-l4-big-data-applications-machine-learning">L4 Big Data
+Applications: Machine Learning</a></li>
+<li><a href="#l5-novel-theoretical-models-for-big-data" id="toc-l5-novel-theoretical-models-for-big-data">L5 Novel Theoretical
+Models for Big Data</a></li>
+<li><a href="#l6-big-data-analytics-frameworks" id="toc-l6-big-data-analytics-frameworks">L6 Big Data Analytics
+Frameworks</a></li>
+<li><a href="#l9-recommendation-systems-and-stream-data-management" id="toc-l9-recommendation-systems-and-stream-data-management">L9
+Recommendation Systems and Stream Data Management</a></li>
+<li><a href="#l11-big-data-applications-industry-and-business" id="toc-l11-big-data-applications-industry-and-business">L11 Big Data
+Applications: Industry and Business</a></li>
+<li><a href="#l12-big-data-applications-health-science-discovery" id="toc-l12-big-data-applications-health-science-discovery">L12 Big Data
+Applications: Health &amp; Science Discovery</a></li>
+<li><a href="#l14-hpc-platforms-for-big-data" id="toc-l14-hpc-platforms-for-big-data">L14 HPC Platforms for Big
+Data</a></li>
+<li><a href="#l17-big-data-applications-deep-learning" id="toc-l17-big-data-applications-deep-learning">L17 Big Data
+Applications: Deep Learning</a></li>
+<li><a href="#l18-mobile-and-iot-data" id="toc-l18-mobile-and-iot-data">L18 Mobile and IoT Data</a></li>
+<li><a href="#l22-privacy-and-security" id="toc-l22-privacy-and-security">L22 Privacy and Security</a></li>
+<li><a href="#s1-big-data-infrastructure-1" id="toc-s1-big-data-infrastructure-1">S1 Big Data Infrastructure
+(1)</a></li>
+<li><a href="#s5-big-data-infrastructure-2" id="toc-s5-big-data-infrastructure-2">S5 Big Data Infrastructure
+(2)</a></li>
+<li><a href="#s6-big-data-applications-2" id="toc-s6-big-data-applications-2">S6 Big Data Applications
+(2)</a></li>
+<li><a href="#s12-recommendation-systems-stream-data-mining" id="toc-s12-recommendation-systems-stream-data-mining">S12
+Recommendation Systems &amp; Stream Data Mining</a></li>
+<li><a href="#ig-regular3-big-data-platforms-frameworks" id="toc-ig-regular3-big-data-platforms-frameworks">I&amp;G Regular3: Big
+Data Platforms &amp; Frameworks</a></li>
+<li><a href="#ig-short3-big-data-algorithms-systems-2" id="toc-ig-short3-big-data-algorithms-systems-2">I&amp;G Short3: Big
+Data Algorithms &amp; Systems (2)</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考情報">参考情報</span></h1>
 <ul>
-<li><a href="http://cci.drexel.edu/bigdata/bigdata2018/index.html" target="_blank" rel="noopener">IEEE BigData 2018の公式ウェブサイト</a></li>
+<li><a href="http://cci.drexel.edu/bigdata/bigdata2018/index.html" target="_blank" rel="noopener">IEEE
+BigData 2018の公式ウェブサイト</a></li>
 <li><a href="http://cci.drexel.edu/bigdata/bigdata2018/files/BigData2018_Program.pdf" target="_blank" rel="noopener">論文リストのPDF</a></li>
 </ul>
 <h1><span id="全体の傾向">全体の傾向</span></h1>
@@ -1229,102 +1282,190 @@ ga('send', 'pageview');
 <li>一部ユースケースを想像させるものもある</li>
 </ul>
 <h1><span id="気になった論文リスト">気になった論文リスト</span></h1>
-<h2><span id="l1-scientific-data-management">L1 Scientific Data Management</span></h2>
+<h2><span id="l1-scientific-datamanagement">L1 Scientific Data
+Management</span></h2>
 <ul>
-<li>BigD529 Cloud based Real-Time and Low Latency Scientific Event Analysis Chen Yang, Zhihui Du, and Xiaofeng Meng</li>
+<li>BigD529 Cloud based Real-Time and Low Latency Scientific Event
+Analysis Chen Yang, Zhihui Du, and Xiaofeng Meng</li>
 </ul>
-<h2><span id="l3-semantic-based-data-mining">L3 Semantic-based Data Mining</span></h2>
+<h2><span id="l3-semantic-based-datamining">L3 Semantic-based Data
+Mining</span></h2>
 <ul>
-<li>BigD483 A Data-Centric Approach for Image Scene Localization Abdullah Alfarrarjeh, Seon Ho Kim, Shivnesh Rajan, Akshay Deshmukh, and Cyrus Shahabi</li>
-<li>BigD753 Improved Dynamic Memory Network for Dialogue Act Classification with Adversarial Training Yao Wan, Wenqiang Yan, Jianwe</li>
+<li>BigD483 A Data-Centric Approach for Image Scene Localization
+Abdullah Alfarrarjeh, Seon Ho Kim, Shivnesh Rajan, Akshay Deshmukh, and
+Cyrus Shahabi</li>
+<li>BigD753 Improved Dynamic Memory Network for Dialogue Act
+Classification with Adversarial Training Yao Wan, Wenqiang Yan,
+Jianwe</li>
 </ul>
-<h2><span id="l4-big-data-applications-machine-learning">L4 Big Data Applications: Machine Learning</span></h2>
+<h2><span id="l4-big-dataapplications-machine-learning">L4 Big Data
+Applications: Machine Learning</span></h2>
 <ul>
-<li>BigD526 A Minimax Approach for Classification with Big-data Krishnan Raghavan, Jagannathan Sarangapani, and VA Samaranayake</li>
-<li>BigD445 Transfer learning for time series classification Hassan Ismail Fawaz, Germain Forestier, Jonathan Weber, Lhassane Idoumghar, and Pierre-Alain Muller</li>
+<li>BigD526 A Minimax Approach for Classification with Big-data Krishnan
+Raghavan, Jagannathan Sarangapani, and VA Samaranayake</li>
+<li>BigD445 Transfer learning for time series classification Hassan
+Ismail Fawaz, Germain Forestier, Jonathan Weber, Lhassane Idoumghar, and
+Pierre-Alain Muller</li>
 </ul>
-<h2><span id="l5-novel-theoretical-models-for-big-data">L5 Novel Theoretical Models for Big Data</span></h2>
+<h2><span id="l5-novel-theoreticalmodels-for-big-data">L5 Novel Theoretical
+Models for Big Data</span></h2>
 <ul>
-<li>BigD357 Linear Models with Many Cores and CPUs: A Stochastic Atomic Update Scheme Edward Raff and Jared Sylvester</li>
-<li>BigD580 Time Series Classification Using a Neural Network Ensemble Soukaina Filali Boubrahimi and Rafal Angryk</li>
+<li>BigD357 Linear Models with Many Cores and CPUs: A Stochastic Atomic
+Update Scheme Edward Raff and Jared Sylvester</li>
+<li>BigD580 Time Series Classification Using a Neural Network Ensemble
+Soukaina Filali Boubrahimi and Rafal Angryk</li>
 </ul>
-<h2><span id="l6-big-data-analytics-frameworks">L6 Big Data Analytics Frameworks</span></h2>
+<h2><span id="l6-big-data-analyticsframeworks">L6 Big Data Analytics
+Frameworks</span></h2>
 <ul>
-<li>BigD336 Online Density Estimation over Streaming Data: A Local Adaptive Solution Zhong Chen, Zhide Fang, Jiabin zhao, Wei Fan, Andrea Edwards, and Kun Zhang</li>
-<li>BigD397 Learning-based Automatic Parameter Tuning for Big Data Analytics Frameworks Liang Bao, Xin Liu, and Weizhao Chen</li>
+<li>BigD336 Online Density Estimation over Streaming Data: A Local
+Adaptive Solution Zhong Chen, Zhide Fang, Jiabin zhao, Wei Fan, Andrea
+Edwards, and Kun Zhang</li>
+<li>BigD397 Learning-based Automatic Parameter Tuning for Big Data
+Analytics Frameworks Liang Bao, Xin Liu, and Weizhao Chen</li>
 </ul>
-<h2><span id="l9-recommendation-systems-and-stream-data-management">L9 Recommendation Systems and Stream Data Management</span></h2>
+<h2><span id="l9recommendation-systems-and-stream-data-management">L9
+Recommendation Systems and Stream Data Management</span></h2>
 <ul>
-<li>BigD626 StreamGuard: A Bayesian Network Approach to Copyright Infringement Detection Problem in Large-scale Live Video Sharing Systems Daniel Zhang, Lixing Song, Qi Li, Yang Zhang, and Dong Wang</li>
-<li>BigD600 BigSR: real-time expressive RDF stream reasoning on modern Big Data platforms Xiangnan Ren, Olivier Cure, Hubert Naacke, and GuohuiXiao</li>
+<li>BigD626 StreamGuard: A Bayesian Network Approach to Copyright
+Infringement Detection Problem in Large-scale Live Video Sharing Systems
+Daniel Zhang, Lixing Song, Qi Li, Yang Zhang, and Dong Wang</li>
+<li>BigD600 BigSR: real-time expressive RDF stream reasoning on modern
+Big Data platforms Xiangnan Ren, Olivier Cure, Hubert Naacke, and
+GuohuiXiao</li>
 </ul>
-<h2><span id="l11-big-data-applications-industry-and-business">L11 Big Data Applications: Industry and Business</span></h2>
+<h2><span id="l11-big-dataapplications-industry-and-business">L11 Big Data
+Applications: Industry and Business</span></h2>
 <ul>
-<li>BigD528 Mining Illegal Insider Trading of Stocks: A Proactive Approach Sheikh Rabiul Islam, Sheikh Khaled Ghafoor, and William Eberle</li>
-<li>BigD547 Profiling Driver Behavior for Personalized Insurance Pricing and Maximal Profit Bing He, Dian Zhang, Siyuan Liu, Hao Liu, Dawei Han, and Lionel M. Ni</li>
-<li>BigD685 An Unsupervised Learning Based Approach for Mining Attribute Based Access Control Policies Leila Karimi and James Joshi</li>
-<li>BigD285 Realtime Robustification of Interdependent Networks under Cascading Attacks Zhen Chen, Hanghang Tong, and Lei Ying</li>
-<li>BigD643 Situation-Based Interaction Learning for Personality Prediction on Facebook Lei Zhang, Liang Zhao, Xuchao Zhang, Wenmo Kong, Zitong Sheng, and Chang-Tien Lu</li>
+<li>BigD528 Mining Illegal Insider Trading of Stocks: A Proactive
+Approach Sheikh Rabiul Islam, Sheikh Khaled Ghafoor, and William
+Eberle</li>
+<li>BigD547 Profiling Driver Behavior for Personalized Insurance Pricing
+and Maximal Profit Bing He, Dian Zhang, Siyuan Liu, Hao Liu, Dawei Han,
+and Lionel M. Ni</li>
+<li>BigD685 An Unsupervised Learning Based Approach for Mining Attribute
+Based Access Control Policies Leila Karimi and James Joshi</li>
+<li>BigD285 Realtime Robustification of Interdependent Networks under
+Cascading Attacks Zhen Chen, Hanghang Tong, and Lei Ying</li>
+<li>BigD643 Situation-Based Interaction Learning for Personality
+Prediction on Facebook Lei Zhang, Liang Zhao, Xuchao Zhang, Wenmo Kong,
+Zitong Sheng, and Chang-Tien Lu</li>
 </ul>
-<h2><span id="l12-big-data-applications-health-amp-science-discovery">L12 Big Data Applications: Health &amp; Science Discovery</span></h2>
+<h2><span id="l12-big-dataapplications-health-amp-science-discovery">L12 Big Data
+Applications: Health &amp; Science Discovery</span></h2>
 <ul>
-<li>BigD653 Technology Enablers for Big Data, Multi-Stage Analysis in Medical Image Processing Shunxing Bao, Prasanna Parvathaneni, Yuankai Huo, Yogesh Barve, Andrew Plassard, Yuang Yao, Hongyang Sun, Ilwoo Lyu, David Zald, Bennett Landman, and Aniruddha Gokhale</li>
-<li>BigD456 A Structured Learning Approach with Neural Conditional Random Fields for Sleep Staging Karan Aggarwal, Swaraj Khadanga, Shafiq Joty, Louis Kazaglis, and Jaideep Srivastava</li>
-<li>BigD402 Dynamic Prediction of ICU Mortality Risk Using Domain Adaptation Tiago Alves, Alberto Laender, Adriano Veloso, and Nivio Ziviani</li>
-<li>BigD353 Large-Scale Validation of Hypothesis Generation Systems via Candidate Ranking Justin Sybrandt, Micheal Shtutman, and Ilya Safro</li>
-<li>BigD354 Are Abstracts Enough for Hypothesis Generation? Justin Sybrandt, Angelo Carrabba, Alexander Herzog, and Ilya Safro</li>
+<li>BigD653 Technology Enablers for Big Data, Multi-Stage Analysis in
+Medical Image Processing Shunxing Bao, Prasanna Parvathaneni, Yuankai
+Huo, Yogesh Barve, Andrew Plassard, Yuang Yao, Hongyang Sun, Ilwoo Lyu,
+David Zald, Bennett Landman, and Aniruddha Gokhale</li>
+<li>BigD456 A Structured Learning Approach with Neural Conditional
+Random Fields for Sleep Staging Karan Aggarwal, Swaraj Khadanga, Shafiq
+Joty, Louis Kazaglis, and Jaideep Srivastava</li>
+<li>BigD402 Dynamic Prediction of ICU Mortality Risk Using Domain
+Adaptation Tiago Alves, Alberto Laender, Adriano Veloso, and Nivio
+Ziviani</li>
+<li>BigD353 Large-Scale Validation of Hypothesis Generation Systems via
+Candidate Ranking Justin Sybrandt, Micheal Shtutman, and Ilya Safro</li>
+<li>BigD354 Are Abstracts Enough for Hypothesis Generation? Justin
+Sybrandt, Angelo Carrabba, Alexander Herzog, and Ilya Safro</li>
 </ul>
-<h2><span id="l14-hpc-platforms-for-big-data">L14 HPC Platforms for Big Data</span></h2>
+<h2><span id="l14-hpc-platforms-for-bigdata">L14 HPC Platforms for Big
+Data</span></h2>
 <ul>
-<li>BigD294 Column Cache: Buffer Cache for Columnar Storage on HDFS Takeshi Yoshimura, Tatsuhiro Chiba, and Hiroshi Horii</li>
-<li>BigD431 Scalable Manifold Learning for Big Data with Apache Spark Frank Schoeneman and Jaroslaw Zola</li>
-<li>BigD598 Mira: Sharing Resources for Distributed Analytics at Small Timescales Michael Kaufmann, Kornilios Kourtis, Adrian Schuepbach, and Martina Zitterbart</li>
+<li>BigD294 Column Cache: Buffer Cache for Columnar Storage on HDFS
+Takeshi Yoshimura, Tatsuhiro Chiba, and Hiroshi Horii</li>
+<li>BigD431 Scalable Manifold Learning for Big Data with Apache Spark
+Frank Schoeneman and Jaroslaw Zola</li>
+<li>BigD598 Mira: Sharing Resources for Distributed Analytics at Small
+Timescales Michael Kaufmann, Kornilios Kourtis, Adrian Schuepbach, and
+Martina Zitterbart</li>
 </ul>
-<h2><span id="l17-big-data-applications-deep-learning">L17 Big Data Applications: Deep Learning</span></h2>
+<h2><span id="l17-big-dataapplications-deep-learning">L17 Big Data
+Applications: Deep Learning</span></h2>
 <ul>
-<li>BigD406 Two Birds with One Network: Unifying Event Prediction and Time-to-failure Modeling Karan Aggarwal, Onur Atan, Ahmed Farahat, Chi Zhang, Kosta Ristovski, and Chetan Gupta</li>
-<li>BigD292 Market Abnormality Period Detection via Comovement Attention Model Yue Wang, Chenwei Zhang, Shen Wang, Philip S. Yu, Lu Bai, and Lixin Cui</li>
-<li>BigD298 Optimizing Taxi Carpool Policies via Reinforcement Learning and Spatio-Temporal Mining Ishan Jindal, Zhiwei (Tony) Qin, Xuewen Chen, Matthew Nokleby, and Jieping Ye</li>
+<li>BigD406 Two Birds with One Network: Unifying Event Prediction and
+Time-to-failure Modeling Karan Aggarwal, Onur Atan, Ahmed Farahat, Chi
+Zhang, Kosta Ristovski, and Chetan Gupta</li>
+<li>BigD292 Market Abnormality Period Detection via Comovement Attention
+Model Yue Wang, Chenwei Zhang, Shen Wang, Philip S. Yu, Lu Bai, and
+Lixin Cui</li>
+<li>BigD298 Optimizing Taxi Carpool Policies via Reinforcement Learning
+and Spatio-Temporal Mining Ishan Jindal, Zhiwei (Tony) Qin, Xuewen Chen,
+Matthew Nokleby, and Jieping Ye</li>
 </ul>
 <h2><span id="l18-mobile-and-iot-data">L18 Mobile and IoT Data</span></h2>
 <ul>
-<li>BigD371 Enabling of Predictive Maintenance in the Brownfield through Low-Cost Sensors, an IIoT-Architecture and Machine Learning Patrick Straus, Rene Wostmann, Markus Schmitz, and Jochen Deuse</li>
-<li>BigD240 Using Smart Card Data to Model Commuters' Response Upon Unexpected Train Delays Xiancai Tian and Baihua Zheng</li>
-<li>BigD542 Hot Spot Analysis for Big Trajectory Data Panagiotis Nikitopoulos, Aris-Iakovos Paraskevopoulos, Christos Doulkeridis, Nikos Pelekis, and Yannis Theodoridis</li>
-<li>BigD722 Fusion of Terrain Information and Mobile Phone Location Data for Flood Area Detection in Rural Areas Takahiro Yabe, Kota Tsubouchi, and Yoshihide Sekimoto</li>
-<li>BigD296 Benchmarking Anomaly Detection Algorithms in an Industrial Context: Dealing with Scarce Labels and Multiple Positive Types David Renaudie, Maria A. Zuluaga, and Rodrigo AcunaAgost</li>
+<li>BigD371 Enabling of Predictive Maintenance in the Brownfield through
+Low-Cost Sensors, an IIoT-Architecture and Machine Learning Patrick
+Straus, Rene Wostmann, Markus Schmitz, and Jochen Deuse</li>
+<li>BigD240 Using Smart Card Data to Model Commuters' Response Upon
+Unexpected Train Delays Xiancai Tian and Baihua Zheng</li>
+<li>BigD542 Hot Spot Analysis for Big Trajectory Data Panagiotis
+Nikitopoulos, Aris-Iakovos Paraskevopoulos, Christos Doulkeridis, Nikos
+Pelekis, and Yannis Theodoridis</li>
+<li>BigD722 Fusion of Terrain Information and Mobile Phone Location Data
+for Flood Area Detection in Rural Areas Takahiro Yabe, Kota Tsubouchi,
+and Yoshihide Sekimoto</li>
+<li>BigD296 Benchmarking Anomaly Detection Algorithms in an Industrial
+Context: Dealing with Scarce Labels and Multiple Positive Types David
+Renaudie, Maria A. Zuluaga, and Rodrigo AcunaAgost</li>
 </ul>
 <h2><span id="l22-privacy-and-security">L22 Privacy and Security</span></h2>
 <ul>
-<li>BigD247 Distributed Machine Learning Meets Blockchain: A Decentralized, Secure, and Privacy-preserving Realization Xuhui Chen, Jinlong Ji, Changqing Luo, Weixian Liao, and Pan Li</li>
+<li>BigD247 Distributed Machine Learning Meets Blockchain: A
+Decentralized, Secure, and Privacy-preserving Realization Xuhui Chen,
+Jinlong Ji, Changqing Luo, Weixian Liao, and Pan Li</li>
 </ul>
-<h2><span id="s1-big-data-infrastructure-1">S1 Big Data Infrastructure (1)</span></h2>
+<h2><span id="s1-big-data-infrastructure1">S1 Big Data Infrastructure
+(1)</span></h2>
 <ul>
-<li>BigD291 Analyzing Alibaba's Co-located Datacenter Workloads Yue Cheng, Ali Anwar, and Xuejing Duan</li>
-<li>BigD735 Spark-uDAPL: Cost-Saving Big Data Analytics on Microsoft Azure Cloud with RDMA Networks Xiaoyi Lu, Dipti Shankar, Haiyang Shi, and Dhabaleswar K. (DK) Panda</li>
-<li>BigD381 Integrated Real-Time Data Stream Analysis and SketchBased Video Retrieval in Team Sports Lukas Probst, Fabian Rauschenbach, Heiko Schuldt, Philipp Seidenschwarz, and Martin Rumo</li>
+<li>BigD291 Analyzing Alibaba's Co-located Datacenter Workloads Yue
+Cheng, Ali Anwar, and Xuejing Duan</li>
+<li>BigD735 Spark-uDAPL: Cost-Saving Big Data Analytics on Microsoft
+Azure Cloud with RDMA Networks Xiaoyi Lu, Dipti Shankar, Haiyang Shi,
+and Dhabaleswar K. (DK) Panda</li>
+<li>BigD381 Integrated Real-Time Data Stream Analysis and SketchBased
+Video Retrieval in Team Sports Lukas Probst, Fabian Rauschenbach, Heiko
+Schuldt, Philipp Seidenschwarz, and Martin Rumo</li>
 </ul>
-<h2><span id="s5-big-data-infrastructure-2">S5 Big Data Infrastructure (2)</span></h2>
+<h2><span id="s5-big-data-infrastructure2">S5 Big Data Infrastructure
+(2)</span></h2>
 <ul>
-<li>BigD252 Serverless Big Data Processing using Matrix Multiplication as Example Sebastian Werner, Jorn Kuhlenkamp, Markus Klems, Johannes Muller, and Stefan Tai</li>
+<li>BigD252 Serverless Big Data Processing using Matrix Multiplication
+as Example Sebastian Werner, Jorn Kuhlenkamp, Markus Klems, Johannes
+Muller, and Stefan Tai</li>
 </ul>
 <h2><span id="s6-big-data-applications-2">S6 Big Data Applications (2)</span></h2>
 <ul>
-<li>BigD535 Short-term local weather forecast using dense weather station by deep neural network Kazuo Yonekura, Hitoshi Hattori, and Taiji Suzuki</li>
+<li>BigD535 Short-term local weather forecast using dense weather
+station by deep neural network Kazuo Yonekura, Hitoshi Hattori, and
+Taiji Suzuki</li>
 </ul>
-<h2><span id="s12-recommendation-systems-amp-stream-data-mining">S12 Recommendation Systems &amp; Stream Data Mining</span></h2>
+<h2><span id="s12recommendation-systems-amp-stream-data-mining">S12
+Recommendation Systems &amp; Stream Data Mining</span></h2>
 <ul>
-<li>BigD383 Learning Fast and Slow - A Unified Batch/Stream Framework Jacob Montiel, Albert Bifet, Viktor Losing, Jesse Read, and Talel Abdessalem</li>
+<li>BigD383 Learning Fast and Slow - A Unified Batch/Stream Framework
+Jacob Montiel, Albert Bifet, Viktor Losing, Jesse Read, and Talel
+Abdessalem</li>
 </ul>
-<h2><span id="iampg-regular3-big-data-platforms-amp-frameworks">I&amp;G Regular3: Big Data Platforms &amp; Frameworks</span></h2>
+<h2><span id="iampg-regular3-bigdata-platforms-amp-frameworks">I&amp;G Regular3: Big
+Data Platforms &amp; Frameworks</span></h2>
 <ul>
-<li>N211 Learning to Simplify Distributed Systems Management Christopher Streiffer, Ramya Raghavendra, Theophilus Benson, and Mudhakar Srivatsa</li>
-<li>N259 Finding Data Should be Easier than Finding Oil Evgeny Kharlamov, Martin Skjaeveland, Theofilos Mailis, Ernesto Jimenez-Ruiz, Guohui Xiao, Ahmet Soylu, Hallstein Lie, and Arild Waaler</li>
+<li>N211 Learning to Simplify Distributed Systems Management Christopher
+Streiffer, Ramya Raghavendra, Theophilus Benson, and Mudhakar
+Srivatsa</li>
+<li>N259 Finding Data Should be Easier than Finding Oil Evgeny
+Kharlamov, Martin Skjaeveland, Theofilos Mailis, Ernesto Jimenez-Ruiz,
+Guohui Xiao, Ahmet Soylu, Hallstein Lie, and Arild Waaler</li>
 </ul>
-<h2><span id="iampg-short3-big-data-algorithms-amp-systems-2">I&amp;G Short3: Big Data Algorithms &amp; Systems (2)</span></h2>
+<h2><span id="iampg-short3-bigdata-algorithms-amp-systems-2">I&amp;G Short3: Big
+Data Algorithms &amp; Systems (2)</span></h2>
 <ul>
-<li>N222 Using Real-World Store Data for Foot Traffic Forecasting Soheila Abrishami and Piyush Kumar</li>
-<li>N218 Distributed NoSQL Data Stores: Performance Analysis and a Case Study Abdeltawab Hendawi, Jayant Gupta, Liu Jiayi, Ankur Teredesai, Ramakrishnan Naveen, Shah Mohak, and Mohamed Ali</li>
+<li>N222 Using Real-World Store Data for Foot Traffic Forecasting
+Soheila Abrishami and Piyush Kumar</li>
+<li>N218 Distributed NoSQL Data Stores: Performance Analysis and a Case
+Study Abdeltawab Hendawi, Jayant Gupta, Liu Jiayi, Ankur Teredesai,
+Ramakrishnan Naveen, Shah Mohak, and Mohamed Ali</li>
 </ul>
 
         
@@ -1336,7 +1477,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/02/IEEE-BigData-2018/" data-id="cl2nztnm800755xqiy7dc607j" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/02/IEEE-BigData-2018/" data-id="cl2o9pb60004y18rzllj122yp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1457,10 +1598,11 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#windows環境でのkaoriya版のvimへのインストール">Windows環境でのKaoriya版のvimへのインストール</a><ul>
-<li><a href="#基本的な手順">基本的な手順</a></li>
-<li><a href="#設定">設定</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#windows環境でのkaoriya版のvimへのインストール" id="toc-windows環境でのkaoriya版のvimへのインストール">Windows環境でのKaoriya版のvimへのインストール</a>
+<ul>
+<li><a href="#基本的な手順" id="toc-基本的な手順">基本的な手順</a></li>
+<li><a href="#設定" id="toc-設定">設定</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1472,12 +1614,16 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="windows環境でのkaoriya版のvimへのインストール">Windows環境でのKaoriya版のvimへのインストール</span></h1>
 <h2><span id="基本的な手順">基本的な手順</span></h2>
-<p>基本的には、 <a href="http://neko-mac.blogspot.com/p/windowsvim.html" target="_blank" rel="noopener">windows10にdein.vimをインストールする手順を示したブログ</a> に記載の方法で問題なかった。 ただし、vim81系でないと正常動作しないことに注意。（一度、うっかり74系で使ってしまった）</p>
-<p>ただ_vimrcに追記する設定のうち、PATHはインストーラで出力されたものではなく、 「~」を使って相対PATH指定にした。</p>
+<p>基本的には、 <a href="http://neko-mac.blogspot.com/p/windowsvim.html" target="_blank" rel="noopener">windows10にdein.vimをインストールする手順を示したブログ</a>
+に記載の方法で問題なかった。
+ただし、vim81系でないと正常動作しないことに注意。（一度、うっかり74系で使ってしまった）</p>
+<p>ただ_vimrcに追記する設定のうち、PATHはインストーラで出力されたものではなく、
+「~」を使って相対PATH指定にした。</p>
 <p>例:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot; Required:</span><br><span class="line">set runtimepath+=~/vimfiles/bundles/repos/github.com/Shougo/dein.vim</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <h2><span id="設定">設定</span></h2>
-<p>今のところの設定は、 <a href="https://github.com/dobachi/vim_config" target="_blank" rel="noopener">dein.vimインストール手順や_vimrcをまとめたレポジトリ</a> に格納した。→ <a href="https://github.com/dobachi/vim_config/blob/master/_vimrc" target="_blank" rel="noopener">_vimrc</a></p>
+<p>今のところの設定は、 <a href="https://github.com/dobachi/vim_config" target="_blank" rel="noopener">dein.vimインストール手順や_vimrcをまとめたレポジトリ</a>
+に格納した。→ <a href="https://github.com/dobachi/vim_config/blob/master/_vimrc" target="_blank" rel="noopener">_vimrc</a></p>
 <p>END</p>
 
         
@@ -1489,7 +1635,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/02/dein-on-windows/" data-id="cl2nztnps00i65xqiqocokgh7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/02/dein-on-windows/" data-id="cl2o9pb9h00dh18rzhfbvqqcl" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1608,9 +1754,11 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p><a href="https://enterprisezine.jp/dbonline/detail/11320?fbclid=IwAR0ZevOL_WGMHD_HszCe4ONU75_94RnptdnLTiePx8TLDzL_Q9PI2d_Qqdk" target="_blank" rel="noopener">「AWSのDBより速くて安い」―ラリー・エリソン氏がAutonomous Databaseを全力で解説</a></p>
+            <p><a href="https://enterprisezine.jp/dbonline/detail/11320?fbclid=IwAR0ZevOL_WGMHD_HszCe4ONU75_94RnptdnLTiePx8TLDzL_Q9PI2d_Qqdk" target="_blank" rel="noopener">「AWSのDBより速くて安い」―ラリー・エリソン氏がAutonomous
+Databaseを全力で解説</a></p>
 <p>Oracle Cloud Infrastructure第2世代の利点の説明。</p>
-<p>Autonomous Databaseは人間によるチューニングよりも効果的だという話。</p>
+<p>Autonomous
+Databaseは人間によるチューニングよりも効果的だという話。</p>
 
         
         </div>
@@ -1621,7 +1769,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/10/24/Autonomous-Database-of-Oracle/" data-id="cl2nztnkc00225xqinat5bl2x" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/10/24/Autonomous-Database-of-Oracle/" data-id="cl2o9pb4o001m18rz51wp6m7w" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1740,7 +1888,8 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p><a href="https://qiita.com/kinagaki/items/460577f46529484d720e" target="_blank" rel="noopener">ドンピシャのQiitaの記事</a> があったので 手元の環境で真似したところ、悪くない結果が得られた。</p>
+            <p><a href="https://qiita.com/kinagaki/items/460577f46529484d720e" target="_blank" rel="noopener">ドンピシャのQiitaの記事</a>
+があったので 手元の環境で真似したところ、悪くない結果が得られた。</p>
 <p>コマンドだけ引用すると以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc hoge.docx -t markdown-raw_html-native_divs-native_spans -o hoge.md</span><br></pre></td></tr></table></figure>
 
@@ -1753,7 +1902,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/10/20/Word-to-Markdown/" data-id="cl2nztnp900gf5xqikhx3q06z" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/10/20/Word-to-Markdown/" data-id="cl2o9pb8t00bw18rz4udzuq72" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1983,5 +2132,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -5,18 +5,18 @@
     
     <title>Databricks AutoML Toolkit | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ ブログ？記事？ GitHub Readme（2019/08/23現在） 実装を確認     参考  Databricks launches AutoML Toolkit for model building and deployment GitHub databrickslabs/automl-toolkit  メモ ブログ？記事？ Databricks launches Aut">
+    <meta name="description" content="参考 メモ  ブログ？記事？ GitHub  Readme（2019/08/23現在） 実装を確認     参考  Databricks launches AutoML Toolkit for model building and deployment GitHub databrickslabs/automl-toolkit  メモ ブログ？記事？ Databricks launches A">
 <meta name="keywords" content="Machine Learning,AutoML">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Databricks AutoML Toolkit">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/08/23/Databricks-AutoML-Toolkit/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ ブログ？記事？ GitHub Readme（2019/08/23現在） 実装を確認     参考  Databricks launches AutoML Toolkit for model building and deployment GitHub databrickslabs/automl-toolkit  メモ ブログ？記事？ Databricks launches Aut">
+<meta property="og:description" content="参考 メモ  ブログ？記事？ GitHub  Readme（2019/08/23現在） 実装を確認     参考  Databricks launches AutoML Toolkit for model building and deployment GitHub databrickslabs/automl-toolkit  メモ ブログ？記事？ Databricks launches A">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Databricks AutoML Toolkit">
-<meta name="twitter:description" content="参考 メモ ブログ？記事？ GitHub Readme（2019/08/23現在） 実装を確認     参考  Databricks launches AutoML Toolkit for model building and deployment GitHub databrickslabs/automl-toolkit  メモ ブログ？記事？ Databricks launches Aut">
+<meta name="twitter:description" content="参考 メモ  ブログ？記事？ GitHub  Readme（2019/08/23現在） 実装を確認     参考  Databricks launches AutoML Toolkit for model building and deployment GitHub databrickslabs/automl-toolkit  メモ ブログ？記事？ Databricks launches A">
     
 
     
@@ -251,41 +251,55 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#ブログ記事">ブログ？記事？</a></li>
-<li><a href="#github">GitHub</a><ul>
-<li><a href="#readme20190823現在">Readme（2019/08/23現在）</a></li>
-<li><a href="#実装を確認">実装を確認</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#ブログ記事" id="toc-ブログ記事">ブログ？記事？</a></li>
+<li><a href="#github" id="toc-github">GitHub</a>
+<ul>
+<li><a href="#readme20190823現在" id="toc-readme20190823現在">Readme（2019/08/23現在）</a></li>
+<li><a href="#実装を確認" id="toc-実装を確認">実装を確認</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://venturebeat.com/2019/08/20/databricks-launches-automl-toolkit-for-model-building-and-deployment/" target="_blank" rel="noopener">Databricks launches AutoML Toolkit for model building and deployment</a></li>
-<li><a href="https://github.com/databrickslabs/automl-toolkit" target="_blank" rel="noopener">GitHub databrickslabs/automl-toolkit</a></li>
+<li><a href="https://venturebeat.com/2019/08/20/databricks-launches-automl-toolkit-for-model-building-and-deployment/" target="_blank" rel="noopener">Databricks
+launches AutoML Toolkit for model building and deployment</a></li>
+<li><a href="https://github.com/databrickslabs/automl-toolkit" target="_blank" rel="noopener">GitHub
+databrickslabs/automl-toolkit</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="ブログ記事">ブログ？記事？</span></h2>
-<p><a href="https://venturebeat.com/2019/08/20/databricks-launches-automl-toolkit-for-model-building-and-deployment/" target="_blank" rel="noopener">Databricks launches AutoML Toolkit for model building and deployment</a> の内容を確認する。</p>
-<p>MLFlowなどをベースに開発された。 ハイパーパラメタータチューニング、バッチ推論、モデルサーチを自動化する。</p>
+<p><a href="https://venturebeat.com/2019/08/20/databricks-launches-automl-toolkit-for-model-building-and-deployment/" target="_blank" rel="noopener">Databricks
+launches AutoML Toolkit for model building and deployment</a>
+の内容を確認する。</p>
+<p>MLFlowなどをベースに開発された。
+ハイパーパラメタータチューニング、バッチ推論、モデルサーチを自動化する。</p>
 <p>TensorFlowやSageMakerなどと連携。</p>
-<p>データサイエンティストとエンジニアが連携可能という点が他のAutoMLと異なる要素。 またコード実装能力が高い人、そうでない人混ざっているケースに対し、 高い抽象度で実装なく動かせると同時に、細かなカスタマイズも可能にする。</p>
+<p>データサイエンティストとエンジニアが連携可能という点が他のAutoMLと異なる要素。
+またコード実装能力が高い人、そうでない人混ざっているケースに対し、
+高い抽象度で実装なく動かせると同時に、細かなカスタマイズも可能にする。</p>
 <p>DatabricksのAutoMLは、Azureの機械学習サービスとも連携する。（パートナーシップあり）</p>
 <h2><span id="github">GitHub</span></h2>
-<p><a href="https://github.com/databrickslabs/automl-toolkit" target="_blank" rel="noopener">GitHub databrickslabs/automl-toolkit</a> を軽く確認する。</p>
+<p><a href="https://github.com/databrickslabs/automl-toolkit" target="_blank" rel="noopener">GitHub
+databrickslabs/automl-toolkit</a> を軽く確認する。</p>
 <h3><span id="readme20190823現在">Readme（2019/08/23現在）</span></h3>
-<p>「non-supported end-to-end supervised learning solution for automating」と定義されている。 以下の内容をautomationするようだ。</p>
+<p>「non-supported end-to-end supervised learning solution for
+automating」と定義されている。 以下の内容をautomationするようだ。</p>
 <ul>
 <li>Feature clean-up（特徴選択？特徴の前処理？）</li>
 <li>Feature vectorization（特徴のデータのベクトル化）</li>
 <li>Model selection and training（モデル選択と学習）</li>
-<li>Hyper parameter optimization and selection（ハイパーパラメータ最適化と選択）</li>
+<li>Hyper parameter optimization and
+selection（ハイパーパラメータ最適化と選択）</li>
 <li>Batch Prediction（バッチ処理での推論）</li>
-<li>Logging of model results and training runs (using MLFlow)（MLFlowを使ってロギング、学習実行）</li>
+<li>Logging of model results and training runs (using
+MLFlow)（MLFlowを使ってロギング、学習実行）</li>
 </ul>
-<p>対応している学習モデルは以下の通り。 Sparkの機械学習ライブラリを利用しているようなので、それに準ずることになりそう。</p>
+<p>対応している学習モデルは以下の通り。
+Sparkの機械学習ライブラリを利用しているようなので、それに準ずることになりそう。</p>
 <ul>
 <li>Decision Trees (Regressor and Classifier)</li>
 <li>Gradient Boosted Trees (Regressor and Classifier)</li>
@@ -297,7 +311,8 @@ ga('send', 'pageview');
 <li>XGBoost (Regressor and Classifier)</li>
 </ul>
 <p>開発言語はScala（100%）</p>
-<p>DBFS APIを前提としているように見えることから、Databricks Cloud前提か？</p>
+<p>DBFS APIを前提としているように見えることから、Databricks
+Cloud前提か？</p>
 <p>ハイレベルAPI（FamilyRunner）について載っている例から、ポイントを抜粋する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// パッケージを見る限り、Databricksのラボとしての活動のようだ？</span><br><span class="line">import com.databricks.labs.automl.executor.config.ConfigurationGenerator</span><br><span class="line">import com.databricks.labs.automl.executor.FamilyRunner</span><br><span class="line"></span><br><span class="line">val data = spark.table(&quot;ben_demo.adult_data&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// MLFlowの設定値など、最低限の上書き設定を定義する</span><br><span class="line">val overrides = Map(&quot;labelCol&quot; -&gt; &quot;income&quot;,</span><br><span class="line">&quot;mlFlowExperimentName&quot; -&gt; &quot;My First AutoML Run&quot;,</span><br><span class="line"></span><br><span class="line">// Databrciks Cloud上で起動するDeltaの場所を指定</span><br><span class="line">&quot;mlFlowTrackingURI&quot; -&gt; &quot;https://&lt;my shard address&gt;&quot;,</span><br><span class="line">&quot;mlFlowAPIToken&quot; -&gt; dbutils.notebook.getContext().apiToken.get,</span><br><span class="line">&quot;mlFlowModelSaveDirectory&quot; -&gt; &quot;/ml/FirstAutoMLRun/&quot;,</span><br><span class="line">&quot;inferenceConfigSaveLocation&quot; -&gt; &quot;ml/FirstAutoMLRun/inference&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// コンフィグを適切に？自動生成。合わせてどのモデルを使うかを指定している。</span><br><span class="line">val randomForestConfig = ConfigurationGenerator.generateConfigFromMap(&quot;RandomForest&quot;, &quot;classifier&quot;, overrides)</span><br><span class="line">val gbtConfig = ConfigurationGenerator.generateConfigFromMap(&quot;GBT&quot;, &quot;classifier&quot;, overrides)</span><br><span class="line">val logConfig = ConfigurationGenerator.generateConfigFromMap(&quot;LogisticRegression&quot;, &quot;classifier&quot;, overrides)</span><br><span class="line"></span><br><span class="line">// 生成されたコンフィグでランナーを生成し、実行</span><br><span class="line">val runner = FamilyRunner(data, Array(randomForestConfig, gbtConfig, logConfig)).execute()</span><br></pre></td></tr></table></figure>
 <p>上記実装では、以下のようなことが裏で行われる。</p>
@@ -307,39 +322,64 @@ ga('send', 'pageview');
 <li>3種類のモデルについてパラメータチューニング</li>
 </ul>
 <h3><span id="実装を確認">実装を確認</span></h3>
-<p>エントリポイントとしては、 <code>com.databricks.labs.automl.executor.FamilyRunner</code> としてみる。</p>
+<p>エントリポイントとしては、
+<code>com.databricks.labs.automl.executor.FamilyRunner</code>
+としてみる。</p>
 <h4><span id="comdatabrickslabsautomlexecutorfamilyrunner">com.databricks.labs.automl.executor.FamilyRunner</span></h4>
-<p>executeメソッドが例として載っていたので確認。 当該メソッド全体は以下の通り。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:115 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">def execute(): FamilyFinalOutput = &#123;</span><br><span class="line"></span><br><span class="line">  val outputBuffer = ArrayBuffer[FamilyOutput]()</span><br><span class="line"></span><br><span class="line">  configs.foreach &#123; x =&gt;</span><br><span class="line">    val mainConfiguration = ConfigurationGenerator.generateMainConfig(x)</span><br><span class="line"></span><br><span class="line">    val runner: AutomationRunner = new AutomationRunner(data)</span><br><span class="line">      .setMainConfig(mainConfiguration)</span><br><span class="line"></span><br><span class="line">    val preppedData = runner.prepData()</span><br><span class="line"></span><br><span class="line">    val preppedDataOverride = preppedData.copy(modelType = x.predictionType)</span><br><span class="line"></span><br><span class="line">    val output = runner.executeTuning(preppedDataOverride)</span><br><span class="line"></span><br><span class="line">    outputBuffer += new FamilyOutput(x.modelFamily, output.mlFlowOutput) &#123;</span><br><span class="line">      override def modelReport: Array[GenericModelReturn] = output.modelReport</span><br><span class="line">      override def generationReport: Array[GenerationalReport] =</span><br><span class="line">        output.generationReport</span><br><span class="line">      override def modelReportDataFrame: DataFrame =</span><br><span class="line">        augmentDF(x.modelFamily, output.modelReportDataFrame)</span><br><span class="line">      override def generationReportDataFrame: DataFrame =</span><br><span class="line">        augmentDF(x.modelFamily, output.generationReportDataFrame)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  unifyFamilyOutput(outputBuffer.toArray)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>また、再掲ではあるが、当該メソッドは以下のように呼び出されている。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 生成されたコンフィグでランナーを生成し、実行</span><br><span class="line">val runner = FamilyRunner(data, Array(randomForestConfig, gbtConfig, logConfig)).execute()</span><br></pre></td></tr></table></figure></p>
+<p>executeメソッドが例として載っていたので確認。
+当該メソッド全体は以下の通り。</p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:115
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">def execute(): FamilyFinalOutput = &#123;</span><br><span class="line"></span><br><span class="line">  val outputBuffer = ArrayBuffer[FamilyOutput]()</span><br><span class="line"></span><br><span class="line">  configs.foreach &#123; x =&gt;</span><br><span class="line">    val mainConfiguration = ConfigurationGenerator.generateMainConfig(x)</span><br><span class="line"></span><br><span class="line">    val runner: AutomationRunner = new AutomationRunner(data)</span><br><span class="line">      .setMainConfig(mainConfiguration)</span><br><span class="line"></span><br><span class="line">    val preppedData = runner.prepData()</span><br><span class="line"></span><br><span class="line">    val preppedDataOverride = preppedData.copy(modelType = x.predictionType)</span><br><span class="line"></span><br><span class="line">    val output = runner.executeTuning(preppedDataOverride)</span><br><span class="line"></span><br><span class="line">    outputBuffer += new FamilyOutput(x.modelFamily, output.mlFlowOutput) &#123;</span><br><span class="line">      override def modelReport: Array[GenericModelReturn] = output.modelReport</span><br><span class="line">      override def generationReport: Array[GenerationalReport] =</span><br><span class="line">        output.generationReport</span><br><span class="line">      override def modelReportDataFrame: DataFrame =</span><br><span class="line">        augmentDF(x.modelFamily, output.modelReportDataFrame)</span><br><span class="line">      override def generationReportDataFrame: DataFrame =</span><br><span class="line">        augmentDF(x.modelFamily, output.generationReportDataFrame)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  unifyFamilyOutput(outputBuffer.toArray)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>また、再掲ではあるが、当該メソッドは以下のように呼び出されている。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 生成されたコンフィグでランナーを生成し、実行</span><br><span class="line">val runner = FamilyRunner(data, Array(randomForestConfig, gbtConfig, logConfig)).execute()</span><br></pre></td></tr></table></figure></p>
 <p>第1引数はデータ、第2引数は採用するアルゴリズムごとのコンフィグを含んだArray。</p>
 <p>では、executeメソッドを少し細かく見る。</p>
 <p>まずループとなっている箇所があるが、ここはアルゴリズムごとのコンフィグをイテレートしている。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:119 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configs.foreach &#123; x =&gt;</span><br></pre></td></tr></table></figure></p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:119
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configs.foreach &#123; x =&gt;</span><br></pre></td></tr></table></figure></p>
 <p>つづいて、渡されたコンフィグを引数に取りながら、パラメータを生成する。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:120 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val mainConfiguration = ConfigurationGenerator.generateMainConfig(x)</span><br></pre></td></tr></table></figure></p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:120
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val mainConfiguration = ConfigurationGenerator.generateMainConfig(x)</span><br></pre></td></tr></table></figure></p>
 <p>次は上記で生成されたパラメータを引数に取りながら、処理の自動実行用のAutomationRunnerインスタンスを生成する。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:122 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val runner: AutomationRunner = new AutomationRunner(data)</span><br><span class="line">  .setMainConfig(mainConfiguration)</span><br></pre></td></tr></table></figure></p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:122
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val runner: AutomationRunner = new AutomationRunner(data)</span><br><span class="line">  .setMainConfig(mainConfiguration)</span><br></pre></td></tr></table></figure></p>
 <p>つづいてデータを前処理する。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:125 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val preppedData = runner.prepData()</span><br><span class="line"></span><br><span class="line">val preppedDataOverride = preppedData.copy(modelType = x.predictionType)</span><br></pre></td></tr></table></figure></p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:125
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val preppedData = runner.prepData()</span><br><span class="line"></span><br><span class="line">val preppedDataOverride = preppedData.copy(modelType = x.predictionType)</span><br></pre></td></tr></table></figure></p>
 <p>つづいて生成されたAutomationRunnerインスタンスを利用し、パラメータチューニングを実施する。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:129 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val output = runner.executeTuning(preppedDataOverride)</span><br></pre></td></tr></table></figure></p>
-<p>その後、出力内容が整理される。 レポートの類にmodelFamilyの情報を付与したり、など。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:131 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">outputBuffer += new FamilyOutput(x.modelFamily, output.mlFlowOutput) &#123;</span><br><span class="line">  override def modelReport: Array[GenericModelReturn] = output.modelReport</span><br><span class="line">  override def generationReport: Array[GenerationalReport] =</span><br><span class="line">    output.generationReport</span><br><span class="line">  override def modelReportDataFrame: DataFrame =</span><br><span class="line">    augmentDF(x.modelFamily, output.modelReportDataFrame)</span><br><span class="line">  override def generationReportDataFrame: DataFrame =</span><br><span class="line">    augmentDF(x.modelFamily, output.generationReportDataFrame)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>最後に、モデルごとのチューニングのループが完了したあとに、 それにより得られた複数の出力内容をまとめ上げる。 （Arrayをまとめたり、DataFrameをunionしたり、など）</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:142 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unifyFamilyOutput(outputBuffer.toArray)</span><br></pre></td></tr></table></figure></p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:129
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val output = runner.executeTuning(preppedDataOverride)</span><br></pre></td></tr></table></figure></p>
+<p>その後、出力内容が整理される。
+レポートの類にmodelFamilyの情報を付与したり、など。</p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:131
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">outputBuffer += new FamilyOutput(x.modelFamily, output.mlFlowOutput) &#123;</span><br><span class="line">  override def modelReport: Array[GenericModelReturn] = output.modelReport</span><br><span class="line">  override def generationReport: Array[GenerationalReport] =</span><br><span class="line">    output.generationReport</span><br><span class="line">  override def modelReportDataFrame: DataFrame =</span><br><span class="line">    augmentDF(x.modelFamily, output.modelReportDataFrame)</span><br><span class="line">  override def generationReportDataFrame: DataFrame =</span><br><span class="line">    augmentDF(x.modelFamily, output.generationReportDataFrame)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最後に、モデルごとのチューニングのループが完了したあとに、
+それにより得られた複数の出力内容をまとめ上げる。
+（Arrayをまとめたり、DataFrameをunionしたり、など）</p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:142
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unifyFamilyOutput(outputBuffer.toArray)</span><br></pre></td></tr></table></figure></p>
 <h4><span id="comdatabrickslabsautomlautomationrunnerexecutetuning">com.databricks.labs.automl.AutomationRunner#executeTuning</span></h4>
 <p>指定されたモデルごとにうチューニングを行う部分を確認する。</p>
-<p>当該メソッド内では、modelFamilyごとの処理の仕方が定義されている。 以下にRandomForestの場合を示す。</p>
+<p>当該メソッド内では、modelFamilyごとの処理の仕方が定義されている。
+以下にRandomForestの場合を示す。</p>
 <p>com/databricks/labs/automl/AutomationRunner.scala:1597 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">  protected[automl] def executeTuning(payload: DataGeneration): TunerOutput = &#123;</span><br><span class="line"></span><br><span class="line">    val genericResults = new ArrayBuffer[GenericModelReturn]</span><br><span class="line"></span><br><span class="line">    val (resultArray, modelStats, modelSelection, dataframe) =</span><br><span class="line">      _mainConfig.modelFamily match &#123;</span><br><span class="line">        case &quot;RandomForest&quot; =&gt;</span><br><span class="line">          val (results, stats, selection, data) = runRandomForest(payload)</span><br><span class="line">          results.foreach &#123; x =&gt;</span><br><span class="line">            genericResults += GenericModelReturn(</span><br><span class="line">              hyperParams = extractPayload(x.modelHyperParams),</span><br><span class="line">              model = x.model,</span><br><span class="line">              score = x.score,</span><br><span class="line">              metrics = x.evalMetrics,</span><br><span class="line">              generation = x.generation</span><br><span class="line">            )</span><br><span class="line">          &#125;</span><br><span class="line">          (genericResults, stats, selection, data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>なお、2019/8/25現在対応しているモデルは以下の通り。（caseになっていたのを抜粋） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">case &quot;RandomForest&quot; =&gt;</span><br><span class="line">case &quot;XGBoost&quot; =&gt;</span><br><span class="line">case &quot;GBT&quot; =&gt;</span><br><span class="line">case &quot;MLPC&quot; =&gt;</span><br><span class="line">case &quot;LinearRegression&quot; =&gt;</span><br><span class="line">case &quot;LogisticRegression&quot; =&gt;</span><br><span class="line">case &quot;SVM&quot; =&gt;</span><br><span class="line">case &quot;Trees&quot; =&gt;</span><br></pre></td></tr></table></figure></p>
-<p>さて、モデルごとのチューニングの様子を確認する。 RandomForestを例にすると、実態は以下の <code>runRandomForest</code> メソッドに見える。</p>
+<p>なお、2019/8/25現在対応しているモデルは以下の通り。（caseになっていたのを抜粋）
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">case &quot;RandomForest&quot; =&gt;</span><br><span class="line">case &quot;XGBoost&quot; =&gt;</span><br><span class="line">case &quot;GBT&quot; =&gt;</span><br><span class="line">case &quot;MLPC&quot; =&gt;</span><br><span class="line">case &quot;LinearRegression&quot; =&gt;</span><br><span class="line">case &quot;LogisticRegression&quot; =&gt;</span><br><span class="line">case &quot;SVM&quot; =&gt;</span><br><span class="line">case &quot;Trees&quot; =&gt;</span><br></pre></td></tr></table></figure></p>
+<p>さて、モデルごとのチューニングの様子を確認する。
+RandomForestを例にすると、実態は以下の <code>runRandomForest</code>
+メソッドに見える。</p>
 <p>com/databricks/labs/automl/AutomationRunner.scala:1604 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val (results, stats, selection, data) = runRandomForest(payload)</span><br></pre></td></tr></table></figure></p>
-<p><code>runRandomForest</code> メソッドは、以下のようにペイロードを引数にとり、 その中でチューニングを実施する。</p>
+<p><code>runRandomForest</code>
+メソッドは、以下のようにペイロードを引数にとり、
+その中でチューニングを実施する。</p>
 <p>com/databricks/labs/automl/AutomationRunner.scala:46 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  private def runRandomForest(</span><br><span class="line">                               payload: DataGeneration</span><br><span class="line">                             ): (Array[RandomForestModelsWithResults], DataFrame, String, DataFrame) = &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>特徴的なのは、非常にきめ細やかに初期設定している箇所。 これらの設定を上書きしてチューニングできる、はず。</p>
+<p>特徴的なのは、非常にきめ細やかに初期設定している箇所。
+これらの設定を上書きしてチューニングできる、はず。</p>
 <p>com/databricks/labs/automl/AutomationRunner.scala:58 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    val initialize = new RandomForestTuner(cachedData, payload.modelType)</span><br><span class="line">      .setLabelCol(_mainConfig.labelCol)</span><br><span class="line">      .setFeaturesCol(_mainConfig.featuresCol)</span><br><span class="line">      .setRandomForestNumericBoundaries(_mainConfig.numericBoundaries)</span><br><span class="line">      .setRandomForestStringBoundaries(_mainConfig.stringBoundaries)</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>実際にチューニングしているのは、以下の箇所のように見える。 <code>evolveWithScoringDF</code> 内では、 <code>RandomForestTuner</code> クラスのメソッドが呼び出され、 ストラテジ（実装上は、バッチ方式か、continuous方式か）に従ったチューニングが実施される。</p>
+<p>実際にチューニングしているのは、以下の箇所のように見える。
+<code>evolveWithScoringDF</code> 内では、 <code>RandomForestTuner</code>
+クラスのメソッドが呼び出され、
+ストラテジ（実装上は、バッチ方式か、continuous方式か）に従ったチューニングが実施される。</p>
 <p>com/databricks/labs/automl/AutomationRunner.scala:169 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val (modelResultsRaw, modelStatsRaw) = initialize.evolveWithScoringDF()</span><br></pre></td></tr></table></figure></p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
@@ -352,7 +392,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/23/Databricks-AutoML-Toolkit/" data-id="cl2nztnl4003v5xqizgowlijh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/23/Databricks-AutoML-Toolkit/" data-id="cl2o9pbga013w18rzu6ypac36" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -603,5 +643,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

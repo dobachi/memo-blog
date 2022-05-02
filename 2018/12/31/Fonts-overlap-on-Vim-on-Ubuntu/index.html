@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  現象についての議論  メモ 現象についての議論 の通り、~/.vimrcに以下を追記して回避した。 1set ambiwidth=double">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu上のgvimでフォントが重なる現象">
 <meta name="twitter:description" content="参考 メモ   参考  現象についての議論  メモ 現象についての議論 の通り、~/.vimrcに以下を追記して回避した。 1set ambiwidth=double">
@@ -251,8 +251,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -260,7 +260,8 @@ ga('send', 'pageview');
 <li><a href="https://forums.ubuntulinux.jp/viewtopic.php?id=12459" target="_blank" rel="noopener">現象についての議論</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://forums.ubuntulinux.jp/viewtopic.php?id=12459" target="_blank" rel="noopener">現象についての議論</a> の通り、<code>~/.vimrc</code>に以下を追記して回避した。</p>
+<p><a href="https://forums.ubuntulinux.jp/viewtopic.php?id=12459" target="_blank" rel="noopener">現象についての議論</a>
+の通り、<code>~/.vimrc</code>に以下を追記して回避した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set ambiwidth=double</span><br></pre></td></tr></table></figure>
 
         
@@ -272,7 +273,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/31/Fonts-overlap-on-Vim-on-Ubuntu/" data-id="cl2nztnll005b5xqiy9mfwudi" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/31/Fonts-overlap-on-Vim-on-Ubuntu/" data-id="cl2o9pb5h003m18rz1qre6uid" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -523,5 +524,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -5,19 +5,19 @@
     
     <title>Chi: a scalable and programmable control plane for distributed stream processing systems | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 2. MOTIVATION ワークロードを予測しがたい データの多様性 マルチテナントなコントロールポリシー  3. BACKGROUND 4. DESIGN 4.1 Overview 4.2 Control Mechanism     参考  Chi a scalable and programmable control plane for distributed stream">
+    <meta name="description" content="参考 メモ  2. MOTIVATION  ワークロードを予測しがたい データの多様性 マルチテナントなコントロールポリシー  3. BACKGROUND 4. DESIGN  4.1 Overview 4.2 Control Mechanism     参考  Chi a scalable and programmable control plane for distributed str">
 <meta name="keywords" content="Stream Processing,Paper">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Chi: a scalable and programmable control plane for distributed stream processing systems">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/08/14/Chi-a-scalable-and-programmable-control-plane-for-distributed-stream-processing-systems/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 2. MOTIVATION ワークロードを予測しがたい データの多様性 マルチテナントなコントロールポリシー  3. BACKGROUND 4. DESIGN 4.1 Overview 4.2 Control Mechanism     参考  Chi a scalable and programmable control plane for distributed stream">
+<meta property="og:description" content="参考 メモ  2. MOTIVATION  ワークロードを予測しがたい データの多様性 マルチテナントなコントロールポリシー  3. BACKGROUND 4. DESIGN  4.1 Overview 4.2 Control Mechanism     参考  Chi a scalable and programmable control plane for distributed str">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/2dP06tOT2MlXbqGp-38F4F.png">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chi: a scalable and programmable control plane for distributed stream processing systems">
-<meta name="twitter:description" content="参考 メモ 2. MOTIVATION ワークロードを予測しがたい データの多様性 マルチテナントなコントロールポリシー  3. BACKGROUND 4. DESIGN 4.1 Overview 4.2 Control Mechanism     参考  Chi a scalable and programmable control plane for distributed stream">
+<meta name="twitter:description" content="参考 メモ  2. MOTIVATION  ワークロードを予測しがたい データの多様性 マルチテナントなコントロールポリシー  3. BACKGROUND 4. DESIGN  4.1 Overview 4.2 Control Mechanism     参考  Chi a scalable and programmable control plane for distributed str">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/2dP06tOT2MlXbqGp-38F4F.png">
     
 
@@ -253,24 +253,30 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#motivation">2. MOTIVATION</a><ul>
-<li><a href="#ワークロードを予測しがたい">ワークロードを予測しがたい</a></li>
-<li><a href="#データの多様性">データの多様性</a></li>
-<li><a href="#マルチテナントなコントロールポリシー">マルチテナントなコントロールポリシー</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#motivation" id="toc-motivation">2. MOTIVATION</a>
+<ul>
+<li><a href="#ワークロードを予測しがたい" id="toc-ワークロードを予測しがたい">ワークロードを予測しがたい</a></li>
+<li><a href="#データの多様性" id="toc-データの多様性">データの多様性</a></li>
+<li><a href="#マルチテナントなコントロールポリシー" id="toc-マルチテナントなコントロールポリシー">マルチテナントなコントロールポリシー</a></li>
 </ul></li>
-<li><a href="#background">3. BACKGROUND</a></li>
-<li><a href="#design">4. DESIGN</a><ul>
-<li><a href="#overview">4.1 Overview</a></li>
-<li><a href="#control-mechanism">4.2 Control Mechanism</a></li>
+<li><a href="#background" id="toc-background">3. BACKGROUND</a></li>
+<li><a href="#design" id="toc-design">4. DESIGN</a>
+<ul>
+<li><a href="#overview" id="toc-overview">4.1 Overview</a></li>
+<li><a href="#control-mechanism" id="toc-control-mechanism">4.2 Control
+Mechanism</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://dl.acm.org/citation.cfm?id=3242946" target="_blank" rel="noopener">Chi a scalable and programmable control plane for distributed stream processing systems</a></li>
+<li><a href="https://dl.acm.org/citation.cfm?id=3242946" target="_blank" rel="noopener">Chi a scalable
+and programmable control plane for distributed stream processing
+systems</a></li>
 <li><a href="http://www.vldb.org/pvldb/vol11/p1303-mai.pdf" target="_blank" rel="noopener">VLDBのダウンロードリンク</a></li>
 <li><a href="https://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
 <li><a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/trill-vldb2015.pdf" target="_blank" rel="noopener">Trill</a></li>
@@ -278,46 +284,91 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>2018/6にVLDBに掲載された論文。Microsoftが中心となって執筆？</p>
-<p>多数のパラメータがあり、調整可能性がある場合に、動的な設定を可能にするChiというControll Planeを提案。</p>
-<p>昨今のストリーム処理エンジン（やアプリケーション？）は、様々なSLO（Service Level Objective）を目指し、 多数の調整用パラメータが存在する。 これをチューニングするのは玄人でも一筋縄ではない。</p>
+<p>多数のパラメータがあり、調整可能性がある場合に、動的な設定を可能にするChiというControll
+Planeを提案。</p>
+<p>昨今のストリーム処理エンジン（やアプリケーション？）は、様々なSLO（Service
+Level Objective）を目指し、 多数の調整用パラメータが存在する。
+これをチューニングするのは玄人でも一筋縄ではない。</p>
 <p>重要なのは、動的に設定できることに加え、常にモニタリングしフィードバックすること。</p>
-<p>本論文では、非同期的にコントロールポリシーを適用するモデル（Control Plane）を提案。 ストリームデータを伝搬する機能を利用し、コントロールメッセージを伝搬する。 またコントロールメッセージを扱うためのリアクティブなプログラミングモデルを合わせて提案。これにより、ポリシーを実装するのにハイレベルAPIを利用すればよくなる。 グローバルな同期が不要であることが特徴。</p>
-<p>過去の技術としては、Heron、Flink、Spark Streamingを例に挙げ、限定的な対応にとどまっている旨を指摘。</p>
-<p>Chiは、 <a href="https://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a> の上に構築されたFlare（★補足：Microsoft内部のシステムのようだ）という仕組み上に実装し、試した。 <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/trill-vldb2015.pdf" target="_blank" rel="noopener">Trill</a>も利用しているとのこと。</p>
+<p>本論文では、非同期的にコントロールポリシーを適用するモデル（Control
+Plane）を提案。
+ストリームデータを伝搬する機能を利用し、コントロールメッセージを伝搬する。
+またコントロールメッセージを扱うためのリアクティブなプログラミングモデルを合わせて提案。これにより、ポリシーを実装するのにハイレベルAPIを利用すればよくなる。
+グローバルな同期が不要であることが特徴。</p>
+<p>過去の技術としては、Heron、Flink、Spark
+Streamingを例に挙げ、限定的な対応にとどまっている旨を指摘。</p>
+<p>Chiは、 <a href="https://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a>
+の上に構築されたFlare（★補足：Microsoft内部のシステムのようだ）という仕組み上に実装し、試した。
+<a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/trill-vldb2015.pdf" target="_blank" rel="noopener">Trill</a>も利用しているとのこと。</p>
 <p>★補足：GitHub等に実装が公開されていないか軽く確認したが存在しないようだ。</p>
 <h2><span id="2-motivation">2. MOTIVATION</span></h2>
-<p>メジャーなパブリッククラウド（★補足：ここではAzureのことを指しているのだと思われる）で生じるログを集めて分析したい。 サーバ台数は20万台、数十PB/日。 これはGoogleのログと同様の規模。</p>
+<p>メジャーなパブリッククラウド（★補足：ここではAzureのことを指しているのだと思われる）で生じるログを集めて分析したい。
+サーバ台数は20万台、数十PB/日。 これはGoogleのログと同様の規模。</p>
 <h3><span id="ワークロードを予測しがたい">ワークロードを予測しがたい</span></h3>
-<p>生じるログはバラエティに富んでいる。これはそれを生成するプロセス、コンポーネントがバラエティ豊かだからである。 例えば、何か障害が起きるとそのとたんにバーストトラフィックが発生する。 デバッグモードを有効にするとログ量が増える。</p>
-<p>特徴として、ひとつの種類のストリームの量も、バラエティ豊かであることが挙げられる。 例えば、あるストリームについては1分の間に数千万イベントまで到達するケースもあった。（つまり、バーストトラフィック）</p>
+<p>生じるログはバラエティに富んでいる。これはそれを生成するプロセス、コンポーネントがバラエティ豊かだからである。
+例えば、何か障害が起きるとそのとたんにバーストトラフィックが発生する。
+デバッグモードを有効にするとログ量が増える。</p>
+<p>特徴として、ひとつの種類のストリームの量も、バラエティ豊かであることが挙げられる。
+例えば、あるストリームについては1分の間に数千万イベントまで到達するケースもあった。（つまり、バーストトラフィック）</p>
 <p>これはトラフィックが予測困難であることを示す。</p>
 <h3><span id="データの多様性">データの多様性</span></h3>
 <p>Skewが存在し、多様である。</p>
 <h3><span id="マルチテナントなコントロールポリシー">マルチテナントなコントロールポリシー</span></h3>
-<p>ログにはError、Infoなどのレベルがあり、要件に応じて多様である。 またそれぞれ異なるSLOを求められることがある。 例えばInfoレベルはExactly Onceだが、それ以外はベストエフォート、など。</p>
+<p>ログにはError、Infoなどのレベルがあり、要件に応じて多様である。
+またそれぞれ異なるSLOを求められることがある。 例えばInfoレベルはExactly
+Onceだが、それ以外はベストエフォート、など。</p>
 <p>これをひとつのストリーム処理システムで実現しようとする。</p>
-<p>またControl Policyは、リソース使用の最適化に用いられることもある。 ある処理の中間データがほかの処理で使われるために保持されたり、 データレイアウトやストレージの使い方を最適化したり…など。</p>
-<p>これらの個別の先行研究は存在するが、まとめて管理しようとすると、 Control Planeに柔軟性とスケーラビリティが必要になる。</p>
+<p>またControl Policyは、リソース使用の最適化に用いられることもある。
+ある処理の中間データがほかの処理で使われるために保持されたり、
+データレイアウトやストレージの使い方を最適化したり…など。</p>
+<p>これらの個別の先行研究は存在するが、まとめて管理しようとすると、
+Control Planeに柔軟性とスケーラビリティが必要になる。</p>
 <h2><span id="3-background">3. BACKGROUND</span></h2>
-<p>ここでは、Naiad、StreamScope、Apache Flinkを例にとって説明。 いずれも、オペレータのDAG構造のモデル。</p>
+<p>ここでは、Naiad、StreamScope、Apache Flinkを例にとって説明。
+いずれも、オペレータのDAG構造のモデル。</p>
 <p>ひとつの例として、 LINQスタイルのクエリでWordCountを表現。</p>
 <figure>
-<img src="/memo-blog/images/2dP06tOT2MlXbqGp-38F4F.png" alt=""><figcaption>LINQ風の表現とオペレータのDAG表現の例</figcaption>
+<img src="/memo-blog/images/2dP06tOT2MlXbqGp-38F4F.png" alt="LINQ風の表現とオペレータのDAG表現の例">
+<figcaption aria-hidden="true">LINQ風の表現とオペレータのDAG表現の例</figcaption>
 </figure>
 <!-- ![計算モデル](/memo-blog/images/2dP06tOT2MlXbqGp-64DDD.png) -->
 <p>計算モデルの前提は以下の通り。</p>
-<p>DAGを<span class="math inline">\(\displaystyle G( V,\ E)\)</span>で表す。</p>
-<p><span class="math inline">\(\displaystyle E\)</span>はEdgeのセット、<span class="math inline">\(\displaystyle V\)</span>がOperatorのセット。</p>
-<p><span class="math inline">\(\displaystyle u\ \rightharpoonup v\)</span>はOperator <span class="math inline">\(\displaystyle u\)</span>から<span class="math inline">\(\displaystyle v\)</span>への有向Edgeを表す。</p>
-<p><span class="math inline">\(\displaystyle \{\cdot \rightharpoonup v\}\)</span>が<span class="math inline">\(\displaystyle v\)</span>への入力Edgeを表す。</p>
-<p><span class="math inline">\(\displaystyle \{v\rightharpoonup \cdot \}\)</span>が<span class="math inline">\(\displaystyle v\)</span>からの出力Edgeを表す。</p>
-<p>Operator <span class="math inline">\(\displaystyle v\ \in V\)</span>はトリプル<span class="math inline">\(\displaystyle ( s_{v} \ ,\ f_{v} \ ,\ p_{v})\)</span>で表す。 この時、<span class="math inline">\(\displaystyle s_{v}\)</span>は<span class="math inline">\(\displaystyle v\)</span>のステート、<span class="math inline">\(\displaystyle f_{v}\)</span>は<span class="math inline">\(\displaystyle v\)</span>で実行される関数、<span class="math inline">\(\displaystyle p_{v}\)</span>はステートに含まれないプロパティを表す。</p>
-<p><span class="math inline">\(\displaystyle f_{v}\)</span>の例としては、 <span class="math display">\[\begin{equation*}
-f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#39;_{v} ,\ m&#39;_{e_{i} \in \{v\ \rightharpoonup \ \cdot \}}
+<p>DAGを<span class="math inline">\(\displaystyle G( V,\
+E)\)</span>で表す。</p>
+<p><span class="math inline">\(\displaystyle
+E\)</span>はEdgeのセット、<span class="math inline">\(\displaystyle
+V\)</span>がOperatorのセット。</p>
+<p><span class="math inline">\(\displaystyle u\ \rightharpoonup
+v\)</span>はOperator <span class="math inline">\(\displaystyle
+u\)</span>から<span class="math inline">\(\displaystyle
+v\)</span>への有向Edgeを表す。</p>
+<p><span class="math inline">\(\displaystyle \{\cdot \rightharpoonup
+v\}\)</span>が<span class="math inline">\(\displaystyle
+v\)</span>への入力Edgeを表す。</p>
+<p><span class="math inline">\(\displaystyle \{v\rightharpoonup \cdot
+\}\)</span>が<span class="math inline">\(\displaystyle
+v\)</span>からの出力Edgeを表す。</p>
+<p>Operator <span class="math inline">\(\displaystyle v\ \in
+V\)</span>はトリプル<span class="math inline">\(\displaystyle ( s_{v} \
+,\ f_{v} \ ,\ p_{v})\)</span>で表す。 この時、<span class="math inline">\(\displaystyle s_{v}\)</span>は<span class="math inline">\(\displaystyle v\)</span>のステート、<span class="math inline">\(\displaystyle f_{v}\)</span>は<span class="math inline">\(\displaystyle v\)</span>で実行される関数、<span class="math inline">\(\displaystyle
+p_{v}\)</span>はステートに含まれないプロパティを表す。</p>
+<p><span class="math inline">\(\displaystyle
+f_{v}\)</span>の例としては、 <span class="math display">\[\begin{equation*}
+f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}}
+\rightharpoonup s&#39;_{v} ,\ m&#39;_{e_{i} \in \{v\ \rightharpoonup \
+\cdot \}}
 \end{equation*}\]</span> が挙げられていた。ここで<span class="math inline">\(\displaystyle m\)</span>はメッセージを表す。</p>
-<p>つまり、<span class="math inline">\(\displaystyle m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}}\)</span>は、入力Edge <span class="math inline">\(\displaystyle e_{i}\)</span>から入ってくるメッセージを表す。 また入力を受け取った時点でステート<span class="math inline">\(\displaystyle s_{v}\)</span>だったものを、出力時点で<span class="math inline">\(\displaystyle s&#39;_{v}\)</span>に変える関数を表す。 また、<span class="math inline">\(\displaystyle \ m&#39;_{e_{i} \in \{v\ \rightharpoonup \ \cdot \}}\)</span>は出力メッセージを表す。</p>
+<p>つまり、<span class="math inline">\(\displaystyle m_{e_{i} \in
+\{\cdot \ \rightharpoonup \ v\}}\)</span>は、入力Edge <span class="math inline">\(\displaystyle
+e_{i}\)</span>から入ってくるメッセージを表す。
+また入力を受け取った時点でステート<span class="math inline">\(\displaystyle
+s_{v}\)</span>だったものを、出力時点で<span class="math inline">\(\displaystyle
+s&#39;_{v}\)</span>に変える関数を表す。 また、<span class="math inline">\(\displaystyle \ m&#39;_{e_{i} \in \{v\
+\rightharpoonup \ \cdot \}}\)</span>は出力メッセージを表す。</p>
 <h2><span id="4-design">4. DESIGN</span></h2>
-<p>データ処理と同様のAPIを設け、データ処理のパイプライン（data-plane）を使う。 グローバルな同期を必要とせず、非同期的なControl Operationを可能にする。</p>
+<p>データ処理と同様のAPIを設け、データ処理のパイプライン（data-plane）を使う。
+グローバルな同期を必要とせず、非同期的なControl
+Operationを可能にする。</p>
 <h3><span id="41-overview">4.1 Overview</span></h3>
 <p>前提は以下の通り。</p>
 <ul>
@@ -326,7 +377,8 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 <li>一度に処理されるメッセージは1個ずつ</li>
 <li>基盤となるSPEはOperatorに関する基本的なオペレーション（起動、停止、Kill）に対応すること</li>
 </ul>
-<p>Control Loopを通じて、Control Messageが伝搬される。 Control Loopの流れは以下の通り。</p>
+<p>Control Loopを通じて、Control Messageが伝搬される。 Control
+Loopの流れは以下の通り。</p>
 <ul>
 <li>Phase 1:
 <ul>
@@ -345,10 +397,22 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 <li>SinkからControllerにフィードバックされる</li>
 </ul></li>
 </ul>
-<p>[LINQ風の表現とオペレータのDAG表現の例] のDAG表現を用いた例でいえば、 もともと Reducer <span class="math inline">\(\{R_1, R_2\}\)</span> で処理していたのを <span class="math inline">\(\{R_1, R_2, R_3\}\)</span> で処理するように変更する例が載っている。 Control Messageが <span class="math inline">\(\{R_1, R_2\}\)</span> に届くと、ルーティング情報を更新しつつ、ステート情報をCheckpointする。 ステート情報は再分配され、 <span class="math inline">\(R_3\)</span> にも分配される。 <span class="math inline">\(R_3\)</span> は、Control Messageを受け取ると入力チャンネルをブロックし、 <span class="math inline">\(\{R_1, R_2\}\)</span> からのステートがそろうのを待つ。 ステートがそろったら、マージし、新しい関数を動かし始める。</p>
-<p>ControllerがすべてのControl Messageを受け取ったら、スケールアウトは完了である。</p>
+<p>[LINQ風の表現とオペレータのDAG表現の例] のDAG表現を用いた例でいえば、
+もともと Reducer <span class="math inline">\(\{R_1, R_2\}\)</span>
+で処理していたのを <span class="math inline">\(\{R_1, R_2,
+R_3\}\)</span> で処理するように変更する例が載っている。 Control
+Messageが <span class="math inline">\(\{R_1, R_2\}\)</span>
+に届くと、ルーティング情報を更新しつつ、ステート情報をCheckpointする。
+ステート情報は再分配され、 <span class="math inline">\(R_3\)</span>
+にも分配される。 <span class="math inline">\(R_3\)</span> は、Control
+Messageを受け取ると入力チャンネルをブロックし、 <span class="math inline">\(\{R_1, R_2\}\)</span>
+からのステートがそろうのを待つ。
+ステートがそろったら、マージし、新しい関数を動かし始める。</p>
+<p>ControllerがすべてのControl
+Messageを受け取ったら、スケールアウトは完了である。</p>
 <h3><span id="42-control-mechanism">4.2 Control Mechanism</span></h3>
-<h4><span id="421-graph-transitions-through-meta-topology">4.2.1 Graph Transitions through Meta Topology</span></h4>
+<h4><span id="421-graph-transitionsthrough-meta-topology">4.2.1 Graph Transitions
+through Meta Topology</span></h4>
 <p>★この辺を読んでいる</p>
 <p>＜WIP＞</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
@@ -362,7 +426,7 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/14/Chi-a-scalable-and-programmable-control-plane-for-distributed-stream-processing-systems/" data-id="cl2nztnkq00315xqixxvka1k7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/14/Chi-a-scalable-and-programmable-control-plane-for-distributed-stream-processing-systems/" data-id="cl2o9pbj4019r18rzteiiawr6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -613,5 +677,20 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

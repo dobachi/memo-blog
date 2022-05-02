@@ -5,18 +5,18 @@
     
     <title>CentOS on WSL | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ CentOS CentOS7 CentOS8 Stream Fedora     参考  wsl2上で無料でCentOS8を動かそう CentOS-WSL CentOS7.zip  メモ Redhat系LinuxをWSL（ないしWSL2）で動かしたい、という話。 wsl2上で無料でCentOS8を動かそう で挙げられているレポジトリはアーカイブされているため、 代替手段で対応した">
+    <meta name="description" content="参考 メモ  CentOS  CentOS7 CentOS8 Stream Fedora     参考  wsl2上で無料でCentOS8を動かそう CentOS-WSL CentOS7.zip  メモ Redhat系LinuxをWSL（ないしWSL2）で動かしたい、という話。 wsl2上で無料でCentOS8を動かそう で挙げられているレポジトリはアーカイブされているため、 代替手段で対応">
 <meta name="keywords" content="WSL,CentOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS on WSL">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2021/04/25/CentOS-on-WSL/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ CentOS CentOS7 CentOS8 Stream Fedora     参考  wsl2上で無料でCentOS8を動かそう CentOS-WSL CentOS7.zip  メモ Redhat系LinuxをWSL（ないしWSL2）で動かしたい、という話。 wsl2上で無料でCentOS8を動かそう で挙げられているレポジトリはアーカイブされているため、 代替手段で対応した">
+<meta property="og:description" content="参考 メモ  CentOS  CentOS7 CentOS8 Stream Fedora     参考  wsl2上で無料でCentOS8を動かそう CentOS-WSL CentOS7.zip  メモ Redhat系LinuxをWSL（ないしWSL2）で動かしたい、という話。 wsl2上で無料でCentOS8を動かそう で挙げられているレポジトリはアーカイブされているため、 代替手段で対応">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS on WSL">
-<meta name="twitter:description" content="参考 メモ CentOS CentOS7 CentOS8 Stream Fedora     参考  wsl2上で無料でCentOS8を動かそう CentOS-WSL CentOS7.zip  メモ Redhat系LinuxをWSL（ないしWSL2）で動かしたい、という話。 wsl2上で無料でCentOS8を動かそう で挙げられているレポジトリはアーカイブされているため、 代替手段で対応した">
+<meta name="twitter:description" content="参考 メモ  CentOS  CentOS7 CentOS8 Stream Fedora     参考  wsl2上で無料でCentOS8を動かそう CentOS-WSL CentOS7.zip  メモ Redhat系LinuxをWSL（ないしWSL2）で動かしたい、という話。 wsl2上で無料でCentOS8を動かそう で挙げられているレポジトリはアーカイブされているため、 代替手段で対応">
     
 
     
@@ -251,12 +251,15 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#centos">CentOS</a><ul>
-<li><a href="#centos7">CentOS7</a></li>
-<li><a href="#centos8-stream">CentOS8 Stream</a></li>
-<li><a href="#fedora">Fedora</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#centos" id="toc-centos">CentOS</a>
+<ul>
+<li><a href="#centos7" id="toc-centos7">CentOS7</a></li>
+<li><a href="#centos8-stream" id="toc-centos8-stream">CentOS8
+Stream</a></li>
+<li><a href="#fedora" id="toc-fedora">Fedora</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -269,19 +272,29 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>Redhat系LinuxをWSL（ないしWSL2）で動かしたい、という話。</p>
-<p><a href="https://www.geekfeed.co.jp/geekblog/install_centos8_on_wsl2_for_free" target="_blank" rel="noopener">wsl2上で無料でCentOS8を動かそう</a> で挙げられているレポジトリはアーカイブされているため、 代替手段で対応した。</p>
+<p><a href="https://www.geekfeed.co.jp/geekblog/install_centos8_on_wsl2_for_free" target="_blank" rel="noopener">wsl2上で無料でCentOS8を動かそう</a>
+で挙げられているレポジトリはアーカイブされているため、
+代替手段で対応した。</p>
 <h2><span id="centos">CentOS</span></h2>
 <h3><span id="centos7">CentOS7</span></h3>
-<p><a href="https://github.com/mishamosher/CentOS-WSL" target="_blank" rel="noopener">CentOS-WSL</a> を参考に、まずは手堅くCentOS7。</p>
-<p><a href="https://www.geekfeed.co.jp/geekblog/install_centos8_on_wsl2_for_free" target="_blank" rel="noopener">wsl2上で無料でCentOS8を動かそう</a> を参考にすすめる。</p>
-<p><a href="https://github.com/mishamosher/CentOS-WSL/releases/download/7.9-2009/CentOS7.zip" target="_blank" rel="noopener">CentOS7.zip</a> をダウンロードし解凍。 中に含まれている <code>rootfs.tar.gz</code> を解凍しておきます。 ここでは、 <code>C:\Users\dobachi\Downloads\CentOS7\rootfs.tar\rootfs.tar</code> として解凍されたものとします。</p>
-<p>インポート先のディレクトリがなければ、予め作成。 ここでは以下にしました。（他のイメージと同じ感じで）</p>
+<p><a href="https://github.com/mishamosher/CentOS-WSL" target="_blank" rel="noopener">CentOS-WSL</a>
+を参考に、まずは手堅くCentOS7。</p>
+<p><a href="https://www.geekfeed.co.jp/geekblog/install_centos8_on_wsl2_for_free" target="_blank" rel="noopener">wsl2上で無料でCentOS8を動かそう</a>
+を参考にすすめる。</p>
+<p><a href="https://github.com/mishamosher/CentOS-WSL/releases/download/7.9-2009/CentOS7.zip" target="_blank" rel="noopener">CentOS7.zip</a>
+をダウンロードし解凍。 中に含まれている <code>rootfs.tar.gz</code>
+を解凍しておきます。 ここでは、
+<code>C:\Users\dobachi\Downloads\CentOS7\rootfs.tar\rootfs.tar</code>
+として解凍されたものとします。</p>
+<p>インポート先のディレクトリがなければ、予め作成。
+ここでは以下にしました。（他のイメージと同じ感じで）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\dobachi\AppData\Local\Packages\CentOS7</span><br></pre></td></tr></table></figure>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --import CentOS7 <span class="string">"C:\Users\dobachi\AppData\Local\Packages\CentOS7"</span> <span class="string">"C:\Users\dobachi\Downloads\CentOS7\rootfs.tar\rootfs.tar"</span></span><br></pre></td></tr></table></figure>
 <p>必要に応じてWSL2用に変換。</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --set-version CentOS7 <span class="number">2</span></span><br></pre></td></tr></table></figure>
 <p>その他、必要に応じてWindows Terminalの設定を行う。</p>
-<p>また日本語とGUI利用のための設定は、UbuntuとCentOSは少し違うので注意。 日本語でのハマりポイントは以下。</p>
+<p>また日本語とGUI利用のための設定は、UbuntuとCentOSは少し違うので注意。
+日本語でのハマりポイントは以下。</p>
 <ul>
 <li>localectlが使えない
 <ul>
@@ -307,7 +320,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/25/CentOS-on-WSL/" data-id="cl2nztnkm002o5xqiuz5hqvob" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/25/CentOS-on-WSL/" data-id="cl2o9pb4u001z18rzibkky00h" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -558,5 +571,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

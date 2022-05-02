@@ -5,18 +5,18 @@
     
     <title>Dask of Python | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ ダミー変数化での支障について    参考  Dask使ってみた Python Dask で 並列 DataFrame 処理 【初めての大規模データ②】Daskでの並列分散処理 時間のかかる前処理をDaskで高速化  メモ ダミー変数化での支障について 【初めての大規模データ②】Daskでの並列分散処理 に記載あった点が気になった。 以下、引用。 1234dask.datafram">
+    <meta name="description" content="参考 メモ  ダミー変数化での支障について    参考  Dask使ってみた Python Dask で 並列 DataFrame 処理 【初めての大規模データ②】Daskでの並列分散処理 時間のかかる前処理をDaskで高速化  メモ ダミー変数化での支障について 【初めての大規模データ②】Daskでの並列分散処理 に記載あった点が気になった。 以下、引用。 1234dask.datafra">
 <meta name="keywords" content="Machine Learning,Data Analysis,Dask,Data Processing Engine">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dask of Python">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/04/23/Dask-of-Python/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ ダミー変数化での支障について    参考  Dask使ってみた Python Dask で 並列 DataFrame 処理 【初めての大規模データ②】Daskでの並列分散処理 時間のかかる前処理をDaskで高速化  メモ ダミー変数化での支障について 【初めての大規模データ②】Daskでの並列分散処理 に記載あった点が気になった。 以下、引用。 1234dask.datafram">
+<meta property="og:description" content="参考 メモ  ダミー変数化での支障について    参考  Dask使ってみた Python Dask で 並列 DataFrame 処理 【初めての大規模データ②】Daskでの並列分散処理 時間のかかる前処理をDaskで高速化  メモ ダミー変数化での支障について 【初めての大規模データ②】Daskでの並列分散処理 に記載あった点が気になった。 以下、引用。 1234dask.datafra">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dask of Python">
-<meta name="twitter:description" content="参考 メモ ダミー変数化での支障について    参考  Dask使ってみた Python Dask で 並列 DataFrame 処理 【初めての大規模データ②】Daskでの並列分散処理 時間のかかる前処理をDaskで高速化  メモ ダミー変数化での支障について 【初めての大規模データ②】Daskでの並列分散処理 に記載あった点が気になった。 以下、引用。 1234dask.datafram">
+<meta name="twitter:description" content="参考 メモ  ダミー変数化での支障について    参考  Dask使ってみた Python Dask で 並列 DataFrame 処理 【初めての大規模データ②】Daskでの並列分散処理 時間のかかる前処理をDaskで高速化  メモ ダミー変数化での支障について 【初めての大規模データ②】Daskでの並列分散処理 に記載あった点が気になった。 以下、引用。 1234dask.datafra">
     
 
     
@@ -251,22 +251,25 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#ダミー変数化での支障について">ダミー変数化での支障について</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#ダミー変数化での支障について" id="toc-ダミー変数化での支障について">ダミー変数化での支障について</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
 <li><a href="https://qiita.com/art_526/items/ca003a78535ab4546a01" target="_blank" rel="noopener">Dask使ってみた</a></li>
-<li><a href="http://sinhrks.hatenablog.com/entry/2015/09/24/222735" target="_blank" rel="noopener">Python Dask で 並列 DataFrame 処理</a></li>
+<li><a href="http://sinhrks.hatenablog.com/entry/2015/09/24/222735" target="_blank" rel="noopener">Python Dask
+で 並列 DataFrame 処理</a></li>
 <li><a href="https://qiita.com/katsuki104/items/222a9d5e85e4f92f4c43" target="_blank" rel="noopener">【初めての大規模データ②】Daskでの並列分散処理</a></li>
 <li><a href="http://cocodrips.hateblo.jp/entry/2018/12/18/201752" target="_blank" rel="noopener">時間のかかる前処理をDaskで高速化</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="ダミー変数化での支障について">ダミー変数化での支障について</span></h2>
-<p><a href="https://qiita.com/katsuki104/items/222a9d5e85e4f92f4c43" target="_blank" rel="noopener">【初めての大規模データ②】Daskでの並列分散処理</a> に記載あった点が気になった。</p>
+<p><a href="https://qiita.com/katsuki104/items/222a9d5e85e4f92f4c43" target="_blank" rel="noopener">【初めての大規模データ②】Daskでの並列分散処理</a>
+に記載あった点が気になった。</p>
 <p>以下、引用。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dask.dataframeは行方向にしかデータを分割できないため、ダミー変数を作成する際には1列分のデータを取得するために、すべてのデータを読み込まなければならず、メモリエラーを起こす危険性があります。</span><br><span class="line">そこで、大規模データの処理を行う際には、dask.dataframeを一度dask.arrayに1列ずつに分割した形で変換し、</span><br><span class="line">それから1列分のデータのみを再度dask.dataframeに変換し、get_dummiesしてやるのが良いと思います。</span><br><span class="line">※私はこの縛りに気づき、daskを使うのを諦めました...</span><br></pre></td></tr></table></figure></p>
 <p>上記ブログでは、少なくともダミー変数化の部分は素のPythonで実装したようだ。</p>
 
@@ -279,7 +282,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/23/Dask-of-Python/" data-id="cl2nztnkz003i5xqippklz57c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/23/Dask-of-Python/" data-id="cl2o9pb53002k18rzyzvr2au3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -530,5 +533,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

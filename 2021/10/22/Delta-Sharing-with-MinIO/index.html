@@ -5,20 +5,20 @@
     
     <title>Delta Sharing with MinIO | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="メモ MinIOの起動 Delta Sharingサーバの起動 リリースされたパッケージを利用する場合 現在のmainブランチを利用する場合 設定ファイルの作成 Delta Sharingサーバの起動 Delta SharingのPythonクライアントを利用してアクセスする。  トラブルシュート パス指定方法の誤り   参考 MinIO Delta Sharing Sample code">
-<meta name="keywords" content="Minio,Delta Sharing">
+    <meta name="description" content="メモ  MinIOの起動 Delta Sharingサーバの起動  リリースされたパッケージを利用する場合 現在のmainブランチを利用する場合 設定ファイルの作成 Delta Sharingサーバの起動 Delta SharingのPythonクライアントを利用してアクセスする。  トラブルシュート  パス指定方法の誤り   参考  MinIO Delta Sharing Sample c">
+<meta name="keywords" content="Delta Sharing,Minio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Delta Sharing with MinIO">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="メモ MinIOの起動 Delta Sharingサーバの起動 リリースされたパッケージを利用する場合 現在のmainブランチを利用する場合 設定ファイルの作成 Delta Sharingサーバの起動 Delta SharingのPythonクライアントを利用してアクセスする。  トラブルシュート パス指定方法の誤り   参考 MinIO Delta Sharing Sample code">
+<meta property="og:description" content="メモ  MinIOの起動 Delta Sharingサーバの起動  リリースされたパッケージを利用する場合 現在のmainブランチを利用する場合 設定ファイルの作成 Delta Sharingサーバの起動 Delta SharingのPythonクライアントを利用してアクセスする。  トラブルシュート  パス指定方法の誤り   参考  MinIO Delta Sharing Sample c">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/images/minio_test_bucket.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/images/20211022_delta_sharing_client.png">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Delta Sharing with MinIO">
-<meta name="twitter:description" content="メモ MinIOの起動 Delta Sharingサーバの起動 リリースされたパッケージを利用する場合 現在のmainブランチを利用する場合 設定ファイルの作成 Delta Sharingサーバの起動 Delta SharingのPythonクライアントを利用してアクセスする。  トラブルシュート パス指定方法の誤り   参考 MinIO Delta Sharing Sample code">
+<meta name="twitter:description" content="メモ  MinIOの起動 Delta Sharingサーバの起動  リリースされたパッケージを利用する場合 現在のmainブランチを利用する場合 設定ファイルの作成 Delta Sharingサーバの起動 Delta SharingのPythonクライアントを利用してアクセスする。  トラブルシュート  パス指定方法の誤り   参考  MinIO Delta Sharing Sample c">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/images/minio_test_bucket.png">
     
 
@@ -254,71 +254,107 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#minioの起動">MinIOの起動</a></li>
-<li><a href="#delta-sharingサーバの起動">Delta Sharingサーバの起動</a><ul>
-<li><a href="#リリースされたパッケージを利用する場合">リリースされたパッケージを利用する場合</a></li>
-<li><a href="#現在のmainブランチを利用する場合">現在のmainブランチを利用する場合</a></li>
-<li><a href="#設定ファイルの作成">設定ファイルの作成</a></li>
-<li><a href="#delta-sharingサーバの起動-1">Delta Sharingサーバの起動</a></li>
-<li><a href="#delta-sharingのpythonクライアントを利用してアクセスする">Delta SharingのPythonクライアントを利用してアクセスする。</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#minioの起動" id="toc-minioの起動">MinIOの起動</a></li>
+<li><a href="#delta-sharingサーバの起動" id="toc-delta-sharingサーバの起動">Delta Sharingサーバの起動</a>
+<ul>
+<li><a href="#リリースされたパッケージを利用する場合" id="toc-リリースされたパッケージを利用する場合">リリースされたパッケージを利用する場合</a></li>
+<li><a href="#現在のmainブランチを利用する場合" id="toc-現在のmainブランチを利用する場合">現在のmainブランチを利用する場合</a></li>
+<li><a href="#設定ファイルの作成" id="toc-設定ファイルの作成">設定ファイルの作成</a></li>
+<li><a href="#delta-sharingサーバの起動-1" id="toc-delta-sharingサーバの起動-1">Delta Sharingサーバの起動</a></li>
+<li><a href="#delta-sharingのpythonクライアントを利用してアクセスする" id="toc-delta-sharingのpythonクライアントを利用してアクセスする">Delta
+SharingのPythonクライアントを利用してアクセスする。</a></li>
 </ul></li>
-<li><a href="#トラブルシュート">トラブルシュート</a><ul>
-<li><a href="#パス指定方法の誤り">パス指定方法の誤り</a></li>
+<li><a href="#トラブルシュート" id="toc-トラブルシュート">トラブルシュート</a>
+<ul>
+<li><a href="#パス指定方法の誤り" id="toc-パス指定方法の誤り">パス指定方法の誤り</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#minio">MinIO</a></li>
-<li><a href="#delta-sharing">Delta Sharing</a></li>
-<li><a href="#sample-code">Sample code</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#minio" id="toc-minio">MinIO</a></li>
+<li><a href="#delta-sharing" id="toc-delta-sharing">Delta
+Sharing</a></li>
+<li><a href="#sample-code" id="toc-sample-code">Sample code</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="メモ">メモ</span></h1>
-<p>Delta SharingはAWS S3、Azure Blob Storage、Azure Data Lake Storage Gen2に対応している。 そこで、AWS S3互換のストレージソフトウェアだったら使えるのではないか、ということで、 <a href="https://min.io/" target="_blank" rel="noopener">MinIO</a> を利用してみることにする。</p>
-<p>もろもろのサンプルコードは <a href="https://github.com/dobachi/DeltaSharingMinioExample" target="_blank" rel="noopener">dobachi DeltaSharingMinioExample</a> にある。</p>
+<p>Delta SharingはAWS S3、Azure Blob Storage、Azure Data Lake Storage
+Gen2に対応している。 そこで、AWS
+S3互換のストレージソフトウェアだったら使えるのではないか、ということで、
+<a href="https://min.io/" target="_blank" rel="noopener">MinIO</a> を利用してみることにする。</p>
+<p>もろもろのサンプルコードは <a href="https://github.com/dobachi/DeltaSharingMinioExample" target="_blank" rel="noopener">dobachi
+DeltaSharingMinioExample</a> にある。</p>
 <h2><span id="minioの起動">MinIOの起動</span></h2>
-<p><a href="https://docs.min.io/docs/minio-quickstart-guide.html" target="_blank" rel="noopener">MinIO Quickstart Guide</a> を参考に、手元でMinIOサーバを構成する。 以下は手順の一例。</p>
+<p><a href="https://docs.min.io/docs/minio-quickstart-guide.html" target="_blank" rel="noopener">MinIO
+Quickstart Guide</a> を参考に、手元でMinIOサーバを構成する。
+以下は手順の一例。</p>
 <p>バイナリをダウンロードし、データ保存ディレクトリを作って立ち上げる。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p ~/Minio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/Minio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://dl.min.io/server/minio/release/linux-amd64/minio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p data</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> chmod +x minio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./minio server data</span></span><br></pre></td></tr></table></figure>
-<p>コンソールにメッセージが色々出る。 今回はテスト用なので特段指定しなかったが、Rootユーザの名称、パスワードが表示されているはずである。 これは後ほど、AWS S3プロトコルでMinIOサービスにアクセスする際のID、シークレットキーとしても利用する。</p>
-<p>MinIOのクライアントをダウンロードし、エイリアスを設定する。 別のターミナルを開く。</p>
+<p>コンソールにメッセージが色々出る。
+今回はテスト用なので特段指定しなかったが、Rootユーザの名称、パスワードが表示されているはずである。
+これは後ほど、AWS
+S3プロトコルでMinIOサービスにアクセスする際のID、シークレットキーとしても利用する。</p>
+<p>MinIOのクライアントをダウンロードし、エイリアスを設定する。
+別のターミナルを開く。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/Minio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://dl.min.io/client/mc/release/linux-amd64/mc</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> chmod +x mc</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./mc <span class="built_in">alias</span> <span class="built_in">set</span> myminio http://your_host:9000 minioadmin minioadmin</span></span><br></pre></td></tr></table></figure>
-<p><code>your_host</code>のところは各自の環境に合わせて変更してほしい。 これにより、<code>myminio</code> という名前でエイリアスが作成された。</p>
+<p><code>your_host</code>のところは各自の環境に合わせて変更してほしい。
+これにより、<code>myminio</code>
+という名前でエイリアスが作成された。</p>
 <p>ちなみに、http://your_host:40915/ からアクセスできる。</p>
 <p>なお、試しにAWS S3クライアントで接続してみることにする。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./mc mb data/test_bucket</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">'test'</span> &gt; test.txt</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> AWS_ACCESS_KEY_ID=minioadmin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> AWS_SECRET_ACCESS_KEY=minioadmin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> aws --endpoint-url http://localhost:9000 s3 ls</span></span><br><span class="line">2021-10-22 12:26:13 test_bucket</span><br><span class="line"><span class="meta">$</span><span class="bash"> aws --endpoint-url http://localhost:9000 s3 cp test.txt s3://test_bucket/test.txt</span></span><br></pre></td></tr></table></figure>
 <p>ここで、今回はMinioを利用していることから、エンドポイントURLを指定していることに注意。</p>
 <figure>
-<img src="images/minio_test_bucket.png" alt=""><figcaption>テストバケットに入ったデータ</figcaption>
+<img src="images/minio_test_bucket.png" alt="テストバケットに入ったデータ">
+<figcaption aria-hidden="true">テストバケットに入ったデータ</figcaption>
 </figure>
 <h2><span id="delta-sharingサーバの起動">Delta Sharingサーバの起動</span></h2>
-<p><a href="https://github.com/delta-io/delta-sharing#delta-sharing-reference-server" target="_blank" rel="noopener">Delta Sharing Reference Server</a> を参考に、サーバを起動する。</p>
+<p><a href="https://github.com/delta-io/delta-sharing#delta-sharing-reference-server" target="_blank" rel="noopener">Delta
+Sharing Reference Server</a> を参考に、サーバを起動する。</p>
 <h3><span id="リリースされたパッケージを利用する場合">リリースされたパッケージを利用する場合</span></h3>
 <p>パッケージを公式リリースからダウンロードして展開する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p ~/DeltaSharing</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/DeltaSharing</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://github.com/delta-io/delta-sharing/releases/download/v0.2.0/delta-sharing-server-0.2.0.zip</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> unzip delta-sharing-server-0.2.0.zip</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> delta-sharing-server-0.2.0</span></span><br></pre></td></tr></table></figure>
 <h3><span id="現在のmainブランチを利用する場合">現在のmainブランチを利用する場合</span></h3>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p ~/Sources/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/Sources</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git@github.com:delta-io/delta-sharing.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> delta-sharing </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./build/sbt server/universal:packageBin</span></span><br></pre></td></tr></table></figure>
-<p><code>server/target/universal/delta-sharing-server-x.y.z-SNAPSHOT.zip</code> にパッケージが保存される。 なお、<code>x.y.z</code>にはバージョン情報が入る。ここでは<code>0.3.0</code>とする。</p>
+<p><code>server/target/universal/delta-sharing-server-x.y.z-SNAPSHOT.zip</code>
+にパッケージが保存される。
+なお、<code>x.y.z</code>にはバージョン情報が入る。ここでは<code>0.3.0</code>とする。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cp server/target/universal/delta-sharing-server-x.y.z-SNAPSHOT.zip ~/DeltaSharing/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/DeltaSharing/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> unzip delta-sharing-server-0.3.0-SNAPSHOT.zip</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> delta-sharing-server-0.3.0-SNAPSHOT</span></span><br></pre></td></tr></table></figure>
 <h3><span id="設定ファイルの作成">設定ファイルの作成</span></h3>
-<p>Delta Sharingはデータストアのアクセスについて、間接的にHadoopライブラリに依存している。 そこで、AWS S3プロトコルでアクセスするためのHadoop設定ファイル <code>core-site.xml</code> を作成する。</p>
+<p>Delta
+Sharingはデータストアのアクセスについて、間接的にHadoopライブラリに依存している。
+そこで、AWS S3プロトコルでアクセスするためのHadoop設定ファイル
+<code>core-site.xml</code> を作成する。</p>
 <p>conf/core-site.xml</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.s3a.endpoint<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>http://localhost:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.s3a.path.style.access<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>ここではエンドポイントURL、パス指定方法の設定をしている。 なおパス指定方法の設定行わないと、Delta SharingからMinIOサーバにリクエストを送る際に、 ホスト名が <code>bucket_name.host</code> のような指定になってしまい、 <code>400 But Reuqest</code> エラーを生じてしまう。 詳しくは、 トラブルシュートの節を参照。</p>
-<p>続いて、Delta Sharingサーバの設定ファイルを作成する。 以下は参考。</p>
+<p>ここではエンドポイントURL、パス指定方法の設定をしている。
+なおパス指定方法の設定行わないと、Delta
+SharingからMinIOサーバにリクエストを送る際に、 ホスト名が
+<code>bucket_name.host</code> のような指定になってしまい、
+<code>400 But Reuqest</code> エラーを生じてしまう。 詳しくは、
+トラブルシュートの節を参照。</p>
+<p>続いて、Delta Sharingサーバの設定ファイルを作成する。
+以下は参考。</p>
 <p>conf/delta-sharing-server.yml</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># The format version of this config file</span></span><br><span class="line"><span class="attr">version:</span> <span class="number">1</span></span><br><span class="line"><span class="comment"># Config shares/schemas/tables to share</span></span><br><span class="line"><span class="attr">shares:</span></span><br><span class="line"><span class="attr">- name:</span> <span class="string">"share1"</span></span><br><span class="line"><span class="attr">  schemas:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">"schema1"</span></span><br><span class="line"><span class="attr">    tables:</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">"table1"</span></span><br><span class="line"><span class="attr">      location:</span> <span class="string">"s3a://test_bucket/delta_table"</span></span><br><span class="line"><span class="comment"># Set the host name that the server will use</span></span><br><span class="line"><span class="attr">host:</span> <span class="string">"localhost"</span></span><br><span class="line"><span class="comment"># Set the port that the server will listen on</span></span><br><span class="line"><span class="attr">port:</span> <span class="number">18080</span></span><br><span class="line"><span class="comment"># Set the url prefix for the REST APIs</span></span><br><span class="line"><span class="attr">endpoint:</span> <span class="string">"/delta-sharing"</span></span><br><span class="line"><span class="comment"># Set the timeout of S3 presigned url in seconds</span></span><br><span class="line"><span class="attr">preSignedUrlTimeoutSeconds:</span> <span class="number">900</span></span><br><span class="line"><span class="comment"># How many tables to cache in the server</span></span><br><span class="line"><span class="attr">deltaTableCacheSize:</span> <span class="number">10</span></span><br><span class="line"><span class="comment"># Whether we can accept working with a stale version of the table. This is useful when sharing</span></span><br><span class="line"><span class="comment"># static tables that will never be changed.</span></span><br><span class="line"><span class="attr">stalenessAcceptable:</span> <span class="literal">false</span></span><br><span class="line"><span class="comment"># Whether to evaluate user provided `predicateHints`</span></span><br><span class="line"><span class="attr">evaluatePredicateHints:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-<p>ここで <code>s3a://test_bucket/delta_table</code> に指定しているのがMinIO内のデータである。 ここでは予め Delta Lakeフォーマットのデータを保存してあるものとする。</p>
+<p>ここで <code>s3a://test_bucket/delta_table</code>
+に指定しているのがMinIO内のデータである。 ここでは予め Delta
+Lakeフォーマットのデータを保存してあるものとする。</p>
 <h3><span id="delta-sharingサーバの起動">Delta Sharingサーバの起動</span></h3>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./bin/delta-sharing-server -- --conf conf/delta-sharing-server.yaml</span></span><br></pre></td></tr></table></figure>
-<h3><span id="delta-sharingのpythonクライアントを利用してアクセスする">Delta SharingのPythonクライアントを利用してアクセスする。</span></h3>
+<h3><span id="deltasharingのpythonクライアントを利用してアクセスする">Delta
+SharingのPythonクライアントを利用してアクセスする。</span></h3>
 <p>まずクライアント用のプロファイルを準備する。</p>
 <p>minio.share</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"shareCredentialsVersion"</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">"endpoint"</span>: <span class="string">"http://localhost:18080/delta-sharing/"</span>,</span><br><span class="line">  <span class="attr">"bearerToken"</span>: <span class="string">""</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>これを利用しながら、テーブルにアクセスする。</p>
 <figure>
-<img src="images/20211022_delta_sharing_client.png" alt=""><figcaption>Delta Sharingのクライアントでアクセス</figcaption>
+<img src="images/20211022_delta_sharing_client.png" alt="Delta Sharingのクライアントでアクセス">
+<figcaption aria-hidden="true">Delta
+Sharingのクライアントでアクセス</figcaption>
 </figure>
 <p>ここでは試しにPandas DataFrameとして読み取っている。</p>
 <h2><span id="トラブルシュート">トラブルシュート</span></h2>
@@ -333,15 +369,18 @@ ga('send', 'pageview');
 <h2><span id="minio">MinIO</span></h2>
 <ul>
 <li><a href="https://min.io/" target="_blank" rel="noopener">MinIO</a></li>
-<li><a href="https://docs.min.io/docs/minio-quickstart-guide.html" target="_blank" rel="noopener">MinIO Quickstart Guide</a></li>
+<li><a href="https://docs.min.io/docs/minio-quickstart-guide.html" target="_blank" rel="noopener">MinIO
+Quickstart Guide</a></li>
 </ul>
 <h2><span id="delta-sharing">Delta Sharing</span></h2>
 <ul>
-<li><a href="https://github.com/delta-io/delta-sharing#delta-sharing-reference-server" target="_blank" rel="noopener">Delta Sharing Reference Server</a></li>
+<li><a href="https://github.com/delta-io/delta-sharing#delta-sharing-reference-server" target="_blank" rel="noopener">Delta
+Sharing Reference Server</a></li>
 </ul>
 <h2><span id="sample-code">Sample code</span></h2>
 <ul>
-<li><a href="https://github.com/dobachi/DeltaSharingMinioExample" target="_blank" rel="noopener">dobachi DeltaSharingMinioExample</a></li>
+<li><a href="https://github.com/dobachi/DeltaSharingMinioExample" target="_blank" rel="noopener">dobachi
+DeltaSharingMinioExample</a></li>
 </ul>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -354,7 +393,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/" data-id="cl2nztnl600425xqiedcujh8x" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/" data-id="cl2o9pbgj014b18rzfkiz2sbk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -605,5 +644,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -5,18 +5,18 @@
     
     <title>Blogs about the portability of kubernetes  | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="メモ Kubernetes を本番環境に適用するための Tips Kubernetes 8 Factors - Kubernetes クラスタの移行から学んだクラスタのポータビリティの重要性と条件 Twelve-Factor App Kubernetesを採用するべき１２の理由 Kubernetes、やめました 多分あなたにKubernetesは必要ない 「あなたにKubernetesは必要">
+    <meta name="description" content="メモ  Kubernetes を本番環境に適用するための Tips Kubernetes 8 Factors - Kubernetes クラスタの移行から学んだクラスタのポータビリティの重要性と条件 Twelve-Factor App Kubernetesを採用するべき１２の理由 Kubernetes、やめました 多分あなたにKubernetesは必要ない 「あなたにKubernetesは必">
 <meta name="keywords" content="Kubernetes">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Blogs about the portability of kubernetes ">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2022/01/07/Blogs-about-the-portability-of-kubernetes/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="メモ Kubernetes を本番環境に適用するための Tips Kubernetes 8 Factors - Kubernetes クラスタの移行から学んだクラスタのポータビリティの重要性と条件 Twelve-Factor App Kubernetesを採用するべき１２の理由 Kubernetes、やめました 多分あなたにKubernetesは必要ない 「あなたにKubernetesは必要">
+<meta property="og:description" content="メモ  Kubernetes を本番環境に適用するための Tips Kubernetes 8 Factors - Kubernetes クラスタの移行から学んだクラスタのポータビリティの重要性と条件 Twelve-Factor App Kubernetesを採用するべき１２の理由 Kubernetes、やめました 多分あなたにKubernetesは必要ない 「あなたにKubernetesは必">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.441Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Blogs about the portability of kubernetes ">
-<meta name="twitter:description" content="メモ Kubernetes を本番環境に適用するための Tips Kubernetes 8 Factors - Kubernetes クラスタの移行から学んだクラスタのポータビリティの重要性と条件 Twelve-Factor App Kubernetesを採用するべき１２の理由 Kubernetes、やめました 多分あなたにKubernetesは必要ない 「あなたにKubernetesは必要">
+<meta name="twitter:description" content="メモ  Kubernetes を本番環境に適用するための Tips Kubernetes 8 Factors - Kubernetes クラスタの移行から学んだクラスタのポータビリティの重要性と条件 Twelve-Factor App Kubernetesを採用するべき１２の理由 Kubernetes、やめました 多分あなたにKubernetesは必要ない 「あなたにKubernetesは必">
     
 
     
@@ -251,17 +251,22 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#kubernetes-を本番環境に適用するための-tips">Kubernetes を本番環境に適用するための Tips</a></li>
-<li><a href="#kubernetes-8-factors---kubernetes-クラスタの移行から学んだクラスタのポータビリティの重要性と条件">Kubernetes 8 Factors - Kubernetes クラスタの移行から学んだクラスタのポータビリティの重要性と条件</a></li>
-<li><a href="#twelve-factor-app">Twelve-Factor App</a></li>
-<li><a href="#kubernetesを採用するべき１２の理由">Kubernetesを採用するべき１２の理由</a></li>
-<li><a href="#kubernetesやめました">Kubernetes、やめました</a></li>
-<li><a href="#多分あなたにkubernetesは必要ない">多分あなたにKubernetesは必要ない</a></li>
-<li><a href="#あなたにkubernetesは必要ですかをkubernetes-meetup-tokyoのコアメンバーが議論">「あなたにKubernetesは必要ですか？」を、Kubernetes Meetup Tokyoのコアメンバーが議論</a></li>
-<li><a href="#cndo2021kubernetesがない世界とある世界の違いをインフラエンジニアが解説">CNDO2021、Kubernetesがない世界とある世界の違いをインフラエンジニアが解説</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#kubernetes-を本番環境に適用するための-tips" id="toc-kubernetes-を本番環境に適用するための-tips">Kubernetes
+を本番環境に適用するための Tips</a></li>
+<li><a href="#kubernetes-8-factors---kubernetes-クラスタの移行から学んだクラスタのポータビリティの重要性と条件" id="toc-kubernetes-8-factors---kubernetes-クラスタの移行から学んだクラスタのポータビリティの重要性と条件">Kubernetes
+8 Factors - Kubernetes
+クラスタの移行から学んだクラスタのポータビリティの重要性と条件</a></li>
+<li><a href="#twelve-factor-app" id="toc-twelve-factor-app">Twelve-Factor App</a></li>
+<li><a href="#kubernetesを採用するべき１２の理由" id="toc-kubernetesを採用するべき１２の理由">Kubernetesを採用するべき１２の理由</a></li>
+<li><a href="#kubernetesやめました" id="toc-kubernetesやめました">Kubernetes、やめました</a></li>
+<li><a href="#多分あなたにkubernetesは必要ない" id="toc-多分あなたにkubernetesは必要ない">多分あなたにKubernetesは必要ない</a></li>
+<li><a href="#あなたにkubernetesは必要ですかをkubernetes-meetup-tokyoのコアメンバーが議論" id="toc-あなたにkubernetesは必要ですかをkubernetes-meetup-tokyoのコアメンバーが議論">「あなたにKubernetesは必要ですか？」を、Kubernetes
+Meetup Tokyoのコアメンバーが議論</a></li>
+<li><a href="#cndo2021kubernetesがない世界とある世界の違いをインフラエンジニアが解説" id="toc-cndo2021kubernetesがない世界とある世界の違いをインフラエンジニアが解説">CNDO2021、Kubernetesがない世界とある世界の違いをインフラエンジニアが解説</a></li>
 </ul></li>
-<li><a href="#参考">参考</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
 </ul>
 </div>
 <h1><span id="メモ">メモ</span></h1>
@@ -269,15 +274,20 @@ ga('send', 'pageview');
 <ul>
 <li>アプリケーションのポータビリティ
 <ul>
-<li>あるKubernetesクラスタ上にデプロイした or 可能なアプリケーションを異なるKubernetes環境で実行する</li>
+<li>あるKubernetesクラスタ上にデプロイした or
+可能なアプリケーションを異なるKubernetes環境で実行する</li>
 </ul></li>
 <li>Kubernetesクラスタのポータビリティ
 <ul>
 <li>Kubernetesクラスタを様々な環境で実行する</li>
 </ul></li>
 </ul>
-<h2><span id="kubernetes-を本番環境に適用するための-tips">Kubernetes を本番環境に適用するための Tips</span></h2>
-<p><a href="https://yoshio3.com/2018/12/06/kubernetes-tips-for-production/" target="_blank" rel="noopener">Kubernetes を本番環境に適用するための Tips</a> の中に、アプリケーションのポータビリティに関する議論が含まれている。 具体的には、</p>
+<h2><span id="kubernetesを本番環境に適用するための-tips">Kubernetes
+を本番環境に適用するための Tips</span></h2>
+<p><a href="https://yoshio3.com/2018/12/06/kubernetes-tips-for-production/" target="_blank" rel="noopener">Kubernetes
+を本番環境に適用するための Tips</a>
+の中に、アプリケーションのポータビリティに関する議論が含まれている。
+具体的には、</p>
 <ul>
 <li>Kubernetes環境の違い</li>
 <li>Kubernetesが同じバージョンでも機能の有効・無効、使える・使えないが異なる</li>
@@ -285,36 +295,64 @@ ga('send', 'pageview');
 <li>具体例として、LoadBalancerやVolumeが環境によって異なる</li>
 </ul>
 <p>ことが挙げられた。</p>
-<h2><span id="kubernetes-8-factors-kubernetes-クラスタの移行から学んだクラスタのポータビリティの重要性と条件">Kubernetes 8 Factors - Kubernetes クラスタの移行から学んだクラスタのポータビリティの重要性と条件</span></h2>
-<p><a href="https://www.wantedly.com/companies/wantedly/post_articles/222009#_=_" target="_blank" rel="noopener">Kubernetes 8 Factors - Kubernetes クラスタの移行から学んだクラスタのポータビリティの重要性と条件</a> では、 KubernetesのBreaking Changeに関して言及されていた。 （アプリケーションのポータビリティの話もあるが、Kubernetesクラスタの運用に関する点が言及された記事）</p>
-<p>そこそこの頻度（マイナーバージョンアップにおいても、という意味）でも、Breaking Changeが生じるため、アップデートしていくのが大変だ、と。 小さな規模だったらクラスタ丸ごとデプロイしなおす（※）、という対応も可能だったが、様々な業務が載ってくるとそれも大変、と。</p>
+<h2><span id="kubernetes8-factors-kubernetesクラスタの移行から学んだクラスタのポータビリティの重要性と条件">Kubernetes
+8 Factors - Kubernetes
+クラスタの移行から学んだクラスタのポータビリティの重要性と条件</span></h2>
+<p><a href="https://www.wantedly.com/companies/wantedly/post_articles/222009#_=_" target="_blank" rel="noopener">Kubernetes
+8 Factors - Kubernetes
+クラスタの移行から学んだクラスタのポータビリティの重要性と条件</a>
+では、 KubernetesのBreaking Changeに関して言及されていた。
+（アプリケーションのポータビリティの話もあるが、Kubernetesクラスタの運用に関する点が言及された記事）</p>
+<p>そこそこの頻度（マイナーバージョンアップにおいても、という意味）でも、Breaking
+Changeが生じるため、アップデートしていくのが大変だ、と。
+小さな規模だったらクラスタ丸ごとデプロイしなおす（※）、という対応も可能だったが、様々な業務が載ってくるとそれも大変、と。</p>
 <p>※小さな規模でクラスタ丸ごと都度デプロイしなおす、ということだと、Kubernetesで抽象化する意味が…？ということも考えうるか？</p>
 <h2><span id="twelve-factor-app">Twelve-Factor App</span></h2>
-<p><a href="https://12factor.net/ja/" target="_blank" rel="noopener">Twelve-Factor App</a> にはアプリケーションのポータビリティの考えを含む、以下のような「Software as a Service 」を実現するにあたってのポイントが提言されている。</p>
+<p><a href="https://12factor.net/ja/" target="_blank" rel="noopener">Twelve-Factor App</a>
+にはアプリケーションのポータビリティの考えを含む、以下のような「Software
+as a Service 」を実現するにあたってのポイントが提言されている。</p>
 <ul>
-<li>セットアップ自動化のために 宣言的な フォーマットを使い、プロジェクトに新しく加わった開発者が要する時間とコストを最小化する。</li>
-<li>下層のOSへの 依存関係を明確化 し、実行環境間での 移植性を最大化 する。</li>
-<li>モダンな クラウドプラットフォーム 上への デプロイ に適しており、サーバー管理やシステム管理を不要なものにする。</li>
-<li>開発環境と本番環境の 差異を最小限 にし、アジリティを最大化する 継続的デプロイ を可能にする。</li>
-<li>ツール、アーキテクチャ、開発プラクティスを大幅に変更することなく スケールアップ できる。</li>
+<li>セットアップ自動化のために 宣言的な
+フォーマットを使い、プロジェクトに新しく加わった開発者が要する時間とコストを最小化する。</li>
+<li>下層のOSへの 依存関係を明確化 し、実行環境間での 移植性を最大化
+する。</li>
+<li>モダンな クラウドプラットフォーム 上への デプロイ
+に適しており、サーバー管理やシステム管理を不要なものにする。</li>
+<li>開発環境と本番環境の 差異を最小限 にし、アジリティを最大化する
+継続的デプロイ を可能にする。</li>
+<li>ツール、アーキテクチャ、開発プラクティスを大幅に変更することなく
+スケールアップ できる。</li>
 </ul>
 <h2><span id="kubernetesを採用するべき12の理由">Kubernetesを採用するべき１２の理由</span></h2>
-<p><a href="https://qiita.com/MahoTakara/items/39ed37449e6f0f8f65a7" target="_blank" rel="noopener">Kubernetesを採用するべき１２の理由</a> にはアプリケーションのポータビリティに関連するKubernetesの利点が記載されている。 一部、Kubernetesクラスタのポータビリティと考えてもよい内容もある。</p>
+<p><a href="https://qiita.com/MahoTakara/items/39ed37449e6f0f8f65a7" target="_blank" rel="noopener">Kubernetesを採用するべき１２の理由</a>
+にはアプリケーションのポータビリティに関連するKubernetesの利点が記載されている。
+一部、Kubernetesクラスタのポータビリティと考えてもよい内容もある。</p>
 <blockquote>
-<p>理由4 仮想サーバーやベアメタルとハイブリッド構成可能な柔軟な運用基盤</p>
+<p>理由4
+仮想サーバーやベアメタルとハイブリッド構成可能な柔軟な運用基盤</p>
 </blockquote>
 <blockquote>
 <p>理由6 オンプレとクラウドの両方で利用できる運用基盤</p>
 </blockquote>
 <h2><span id="kubernetes-やめました">Kubernetes、やめました</span></h2>
-<p>ポータビリティの直接的な議論ではないが、<a href="http://blog.father.gedow.net/2020/06/03/goodbye-kubernetes/" target="_blank" rel="noopener">Kubernetes、やめました</a> にはKubernetesを採用しなかったケースの話が記載されている。 Kubernetesの学習コストと効果を天秤にかけた結果、他の技術で目的は達成できるはず、ということ。</p>
+<p>ポータビリティの直接的な議論ではないが、<a href="http://blog.father.gedow.net/2020/06/03/goodbye-kubernetes/" target="_blank" rel="noopener">Kubernetes、やめました</a>
+にはKubernetesを採用しなかったケースの話が記載されている。
+Kubernetesの学習コストと効果を天秤にかけた結果、他の技術で目的は達成できるはず、ということ。</p>
 <h2><span id="多分あなたにkubernetesは必要ない">多分あなたにKubernetesは必要ない</span></h2>
-<p><a href="https://yakst.com/ja/posts/5455" target="_blank" rel="noopener">多分あなたにKubernetesは必要ない</a> では、KubernetesではなくNomadを利用することにした経緯が記載されている。 Nomadは「オーケストレータ」だがそれで用が足りた、ということのようだ。</p>
+<p><a href="https://yakst.com/ja/posts/5455" target="_blank" rel="noopener">多分あなたにKubernetesは必要ない</a>
+では、KubernetesではなくNomadを利用することにした経緯が記載されている。
+Nomadは「オーケストレータ」だがそれで用が足りた、ということのようだ。</p>
 <blockquote>
-<p>もしあなたが大規模インフラ上に同一サービス群をデプロイする計画をしているのであれば、Kubernetesという道を選んで良いでしょう。ただ、複雑性や運用コストが増えることを肝に命じてください。そしてこういったコストの一部は、Google Kubernetes EngineやAmazon EKSのようなマネージドKubernetes環境を利用することで省くことができます。</p>
+<p>もしあなたが大規模インフラ上に同一サービス群をデプロイする計画をしているのであれば、Kubernetesという道を選んで良いでしょう。ただ、複雑性や運用コストが増えることを肝に命じてください。そしてこういったコストの一部は、Google
+Kubernetes EngineやAmazon
+EKSのようなマネージドKubernetes環境を利用することで省くことができます。</p>
 </blockquote>
-<h2><span id="あなたにkubernetesは必要ですかを-kubernetes-meetup-tokyoのコアメンバーが議論">「あなたにKubernetesは必要ですか？」を、Kubernetes Meetup Tokyoのコアメンバーが議論</span></h2>
-<p><a href="https://atmarkit.itmedia.co.jp/ait/articles/1907/23/news120.html" target="_blank" rel="noopener">「あなたにKubernetesは必要ですか？」を、Kubernetes Meetup Tokyoのコアメンバーが議論</a> では、 <a href="https://yakst.com/ja/posts/5455" target="_blank" rel="noopener">多分あなたにKubernetesは必要ない</a> の記事を受けて行われた、 日本でKubernetesを本格運用している企業の著名エンジニアによるパネルディスカッションの様子が記載されている。</p>
+<h2><span id="あなたにkubernetesは必要ですかを-kubernetesmeetup-tokyoのコアメンバーが議論">「あなたにKubernetesは必要ですか？」を、Kubernetes
+Meetup Tokyoのコアメンバーが議論</span></h2>
+<p><a href="https://atmarkit.itmedia.co.jp/ait/articles/1907/23/news120.html" target="_blank" rel="noopener">「あなたにKubernetesは必要ですか？」を、Kubernetes
+Meetup Tokyoのコアメンバーが議論</a> では、 <a href="https://yakst.com/ja/posts/5455" target="_blank" rel="noopener">多分あなたにKubernetesは必要ない</a>
+の記事を受けて行われた、
+日本でKubernetesを本格運用している企業の著名エンジニアによるパネルディスカッションの様子が記載されている。</p>
 <p>なお、個人的に気になったのは以下の下り。</p>
 <blockquote>
 <p>青山氏は、Kubernetesでも、CI/CDツールなどとうまく組み合わせることで、カスタマイズできるPaaSに近い環境を作ることができるとした。また、五十嵐氏は、「開発者と運用支援担当が別チームとして役割分担しやすい」というKubernetesの特徴を生かせれば、開発者が最小限の設定で使えるようにできると話した。</p>
@@ -322,23 +360,31 @@ ga('send', 'pageview');
 <blockquote>
 <p>ルイス氏は、Kubernetes上でPaaSやFaaSが稼働するような動きが今後進むことで、一部の懸念は解消に向かうのではないかとしている。</p>
 </blockquote>
-<p>PaaSやFaaSを実現する基盤技術は、単体でクラスタ構成可能なものもあるため、Kubernetes上に載せることで「抽象化の層」が増えることになる。 抽象化の恩恵と複雑性増加の辛さを天秤にかけることになるだろう。</p>
+<p>PaaSやFaaSを実現する基盤技術は、単体でクラスタ構成可能なものもあるため、Kubernetes上に載せることで「抽象化の層」が増えることになる。
+抽象化の恩恵と複雑性増加の辛さを天秤にかけることになるだろう。</p>
 <h2><span id="cndo2021-kubernetesがない世界とある世界の違いをインフラエンジニアが解説">CNDO2021、Kubernetesがない世界とある世界の違いをインフラエンジニアが解説</span></h2>
 <p>ポータビリティはあまり関係ない。</p>
-<p><a href="https://thinkit.co.jp/article/18557" target="_blank" rel="noopener">CNDO2021、Kubernetesがない世界とある世界の違いをインフラエンジニアが解説</a> では、 「CI/CDまではできているがKubernetesがない」場合と、Kubernetesがある場合を比較し、 「Kubernetesがなくてもクラウドネイティブ化の目的は達成できうるが、結局はKubernetesらが実現していることを自分でやらないといけない」とした。</p>
+<p><a href="https://thinkit.co.jp/article/18557" target="_blank" rel="noopener">CNDO2021、Kubernetesがない世界とある世界の違いをインフラエンジニアが解説</a>
+では、
+「CI/CDまではできているがKubernetesがない」場合と、Kubernetesがある場合を比較し、
+「Kubernetesがなくてもクラウドネイティブ化の目的は達成できうるが、結局はKubernetesらが実現していることを自分でやらないといけない」とした。</p>
 <p>なお、クラウドネイティブ化の目的については、CNCFの定義が引用されていた。</p>
 <blockquote>
 <p>素早く継続的にユーザーに価値を届ける</p>
 </blockquote>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://yoshio3.com/2018/12/06/kubernetes-tips-for-production/" target="_blank" rel="noopener">Kubernetes を本番環境に適用するための Tips</a></li>
-<li><a href="https://www.wantedly.com/companies/wantedly/post_articles/222009#_=_" target="_blank" rel="noopener">Kubernetes 8 Factors - Kubernetes クラスタの移行から学んだクラスタのポータビリティの重要性と条件</a></li>
+<li><a href="https://yoshio3.com/2018/12/06/kubernetes-tips-for-production/" target="_blank" rel="noopener">Kubernetes
+を本番環境に適用するための Tips</a></li>
+<li><a href="https://www.wantedly.com/companies/wantedly/post_articles/222009#_=_" target="_blank" rel="noopener">Kubernetes
+8 Factors - Kubernetes
+クラスタの移行から学んだクラスタのポータビリティの重要性と条件</a></li>
 <li><a href="https://12factor.net/ja/" target="_blank" rel="noopener">Twelve-Factor App</a></li>
 <li><a href="https://qiita.com/MahoTakara/items/39ed37449e6f0f8f65a7" target="_blank" rel="noopener">Kubernetesを採用するべき１２の理由</a></li>
 <li><a href="http://blog.father.gedow.net/2020/06/03/goodbye-kubernetes/" target="_blank" rel="noopener">Kubernetes、やめました</a></li>
 <li><a href="https://yakst.com/ja/posts/5455" target="_blank" rel="noopener">多分あなたにKubernetesは必要ない</a></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/1907/23/news120.html" target="_blank" rel="noopener">「あなたにKubernetesは必要ですか？」を、Kubernetes Meetup Tokyoのコアメンバーが議論</a></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/1907/23/news120.html" target="_blank" rel="noopener">「あなたにKubernetesは必要ですか？」を、Kubernetes
+Meetup Tokyoのコアメンバーが議論</a></li>
 <li><a href="https://thinkit.co.jp/article/18557" target="_blank" rel="noopener">CNDO2021、Kubernetesがない世界とある世界の違いをインフラエンジニアが解説</a></li>
 </ul>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
@@ -352,7 +398,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Blogs-about-the-portability-of-kubernetes/" data-id="cl2nztnkl002m5xqivtkpd0o0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Blogs-about-the-portability-of-kubernetes/" data-id="cl2o9pbg5013o18rz8x6ga6ik" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -603,5 +649,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

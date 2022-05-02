@@ -250,24 +250,30 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#公式ドキュメント">公式ドキュメント</a><ul>
-<li><a href="#kinesis-clinet-library">Kinesis Clinet Library</a><ul>
-<li><a href="#javaでの実装例">Javaでの実装例</a></li>
-<li><a href="#c言語のバインディングはないのか">C言語のバインディングはないのか？</a></li>
+<li><a href="#公式ドキュメント" id="toc-公式ドキュメント">公式ドキュメント</a>
+<ul>
+<li><a href="#kinesis-clinet-library" id="toc-kinesis-clinet-library">Kinesis Clinet Library</a>
+<ul>
+<li><a href="#javaでの実装例" id="toc-javaでの実装例">Javaでの実装例</a></li>
+<li><a href="#c言語のバインディングはないのか" id="toc-c言語のバインディングはないのか">C言語のバインディングはないのか？</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="公式ドキュメント">公式ドキュメント</span></h1>
-<p><a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/shared-fan-out-consumers.html" target="_blank" rel="noopener">Amazon Kinesis Data Streams コンシューマーの開発</a> を見ると、</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/shared-fan-out-consumers.html" target="_blank" rel="noopener">Amazon
+Kinesis Data Streams コンシューマーの開発</a> を見ると、</p>
 <ul>
 <li>Kinesis Client Library 1.x を使う場合</li>
 <li>Kinesis Data Streams API および AWS SDK for Javaを使う場合</li>
 </ul>
 <p>の2種類があることが分かりました。</p>
-<p>一旦、 <a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-java.html" target="_blank" rel="noopener">Kinesis Client Library 1.x を使う場合</a> を見てみることにします。</p>
+<p>一旦、 <a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-java.html" target="_blank" rel="noopener">Kinesis
+Client Library 1.x を使う場合</a> を見てみることにします。</p>
 <h2><span id="kinesis-clinet-library">Kinesis Clinet Library</span></h2>
-<p><a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-java.html" target="_blank" rel="noopener">Kinesis Client Library 1.x を使う場合</a> によると、以下の言語に対応しているように見えます。</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-java.html" target="_blank" rel="noopener">Kinesis
+Client Library 1.x を使う場合</a>
+によると、以下の言語に対応しているように見えます。</p>
 <ul>
 <li>Java</li>
 <li>Node.js</li>
@@ -276,11 +282,21 @@ ga('send', 'pageview');
 <li>Ruby</li>
 </ul>
 <h3><span id="javaでの実装例">Javaでの実装例</span></h3>
-<p><a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-java.html" target="_blank" rel="noopener">Java での Kinesis Client Library コンシューマーの開発</a> を見ると、Javaライブラリの使い方が載っていました。 Kinesisから読んでどこかに書き出すときに使えそうです。</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-java.html" target="_blank" rel="noopener">Java
+での Kinesis Client Library コンシューマーの開発</a>
+を見ると、Javaライブラリの使い方が載っていました。
+Kinesisから読んでどこかに書き出すときに使えそうです。</p>
 <h3><span id="c言語のバインディングはないのか">C言語のバインディングはないのか？</span></h3>
-<p>少々気になるのは、c言語のバインディングがないかもしれない、ことです。 <a href="https://github.com/awslabs/amazon-kinesis-client#amazon-kcl-support-for-other-languages" target="_blank" rel="noopener">Amazon KCL support for other languages</a> を参照すると、MultiLangDaemonなるものを立てて使え、とありました。 他にも、 <a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-py.html" target="_blank" rel="noopener">Python での Kinesis Client Library コンシューマーの開発</a> においても、</p>
+<p>少々気になるのは、c言語のバインディングがないかもしれない、ことです。
+<a href="https://github.com/awslabs/amazon-kinesis-client#amazon-kcl-support-for-other-languages" target="_blank" rel="noopener">Amazon
+KCL support for other languages</a>
+を参照すると、MultiLangDaemonなるものを立てて使え、とありました。
+他にも、 <a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-py.html" target="_blank" rel="noopener">Python
+での Kinesis Client Library コンシューマーの開発</a> においても、</p>
 <blockquote>
-<p>KCL は Java ライブラリです。Java 以外の言語のサポートは、MultiLangDaemon という多言語インターフェイスを使用して提供されます。</p>
+<p>KCL は Java ライブラリです。Java
+以外の言語のサポートは、MultiLangDaemon
+という多言語インターフェイスを使用して提供されます。</p>
 </blockquote>
 <p>と記載されています。</p>
 <p>いずれにせよ、Java以外の開発では一癖ありそうな予感がしました。</p>
@@ -294,7 +310,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/09/20/kinesis-consumer-samples/" data-id="cl2nztnpx00ii5xqipuo1ro41" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/09/20/kinesis-consumer-samples/" data-id="cl2o9pb9m00dv18rzte0n8ze1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -415,12 +431,13 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考にした情報">参考にした情報</a></li>
-<li><a href="#ブログ構築の基本的な流れ">ブログ構築の基本的な流れ</a><ul>
-<li><a href="#type">type</a></li>
-<li><a href="#branch">branch</a></li>
+<li><a href="#参考にした情報" id="toc-参考にした情報">参考にした情報</a></li>
+<li><a href="#ブログ構築の基本的な流れ" id="toc-ブログ構築の基本的な流れ">ブログ構築の基本的な流れ</a>
+<ul>
+<li><a href="#type" id="toc-type">type</a></li>
+<li><a href="#branch" id="toc-branch">branch</a></li>
 </ul></li>
-<li><a href="#ブログの原稿や元データの保存について">ブログの原稿や元データの保存について</a></li>
+<li><a href="#ブログの原稿や元データの保存について" id="toc-ブログの原稿や元データの保存について">ブログの原稿や元データの保存について</a></li>
 </ul>
 </div>
 <p>あまり考えずに使えそうなブログ生成ツールということで、Hexoを選んでみました。</p>
@@ -439,20 +456,29 @@ ga('send', 'pageview');
 </ul></li>
 </ul>
 <h1><span id="ブログ構築の基本的な流れ">ブログ構築の基本的な流れ</span></h1>
-<p>https://liginc.co.jp/web/programming/server/104594 に記載の流れで問題ありませんでしたが、 以下の点だけ少々異なる手順で実行しました。</p>
+<p>https://liginc.co.jp/web/programming/server/104594
+に記載の流れで問題ありませんでしたが、
+以下の点だけ少々異なる手順で実行しました。</p>
 <h2><span id="type">type</span></h2>
-<p><code>_config.yml</code> の中で上記のブログでは以下のように設定するようになっています。</p>
+<p><code>_config.yml</code>
+の中で上記のブログでは以下のように設定するようになっています。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">・・・(省略)・・・</span><br><span class="line"># Deployment</span><br><span class="line">## Docs: http://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: github</span><br><span class="line">  repo: git@github.com:n0bisuke/n0bisuke.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
 <p>このとき、自分がインストールした</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo: 3.7.1</span><br><span class="line">hexo-cli: 1.1.0</span><br></pre></td></tr></table></figure>
-<p>のバージョンのHexoではgithubではなく、gitを用いる必要がありました。 これについては、 https://liginc.co.jp/web/programming/node-js/85318 にも記載がありました。 本ブログに記載の通り、typeをgitにした後、</p>
+<p>のバージョンのHexoではgithubではなく、gitを用いる必要がありました。
+これについては、 https://liginc.co.jp/web/programming/node-js/85318
+にも記載がありました。 本ブログに記載の通り、typeをgitにした後、</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
 <p>と、hexo-deployer-gitをインストールしました。</p>
 <h2><span id="branch">branch</span></h2>
-<p>私はGitHubアカウントのプロジェクトページにデプロイしたかったので、masterブランチではなく、 gh-pagesブランチを指定するようにしました。</p>
+<p>私はGitHubアカウントのプロジェクトページにデプロイしたかったので、masterブランチではなく、
+gh-pagesブランチを指定するようにしました。</p>
 <h1><span id="ブログの原稿や元データの保存について">ブログの原稿や元データの保存について</span></h1>
-<p>公開されるデータは、 <code>.deploy_git</code> に保存されているように見えます。 またこれは生成されたデータであり、gh-pagesにデプロイされるデータも、この生成済みデータだけのように見えます。</p>
-<p>ブログ原稿をどこでも記載できるようにするため、 <code>hexo init</code> したプロジェクトそのものをGitHubのプライベートレポジトリにも保存するようにしました。</p>
+<p>公開されるデータは、 <code>.deploy_git</code>
+に保存されているように見えます。
+またこれは生成されたデータであり、gh-pagesにデプロイされるデータも、この生成済みデータだけのように見えます。</p>
+<p>ブログ原稿をどこでも記載できるようにするため、 <code>hexo init</code>
+したプロジェクトそのものをGitHubのプライベートレポジトリにも保存するようにしました。</p>
 
         
         </div>
@@ -463,7 +489,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/09/20/create-hexo-blog/" data-id="cl2nztnpl00hj5xqi8heo9g55" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/09/20/create-hexo-blog/" data-id="cl2o9pb9700cu18rzmqm5iqcy" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -693,5 +719,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

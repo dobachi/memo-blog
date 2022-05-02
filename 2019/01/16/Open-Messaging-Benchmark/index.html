@@ -5,18 +5,18 @@
     
     <title>Open Messaging Benchmark | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 所感 パラメータ その他  GitHubを見てみる Kafkaのドライバ bin Benchmarkクラス コントリビュータ イシュー    参考  Open Messaging Benchmarkのウェブサイト openmessaging-benchmarkのGitHub Kafkaのドライバ Kafka構築のAnsible Playbook Kafka構築のTerraform">
+    <meta name="description" content="参考 メモ  所感 パラメータ その他  GitHubを見てみる  Kafkaのドライバ bin Benchmarkクラス コントリビュータ イシュー    参考  Open Messaging Benchmarkのウェブサイト openmessaging-benchmarkのGitHub Kafkaのドライバ Kafka構築のAnsible Playbook Kafka構築のTerrafo">
 <meta name="keywords" content="Kafka,Open Messaging Benchmark,Pulsar">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Open Messaging Benchmark">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/01/16/Open-Messaging-Benchmark/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 所感 パラメータ その他  GitHubを見てみる Kafkaのドライバ bin Benchmarkクラス コントリビュータ イシュー    参考  Open Messaging Benchmarkのウェブサイト openmessaging-benchmarkのGitHub Kafkaのドライバ Kafka構築のAnsible Playbook Kafka構築のTerraform">
+<meta property="og:description" content="参考 メモ  所感 パラメータ その他  GitHubを見てみる  Kafkaのドライバ bin Benchmarkクラス コントリビュータ イシュー    参考  Open Messaging Benchmarkのウェブサイト openmessaging-benchmarkのGitHub Kafkaのドライバ Kafka構築のAnsible Playbook Kafka構築のTerrafo">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Open Messaging Benchmark">
-<meta name="twitter:description" content="参考 メモ 所感 パラメータ その他  GitHubを見てみる Kafkaのドライバ bin Benchmarkクラス コントリビュータ イシュー    参考  Open Messaging Benchmarkのウェブサイト openmessaging-benchmarkのGitHub Kafkaのドライバ Kafka構築のAnsible Playbook Kafka構築のTerraform">
+<meta name="twitter:description" content="参考 メモ  所感 パラメータ その他  GitHubを見てみる  Kafkaのドライバ bin Benchmarkクラス コントリビュータ イシュー    参考  Open Messaging Benchmarkのウェブサイト openmessaging-benchmarkのGitHub Kafkaのドライバ Kafka構築のAnsible Playbook Kafka構築のTerrafo">
     
 
     
@@ -251,44 +251,53 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#所感">所感</a></li>
-<li><a href="#パラメータ">パラメータ</a></li>
-<li><a href="#その他">その他</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#所感" id="toc-所感">所感</a></li>
+<li><a href="#パラメータ" id="toc-パラメータ">パラメータ</a></li>
+<li><a href="#その他" id="toc-その他">その他</a></li>
 </ul></li>
-<li><a href="#githubを見てみる">GitHubを見てみる</a><ul>
-<li><a href="#kafkaのドライバ">Kafkaのドライバ</a></li>
-<li><a href="#bin">bin</a></li>
-<li><a href="#benchmarkクラス">Benchmarkクラス</a></li>
-<li><a href="#コントリビュータ">コントリビュータ</a></li>
-<li><a href="#イシュー">イシュー</a></li>
+<li><a href="#githubを見てみる" id="toc-githubを見てみる">GitHubを見てみる</a>
+<ul>
+<li><a href="#kafkaのドライバ" id="toc-kafkaのドライバ">Kafkaのドライバ</a></li>
+<li><a href="#bin" id="toc-bin">bin</a></li>
+<li><a href="#benchmarkクラス" id="toc-benchmarkクラス">Benchmarkクラス</a></li>
+<li><a href="#コントリビュータ" id="toc-コントリビュータ">コントリビュータ</a></li>
+<li><a href="#イシュー" id="toc-イシュー">イシュー</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="http://openmessaging.cloud/docs/benchmarks/" target="_blank" rel="noopener">Open Messaging Benchmarkのウェブサイト</a></li>
+<li><a href="http://openmessaging.cloud/docs/benchmarks/" target="_blank" rel="noopener">Open Messaging
+Benchmarkのウェブサイト</a></li>
 <li><a href="https://github.com/openmessaging/openmessaging-benchmark" target="_blank" rel="noopener">openmessaging-benchmarkのGitHub</a></li>
 <li><a href="https://github.com/openmessaging/openmessaging-benchmark/tree/master/driver-kafka" target="_blank" rel="noopener">Kafkaのドライバ</a></li>
-<li><a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/deploy.yaml" target="_blank" rel="noopener">Kafka構築のAnsible Playbook</a></li>
+<li><a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/deploy.yaml" target="_blank" rel="noopener">Kafka構築のAnsible
+Playbook</a></li>
 <li><a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/provision-kafka-aws.tf" target="_blank" rel="noopener">Kafka構築のTerraformコンフィグ</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>ウェブサイトを確認してみる。</p>
 <h2><span id="所感">所感</span></h2>
-<p>あくまでメッセージングシステムに負荷をかけ、その特性を見るためのベンチマークに見える。 したがって負荷をかけるクライアントはシンプルであり、ただしワークロードを調整するための パラメータは一通り揃っている、という様子。</p>
+<p>あくまでメッセージングシステムに負荷をかけ、その特性を見るためのベンチマークに見える。
+したがって負荷をかけるクライアントはシンプルであり、ただしワークロードを調整するための
+パラメータは一通り揃っている、という様子。</p>
 <h2><span id="パラメータ">パラメータ</span></h2>
 <ul>
 <li>The number of topics</li>
 <li>The size of the messages being produced and consumed</li>
 <li>The number of subscriptions per topic</li>
 <li>The number of producers per topic</li>
-<li>The rate at which producers produce messages (per second). Note: a value of 0 means that messages are produced as quickly as possible, with no rate limiting.</li>
+<li>The rate at which producers produce messages (per second). Note: a
+value of 0 means that messages are produced as quickly as possible, with
+no rate limiting.</li>
 <li>The size of the consumer’s backlog (in gigabytes)</li>
 <li>The total duration of the test (in minutes)</li>
 </ul>
-<p>「BENCHMARKING WORKLOADS」の章に代表的な組み合わせパターンの記載がある。</p>
+<p>「BENCHMARKING
+WORKLOADS」の章に代表的な組み合わせパターンの記載がある。</p>
 <h2><span id="その他">その他</span></h2>
 <ul>
 <li>「warm-up」とあったが、何をしているのだろう。</li>
@@ -296,20 +305,30 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="githubを見てみる">GitHubを見てみる</span></h1>
 <h2><span id="kafkaのドライバ">Kafkaのドライバ</span></h2>
-<p><a href="https://github.com/openmessaging/openmessaging-benchmark" target="_blank" rel="noopener">openmessaging-benchmarkのGitHub</a> を眺めてみる。 <a href="https://github.com/openmessaging/openmessaging-benchmark/tree/master/driver-kafka" target="_blank" rel="noopener">Kafkaのドライバ</a> を除くとデプロイ用のTerraformコンフィグとAnsibleプレイブックがあった。</p>
-<p><a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/provision-kafka-aws.tf" target="_blank" rel="noopener">Kafka構築のTerraformコンフィグ</a> の通り、一通りAWSインスタンスをデプロイ。 <a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/deploy.yaml" target="_blank" rel="noopener">Kafka構築のAnsible Playbook</a> の通り、ひととおりKafkaクラスタから負荷がけクライアントまで構成。</p>
-<p>なお、ソースコードとしてベンチマークのドライバが含まれているが、 その親クラスが <a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-api/src/main/java/io/openmessaging/benchmark/driver/BenchmarkDriver.java" target="_blank" rel="noopener">BenchmarkDriver</a> だった。</p>
+<p><a href="https://github.com/openmessaging/openmessaging-benchmark" target="_blank" rel="noopener">openmessaging-benchmarkのGitHub</a>
+を眺めてみる。 <a href="https://github.com/openmessaging/openmessaging-benchmark/tree/master/driver-kafka" target="_blank" rel="noopener">Kafkaのドライバ</a>
+を除くとデプロイ用のTerraformコンフィグとAnsibleプレイブックがあった。</p>
+<p><a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/provision-kafka-aws.tf" target="_blank" rel="noopener">Kafka構築のTerraformコンフィグ</a>
+の通り、一通りAWSインスタンスをデプロイ。 <a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/deploy.yaml" target="_blank" rel="noopener">Kafka構築のAnsible
+Playbook</a>
+の通り、ひととおりKafkaクラスタから負荷がけクライアントまで構成。</p>
+<p>なお、ソースコードとしてベンチマークのドライバが含まれているが、
+その親クラスが <a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-api/src/main/java/io/openmessaging/benchmark/driver/BenchmarkDriver.java" target="_blank" rel="noopener">BenchmarkDriver</a>
+だった。</p>
 <h2><span id="bin">bin</span></h2>
 <p>bin以下には、ベンチマークを実行すると思われる、 <a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/bin/benchmark" target="_blank" rel="noopener">benchmark</a>が含まれていた。</p>
 <h2><span id="benchmarkクラス">Benchmarkクラス</span></h2>
-<p>以下の通り、ワークロードごとに、指定されたドライバのコンフィグレーションに基づき、 負荷をかけるようになっているようだ。</p>
+<p>以下の通り、ワークロードごとに、指定されたドライバのコンフィグレーションに基づき、
+負荷をかけるようになっているようだ。</p>
 <p>io/openmessaging/benchmark/Benchmark.java:126</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">workloads.forEach((workloadName, workload) -&gt; &#123;</span><br><span class="line">    arguments.drivers.forEach(driverConfig -&gt; &#123;</span><br></pre></td></tr></table></figure>
 <p>また以下の通り、WorkloadGeneratorを通じて、ワークロードがかけられるようだ。</p>
 <p>io/openmessaging/benchmark/Benchmark.java:140</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WorkloadGenerator generator = new WorkloadGenerator(driverConfiguration.name, workload, worker);</span><br><span class="line"></span><br><span class="line">TestResult result = generator.run();</span><br></pre></td></tr></table></figure>
 <h2><span id="コントリビュータ">コントリビュータ</span></h2>
-<p>yahoo、alibaba、streamlioあたりからコントリビュータが出ている。 ただし主要な開発者は数名。 最初にYahooの若干名が活発に開発し、それに加わった人がいるようだ。</p>
+<p>yahoo、alibaba、streamlioあたりからコントリビュータが出ている。
+ただし主要な開発者は数名。
+最初にYahooの若干名が活発に開発し、それに加わった人がいるようだ。</p>
 <h2><span id="イシュー">イシュー</span></h2>
 <p>エンハンスを中心に、いくつか挙げられていた（2019/1/18時点）</p>
 
@@ -322,7 +341,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/16/Open-Messaging-Benchmark/" data-id="cl2nztnnc00au5xqiebtn9sqc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/16/Open-Messaging-Benchmark/" data-id="cl2o9pb79007r18rzzzprf6py" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -573,5 +592,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

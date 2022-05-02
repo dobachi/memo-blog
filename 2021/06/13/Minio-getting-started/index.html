@@ -5,19 +5,19 @@
     
     <title>Minio getting started | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 公式 ブログ  メモ 動作確認 前提 サーバ起動 コンフィグ mcコマンドの利用 s3コマンドで利用  アップデート 署名済みURL発行 S3互換サービスのためのエイリアス 作業用バケット作成 ポリシーファイルの作成 ポリシーを適用 ユーザ作成 ユーザにポリシーを設定 共有の動作確認用のファイルの準備 Python botoを利用して一時アカウント発行＆署名済みURL発行     参考">
+    <meta name="description" content="参考  公式 ブログ  メモ  動作確認  前提 サーバ起動 コンフィグ mcコマンドの利用 s3コマンドで利用  アップデート 署名済みURL発行  S3互換サービスのためのエイリアス 作業用バケット作成 ポリシーファイルの作成 ポリシーを適用 ユーザ作成 ユーザにポリシーを設定 共有の動作確認用のファイルの準備 Python botoを利用して一時アカウント発行＆署名済みURL発行">
 <meta name="keywords" content="Minio,Storage,S3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Minio getting started">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2021/06/13/Minio-getting-started/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 公式 ブログ  メモ 動作確認 前提 サーバ起動 コンフィグ mcコマンドの利用 s3コマンドで利用  アップデート 署名済みURL発行 S3互換サービスのためのエイリアス 作業用バケット作成 ポリシーファイルの作成 ポリシーを適用 ユーザ作成 ユーザにポリシーを設定 共有の動作確認用のファイルの準備 Python botoを利用して一時アカウント発行＆署名済みURL発行     参考">
+<meta property="og:description" content="参考  公式 ブログ  メモ  動作確認  前提 サーバ起動 コンフィグ mcコマンドの利用 s3コマンドで利用  アップデート 署名済みURL発行  S3互換サービスのためのエイリアス 作業用バケット作成 ポリシーファイルの作成 ポリシーを適用 ユーザ作成 ユーザにポリシーを設定 共有の動作確認用のファイルの準備 Python botoを利用して一時アカウント発行＆署名済みURL発行">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2021/06/13/Minio-getting-started/memo-blog/images/minio_presigned_url_via_gui.png">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Minio getting started">
-<meta name="twitter:description" content="参考 公式 ブログ  メモ 動作確認 前提 サーバ起動 コンフィグ mcコマンドの利用 s3コマンドで利用  アップデート 署名済みURL発行 S3互換サービスのためのエイリアス 作業用バケット作成 ポリシーファイルの作成 ポリシーを適用 ユーザ作成 ユーザにポリシーを設定 共有の動作確認用のファイルの準備 Python botoを利用して一時アカウント発行＆署名済みURL発行     参考">
+<meta name="twitter:description" content="参考  公式 ブログ  メモ  動作確認  前提 サーバ起動 コンフィグ mcコマンドの利用 s3コマンドで利用  アップデート 署名済みURL発行  S3互換サービスのためのエイリアス 作業用バケット作成 ポリシーファイルの作成 ポリシーを適用 ユーザ作成 ユーザにポリシーを設定 共有の動作確認用のファイルの準備 Python botoを利用して一時アカウント発行＆署名済みURL発行">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/2021/06/13/Minio-getting-started/memo-blog/images/minio_presigned_url_via_gui.png">
     
 
@@ -253,28 +253,33 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#公式">公式</a></li>
-<li><a href="#ブログ">ブログ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#公式" id="toc-公式">公式</a></li>
+<li><a href="#ブログ" id="toc-ブログ">ブログ</a></li>
 </ul></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#動作確認">動作確認</a><ul>
-<li><a href="#前提">前提</a></li>
-<li><a href="#サーバ起動">サーバ起動</a></li>
-<li><a href="#コンフィグ">コンフィグ</a></li>
-<li><a href="#mcコマンドの利用">mcコマンドの利用</a></li>
-<li><a href="#s3コマンドで利用">s3コマンドで利用</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a>
+<ul>
+<li><a href="#前提" id="toc-前提">前提</a></li>
+<li><a href="#サーバ起動" id="toc-サーバ起動">サーバ起動</a></li>
+<li><a href="#コンフィグ" id="toc-コンフィグ">コンフィグ</a></li>
+<li><a href="#mcコマンドの利用" id="toc-mcコマンドの利用">mcコマンドの利用</a></li>
+<li><a href="#s3コマンドで利用" id="toc-s3コマンドで利用">s3コマンドで利用</a></li>
 </ul></li>
-<li><a href="#アップデート">アップデート</a></li>
-<li><a href="#署名済みurl発行">署名済みURL発行</a><ul>
-<li><a href="#s3互換サービスのためのエイリアス">S3互換サービスのためのエイリアス</a></li>
-<li><a href="#作業用バケット作成">作業用バケット作成</a></li>
-<li><a href="#ポリシーファイルの作成">ポリシーファイルの作成</a></li>
-<li><a href="#ポリシーを適用">ポリシーを適用</a></li>
-<li><a href="#ユーザ作成">ユーザ作成</a></li>
-<li><a href="#ユーザにポリシーを設定">ユーザにポリシーを設定</a></li>
-<li><a href="#共有の動作確認用のファイルの準備">共有の動作確認用のファイルの準備</a></li>
-<li><a href="#python-botoを利用して一時アカウント発行署名済みurl発行">Python botoを利用して一時アカウント発行＆署名済みURL発行</a></li>
+<li><a href="#アップデート" id="toc-アップデート">アップデート</a></li>
+<li><a href="#署名済みurl発行" id="toc-署名済みurl発行">署名済みURL発行</a>
+<ul>
+<li><a href="#s3互換サービスのためのエイリアス" id="toc-s3互換サービスのためのエイリアス">S3互換サービスのためのエイリアス</a></li>
+<li><a href="#作業用バケット作成" id="toc-作業用バケット作成">作業用バケット作成</a></li>
+<li><a href="#ポリシーファイルの作成" id="toc-ポリシーファイルの作成">ポリシーファイルの作成</a></li>
+<li><a href="#ポリシーを適用" id="toc-ポリシーを適用">ポリシーを適用</a></li>
+<li><a href="#ユーザ作成" id="toc-ユーザ作成">ユーザ作成</a></li>
+<li><a href="#ユーザにポリシーを設定" id="toc-ユーザにポリシーを設定">ユーザにポリシーを設定</a></li>
+<li><a href="#共有の動作確認用のファイルの準備" id="toc-共有の動作確認用のファイルの準備">共有の動作確認用のファイルの準備</a></li>
+<li><a href="#python-botoを利用して一時アカウント発行署名済みurl発行" id="toc-python-botoを利用して一時アカウント発行署名済みurl発行">Python
+botoを利用して一時アカウント発行＆署名済みURL発行</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -286,14 +291,20 @@ ga('send', 'pageview');
 <li><a href="https://docs.min.io/docs/minio-client-quickstart-guide" target="_blank" rel="noopener">Minioのクライアントガイド</a></li>
 <li><a href="https://docs.min.io/docs/minio-admin-complete-guide.html" target="_blank" rel="noopener">Minioのアドミンガイド</a></li>
 <li><a href="https://docs.min.io/docs/minio-server-configuration-guide.html" target="_blank" rel="noopener">Minioのコンフィグガイド</a></li>
-<li><a href="https://qiita.com/y_k/items/9c134f7be0263d64a89b" target="_blank" rel="noopener">boto3 を用いて MinIO でユーザの追加と Security Token Service(STS) による一時認証情報での署名済み URL を発行する</a></li>
-<li><a href="https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc/mc-alias.html#mc-alias" target="_blank" rel="noopener">mc alias</a></li>
-<li><a href="https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc-admin/mc-admin-policy.html" target="_blank" rel="noopener">mc admin policy</a></li>
-<li><a href="https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc-admin/mc-admin-user.html#create-a-new-user" target="_blank" rel="noopener">mc admin userを利用したユーザ作成</a></li>
+<li><a href="https://qiita.com/y_k/items/9c134f7be0263d64a89b" target="_blank" rel="noopener">boto3
+を用いて MinIO でユーザの追加と Security Token Service(STS)
+による一時認証情報での署名済み URL を発行する</a></li>
+<li><a href="https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc/mc-alias.html#mc-alias" target="_blank" rel="noopener">mc
+alias</a></li>
+<li><a href="https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc-admin/mc-admin-policy.html" target="_blank" rel="noopener">mc
+admin policy</a></li>
+<li><a href="https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc-admin/mc-admin-user.html#create-a-new-user" target="_blank" rel="noopener">mc
+admin userを利用したユーザ作成</a></li>
 </ul>
 <h2><span id="ブログ">ブログ</span></h2>
 <ul>
-<li><a href="https://qiita.com/Taroi_Japanista/items/7139ae983b5db2404cdb" target="_blank" rel="noopener">MinIO オブジェクトストレージの構築</a></li>
+<li><a href="https://qiita.com/Taroi_Japanista/items/7139ae983b5db2404cdb" target="_blank" rel="noopener">MinIO
+オブジェクトストレージの構築</a></li>
 <li><a href="https://liginc.co.jp/402383" target="_blank" rel="noopener">開発のためにローカルにもS3が欲しいというわがまま、MINIOが叶えてくれました</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
@@ -302,15 +313,21 @@ ga('send', 'pageview');
 <h3><span id="前提">前提</span></h3>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat /etc/redhat-release</span></span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br></pre></td></tr></table></figure>
 <h3><span id="サーバ起動">サーバ起動</span></h3>
-<p><a href="https://docs.min.io/" target="_blank" rel="noopener">Minioの公式ウェブサイト</a> を確認し、</p>
+<p><a href="https://docs.min.io/" target="_blank" rel="noopener">Minioの公式ウェブサイト</a>
+を確認し、</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir ~/Minio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/Minio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://dl.min.io/server/minio/release/linux-amd64/minio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> chmod +x minio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir data</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./minio server data</span></span><br></pre></td></tr></table></figure>
-<p>http://localhost:9000/minio/ にアクセスすると、ログイン画面が出るので、 デフォルトのID、パスワードを入力する。</p>
+<p>http://localhost:9000/minio/
+にアクセスすると、ログイン画面が出るので、
+デフォルトのID、パスワードを入力する。</p>
 <h3><span id="コンフィグ">コンフィグ</span></h3>
-<p><a href="https://docs.min.io/docs/minio-server-configuration-guide.html" target="_blank" rel="noopener">Minioのコンフィグガイド</a> を見ると、アドミンユーザとパスワードの設定方法が載っていた。</p>
+<p><a href="https://docs.min.io/docs/minio-server-configuration-guide.html" target="_blank" rel="noopener">Minioのコンフィグガイド</a>
+を見ると、アドミンユーザとパスワードの設定方法が載っていた。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> MINIO_ROOT_USER=minio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> MINIO_ROOT_PASSWORD=miniominio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./minio server data</span></span><br></pre></td></tr></table></figure>
-<p>上記のようにすればよさそうである。なお、USERは3文字以上、PASSWORDは8文字以上が必要。 ここでは、ローカル環境用にお試し用のID、パスワードとした。</p>
+<p>上記のようにすればよさそうである。なお、USERは3文字以上、PASSWORDは8文字以上が必要。
+ここでは、ローカル環境用にお試し用のID、パスワードとした。</p>
 <h3><span id="mcコマンドの利用">mcコマンドの利用</span></h3>
-<p><a href="https://docs.min.io/docs/minio-admin-complete-guide.html" target="_blank" rel="noopener">Minioのアドミンガイド</a>と<a href="https://docs.min.io/docs/minio-client-quickstart-guide" target="_blank" rel="noopener">Minioのクライアントガイド</a> を参考に、いくつか動作確認、設定してみる。</p>
+<p><a href="https://docs.min.io/docs/minio-admin-complete-guide.html" target="_blank" rel="noopener">Minioのアドミンガイド</a>と<a href="https://docs.min.io/docs/minio-client-quickstart-guide" target="_blank" rel="noopener">Minioのクライアントガイド</a>
+を参考に、いくつか動作確認、設定してみる。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/Minio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://dl.min.io/client/mc/release/linux-amd64/mc</span></span><br></pre></td></tr></table></figure>
 <p>エイリアスを設定。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./mc <span class="built_in">alias</span> <span class="built_in">set</span> myminio http://172.24.88.24:9000 minio miniominio</span></span><br></pre></td></tr></table></figure>
@@ -321,7 +338,8 @@ ga('send', 'pageview');
 <p>ファイルを書き込み</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="built_in">test</span> &gt; /tmp/test.txt</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./mc cp /tmp/test.txt myminio/<span class="built_in">test</span>/</span></span><br><span class="line">/tmp/test.txt:              5 B / 5 B ┃┃ 224 B/s 0s</span><br></pre></td></tr></table></figure>
 <h3><span id="s3コマンドで利用">s3コマンドで利用</span></h3>
-<p><a href="https://liginc.co.jp/402383" target="_blank" rel="noopener">開発のためにローカルにもS3が欲しいというわがまま、MINIOが叶えてくれました</a> を参照し、 S3としてアクセスしてみる。</p>
+<p><a href="https://liginc.co.jp/402383" target="_blank" rel="noopener">開発のためにローカルにもS3が欲しいというわがまま、MINIOが叶えてくれました</a>
+を参照し、 S3としてアクセスしてみる。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> aws --profile myminio configure</span></span><br><span class="line">AWS Access Key ID [None]: minio</span><br><span class="line">AWS Secret Access Key [None]: miniominio</span><br><span class="line">Default region name [None]:</span><br><span class="line">Default output format [None]:</span><br><span class="line"><span class="meta">$</span><span class="bash"> aws --endpoint-url http://127.0.0.1:9000 --profile myminio s3 mb s3://test2</span></span><br></pre></td></tr></table></figure>
 <p>上記のように、エンドポイントを指定して利用する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> aws --endpoint-url http://127.0.0.1:9000 --profile myminio s3 cp /tmp/test.txt s3://test2</span></span><br><span class="line">upload: ../../../tmp/test.txt to s3://test2/test.txt</span><br></pre></td></tr></table></figure>
@@ -335,9 +353,15 @@ ga('send', 'pageview');
 <p>アップデート実行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./mc admin update myminio</span></span><br><span class="line">Server `myminio` updated successfully from 2021-06-09T18:51:39Z to 2021-08-25T00-41-18Z</span><br></pre></td></tr></table></figure>
 <h2><span id="署名済みurl発行">署名済みURL発行</span></h2>
-<p><a href="https://qiita.com/y_k/items/9c134f7be0263d64a89b" target="_blank" rel="noopener">boto3 を用いて MinIO でユーザの追加と Security Token Service(STS) による一時認証情報での署名済み URL を発行する</a> を参考に、 上記環境で署名済みURLを発行してみる。 これにより、あるオブジェクトへのアクセス権をデリゲート可能になるはずである。</p>
+<p><a href="https://qiita.com/y_k/items/9c134f7be0263d64a89b" target="_blank" rel="noopener">boto3
+を用いて MinIO でユーザの追加と Security Token Service(STS)
+による一時認証情報での署名済み URL を発行する</a> を参考に、
+上記環境で署名済みURLを発行してみる。
+これにより、あるオブジェクトへのアクセス権をデリゲート可能になるはずである。</p>
 <h3><span id="s3互換サービスのためのエイリアス">S3互換サービスのためのエイリアス</span></h3>
-<p>前述の通り、 <a href="https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc/mc-alias.html#mc-alias" target="_blank" rel="noopener">mc alias</a> を利用して、S3互換サービスのためのエイリアスを作成済みである。 ここでは、その作成した <code>myminio</code> を利用する。</p>
+<p>前述の通り、 <a href="https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc/mc-alias.html#mc-alias" target="_blank" rel="noopener">mc
+alias</a> を利用して、S3互換サービスのためのエイリアスを作成済みである。
+ここでは、その作成した <code>myminio</code> を利用する。</p>
 <h3><span id="作業用バケット作成">作業用バケット作成</span></h3>
 <p>今回の動作確認で使用するバケットを作成する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./mc mb myminio/share</span></span><br></pre></td></tr></table></figure>
@@ -346,18 +370,24 @@ ga('send', 'pageview');
 <p>share.json</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat &lt;&lt; EOF &gt; share.json</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> &#123;</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">   <span class="string">"Version"</span>: <span class="string">"2012-10-17"</span>,</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">   <span class="string">"Statement"</span>: [</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">     &#123;</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">       <span class="string">"Action"</span>: [</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">         <span class="string">"s3:GetObject"</span>,</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">         <span class="string">"s3:PutObject"</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">       ],</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">       <span class="string">"Effect"</span>: <span class="string">"Allow"</span>,</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">       <span class="string">"Resource"</span>: [</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">         <span class="string">"arn:aws:s3:::share/*"</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">       ],</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">       <span class="string">"Sid"</span>: <span class="string">""</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">     &#125;</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">   ]</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> &#125;</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> EOF</span></span><br></pre></td></tr></table></figure>
 <h3><span id="ポリシーを適用">ポリシーを適用</span></h3>
-<p><a href="https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc-admin/mc-admin-policy.html" target="_blank" rel="noopener">mc admin policy</a> の通り、AWSのIAM互換のポリシーを利用し、Minioのポリシーを設定する。 先程作成したファイルを用いる。</p>
+<p><a href="https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc-admin/mc-admin-policy.html" target="_blank" rel="noopener">mc
+admin policy</a>
+の通り、AWSのIAM互換のポリシーを利用し、Minioのポリシーを設定する。
+先程作成したファイルを用いる。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./mc admin policy add myminio share share.json</span></span><br></pre></td></tr></table></figure>
 <p>適用されたことを確かめる</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./mc admin policy info  myminio share</span></span><br><span class="line">&#123;</span><br><span class="line"> "Version": "2012-10-17",</span><br><span class="line"> "Statement": [</span><br><span class="line">  &#123;</span><br><span class="line">   "Effect": "Allow",</span><br><span class="line">   "Action": [</span><br><span class="line">    "s3:GetObject",</span><br><span class="line">    "s3:PutObject"</span><br><span class="line">   ],</span><br><span class="line">   "Resource": [</span><br><span class="line">    "arn:aws:s3:::share/*"</span><br><span class="line">   ]</span><br><span class="line">  &#125;</span><br><span class="line"> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3><span id="ユーザ作成">ユーザ作成</span></h3>
-<p><a href="https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc-admin/mc-admin-user.html#create-a-new-user" target="_blank" rel="noopener">mc admin userを利用したユーザ作成</a> を利用して、 動作確認のためのユーザを作成する。</p>
+<p><a href="https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc-admin/mc-admin-user.html#create-a-new-user" target="_blank" rel="noopener">mc
+admin userを利用したユーザ作成</a> を利用して、
+動作確認のためのユーザを作成する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./mc admin user add myminio bob bob123456</span></span><br></pre></td></tr></table></figure>
 <p>なお、上記ドキュメントでは</p>
 <blockquote>
 <p>mc admin user add ALIAS ACCESSKEY SECRETKEY</p>
 </blockquote>
-<p>と記載されているが、<code>ACCESSKEY</code> にしていた内容がユーザ名になるようだ。</p>
+<p>と記載されているが、<code>ACCESSKEY</code>
+にしていた内容がユーザ名になるようだ。</p>
 <h3><span id="ユーザにポリシーを設定">ユーザにポリシーを設定</span></h3>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./mc admin policy <span class="built_in">set</span> myminio share user=bob</span></span><br></pre></td></tr></table></figure>
 <p>ユーザ作成され、ポリシーが設定されたことを確かめる。</p>
@@ -365,26 +395,33 @@ ga('send', 'pageview');
 <h3><span id="共有の動作確認用のファイルの準備">共有の動作確認用のファイルの準備</span></h3>
 <p>手元でファイルを作り、Minio上にアップロードしておく。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"hoge"</span> &gt; test.txt</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./mc cp test.txt myminio/share/test.txt</span></span><br></pre></td></tr></table></figure>
-<h3><span id="python-botoを利用して一時アカウント発行署名済みurl発行">Python botoを利用して一時アカウント発行＆署名済みURL発行</span></h3>
+<h3><span id="pythonbotoを利用して一時アカウント発行署名済みurl発行">Python
+botoを利用して一時アカウント発行＆署名済みURL発行</span></h3>
 <h4><span id="ウェブuiからの発行">ウェブUIからの発行</span></h4>
 <p>実は、ウェブUIからも発行できるため、先にそちらを試した。</p>
 <figure>
-<img src="memo-blog/images/minio_presigned_url_via_gui.png" alt=""><figcaption>ウェブUIからの署名済みURL発行の例</figcaption>
+<img src="memo-blog/images/minio_presigned_url_via_gui.png" alt="ウェブUIからの署名済みURL発行の例">
+<figcaption aria-hidden="true">ウェブUIからの署名済みURL発行の例</figcaption>
 </figure>
-<p>オブジェクトブラウザから辿りオブジェクトのページを開き、共有マークを押下すると発行できた。 実際にアクセスしたところ、ファイル本体にアクセスできた。</p>
+<p>オブジェクトブラウザから辿りオブジェクトのページを開き、共有マークを押下すると発行できた。
+実際にアクセスしたところ、ファイル本体にアクセスできた。</p>
 <h4><span id="前提">前提</span></h4>
 <ul>
 <li>Pythonバージョン: 3.7.10</li>
 <li>利用パッケージ: boto3、jupyter</li>
 </ul>
 <h4><span id="ソースコードの例">ソースコードの例</span></h4>
-<p>https://github.com/dobachi/MinioPresignedURLExample にサンプルを載せておくことにする。 こちらの手順で特に問題なく、発行できた。</p>
+<p>https://github.com/dobachi/MinioPresignedURLExample
+にサンプルを載せておくことにする。
+こちらの手順で特に問題なく、発行できた。</p>
 <h4><span id="トラブルシュート署名済みurlにアクセスしてみたらエラー">（トラブルシュート）署名済みURLにアクセスしてみたらエラー</span></h4>
 <p>署名済みURLを発行してアクセスしてみたら、以下のようなエラーが生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;Error&gt;</span><br><span class="line">&lt;Code&gt;AccessDenied&lt;/Code&gt;</span><br><span class="line">&lt;Message&gt;Access Denied.&lt;/Message&gt;</span><br><span class="line">&lt;Key&gt;test.txt&lt;/Key&gt;</span><br><span class="line">&lt;BucketName&gt;share&lt;/BucketName&gt;</span><br><span class="line">&lt;Resource&gt;/share/test.txt&lt;/Resource&gt;</span><br><span class="line">&lt;RequestId&gt;16A34CDD784CBCCC&lt;/RequestId&gt;</span><br><span class="line">&lt;HostId&gt;baec9ee7-bfb0-441b-a70a-493bfd80d745&lt;/HostId&gt;</span><br><span class="line">&lt;/Error&gt;</span><br></pre></td></tr></table></figure>
-<p>ひとまず、<code>./mc admin trace</code>を利用してデバッグメッセージを確認しながらアクセスしてみる。 生じたエラーメッセージは以下の通り。</p>
+<p>ひとまず、<code>./mc admin trace</code>を利用してデバッグメッセージを確認しながらアクセスしてみる。
+生じたエラーメッセージは以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">172.24.32.250:9000 [REQUEST s3.GetObject] [2021-09-10T00:34:26:000] [Client IP: 172.24.32.1]</span><br><span class="line">172.24.32.250:9000 GET /share/test.txt?xxxxxxxx</span><br><span class="line">172.24.32.250:9000 Proto: HTTP/1.1</span><br><span class="line">172.24.32.250:9000 Host: 172.24.32.250:9000</span><br><span class="line">172.24.32.250:9000 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">172.24.32.250:9000 Accept-Encoding: gzip, deflate</span><br><span class="line">172.24.32.250:9000 Cache-Control: max-age=0</span><br><span class="line">172.24.32.250:9000 Content-Length: 0</span><br><span class="line">172.24.32.250:9000 Dnt: 1</span><br><span class="line">172.24.32.250:9000 Upgrade-Insecure-Requests: 1</span><br><span class="line">172.24.32.250:9000 Accept-Language: ja,en;q=0.9,en-GB;q=0.8,en-US;q=0.7</span><br><span class="line">172.24.32.250:9000 Connection: keep-alive</span><br><span class="line">172.24.32.250:9000 Cookie: token=xxxxxxxxx</span><br><span class="line">172.24.32.250:9000 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36 Edg/92.0.902.84</span><br><span class="line">172.24.32.250:9000 &lt;BODY&gt;</span><br><span class="line">172.24.32.250:9000 [RESPONSE] [2021-09-10T00:34:26:000] [ Duration 387µs  ↑ 132 B  ↓ 617 B ]</span><br><span class="line">172.24.32.250:9000 403 Forbidden</span><br><span class="line">172.24.32.250:9000 Accept-Ranges: bytes</span><br><span class="line">172.24.32.250:9000 Content-Length: 294</span><br><span class="line">172.24.32.250:9000 Server: MinIO</span><br><span class="line">172.24.32.250:9000 X-Content-Type-Options: nosniff</span><br><span class="line">172.24.32.250:9000 X-Amz-Request-Id: 16A34EBDA67B7B88</span><br><span class="line">172.24.32.250:9000 X-Xss-Protection: 1; mode=block</span><br><span class="line">172.24.32.250:9000 Content-Security-Policy: block-all-mixed-content</span><br><span class="line">172.24.32.250:9000 Content-Type: application/xml</span><br><span class="line">172.24.32.250:9000 Strict-Transport-Security: max-age=31536000; includeSubDomains</span><br><span class="line">172.24.32.250:9000 Vary: Origin</span><br><span class="line">172.24.32.250:9000 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;Error&gt;&lt;Code&gt;AccessDenied&lt;/Code&gt;&lt;Message&gt;Request has expired&lt;/Message&gt;&lt;Key&gt;test.txt&lt;/Key&gt;&lt;BucketName&gt;share&lt;/BucketName&gt;&lt;Resource&gt;/share/test.txt&lt;/Resource&gt;&lt;RequestId&gt;16A34EBDA67B7B88&lt;/RequestId&gt;&lt;HostId&gt;baec9ee7-bfb0-441b-a70a-493bfd80d745&lt;/HostId&gt;&lt;/Error&gt;</span><br><span class="line">172.24.32.250:9000</span><br><span class="line">172.24.32.250:9000 [REQUEST s3.ListObjectsV1] [2021-09-10T00:34:26:000] [Client IP: 172.24.32.1]</span><br><span class="line">172.24.32.250:9000 GET /favicon.ico</span><br><span class="line">172.24.32.250:9000 Proto: HTTP/1.1</span><br><span class="line">172.24.32.250:9000 Host: 172.24.32.250:9000</span><br><span class="line">172.24.32.250:9000 Accept: image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8</span><br><span class="line">172.24.32.250:9000 Cache-Control: no-cache</span><br><span class="line">172.24.32.250:9000 Connection: keep-alive</span><br><span class="line">172.24.32.250:9000 Cookie: token=xxxxxxxxxxxxxxxxxxx</span><br><span class="line">172.24.32.250:9000 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36 Edg/92.0.902.84</span><br><span class="line">172.24.32.250:9000 Accept-Encoding: gzip, deflate</span><br><span class="line">172.24.32.250:9000 Accept-Language: ja,en;q=0.9,en-GB;q=0.8,en-US;q=0.7</span><br><span class="line">172.24.32.250:9000 Content-Length: 0</span><br><span class="line">172.24.32.250:9000 Dnt: 1</span><br><span class="line">172.24.32.250:9000 Pragma: no-cache</span><br><span class="line">172.24.32.250:9000 Referer: http://172.24.32.250:9000/share/test.txt?xxxxxxxxxxxxxx</span><br><span class="line">172.24.32.250:9000</span><br><span class="line">172.24.32.250:9000 [RESPONSE] [2021-09-10T00:34:26:000] [ Duration 184µs  ↑ 121 B  ↓ 596 B ]</span><br><span class="line">172.24.32.250:9000 403 Forbidden</span><br><span class="line">172.24.32.250:9000 X-Xss-Protection: 1; mode=block</span><br><span class="line">172.24.32.250:9000 Content-Length: 273</span><br><span class="line">172.24.32.250:9000 Content-Type: application/xml</span><br><span class="line">172.24.32.250:9000 Strict-Transport-Security: max-age=31536000; includeSubDomains</span><br><span class="line">172.24.32.250:9000 X-Amz-Request-Id: 16A34EBDAA2A2630</span><br><span class="line">172.24.32.250:9000 X-Content-Type-Options: nosniff</span><br><span class="line">172.24.32.250:9000 Accept-Ranges: bytes</span><br><span class="line">172.24.32.250:9000 Content-Security-Policy: block-all-mixed-content</span><br><span class="line">172.24.32.250:9000 Server: MinIO</span><br><span class="line">172.24.32.250:9000 Vary: OriginAccept-Encoding</span><br><span class="line">172.24.32.250:9000 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;Error&gt;&lt;Code&gt;AccessDenied&lt;/Code&gt;&lt;Message&gt;Access Denied.&lt;/Message&gt;&lt;BucketName&gt;favicon.ico&lt;/BucketName&gt;&lt;Resource&gt;/favicon.ico&lt;/Resource&gt;&lt;RequestId&gt;16A34EBDAA2A2630&lt;/RequestId&gt;&lt;HostId&gt;baec9ee7-bfb0-441b-a70a-493bfd80d745&lt;/HostId&gt;&lt;/Error&gt;</span><br><span class="line">172.24.32.250:9000</span><br></pre></td></tr></table></figure>
-<p>あまり追加情報はなさそう。ひとまず、いずれにせよ403 Forbidenエラーであることがわかる。</p>
+<p>あまり追加情報はなさそう。ひとまず、いずれにせよ403
+Forbidenエラーであることがわかる。</p>
 <p>で、結論としては、PythonでURLを発行する際に指定したポリシが間違っていた。</p>
 <p>以下のようにすべきところを、</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"Resource": [</span><br><span class="line">  <span class="string">"arn:aws:s3:::share/*"</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure>
@@ -402,7 +439,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/06/13/Minio-getting-started/" data-id="cl2nztnn900al5xqiw2ejuhrf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/06/13/Minio-getting-started/" data-id="cl2o9pbgz015318rzeqho6a4v" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -653,5 +690,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

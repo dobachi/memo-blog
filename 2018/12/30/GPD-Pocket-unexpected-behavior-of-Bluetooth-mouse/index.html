@@ -5,18 +5,18 @@
     
     <title>GPD PocketでBluetoothトラックボールを使うと途中で使用できなくなる現象 | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 当たった症状 対処 備考：ブログとの差分    参考  関連情報を含むブログ記事  当たった症状 Digio2のBluetoothトラックボールを使っていたところ、唐突に使用できなくなる現象にあたった。 そのとき、Windowsの設定画面「Bluetoothとその他のデバイス」を開いたところ、 当該トラックボールは「接続済み」と表示されていた。 デバイスの削除と再度追加、ドライバの更新">
+    <meta name="description" content="参考 当たった症状 対処  備考：ブログとの差分    参考  関連情報を含むブログ記事  当たった症状 Digio2のBluetoothトラックボールを使っていたところ、唐突に使用できなくなる現象にあたった。 そのとき、Windowsの設定画面「Bluetoothとその他のデバイス」を開いたところ、 当該トラックボールは「接続済み」と表示されていた。 デバイスの削除と再度追加、ドライバの更">
 <meta name="keywords" content="GPD Pocket,Bluetooth,Mouse">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GPD PocketでBluetoothトラックボールを使うと途中で使用できなくなる現象">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/12/30/GPD-Pocket-unexpected-behavior-of-Bluetooth-mouse/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 当たった症状 対処 備考：ブログとの差分    参考  関連情報を含むブログ記事  当たった症状 Digio2のBluetoothトラックボールを使っていたところ、唐突に使用できなくなる現象にあたった。 そのとき、Windowsの設定画面「Bluetoothとその他のデバイス」を開いたところ、 当該トラックボールは「接続済み」と表示されていた。 デバイスの削除と再度追加、ドライバの更新">
+<meta property="og:description" content="参考 当たった症状 対処  備考：ブログとの差分    参考  関連情報を含むブログ記事  当たった症状 Digio2のBluetoothトラックボールを使っていたところ、唐突に使用できなくなる現象にあたった。 そのとき、Windowsの設定画面「Bluetoothとその他のデバイス」を開いたところ、 当該トラックボールは「接続済み」と表示されていた。 デバイスの削除と再度追加、ドライバの更">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GPD PocketでBluetoothトラックボールを使うと途中で使用できなくなる現象">
-<meta name="twitter:description" content="参考 当たった症状 対処 備考：ブログとの差分    参考  関連情報を含むブログ記事  当たった症状 Digio2のBluetoothトラックボールを使っていたところ、唐突に使用できなくなる現象にあたった。 そのとき、Windowsの設定画面「Bluetoothとその他のデバイス」を開いたところ、 当該トラックボールは「接続済み」と表示されていた。 デバイスの削除と再度追加、ドライバの更新">
+<meta name="twitter:description" content="参考 当たった症状 対処  備考：ブログとの差分    参考  関連情報を含むブログ記事  当たった症状 Digio2のBluetoothトラックボールを使っていたところ、唐突に使用できなくなる現象にあたった。 そのとき、Windowsの設定画面「Bluetoothとその他のデバイス」を開いたところ、 当該トラックボールは「接続済み」と表示されていた。 デバイスの削除と再度追加、ドライバの更">
     
 
     
@@ -251,10 +251,11 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#当たった症状">当たった症状</a></li>
-<li><a href="#対処">対処</a><ul>
-<li><a href="#備考ブログとの差分">備考：ブログとの差分</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#当たった症状" id="toc-当たった症状">当たった症状</a></li>
+<li><a href="#対処" id="toc-対処">対処</a>
+<ul>
+<li><a href="#備考ブログとの差分" id="toc-備考ブログとの差分">備考：ブログとの差分</a></li>
 </ul></li>
 </ul>
 </div>
@@ -263,23 +264,34 @@ ga('send', 'pageview');
 <li><a href="https://www.wingfield.gr.jp/blog/2017/09/19/p6407/#bluetooth" target="_blank" rel="noopener">関連情報を含むブログ記事</a></li>
 </ul>
 <h1><span id="当たった症状">当たった症状</span></h1>
-<p>Digio2のBluetoothトラックボールを使っていたところ、唐突に使用できなくなる現象にあたった。 そのとき、Windowsの設定画面「Bluetoothとその他のデバイス」を開いたところ、 当該トラックボールは「接続済み」と表示されていた。 デバイスの削除と再度追加、ドライバの更新（結局最新版だった）を試みるも現象は収まらなかった。</p>
+<p>Digio2のBluetoothトラックボールを使っていたところ、唐突に使用できなくなる現象にあたった。
+そのとき、Windowsの設定画面「Bluetoothとその他のデバイス」を開いたところ、
+当該トラックボールは「接続済み」と表示されていた。
+デバイスの削除と再度追加、ドライバの更新（結局最新版だった）を試みるも現象は収まらなかった。</p>
 <h1><span id="対処">対処</span></h1>
-<p><a href="https://www.wingfield.gr.jp/blog/2017/09/19/p6407/#bluetooth" target="_blank" rel="noopener">関連情報を含むブログ記事</a> で記載の通り、デバイスマネージャから節電関係の機能を オフにすることで現象は解消したように見える。 おおむね上記ブログのとおりだが、一部デバイス名に差分があったので、 手元で試した方法を記載する。</p>
+<p><a href="https://www.wingfield.gr.jp/blog/2017/09/19/p6407/#bluetooth" target="_blank" rel="noopener">関連情報を含むブログ記事</a>
+で記載の通り、デバイスマネージャから節電関係の機能を
+オフにすることで現象は解消したように見える。
+おおむね上記ブログのとおりだが、一部デバイス名に差分があったので、
+手元で試した方法を記載する。</p>
 <ul>
 <li>Windowsのランチャーからデバイスマネージャを開く</li>
-<li>「ヒューマン インターフェイス デバイス」-&gt; 「Bluetooth HID デバイス」のプロパティを開く。
+<li>「ヒューマン インターフェイス デバイス」-&gt; 「Bluetooth HID
+デバイス」のプロパティを開く。
 <ul>
 <li>「電源の管理」を開き、「電力の節電のために…（省略）」のチェックボックスを外す</li>
 <li>なお、手元の環境では当該デバイスは2件表示されたので両方とも対応した</li>
 </ul></li>
-<li>おなじくデバイスマネージャ上で「bluetooth」-&gt;「Bluetooth 無線」のプロパティを開く。
+<li>おなじくデバイスマネージャ上で「bluetooth」-&gt;「Bluetooth
+無線」のプロパティを開く。
 <ul>
 <li>「電源の管理」を開き、「電力の節電のために…（省略）」のチェックボックスを外す</li>
 </ul></li>
 </ul>
 <h2><span id="備考ブログとの差分">備考：ブログとの差分</span></h2>
-<p>なお、<a href="https://www.wingfield.gr.jp/blog/2017/09/19/p6407/#bluetooth" target="_blank" rel="noopener">関連情報を含むブログ記事</a>では、「Bluetooth HID デバイス」のところが 「Bluetooth 低エネルギーGTT 対応 HID デバイス」となっていたようだ。</p>
+<p>なお、<a href="https://www.wingfield.gr.jp/blog/2017/09/19/p6407/#bluetooth" target="_blank" rel="noopener">関連情報を含むブログ記事</a>では、「Bluetooth
+HID デバイス」のところが 「Bluetooth 低エネルギーGTT 対応 HID
+デバイス」となっていたようだ。</p>
 
         
         </div>
@@ -290,7 +302,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/GPD-Pocket-unexpected-behavior-of-Bluetooth-mouse/" data-id="cl2nztnlm005f5xqid9emmver" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/GPD-Pocket-unexpected-behavior-of-Bluetooth-mouse/" data-id="cl2o9pb5j003p18rzslfzhqo9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -541,5 +553,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

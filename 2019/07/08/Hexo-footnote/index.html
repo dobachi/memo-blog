@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考   参考  hexo-renderer-markdown-it  ＃メモ 最初はhexo-footnoteを見つけたのだが、開発停止されているようなので、 そこで言及されていた hexo-renderer-markdown-it を利用してみることにした。 院すとーすして、以下のようなコンフィグレーションを _config.yml に追加。 1234567891011121314151">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexoでふっとノートを用いる">
 <meta name="twitter:description" content="参考   参考  hexo-renderer-markdown-it  ＃メモ 最初はhexo-footnoteを見つけたのだが、開発停止されているようなので、 そこで言及されていた hexo-renderer-markdown-it を利用してみることにした。 院すとーすして、以下のようなコンフィグレーションを _config.yml に追加。 1234567891011121314151">
@@ -251,7 +251,7 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -259,10 +259,14 @@ ga('send', 'pageview');
 <li><a href="https://github.com/hexojs/hexo-renderer-markdown-it" target="_blank" rel="noopener">hexo-renderer-markdown-it</a></li>
 </ul>
 <p>＃メモ</p>
-<p>最初はhexo-footnoteを見つけたのだが、開発停止されているようなので、 そこで言及されていた <a href="https://github.com/hexojs/hexo-renderer-markdown-it" target="_blank" rel="noopener">hexo-renderer-markdown-it</a> を利用してみることにした。</p>
-<p>院すとーすして、以下のようなコンフィグレーションを <code>_config.yml</code> に追加。</p>
+<p>最初はhexo-footnoteを見つけたのだが、開発停止されているようなので、
+そこで言及されていた <a href="https://github.com/hexojs/hexo-renderer-markdown-it" target="_blank" rel="noopener">hexo-renderer-markdown-it</a>
+を利用してみることにした。</p>
+<p>院すとーすして、以下のようなコンフィグレーションを
+<code>_config.yml</code> に追加。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">markdown:</span><br><span class="line">  render:</span><br><span class="line">    html: true</span><br><span class="line">    xhtmlOut: false</span><br><span class="line">    breaks: false</span><br><span class="line">    linkify: false</span><br><span class="line">    typographer: false</span><br><span class="line">    #quotes: &apos;“”‘’&apos;</span><br><span class="line">  plugins:</span><br><span class="line">    - markdown-it-abbr</span><br><span class="line">    - markdown-it-footnote</span><br><span class="line">    - markdown-it-ins</span><br><span class="line">    - markdown-it-sub</span><br><span class="line">    - markdown-it-sup</span><br><span class="line">  anchors:</span><br><span class="line">    level: 2</span><br><span class="line">    collisionSuffix: &apos;v&apos;</span><br><span class="line">    permalink: true</span><br><span class="line">    permalinkClass: header-anchor</span><br><span class="line">    permalinkSymbol: ¶</span><br></pre></td></tr></table></figure>
-<p>これでフットノートが使えるようになった。 しかし、アンカーが使えないのだがまだ詳しく調査していない。</p>
+<p>これでフットノートが使えるようになった。
+しかし、アンカーが使えないのだがまだ詳しく調査していない。</p>
 
         
         </div>
@@ -273,7 +277,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/07/08/Hexo-footnote/" data-id="cl2nztnm1006j5xqi4u93mgwo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/07/08/Hexo-footnote/" data-id="cl2o9pb5u004h18rz2j816o04" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -524,5 +528,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

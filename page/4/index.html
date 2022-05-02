@@ -250,11 +250,12 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#coursierプロジェクト">Coursierプロジェクト</a></li>
-<li><a href="#補足sbt-launcher-packageプロジェクト">（補足）sbt-launcher-packageプロジェクト</a></li>
-<li><a href="#補足launcherプロジェクト">（補足）launcherプロジェクト</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#coursierプロジェクト" id="toc-coursierプロジェクト">Coursierプロジェクト</a></li>
+<li><a href="#補足sbt-launcher-packageプロジェクト" id="toc-補足sbt-launcher-packageプロジェクト">（補足）sbt-launcher-packageプロジェクト</a></li>
+<li><a href="#補足launcherプロジェクト" id="toc-補足launcherプロジェクト">（補足）launcherプロジェクト</a></li>
 </ul></li>
 </ul>
 </div>
@@ -262,18 +263,22 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://github.com/sbt/launcher" target="_blank" rel="noopener">launcher</a></li>
 <li><a href="https://github.com/sbt/sbt-launcher-package" target="_blank" rel="noopener">sbt-launcher-package</a></li>
-<li><a href="https://nomadblacky.hatenablog.com/entry/2020/03/22/164815" target="_blank" rel="noopener">Coursier を使って最速でScalaの開発環境を整える</a></li>
+<li><a href="https://nomadblacky.hatenablog.com/entry/2020/03/22/164815" target="_blank" rel="noopener">Coursier
+を使って最速でScalaの開発環境を整える</a></li>
 <li><a href="https://get-coursier.io/docs/cli-installation" target="_blank" rel="noopener">csのインストール</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>プロジェクト内に、sbt自体を含めてクローンしただけでビルドできるようにしたい、という動機。 現時点ではCoursierプロジェクトが汎用性※が高く便利であると、個人的には感じた。</p>
+<p>プロジェクト内に、sbt自体を含めてクローンしただけでビルドできるようにしたい、という動機。
+現時点ではCoursierプロジェクトが汎用性※が高く便利であると、個人的には感じた。</p>
 <p>※ここでは、多くの環境で実行可能で、様々なツールを一度にセットアップ可能という意味。</p>
 <h2><span id="coursierプロジェクト">Coursierプロジェクト</span></h2>
-<p><a href="https://nomadblacky.hatenablog.com/entry/2020/03/22/164815" target="_blank" rel="noopener">Coursier を使って最速でScalaの開発環境を整える</a> のブログに記載されているとおり、 Scala開発環境を簡単に整えられる。</p>
+<p><a href="https://nomadblacky.hatenablog.com/entry/2020/03/22/164815" target="_blank" rel="noopener">Coursier
+を使って最速でScalaの開発環境を整える</a>
+のブログに記載されているとおり、 Scala開発環境を簡単に整えられる。</p>
 <p>ひとまずDocker内で試す。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo docker pull ubuntu:18.04</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo docker run -rm -it -d --name ubu ubuntu:18.04</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo docker <span class="built_in">exec</span> -it ubu /bin/bash</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo docker pull ubuntu:18.04</span><br><span class="line"><span class="meta">$</span> sudo docker run -rm -it -d --name ubu ubuntu:18.04</span><br><span class="line"><span class="meta">$</span> sudo docker exec -it ubu /bin/bash</span><br></pre></td></tr></table></figure>
 <p>Dockerコンテナ内でインストール。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> apt update</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> apt install -y curl</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> curl -fLo cs https://git.io/coursier-cli-linux &amp;&amp;</span></span><br><span class="line">     chmod +x cs &amp;&amp;</span><br><span class="line">     ./cs</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> apt update</span><br><span class="line"><span class="meta">#</span> apt install -y curl</span><br><span class="line"><span class="meta">#</span> curl -fLo cs https://git.io/coursier-cli-linux &amp;&amp;</span><br><span class="line">     chmod +x cs &amp;&amp;</span><br><span class="line">     ./cs</span><br></pre></td></tr></table></figure>
 <p>結果として以下がインストールされた様子。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Checking if the standard Scala applications are installed</span><br><span class="line">  Installed ammonite</span><br><span class="line">  Installed cs</span><br><span class="line">  Installed coursier</span><br><span class="line">  Installed scala</span><br><span class="line">  Installed scalac</span><br><span class="line">  Installed sbt</span><br><span class="line">  Installed sbtn</span><br><span class="line">  Installed scalafmt</span><br></pre></td></tr></table></figure>
 <p><code>~/.profile</code>に環境変数等がまとまっているので有効化する。</p>
@@ -282,9 +287,11 @@ ga('send', 'pageview');
 <p>なお、参考までに上記でダウンロードしたcsコマンドは以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">$ ./cs setup --help</span><br><span class="line">Command: setup</span><br><span class="line">Usage: cs setup</span><br><span class="line">  --jvm  &lt;string?&gt;</span><br><span class="line">  --jvm-dir  &lt;string?&gt;</span><br><span class="line">  --system-jvm  &lt;bool?&gt;</span><br><span class="line">  --local-only  &lt;bool&gt;</span><br><span class="line">  --update  &lt;bool&gt;</span><br><span class="line">  --jvm-index  &lt;string?&gt;</span><br><span class="line">  --graalvm-home  &lt;string?&gt;</span><br><span class="line">  --graalvm-option  &lt;string*&gt;</span><br><span class="line">  --graalvm-default-version  &lt;string?&gt;</span><br><span class="line">  --install-dir | --dir  &lt;string?&gt;</span><br><span class="line">  --install-platform  &lt;string?&gt;</span><br><span class="line">        Platform for prebuilt binaries (e.g. &quot;x86_64-pc-linux&quot;, &quot;x86_64-apple-darwin&quot;, &quot;x86_64-pc-win32&quot;)</span><br><span class="line">  --install-prefer-prebuilt  &lt;bool&gt;</span><br><span class="line">  --only-prebuilt  &lt;bool&gt;</span><br><span class="line">        Require prebuilt artifacts for native applications, don&apos;t try to build native executable ourselves</span><br><span class="line">  --repository | -r  &lt;maven|sonatype:$repo|ivy2local|bintray:$org/$repo|bintray-ivy:$org/$repo|typesafe:ivy-$repo|typesafe:$repo|sbt-plugin:$repo|ivy:$pattern&gt;</span><br><span class="line">        Repository - for multiple repositories, separate with comma and/or add this option multiple times (e.g. -r central,ivy2local -r sonatype:snapshots, or equivalently -r central,ivy2local,sonatype:snapshots)</span><br><span class="line">  --default-repositories  &lt;bool&gt;</span><br><span class="line">  --proguarded  &lt;bool?&gt;</span><br><span class="line">  --channel  &lt;org:name&gt;</span><br><span class="line">        Channel for apps</span><br><span class="line">  --default-channels  &lt;bool&gt;</span><br><span class="line">        Add default channels</span><br><span class="line">  --contrib  &lt;bool&gt;</span><br><span class="line">        Add contrib channel</span><br><span class="line">  --file-channels  &lt;bool&gt;</span><br><span class="line">        Add channels read from the configuration directory</span><br><span class="line">  --cache  &lt;string?&gt;</span><br><span class="line">        Cache directory (defaults to environment variable COURSIER_CACHE, or ~/.cache/coursier/v1 on Linux and ~/Library/Caches/Coursier/v1 on Mac)</span><br><span class="line">  --mode | -m  &lt;offline|update-changing|update|missing|force&gt;</span><br><span class="line">        Download mode (default: missing, that is fetch things missing from cache)</span><br><span class="line">  --ttl | -l  &lt;duration&gt;</span><br><span class="line">        TTL duration (e.g. &quot;24 hours&quot;)</span><br><span class="line">  --parallel | -n  &lt;int&gt;</span><br><span class="line">        Maximum number of parallel downloads (default: 6)</span><br><span class="line">  --checksum  &lt;checksum1,checksum2,...&gt;</span><br><span class="line">        Checksum types to check - end with none to allow for no checksum validation if no checksum is available, example: SHA-256,SHA-1,none</span><br><span class="line">  --retry-count  &lt;int&gt;</span><br><span class="line">        Retry limit for Checksum error when fetching a file</span><br><span class="line">  --cache-file-artifacts | --cfa  &lt;bool&gt;</span><br><span class="line">        Flag that specifies if a local artifact should be cached.</span><br><span class="line">  --follow-http-to-https-redirect  &lt;bool&gt;</span><br><span class="line">        Whether to follow http to https redirections</span><br><span class="line">  --credentials  &lt;host(realm) user:pass|host user:pass&gt;</span><br><span class="line">        Credentials to be used when fetching metadata or artifacts. Specify multiple times to pass multiple credentials. Alternatively, use the COURSIER_CREDENTIALS environment variable</span><br><span class="line">  --credential-file  &lt;string*&gt;</span><br><span class="line">        Path to credential files to read credentials from</span><br><span class="line">  --use-env-credentials  &lt;bool&gt;</span><br><span class="line">        Whether to read credentials from COURSIER_CREDENTIALS (env) or coursier.credentials (Java property), along those passed with --credentials and --credential-file</span><br><span class="line">  --quiet | -q  &lt;counter&gt;</span><br><span class="line">        Quiet output</span><br><span class="line">  --verbose | -v  &lt;counter&gt;</span><br><span class="line">        Increase verbosity (specify several times to increase more)</span><br><span class="line">  --progress | -P  &lt;bool&gt;</span><br><span class="line">        Force display of progress bars</span><br><span class="line">  --env  &lt;bool&gt;</span><br><span class="line">  --user-home  &lt;string?&gt;</span><br><span class="line">  --banner  &lt;bool?&gt;</span><br><span class="line">  --yes | -y  &lt;bool?&gt;</span><br><span class="line">  --try-revert  &lt;bool&gt;</span><br><span class="line">  --apps  &lt;string*&gt;</span><br></pre></td></tr></table></figure>
 <h2><span id="補足sbt-launcher-packageプロジェクト">（補足）sbt-launcher-packageプロジェクト</span></h2>
-<p><a href="https://github.com/sbt/sbt-launcher-package" target="_blank" rel="noopener">sbt-launcher-package</a> をビルドすることでSBTランチャーを提供できそうだった。</p>
+<p><a href="https://github.com/sbt/sbt-launcher-package" target="_blank" rel="noopener">sbt-launcher-package</a>
+をビルドすることでSBTランチャーを提供できそうだった。</p>
 <h2><span id="補足launcherプロジェクト">（補足）launcherプロジェクト</span></h2>
-<p>https://github.com/sbt/launcher/blob/1.x/.java-version にも記載されているとおり、 JDK7系にしか公式に対応していなかった。</p>
+<p>https://github.com/sbt/launcher/blob/1.x/.java-version
+にも記載されているとおり、 JDK7系にしか公式に対応していなかった。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -296,7 +303,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/07/Create-project-includes-sbt-launcher/" data-id="cl2nztnky003f5xqivrs2s9ld" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/07/Create-project-includes-sbt-launcher/" data-id="cl2o9pb52002h18rzwofs19d2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -417,75 +424,116 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#準備sbt">準備（SBT）</a></li>
-<li><a href="#簡単なビルドと実行の例">簡単なビルドと実行の例</a></li>
-<li><a href="#書き込み">書き込み</a><ul>
-<li><a href="#appendモード">Appendモード</a></li>
-<li><a href="#completeモード">Completeモード</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#準備sbt" id="toc-準備sbt">準備（SBT）</a></li>
+<li><a href="#簡単なビルドと実行の例" id="toc-簡単なビルドと実行の例">簡単なビルドと実行の例</a></li>
+<li><a href="#書き込み" id="toc-書き込み">書き込み</a>
+<ul>
+<li><a href="#appendモード" id="toc-appendモード">Appendモード</a></li>
+<li><a href="#completeモード" id="toc-completeモード">Completeモード</a></li>
 </ul></li>
-<li><a href="#読み出し">読み出し</a><ul>
-<li><a href="#準備">準備</a></li>
-<li><a href="#ストリームで読み込んでみる">ストリームで読み込んでみる</a></li>
-<li><a href="#読み込み時の-maxfilespertrigger-オプション">読み込み時の maxFilesPerTrigger オプション</a></li>
-<li><a href="#読み込み時の-maxbytespertrigger-オプション">読み込み時の maxBytesPerTrigger オプション</a></li>
-<li><a href="#追記ではなく更新したらどうなるか">追記ではなく更新したらどうなるか？</a></li>
-<li><a href="#読み込み時の-ignoredeletes-オプション">読み込み時の ignoreDeletes オプション</a></li>
-<li><a href="#読み込み時の-ignorechanges-オプション">読み込み時の ignoreChanges オプション</a></li>
+<li><a href="#読み出し" id="toc-読み出し">読み出し</a>
+<ul>
+<li><a href="#準備" id="toc-準備">準備</a></li>
+<li><a href="#ストリームで読み込んでみる" id="toc-ストリームで読み込んでみる">ストリームで読み込んでみる</a></li>
+<li><a href="#読み込み時の-maxfilespertrigger-オプション" id="toc-読み込み時の-maxfilespertrigger-オプション">読み込み時の
+maxFilesPerTrigger オプション</a></li>
+<li><a href="#読み込み時の-maxbytespertrigger-オプション" id="toc-読み込み時の-maxbytespertrigger-オプション">読み込み時の
+maxBytesPerTrigger オプション</a></li>
+<li><a href="#追記ではなく更新したらどうなるか" id="toc-追記ではなく更新したらどうなるか">追記ではなく更新したらどうなるか？</a></li>
+<li><a href="#読み込み時の-ignoredeletes-オプション" id="toc-読み込み時の-ignoredeletes-オプション">読み込み時の
+ignoreDeletes オプション</a></li>
+<li><a href="#読み込み時の-ignorechanges-オプション" id="toc-読み込み時の-ignorechanges-オプション">読み込み時の
+ignoreChanges オプション</a></li>
 </ul></li>
-<li><a href="#org.apache.spark.sql.delta.sources.deltasource-クラスについて">org.apache.spark.sql.delta.sources.DeltaSource クラスについて</a><ul>
-<li><a href="#org.apache.spark.sql.delta.sources.deltasourcegetchanges-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getChanges メソッド</a></li>
-<li><a href="#org.apache.spark.sql.delta.sources.deltasourcegetsnapshotat-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getSnapshotAt メソッド</a></li>
-<li><a href="#org.apache.spark.sql.delta.sources.deltasourcegetchangeswithratelimit-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getChangesWithRateLimit メソッド</a></li>
-<li><a href="#org.apache.spark.sql.delta.sources.deltasourcegetstartingoffset-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getStartingOffset メソッド</a></li>
-<li><a href="#org.apache.spark.sql.delta.sources.deltasourcelatestoffset-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#latestOffset メソッド</a></li>
-<li><a href="#org.apache.spark.sql.delta.sources.deltasourceverifystreamhygieneandfilteraddfiles-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#verifyStreamHygieneAndFilterAddFiles メソッド</a></li>
-<li><a href="#org.apache.spark.sql.delta.sources.deltasourcegetbatch-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getBatch メソッド</a></li>
+<li><a href="#org.apache.spark.sql.delta.sources.deltasource-クラスについて" id="toc-org.apache.spark.sql.delta.sources.deltasource-クラスについて">org.apache.spark.sql.delta.sources.DeltaSource
+クラスについて</a>
+<ul>
+<li><a href="#org.apache.spark.sql.delta.sources.deltasourcegetchanges-メソッド" id="toc-org.apache.spark.sql.delta.sources.deltasourcegetchanges-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getChanges
+メソッド</a></li>
+<li><a href="#org.apache.spark.sql.delta.sources.deltasourcegetsnapshotat-メソッド" id="toc-org.apache.spark.sql.delta.sources.deltasourcegetsnapshotat-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getSnapshotAt
+メソッド</a></li>
+<li><a href="#org.apache.spark.sql.delta.sources.deltasourcegetchangeswithratelimit-メソッド" id="toc-org.apache.spark.sql.delta.sources.deltasourcegetchangeswithratelimit-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getChangesWithRateLimit
+メソッド</a></li>
+<li><a href="#org.apache.spark.sql.delta.sources.deltasourcegetstartingoffset-メソッド" id="toc-org.apache.spark.sql.delta.sources.deltasourcegetstartingoffset-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getStartingOffset
+メソッド</a></li>
+<li><a href="#org.apache.spark.sql.delta.sources.deltasourcelatestoffset-メソッド" id="toc-org.apache.spark.sql.delta.sources.deltasourcelatestoffset-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#latestOffset
+メソッド</a></li>
+<li><a href="#org.apache.spark.sql.delta.sources.deltasourceverifystreamhygieneandfilteraddfiles-メソッド" id="toc-org.apache.spark.sql.delta.sources.deltasourceverifystreamhygieneandfilteraddfiles-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#verifyStreamHygieneAndFilterAddFiles
+メソッド</a></li>
+<li><a href="#org.apache.spark.sql.delta.sources.deltasourcegetbatch-メソッド" id="toc-org.apache.spark.sql.delta.sources.deltasourcegetbatch-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getBatch
+メソッド</a></li>
 </ul></li>
-<li><a href="#org.apache.spark.sql.delta.sources.deltasource.admissionlimits-クラスについて">org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits クラスについて</a><ul>
-<li><a href="#org.apache.spark.sql.delta.sources.deltasource.admissionlimitstoreadlimit-メソッド">org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits#toReadLimit メソッド</a></li>
-<li><a href="#org.apache.spark.sql.delta.sources.deltasource.admissionlimitsadmit-メソッド">org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits#admit メソッド</a></li>
+<li><a href="#org.apache.spark.sql.delta.sources.deltasource.admissionlimits-クラスについて" id="toc-org.apache.spark.sql.delta.sources.deltasource.admissionlimits-クラスについて">org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits
+クラスについて</a>
+<ul>
+<li><a href="#org.apache.spark.sql.delta.sources.deltasource.admissionlimitstoreadlimit-メソッド" id="toc-org.apache.spark.sql.delta.sources.deltasource.admissionlimitstoreadlimit-メソッド">org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits#toReadLimit
+メソッド</a></li>
+<li><a href="#org.apache.spark.sql.delta.sources.deltasource.admissionlimitsadmit-メソッド" id="toc-org.apache.spark.sql.delta.sources.deltasource.admissionlimitsadmit-メソッド">org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits#admit
+メソッド</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://github.com/dobachi/StructuredStreamingDeltaLakeExample" target="_blank" rel="noopener">dobachi's StructuredStreamingDeltaLakeExample</a></li>
+<li><a href="https://github.com/dobachi/StructuredStreamingDeltaLakeExample" target="_blank" rel="noopener">dobachi's
+StructuredStreamingDeltaLakeExample</a></li>
 <li><a href="https://www.scala-sbt.org/" target="_blank" rel="noopener">sbt</a></li>
 <li><a href="https://dev.classmethod.jp/articles/merit-to-use-spark-testing-base-on-spark-unittest/" target="_blank" rel="noopener">SparkのUnitTest作成でspark-testing-base</a></li>
 <li><a href="https://github.com/holdenk/spark-testing-base/" target="_blank" rel="noopener">spark-testing-base</a></li>
-<li><a href="https://github.com/dobachi/sparkProjectTemplate.g8" target="_blank" rel="noopener">dobachi's sparkProjectTemplate.g8</a></li>
-<li><a href="https://github.com/dobachi/spark-sbt.g8" target="_blank" rel="noopener">dobachi's spark-sbt</a></li>
+<li><a href="https://github.com/dobachi/sparkProjectTemplate.g8" target="_blank" rel="noopener">dobachi's
+sparkProjectTemplate.g8</a></li>
+<li><a href="https://github.com/dobachi/spark-sbt.g8" target="_blank" rel="noopener">dobachi's
+spark-sbt</a></li>
 <li><a href="https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/sql/streaming/StructuredNetworkWordCount.scala" target="_blank" rel="noopener">StructuredNetworkWordCount</a></li>
-<li><a href="https://docs.delta.io/latest/delta-streaming.html#delta-table-as-a-sink" target="_blank" rel="noopener">Delta table as a sink</a></li>
-<li><a href="https://docs.delta.io/latest/delta-streaming.html#delta-table-as-a-stream-source" target="_blank" rel="noopener">Delta table as a stream source</a></li>
-<li><a href="https://docs.delta.io/latest/delta-streaming.html#ignore-updates-and-deletes" target="_blank" rel="noopener">Ignore updates and deletes</a></li>
+<li><a href="https://docs.delta.io/latest/delta-streaming.html#delta-table-as-a-sink" target="_blank" rel="noopener">Delta
+table as a sink</a></li>
+<li><a href="https://docs.delta.io/latest/delta-streaming.html#delta-table-as-a-stream-source" target="_blank" rel="noopener">Delta
+table as a stream source</a></li>
+<li><a href="https://docs.delta.io/latest/delta-streaming.html#ignore-updates-and-deletes" target="_blank" rel="noopener">Ignore
+updates and deletes</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="準備sbt">準備（SBT）</span></h2>
-<p>今回はSBTを利用してSalaを用いたSparkアプリケーションで試すことにする。 <a href="https://www.scala-sbt.org/" target="_blank" rel="noopener">sbt</a> を参考にSBTをセットアップする。（基本的には対象バージョンをダウンロードして置くだけ）</p>
+<p>今回はSBTを利用してSalaを用いたSparkアプリケーションで試すことにする。
+<a href="https://www.scala-sbt.org/" target="_blank" rel="noopener">sbt</a>
+を参考にSBTをセットアップする。（基本的には対象バージョンをダウンロードして置くだけ）</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p ~/Sources</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/Sources</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sbt new dobachi/spark-sbt.g8</span></span><br></pre></td></tr></table></figure>
-<p>ここでは、 [dobachi's spark-sbt.g8] を利用してSpark3.0.1の雛形を作った。 対話的に色々聞かれるので、ほぼデフォルトで生成。</p>
-<p>ここでは、 <a href="https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/sql/streaming/StructuredNetworkWordCount.scala" target="_blank" rel="noopener">StructuredNetworkWordCount</a> を参考に、Word Countした結果をDelta Lakeに書き込むことにする。</p>
-<p>なお、以降の例で示しているアプリケーションは、すべて <a href="https://github.com/dobachi/StructuredStreamingDeltaLakeExample" target="_blank" rel="noopener">dobachi's StructuredStreamingDeltaLakeExample</a> に含まれている。</p>
+<p>ここでは、 [dobachi's spark-sbt.g8]
+を利用してSpark3.0.1の雛形を作った。
+対話的に色々聞かれるので、ほぼデフォルトで生成。</p>
+<p>ここでは、 <a href="https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/sql/streaming/StructuredNetworkWordCount.scala" target="_blank" rel="noopener">StructuredNetworkWordCount</a>
+を参考に、Word Countした結果をDelta Lakeに書き込むことにする。</p>
+<p>なお、以降の例で示しているアプリケーションは、すべて <a href="https://github.com/dobachi/StructuredStreamingDeltaLakeExample" target="_blank" rel="noopener">dobachi's
+StructuredStreamingDeltaLakeExample</a> に含まれている。</p>
 <h2><span id="簡単なビルドと実行の例">簡単なビルドと実行の例</span></h2>
 <p>以下のように予めncコマンドを起動しておく。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nc -lk 9999</span></span><br></pre></td></tr></table></figure>
 <p>続いて、別のターミナルでアプリケーションをビルドして実行。（ncコマンドを起動したターミナルは一旦保留）</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> structured_streaming_deltalake</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sbt assembly</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-submit --class com.example.StructuredStreamingDeltaLakeExample target/scala-2.12/structured_streaming_deltalake-assembly-0.0.1.jar localhost 9999</span></span><br></pre></td></tr></table></figure>
-<p>先程起動したncコマンドの引数に合わせ、9999ポートに接続する。 Structured Streamingが起動したら、ncコマンド側で、適当な文字列（単語）を入力する（以下は例）</p>
+<p>先程起動したncコマンドの引数に合わせ、9999ポートに接続する。
+Structured
+Streamingが起動したら、ncコマンド側で、適当な文字列（単語）を入力する（以下は例）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hoge hoge fuga</span><br><span class="line">fuga fuga</span><br><span class="line">fuga fuga hoge</span><br></pre></td></tr></table></figure>
 <p>もうひとつターミナルを開き、spark-shellを起動する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-shell --packages io.delta:delta-core_2.12:0.7.0 --conf <span class="string">"spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension"</span> --conf <span class="string">"spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"</span></span></span><br></pre></td></tr></table></figure>
-<p>アプリケーションで出力先としたディレクトリ内のDelta Lakeテーブルを参照すると、以下のようにテーブルが更新されていることがわかる。 ひとまずncコマンドでいろいろな単語を入力して挙動を試すと良い。</p>
+<p>アプリケーションで出力先としたディレクトリ内のDelta
+Lakeテーブルを参照すると、以下のようにテーブルが更新されていることがわかる。
+ひとまずncコマンドでいろいろな単語を入力して挙動を試すと良い。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> df = spark.read.format(<span class="string">"delta"</span>).load(<span class="string">"/tmp/delta/wordcount"</span>)</span><br><span class="line">df: org.apache.spark.sql.<span class="type">DataFrame</span> = [value: string, count: bigint]</span><br><span class="line"></span><br><span class="line">scala&gt; df.show</span><br><span class="line">+-----+-----+</span><br><span class="line">|value|count|</span><br><span class="line">+-----+-----+</span><br><span class="line">| fuga|    <span class="number">5</span>|</span><br><span class="line">| hoge|    <span class="number">3</span>|</span><br><span class="line">+-----+-----+</span><br></pre></td></tr></table></figure>
 <p>(wip)</p>
 <h2><span id="書き込み">書き込み</span></h2>
-<p><a href="https://docs.delta.io/latest/delta-streaming.html#delta-table-as-a-sink" target="_blank" rel="noopener">Delta table as a sink</a> の通り、Delta LakeテーブルをSink（つまり書き込み先）として利用する際には、 AppendモードとCompleteモードのそれぞれが使える。</p>
+<p><a href="https://docs.delta.io/latest/delta-streaming.html#delta-table-as-a-sink" target="_blank" rel="noopener">Delta
+table as a sink</a> の通り、Delta
+LakeテーブルをSink（つまり書き込み先）として利用する際には、
+AppendモードとCompleteモードのそれぞれが使える。</p>
 <h3><span id="appendモード">Appendモード</span></h3>
-<p>例のごとく、ncコマンドを起動し、アプリケーションを実行。（予めsbt assemblyしておく） もうひとつターミナルを開き、spark-shellでDelta Lakeテーブルの中身を確認する。</p>
+<p>例のごとく、ncコマンドを起動し、アプリケーションを実行。（予めsbt
+assemblyしておく） もうひとつターミナルを開き、spark-shellでDelta
+Lakeテーブルの中身を確認する。</p>
 <p>ターミナル1</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nc -lk 9999</span></span><br></pre></td></tr></table></figure>
 <p>ターミナル2</p>
@@ -499,11 +547,15 @@ ga('send', 'pageview');
 <p>何度かncコマンド経由でテキストを流し込むと、以下のように行が加わるkとがわかる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; df.show</span><br><span class="line">+-------------+-----+</span><br><span class="line">|     unixtime|count|</span><br><span class="line">+-------------+-----+</span><br><span class="line">|1605968491821|    2|</span><br><span class="line">+-------------+-----+</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">scala&gt; df.show</span><br><span class="line">+-------------+-----+</span><br><span class="line">|     unixtime|count|</span><br><span class="line">+-------------+-----+</span><br><span class="line">|1605968518584|    2|</span><br><span class="line">|1605968522461|    3|</span><br><span class="line">|1605968491821|    2|</span><br><span class="line">+-------------+-----+</span><br></pre></td></tr></table></figure>
 <h3><span id="completeモード">Completeモード</span></h3>
-<p>Completeモードは、上記のWordCountの例がそのまま例になっている。 <code>com.example.StructuredStreamingDeltaLakeExample</code> 参照。</p>
+<p>Completeモードは、上記のWordCountの例がそのまま例になっている。
+<code>com.example.StructuredStreamingDeltaLakeExample</code> 参照。</p>
 <h2><span id="読み出し">読み出し</span></h2>
-<p><a href="https://docs.delta.io/latest/delta-streaming.html#delta-table-as-a-stream-source" target="_blank" rel="noopener">Delta table as a stream source</a> の通り、既存のDelta Lakeテーブルからストリームデータを取り出す。</p>
+<p><a href="https://docs.delta.io/latest/delta-streaming.html#delta-table-as-a-stream-source" target="_blank" rel="noopener">Delta
+table as a stream source</a> の通り、既存のDelta
+Lakeテーブルからストリームデータを取り出す。</p>
 <h3><span id="準備">準備</span></h3>
-<p>ひとまずDelta Lakeのテーブルを作る。 ここではspark-shellで適当に作成する。</p>
+<p>ひとまずDelta Lakeのテーブルを作る。
+ここではspark-shellで適当に作成する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-shell --packages io.delta:delta-core_2.12:0.7.0 --conf <span class="string">"spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension"</span> --conf <span class="string">"spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"</span></span></span><br></pre></td></tr></table></figure>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> df = spark.read.format(<span class="string">"parquet"</span>).load(<span class="string">"/opt/spark/default/examples/src/main/resources/users.parquet"</span>)</span><br><span class="line">scala&gt; df.show</span><br><span class="line">+------+--------------+----------------+</span><br><span class="line">|  name|favorite_color|favorite_numbers|</span><br><span class="line">+------+--------------+----------------+</span><br><span class="line">|<span class="type">Alyssa</span>|          <span class="literal">null</span>|  [<span class="number">3</span>, <span class="number">9</span>, <span class="number">15</span>, <span class="number">20</span>]|</span><br><span class="line">|   <span class="type">Ben</span>|           red|              []|</span><br><span class="line">+------+--------------+----------------+</span><br><span class="line"></span><br><span class="line">scala&gt; df.write.format(<span class="string">"delta"</span>).save(<span class="string">"/tmp/delta/users"</span>)</span><br></pre></td></tr></table></figure>
 <p>上記のDataFrameのスキーマは以下の通り。</p>
@@ -513,43 +565,69 @@ ga('send', 'pageview');
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-submit --class com.example.StructuredStreamingDeltaLakeReadExample target/scala-2.12/structured_streaming_deltalake-assembly-0.0.1.jar /tmp/delta/users</span></span><br></pre></td></tr></table></figure>
 <p>先程作成しておいたテーブルの中身が読み込まれる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-------------------------------------------</span><br><span class="line">Batch: 0</span><br><span class="line">-------------------------------------------</span><br><span class="line">20/11/22 00:29:41 INFO CodeGenerator: Code generated in 3.212 ms</span><br><span class="line">20/11/22 00:29:41 INFO CodeGenerator: Code generated in 4.1238 ms</span><br><span class="line">+------+--------------+----------------+</span><br><span class="line">|  name|favorite_color|favorite_numbers|</span><br><span class="line">+------+--------------+----------------+</span><br><span class="line">|Alyssa|          null|  [3, 9, 15, 20]|</span><br><span class="line">|   Ben|           red|              []|</span><br><span class="line">+------+--------------+----------------+</span><br></pre></td></tr></table></figure>
-<p>先程の、Delta Lakeテーブルを作成したターミナルのspark-shellで、 追加データを作り、Delta Lakeテーブルに挿入する。</p>
+<p>先程の、Delta Lakeテーブルを作成したターミナルのspark-shellで、
+追加データを作り、Delta Lakeテーブルに挿入する。</p>
 <p>まず、追加データ用のスキーマを持つcase classを作成する。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span>(<span class="params">name: <span class="type">String</span>, favorite_color: <span class="type">String</span>, favorite_numbers: <span class="type">Array</span>[<span class="type">Int</span>]</span>)</span></span><br></pre></td></tr></table></figure>
-<p>つづいて、作られたcase classを利用して、追加用のDataFrameを作る。 （SeqからDataFrameを生成する）</p>
+<p>つづいて、作られたcase classを利用して、追加用のDataFrameを作る。
+（SeqからDataFrameを生成する）</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> addRecord = <span class="type">Seq</span>(<span class="type">User</span>(<span class="string">"Bob"</span>, <span class="string">"yellow"</span>, <span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>))).toDF</span><br></pre></td></tr></table></figure>
 <p>appendモードで既存のDelta Lakeテーブルに追加する。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; addRecord.write.format(<span class="string">"delta"</span>).mode(<span class="string">"append"</span>).save(<span class="string">"/tmp/delta/users"</span>)</span><br></pre></td></tr></table></figure>
-<p>ここで、ストリーム処理を動かしている方のターミナルを見ると、 以下のように追記された内容が表示されていることがわかる。</p>
+<p>ここで、ストリーム処理を動かしている方のターミナルを見ると、
+以下のように追記された内容が表示されていることがわかる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-------------------------------------------</span><br><span class="line">Batch: 1</span><br><span class="line">-------------------------------------------</span><br><span class="line">+----+--------------+----------------+</span><br><span class="line">|name|favorite_color|favorite_numbers|</span><br><span class="line">+----+--------------+----------------+</span><br><span class="line">| Bob|        yellow|          [1, 2]|</span><br><span class="line">+----+--------------+----------------+</span><br></pre></td></tr></table></figure>
-<h3><span id="読み込み時の-maxfilespertrigger-オプション">読み込み時の maxFilesPerTrigger オプション</span></h3>
-<p>ストリーム読み込み時には、 <code>maxFilesPerTrigger</code> オプションを指定できる。 このオプションは、以下のパラメータとして利用される。</p>
+<h3><span id="読み込み時のmaxfilespertrigger-オプション">読み込み時の
+maxFilesPerTrigger オプション</span></h3>
+<p>ストリーム読み込み時には、 <code>maxFilesPerTrigger</code>
+オプションを指定できる。
+このオプションは、以下のパラメータとして利用される。</p>
 <p>org/apache/spark/sql/delta/DeltaOptions.scala:98</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> maxFilesPerTrigger = options.get(<span class="type">MAX_FILES_PER_TRIGGER_OPTION</span>).map &#123; str =&gt;</span><br><span class="line">  <span class="type">Try</span>(str.toInt).toOption.filter(_ &gt; <span class="number">0</span>).getOrElse &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="type">DeltaErrors</span>.illegalDeltaOptionException(</span><br><span class="line">      <span class="type">MAX_FILES_PER_TRIGGER_OPTION</span>, str, <span class="string">"must be a positive integer"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>このパラメータは org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits#toReadLimit メソッド内で用いられる。</p>
+<p>このパラメータは
+org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits#toReadLimit
+メソッド内で用いられる。</p>
 <p>org/apache/spark/sql/delta/sources/DeltaSource.scala:350</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">toReadLimit</span></span>: <span class="type">ReadLimit</span> = &#123;</span><br><span class="line">    <span class="keyword">if</span> (options.maxFilesPerTrigger.isDefined &amp;&amp; options.maxBytesPerTrigger.isDefined) &#123;</span><br><span class="line">      <span class="type">CompositeLimit</span>(</span><br><span class="line">        <span class="type">ReadMaxBytes</span>(options.maxBytesPerTrigger.get),</span><br><span class="line">        <span class="type">ReadLimit</span>.maxFiles(options.maxFilesPerTrigger.get).asInstanceOf[<span class="type">ReadMaxFiles</span>])</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (options.maxBytesPerTrigger.isDefined) &#123;</span><br><span class="line">      <span class="type">ReadMaxBytes</span>(options.maxBytesPerTrigger.get)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="type">ReadLimit</span>.maxFiles(</span><br><span class="line">        options.maxFilesPerTrigger.getOrElse(<span class="type">DeltaOptions</span>.<span class="type">MAX_FILES_PER_TRIGGER_OPTION_DEFAULT</span>))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>このメソッドの呼び出し階層は以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AdmissionLimits in DeltaSource.toReadLimit()  (org.apache.spark.sql.delta.sources)</span><br><span class="line">  DeltaSource.getDefaultReadLimit()  (org.apache.spark.sql.delta.sources)</span><br><span class="line">    MicroBatchExecution</span><br></pre></td></tr></table></figure>
-<p>MicroBatchExecutionは、 <code>org.apache.spark.sql.execution.streaming.MicroBatchExecution</code> クラスであり、 この仕組みを通じてSparkのStructured Streamingの持つレートコントロールの仕組みに設定値をベースにした値が渡される。</p>
-<h3><span id="読み込み時の-maxbytespertrigger-オプション">読み込み時の maxBytesPerTrigger オプション</span></h3>
-<p>原則的には、 <code>maxFilesPerTrigger</code> と同じようなもの。 指定された値を用いてcase classを定義し、最大バイトサイズの目安を保持する。</p>
+<p>MicroBatchExecutionは、
+<code>org.apache.spark.sql.execution.streaming.MicroBatchExecution</code>
+クラスであり、 この仕組みを通じてSparkのStructured
+Streamingの持つレートコントロールの仕組みに設定値をベースにした値が渡される。</p>
+<h3><span id="読み込み時のmaxbytespertrigger-オプション">読み込み時の
+maxBytesPerTrigger オプション</span></h3>
+<p>原則的には、 <code>maxFilesPerTrigger</code> と同じようなもの。
+指定された値を用いてcase
+classを定義し、最大バイトサイズの目安を保持する。</p>
 <h3><span id="追記ではなく更新したらどうなるか">追記ではなく更新したらどうなるか？</span></h3>
-<p>Delta Lakeでoverwriteモードで書き込む際に、パーティションカラムに対して条件を指定できることを利用し、 部分更新することにする。</p>
-<p>まず <code>name</code> をパーティションカラムとしたDataFrameを作ることにする。</p>
+<p>Delta
+Lakeでoverwriteモードで書き込む際に、パーティションカラムに対して条件を指定できることを利用し、
+部分更新することにする。</p>
+<p>まず <code>name</code>
+をパーティションカラムとしたDataFrameを作ることにする。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> df = spark.read.format(<span class="string">"parquet"</span>).load(<span class="string">"/opt/spark/default/examples/src/main/resources/users.parquet"</span>)</span><br><span class="line">scala&gt; df.show</span><br><span class="line">+------+--------------+----------------+</span><br><span class="line">|  name|favorite_color|favorite_numbers|</span><br><span class="line">+------+--------------+----------------+</span><br><span class="line">|<span class="type">Alyssa</span>|          <span class="literal">null</span>|  [<span class="number">3</span>, <span class="number">9</span>, <span class="number">15</span>, <span class="number">20</span>]|</span><br><span class="line">|   <span class="type">Ben</span>|           red|              []|</span><br><span class="line">+------+--------------+----------------+</span><br><span class="line"></span><br><span class="line">scala&gt; df.write.format(<span class="string">"delta"</span>).partitionBy(<span class="string">"name"</span>).save(<span class="string">"/tmp/delta/partitioned_users"</span>)</span><br></pre></td></tr></table></figure>
 <p>上記例と同様に、ストリームでデータを読み込むため、もうひとつターミナルを起動し、以下を実行。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-submit --class com.example.StructuredStreamingDeltaLakeReadExample target/scala-2.12/structured_streaming_deltalake-assembly-0.0.1.jar /tmp/delta/partitioned_users</span></span><br></pre></td></tr></table></figure>
 <p>spark-shellを起動したターミナルで、更新用のデータを準備。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> updateRecord = <span class="type">Seq</span>(<span class="type">User</span>(<span class="string">"Ben"</span>, <span class="string">"green"</span>, <span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>))).toDF</span><br></pre></td></tr></table></figure>
-<p>条件付きのoverwriteモードで既存のDelta Lakeテーブルの一部レコードを更新する。</p>
+<p>条件付きのoverwriteモードで既存のDelta
+Lakeテーブルの一部レコードを更新する。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; updateRecord</span><br><span class="line">         .write</span><br><span class="line">         .format(<span class="string">"delta"</span>)</span><br><span class="line">         .mode(<span class="string">"overwrite"</span>)</span><br><span class="line">         .option(<span class="string">"replaceWhere"</span>, <span class="string">"name == 'Ben'"</span>)</span><br><span class="line">         .save(<span class="string">"/tmp/delta/partitioned_users"</span>)</span><br></pre></td></tr></table></figure>
-<p>上記を実行したときに、ストリーム処理を実行しているターミナル側で、 以下のエラーが生じ、プロセスが停止した。</p>
+<p>上記を実行したときに、ストリーム処理を実行しているターミナル側で、
+以下のエラーが生じ、プロセスが停止した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">20/11/23 22:10:55 ERROR MicroBatchExecution: Query [id = 13cf0aa0-116c-4c95-aea0-3e6f779e02c8, runId = 6f71a4bb-c067-4f6d-aa17-6bf04eea3520] terminated</span><br><span class="line">with error</span><br><span class="line">java.lang.UnsupportedOperationException: Detected a data update in the source table. This is currently not supported. If you&apos;d like to ignore updates, set the option &apos;ignoreChanges&apos; to &apos;true&apos;. If you would like the data update to be reflected, please restart this query with a fresh checkpoint directory.        at org.apache.spark.sql.delta.sources.DeltaSource.verifyStreamHygieneAndFilterAddFiles(DeltaSource.scala:273)</span><br><span class="line">        at org.apache.spark.sql.delta.sources.DeltaSource.$anonfun$getChanges$1(DeltaSource.scala:117)</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
-<p>後ほど検証するが、Delta Lakeのストリーム処理では、既存レコードのupdate、deleteなどの既存レコードの更新となる処理は基本的にサポートされていない。 オプションを指定することで、更新を無視することができる。</p>
-<h3><span id="読み込み時の-ignoredeletes-オプション">読み込み時の ignoreDeletes オプション</span></h3>
-<p>基本的には、上記の通り、元テーブルに変化があった場合はエラーを生じるようになっている。 <a href="https://docs.delta.io/latest/delta-streaming.html#ignore-updates-and-deletes" target="_blank" rel="noopener">Ignore updates and deletes</a> に記載の通り、update、merge into、delete、overwriteがエラーの対象である。</p>
-<p>ひとまずdeleteでエラーになるのを避けるため、 <code>ignoreDeletes</code> で無視するオプションを指定できる。</p>
+<p>後ほど検証するが、Delta
+Lakeのストリーム処理では、既存レコードのupdate、deleteなどの既存レコードの更新となる処理は基本的にサポートされていない。
+オプションを指定することで、更新を無視することができる。</p>
+<h3><span id="読み込み時のignoredeletes-オプション">読み込み時の
+ignoreDeletes オプション</span></h3>
+<p>基本的には、上記の通り、元テーブルに変化があった場合はエラーを生じるようになっている。
+<a href="https://docs.delta.io/latest/delta-streaming.html#ignore-updates-and-deletes" target="_blank" rel="noopener">Ignore
+updates and deletes</a> に記載の通り、update、merge
+into、delete、overwriteがエラーの対象である。</p>
+<p>ひとまずdeleteでエラーになるのを避けるため、
+<code>ignoreDeletes</code> で無視するオプションを指定できる。</p>
 <p>動作確認する。</p>
 <p>spark-shellを立ち上げ、検証用のテーブルを作成する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-shell --packages io.delta:delta-core_2.12:0.7.0 --conf <span class="string">"spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension"</span> --conf <span class="string">"spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"</span></span></span><br></pre></td></tr></table></figure>
@@ -561,9 +639,13 @@ ga('send', 'pageview');
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; deltaTable.delete(<span class="string">"name == 'Ben'"</span>)</span><br></pre></td></tr></table></figure>
 <p>上記の通り、テーブルを更新（削除）した結果、ストリーム処理が以下のエラーを出力して終了した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">20/11/23 22:26:21 ERROR MicroBatchExecution: Query [id = 660b82a9-ca40-4b91-8032-d75807b11c18, runId = 7e46e9a7-1ba2-48b2-b264-53c254cfa6fc] terminated</span><br><span class="line">with error</span><br><span class="line">java.lang.UnsupportedOperationException: Detected a data update in the source table. This is currently not supported. If you&apos;d like to ignore updates, set the option &apos;ignoreChanges&apos; to &apos;true&apos;. If you would like the data update to be reflected, please restart this query with a fresh checkpoint directory.        at org.apache.spark.sql.delta.sources.DeltaSource.verifyStreamHygieneAndFilterAddFiles(DeltaSource.scala:273)</span><br><span class="line">        at org.apache.spark.sql.delta.sources.DeltaSource.$anonfun$getChanges$1(DeltaSource.scala:117)</span><br><span class="line">        at scala.collection.Iterator$$anon$11.nextCur(Iterator.scala:484)</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
-<p>そこで、同じことをもう一度 ignoreDelte オプションを利用して実行してみる。</p>
+<p>そこで、同じことをもう一度 ignoreDelte
+オプションを利用して実行してみる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; df.write.format(&quot;delta&quot;).partitionBy(&quot;name&quot;).save(&quot;/tmp/delta/users_for_delete2&quot;)</span><br></pre></td></tr></table></figure>
-<p>なお、 <code>ignoreDelete</code> オプションはパーティションカラムに指定されたカラムに対し、 where句を利用して削除するものに対して有効である。 （パーティションカラムに指定されていないカラムをwhere句に使用してdeleteしたところ、エラーが生じた）</p>
+<p>なお、 <code>ignoreDelete</code>
+オプションはパーティションカラムに指定されたカラムに対し、
+where句を利用して削除するものに対して有効である。
+（パーティションカラムに指定されていないカラムをwhere句に使用してdeleteしたところ、エラーが生じた）</p>
 <p>別のターミナルを立ち上げ、当該テーブルをストリームで読み込む。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-submit --class com.example.StructuredStreamingDeltaLakeDeleteExample target/scala-2.12/structured_streaming_deltalake-assembly-0.0.1.jar /tmp/delta/users_for_delete2</span></span><br></pre></td></tr></table></figure>
 <p>spark-shellでテーブルとして読み込む。</p>
@@ -573,35 +655,78 @@ ga('send', 'pageview');
 <p>またテーブルを見たところ、</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; deltaTable.toDF.show</span><br><span class="line">+------+--------------+----------------+</span><br><span class="line">|  name|favorite_color|favorite_numbers|</span><br><span class="line">+------+--------------+----------------+</span><br><span class="line">|<span class="type">Alyssa</span>|          <span class="literal">null</span>|  [<span class="number">3</span>, <span class="number">9</span>, <span class="number">15</span>, <span class="number">20</span>]|</span><br><span class="line">+------+--------------+----------------+</span><br></pre></td></tr></table></figure>
 <p>削除対象のレコードが消えていることが確かめられる。</p>
-<h3><span id="読み込み時の-ignorechanges-オプション">読み込み時の ignoreChanges オプション</span></h3>
-<p><code>ignoreChanges</code> オプションは、いったん概ね <code>ignoreDelete</code> オプションと同様だと思えば良い。 ただしdeleteに限らない。（deleteも含む） 細かな点は後で調査する。</p>
-<h2><span id="orgapachesparksqldeltasourcesdeltasource-クラスについて">org.apache.spark.sql.delta.sources.DeltaSource クラスについて</span></h2>
-<p>Delta Lake用のストリームData Sourceである。 親クラスは以下の通り。</p>
+<h3><span id="読み込み時のignorechanges-オプション">読み込み時の
+ignoreChanges オプション</span></h3>
+<p><code>ignoreChanges</code> オプションは、いったん概ね
+<code>ignoreDelete</code> オプションと同様だと思えば良い。
+ただしdeleteに限らない。（deleteも含む） 細かな点は後で調査する。</p>
+<h2><span id="orgapachesparksqldeltasourcesdeltasourceクラスについて">org.apache.spark.sql.delta.sources.DeltaSource
+クラスについて</span></h2>
+<p>Delta Lake用のストリームData Sourceである。
+親クラスは以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DeltaSource (org.apache.spark.sql.delta.sources)</span><br><span class="line">  Source (org.apache.spark.sql.execution.streaming)</span><br><span class="line">    SparkDataStream (org.apache.spark.sql.connector.read.streaming)</span><br></pre></td></tr></table></figure>
 <p>気になったメンバ変数は以下の通り。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** A check on the source table that disallows deletes on the source data. */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> ignoreChanges = options.ignoreChanges || ignoreFileDeletion</span><br><span class="line">--&gt; レコードの変更（ファイル変更）を無視するかどうか</span><br><span class="line"></span><br><span class="line"><span class="comment">/** A check on the source table that disallows commits that only include deletes to the data. */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> ignoreDeletes = options.ignoreDeletes || ignoreFileDeletion || ignoreChanges</span><br><span class="line">--&gt; レコードの削除（ファイル削除）を無視するかどうか</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> excludeRegex: <span class="type">Option</span>[<span class="type">Regex</span>] = options.excludeRegex</span><br><span class="line">--&gt; <span class="type">ADD</span>ファイルのリストする際、無視するファイルを指定する</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="keyword">val</span> schema: <span class="type">StructType</span> = deltaLog.snapshot.metadata.schema</span><br><span class="line">--&gt; 対象テーブルのスキーマ</span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> tableId = deltaLog.snapshot.metadata.id</span><br><span class="line">--&gt; テーブルの<span class="type">ID</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> previousOffset: <span class="type">DeltaSourceOffset</span> = <span class="literal">null</span></span><br><span class="line">--&gt; バッチの取得時のオフセットを保持する</span><br><span class="line"></span><br><span class="line"><span class="comment">// A metadata snapshot when starting the query.</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> initialState: <span class="type">DeltaSourceSnapshot</span> = <span class="literal">null</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> initialStateVersion: <span class="type">Long</span> = <span class="number">-1</span>L</span><br><span class="line">--&gt; org.apache.spark.sql.delta.sources.<span class="type">DeltaSource</span>#getBatch などから呼ばれる、スナップショットを保持するための変数</span><br></pre></td></tr></table></figure>
-<h3><span id="orgapachesparksqldeltasourcesdeltasourcegetchanges-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getChanges メソッド</span></h3>
-<p>ストリーム処理のバッチ取得メソッド <code>org.apache.spark.sql.delta.sources.DeltaSource#getBatch</code> などから呼ばれるメソッド。 スナップショットなどの情報から、開始時点のバージョンから現在までの変化を返す。</p>
-<h3><span id="orgapachesparksqldeltasourcesdeltasourcegetsnapshotat-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getSnapshotAt メソッド</span></h3>
-<p>上記の <code>org.apache.spark.sql.delta.sources.DeltaSource#getChanges</code> メソッドなどで利用される、 指定されたバージョンでのスナップショットを返す。</p>
-<p><code>org.apache.spark.sql.delta.SnapshotManagement#getSnapshotAt</code> を内部的に利用する。</p>
-<h3><span id="orgapachesparksqldeltasourcesdeltasourcegetchangeswithratelimit-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getChangesWithRateLimit メソッド</span></h3>
-<p><code>org.apache.spark.sql.delta.sources.DeltaSource#getChanges</code> メソッドに比べ、 レート制限を考慮した上での変化を返す。</p>
-<h3><span id="orgapachesparksqldeltasourcesdeltasourcegetstartingoffset-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getStartingOffset メソッド</span></h3>
-<p><code>org.apache.spark.sql.delta.sources.DeltaSource#latestOffset</code> メソッド内で呼ばれる。 ストリーム処理でマイクロバッチを構成する際、対象としているデータのオフセットを返すのだが、 それらのうち、初回の場合に呼ばれる。★要確認</p>
-<p>当該メソッド内で、「開始時点か、変化をキャプチャして処理しているのか」、「コミット内のオフセット位置」などの確認が行われ、 <code>org.apache.spark.sql.delta.sources.DeltaSourceOffset</code> にラップした上でメタデータが返される。</p>
-<h3><span id="orgapachesparksqldeltasourcesdeltasourcelatestoffset-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#latestOffset メソッド</span></h3>
-<p><code>org.apache.spark.sql.connector.read.streaming.SupportsAdmissionControl#latestOffset</code> メソッドをオーバーライドしている。 今回のマイクロバッチで対象となるデータのうち、最後のデータを示すオフセットを返す。</p>
-<h3><span id="orgapachesparksqldeltasourcesdeltasourceverifystreamhygieneandfilteraddfiles-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#verifyStreamHygieneAndFilterAddFiles メソッド</span></h3>
-<p><code>org.apache.spark.sql.delta.sources.DeltaSource#getChanges</code> メソッドで呼ばれる。 <code>getChanges</code> メソッドは指定されたバージョン以降の「変更」を取得するものである。 その中において、<code>verifyStreamHygieneAndFilterAddFiles</code> メソッドは関係あるアクションだけ取り出すために用いられる。</p>
-<h3><span id="orgapachesparksqldeltasourcesdeltasourcegetbatch-メソッド">org.apache.spark.sql.delta.sources.DeltaSource#getBatch メソッド</span></h3>
-<p><code>org.apache.spark.sql.execution.streaming.Source#getBatch</code> メソッドをオーバライドしたもの。 与えられたオフセット（開始、終了）をもとに、そのタイミングで処理すべきバッチとなるDataFrameを返す。</p>
-<h2><span id="orgapachesparksqldeltasourcesdeltasourceadmissionlimits-クラスについて">org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits クラスについて</span></h2>
+<h3><span id="orgapachesparksqldeltasourcesdeltasourcegetchangesメソッド">org.apache.spark.sql.delta.sources.DeltaSource#getChanges
+メソッド</span></h3>
+<p>ストリーム処理のバッチ取得メソッド
+<code>org.apache.spark.sql.delta.sources.DeltaSource#getBatch</code>
+などから呼ばれるメソッド。
+スナップショットなどの情報から、開始時点のバージョンから現在までの変化を返す。</p>
+<h3><span id="orgapachesparksqldeltasourcesdeltasourcegetsnapshotatメソッド">org.apache.spark.sql.delta.sources.DeltaSource#getSnapshotAt
+メソッド</span></h3>
+<p>上記の
+<code>org.apache.spark.sql.delta.sources.DeltaSource#getChanges</code>
+メソッドなどで利用される、
+指定されたバージョンでのスナップショットを返す。</p>
+<p><code>org.apache.spark.sql.delta.SnapshotManagement#getSnapshotAt</code>
+を内部的に利用する。</p>
+<h3><span id="orgapachesparksqldeltasourcesdeltasourcegetchangeswithratelimitメソッド">org.apache.spark.sql.delta.sources.DeltaSource#getChangesWithRateLimit
+メソッド</span></h3>
+<p><code>org.apache.spark.sql.delta.sources.DeltaSource#getChanges</code>
+メソッドに比べ、 レート制限を考慮した上での変化を返す。</p>
+<h3><span id="orgapachesparksqldeltasourcesdeltasourcegetstartingoffsetメソッド">org.apache.spark.sql.delta.sources.DeltaSource#getStartingOffset
+メソッド</span></h3>
+<p><code>org.apache.spark.sql.delta.sources.DeltaSource#latestOffset</code>
+メソッド内で呼ばれる。
+ストリーム処理でマイクロバッチを構成する際、対象としているデータのオフセットを返すのだが、
+それらのうち、初回の場合に呼ばれる。★要確認</p>
+<p>当該メソッド内で、「開始時点か、変化をキャプチャして処理しているのか」、「コミット内のオフセット位置」などの確認が行われ、
+<code>org.apache.spark.sql.delta.sources.DeltaSourceOffset</code>
+にラップした上でメタデータが返される。</p>
+<h3><span id="orgapachesparksqldeltasourcesdeltasourcelatestoffsetメソッド">org.apache.spark.sql.delta.sources.DeltaSource#latestOffset
+メソッド</span></h3>
+<p><code>org.apache.spark.sql.connector.read.streaming.SupportsAdmissionControl#latestOffset</code>
+メソッドをオーバーライドしている。
+今回のマイクロバッチで対象となるデータのうち、最後のデータを示すオフセットを返す。</p>
+<h3><span id="orgapachesparksqldeltasourcesdeltasourceverifystreamhygieneandfilteraddfilesメソッド">org.apache.spark.sql.delta.sources.DeltaSource#verifyStreamHygieneAndFilterAddFiles
+メソッド</span></h3>
+<p><code>org.apache.spark.sql.delta.sources.DeltaSource#getChanges</code>
+メソッドで呼ばれる。 <code>getChanges</code>
+メソッドは指定されたバージョン以降の「変更」を取得するものである。
+その中において、<code>verifyStreamHygieneAndFilterAddFiles</code>
+メソッドは関係あるアクションだけ取り出すために用いられる。</p>
+<h3><span id="orgapachesparksqldeltasourcesdeltasourcegetbatchメソッド">org.apache.spark.sql.delta.sources.DeltaSource#getBatch
+メソッド</span></h3>
+<p><code>org.apache.spark.sql.execution.streaming.Source#getBatch</code>
+メソッドをオーバライドしたもの。
+与えられたオフセット（開始、終了）をもとに、そのタイミングで処理すべきバッチとなるDataFrameを返す。</p>
+<h2><span id="orgapachesparksqldeltasourcesdeltasourceadmissionlimitsクラスについて">org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits
+クラスについて</span></h2>
 <p>レート管理のためのクラス。</p>
-<h3><span id="orgapachesparksqldeltasourcesdeltasourceadmissionlimitstoreadlimit-メソッド">org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits#toReadLimit メソッド</span></h3>
-<p><code>org.apache.spark.sql.delta.sources.DeltaSource#getDefaultReadLimit</code> メソッド内で呼ばれる。 オプションで与えられたレート制限のヒント値を、 <code>org.apache.spark.sql.connector.read.streaming.ReadLimit</code> に変換する。</p>
-<h3><span id="orgapachesparksqldeltasourcesdeltasourceadmissionlimitsadmit-メソッド">org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits#admit メソッド</span></h3>
-<p><code>org.apache.spark.sql.delta.sources.DeltaSource#getChangesWithRateLimit</code> メソッド内で呼ばれる。 上記メソッドは、レート制限を考慮して変化に関する情報のイテレータを返す。 <code>admit</code> メソッドはその中において、レートリミットに達しているかどうかを判断するために用いられる。</p>
+<h3><span id="orgapachesparksqldeltasourcesdeltasourceadmissionlimitstoreadlimitメソッド">org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits#toReadLimit
+メソッド</span></h3>
+<p><code>org.apache.spark.sql.delta.sources.DeltaSource#getDefaultReadLimit</code>
+メソッド内で呼ばれる。 オプションで与えられたレート制限のヒント値を、
+<code>org.apache.spark.sql.connector.read.streaming.ReadLimit</code>
+に変換する。</p>
+<h3><span id="orgapachesparksqldeltasourcesdeltasourceadmissionlimitsadmitメソッド">org.apache.spark.sql.delta.sources.DeltaSource.AdmissionLimits#admit
+メソッド</span></h3>
+<p><code>org.apache.spark.sql.delta.sources.DeltaSource#getChangesWithRateLimit</code>
+メソッド内で呼ばれる。
+上記メソッドは、レート制限を考慮して変化に関する情報のイテレータを返す。
+<code>admit</code>
+メソッドはその中において、レートリミットに達しているかどうかを判断するために用いられる。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -613,7 +738,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/11/19/Read-and-write-data-on-Delta-Lake-streaming-manner/" data-id="cl2nztnnr00c95xqi5jix756e" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/11/19/Read-and-write-data-on-Delta-Lake-streaming-manner/" data-id="cl2o9pbio019418rz0yyc35s8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -734,14 +859,16 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#前提">前提</a></li>
-<li><a href="#spark起動">Spark起動</a></li>
-<li><a href="#サンプルを動かす">サンプルを動かす</a></li>
-<li><a href="#サンプルの中身">サンプルの中身</a><ul>
-<li><a href="#trainクラス">Trainクラス</a></li>
-<li><a href="#optimizerの種類">Optimizerの種類</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#前提" id="toc-前提">前提</a></li>
+<li><a href="#spark起動" id="toc-spark起動">Spark起動</a></li>
+<li><a href="#サンプルを動かす" id="toc-サンプルを動かす">サンプルを動かす</a></li>
+<li><a href="#サンプルの中身" id="toc-サンプルの中身">サンプルの中身</a>
+<ul>
+<li><a href="#trainクラス" id="toc-trainクラス">Trainクラス</a></li>
+<li><a href="#optimizerの種類" id="toc-optimizerの種類">Optimizerの種類</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -750,39 +877,51 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://bigdl-project.github.io/master/#release-download/" target="_blank" rel="noopener">Download</a></li>
 <li><a href="https://github.com/intel-analytics/BigDL/issues/3070" target="_blank" rel="noopener">Issue-3070</a></li>
-<li><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/install-pre-built/" target="_blank" rel="noopener">use pre-bulid libs</a></li>
+<li><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/install-pre-built/" target="_blank" rel="noopener">use
+pre-bulid libs</a></li>
 <li><a href="https://search.maven.org/artifact/com.intel.analytics.bigdl/bigdl-SPARK_2.4/0.11.1/jar" target="_blank" rel="noopener">bigdl-SPARK_2.4</a></li>
 <li><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/run/" target="_blank" rel="noopener">Run</a></li>
 <li><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/examples/" target="_blank" rel="noopener">Examples</a></li>
-<li><a href="https://github.com/intel-analytics/BigDL/blob/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet/Train.scala" target="_blank" rel="noopener">Lenet Train</a></li>
-<li><a href="https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet" target="_blank" rel="noopener">LeNet Example</a></li>
+<li><a href="https://github.com/intel-analytics/BigDL/blob/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet/Train.scala" target="_blank" rel="noopener">Lenet
+Train</a></li>
+<li><a href="https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet" target="_blank" rel="noopener">LeNet
+Example</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="前提">前提</span></h2>
-<p><a href="https://bigdl-project.github.io/master/#release-download/" target="_blank" rel="noopener">Download</a> によると、Sparkは2.4系まで対応しているようだ。 <a href="https://github.com/intel-analytics/BigDL/issues/3070" target="_blank" rel="noopener">Issue-3070</a> によると、Spark3対応も進んでいるようだ。</p>
+<p><a href="https://bigdl-project.github.io/master/#release-download/" target="_blank" rel="noopener">Download</a>
+によると、Sparkは2.4系まで対応しているようだ。 <a href="https://github.com/intel-analytics/BigDL/issues/3070" target="_blank" rel="noopener">Issue-3070</a>
+によると、Spark3対応も進んでいるようだ。</p>
 <h2><span id="spark起動">Spark起動</span></h2>
-<p><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/run/" target="_blank" rel="noopener">Run</a> で記載の通り、以下のように起動した。</p>
+<p><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/run/" target="_blank" rel="noopener">Run</a>
+で記載の通り、以下のように起動した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ export SPARK_HOME=/usr/local/spark/default</span><br><span class="line">$ export BIGDL_HOME=/usr/local/bigdl/default</span><br><span class="line">$ $&#123;BIGDL_HOME&#125;/bin/spark-shell-with-bigdl.sh --master local[*]</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; import com.intel.analytics.bigdl.utils.Engine</span><br><span class="line">scala&gt; Engine.init</span><br></pre></td></tr></table></figure>
 <p>とりあえず初期化までは動いた。</p>
 <h2><span id="サンプルを動かす">サンプルを動かす</span></h2>
-<p><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/examples/" target="_blank" rel="noopener">Examples</a> に記載のサンプルを動かす。 <a href="https://github.com/intel-analytics/BigDL/blob/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet/Train.scala" target="_blank" rel="noopener">LeNet Train</a> にあるLeNetの例が良さそう。</p>
+<p><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/examples/" target="_blank" rel="noopener">Examples</a>
+に記載のサンプルを動かす。 <a href="https://github.com/intel-analytics/BigDL/blob/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet/Train.scala" target="_blank" rel="noopener">LeNet
+Train</a> にあるLeNetの例が良さそう。</p>
 <p>MNISTの画像をダウンロードして、展開した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir ~/tmp</span><br><span class="line">$ cd ~/tmp</span><br><span class="line">$ wget http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz</span><br><span class="line">$ wget http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz</span><br><span class="line">$ wget http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz</span><br><span class="line">$ wget http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz</span><br><span class="line">$ gunzip *.gz</span><br></pre></td></tr></table></figure>
 <p>展開したディレクトリを指定しながら、LeNetの学習を実行。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ spark-submit \</span><br><span class="line">  --master local[6] \</span><br><span class="line">  --driver-class-path $&#123;BIGDL_HOME&#125;/lib/bigdl-SPARK_2.4-0.11.1-jar-with-dependencies.jar \</span><br><span class="line">  --class com.intel.analytics.bigdl.models.lenet.Train \</span><br><span class="line">  $&#123;BIGDL_HOME&#125;/lib/bigdl-SPARK_2.4-0.11.1-jar-with-dependencies.jar \</span><br><span class="line">  -f $HOME/tmp \</span><br><span class="line">  -b 12 \</span><br><span class="line">  --checkpoint ./model</span><br></pre></td></tr></table></figure>
 <p>実行中の様子は以下の通り。</p>
 <figure>
-<img src="/memo-blog/images/p5b0S1PrMD3x9YMp-31A2F.png" alt=""><figcaption>ヒストリのキャプチャ</figcaption>
+<img src="/memo-blog/images/p5b0S1PrMD3x9YMp-31A2F.png" alt="ヒストリのキャプチャ">
+<figcaption aria-hidden="true">ヒストリのキャプチャ</figcaption>
 </figure>
 <p>今回はローカルモードで実行したが、入力された学習データと同様のサイズのキャッシュがメモリ上に展開されていることがわかる。</p>
 <h2><span id="サンプルの中身">サンプルの中身</span></h2>
 <p>2020/11/15時点のmasterブランチを確認する。</p>
 <h3><span id="trainクラス">Trainクラス</span></h3>
-<p>上記サンプルで実行されているTrainを見る。 モデルを定義している箇所は以下の通り。</p>
+<p>上記サンプルで実行されているTrainを見る。
+モデルを定義している箇所は以下の通り。</p>
 <p>com/intel/analytics/bigdl/models/lenet/Train.scala:48</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> model = <span class="keyword">if</span> (param.modelSnapshot.isDefined) &#123;</span><br><span class="line">  <span class="type">Module</span>.load[<span class="type">Float</span>](param.modelSnapshot.get)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (param.graphModel) &#123;</span><br><span class="line">    <span class="type">LeNet5</span>.graph(classNum = <span class="number">10</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="type">Engine</span>.getEngineType() <span class="keyword">match</span> &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="type">MklBlas</span> =&gt; <span class="type">LeNet5</span>(<span class="number">10</span>)</span><br><span class="line">      <span class="keyword">case</span> <span class="type">MklDnn</span> =&gt; <span class="type">LeNet5</span>.dnnGraph(param.batchSize / <span class="type">Engine</span>.nodeNumber(), <span class="number">10</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Modelインスタンスは以下の通り、Optimizerオブジェクトに渡され、 データセットに合わせたOptimizerが返される。 （例：データセットが分散データセットかどうか、など）</p>
+<p>Modelインスタンスは以下の通り、Optimizerオブジェクトに渡され、
+データセットに合わせたOptimizerが返される。
+（例：データセットが分散データセットかどうか、など）</p>
 <p>com/intel/analytics/bigdl/models/lenet/Train.scala:83</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> optimizer = <span class="type">Optimizer</span>(</span><br><span class="line">  model = model,</span><br><span class="line">  dataset = trainSet,</span><br><span class="line">  criterion = criterion)</span><br></pre></td></tr></table></figure>
 <p>参考までに、Optimizerの種類と判定の処理は以下の通り。</p>
@@ -799,33 +938,59 @@ ga('send', 'pageview');
 <li>LocalOptimizer</li>
 </ul>
 <h4><span id="distrioptimizer">DistriOptimizer</span></h4>
-<p>ひとまずメモリ使用に関連する箇所ということで、入力データの準備の処理を確認する。 <code>com.intel.analytics.bigdl.optim.DistriOptimizer#optimize</code> メソッドには 以下のような箇所がある。</p>
+<p>ひとまずメモリ使用に関連する箇所ということで、入力データの準備の処理を確認する。
+<code>com.intel.analytics.bigdl.optim.DistriOptimizer#optimize</code>
+メソッドには 以下のような箇所がある。</p>
 <p>com/intel/analytics/bigdl/optim/DistriOptimizer.scala:870</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prepareInput()</span><br></pre></td></tr></table></figure>
-<p>これは <code>com.intel.analytics.bigdl.optim.DistriOptimizer#prepareInput</code> メソッドであり、 内部的に <code>com.intel.analytics.bigdl.optim.AbstractOptimizer#prepareInput</code> メソッドを呼び出し、 入力データをSparkのキャッシュに載せるように処理する。</p>
+<p>これは
+<code>com.intel.analytics.bigdl.optim.DistriOptimizer#prepareInput</code>
+メソッドであり、 内部的に
+<code>com.intel.analytics.bigdl.optim.AbstractOptimizer#prepareInput</code>
+メソッドを呼び出し、
+入力データをSparkのキャッシュに載せるように処理する。</p>
 <p>com/intel/analytics/bigdl/optim/DistriOptimizer.scala:808</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!dataset.toDistributed().isCached) &#123;</span><br><span class="line">  <span class="type">DistriOptimizer</span>.logger.info(<span class="string">"caching training rdd ..."</span>)</span><br><span class="line">  <span class="type">DistriOptimizer</span>.prepareInput(<span class="keyword">this</span>.dataset, <span class="keyword">this</span>.validationDataSet)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>キャシュに載せると箇所は以下の通り。</p>
 <p>com/intel/analytics/bigdl/optim/AbstractOptimizer.scala:279</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span>[bigdl] <span class="function"><span class="keyword">def</span> <span class="title">prepareInput</span></span>[<span class="type">T</span>: <span class="type">ClassTag</span>](dataset: <span class="type">DataSet</span>[<span class="type">MiniBatch</span>[<span class="type">T</span>]],</span><br><span class="line">  validationDataSet: <span class="type">Option</span>[<span class="type">DataSet</span>[<span class="type">MiniBatch</span>[<span class="type">T</span>]]]): <span class="type">Unit</span> = &#123;</span><br><span class="line">  dataset.asInstanceOf[<span class="type">DistributedDataSet</span>[<span class="type">MiniBatch</span>[<span class="type">T</span>]]].cache()</span><br><span class="line">  <span class="keyword">if</span> (validationDataSet.isDefined) &#123;</span><br><span class="line">    validationDataSet.get.toDistributed().cache()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上記の <code>DistributedDataSet</code> の <code>chache</code> メソッドは以下の通り。</p>
+<p>上記の <code>DistributedDataSet</code> の <code>chache</code>
+メソッドは以下の通り。</p>
 <p>com/intel/analytics/bigdl/dataset/DataSet.scala:216</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cache</span></span>(): <span class="type">Unit</span> = &#123;</span><br><span class="line">  <span class="keyword">if</span> (originRDD() != <span class="literal">null</span>) &#123;</span><br><span class="line">    originRDD().count()</span><br><span class="line">  &#125;</span><br><span class="line">  isCached = <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>originRDD</code> の戻り値に対して、<code>count</code> を読んでいる。 ここで <code>count</code> を呼ぶのは、入力データである <code>originRDD</code> の戻り値に入っているRDDをメモリ上にマテリアライズするためである。</p>
-<p><code>count</code> を呼ぶだけでマテリアライズできるのは、予め入力データを定義したときに Spark RDDの <code>cache</code> を利用してキャッシュ化することを指定されているからである。 今回の例では、Optimizerオブジェクトのapplyを利用する際に渡されるデータセット <code>trainSet</code> を 定義する際に予め <code>cache</code> が呼ばれる。</p>
+<p><code>originRDD</code> の戻り値に対して、<code>count</code>
+を読んでいる。 ここで <code>count</code> を呼ぶのは、入力データである
+<code>originRDD</code>
+の戻り値に入っているRDDをメモリ上にマテリアライズするためである。</p>
+<p><code>count</code>
+を呼ぶだけでマテリアライズできるのは、予め入力データを定義したときに
+Spark RDDの <code>cache</code>
+を利用してキャッシュ化することを指定されているからである。
+今回の例では、Optimizerオブジェクトのapplyを利用する際に渡されるデータセット
+<code>trainSet</code> を 定義する際に予め <code>cache</code>
+が呼ばれる。</p>
 <p>com/intel/analytics/bigdl/models/lenet/Train.scala:79</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> trainSet = <span class="type">DataSet</span>.array(load(trainData, trainLabel), sc) -&gt;</span><br><span class="line">  <span class="type">BytesToGreyImg</span>(<span class="number">28</span>, <span class="number">28</span>) -&gt; <span class="type">GreyImgNormalizer</span>(trainMean, trainStd) -&gt; <span class="type">GreyImgToBatch</span>(</span><br><span class="line">  param.batchSize)</span><br></pre></td></tr></table></figure>
-<p><code>trainSet</code> を定義する際、 <code>com.intel.analytics.bigdl.dataset.DataSet$#array(T[], org.apache.spark.SparkContext)</code> メソッドが 呼ばれるのだが、その中で以下のように Sparkの <code>RDD#cache</code> が呼ばれていることがわかる。</p>
+<p><code>trainSet</code> を定義する際、
+<code>com.intel.analytics.bigdl.dataset.DataSet$#array(T[], org.apache.spark.SparkContext)</code>
+メソッドが 呼ばれるのだが、その中で以下のように Sparkの
+<code>RDD#cache</code> が呼ばれていることがわかる。</p>
 <p>com/intel/analytics/bigdl/dataset/DataSet.scala:343</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">array</span></span>[<span class="type">T</span>: <span class="type">ClassTag</span>](localData: <span class="type">Array</span>[<span class="type">T</span>], sc: <span class="type">SparkContext</span>): <span class="type">DistributedDataSet</span>[<span class="type">T</span>] = &#123;</span><br><span class="line">  <span class="keyword">val</span> nodeNumber = <span class="type">Engine</span>.nodeNumber()</span><br><span class="line">  <span class="keyword">new</span> <span class="type">CachedDistriDataSet</span>[<span class="type">T</span>](</span><br><span class="line">    sc.parallelize(localData, nodeNumber)</span><br><span class="line">      <span class="comment">// Keep this line, or the array will be send to worker every time</span></span><br><span class="line">      .coalesce(nodeNumber, <span class="literal">true</span>)</span><br><span class="line">      .mapPartitions(iter =&gt; &#123;</span><br><span class="line">        <span class="type">Iterator</span>.single(iter.toArray)</span><br><span class="line">      &#125;).setName(<span class="string">"cached dataset"</span>)</span><br><span class="line">      .cache()</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>以下、一例。</p>
-<p>具体的には、Optimizerのインスタンスを生成するための <code>apply</code> メソッドはいくつかあるが、 以下のように引数にデータセットを指定する箇所がある。（再掲）</p>
+<p>具体的には、Optimizerのインスタンスを生成するための
+<code>apply</code> メソッドはいくつかあるが、
+以下のように引数にデータセットを指定する箇所がある。（再掲）</p>
 <p>com/intel/analytics/bigdl/optim/Optimizer.scala:619</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_dataset = (<span class="type">DataSet</span>.rdd(sampleRDD) -&gt;</span><br></pre></td></tr></table></figure>
-<p>ここで用いられている <code>com.intel.analytics.bigdl.dataset.DataSet#rdd</code> メソッドは以下の通り。</p>
+<p>ここで用いられている
+<code>com.intel.analytics.bigdl.dataset.DataSet#rdd</code>
+メソッドは以下の通り。</p>
 <p>com/intel/analytics/bigdl/dataset/DataSet.scala:363</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rdd</span></span>[<span class="type">T</span>: <span class="type">ClassTag</span>](data: <span class="type">RDD</span>[<span class="type">T</span>], partitionNum: <span class="type">Int</span> = <span class="type">Engine</span>.nodeNumber()</span><br><span class="line">  ): <span class="type">DistributedDataSet</span>[<span class="type">T</span>] = &#123;</span><br><span class="line">  <span class="keyword">new</span> <span class="type">CachedDistriDataSet</span>[<span class="type">T</span>](</span><br><span class="line">    data.coalesce(partitionNum, <span class="literal">true</span>)</span><br><span class="line">      .mapPartitions(iter =&gt; &#123;</span><br><span class="line">        <span class="type">Iterator</span>.single(iter.toArray)</span><br><span class="line">      &#125;).setName(<span class="string">"cached dataset"</span>)</span><br><span class="line">      .cache()</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>com.intel.analytics.bigdl.dataset.CachedDistriDataSet#CachedDistriDataSet</code> のコンストラクタ引数に、 <code>org.apache.spark.rdd.RDD#cache</code> を用いてキャッシュ化することを指定したRDDを渡していることがわかる。</p>
+<p><code>com.intel.analytics.bigdl.dataset.CachedDistriDataSet#CachedDistriDataSet</code>
+のコンストラクタ引数に、 <code>org.apache.spark.rdd.RDD#cache</code>
+を用いてキャッシュ化することを指定したRDDを渡していることがわかる。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -837,7 +1002,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/11/13/BigDL-memory-usage/" data-id="cl2nztnkg00295xqisxs16p5t" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/11/13/BigDL-memory-usage/" data-id="cl2o9pbg3013k18rzcwqw9xhq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -958,20 +1123,25 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://texwiki.texjp.org/?Linux#texliveinstall" target="_blank" rel="noopener">TeX Liveのインストール手順</a></li>
+<li><a href="https://texwiki.texjp.org/?Linux#texliveinstall" target="_blank" rel="noopener">TeX
+Liveのインストール手順</a></li>
 <li><a href="https://github.com/jgm/pandoc-templates/blob/master/default.latex" target="_blank" rel="noopener">default.latex</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://texwiki.texjp.org/?Linux#texliveinstall" target="_blank" rel="noopener">TeX Liveのインストール手順</a> の通り、最新版をインストールする。 なお、フルセットでインストールした。</p>
+<p><a href="https://texwiki.texjp.org/?Linux#texliveinstall" target="_blank" rel="noopener">TeX
+Liveのインストール手順</a> の通り、最新版をインストールする。
+なお、フルセットでインストールした。</p>
 <p>PDFを作成するときは以下のようにする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc test.md -o test.pdf --pdf-engine=lualatex -V documentclass=bxjsarticle -V classoption=pandoc</span><br></pre></td></tr></table></figure>
-<p>ただし、 <a href="https://github.com/jgm/pandoc-templates/blob/master/default.latex" target="_blank" rel="noopener">default.latex</a> に示すとおり、リンクに色を付けるなどしたいので、 上記マークダウンファイルには先頭部分にYAMLでコンフィグを記載することとした。</p>
+<p>ただし、 <a href="https://github.com/jgm/pandoc-templates/blob/master/default.latex" target="_blank" rel="noopener">default.latex</a>
+に示すとおり、リンクに色を付けるなどしたいので、
+上記マークダウンファイルには先頭部分にYAMLでコンフィグを記載することとした。</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: テスト文章</span><br><span class="line">date: 2020-10-30</span><br><span class="line">author: dobachi</span><br><span class="line">colorlinks: yes</span><br><span class="line">numbersections: yes</span><br><span class="line">toc: yes</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section"># test</span></span><br><span class="line"></span><br><span class="line"><span class="section">## これはテスト</span></span><br><span class="line"></span><br><span class="line">[<span class="string">Google</span>](<span class="link">https://www.google.com</span>)</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- vim: set ft=markdown : --&gt;</span></span></span><br></pre></td></tr></table></figure>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -984,7 +1154,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/10/29/Generate-PDF-using-pandoc/" data-id="cl2nztnln005h5xqibsdccc2b" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/10/29/Generate-PDF-using-pandoc/" data-id="cl2o9pb5k003t18rzebe7y2r4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1105,11 +1275,13 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#パッケージインポート">パッケージインポート</a></li>
-<li><a href="#profileを使ったクレデンシャル設定">profileを使ったクレデンシャル設定</a><ul>
-<li><a href="#補足パラメータと指定するクラスについて">（補足）パラメータと指定するクラスについて</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#パッケージインポート" id="toc-パッケージインポート">パッケージインポート</a></li>
+<li><a href="#profileを使ったクレデンシャル設定" id="toc-profileを使ったクレデンシャル設定">profileを使ったクレデンシャル設定</a>
+<ul>
+<li><a href="#補足パラメータと指定するクラスについて" id="toc-補足パラメータと指定するクラスについて">（補足）パラメータと指定するクラスについて</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -1121,22 +1293,39 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="パッケージインポート">パッケージインポート</span></h2>
-<p><a href="https://spark.apache.org/docs/latest/cloud-integration.html" target="_blank" rel="noopener">Sparkの公式ドキュメント</a> には、org.apache.spark:hadoop-cloud_2.12を利用するよう記載されているが、 このMavenパッケージは見当たらなかった。</p>
-<p>そこで、 <a href="https://hadoop.apache.org/docs/current/hadoop-aws/tools/hadoop-aws/index.html" target="_blank" rel="noopener">Hadoopの公式ドキュメント</a> の通り、hadoop-awsをインポートすると、それに関連した依存関係をインポートすることにした。 spark-shellで試すとしたら以下の通り。</p>
+<p><a href="https://spark.apache.org/docs/latest/cloud-integration.html" target="_blank" rel="noopener">Sparkの公式ドキュメント</a>
+には、org.apache.spark:hadoop-cloud_2.12を利用するよう記載されているが、
+このMavenパッケージは見当たらなかった。</p>
+<p>そこで、 <a href="https://hadoop.apache.org/docs/current/hadoop-aws/tools/hadoop-aws/index.html" target="_blank" rel="noopener">Hadoopの公式ドキュメント</a>
+の通り、hadoop-awsをインポートすると、それに関連した依存関係をインポートすることにした。
+spark-shellで試すとしたら以下の通り。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> /opt/spark/default/bin/spark-shell --packages org.apache.hadoop:hadoop-aws:3.2.0</span><br></pre></td></tr></table></figure>
 <h2><span id="profileを使ったクレデンシャル設定">profileを使ったクレデンシャル設定</span></h2>
-<p>awscliを利用しているとしたら、profileを設定しながらクレデンシャルを使い分けていることもあると思う。 その場合、起動時の環境変数でプロフィールを指定しながら、以下のようにproviderを指定することで、 profileを利用したクレデンシャル管理の仕組みを利用してアクセスできる。</p>
+<p>awscliを利用しているとしたら、profileを設定しながらクレデンシャルを使い分けていることもあると思う。
+その場合、起動時の環境変数でプロフィールを指定しながら、以下のようにproviderを指定することで、
+profileを利用したクレデンシャル管理の仕組みを利用してアクセスできる。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> AWS_PROFILE=s3test /opt/spark/default/bin/spark-shell --packages org.apache.hadoop:hadoop-aws:3.2.0</span><br></pre></td></tr></table></figure>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; spark.sparkContext.hadoopConfiguration.set(<span class="string">"fs.s3a.aws.credentials.provider"</span>, <span class="string">"com.amazonaws.auth.DefaultAWSCredentialsProviderChain"</span>)</span><br></pre></td></tr></table></figure>
 <h3><span id="補足パラメータと指定するクラスについて">（補足）パラメータと指定するクラスについて</span></h3>
 <p>ちなみに、上記パラメータの説明には、</p>
 <blockquote>
-<p>If unspecified, then the default list of credential provider classes, queried in sequence, is: 1. org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider: Uses the values of fs.s3a.access.key and fs.s3a.secret.key. 2. com.amazonaws.auth.EnvironmentVariableCredentialsProvider: supports configuration of AWS access key ID and secret access key in environment variables named AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY, as documented in the AWS SDK. 3. com.amazonaws.auth.InstanceProfileCredentialsProvider: supports use of instance profile credentials if running in an EC2 VM.</p>
+<p>If unspecified, then the default list of credential provider classes,
+queried in sequence, is: 1.
+org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider: Uses the values
+of fs.s3a.access.key and fs.s3a.secret.key. 2.
+com.amazonaws.auth.EnvironmentVariableCredentialsProvider: supports
+configuration of AWS access key ID and secret access key in environment
+variables named AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY, as
+documented in the AWS SDK. 3.
+com.amazonaws.auth.InstanceProfileCredentialsProvider: supports use of
+instance profile credentials if running in an EC2 VM.</p>
 </blockquote>
 <p>のように記載されている。</p>
-<p>また、「Using Named Profile Credentials with ProfileCredentialsProvider」の節には、</p>
+<p>また、「Using Named Profile Credentials with
+ProfileCredentialsProvider」の節には、</p>
 <blockquote>
-<p>Declare com.amazonaws.auth.profile.ProfileCredentialsProvider as the provider.</p>
+<p>Declare com.amazonaws.auth.profile.ProfileCredentialsProvider as the
+provider.</p>
 </blockquote>
 <p>と書かれており、上記Default...でなくても良い。（実際に試したところ動作した）</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
@@ -1150,7 +1339,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/09/14/Access-AWS-S3-from-Hadoop3/" data-id="cl2nztnk2001a5xqivgqv3wz0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/09/14/Access-AWS-S3-from-Hadoop3/" data-id="cl2o9pb4b000y18rzhsz213v6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1271,24 +1460,32 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://qiita.com/huequica/items/6067d3a022c7cd719ab2" target="_blank" rel="noopener">QMK Firmwareでファームウェアをビルドしようとしたらavr-gccでコケた話</a></li>
+<li><a href="https://qiita.com/huequica/items/6067d3a022c7cd719ab2" target="_blank" rel="noopener">QMK
+Firmwareでファームウェアをビルドしようとしたらavr-gccでコケた話</a></li>
 <li><a href="https://docs.qmk.fm/#/newbs_building_firmware" target="_blank" rel="noopener">公式の環境構築手順</a></li>
 <li><a href="https://docs.qmk.fm/#/newbs_flashing" target="_blank" rel="noopener">公式のコンパイル手順</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>2020/9に久しぶりにコンパイルしようとしたら、だいぶ勝手が変わっていた。</p>
-<p><a href="https://docs.qmk.fm/#/newbs_building_firmware" target="_blank" rel="noopener">公式の環境構築手順</a> に従って環境を構築した。 なお、インストールするよう指定されていたパッケージだけでは足りなかったので、 以下のようにインストールした。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> pacman --needed --noconfirm --<span class="built_in">disable</span>-download-timeout -S git mingw-w64-x86_64-toolchain mingw-w64-x86_64-python3-pip python3 python3-pip make diffutils</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://docs.qmk.fm/#/newbs_building_firmware" target="_blank" rel="noopener">公式の環境構築手順</a>
+に従って環境を構築した。
+なお、インストールするよう指定されていたパッケージだけでは足りなかったので、
+以下のようにインストールした。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> pacman --needed --noconfirm --disable-download-timeout -S git mingw-w64-x86_64-toolchain mingw-w64-x86_64-python3-pip python3 python3-pip make diffutils</span><br></pre></td></tr></table></figure>
 <p>最初、以下を忘れたため、失敗したので注意・・・。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> qmk setup</span></span><br></pre></td></tr></table></figure>
-<p><a href="https://docs.qmk.fm/#/newbs_flashing" target="_blank" rel="noopener">公式のコンパイル手順</a> に従うと、qmkコマンドを利用してコンパイル、フラッシュするようだ。</p>
-<p>ただ、 <a href="https://qiita.com/huequica/items/6067d3a022c7cd719ab2" target="_blank" rel="noopener">QMK Firmwareでファームウェアをビルドしようとしたらavr-gccでコケた話</a> に記載されているのと同様に、 <code>make git-submodules</code> が必要だった。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> qmk setup</span><br></pre></td></tr></table></figure>
+<p><a href="https://docs.qmk.fm/#/newbs_flashing" target="_blank" rel="noopener">公式のコンパイル手順</a>
+に従うと、qmkコマンドを利用してコンパイル、フラッシュするようだ。</p>
+<p>ただ、 <a href="https://qiita.com/huequica/items/6067d3a022c7cd719ab2" target="_blank" rel="noopener">QMK
+Firmwareでファームウェアをビルドしようとしたらavr-gccでコケた話</a>
+に記載されているのと同様に、 <code>make git-submodules</code>
+が必要だった。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -1300,7 +1497,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/09/06/qmk-firmware-202009/" data-id="cl2nztnq500j85xqiqwavlife" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/09/06/qmk-firmware-202009/" data-id="cl2o9pb9v00ei18rzgme3evql" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1421,29 +1618,51 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#レポジトリのdeploy-key設定">レポジトリのDeploy Key設定</a></li>
-<li><a href="#github-actionsのワークフローの記述">GitHub Actionsのワークフローの記述</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#レポジトリのdeploy-key設定" id="toc-レポジトリのdeploy-key設定">レポジトリのDeploy Key設定</a></li>
+<li><a href="#github-actionsのワークフローの記述" id="toc-github-actionsのワークフローの記述">GitHub
+Actionsのワークフローの記述</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する</a></li>
+<li><a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub
+Actionsを用いてGitHub Pagesへのデプロイを自動化する</a></li>
 <li><a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> がSphinx JPのユーザ会による記事だったので参考になるが、 依存関係を都度pipインストールしているのが気になった。</p>
-<p><a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a> を利用すると良さそうだが、 この手順ではGITHUB TOKENを利用してデプロイしているのが気になった。 レポジトリごとに設定できる、Deploy Keyを利用したい。</p>
-<p>そこでビルドには <a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a> を利用し、デプロイには <a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> の手順を利用することにした。</p>
+<p><a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub
+Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> がSphinx
+JPのユーザ会による記事だったので参考になるが、
+依存関係を都度pipインストールしているのが気になった。</p>
+<p><a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a>
+を利用すると良さそうだが、 この手順ではGITHUB
+TOKENを利用してデプロイしているのが気になった。
+レポジトリごとに設定できる、Deploy Keyを利用したい。</p>
+<p>そこでビルドには <a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a>
+を利用し、デプロイには <a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub
+Actionsを用いてGitHub Pagesへのデプロイを自動化する</a>
+の手順を利用することにした。</p>
 <h2><span id="レポジトリのdeploy-key設定">レポジトリのDeploy Key設定</span></h2>
-<p><a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> の「Deploy keys の設定」章を参考に、 当該レポジトリのDeploy Keyを登録する。</p>
-<p>任意の環境（ここではWSLのUbuntu18を利用した）で、 以下のコマンドを実行。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh-keygen -t rsa -b 4096 -C <span class="string">"＜レポジトリで使用しているメールアドレス＞"</span> -f ＜任意の名前＞ -N <span class="string">""</span></span></span><br></pre></td></tr></table></figure>
-<p>上記記事の通り、秘密鍵と公開鍵をGitHubのウェブUIで登録する。 なお、「Secrets」タブで登録した名称は、後ほどGitHub Actionsのワークフロー内で使用する。</p>
-<h2><span id="github-actionsのワークフローの記述">GitHub Actionsのワークフローの記述</span></h2>
-<p><a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a> の例を参考に、 ワークフローを記述する。 なお、最後のデプロイする部分は、 <a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> を参考に、 Deploy Keyを利用するよう修正した。</p>
+<p><a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub
+Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> の「Deploy keys
+の設定」章を参考に、 当該レポジトリのDeploy Keyを登録する。</p>
+<p>任意の環境（ここではWSLのUbuntu18を利用した）で、
+以下のコマンドを実行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh-keygen -t rsa -b 4096 -C "＜レポジトリで使用しているメールアドレス＞" -f ＜任意の名前＞ -N ""</span><br></pre></td></tr></table></figure>
+<p>上記記事の通り、秘密鍵と公開鍵をGitHubのウェブUIで登録する。
+なお、「Secrets」タブで登録した名称は、後ほどGitHub
+Actionsのワークフロー内で使用する。</p>
+<h2><span id="githubactionsのワークフローの記述">GitHub
+Actionsのワークフローの記述</span></h2>
+<p><a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a>
+の例を参考に、 ワークフローを記述する。 なお、最後のデプロイする部分は、
+<a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub
+Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> を参考に、
+Deploy Keyを利用するよう修正した。</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">CI</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 今回はマスタブランチへのPushをトリガとする。</span></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line"><span class="attr">  push:</span></span><br><span class="line"><span class="attr">    branches:</span>    </span><br><span class="line"><span class="bullet">      -</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line"><span class="attr">  build:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="comment"># 今回はmasterブランチへのpushをトリガとしているので不要だが、gh-pagesへのpushをトリガとする場合など</span></span><br><span class="line">    <span class="comment"># 無限ループを回避する際には以下のように記述する。</span></span><br><span class="line"><span class="attr">    if:</span> <span class="string">"!contains(github.event.head_commit.message, 'Update documentation via GitHub Actions')"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    steps:</span></span><br><span class="line"><span class="attr">    - uses:</span> <span class="string">actions/checkout@v1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 今回はMakefileを利用するので、makeコマンドを使用するよう元ネタから修正した。</span></span><br><span class="line">    <span class="comment"># またドキュメントのソースが含まれているディレクトリは各自の定義に依存する。</span></span><br><span class="line"><span class="attr">    - uses:</span> <span class="string">ammaraskar/sphinx-action@master</span></span><br><span class="line"><span class="attr">      with:</span></span><br><span class="line"><span class="attr">        build-command:</span> <span class="string">"make html"</span></span><br><span class="line"><span class="attr">        docs-folder:</span> <span class="string">"documents/"</span></span><br><span class="line">    <span class="comment"># 先ほどGitHubのウェブUIで定義した秘密鍵名を使用する。</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">Commit</span> <span class="string">documentation</span> <span class="string">changes</span> <span class="string">and</span> <span class="string">push</span> <span class="string">it</span></span><br><span class="line"><span class="attr">      run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        mkdir ~/.ssh</span></span><br><span class="line"><span class="string">        ssh-keyscan -t rsa github.com &gt;&gt; ~/.ssh/known_hosts</span></span><br><span class="line"><span class="string">        echo "$<span class="template-variable">&#123;&#123; secrets.＜先ほどGitHubウェブUIで定義した秘密鍵名＞ &#125;&#125;</span>" &gt; ~/.ssh/id_rsa</span></span><br><span class="line"><span class="string">        chmod 400 ~/.ssh/id_rsa</span></span><br><span class="line"><span class="string">        git clone git@github.com:$&#123;GITHUB_REPOSITORY&#125;.git --branch gh-pages --single-branch gh-pages</span></span><br><span class="line"><span class="string">        cp -r documents/_build/html/* gh-pages/</span></span><br><span class="line"><span class="string">        cd gh-pages</span></span><br><span class="line"><span class="string">        git config --local user.email "action@github.com"</span></span><br><span class="line"><span class="string">        git config --local user.name "GitHub Action"</span></span><br><span class="line"><span class="string">        git add .</span></span><br><span class="line"><span class="string">        git commit -m "Update documentation via GitHub Actions" -a || true</span></span><br><span class="line"><span class="string">        git push origin HEAD:gh-pages</span></span><br><span class="line"><span class="string">        # The above command will fail if no changes were present, so we ignore</span></span><br><span class="line"><span class="string">        # that.</span></span><br><span class="line"><span class="string">    # ===============================</span></span><br></pre></td></tr></table></figure>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -1456,7 +1675,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/08/09/Use-GitHub-actions-to-deploy-documents/" data-id="cl2nztnox00fi5xqi85zt798b" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/08/09/Use-GitHub-actions-to-deploy-documents/" data-id="cl2o9pb8h00b118rzncrfk5f8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1567,30 +1786,35 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+1.4.0+Release" target="_blank" rel="noopener">Apache Bigtop 1.4.0のパッケージバージョン</a></li>
+<li><a href="https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+1.4.0+Release" target="_blank" rel="noopener">Apache
+Bigtop 1.4.0のパッケージバージョン</a></li>
 <li><a href="https://downloads.apache.org/bigtop/" target="_blank" rel="noopener">レポジトリ関連の資材置き場</a></li>
 <li><a href="https://downloads.apache.org/bigtop/bigtop-1.4.0/repos/centos7/bigtop.repo" target="_blank" rel="noopener">CentOS7のbigtop.repo</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>今回は、2020/7/21時点の最新バージョンである <a href="https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+1.4.0+Release" target="_blank" rel="noopener">Apache Bigtop 1.4.0のパッケージバージョン</a> の Hadoopをインストールできるかどうかを試してみることとする。</p>
-<p>Yumのrepoファイルは <a href="https://downloads.apache.org/bigtop/" target="_blank" rel="noopener">レポジトリ関連の資材置き場</a> 以下にある。 例えば、今回はCentOS7を利用することにするので、 <a href="https://downloads.apache.org/bigtop/bigtop-1.4.0/repos/centos7/bigtop.repo" target="_blank" rel="noopener">CentOS7のbigtop.repo</a> あたりを利用する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /etc/yum.repos.d</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo wget https://downloads.apache.org/bigtop/bigtop-1.4.0/repos/centos7/bigtop.repo</span></span><br></pre></td></tr></table></figure>
+<p>今回は、2020/7/21時点の最新バージョンである <a href="https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+1.4.0+Release" target="_blank" rel="noopener">Apache
+Bigtop 1.4.0のパッケージバージョン</a> の
+Hadoopをインストールできるかどうかを試してみることとする。</p>
+<p>Yumのrepoファイルは <a href="https://downloads.apache.org/bigtop/" target="_blank" rel="noopener">レポジトリ関連の資材置き場</a>
+以下にある。 例えば、今回はCentOS7を利用することにするので、 <a href="https://downloads.apache.org/bigtop/bigtop-1.4.0/repos/centos7/bigtop.repo" target="_blank" rel="noopener">CentOS7のbigtop.repo</a>
+あたりを利用する。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd /etc/yum.repos.d</span><br><span class="line"><span class="meta">$</span> sudo wget https://downloads.apache.org/bigtop/bigtop-1.4.0/repos/centos7/bigtop.repo</span><br></pre></td></tr></table></figure>
 <p>ひとまずパッケージが見つかるかどうか、確認。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum search hadoop-conf-pseudo</span></span><br><span class="line">読み込んだプラグイン:fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: d36uatko69830t.cloudfront.net</span><br><span class="line"> * epel: d2lzkl7pfhq30w.cloudfront.net</span><br><span class="line"> * extras: d36uatko69830t.cloudfront.net</span><br><span class="line"> * updates: d36uatko69830t.cloudfront.net</span><br><span class="line">=========================================== N/S matched: hadoop-conf-pseudo ============================================</span><br><span class="line">hadoop-conf-pseudo.x86_64 : Pseudo-distributed Hadoop configuration</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo yum search hadoop-conf-pseudo</span><br><span class="line">読み込んだプラグイン:fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: d36uatko69830t.cloudfront.net</span><br><span class="line"> * epel: d2lzkl7pfhq30w.cloudfront.net</span><br><span class="line"> * extras: d36uatko69830t.cloudfront.net</span><br><span class="line"> * updates: d36uatko69830t.cloudfront.net</span><br><span class="line">=========================================== N/S matched: hadoop-conf-pseudo ============================================</span><br><span class="line">hadoop-conf-pseudo.x86_64 : Pseudo-distributed Hadoop configuration</span><br></pre></td></tr></table></figure>
 <p>確認できたので、試しにインストール。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install hadoop-conf-pseudo</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo yum install hadoop-conf-pseudo</span><br></pre></td></tr></table></figure>
 <p>自分の手元の環境では、依存関係で以下のパッケージがインストールされた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">========================================================================================================================</span><br><span class="line"> Package                                    アーキテクチャー   バージョン                      リポジトリー        容量</span><br><span class="line">========================================================================================================================</span><br><span class="line">インストール中:</span><br><span class="line"> hadoop-conf-pseudo                         x86_64             2.8.5-1.el7                     bigtop              20 k</span><br><span class="line">依存性関連でのインストールをします:</span><br><span class="line"> at                                         x86_64             3.1.13-24.el7                   base                51 k</span><br><span class="line"> bc                                         x86_64             1.06.95-13.el7                  base               115 k</span><br><span class="line"> bigtop-groovy                              noarch             2.4.10-1.el7                    bigtop             9.8 M</span><br><span class="line"> bigtop-jsvc                                x86_64             1.0.15-1.el7                    bigtop              29 k</span><br><span class="line"> bigtop-utils                               noarch             1.4.0-1.el7                     bigtop              11 k</span><br><span class="line"> cups-client                                x86_64             1:1.6.3-43.el7                  base               152 k</span><br><span class="line"> ed                                         x86_64             1.9-4.el7                       base                72 k</span><br><span class="line"> hadoop                                     x86_64             2.8.5-1.el7                     bigtop              24 M</span><br><span class="line"> hadoop-hdfs                                x86_64             2.8.5-1.el7                     bigtop              24 M</span><br><span class="line"> hadoop-hdfs-datanode                       x86_64             2.8.5-1.el7                     bigtop             5.7 k</span><br><span class="line"> hadoop-hdfs-namenode                       x86_64             2.8.5-1.el7                     bigtop             5.8 k</span><br><span class="line"> hadoop-hdfs-secondarynamenode              x86_64             2.8.5-1.el7                     bigtop             5.8 k</span><br><span class="line"> hadoop-mapreduce                           x86_64             2.8.5-1.el7                     bigtop              34 M</span><br><span class="line"> hadoop-mapreduce-historyserver             x86_64             2.8.5-1.el7                     bigtop             5.8 k</span><br><span class="line"> hadoop-yarn                                x86_64             2.8.5-1.el7                     bigtop              20 M</span><br><span class="line"> hadoop-yarn-nodemanager                    x86_64             2.8.5-1.el7                     bigtop             5.7 k</span><br><span class="line"> hadoop-yarn-resourcemanager                x86_64             2.8.5-1.el7                     bigtop             5.6 k</span><br><span class="line"> libpcap                                    x86_64             14:1.5.3-12.el7                 base               139 k</span><br><span class="line"> m4                                         x86_64             1.4.16-10.el7                   base               256 k</span><br><span class="line"> mailx                                      x86_64             12.5-19.el7                     base               245 k</span><br><span class="line"> nmap-ncat                                  x86_64             2:6.40-19.el7                   base               206 k</span><br><span class="line"> patch                                      x86_64             2.7.1-12.el7_7                  base               111 k</span><br><span class="line"> psmisc                                     x86_64             22.20-16.el7                    base               141 k</span><br><span class="line"> redhat-lsb-core                            x86_64             4.1-27.el7.centos.1             base                38 k</span><br><span class="line"> redhat-lsb-submod-security                 x86_64             4.1-27.el7.centos.1             base                15 k</span><br><span class="line"> spax                                       x86_64             1.5.2-13.el7                    base               260 k</span><br><span class="line"> time                                       x86_64             1.7-45.el7                      base                30 k</span><br><span class="line"> zookeeper                                  x86_64             3.4.6-1.el7                     bigtop             7.0 M</span><br></pre></td></tr></table></figure>
 <p>initスクリプトがインストールされていることがわかる。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -1 /etc/init.d/</span></span><br><span class="line">README</span><br><span class="line">functions</span><br><span class="line">hadoop-hdfs-datanode</span><br><span class="line">hadoop-hdfs-namenode</span><br><span class="line">hadoop-hdfs-secondarynamenode</span><br><span class="line">hadoop-mapreduce-historyserver</span><br><span class="line">hadoop-yarn-nodemanager</span><br><span class="line">hadoop-yarn-resourcemanager</span><br><span class="line">netconsole</span><br><span class="line">network</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ls -1 /etc/init.d/</span><br><span class="line">README</span><br><span class="line">functions</span><br><span class="line">hadoop-hdfs-datanode</span><br><span class="line">hadoop-hdfs-namenode</span><br><span class="line">hadoop-hdfs-secondarynamenode</span><br><span class="line">hadoop-mapreduce-historyserver</span><br><span class="line">hadoop-yarn-nodemanager</span><br><span class="line">hadoop-yarn-resourcemanager</span><br><span class="line">netconsole</span><br><span class="line">network</span><br></pre></td></tr></table></figure>
 <p>ひとまずHDFSをフォーマット。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo -u hdfs hdfs namenode -format</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo -u hdfs hdfs namenode -format</span><br></pre></td></tr></table></figure>
 <p>あとは、上記の各種Hadoopサービスを立ち上げれば良い。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -1603,7 +1827,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/07/21/Install-Bigtop-RPMs-using-Yum/" data-id="cl2nztnmg007x5xqi13rnvws2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/07/21/Install-Bigtop-RPMs-using-Yum/" data-id="cl2o9pb67005a18rzfiut4ia8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1724,63 +1948,113 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#sql-ddlへの対応やhive-メタストアの対応">SQL DDLへの対応やHive メタストアの対応</a><ul>
-<li><a href="#起動時のオプション例">起動時のオプション例</a></li>
-<li><a href="#パーサの呼び出し流れ">パーサの呼び出し流れ</a></li>
-<li><a href="#カスタムカタログ">カスタムカタログ</a></li>
-<li><a href="#scalaやpythonでの例">ScalaやPythonでの例</a></li>
-<li><a href="#sqlでのマージ処理">SQLでのマージ処理</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#sql-ddlへの対応やhive-メタストアの対応" id="toc-sql-ddlへの対応やhive-メタストアの対応">SQL DDLへの対応やHive
+メタストアの対応</a>
+<ul>
+<li><a href="#起動時のオプション例" id="toc-起動時のオプション例">起動時のオプション例</a></li>
+<li><a href="#パーサの呼び出し流れ" id="toc-パーサの呼び出し流れ">パーサの呼び出し流れ</a></li>
+<li><a href="#カスタムカタログ" id="toc-カスタムカタログ">カスタムカタログ</a></li>
+<li><a href="#scalaやpythonでの例" id="toc-scalaやpythonでの例">ScalaやPythonでの例</a></li>
+<li><a href="#sqlでのマージ処理" id="toc-sqlでのマージ処理">SQLでのマージ処理</a></li>
 </ul></li>
-<li><a href="#presto-athena用のメタデータの自動生成">Presto / Athena用のメタデータの自動生成</a></li>
-<li><a href="#テーブル履歴の切り詰めの管理">テーブル履歴の切り詰めの管理</a></li>
-<li><a href="#ユーザメタデータ">ユーザメタデータ</a></li>
-<li><a href="#azureのdata-lake-storage-gen2">AzureのData Lake Storage Gen2</a></li>
-<li><a href="#ストリーム処理のone-timeトリガの改善">ストリーム処理のone-timeトリガの改善</a></li>
+<li><a href="#presto-athena用のメタデータの自動生成" id="toc-presto-athena用のメタデータの自動生成">Presto /
+Athena用のメタデータの自動生成</a></li>
+<li><a href="#テーブル履歴の切り詰めの管理" id="toc-テーブル履歴の切り詰めの管理">テーブル履歴の切り詰めの管理</a></li>
+<li><a href="#ユーザメタデータ" id="toc-ユーザメタデータ">ユーザメタデータ</a></li>
+<li><a href="#azureのdata-lake-storage-gen2" id="toc-azureのdata-lake-storage-gen2">AzureのData Lake Storage
+Gen2</a></li>
+<li><a href="#ストリーム処理のone-timeトリガの改善" id="toc-ストリーム処理のone-timeトリガの改善">ストリーム処理のone-timeトリガの改善</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://github.com/delta-io/delta/releases" target="_blank" rel="noopener">Delta Lake リリースノート</a></li>
+<li><a href="https://github.com/delta-io/delta/releases" target="_blank" rel="noopener">Delta Lake
+リリースノート</a></li>
 <li><a href="https://docs.delta.io/0.7.0/delta-batch.html" target="_blank" rel="noopener">0.7.0のテーブル読み書き</a></li>
 <li><a href="https://docs.delta.io/0.6.1/delta-batch.html" target="_blank" rel="noopener">0.6.1のテーブル読み書き</a></li>
 <li><a href="https://github.com/delta-io/delta/issues/307#issuecomment-582186407" target="_blank" rel="noopener">Spark3系でないとHiveメタストアに対応できない理由</a></li>
 <li><a href="https://github.com/delta-io/delta/blob/master/examples/scala/src/main/scala/example/QuickstartSQL.scala#L58" target="_blank" rel="noopener">SQLを用いたマージの例</a></li>
-<li><a href="https://docs.delta.io/0.7.0/delta-batch.html#table-properties" target="_blank" rel="noopener">Table Properties</a></li>
-<li><a href="https://docs.delta.io/0.7.0/delta-batch.html#table-properties" target="_blank" rel="noopener">Table Properties</a></li>
-<li><a href="https://docs.delta.io/0.7.0/delta-storage.html#azure-data-lake-storage-gen2" target="_blank" rel="noopener">0.7.0で対応したAzure Data Lake Storage Gen2</a></li>
+<li><a href="https://docs.delta.io/0.7.0/delta-batch.html#table-properties" target="_blank" rel="noopener">Table
+Properties</a></li>
+<li><a href="https://docs.delta.io/0.7.0/delta-batch.html#table-properties" target="_blank" rel="noopener">Table
+Properties</a></li>
+<li><a href="https://docs.delta.io/0.7.0/delta-storage.html#azure-data-lake-storage-gen2" target="_blank" rel="noopener">0.7.0で対応したAzure
+Data Lake Storage Gen2</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>0.7.0が出たので、本リリースの特徴を確認する。</p>
-<h2><span id="sql-ddlへの対応やhive-メタストアの対応">SQL DDLへの対応やHive メタストアの対応</span></h2>
-<p>0.6系まではScala、Python APIのみであったが、SQL DDLにも対応した。 <a href="https://docs.delta.io/0.7.0/delta-batch.html" target="_blank" rel="noopener">0.7.0のテーブル読み書き</a> と <a href="https://docs.delta.io/0.6.1/delta-batch.html" target="_blank" rel="noopener">0.6.1のテーブル読み書き</a> を見比べると、SQLの例が載っていることがわかる。 対応するSQL構文については <code>src/main/antlr4/io/delta/sql/parser/DeltaSqlBase.g4</code> あたりを見ると良い。</p>
-<p>なお、 <a href="https://github.com/delta-io/delta/issues/307#issuecomment-582186407" target="_blank" rel="noopener">Spark3系でないとHiveメタストアに対応できない理由</a> を見る限り、 Spark3系のAPI（や、DataSourceV2も、かな）を使わないと、Data SourceのカスタムAPIを利用できないため、 これまでHiveメタストアのような外部メタストアと連携したDelta Lakeのメタデータ管理ができなかった、とのこと。</p>
-<p>なお、今回の対応でSparkのカタログ機能を利用することになったので、起動時もしくはSparkSession生成時の オプション指定が必要になった。 その代わり、ライブラリの明示的なインポートが不要であり、クエリはDelta Lakeのパーサで解釈された後、 解釈できないようであれば通常のパーサで処理されるようになる。</p>
+<h2><span id="sql-ddlへの対応やhiveメタストアの対応">SQL DDLへの対応やHive
+メタストアの対応</span></h2>
+<p>0.6系まではScala、Python APIのみであったが、SQL DDLにも対応した。 <a href="https://docs.delta.io/0.7.0/delta-batch.html" target="_blank" rel="noopener">0.7.0のテーブル読み書き</a>
+と <a href="https://docs.delta.io/0.6.1/delta-batch.html" target="_blank" rel="noopener">0.6.1のテーブル読み書き</a>
+を見比べると、SQLの例が載っていることがわかる。
+対応するSQL構文については
+<code>src/main/antlr4/io/delta/sql/parser/DeltaSqlBase.g4</code>
+あたりを見ると良い。</p>
+<p>なお、 <a href="https://github.com/delta-io/delta/issues/307#issuecomment-582186407" target="_blank" rel="noopener">Spark3系でないとHiveメタストアに対応できない理由</a>
+を見る限り、 Spark3系のAPI（や、DataSourceV2も、かな）を使わないと、Data
+SourceのカスタムAPIを利用できないため、
+これまでHiveメタストアのような外部メタストアと連携したDelta
+Lakeのメタデータ管理ができなかった、とのこと。</p>
+<p>なお、今回の対応でSparkのカタログ機能を利用することになったので、起動時もしくはSparkSession生成時の
+オプション指定が必要になった。
+その代わり、ライブラリの明示的なインポートが不要であり、クエリはDelta
+Lakeのパーサで解釈された後、
+解釈できないようであれば通常のパーサで処理されるようになる。</p>
 <h3><span id="起動時のオプション例">起動時のオプション例</span></h3>
 <p>例：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-shell --packages io.delta:delta-core_2.12:0.7.0 --conf <span class="string">"spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension"</span> --conf <span class="string">"spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"</span></span></span><br></pre></td></tr></table></figure>
-<p>なお、ここでは <code>SparkSessionExtensions</code> を利用し、SparkSession生成時にカスタムルール等を挿入している。 この機能は2020/06/19時点でSpark本体側でExperimentalであることに注意。 今後もSpark本体側の仕様変更に引きずられる可能性はある。</p>
+<p>なお、ここでは <code>SparkSessionExtensions</code>
+を利用し、SparkSession生成時にカスタムルール等を挿入している。
+この機能は2020/06/19時点でSpark本体側でExperimentalであることに注意。
+今後もSpark本体側の仕様変更に引きずられる可能性はある。</p>
 <h3><span id="パーサの呼び出し流れ">パーサの呼び出し流れ</span></h3>
 <p>セッション拡張機能を利用し、パーサが差し替えられている。</p>
 <p>io/delta/sql/DeltaSparkSessionExtension.scala:73</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DeltaSparkSessionExtension</span> <span class="keyword">extends</span> (<span class="params"><span class="type">SparkSessionExtensions</span> =&gt; <span class="type">Unit</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">apply</span></span>(extensions: <span class="type">SparkSessionExtensions</span>): <span class="type">Unit</span> = &#123;</span><br><span class="line">    extensions.injectParser &#123; (session, parser) =&gt;</span><br><span class="line">      <span class="keyword">new</span> <span class="type">DeltaSqlParser</span>(parser)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
-<p><code>io.delta.sql.parser.DeltaSqlParser</code> クラスでは デリゲート用のパーサを受け取り、自身のパーサで処理できなかった場合に処理をデリゲートパーサに渡す。</p>
+<p><code>io.delta.sql.parser.DeltaSqlParser</code> クラスでは
+デリゲート用のパーサを受け取り、自身のパーサで処理できなかった場合に処理をデリゲートパーサに渡す。</p>
 <p>io/delta/sql/parser/DeltaSqlParser.scala:66</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DeltaSqlParser</span>(<span class="params">val delegate: <span class="type">ParserInterface</span></span>) <span class="keyword">extends</span> <span class="title">ParserInterface</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">val</span> builder = <span class="keyword">new</span> <span class="type">DeltaSqlAstBuilder</span></span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
-<p>例えば、 <code>SparkSession</code> の <code>sql</code> メソッドを使って呼び出す場合を例にする。 このとき、内部では、 <code>org.apache.spark.sql.catalyst.parser.ParserInterface#parsePlan</code> メソッドが呼ばれて、 渡されたクエリ文 <code>sqlText</code> が処理される。</p>
+<p>例えば、 <code>SparkSession</code> の <code>sql</code>
+メソッドを使って呼び出す場合を例にする。 このとき、内部では、
+<code>org.apache.spark.sql.catalyst.parser.ParserInterface#parsePlan</code>
+メソッドが呼ばれて、 渡されたクエリ文 <code>sqlText</code>
+が処理される。</p>
 <p>org/apache/spark/sql/SparkSession.scala:601</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sql</span></span>(sqlText: <span class="type">String</span>): <span class="type">DataFrame</span> = withActive &#123;</span><br><span class="line">  <span class="keyword">val</span> tracker = <span class="keyword">new</span> <span class="type">QueryPlanningTracker</span></span><br><span class="line">  <span class="keyword">val</span> plan = tracker.measurePhase(<span class="type">QueryPlanningTracker</span>.<span class="type">PARSING</span>) &#123;</span><br><span class="line">    sessionState.sqlParser.parsePlan(sqlText)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">Dataset</span>.ofRows(self, plan, tracker)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>この <code>parsePlan</code> がoverrideされており、以下のように定義されている。</p>
+<p>この <code>parsePlan</code>
+がoverrideされており、以下のように定義されている。</p>
 <p>io/delta/sql/parser/DeltaSqlParser.scala:69</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">parsePlan</span></span>(sqlText: <span class="type">String</span>): <span class="type">LogicalPlan</span> = parse(sqlText) &#123; parser =&gt;</span><br><span class="line">  builder.visit(parser.singleStatement()) <span class="keyword">match</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> plan: <span class="type">LogicalPlan</span> =&gt; plan</span><br><span class="line">    <span class="keyword">case</span> _ =&gt; delegate.parsePlan(sqlText)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>まずは <code>io.delta.sql.parser.DeltaSqlParser#parse</code> メソッドを利用してパースがここ見られるが、 LogicalPlanが戻らなかったときは、デリゲート用パーサが呼び出されるようになっている。</p>
+<p>まずは <code>io.delta.sql.parser.DeltaSqlParser#parse</code>
+メソッドを利用してパースがここ見られるが、
+LogicalPlanが戻らなかったときは、デリゲート用パーサが呼び出されるようになっている。</p>
 <h3><span id="カスタムカタログ">カスタムカタログ</span></h3>
-<p>Spark3ではDataSourvV2の中で、プラガブルなカタログに対応した。 Delta Lake 0.7.0はこれを利用し、カスタムカタログを用いる。（これにより、Hiveメタストアを経由してDelta Lake形式のデータを読み書きできるようになっている） 使われているカタログは <code>org.apache.spark.sql.delta.catalog.DeltaCatalog</code> である。 （SparkSessionのインスタンス生成する際、もしくは起動時のオプション指定）</p>
-<p>当該カタログ内部では、例えば <code>org.apache.spark.sql.delta.catalog.DeltaCatalog#createDeltaTable</code> メソッドが定義されており、 <code>org.apache.spark.sql.delta.catalog.DeltaCatalog#createTable</code> ※ しようとするときなどに呼び出されるようになっている。</p>
-<p>※ <code>org.apache.spark.sql.connector.catalog.DelegatingCatalogExtension#createTable</code> をoverrideしている</p>
-<p>なお、このクラスもデリゲート用のカタログを用いるようになっている。 <code>org.apache.spark.sql.delta.catalog.DeltaCatalog#createTable</code> メソッドは以下のようになっており、 データソースが delta 出ない場合は、親クラスの <code>createTable</code> （つまり標準的なもの）が呼び出されるようになっている。</p>
+<p>Spark3ではDataSourvV2の中で、プラガブルなカタログに対応した。 Delta
+Lake
+0.7.0はこれを利用し、カスタムカタログを用いる。（これにより、Hiveメタストアを経由してDelta
+Lake形式のデータを読み書きできるようになっている）
+使われているカタログは
+<code>org.apache.spark.sql.delta.catalog.DeltaCatalog</code> である。
+（SparkSessionのインスタンス生成する際、もしくは起動時のオプション指定）</p>
+<p>当該カタログ内部では、例えば
+<code>org.apache.spark.sql.delta.catalog.DeltaCatalog#createDeltaTable</code>
+メソッドが定義されており、
+<code>org.apache.spark.sql.delta.catalog.DeltaCatalog#createTable</code>
+※ しようとするときなどに呼び出されるようになっている。</p>
+<p>※
+<code>org.apache.spark.sql.connector.catalog.DelegatingCatalogExtension#createTable</code>
+をoverrideしている</p>
+<p>なお、このクラスもデリゲート用のカタログを用いるようになっている。
+<code>org.apache.spark.sql.delta.catalog.DeltaCatalog#createTable</code>
+メソッドは以下のようになっており、 データソースが delta
+出ない場合は、親クラスの <code>createTable</code>
+（つまり標準的なもの）が呼び出されるようになっている。</p>
 <p>org/apache/spark/sql/delta/catalog/DeltaCatalog.scala:149</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">createTable</span></span>(</span><br><span class="line">    ident: <span class="type">Identifier</span>,</span><br><span class="line">    schema: <span class="type">StructType</span>,</span><br><span class="line">    partitions: <span class="type">Array</span>[<span class="type">Transform</span>],</span><br><span class="line">    properties: util.<span class="type">Map</span>[<span class="type">String</span>, <span class="type">String</span>]): <span class="type">Table</span> = &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="type">DeltaSourceUtils</span>.isDeltaDataSourceName(getProvider(properties))) &#123;</span><br><span class="line">    createDeltaTable(</span><br><span class="line">      ident, schema, partitions, properties, sourceQuery = <span class="type">None</span>, <span class="type">TableCreationModes</span>.<span class="type">Create</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.createTable(ident, schema, partitions, properties)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3><span id="scalaやpythonでの例">ScalaやPythonでの例</span></h3>
@@ -1788,25 +2062,38 @@ ga('send', 'pageview');
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df.write.format(<span class="string">"delta"</span>).saveAsTable(<span class="string">"events"</span>)      <span class="comment">// create table in the metastore</span></span><br><span class="line"></span><br><span class="line">df.write.format(<span class="string">"delta"</span>).save(<span class="string">"/delta/events"</span>)  <span class="comment">// create table by path</span></span><br></pre></td></tr></table></figure>
 <p>Hiveメタストア経由で書き込むケースと、ストレージ上に直接書き出すケースが載っている。</p>
 <h3><span id="sqlでのマージ処理">SQLでのマージ処理</span></h3>
-<p><a href="https://github.com/delta-io/delta/blob/master/examples/scala/src/main/scala/example/QuickstartSQL.scala#L58" target="_blank" rel="noopener">SQLを用いたマージの例</a> の通り、Delta Lakeの特徴であるマージ機能もSQLから呼び出させる。</p>
+<p><a href="https://github.com/delta-io/delta/blob/master/examples/scala/src/main/scala/example/QuickstartSQL.scala#L58" target="_blank" rel="noopener">SQLを用いたマージの例</a>
+の通り、Delta Lakeの特徴であるマージ機能もSQLから呼び出させる。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spark.sql(<span class="string">s""</span><span class="string">"MERGE INTO $tableName USING newData</span></span><br><span class="line"><span class="string">    ON $&#123;tableName&#125;.id = newData.id</span></span><br><span class="line"><span class="string">    WHEN MATCHED THEN</span></span><br><span class="line"><span class="string">      UPDATE SET $&#123;tableName&#125;.id = newData.id</span></span><br><span class="line"><span class="string">    WHEN NOT MATCHED THEN INSERT *</span></span><br><span class="line"><span class="string">"</span><span class="string">""</span>)</span><br></pre></td></tr></table></figure>
-<p>Spark SQLのカタログに登録されたDelta LakeのテーブルからDeltaTableを生成することもできる。</p>
+<p>Spark SQLのカタログに登録されたDelta
+LakeのテーブルからDeltaTableを生成することもできる。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">import</span> io.delta.tables.<span class="type">DeltaTable</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> tbl = <span class="type">DeltaTable</span>.forName(tableName)</span><br></pre></td></tr></table></figure>
-<h2><span id="presto-athena用のメタデータの自動生成">Presto / Athena用のメタデータの自動生成</span></h2>
-<p>Delta LakeはPresto、Athena用のメタデータを生成できるが、更新があった際にパーティションごとに自動で再生成できるようになった。</p>
+<h2><span id="presto-athena用のメタデータの自動生成">Presto /
+Athena用のメタデータの自動生成</span></h2>
+<p>Delta
+LakeはPresto、Athena用のメタデータを生成できるが、更新があった際にパーティションごとに自動で再生成できるようになった。</p>
 <h2><span id="テーブル履歴の切り詰めの管理">テーブル履歴の切り詰めの管理</span></h2>
-<p>Delta Lakeは更新の履歴を保持することも特徴の一つだが、 データ本体とログのそれぞれの切り詰め対象期間を指定できる。</p>
-<p>CREATEやALTER句内で、TBLPROPERTIESとして指定することになっている。 例えば以下。</p>
+<p>Delta Lakeは更新の履歴を保持することも特徴の一つだが、
+データ本体とログのそれぞれの切り詰め対象期間を指定できる。</p>
+<p>CREATEやALTER句内で、TBLPROPERTIESとして指定することになっている。
+例えば以下。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark.sql(<span class="string">s"CREATE TABLE <span class="subst">$tableName</span>(id LONG) USING delta TBLPROPERTIES ('delta.logRetentionDuration' = 'interval 1 day', 'delta.deletedFileRetentionDuration' = 'interval 1 day')"</span>)</span><br><span class="line">spark.sql(<span class="string">s"ALTER TABLE <span class="subst">$tableName</span> SET TBLPROPERTIES ('delta.logRetentionDuration' = 'interval 1 day', 'delta.deletedFileRetentionDuration' = 'interval 1 day')"</span>)</span><br></pre></td></tr></table></figure>
 <h2><span id="ユーザメタデータ">ユーザメタデータ</span></h2>
-<p>spark.databricks.delta.commitInfo.userMetadata プロパティを利用して、ユーザメタデータを付与できる。</p>
+<p>spark.databricks.delta.commitInfo.userMetadata
+プロパティを利用して、ユーザメタデータを付与できる。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.write.option(<span class="string">"spark.databricks.delta.commitInfo.userMetadata"</span>, <span class="string">"test"</span>).format(<span class="string">"delta"</span>).mode(<span class="string">"append"</span>).save(<span class="string">"/tmp/test"</span>)</span><br></pre></td></tr></table></figure>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; spark.sql(<span class="string">"SET spark.databricks.delta.commitInfo.userMetadata=test"</span>)</span><br><span class="line">scala&gt; spark.sql(<span class="string">s"INSERT INTO <span class="subst">$tableName</span> VALUES 0, 1, 2, 3, 4"</span>)</span><br></pre></td></tr></table></figure>
-<h2><span id="azureのdata-lake-storage-gen2">AzureのData Lake Storage Gen2</span></h2>
+<h2><span id="azureのdata-lake-storagegen2">AzureのData Lake Storage
+Gen2</span></h2>
 <p>対応した。</p>
-<p>しかし、 <a href="https://docs.delta.io/0.7.0/delta-storage.html#azure-data-lake-storage-gen2" target="_blank" rel="noopener">0.7.0で対応したAzure Data Lake Storage Gen2</a> の通り、 前提となっている各種ソフトウェアバージョンは高め。</p>
+<p>しかし、 <a href="https://docs.delta.io/0.7.0/delta-storage.html#azure-data-lake-storage-gen2" target="_blank" rel="noopener">0.7.0で対応したAzure
+Data Lake Storage Gen2</a> の通り、
+前提となっている各種ソフトウェアバージョンは高め。</p>
 <h2><span id="ストリーム処理のone-timeトリガの改善">ストリーム処理のone-timeトリガの改善</span></h2>
-<p>DataStreamReaderのオプションでmaxFilesPerTriggerを設定しているとしても、 one-time triggerでは一度に溜まったすべてのデータを読み込むようになった。（Spark 3系の話）  <!-- vim: set et tw=0 ts=2 sw=2: --></p>
+<p>DataStreamReaderのオプションでmaxFilesPerTriggerを設定しているとしても、
+one-time
+triggerでは一度に溜まったすべてのデータを読み込むようになった。（Spark
+3系の話）  <!-- vim: set et tw=0 ts=2 sw=2: --></p>
 
         
         </div>
@@ -1817,7 +2104,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/06/19/Delta-Lake-0-7-0/" data-id="cl2nztnl3003s5xqipqyudxd0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/06/19/Delta-Lake-0-7-0/" data-id="cl2o9pbge014418rzlnun0j1p" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1938,34 +2225,51 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#tyler-akidauらによるapache-beamにまつわる情報">Tyler AkidauらによるApache Beamにまつわる情報</a></li>
-<li><a href="#matthias-j.-saxguozhang-wangらによる論文">Matthias J. Sax、Guozhang Wangらによる論文</a><ul>
-<li><a href="#概要">概要</a></li>
-<li><a href="#introduction">1 Introduction</a></li>
-<li><a href="#background">2 Background</a></li>
-<li><a href="#duality-of-streams-and-tables">3 Duality of streams and tables</a></li>
-<li><a href="#stream-processing-operators">4 STREAM PROCESSING OPERATORS</a></li>
-<li><a href="#case-study-apache-kafka">5 CASE STUDY: APACHE KAFKA</a></li>
-<li><a href="#related-work">6 RELATED WORK</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#tyler-akidauらによるapache-beamにまつわる情報" id="toc-tyler-akidauらによるapache-beamにまつわる情報">Tyler
+AkidauらによるApache Beamにまつわる情報</a></li>
+<li><a href="#matthias-j.-saxguozhang-wangらによる論文" id="toc-matthias-j.-saxguozhang-wangらによる論文">Matthias J.
+Sax、Guozhang Wangらによる論文</a>
+<ul>
+<li><a href="#概要" id="toc-概要">概要</a></li>
+<li><a href="#introduction" id="toc-introduction">1
+Introduction</a></li>
+<li><a href="#background" id="toc-background">2 Background</a></li>
+<li><a href="#duality-of-streams-and-tables" id="toc-duality-of-streams-and-tables">3 Duality of streams and
+tables</a></li>
+<li><a href="#stream-processing-operators" id="toc-stream-processing-operators">4 STREAM PROCESSING
+OPERATORS</a></li>
+<li><a href="#case-study-apache-kafka" id="toc-case-study-apache-kafka">5 CASE STUDY: APACHE KAFKA</a></li>
+<li><a href="#related-work" id="toc-related-work">6 RELATED
+WORK</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://www.slideshare.net/Hadoop_Summit/foundations-of-streaming-sql-stream-table-theory" target="_blank" rel="noopener">Foundations of streaming SQL stream &amp; table theory</a></li>
+<li><a href="https://www.slideshare.net/Hadoop_Summit/foundations-of-streaming-sql-stream-table-theory" target="_blank" rel="noopener">Foundations
+of streaming SQL stream &amp; table theory</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<h2><span id="tyler-akidauらによるapache-beamにまつわる情報">Tyler AkidauらによるApache Beamにまつわる情報</span></h2>
-<p><a href="https://www.slideshare.net/Hadoop_Summit/foundations-of-streaming-sql-stream-table-theory#43" target="_blank" rel="noopener">Foundations of streaming SQL stream &amp; table theory (General theory)</a> の通り、 ストリームデータとテーブルデータの関係性を論じたもの。</p>
-<p>上記の内容の全体は、 <a href="http://shop.oreilly.com/product/0636920073994.do" target="_blank" rel="noopener">OReillyのStreaming Systems</a> に記載あり。</p>
-<p>これらは、ストリーム・テーブル理論をベースに、Apache Beamを利用したストリームデータ処理・活用システムについて論じたもの。</p>
-<h2><span id="matthias-j-sax-guozhang-wangらによる論文">Matthias J. Sax、Guozhang Wangらによる論文</span></h2>
-<p><a href="https://dl.acm.org/doi/10.1145/3242153.3242155" target="_blank" rel="noopener">Streams and Tables Two Sides of the Same Coin</a></p>
+<h2><span id="tylerakidauらによるapache-beamにまつわる情報">Tyler
+AkidauらによるApache Beamにまつわる情報</span></h2>
+<p><a href="https://www.slideshare.net/Hadoop_Summit/foundations-of-streaming-sql-stream-table-theory#43" target="_blank" rel="noopener">Foundations
+of streaming SQL stream &amp; table theory (General theory)</a> の通り、
+ストリームデータとテーブルデータの関係性を論じたもの。</p>
+<p>上記の内容の全体は、 <a href="http://shop.oreilly.com/product/0636920073994.do" target="_blank" rel="noopener">OReillyのStreaming
+Systems</a> に記載あり。</p>
+<p>これらは、ストリーム・テーブル理論をベースに、Apache
+Beamを利用したストリームデータ処理・活用システムについて論じたもの。</p>
+<h2><span id="matthias-jsax-guozhang-wangらによる論文">Matthias J.
+Sax、Guozhang Wangらによる論文</span></h2>
+<p><a href="https://dl.acm.org/doi/10.1145/3242153.3242155" target="_blank" rel="noopener">Streams and
+Tables Two Sides of the Same Coin</a></p>
 <h3><span id="概要">概要</span></h3>
-<p>ストリームデータの処理モデルを提案。 論理・物理の間の一貫性の崩れに対処する。</p>
+<p>ストリームデータの処理モデルを提案。
+論理・物理の間の一貫性の崩れに対処する。</p>
 <h3><span id="1-introduction">1 Introduction</span></h3>
 <p>データストリームのチャレンジ</p>
 <ul>
@@ -1973,7 +2277,8 @@ ga('send', 'pageview');
 <li>処理のオペレータがステートフルでないといけない、レイテンシ、正しさ、処理コストなどのトレードオフがある、など</li>
 <li>分散処理への対応</li>
 </ul>
-<p>物理的な並びが保証されない条件下で、 十分に表現力のあるオペレータ（モデル）を立案する。</p>
+<p>物理的な並びが保証されない条件下で、
+十分に表現力のあるオペレータ（モデル）を立案する。</p>
 <h3><span id="2-background">2 Background</span></h3>
 <p>ストリームデータのモデル。</p>
 <p>ポイント。レコード配下の構成。</p>
@@ -1983,22 +2288,33 @@ ga('send', 'pageview');
 <li>キー</li>
 <li>バリュー</li>
 </ul>
-<h3><span id="3-duality-of-streams-and-tables">3 Duality of streams and tables</span></h3>
+<h3><span id="3-duality-of-streams-andtables">3 Duality of streams and
+tables</span></h3>
 <p>レイテンシは、データストリームの特性に依存する。</p>
 <p>論理、物理の並びの差異を解決するため、結果を継続的に更新するモデルを提案した。</p>
 <p>Dual Streaming Model</p>
 <p>DUality of streams and tables</p>
 <p>テーブルは、テーブルのバージョンのコレクションと考えることもできる。</p>
 <h3><span id="4-stream-processing-operators">4 STREAM PROCESSING OPERATORS</span></h3>
-<p>モデル定義を解説。 フィルターなどのステートレスな処理から、アグリゲーションなどのステートフルな処理まで。</p>
-<p>out-of-order なレコードが届いても、最終的な出力結果テーブルがout-of-orderレコードがないときと同一になるように動くことを期待する。</p>
-<p>Watermarkと似たような機構として、「retention time」を導入。 結果テーブル内の「現在時刻 - retention time」よりも古い結果をメンテナンス対象から外す。</p>
-<p>Stream - Table Joinのケースで、「遅れテーブル更新」が生じると、 下流システムに対して結果の上書きデータを出力する必要がある。</p>
+<p>モデル定義を解説。
+フィルターなどのステートレスな処理から、アグリゲーションなどのステートフルな処理まで。</p>
+<p>out-of-order
+なレコードが届いても、最終的な出力結果テーブルがout-of-orderレコードがないときと同一になるように動くことを期待する。</p>
+<p>Watermarkと似たような機構として、「retention time」を導入。
+結果テーブル内の「現在時刻 - retention
+time」よりも古い結果をメンテナンス対象から外す。</p>
+<p>Stream - Table Joinのケースで、「遅れテーブル更新」が生じると、
+下流システムに対して結果の上書きデータを出力する必要がある。</p>
 <h3><span id="5-case-study-apache-kafka">5 CASE STUDY: APACHE KAFKA</span></h3>
 <p>Kafka Streamsの例。</p>
-<p>Kafka Streamsの利用企業：The New York Times, Pinterest, LINE, Trivago, etc</p>
-<p>Kafka Streamsのオペレーションはすべてノンブロッキングであり、 レコードを受領次第処理し、KTableにマテリアライズされたり、Topicに書き戻したりされる。</p>
-<p>Window集計の例を題材に、retention timeを利用。 retention timeを長くするほどストレージを利用するが、 out-of-orderレコードに対してロバストになる。 また、retention timeが長いほど、ウィンドウ結果が確定したと言えるタイミングが遅くなる。</p>
+<p>Kafka Streamsの利用企業：The New York Times, Pinterest, LINE,
+Trivago, etc</p>
+<p>Kafka Streamsのオペレーションはすべてノンブロッキングであり、
+レコードを受領次第処理し、KTableにマテリアライズされたり、Topicに書き戻したりされる。</p>
+<p>Window集計の例を題材に、retention timeを利用。 retention
+timeを長くするほどストレージを利用するが、
+out-of-orderレコードに対してロバストになる。 また、retention
+timeが長いほど、ウィンドウ結果が確定したと言えるタイミングが遅くなる。</p>
 <h3><span id="6-related-work">6 RELATED WORK</span></h3>
 <p>Relationを取り扱うモデル、out-of-orderを取り扱うモデル、テーブルバージョン管理を取り扱うモデルなど。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
@@ -2012,7 +2328,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/05/20/About-tream-table-theory/" data-id="cl2nztnk000155xqibrggjjk6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/05/20/About-tream-table-theory/" data-id="cl2o9pb4a000v18rz3fojw5w5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2242,5 +2558,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

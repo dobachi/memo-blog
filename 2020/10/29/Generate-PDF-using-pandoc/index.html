@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  TeX Liveのインストール手順 default.latex  メモ TeX Liveのインストール手順 の通り、最新版をインストールする。 なお、フルセットでインストールした。 PDFを作成するときは以下のようにする。 1$ pandoc test.md -o test.pdf --pdf-engine=lualatex -V documentclass=bxjs">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Generate PDF using pandoc">
 <meta name="twitter:description" content="参考 メモ   参考  TeX Liveのインストール手順 default.latex  メモ TeX Liveのインストール手順 の通り、最新版をインストールする。 なお、フルセットでインストールした。 PDFを作成するときは以下のようにする。 1$ pandoc test.md -o test.pdf --pdf-engine=lualatex -V documentclass=bxjs">
@@ -251,20 +251,25 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://texwiki.texjp.org/?Linux#texliveinstall" target="_blank" rel="noopener">TeX Liveのインストール手順</a></li>
+<li><a href="https://texwiki.texjp.org/?Linux#texliveinstall" target="_blank" rel="noopener">TeX
+Liveのインストール手順</a></li>
 <li><a href="https://github.com/jgm/pandoc-templates/blob/master/default.latex" target="_blank" rel="noopener">default.latex</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://texwiki.texjp.org/?Linux#texliveinstall" target="_blank" rel="noopener">TeX Liveのインストール手順</a> の通り、最新版をインストールする。 なお、フルセットでインストールした。</p>
+<p><a href="https://texwiki.texjp.org/?Linux#texliveinstall" target="_blank" rel="noopener">TeX
+Liveのインストール手順</a> の通り、最新版をインストールする。
+なお、フルセットでインストールした。</p>
 <p>PDFを作成するときは以下のようにする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc test.md -o test.pdf --pdf-engine=lualatex -V documentclass=bxjsarticle -V classoption=pandoc</span><br></pre></td></tr></table></figure>
-<p>ただし、 <a href="https://github.com/jgm/pandoc-templates/blob/master/default.latex" target="_blank" rel="noopener">default.latex</a> に示すとおり、リンクに色を付けるなどしたいので、 上記マークダウンファイルには先頭部分にYAMLでコンフィグを記載することとした。</p>
+<p>ただし、 <a href="https://github.com/jgm/pandoc-templates/blob/master/default.latex" target="_blank" rel="noopener">default.latex</a>
+に示すとおり、リンクに色を付けるなどしたいので、
+上記マークダウンファイルには先頭部分にYAMLでコンフィグを記載することとした。</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: テスト文章</span><br><span class="line">date: 2020-10-30</span><br><span class="line">author: dobachi</span><br><span class="line">colorlinks: yes</span><br><span class="line">numbersections: yes</span><br><span class="line">toc: yes</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section"># test</span></span><br><span class="line"></span><br><span class="line"><span class="section">## これはテスト</span></span><br><span class="line"></span><br><span class="line">[<span class="string">Google</span>](<span class="link">https://www.google.com</span>)</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- vim: set ft=markdown : --&gt;</span></span></span><br></pre></td></tr></table></figure>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -277,7 +282,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/10/29/Generate-PDF-using-pandoc/" data-id="cl2nztnln005h5xqibsdccc2b" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/10/29/Generate-PDF-using-pandoc/" data-id="cl2o9pb5k003t18rzebe7y2r4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -528,5 +533,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

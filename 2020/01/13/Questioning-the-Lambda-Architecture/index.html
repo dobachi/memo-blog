@@ -5,20 +5,20 @@
     
     <title>Questioning the Lambda Architecture | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ まとめ 気になった文言を引用 所感    参考  Questioning the Lambda Architecture  メモ Questioning the Lambda Architecture にてJay Krepsが初めて言及したとされているようだ。 過去に読んだが忘れたので改めて、いかにメモを記載する。 まとめ 主張としては、ストリーム処理はKafkaの登場により、十">
+    <meta name="description" content="参考 メモ  まとめ 気になった文言を引用 所感    参考  Questioning the Lambda Architecture  メモ Questioning the Lambda Architecture にてJay Krepsが初めて言及したとされているようだ。 過去に読んだが忘れたので改めて、いかにメモを記載する。 まとめ 主張としては、ストリーム処理はKafkaの登場により、">
 <meta name="keywords" content="Stream Processing,Kappa Architecture,Lambda Architecture">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Questioning the Lambda Architecture">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/01/13/Questioning-the-Lambda-Architecture/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ まとめ 気になった文言を引用 所感    参考  Questioning the Lambda Architecture  メモ Questioning the Lambda Architecture にてJay Krepsが初めて言及したとされているようだ。 過去に読んだが忘れたので改めて、いかにメモを記載する。 まとめ 主張としては、ストリーム処理はKafkaの登場により、十">
+<meta property="og:description" content="参考 メモ  まとめ 気になった文言を引用 所感    参考  Questioning the Lambda Architecture  メモ Questioning the Lambda Architecture にてJay Krepsが初めて言及したとされているようだ。 過去に読んだが忘れたので改めて、いかにメモを記載する。 まとめ 主張としては、ストリーム処理はKafkaの登場により、">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dmgpayxepw99m.cloudfront.net/lambda-16338c9225c8e6b0c33a3f953133a4cb.png">
 <meta property="og:image" content="https://dmgpayxepw99m.cloudfront.net/kappa-61d0afc292912b61ce62517fa2bd4309.png">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Questioning the Lambda Architecture">
-<meta name="twitter:description" content="参考 メモ まとめ 気になった文言を引用 所感    参考  Questioning the Lambda Architecture  メモ Questioning the Lambda Architecture にてJay Krepsが初めて言及したとされているようだ。 過去に読んだが忘れたので改めて、いかにメモを記載する。 まとめ 主張としては、ストリーム処理はKafkaの登場により、十">
+<meta name="twitter:description" content="参考 メモ  まとめ 気になった文言を引用 所感    参考  Questioning the Lambda Architecture  メモ Questioning the Lambda Architecture にてJay Krepsが初めて言及したとされているようだ。 過去に読んだが忘れたので改めて、いかにメモを記載する。 まとめ 主張としては、ストリーム処理はKafkaの登場により、">
 <meta name="twitter:image" content="https://dmgpayxepw99m.cloudfront.net/lambda-16338c9225c8e6b0c33a3f953133a4cb.png">
     
 
@@ -254,56 +254,78 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#まとめ">まとめ</a></li>
-<li><a href="#気になった文言を引用">気になった文言を引用</a></li>
-<li><a href="#所感">所感</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#まとめ" id="toc-まとめ">まとめ</a></li>
+<li><a href="#気になった文言を引用" id="toc-気になった文言を引用">気になった文言を引用</a></li>
+<li><a href="#所感" id="toc-所感">所感</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://www.oreilly.com/radar/questioning-the-lambda-architecture/" target="_blank" rel="noopener">Questioning the Lambda Architecture</a></li>
+<li><a href="https://www.oreilly.com/radar/questioning-the-lambda-architecture/" target="_blank" rel="noopener">Questioning
+the Lambda Architecture</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://www.oreilly.com/radar/questioning-the-lambda-architecture/" target="_blank" rel="noopener">Questioning the Lambda Architecture</a> にてJay Krepsが初めて言及したとされているようだ。 過去に読んだが忘れたので改めて、いかにメモを記載する。</p>
+<p><a href="https://www.oreilly.com/radar/questioning-the-lambda-architecture/" target="_blank" rel="noopener">Questioning
+the Lambda Architecture</a> にてJay
+Krepsが初めて言及したとされているようだ。
+過去に読んだが忘れたので改めて、いかにメモを記載する。</p>
 <h2><span id="まとめ">まとめ</span></h2>
-<p>主張としては、ストリーム処理はKafkaの登場により、十分に使用に耐えうるものになったため、 バッチ処理と両方使うのではなく、ストリーム処理1本で勝負できるのでは？ということだった。</p>
+<p>主張としては、ストリーム処理はKafkaの登場により、十分に使用に耐えうるものになったため、
+バッチ処理と両方使うのではなく、ストリーム処理1本で勝負できるのでは？ということだった。</p>
 <h2><span id="気になった文言を引用">気になった文言を引用</span></h2>
 <p>ラムダアーキテクチャについて：</p>
 <blockquote>
-<p>The Lambda Architecture is an approach to building stream processing applications on top of MapReduce and Storm or similar systems.</p>
+<p>The Lambda Architecture is an approach to building stream processing
+applications on top of MapReduce and Storm or similar systems.</p>
 </blockquote>
 <figure>
-<img src="https://dmgpayxepw99m.cloudfront.net/lambda-16338c9225c8e6b0c33a3f953133a4cb.png" alt=""><figcaption>Lambdaアーキテクチャのイメージ</figcaption>
+<img src="https://dmgpayxepw99m.cloudfront.net/lambda-16338c9225c8e6b0c33a3f953133a4cb.png" alt="Lambdaアーキテクチャのイメージ">
+<figcaption aria-hidden="true">Lambdaアーキテクチャのイメージ</figcaption>
 </figure>
 <p>バッチ処理とストリーム処理で2回ロジックを書く。：</p>
 <blockquote>
-<p>You implement your transformation logic twice, once in the batch system and once in the stream processing system.</p>
+<p>You implement your transformation logic twice, once in the batch
+system and once in the stream processing system.</p>
 </blockquote>
 <p>レコメンデーションシステムを例にとる：</p>
 <blockquote>
-<p>A good example would be a news recommendation system that needs to crawl various news sources, process and normalize all the input, and then index, rank, and store it for serving.</p>
+<p>A good example would be a news recommendation system that needs to
+crawl various news sources, process and normalize all the input, and
+then index, rank, and store it for serving.</p>
 </blockquote>
 <p>データを取り込み、イミュターブルなものとして扱うことはありだと思う：</p>
 <blockquote>
-<p>I’ve written some of my thoughts about capturing and transforming immutable data streams</p>
+<p>I’ve written some of my thoughts about capturing and transforming
+immutable data streams</p>
 </blockquote>
 <blockquote>
-<p>I have found that many people who attempt to build real-time data processing systems don’t put much thought into this problem and end-up with a system that simply cannot evolve quickly because it has no convenient way to handle reprocessing.</p>
+<p>I have found that many people who attempt to build real-time data
+processing systems don’t put much thought into this problem and end-up
+with a system that simply cannot evolve quickly because it has no
+convenient way to handle reprocessing.</p>
 </blockquote>
 <p>リアルタイム処理が本質的に近似であり、バッチ処理よりも弱く、損失しがち、という意見があるよね、と。：</p>
 <blockquote>
-<p>One is that real-time processing is inherently approximate, less powerful, and more lossy than batch processing.</p>
+<p>One is that real-time processing is inherently approximate, less
+powerful, and more lossy than batch processing.</p>
 </blockquote>
 <p>ラムダアーキテクチャの利点にCAP定理との比較が持ち出されることを引き合いに出し、ラムダアーキテクチャがCAP定例を克服するようなものではない旨を説明。：</p>
 <blockquote>
-<p>Long story short, although there are definitely latency/availability trade-offs in stream processing, this is an architecture for asynchronous processing, so the results being computed are not kept immediately consistent with the incoming data. The CAP theorem, sadly, remains intact.</p>
+<p>Long story short, although there are definitely latency/availability
+trade-offs in stream processing, this is an architecture for
+asynchronous processing, so the results being computed are not kept
+immediately consistent with the incoming data. The CAP theorem, sadly,
+remains intact.</p>
 </blockquote>
-<p>結局、StormとHadoopの両方で同じ結果を生み出すアプリケーションを 実装するのがしんどいという話。：</p>
+<p>結局、StormとHadoopの両方で同じ結果を生み出すアプリケーションを
+実装するのがしんどいという話。：</p>
 <blockquote>
-<p>Programming in distributed frameworks like Storm and Hadoop is complex.</p>
+<p>Programming in distributed frameworks like Storm and Hadoop is
+complex.</p>
 </blockquote>
 <p>ひとつの解法は抽象化。：</p>
 <blockquote>
@@ -311,50 +333,69 @@ ga('send', 'pageview');
 </blockquote>
 <p>とはいえ、2重運用はしんどい。デバッグなど。：</p>
 <blockquote>
-<p>the operational burden of running and debugging two systems is going to be very high.</p>
+<p>the operational burden of running and debugging two systems is going
+to be very high.</p>
 </blockquote>
 <p>結局のところ、両方を同時に使わないでくれ、という結論：</p>
 <blockquote>
-<p>These days, my advice is to use a batch processing framework like MapReduce if you aren’t latency sensitive, and use a stream processing framework if you are, but not to try to do both at the same time unless you absolutely must.</p>
+<p>These days, my advice is to use a batch processing framework like
+MapReduce if you aren’t latency sensitive, and use a stream processing
+framework if you are, but not to try to do both at the same time unless
+you absolutely must.</p>
 </blockquote>
 <p>ストリーム処理はヒストリカルデータの高スループットでの処理に向かない、という話もあるが…：</p>
 <blockquote>
-<p>When I’ve discussed this with people, they sometimes tell me that stream processing feels inappropriate for high-throughput processing of historical data.</p>
+<p>When I’ve discussed this with people, they sometimes tell me that
+stream processing feels inappropriate for high-throughput processing of
+historical data.</p>
 </blockquote>
-<p>バッチ処理もストリーム処理も抽象化の仕方は、DAGをベースにしたものであり、 その点では共通である、と。：</p>
+<p>バッチ処理もストリーム処理も抽象化の仕方は、DAGをベースにしたものであり、
+その点では共通である、と。：</p>
 <blockquote>
-<p>But there is no reason this should be true. The fundamental abstraction in stream processing is data flow DAGs, which are exactly the same underlying abstraction in a traditional data warehouse (a la Volcano) as well as being the fundamental abstraction in the MapReduce successor Tez.</p>
+<p>But there is no reason this should be true. The fundamental
+abstraction in stream processing is data flow DAGs, which are exactly
+the same underlying abstraction in a traditional data warehouse (a la
+Volcano) as well as being the fundamental abstraction in the MapReduce
+successor Tez.</p>
 </blockquote>
 <p>ということでKafka。：</p>
 <blockquote>
 <p>Use Kafka</p>
 </blockquote>
 <figure>
-<img src="https://dmgpayxepw99m.cloudfront.net/kappa-61d0afc292912b61ce62517fa2bd4309.png" alt=""><figcaption>提案アーキテクチャ</figcaption>
+<img src="https://dmgpayxepw99m.cloudfront.net/kappa-61d0afc292912b61ce62517fa2bd4309.png" alt="提案アーキテクチャ">
+<figcaption aria-hidden="true">提案アーキテクチャ</figcaption>
 </figure>
 <p>Kafkaに入れた後は、HDFS等に簡単に保存できる。：</p>
 <blockquote>
-<p>Kafka has good integration with Hadoop, so mirroring any Kafka topic into HDFS is easy.</p>
+<p>Kafka has good integration with Hadoop, so mirroring any Kafka topic
+into HDFS is easy.</p>
 </blockquote>
 <p>このあと少し、Kafkaの説明が続く。</p>
 <p>この時点では、Event Sourcing、CQRSについての言及あり。</p>
 <blockquote>
-<p>Indeed, a lot of people are familiar with similar patterns that go by the name Event Sourcing or CQRS.</p>
+<p>Indeed, a lot of people are familiar with similar patterns that go by
+the name Event Sourcing or CQRS.</p>
 </blockquote>
 <p>LinkedInにて、JayはSamzaを利用。</p>
 <blockquote>
-<p>I know this approach works well using Samza as the stream processing system because we do it at LinkedIn.</p>
+<p>I know this approach works well using Samza as the stream processing
+system because we do it at LinkedIn.</p>
 </blockquote>
 <p>提案手法の難点として、一時的に2倍の出力ストレージサイズが必要になる。</p>
 <blockquote>
-<p>However, my proposal requires temporarily having 2x the storage space in the output database and requires a database that supports high-volume writes for the re-load.</p>
+<p>However, my proposal requires temporarily having 2x the storage space
+in the output database and requires a database that supports high-volume
+writes for the re-load.</p>
 </blockquote>
 <p>単純さを大事にする。：</p>
 <blockquote>
-<p>So, in cases where simplicity is important, consider this approach as an alternative to the Lambda Architecture.</p>
+<p>So, in cases where simplicity is important, consider this approach as
+an alternative to the Lambda Architecture.</p>
 </blockquote>
 <h2><span id="所感">所感</span></h2>
-<p>当時よりも、最近のワークロードは複雑なものも含めて期待されるようになっており、 ますます「バッチ処理とストリーム処理で同じ処理を実装する」というのがしんどくなっている印象。</p>
+<p>当時よりも、最近のワークロードは複雑なものも含めて期待されるようになっており、
+ますます「バッチ処理とストリーム処理で同じ処理を実装する」というのがしんどくなっている印象。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -366,7 +407,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/01/13/Questioning-the-Lambda-Architecture/" data-id="cl2nztnnk00bl5xqis98kudzv" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/01/13/Questioning-the-Lambda-Architecture/" data-id="cl2o9pb7h008e18rztr6p41ck" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -617,5 +658,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

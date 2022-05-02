@@ -5,18 +5,18 @@
     
     <title>X Window on wsl for Ubuntu | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ Windows側 WSL側 最低限のインストール 日本語関連 例：GUI vimのインストール     参考  一通りの流れが説明されたブログ VcXsrvのダウンロード VcXsrvの自動起動設定 WSLを使ってWindowsでmikutterを動かす -&amp;gt; こちらの方が良いかも お前らのWSLはそれじゃダメだ -&amp;gt; こちらの方が良いかも Ubuntu 18.04">
+    <meta name="description" content="参考 メモ  Windows側 WSL側  最低限のインストール 日本語関連 例：GUI vimのインストール     参考  一通りの流れが説明されたブログ VcXsrvのダウンロード VcXsrvの自動起動設定 WSLを使ってWindowsでmikutterを動かす -&amp;gt; こちらの方が良いかも お前らのWSLはそれじゃダメだ -&amp;gt; こちらの方が良いかも Ubuntu 18.0">
 <meta name="keywords" content="WSL,X Window">
 <meta property="og:type" content="article">
 <meta property="og:title" content="X Window on wsl for Ubuntu">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/12/30/X-window-on-wsl-for-Ubuntu/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ Windows側 WSL側 最低限のインストール 日本語関連 例：GUI vimのインストール     参考  一通りの流れが説明されたブログ VcXsrvのダウンロード VcXsrvの自動起動設定 WSLを使ってWindowsでmikutterを動かす -&amp;gt; こちらの方が良いかも お前らのWSLはそれじゃダメだ -&amp;gt; こちらの方が良いかも Ubuntu 18.04">
+<meta property="og:description" content="参考 メモ  Windows側 WSL側  最低限のインストール 日本語関連 例：GUI vimのインストール     参考  一通りの流れが説明されたブログ VcXsrvのダウンロード VcXsrvの自動起動設定 WSLを使ってWindowsでmikutterを動かす -&amp;gt; こちらの方が良いかも お前らのWSLはそれじゃダメだ -&amp;gt; こちらの方が良いかも Ubuntu 18.0">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="X Window on wsl for Ubuntu">
-<meta name="twitter:description" content="参考 メモ Windows側 WSL側 最低限のインストール 日本語関連 例：GUI vimのインストール     参考  一通りの流れが説明されたブログ VcXsrvのダウンロード VcXsrvの自動起動設定 WSLを使ってWindowsでmikutterを動かす -&amp;gt; こちらの方が良いかも お前らのWSLはそれじゃダメだ -&amp;gt; こちらの方が良いかも Ubuntu 18.04">
+<meta name="twitter:description" content="参考 メモ  Windows側 WSL側  最低限のインストール 日本語関連 例：GUI vimのインストール     参考  一通りの流れが説明されたブログ VcXsrvのダウンロード VcXsrvの自動起動設定 WSLを使ってWindowsでmikutterを動かす -&amp;gt; こちらの方が良いかも お前らのWSLはそれじゃダメだ -&amp;gt; こちらの方が良いかも Ubuntu 18.0">
     
 
     
@@ -251,13 +251,15 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#windows側">Windows側</a></li>
-<li><a href="#wsl側">WSL側</a><ul>
-<li><a href="#最低限のインストール">最低限のインストール</a></li>
-<li><a href="#日本語関連">日本語関連</a></li>
-<li><a href="#例gui-vimのインストール">例：GUI vimのインストール</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#windows側" id="toc-windows側">Windows側</a></li>
+<li><a href="#wsl側" id="toc-wsl側">WSL側</a>
+<ul>
+<li><a href="#最低限のインストール" id="toc-最低限のインストール">最低限のインストール</a></li>
+<li><a href="#日本語関連" id="toc-日本語関連">日本語関連</a></li>
+<li><a href="#例gui-vimのインストール" id="toc-例gui-vimのインストール">例：GUI vimのインストール</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -267,23 +269,35 @@ ga('send', 'pageview');
 <li><a href="https://estuarine.jp/2017/11/wsl-x-window/" target="_blank" rel="noopener">一通りの流れが説明されたブログ</a></li>
 <li><a href="https://sourceforge.net/projects/vcxsrv/files/latest/download" target="_blank" rel="noopener">VcXsrvのダウンロード</a></li>
 <li><a href="https://www.yokoweb.net/2018/03/07/windows10-wsl-xserver-appl/" target="_blank" rel="noopener">VcXsrvの自動起動設定</a></li>
-<li><a href="http://moguno.hatenablog.jp/entry/2017/10/08/155023" target="_blank" rel="noopener">WSLを使ってWindowsでmikutterを動かす</a> -&gt; こちらの方が良いかも</li>
-<li><a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a> -&gt; こちらの方が良いかも</li>
-<li><a href="https://qiita.com/maromaro3721/items/be8ce6e3cec4cbcdac00" target="_blank" rel="noopener">Ubuntu 18.04 な WSL 上に日本語入力環境を構築する</a></li>
+<li><a href="http://moguno.hatenablog.jp/entry/2017/10/08/155023" target="_blank" rel="noopener">WSLを使ってWindowsでmikutterを動かす</a>
+-&gt; こちらの方が良いかも</li>
+<li><a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a>
+-&gt; こちらの方が良いかも</li>
+<li><a href="https://qiita.com/maromaro3721/items/be8ce6e3cec4cbcdac00" target="_blank" rel="noopener">Ubuntu
+18.04 な WSL 上に日本語入力環境を構築する</a></li>
 <li><a href="https://qiita.com/dozo/items/97ac6c80f4cd13b84558" target="_blank" rel="noopener">fcitxで作るWSL日本語開発環境</a></li>
-<li><a href="http://hisagi.hateblo.jp/entry/2017/10/21/234202" target="_blank" rel="noopener">WSL で gnome-terminal を動かすお話</a></li>
+<li><a href="http://hisagi.hateblo.jp/entry/2017/10/21/234202" target="_blank" rel="noopener">WSL で
+gnome-terminal を動かすお話</a></li>
 <li><a href="https://demura.net/lecture/15290.html" target="_blank" rel="noopener">Xサーバーを自動起動しよう！</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="windows側">Windows側</span></h2>
-<p><a href="https://estuarine.jp/2017/11/wsl-x-window/" target="_blank" rel="noopener">一通りの流れが説明されたブログ</a> に記載の通り試した。 <a href="https://sourceforge.net/projects/vcxsrv/files/latest/download" target="_blank" rel="noopener">VcXsrvのダウンロード</a>からダウンロードしたパッケージをインストールする。</p>
-<p>なお、インストールすると「XLaunch」がスタートメニューに追加される。 これを都度起動することになるが、スタートアップメニューにショートカットを登録し、 自動起動するようにした。 （ <a href="https://demura.net/lecture/15290.html" target="_blank" rel="noopener">Xサーバーを自動起動しよう！</a> を参考にする）</p>
+<p><a href="https://estuarine.jp/2017/11/wsl-x-window/" target="_blank" rel="noopener">一通りの流れが説明されたブログ</a>
+に記載の通り試した。 <a href="https://sourceforge.net/projects/vcxsrv/files/latest/download" target="_blank" rel="noopener">VcXsrvのダウンロード</a>からダウンロードしたパッケージをインストールする。</p>
+<p>なお、インストールすると「XLaunch」がスタートメニューに追加される。
+これを都度起動することになるが、スタートアップメニューにショートカットを登録し、
+自動起動するようにした。 （ <a href="https://demura.net/lecture/15290.html" target="_blank" rel="noopener">Xサーバーを自動起動しよう！</a>
+を参考にする）</p>
 <h2><span id="wsl側">WSL側</span></h2>
 <h3><span id="最低限のインストール">最低限のインストール</span></h3>
 <p>関連パッケージのインストール <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install git build-essential libssl-dev libreadline-dev zlib1g-dev x11-apps x11-utils x11-xserver-utils libsqlite3-dev nodejs fonts-ipafont libxml2-dev libxslt1-dev</span><br></pre></td></tr></table></figure></p>
 <p><code>~/.bashrc</code>に環境変数DISPLAYの値を追加 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">--- /home/dobachi/.bashrc.2018123001    2018-12-30 23:21:48.626055900 +0900</span><br><span class="line">+++ /home/dobachi/.bashrc       2018-12-30 23:20:26.333894000 +0900</span><br><span class="line">@@ -115,3 +115,5 @@</span><br><span class="line">     . /etc/bash_completion</span><br><span class="line">   fi</span><br><span class="line"> fi</span><br><span class="line">+</span><br><span class="line">+export DISPLAY=localhost:0.0</span><br></pre></td></tr></table></figure></p>
 <h3><span id="日本語関連">日本語関連</span></h3>
-<p>上記手順だけでは日本語入力環境が整わないので、 <a href="http://moguno.hatenablog.jp/entry/2017/10/08/155023" target="_blank" rel="noopener">WSLを使ってWindowsでmikutterを動かす</a> と <a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a> を参考に日本語環境を構築する。 まず、<a href="http://moguno.hatenablog.jp/entry/2017/10/08/155023" target="_blank" rel="noopener">WSLを使ってWindowsでmikutterを動かす</a> のとおり、uim-anthyをインストールし、 <a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a> のとおり、<code>~/.uim</code>を設定する。 結局は、<a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a>のとおりで良さそうではある。</p>
+<p>上記手順だけでは日本語入力環境が整わないので、 <a href="http://moguno.hatenablog.jp/entry/2017/10/08/155023" target="_blank" rel="noopener">WSLを使ってWindowsでmikutterを動かす</a>
+と <a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a>
+を参考に日本語環境を構築する。 まず、<a href="http://moguno.hatenablog.jp/entry/2017/10/08/155023" target="_blank" rel="noopener">WSLを使ってWindowsでmikutterを動かす</a>
+のとおり、uim-anthyをインストールし、 <a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a>
+のとおり、<code>~/.uim</code>を設定する。 結局は、<a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a>のとおりで良さそうではある。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install language-pack-ja</span><br><span class="line">$ sudo update-locale LANG=ja_JP.UTF-8</span><br><span class="line">$ sudo apt install -y uim uim-xim uim-fep uim-anthy dbus-x11</span><br><span class="line">$ cat &lt;&lt; EOF &gt; ~/.uim</span><br><span class="line">  (define default-im-name &apos;anthy)</span><br><span class="line">  (define-key generic-on-key? &apos;(&quot;&lt;Control&gt; &quot;))</span><br><span class="line">  (define-key generic-off-key? &apos;(&quot;&lt;Control&gt; &quot;))</span><br><span class="line">  EOF</span><br><span class="line">$ cat &lt;&lt; EOF &gt;&gt; ~/.profile</span><br><span class="line">  export GTK_IM_MODULE=uim</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
 <h3><span id="例gui-vimのインストール">例：GUI vimのインストール</span></h3>
 <p>使いたいツールをインストール。</p>
@@ -302,7 +316,7 @@ $ gvim</code></pre>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/X-window-on-wsl-for-Ubuntu/" data-id="cl2nztnpd00gv5xqiyolwm9bd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/X-window-on-wsl-for-Ubuntu/" data-id="cl2o9pb8x00c618rzzr0rulxo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -553,5 +567,20 @@ $ gvim</code></pre>
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

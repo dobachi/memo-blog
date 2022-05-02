@@ -250,70 +250,110 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#論文の要点メモ">論文の要点メモ</a><ul>
-<li><a href="#introduction">1. Introduction</a></li>
-<li><a href="#related-work">2. Related Work</a></li>
-<li><a href="#motivation-for-heron">3. Motivation for Heron</a><ul>
-<li><a href="#storm-background">3.1 Storm Background</a></li>
-<li><a href="#storm-worker-architecture-limitations">3.2 Storm Worker Architecture: Limitations</a></li>
-<li><a href="#issues-with-the-storm-nimbus">3.3 Issues with the Storm Nimbus</a></li>
-<li><a href="#lack-of-backpressure">3.4 Lack of Backpressure</a></li>
-<li><a href="#efficiency">3.5 Efficiency</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#論文の要点メモ" id="toc-論文の要点メモ">論文の要点メモ</a>
+<ul>
+<li><a href="#introduction" id="toc-introduction">1.
+Introduction</a></li>
+<li><a href="#related-work" id="toc-related-work">2. Related
+Work</a></li>
+<li><a href="#motivation-for-heron" id="toc-motivation-for-heron">3.
+Motivation for Heron</a>
+<ul>
+<li><a href="#storm-background" id="toc-storm-background">3.1 Storm
+Background</a></li>
+<li><a href="#storm-worker-architecture-limitations" id="toc-storm-worker-architecture-limitations">3.2 Storm Worker
+Architecture: Limitations</a></li>
+<li><a href="#issues-with-the-storm-nimbus" id="toc-issues-with-the-storm-nimbus">3.3 Issues with the Storm
+Nimbus</a></li>
+<li><a href="#lack-of-backpressure" id="toc-lack-of-backpressure">3.4
+Lack of Backpressure</a></li>
+<li><a href="#efficiency" id="toc-efficiency">3.5 Efficiency</a></li>
 </ul></li>
-<li><a href="#design-alternatives">4. Design Alternatives</a></li>
-<li><a href="#heron">5. Heron</a><ul>
-<li><a href="#data-model-and-api">5.1 Data Model and API</a></li>
-<li><a href="#architecture-overview">5.2 Architecture overview</a></li>
-<li><a href="#topology-master">5.3 Topology Master</a></li>
-<li><a href="#stream-manager">5.4 Stream Manager</a></li>
-<li><a href="#heron-instance">5.5 Heron Instance</a></li>
-<li><a href="#metrics-manager">5.6 Metrics Manager</a></li>
-<li><a href="#startup-sequence-and-failure-scenarios">5.7 Startup Sequence and Failure Scenarios</a></li>
-<li><a href="#architecture-features-summary">5.8 Architecture Features: Summary</a></li>
+<li><a href="#design-alternatives" id="toc-design-alternatives">4.
+Design Alternatives</a></li>
+<li><a href="#heron" id="toc-heron">5. Heron</a>
+<ul>
+<li><a href="#data-model-and-api" id="toc-data-model-and-api">5.1 Data
+Model and API</a></li>
+<li><a href="#architecture-overview" id="toc-architecture-overview">5.2
+Architecture overview</a></li>
+<li><a href="#topology-master" id="toc-topology-master">5.3 Topology
+Master</a></li>
+<li><a href="#stream-manager" id="toc-stream-manager">5.4 Stream
+Manager</a></li>
+<li><a href="#heron-instance" id="toc-heron-instance">5.5 Heron
+Instance</a></li>
+<li><a href="#metrics-manager" id="toc-metrics-manager">5.6 Metrics
+Manager</a></li>
+<li><a href="#startup-sequence-and-failure-scenarios" id="toc-startup-sequence-and-failure-scenarios">5.7 Startup Sequence and
+Failure Scenarios</a></li>
+<li><a href="#architecture-features-summary" id="toc-architecture-features-summary">5.8 Architecture Features:
+Summary</a></li>
 </ul></li>
-<li><a href="#heron-in-production">6. Heron in Production</a><ul>
-<li><a href="#heron-tracker">6.1 Heron Tracker</a></li>
-<li><a href="#heron-ui">6.2 Heron UI</a></li>
-<li><a href="#heron-viz">6.3 Heron Viz</a></li>
-<li><a href="#herontwitter">6.4 Heron@Twitter</a></li>
+<li><a href="#heron-in-production" id="toc-heron-in-production">6. Heron
+in Production</a>
+<ul>
+<li><a href="#heron-tracker" id="toc-heron-tracker">6.1 Heron
+Tracker</a></li>
+<li><a href="#heron-ui" id="toc-heron-ui">6.2 Heron UI</a></li>
+<li><a href="#heron-viz" id="toc-heron-viz">6.3 Heron Viz</a></li>
+<li><a href="#herontwitter" id="toc-herontwitter">6.4
+Heron@Twitter</a></li>
 </ul></li>
-<li><a href="#empirical-evaluation">7. Empirical Evaluation</a><ul>
-<li><a href="#word-count-topology">7.3 Word Count Topology</a></li>
-<li><a href="#rtac-topology">7.4 RTAC Topology</a></li>
+<li><a href="#empirical-evaluation" id="toc-empirical-evaluation">7.
+Empirical Evaluation</a>
+<ul>
+<li><a href="#word-count-topology" id="toc-word-count-topology">7.3 Word
+Count Topology</a></li>
+<li><a href="#rtac-topology" id="toc-rtac-topology">7.4 RTAC
+Topology</a></li>
 </ul></li>
-<li><a href="#conclusions-and-future-work">8. Conclusions and Future work</a></li>
+<li><a href="#conclusions-and-future-work" id="toc-conclusions-and-future-work">8. Conclusions and Future
+work</a></li>
 </ul></li>
-<li><a href="#最近のheronはどうかのメモ">最近のHeronはどうか？のメモ</a><ul>
-<li><a href="#readmeによるupdate">READMEによる「Update」</a></li>
-<li><a href="#公式ドキュメントを覗いてみる">公式ドキュメントを覗いてみる</a><ul>
-<li><a href="#herons-design-goals">Heron's Design Goals</a></li>
+<li><a href="#最近のheronはどうかのメモ" id="toc-最近のheronはどうかのメモ">最近のHeronはどうか？のメモ</a>
+<ul>
+<li><a href="#readmeによるupdate" id="toc-readmeによるupdate">READMEによる「Update」</a></li>
+<li><a href="#公式ドキュメントを覗いてみる" id="toc-公式ドキュメントを覗いてみる">公式ドキュメントを覗いてみる</a>
+<ul>
+<li><a href="#herons-design-goals" id="toc-herons-design-goals">Heron's
+Design Goals</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#商用サポートはあるのか">商用サポートはあるのか？</a></li>
+<li><a href="#商用サポートはあるのか" id="toc-商用サポートはあるのか">商用サポートはあるのか？</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://dl.acm.org/citation.cfm?id=2742788" target="_blank" rel="noopener">Twitter Heronの論文要旨</a></li>
+<li><a href="https://dl.acm.org/citation.cfm?id=2742788" target="_blank" rel="noopener">Twitter
+Heronの論文要旨</a></li>
 <li><a href="https://github.com/nathanmarz/storm/wiki" target="_blank" rel="noopener">Trident</a></li>
-<li><a href="https://github.com/apache/incubator-heron" target="_blank" rel="noopener">Apache incubation Heron</a></li>
-<li><a href="https://github.com/apache/incubator-heron/graphs/commit-activity" target="_blank" rel="noopener">Apache Heronのコミット状況</a></li>
-<li><a href="https://github.com/apache/incubator-heron/graphs/contributors" target="_blank" rel="noopener">Apache Heronのコントリビュータ</a></li>
+<li><a href="https://github.com/apache/incubator-heron" target="_blank" rel="noopener">Apache
+incubation Heron</a></li>
+<li><a href="https://github.com/apache/incubator-heron/graphs/commit-activity" target="_blank" rel="noopener">Apache
+Heronのコミット状況</a></li>
+<li><a href="https://github.com/apache/incubator-heron/graphs/contributors" target="_blank" rel="noopener">Apache
+Heronのコントリビュータ</a></li>
 <li><a href="https://twitter.com/sanjeevrk" target="_blank" rel="noopener">Sanjeev Kulkarni</a></li>
 <li><a href="https://github.com/objmagic" target="_blank" rel="noopener">objmagic</a></li>
 <li><a href="https://www.linkedin.com/in/ningwang/" target="_blank" rel="noopener">Ning Wang</a></li>
 <li><a href="https://slurm.schedmd.com/" target="_blank" rel="noopener">slurm</a></li>
 <li><a href="https://apache.github.io/incubator-heron/" target="_blank" rel="noopener">公式ドキュメント</a></li>
-<li><a href="https://qiita.com/takeuchikzm/items/5f21e9ec7ddf885c8e5e" target="_blank" rel="noopener">Storm vs. Heron</a></li>
-<li><a href="https://www.slideshare.net/streamlio/introduction-to-heron" target="_blank" rel="noopener">Introduction to Apache Heron by Streamlio</a></li>
+<li><a href="https://qiita.com/takeuchikzm/items/5f21e9ec7ddf885c8e5e" target="_blank" rel="noopener">Storm
+vs. Heron</a></li>
+<li><a href="https://www.slideshare.net/streamlio/introduction-to-heron" target="_blank" rel="noopener">Introduction
+to Apache Heron by Streamlio</a></li>
 <li><a href="https://streaml.io/support" target="_blank" rel="noopener">Streamlioのサポートサービス</a></li>
 <li><a href="https://streaml.io/product/technology/processing" target="_blank" rel="noopener">Streamlioのプロセッシングエンジンに関する説明</a></li>
-<li><a href="https://streaml.io/blog/pulsar-functions" target="_blank" rel="noopener">Pulsar functions</a></li>
+<li><a href="https://streaml.io/blog/pulsar-functions" target="_blank" rel="noopener">Pulsar
+functions</a></li>
 </ul>
 <h1><span id="論文の要点メモ">論文の要点メモ</span></h1>
 <p>昔のメモをコピペ。</p>
-<p>なお、 <a href="https://qiita.com/takeuchikzm/items/5f21e9ec7ddf885c8e5e" target="_blank" rel="noopener">Storm vs. Heron</a> のブログに記載の通り、 本論文当時のStormは古く、現在のStormでは解消されている（可能性のある）課題が取り扱われていることに注意が必要。</p>
+<p>なお、 <a href="https://qiita.com/takeuchikzm/items/5f21e9ec7ddf885c8e5e" target="_blank" rel="noopener">Storm
+vs. Heron</a> のブログに記載の通り、
+本論文当時のStormは古く、現在のStormでは解消されている（可能性のある）課題が取り扱われていることに注意が必要。</p>
 <h2><span id="1-introduction">1. Introduction</span></h2>
 <p>Twitterでのリアルタイム・ストリーミングのユースケースの例。</p>
 <ul>
@@ -323,10 +363,12 @@ ga('send', 'pageview');
 </ul></li>
 <li>リアルタイム・エンゲージメント（ツイートや広告）</li>
 </ul>
-<p>大きな課題のひとつは、デバッガビリティ。性能劣化の原因を素早く探りたい。 論理単位と物理的なプロセスを結びつけてシンプルにしたかった。</p>
+<p>大きな課題のひとつは、デバッガビリティ。性能劣化の原因を素早く探りたい。
+論理単位と物理的なプロセスを結びつけてシンプルにしたかった。</p>
 <p>クラスタ管理の仕組み（TwitterではAuroraを使用）と組み合わせたかった。</p>
 <p>計算リソースの効率も上げたかった。</p>
-<p>一方で既存のアプリを書き換えたくないので、Storm API、Summingbird APIに対応させたい。</p>
+<p>一方で既存のアプリを書き換えたくないので、Storm API、Summingbird
+APIに対応させたい。</p>
 <h2><span id="2-related-work">2. Related Work</span></h2>
 <p>挙げられていたのは以下のような技術。</p>
 <ul>
@@ -354,27 +396,43 @@ ga('send', 'pageview');
 <h2><span id="3-motivation-for-heron">3. Motivation for Heron</span></h2>
 <h3><span id="31-storm-background">3.1 Storm Background</span></h3>
 <p>特筆なし。Stormの論理構造の説明があるだけ。</p>
-<h3><span id="32-storm-worker-architecture-limitations">3.2 Storm Worker Architecture: Limitations</span></h3>
-<p>Stormはプロセス内で複数のタスクを実行するし、それらのタスクは複数のトポロジーに属している。 これにより性能劣化などが発生しても、その原因を見極めるのが難しく、結果としてトポロジー「再起動」という 手段を取らざるを得なくなる。</p>
+<h3><span id="32-storm-workerarchitecture-limitations">3.2 Storm Worker
+Architecture: Limitations</span></h3>
+<p>Stormはプロセス内で複数のタスクを実行するし、それらのタスクは複数のトポロジーに属している。
+これにより性能劣化などが発生しても、その原因を見極めるのが難しく、結果としてトポロジー「再起動」という
+手段を取らざるを得なくなる。</p>
 <p>ログが混ざって調査しづらい。</p>
-<p>マシンリソースのリザーブが一律である点が辛い。 余分なリソースを確保してしまう。特に複雑なトポロジーを用いることになるハイレベルAPIで利用する場合。</p>
+<p>マシンリソースのリザーブが一律である点が辛い。
+余分なリソースを確保してしまう。特に複雑なトポロジーを用いることになるハイレベルAPIで利用する場合。</p>
 <p>大きなヒープを用いることもデバッグしづらさを助長する。</p>
-<p>ワーカ内では、グローバルな送信スレッド、受信スレッド、コンピューティングスレッドがある。 その間で内外の通信を行う。これは無駄が多い。</p>
-<h3><span id="33-issues-with-the-storm-nimbus">3.3 Issues with the Storm Nimbus</span></h3>
-<p>Stormのスケジューラは、ワーカにおいてリソース使用分割をきちんと実施しない。 Storm on YARNを導入しても十分ではなかった。</p>
+<p>ワーカ内では、グローバルな送信スレッド、受信スレッド、コンピューティングスレッドがある。
+その間で内外の通信を行う。これは無駄が多い。</p>
+<h3><span id="33-issues-with-the-stormnimbus">3.3 Issues with the Storm
+Nimbus</span></h3>
+<p>Stormのスケジューラは、ワーカにおいてリソース使用分割をきちんと実施しない。
+Storm on YARNを導入しても十分ではなかった。</p>
 <p>ZooKeeperがワーカ数の制約になる。</p>
-<p>NimbusはSPOF。 Nimbusがとまると新しいトポロジーを投入できないし、走っているトポロジーを止められない。 エラーが起きても気づけないし、自動的にリカバーできない。</p>
+<p>NimbusはSPOF。
+Nimbusがとまると新しいトポロジーを投入できないし、走っているトポロジーを止められない。
+エラーが起きても気づけないし、自動的にリカバーできない。</p>
 <h3><span id="34-lack-of-backpressure">3.4 Lack of Backpressure</span></h3>
 <p>Stormにはバックプレッシャ機能がなかった。</p>
 <h3><span id="35-efficiency">3.5 Efficiency</span></h3>
-<p>効率の悪さ（マシンリソースを使い切らない）が課題。 イメージで言えば…100コアのクラスタがあるとき、Utilization 90%以上のコアが30個で動いていほしいところ、Utilizaiton 30%のコアが90個になる、という具合。</p>
+<p>効率の悪さ（マシンリソースを使い切らない）が課題。
+イメージで言えば…100コアのクラスタがあるとき、Utilization
+90%以上のコアが30個で動いていほしいところ、Utilizaiton
+30%のコアが90個になる、という具合。</p>
 <h2><span id="4-design-alternatives">4. Design Alternatives</span></h2>
-<p>Heronの他に選択肢がなかったのか、というと、なかった、ということが書かれている。 ポイントはStorm互換APIを持ち、Stormの欠点を克服するプロダクトがなかった、ということ。</p>
+<p>Heronの他に選択肢がなかったのか、というと、なかった、ということが書かれている。
+ポイントはStorm互換APIを持ち、Stormの欠点を克服するプロダクトがなかった、ということ。</p>
 <h2><span id="5-heron">5. Heron</span></h2>
 <h3><span id="51-data-model-and-api">5.1 Data Model and API</span></h3>
-<p>データモデルとAPIはStormと同様。 トポロジーは論理プラン、実際に実行されるパーティション化されたスパウトやボルトが 物理プランに相当すると考えて良い。</p>
+<p>データモデルとAPIはStormと同様。
+トポロジーは論理プラン、実際に実行されるパーティション化されたスパウトやボルトが
+物理プランに相当すると考えて良い。</p>
 <h3><span id="52-architecture-overview">5.2 Architecture overview</span></h3>
-<p>ジェネラルなスケジューラであるAuroraを使用し、トポロジーをデプロイする。 Nimbusからの離脱。</p>
+<p>ジェネラルなスケジューラであるAuroraを使用し、トポロジーをデプロイする。
+Nimbusからの離脱。</p>
 <p>以下のようなコンポーネントで成り立つ。</p>
 <ul>
 <li>トポロジマスタ（TM）（スタンバイTMを起動することも可能）</li>
@@ -382,43 +440,83 @@ ga('send', 'pageview');
 <li>メトリクスマネージャ（MM）</li>
 <li>ヘロンインスタンス（HI）（要はスパウトとボルト）</li>
 </ul>
-<p>コンテナは単独の物理ノードとして起動する。 なお、Twitterではcgroupsでコンテナを起動する。</p>
+<p>コンテナは単独の物理ノードとして起動する。
+なお、Twitterではcgroupsでコンテナを起動する。</p>
 <p>メタデータはZooKeeperに保存する。</p>
 <p>なお、HIはJavaで実装されている。</p>
 <p>通信はProtocol Buffersで。</p>
 <h3><span id="53-topology-master">5.3 Topology Master</span></h3>
-<p>YARNでいうAMに近い。 ZooKeeperのエファメラルノードの機能を使い、複数のTMがマスタになるのを防ぎ、TMを探すのを助ける。</p>
+<p>YARNでいうAMに近い。
+ZooKeeperのエファメラルノードの機能を使い、複数のTMがマスタになるのを防ぎ、TMを探すのを助ける。</p>
 <h3><span id="54-stream-manager">5.4 Stream Manager</span></h3>
-<p>HIは、そのローカルのSMを通じて通信する。 通信経路は <code>O(k^2)</code> である。このとき、HIの数 <code>n</code> は、 kよりもずっと大きいことが多いので、効率的に通信できるはずである。</p>
+<p>HIは、そのローカルのSMを通じて通信する。 通信経路は
+<code>O(k^2)</code> である。このとき、HIの数 <code>n</code> は、
+kよりもずっと大きいことが多いので、効率的に通信できるはずである。</p>
 <p>補足：ひとつのマシンにひとつのSM、複数のコンテナ（つまりHI等）があるモデルを仮定。</p>
 <p>バックプレッシャの方式には種類がある。</p>
-<p>バックプレッシャについて。 複数のステージで構成されるケースにおいて、後段のステージの処理時間が長引いていると、 タプルを送るのが <em>つまって</em> バッファがあふれる可能性が生じる。 そこでそれを調整する機能が必要。</p>
-<p>TCPバックプレッシャ。 HIの処理時間が長くなると、HIの受信バッファが埋まり始め、合わせて SMの送信バッファも埋まり始める。 これによりSMは <em>つまり</em> 始めているのを検知し、それを上流に伝搬する。 この仕組みは実装は簡単だが、実際にはワークしない。 HI間の論理通信経路は、SM間の物理通信経路上で、 オーバーレイ構成されるためである。</p>
-<p>スパウトバックプレッシャについて。 TCPバックプレッシャと組み合わせて用いられる。 SMがHIの処理遅延を検知すると、 スパウトのデータ読み込みを止める。 続いてスタートバックプレッシャのメッセージを他のSMに送る。これにより読み込みが抑制される。 処理遅延が解消されると、ストップバックプレッシャのメッセージを送る。 欠点は、過剰に読み込みを抑止すること、メッセージングのオーバヘッドがあること。利点は、トポロジによらず素早く対処可能なこと。</p>
-<p>その他、ステージ・バイ・ステージバックプレッシャについて。 これはトポロジはステージの連続からなる。 バックプレッシャを伝搬させることで必要分だけ読み込み抑制する。</p>
+<p>バックプレッシャについて。
+複数のステージで構成されるケースにおいて、後段のステージの処理時間が長引いていると、
+タプルを送るのが <em>つまって</em> バッファがあふれる可能性が生じる。
+そこでそれを調整する機能が必要。</p>
+<p>TCPバックプレッシャ。
+HIの処理時間が長くなると、HIの受信バッファが埋まり始め、合わせて
+SMの送信バッファも埋まり始める。 これによりSMは <em>つまり</em>
+始めているのを検知し、それを上流に伝搬する。
+この仕組みは実装は簡単だが、実際にはワークしない。
+HI間の論理通信経路は、SM間の物理通信経路上で、
+オーバーレイ構成されるためである。</p>
+<p>スパウトバックプレッシャについて。
+TCPバックプレッシャと組み合わせて用いられる。
+SMがHIの処理遅延を検知すると、 スパウトのデータ読み込みを止める。
+続いてスタートバックプレッシャのメッセージを他のSMに送る。これにより読み込みが抑制される。
+処理遅延が解消されると、ストップバックプレッシャのメッセージを送る。
+欠点は、過剰に読み込みを抑止すること、メッセージングのオーバヘッドがあること。利点は、トポロジによらず素早く対処可能なこと。</p>
+<p>その他、ステージ・バイ・ステージバックプレッシャについて。
+これはトポロジはステージの連続からなる。
+バックプレッシャを伝搬させることで必要分だけ読み込み抑制する。</p>
 <p>Heronでは、スパウトバックプレッシャ方式を用いた。</p>
-<p>ソケットをアプリケーションレベルのバッファに対応させ、 ハイ・ウォータマークとロー・ウォータマークを定義。 ハイ・ウォータマークを超えるとバックプレッシャが発動し、 ロー・ウォータマークを下回るまでバックプレッシャが続く。</p>
+<p>ソケットをアプリケーションレベルのバッファに対応させ、
+ハイ・ウォータマークとロー・ウォータマークを定義。
+ハイ・ウォータマークを超えるとバックプレッシャが発動し、
+ロー・ウォータマークを下回るまでバックプレッシャが続く。</p>
 <h3><span id="55-heron-instance">5.5 Heron Instance</span></h3>
 <p>デザインにはいくつかの選択肢がある。</p>
 <h4><span id="551-single-threaded-approach">5.5.1 Single-threaded approach</span></h4>
-<p>HIはJVMであり、単独のタスクを実行する。 これによりデバッグしやすくなる。</p>
-<p>しかし、シングルスレッドアプローチは「ユーザコードが様々な理由によりブロックする可能性がある」という欠点がある。 ブロックする理由は様々だが、例えば…</p>
+<p>HIはJVMであり、単独のタスクを実行する。
+これによりデバッグしやすくなる。</p>
+<p>しかし、シングルスレッドアプローチは「ユーザコードが様々な理由によりブロックする可能性がある」という欠点がある。
+ブロックする理由は様々だが、例えば…</p>
 <ul>
 <li>スリープのシステムコールを実行</li>
 <li>ファイルやソケットI/Oのため読み書きのシステムコールを実行</li>
 <li>スレッド同期を実行</li>
 </ul>
-<p>これらのブロックは特にメトリクスの取り扱いにおいて問題になった。 つまり、仮にブロックされてしまうともし問題が起きていたとしてもメトリクスの伝搬が遅くなることがあり、 ユーザは信用を置けなくなってしまうからだ。</p>
+<p>これらのブロックは特にメトリクスの取り扱いにおいて問題になった。
+つまり、仮にブロックされてしまうともし問題が起きていたとしてもメトリクスの伝搬が遅くなることがあり、
+ユーザは信用を置けなくなってしまうからだ。</p>
 <h4><span id="552-two-threaded-approach">5.5.2 Two-threaded approach</span></h4>
-<p>ゲートウェイスレオッドとタスク実行スレッドの2種類で構成する。 ゲートウェイスレッドは、HIの通信管理を担う。 TCP接続の管理など。</p>
-<p>タスク実行スレッドはユーザコードを実行する。 スパウトか、ボルトかによって実行されるメソッドが異なる。 スパウトであれば <code>nextTuple</code> を実行してデータをフェッチするし、 ボルトであれば <code>execute</code> メソッドを実行してデータを処理する。 処理されたデータはゲートウェイスレッドに渡され、ローカルのSMに渡される。 なお、その他にも送られたタプルの数などのメトリクスが取得される。</p>
+<p>ゲートウェイスレオッドとタスク実行スレッドの2種類で構成する。
+ゲートウェイスレッドは、HIの通信管理を担う。 TCP接続の管理など。</p>
+<p>タスク実行スレッドはユーザコードを実行する。
+スパウトか、ボルトかによって実行されるメソッドが異なる。
+スパウトであれば <code>nextTuple</code>
+を実行してデータをフェッチするし、 ボルトであれば <code>execute</code>
+メソッドを実行してデータを処理する。
+処理されたデータはゲートウェイスレッドに渡され、ローカルのSMに渡される。
+なお、その他にも送られたタプルの数などのメトリクスが取得される。</p>
 <p>★補足：このデザインは汎用的なので、他のプロダクトにも利用できそう。</p>
-<p>スレッド間はいくつかのキューで結ばれる。 data-in、data-out、metrics-outである。 重要なのは、data-inとdata-outは長さが決まっており、このキューがいっぱいになるとバックプレッシャ機能が有効になる仕組みになっていること。</p>
-<p>問題は、NWがいっぱいなときにdata-outキューが溜まった状態になることだった。 これにより、生存オブジェクトがメモリ内に大量に残り、GCによる回収ができない。 このとき、もしdata-outキューからの送信よりも、先に受信が発動すると、新しいオブジェクトが生成されることになり、 GCを発動するが回収可能なオブジェクトが少ないため、さらなる性能劣化を引き起こす。</p>
+<p>スレッド間はいくつかのキューで結ばれる。
+data-in、data-out、metrics-outである。
+重要なのは、data-inとdata-outは長さが決まっており、このキューがいっぱいになるとバックプレッシャ機能が有効になる仕組みになっていること。</p>
+<p>問題は、NWがいっぱいなときにdata-outキューが溜まった状態になることだった。
+これにより、生存オブジェクトがメモリ内に大量に残り、GCによる回収ができない。
+このとき、もしdata-outキューからの送信よりも、先に受信が発動すると、新しいオブジェクトが生成されることになり、
+GCを発動するが回収可能なオブジェクトが少ないため、さらなる性能劣化を引き起こす。</p>
 <p>これを軽減するため、data-out、data-inキューの長さを状況に応じて増減することにした。</p>
 <h3><span id="56-metrics-manager">5.6 Metrics Manager</span></h3>
 <p>メトリクスマネージャは、コンテナごとに1個。</p>
-<h3><span id="57-startup-sequence-and-failure-scenarios">5.7 Startup Sequence and Failure Scenarios</span></h3>
+<h3><span id="57-startup-sequence-andfailure-scenarios">5.7 Startup Sequence and
+Failure Scenarios</span></h3>
 <p>トポロジがサブミットされてから実際に処理が開始されるまでの流れの説明。</p>
 <ul>
 <li>スケジューラがリソースをアロケート</li>
@@ -435,28 +533,39 @@ ga('send', 'pageview');
 <li>SMが故障した場合、復旧したSMは物理プランを取得する。他のSMも新しいSMの物理プランを取得する。</li>
 <li>HIが故障した場合、再起動してローカルSMにつなぎにいく。その後物理プランを取得し処理を再開する。</li>
 </ul>
-<h3><span id="58-architecture-features-summary">5.8 Architecture Features: Summary</span></h3>
+<h3><span id="58-architecture-featuressummary">5.8 Architecture Features:
+Summary</span></h3>
 <p>まとめが記載されているのみ。</p>
 <h2><span id="6-heron-in-production">6. Heron in Production</span></h2>
 <p>プロダクションで利用するため、いくつかの周辺機能を有している。</p>
 <h3><span id="61-heron-tracker">6.1 Heron Tracker</span></h3>
-<p>ヘロントラッカーはZooKeeperを利用し、トポロジのローンチ、既存トポロジの停止、 物理プランの変更を追従する。 また同様にトポロジマスタを把握し、メトリクス等を取得する。</p>
+<p>ヘロントラッカーはZooKeeperを利用し、トポロジのローンチ、既存トポロジの停止、
+物理プランの変更を追従する。
+また同様にトポロジマスタを把握し、メトリクス等を取得する。</p>
 <h3><span id="62-heron-ui">6.2 Heron UI</span></h3>
-<p>ヘロントラッカーAPIを利用し、UIを提供する。 論文上にはUIの例が載っている。 トポロジのDAG、コンテナ、コンポーネント、メトリクスを把握できる。</p>
+<p>ヘロントラッカーAPIを利用し、UIを提供する。
+論文上にはUIの例が載っている。
+トポロジのDAG、コンテナ、コンポーネント、メトリクスを把握できる。</p>
 <h3><span id="63-heron-viz">6.3 Heron Viz</span></h3>
 <p>メトリクスの可視化。トラッカーAPIを利用し、新しいトポロジがローンチされたことを検知し、可視化する。</p>
 <p>ヘルスメトリクス、リソースメトリクス、コンポーネントメトリクス、ストリームマネージャメトリクス。</p>
 <p>ヘルスメトリクスではラグや失敗などを表示する。</p>
 <p>リソースメトリクスでは予約されたCPU、実際に使用されたCPU、同様にメモリに関する情報を扱う。またGCなども。</p>
-<p>コンポーネントメトリクスはスパウトではエミットされたタプル数などのコンポーネントごとに固有のメトリクスを扱う。 エンドツーエンドのレイテンシも扱う。</p>
+<p>コンポーネントメトリクスはスパウトではエミットされたタプル数などのコンポーネントごとに固有のメトリクスを扱う。
+エンドツーエンドのレイテンシも扱う。</p>
 <p>ストリームマネージャメトリクスは、インスタンスに送受信されたタプル数やバックプレッシャ機能に関するメトリクスを扱う。</p>
 <h3><span id="64-herontwitter">6.4 Heron@Twitter</span></h3>
 <p>TwitterではStormではなくHeronがデファクトスタンダードである。</p>
-<p>ユースケースは多岐にわたるが、データ加工、フィルタリング、結合、コンテンツのアグリゲーションなどなど。 機械学習も含む。例えば、回帰、アソシエーション、クラスタリングなど。</p>
+<p>ユースケースは多岐にわたるが、データ加工、フィルタリング、結合、コンテンツのアグリゲーションなどなど。
+機械学習も含む。例えば、回帰、アソシエーション、クラスタリングなど。</p>
 <p>3倍ほどのリソース使用効率を得られた。</p>
 <h2><span id="7-empirical-evaluation">7. Empirical Evaluation</span></h2>
-<p>本論文用に組まれた動作確認。 StormとHeronの比較。 Ackあり・なしの両方。</p>
-<p>なお、計測はデータ処理が安定してから開始するようにした。 そのため、Stormでは0mq層 <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> でほとんどドロップが起きていないときに計測することを意味し、 Heronではバックプレッシャが発動しておらず転送キューが溜まっていない状態での計測を意味する。</p>
+<p>本論文用に組まれた動作確認。 StormとHeronの比較。
+Ackあり・なしの両方。</p>
+<p>なお、計測はデータ処理が安定してから開始するようにした。
+そのため、Stormでは0mq層 <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+でほとんどドロップが起きていないときに計測することを意味し、
+Heronではバックプレッシャが発動しておらず転送キューが溜まっていない状態での計測を意味する。</p>
 <p>Ackありのケースについて、タプルのドロップは、</p>
 <ul>
 <li>Storm：0mqでのドロップもしくはタイムアウト</li>
@@ -464,29 +573,45 @@ ga('send', 'pageview');
 </ul>
 <p>を要因とするものを想定する。</p>
 <h3><span id="73-word-count-topology">7.3 Word Count Topology</span></h3>
-<p>スパウトで高々175k単語のランダムな単語群を生成する。 それをボルトに渡し、メモリマップに保持する。</p>
+<p>スパウトで高々175k単語のランダムな単語群を生成する。
+それをボルトに渡し、メモリマップに保持する。</p>
 <p>これは単純な処理なので、オーバーヘッドを計測するのに適している。</p>
 <p>結果は、スループットで10倍〜14倍、レイテンシで5〜15倍の改善が見られた。</p>
-<p>Heronのエンドツーエンドでのレイテンシにおけるボトルネックは、 SMのバッファでバッチ化されることであり、これは概ね数十ms程度の影響がある。</p>
-<p>CPUコアの使用量は、2〜3倍小さくなった。 （補足：無駄にリソース確保せずに、きちんと各コアを使い切っている、というのも影響しているようだ）</p>
+<p>Heronのエンドツーエンドでのレイテンシにおけるボトルネックは、
+SMのバッファでバッチ化されることであり、これは概ね数十ms程度の影響がある。</p>
+<p>CPUコアの使用量は、2〜3倍小さくなった。
+（補足：無駄にリソース確保せずに、きちんと各コアを使い切っている、というのも影響しているようだ）</p>
 <p>Ackが有効、無効で同様の傾向。</p>
 <h3><span id="74-rtac-topology">7.4 RTAC Topology</span></h3>
-<p>Ack有効の場合、Stormで6Mタプル/min出すのに360コア必要だった。レイテンシは70ms。 対してHeronでは、36コアでよく、レイテンシも24msだった。</p>
+<p>Ack有効の場合、Stormで6Mタプル/min出すのに360コア必要だった。レイテンシは70ms。
+対してHeronでは、36コアでよく、レイテンシも24msだった。</p>
 <p>Ack無効の場合も同様の傾向。必要なCPUコア数に関し、10倍（つまり1/10のコアで良い）の改善が得られた。</p>
 <h2><span id="8-conclusions-and-future-work">8. Conclusions and Future work</span></h2>
-<p>Exactly oneceセマンティクスは論文執筆時点では対応されていない。 論文中では、 <a href="https://github.com/nathanmarz/storm/wiki" target="_blank" rel="noopener">Trident</a> が引用されていた。</p>
+<p>Exactly oneceセマンティクスは論文執筆時点では対応されていない。
+論文中では、 <a href="https://github.com/nathanmarz/storm/wiki" target="_blank" rel="noopener">Trident</a>
+が引用されていた。</p>
 <h1><span id="最近のheronはどうかのメモ">最近のHeronはどうか？のメモ</span></h1>
 <p>2019/7/8現在になりどうなったかを軽く確認。</p>
-<p><a href="https://github.com/apache/incubator-heron" target="_blank" rel="noopener">Apache incubation Heron</a> が公式レポジトリである。 <a href="https://github.com/apache/incubator-heron/graphs/commit-activity" target="_blank" rel="noopener">Apache Heronのコミット状況</a> を見る限り、2019/7/8現在も活発に活動されている。</p>
-<p><a href="https://github.com/apache/incubator-heron/graphs/contributors" target="_blank" rel="noopener">Apache Heronのコントリビュータ</a> を見る限り以下の様子。</p>
+<p><a href="https://github.com/apache/incubator-heron" target="_blank" rel="noopener">Apache incubation
+Heron</a> が公式レポジトリである。 <a href="https://github.com/apache/incubator-heron/graphs/commit-activity" target="_blank" rel="noopener">Apache
+Heronのコミット状況</a>
+を見る限り、2019/7/8現在も活発に活動されている。</p>
+<p><a href="https://github.com/apache/incubator-heron/graphs/contributors" target="_blank" rel="noopener">Apache
+Heronのコントリビュータ</a> を見る限り以下の様子。</p>
 <ul>
 <li>コアの開発者はApache Pulsarの人でもある <a href="https://twitter.com/sanjeevrk" target="_blank" rel="noopener">Sanjeev Kulkarni</a> や <a href="https://github.com/objmagic" target="_blank" rel="noopener">objmagic</a></li>
-<li>ただし最近は <a href="https://www.linkedin.com/in/ningwang/" target="_blank" rel="noopener">Ning Wang</a> のように見える。彼はもともと2013年あたりまでGoogleでYouTubeに携わっていたようだ。</li>
+<li>ただし最近は <a href="https://www.linkedin.com/in/ningwang/" target="_blank" rel="noopener">Ning
+Wang</a>
+のように見える。彼はもともと2013年あたりまでGoogleでYouTubeに携わっていたようだ。</li>
 </ul>
 <h2><span id="readmeによるupdate">READMEによる「Update」</span></h2>
-<p>2019/7/8時点のREADMEによると、Mesos in AWS、Mesos/Aurora in AWS、ローカル（ラップトップ）の上でネイティブ動作するようになった。 またApache REEFを用いてApache YARN上で動作するように試みている。 <a href="https://slurm.schedmd.com/" target="_blank" rel="noopener">slurm</a> にも対応しようとしているとのこと。</p>
+<p>2019/7/8時点のREADMEによると、Mesos in AWS、Mesos/Aurora in
+AWS、ローカル（ラップトップ）の上でネイティブ動作するようになった。
+またApache REEFを用いてApache YARN上で動作するように試みている。 <a href="https://slurm.schedmd.com/" target="_blank" rel="noopener">slurm</a>
+にも対応しようとしているとのこと。</p>
 <h2><span id="公式ドキュメントを覗いてみる">公式ドキュメントを覗いてみる</span></h2>
-<p><a href="https://apache.github.io/incubator-heron/" target="_blank" rel="noopener">公式ドキュメント</a> を確認し、最近の様子を探る。</p>
+<p><a href="https://apache.github.io/incubator-heron/" target="_blank" rel="noopener">公式ドキュメント</a>
+を確認し、最近の様子を探る。</p>
 <ul>
 <li>Python APIがある</li>
 <li>UIがかなり進化している</li>
@@ -510,7 +635,10 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="商用サポートはあるのか">商用サポートはあるのか？</span></h1>
 <p>2019/7/8現在、Heronの商用サポートがあるのか？ →なさそうに見える。</p>
-<p><a href="https://www.slideshare.net/streamlio/introduction-to-heron" target="_blank" rel="noopener">Introduction to Apache Heron by Streamlio</a> の通り、StreamlioがよくHeronの説明をしているように見える。 またこのスライドではユースケースとして、</p>
+<p><a href="https://www.slideshare.net/streamlio/introduction-to-heron" target="_blank" rel="noopener">Introduction
+to Apache Heron by Streamlio</a>
+の通り、StreamlioがよくHeronの説明をしているように見える。
+またこのスライドではユースケースとして、</p>
 <ul>
 <li>Ads</li>
 <li>Monitoring</li>
@@ -530,8 +658,15 @@ ga('send', 'pageview');
 <li>Industrial.io</li>
 </ul>
 <p>を挙げている。</p>
-<p>ただし、 <a href="https://streaml.io/support" target="_blank" rel="noopener">Streamlioのサポートサービス</a> を見る限り、Apache Pulsarを対象としているがApache Heronが対象に入っているようには見えない。 また <a href="https://streaml.io/product/technology/processing" target="_blank" rel="noopener">Streamlioのプロセッシングエンジンに関する説明</a> を見ると、Apache Heronに言及しているが、あくまでStreamlioがApache Heronの 開発に携わっていた経験がStreamlioのストリーム処理エンジンの開発に生かされている件について触れられているだけである。 現在は、 <a href="https://streaml.io/blog/pulsar-functions" target="_blank" rel="noopener">Pulsar functions</a> が彼らのコアか。</p>
-<section class="footnotes" role="doc-endnotes">
+<p>ただし、 <a href="https://streaml.io/support" target="_blank" rel="noopener">Streamlioのサポートサービス</a>
+を見る限り、Apache Pulsarを対象としているがApache
+Heronが対象に入っているようには見えない。 また <a href="https://streaml.io/product/technology/processing" target="_blank" rel="noopener">Streamlioのプロセッシングエンジンに関する説明</a>
+を見ると、Apache Heronに言及しているが、あくまでStreamlioがApache
+Heronの
+開発に携わっていた経験がStreamlioのストリーム処理エンジンの開発に生かされている件について触れられているだけである。
+現在は、 <a href="https://streaml.io/blog/pulsar-functions" target="_blank" rel="noopener">Pulsar
+functions</a> が彼らのコアか。</p>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn1" role="doc-endnote"><p>0mqの記述が読み取れることから、0.8系Stormを比較対象としたように見える。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -547,7 +682,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/07/03/Twitter-Heron-Paper/" data-id="cl2nztnp200fw5xqigtfiyi5i" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/07/03/Twitter-Heron-Paper/" data-id="cl2o9pbiz019k18rzz18efxoq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -668,19 +803,26 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="http://mail-archives.apache.org/mod_mbox/kafka-dev/201812.mbox/%3CCAHwHRrXN23vyHXz0OV2NKxN8yB7Ez8Ao3wf9WiEBfYFLmY43DA@mail.gmail.com%3E" target="_blank" rel="noopener">Re: Kafka Trunk Build Failure with Gradle 5.0</a></li>
+<li><a href="http://mail-archives.apache.org/mod_mbox/kafka-dev/201812.mbox/%3CCAHwHRrXN23vyHXz0OV2NKxN8yB7Ez8Ao3wf9WiEBfYFLmY43DA@mail.gmail.com%3E" target="_blank" rel="noopener">Re:
+Kafka Trunk Build Failure with Gradle 5.0</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="http://mail-archives.apache.org/mod_mbox/kafka-dev/201812.mbox/%3CCAHwHRrXN23vyHXz0OV2NKxN8yB7Ez8Ao3wf9WiEBfYFLmY43DA@mail.gmail.com%3E" target="_blank" rel="noopener">Re: Kafka Trunk Build Failure with Gradle 5.0</a> に記載のように Gradle 4系でエラーが出るようなので、いったん5系をインストールして実行し直した。 （現環境のUbuntuではaptインストールでのバージョンが4系だったので、 SDKMANを使って5系をインストールした）</p>
+<p><a href="http://mail-archives.apache.org/mod_mbox/kafka-dev/201812.mbox/%3CCAHwHRrXN23vyHXz0OV2NKxN8yB7Ez8Ao3wf9WiEBfYFLmY43DA@mail.gmail.com%3E" target="_blank" rel="noopener">Re:
+Kafka Trunk Build Failure with Gradle 5.0</a> に記載のように Gradle
+4系でエラーが出るようなので、いったん5系をインストールして実行し直した。
+（現環境のUbuntuではaptインストールでのバージョンが4系だったので、
+SDKMANを使って5系をインストールした）</p>
 <p>Gradleのバージョンを上げたところ問題なく実行できた。 以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gradle clients:test --tests org.apache.kafka.clients.producer.KafkaProducerTest</span><br></pre></td></tr></table></figure>
-<p>ここではGradleを使って、clientsサブプロジェクト以下の <code>org.apache.kafka.clients.producer.KafkaProducerTest</code> を実行する例である。</p>
+<p>ここではGradleを使って、clientsサブプロジェクト以下の
+<code>org.apache.kafka.clients.producer.KafkaProducerTest</code>
+を実行する例である。</p>
 
         
         </div>
@@ -691,7 +833,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/28/Error-during-building-Apache-Kafka/" data-id="cl2nztnlh004z5xqiqvas9hv4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/28/Error-during-building-Apache-Kafka/" data-id="cl2o9pb5a003218rzltbm1y9e" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -812,11 +954,13 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#consoleproducer">ConsoleProducer</a></li>
-<li><a href="#kafkaproducer">KafkaProducer</a><ul>
-<li><a href="#コンストラクタを確認する">コンストラクタを確認する</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#consoleproducer" id="toc-consoleproducer">ConsoleProducer</a></li>
+<li><a href="#kafkaproducer" id="toc-kafkaproducer">KafkaProducer</a>
+<ul>
+<li><a href="#コンストラクタを確認する" id="toc-コンストラクタを確認する">コンストラクタを確認する</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -826,29 +970,40 @@ ga('send', 'pageview');
 <li><a href="https://www.confluent.io/blog/transactions-apache-kafka/" target="_blank" rel="noopener">Confluentのトランザクションに関する説明</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。</p>
+<p>2019/6/23時点でのtrunkで再確認した内容。
+ほぼ昔のメモのままコピペ・・・。</p>
 <h2><span id="consoleproducer">ConsoleProducer</span></h2>
 <p>エントリポイントとして、Kafkaのコンソールプロデューサを選ぶ。</p>
 <p>bin/kafka-console-producer.sh:20 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsoleProducer &quot;$@&quot;</span><br></pre></td></tr></table></figure></p>
 <p>コンソールプロデューサの実態は、KafkaProducerである。</p>
 <p>kafka/tools/ConsoleProducer.scala:45 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val producer = new KafkaProducer[Array[Byte], Array[Byte]](producerProps(config))</span><br></pre></td></tr></table></figure></p>
-<p>なお、 ConsoleProducerにはsendメソッドが定義されており、 以下のように標準入力からデータを読み出してはメッセージを送信する、を繰り返す。</p>
+<p>なお、 ConsoleProducerにはsendメソッドが定義されており、
+以下のように標準入力からデータを読み出してはメッセージを送信する、を繰り返す。</p>
 <p>kafka/tools/ConsoleProducer.scala:54 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">do &#123;</span><br><span class="line">  record = reader.readMessage()</span><br><span class="line">  if (record != null)</span><br><span class="line">    send(producer, record, config.sync)</span><br><span class="line">&#125; while (record != null)</span><br></pre></td></tr></table></figure></p>
 <p>kafka/tools/ConsoleProducer.scala:70 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private def send(producer: KafkaProducer[Array[Byte], Array[Byte]],</span><br><span class="line">                       record: ProducerRecord[Array[Byte], Array[Byte]], sync: Boolean): Unit = &#123;</span><br><span class="line">  if (sync)</span><br><span class="line">    producer.send(record).get()</span><br><span class="line">  else</span><br><span class="line">    producer.send(record, new ErrorLoggingCallback(record.topic, record.key, record.value, false))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2><span id="kafkaproducer">KafkaProducer</span></h2>
 <p>それでは実態であるKafkaProducerを確認する。</p>
 <h3><span id="コンストラクタを確認する">コンストラクタを確認する</span></h3>
 <p>まずクライアントのIDが定義される。</p>
-<p>org/apache/kafka/clients/producer/KafkaProducer.java:332 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String clientId = config.getString(ProducerConfig.CLIENT_ID_CONFIG);</span><br><span class="line">if (clientId.length() &lt;= 0)</span><br><span class="line">    clientId = &quot;producer-&quot; + PRODUCER_CLIENT_ID_SEQUENCE.getAndIncrement();</span><br><span class="line">this.clientId = clientId;</span><br></pre></td></tr></table></figure></p>
+<p>org/apache/kafka/clients/producer/KafkaProducer.java:332
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String clientId = config.getString(ProducerConfig.CLIENT_ID_CONFIG);</span><br><span class="line">if (clientId.length() &lt;= 0)</span><br><span class="line">    clientId = &quot;producer-&quot; + PRODUCER_CLIENT_ID_SEQUENCE.getAndIncrement();</span><br><span class="line">this.clientId = clientId;</span><br></pre></td></tr></table></figure></p>
 <p>続いてトランザクションIDが定義される。</p>
-<p>org/apache/kafka/clients/producer/KafkaProducer.java:337 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String transactionalId = userProvidedConfigs.containsKey(ProducerConfig.TRANSACTIONAL_ID_CONFIG) ?</span><br><span class="line">        (String) userProvidedConfigs.get(ProducerConfig.TRANSACTIONAL_ID_CONFIG) : null;</span><br></pre></td></tr></table></figure></p>
-<p>Kafkaのトランザクションについては、 <a href="https://www.confluent.io/blog/transactions-apache-kafka/" target="_blank" rel="noopener">Confluentのトランザクションに関する説明</a> を参照。</p>
-<p>その後、ログ設定、メトリクス設定、キー・バリューのシリアライザ設定。 その後、各種設定値を定義する。</p>
-<p>特徴的なところとしては、メッセージを送信するときにメッセージをいったんまとめこむ accumulator も このときに定義される。</p>
-<p>org/apache/kafka/clients/producer/KafkaProducer.java:396 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">this.accumulator = new RecordAccumulator(logContext,</span><br><span class="line">        config.getInt(ProducerConfig.BATCH_SIZE_CONFIG),</span><br><span class="line">        this.compressionType,</span><br><span class="line">        lingerMs(config),</span><br><span class="line">        retryBackoffMs,</span><br><span class="line">        deliveryTimeoutMs,</span><br><span class="line">        metrics,</span><br><span class="line">        PRODUCER_METRIC_GROUP_NAME,</span><br><span class="line">        time,</span><br><span class="line">        apiVersions,</span><br><span class="line">        transactionManager,</span><br><span class="line">        new BufferPool(this.totalMemorySize, config.getInt(ProducerConfig.BATCH_SIZE_CONFIG), metrics, time, PRODUCER_METRIC_GROUP_NAME));</span><br></pre></td></tr></table></figure></p>
-<p>他には Sendor も挙げられる。 例えば、上記で示したaccumulatorも、Sendorのコンストラクタに渡され、内部で利用される。</p>
-<p>org/apache/kafka/clients/producer/KafkaProducer.java:422 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.sender = newSender(logContext, kafkaClient, this.metadata);</span><br></pre></td></tr></table></figure></p>
-<p>org/apache/kafka/clients/producer/KafkaProducer.java:463 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">return new Sender(logContext,</span><br><span class="line">        client,</span><br><span class="line">        metadata,</span><br><span class="line">        this.accumulator,</span><br><span class="line">        maxInflightRequests == 1,</span><br><span class="line">        producerConfig.getInt(ProducerConfig.MAX_REQUEST_SIZE_CONFIG),</span><br><span class="line">        acks,</span><br><span class="line">        retries,</span><br><span class="line">        metricsRegistry.senderMetrics,</span><br><span class="line">        time,</span><br><span class="line">        requestTimeoutMs,</span><br><span class="line">        producerConfig.getLong(ProducerConfig.RETRY_BACKOFF_MS_CONFIG),</span><br><span class="line">        this.transactionManager,</span><br><span class="line">        apiVersions);</span><br></pre></td></tr></table></figure></p>
+<p>org/apache/kafka/clients/producer/KafkaProducer.java:337
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String transactionalId = userProvidedConfigs.containsKey(ProducerConfig.TRANSACTIONAL_ID_CONFIG) ?</span><br><span class="line">        (String) userProvidedConfigs.get(ProducerConfig.TRANSACTIONAL_ID_CONFIG) : null;</span><br></pre></td></tr></table></figure></p>
+<p>Kafkaのトランザクションについては、 <a href="https://www.confluent.io/blog/transactions-apache-kafka/" target="_blank" rel="noopener">Confluentのトランザクションに関する説明</a>
+を参照。</p>
+<p>その後、ログ設定、メトリクス設定、キー・バリューのシリアライザ設定。
+その後、各種設定値を定義する。</p>
+<p>特徴的なところとしては、メッセージを送信するときにメッセージをいったんまとめこむ
+accumulator も このときに定義される。</p>
+<p>org/apache/kafka/clients/producer/KafkaProducer.java:396
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">this.accumulator = new RecordAccumulator(logContext,</span><br><span class="line">        config.getInt(ProducerConfig.BATCH_SIZE_CONFIG),</span><br><span class="line">        this.compressionType,</span><br><span class="line">        lingerMs(config),</span><br><span class="line">        retryBackoffMs,</span><br><span class="line">        deliveryTimeoutMs,</span><br><span class="line">        metrics,</span><br><span class="line">        PRODUCER_METRIC_GROUP_NAME,</span><br><span class="line">        time,</span><br><span class="line">        apiVersions,</span><br><span class="line">        transactionManager,</span><br><span class="line">        new BufferPool(this.totalMemorySize, config.getInt(ProducerConfig.BATCH_SIZE_CONFIG), metrics, time, PRODUCER_METRIC_GROUP_NAME));</span><br></pre></td></tr></table></figure></p>
+<p>他には Sendor も挙げられる。
+例えば、上記で示したaccumulatorも、Sendorのコンストラクタに渡され、内部で利用される。</p>
+<p>org/apache/kafka/clients/producer/KafkaProducer.java:422
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.sender = newSender(logContext, kafkaClient, this.metadata);</span><br></pre></td></tr></table></figure></p>
+<p>org/apache/kafka/clients/producer/KafkaProducer.java:463
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">return new Sender(logContext,</span><br><span class="line">        client,</span><br><span class="line">        metadata,</span><br><span class="line">        this.accumulator,</span><br><span class="line">        maxInflightRequests == 1,</span><br><span class="line">        producerConfig.getInt(ProducerConfig.MAX_REQUEST_SIZE_CONFIG),</span><br><span class="line">        acks,</span><br><span class="line">        retries,</span><br><span class="line">        metricsRegistry.senderMetrics,</span><br><span class="line">        time,</span><br><span class="line">        requestTimeoutMs,</span><br><span class="line">        producerConfig.getLong(ProducerConfig.RETRY_BACKOFF_MS_CONFIG),</span><br><span class="line">        this.transactionManager,</span><br><span class="line">        apiVersions);</span><br></pre></td></tr></table></figure></p>
 <p>その他にはトランザクション・マネージャなども。</p>
 
         
@@ -860,7 +1015,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/26/Kafka-Console-Producer/" data-id="cl2nztnmm008h5xqipyh6fcd7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/26/Kafka-Console-Producer/" data-id="cl2o9pb6d005q18rz23szz97u" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -981,17 +1136,22 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://tyablog.net/2018/09/24/dont-have-to-run-gradlew-idea/" target="_blank" rel="noopener">./grdlew idea 叩かなくていいよ。</a></li>
+<li><a href="https://tyablog.net/2018/09/24/dont-have-to-run-gradlew-idea/" target="_blank" rel="noopener">./grdlew
+idea 叩かなくていいよ。</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>昔は <code>gradlew idea</code> とやってIdea用のプロジェクトファイルを生成してから インポートしていたけれども、最近のIntellijは「ディレクトリを指定」してインポートすると、 Gradleプロジェクトを検知して、ウィザードを開いてくれる。</p>
-<p>例えばApache KafkaなどのGradleプロジェクトをインポートするときには、 メニューからインポートを選択し、ディレクトリをインポートすると良い。</p>
+<p>昔は <code>gradlew idea</code>
+とやってIdea用のプロジェクトファイルを生成してから
+インポートしていたけれども、最近のIntellijは「ディレクトリを指定」してインポートすると、
+Gradleプロジェクトを検知して、ウィザードを開いてくれる。</p>
+<p>例えばApache KafkaなどのGradleプロジェクトをインポートするときには、
+メニューからインポートを選択し、ディレクトリをインポートすると良い。</p>
 
         
         </div>
@@ -1002,7 +1162,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/24/Import-gradle-projects/" data-id="cl2nztnm700705xqi6myy9m73" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/24/Import-gradle-projects/" data-id="cl2o9pb5z004w18rzib96ecp7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1123,69 +1283,119 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#consoleconsumer">ConsoleConsumer</a></li>
-<li><a href="#kafkaconsumer">KafkaConsumer</a><ul>
-<li><a href="#トピックアサイン">トピックアサイン</a></li>
-<li><a href="#コンシューマ故障の検知">コンシューマ故障の検知</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#consoleconsumer" id="toc-consoleconsumer">ConsoleConsumer</a></li>
+<li><a href="#kafkaconsumer" id="toc-kafkaconsumer">KafkaConsumer</a>
+<ul>
+<li><a href="#トピックアサイン" id="toc-トピックアサイン">トピックアサイン</a></li>
+<li><a href="#コンシューマ故障の検知" id="toc-コンシューマ故障の検知">コンシューマ故障の検知</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <h1><span id="メモ">メモ</span></h1>
-<p>2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。</p>
+<p>2019/6/23時点でのtrunkで再確認した内容。
+ほぼ昔のメモのままコピペ・・・。</p>
 <h2><span id="consoleconsumer">ConsoleConsumer</span></h2>
 <p>コンシューマの実装を確認するにあたっては、コンソール・コンシューマが良いのではないか。</p>
 <p>bin/kafka-console-consumer.sh:21 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsoleConsumer &quot;$@&quot;</span><br></pre></td></tr></table></figure></p>
-<p>から、 kafka.tools.ConsoleConsumer クラスあたりを確認すると良いだろう。</p>
+<p>から、 kafka.tools.ConsoleConsumer
+クラスあたりを確認すると良いだろう。</p>
 <p>mainを確認すると、ConsumerConfigのインスタンスを生成し、runメソッドに渡すことがわかる。</p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:54 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val conf = new ConsumerConfig(args)</span><br><span class="line">try &#123;</span><br><span class="line">  run(conf)</span><br></pre></td></tr></table></figure></p>
-<p>ここで、ConsumerConfigはコンソールからパラメータを受け取るためのクラス。 実態はrunメソッドである。</p>
-<p>まず大事な箇所として、 KafkaConsumer クラスのインスタンスを生成している箇所がある。 ★</p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:67 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val consumer = new KafkaConsumer(consumerProps(conf), new ByteArrayDeserializer, new ByteArrayDeserializer)</span><br></pre></td></tr></table></figure></p>
-<p>この KafkaConsumer クラスがコンシューマの実態である。 なお、コンソール・コンシューマでは、これをラップした便利クラス ConsumerWrapper が定義されており、 そちらを通じて主に使う。</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:54
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val conf = new ConsumerConfig(args)</span><br><span class="line">try &#123;</span><br><span class="line">  run(conf)</span><br></pre></td></tr></table></figure></p>
+<p>ここで、ConsumerConfigはコンソールからパラメータを受け取るためのクラス。
+実態はrunメソッドである。</p>
+<p>まず大事な箇所として、 KafkaConsumer
+クラスのインスタンスを生成している箇所がある。 ★</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:67
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val consumer = new KafkaConsumer(consumerProps(conf), new ByteArrayDeserializer, new ByteArrayDeserializer)</span><br></pre></td></tr></table></figure></p>
+<p>この KafkaConsumer クラスがコンシューマの実態である。
+なお、コンソール・コンシューマでは、これをラップした便利クラス
+ConsumerWrapper が定義されており、 そちらを通じて主に使う。</p>
 <p>またシャットダウンフックを定義している。</p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:75 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addShutdownHook(consumerWrapper, conf)</span><br></pre></td></tr></table></figure></p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:87 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def addShutdownHook(consumer: ConsumerWrapper, conf: ConsumerConfig) &#123;</span><br><span class="line">  Runtime.getRuntime.addShutdownHook(new Thread() &#123;</span><br><span class="line">    override def run() &#123;</span><br><span class="line">      consumer.wakeup()</span><br><span class="line"></span><br><span class="line">      shutdownLatch.await()</span><br><span class="line"></span><br><span class="line">      if (conf.enableSystestEventsLogging) &#123;</span><br><span class="line">        System.out.println(&quot;shutdown_complete&quot;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:75
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addShutdownHook(consumerWrapper, conf)</span><br></pre></td></tr></table></figure></p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:87
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def addShutdownHook(consumer: ConsumerWrapper, conf: ConsumerConfig) &#123;</span><br><span class="line">  Runtime.getRuntime.addShutdownHook(new Thread() &#123;</span><br><span class="line">    override def run() &#123;</span><br><span class="line">      consumer.wakeup()</span><br><span class="line"></span><br><span class="line">      shutdownLatch.await()</span><br><span class="line"></span><br><span class="line">      if (conf.enableSystestEventsLogging) &#123;</span><br><span class="line">        System.out.println(&quot;shutdown_complete&quot;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>これはグレースフルにシャットダウンするには大切。 ★</p>
 <p>またデータ処理の実態は、以下の process メソッドである。</p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:77 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">try process(conf.maxMessages, conf.formatter, consumerWrapper, System.out, conf.skipMessageOnError)</span><br></pre></td></tr></table></figure></p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:101 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def process(maxMessages: Integer, formatter: MessageFormatter, consumer: ConsumerWrapper, output: PrintStream,</span><br><span class="line">            skipMessageOnError: Boolean) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>処理するメッセージ最大数、出力ストリームに渡す形を整形するメッセージフォーマッタ、コンシューマのラッパ、出力ストリーム、 エラーのときに呼び飛ばすかどうかのフラグが渡される。</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:77
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">try process(conf.maxMessages, conf.formatter, consumerWrapper, System.out, conf.skipMessageOnError)</span><br></pre></td></tr></table></figure></p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:101
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def process(maxMessages: Integer, formatter: MessageFormatter, consumer: ConsumerWrapper, output: PrintStream,</span><br><span class="line">            skipMessageOnError: Boolean) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
+<p>処理するメッセージ最大数、出力ストリームに渡す形を整形するメッセージフォーマッタ、コンシューマのラッパ、出力ストリーム、
+エラーのときに呼び飛ばすかどうかのフラグが渡される。</p>
 <p>少し処理の中身を確認する。 まず以下のようにメッセージを取得する。</p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:104 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    val msg: ConsumerRecord[Array[Byte], Array[Byte]] = try &#123;</span><br><span class="line">      consumer.receive()</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:104
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    val msg: ConsumerRecord[Array[Byte], Array[Byte]] = try &#123;</span><br><span class="line">      consumer.receive()</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
 <p>上記の receive は、先程の通り、ラッパーのreceiveメソッドである。</p>
-<p>receiveメソッドは以下のようにコンシューマのポール機能を使い、 メッセージを取得する。</p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:437 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def receive(): ConsumerRecord[Array[Byte], Array[Byte]] = &#123;</span><br><span class="line">  if (!recordIter.hasNext) &#123;</span><br><span class="line">    recordIter = consumer.poll(Duration.ofMillis(timeoutMs)).iterator</span><br><span class="line">    if (!recordIter.hasNext)</span><br><span class="line">      throw new TimeoutException()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  recordIter.next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>メッセージを取得するためのイテレータが得られるので、nextメソッドで取得する。 →イテレータのnextを使って１件ずつ取り出していることがわかる。 ★</p>
-<p>続いて、取り出されたメッセージを ConsumerRecord 化してフォーマッタに渡す。 　 core/src/main/scala/kafka/tools/ConsoleConsumer.scala:118 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">formatter.writeTo(new ConsumerRecord(msg.topic, msg.partition, msg.offset, msg.timestamp,</span><br><span class="line">                                     msg.timestampType, 0, 0, 0, msg.key, msg.value, msg.headers), output)</span><br></pre></td></tr></table></figure></p>
+<p>receiveメソッドは以下のようにコンシューマのポール機能を使い、
+メッセージを取得する。</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:437
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def receive(): ConsumerRecord[Array[Byte], Array[Byte]] = &#123;</span><br><span class="line">  if (!recordIter.hasNext) &#123;</span><br><span class="line">    recordIter = consumer.poll(Duration.ofMillis(timeoutMs)).iterator</span><br><span class="line">    if (!recordIter.hasNext)</span><br><span class="line">      throw new TimeoutException()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  recordIter.next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>メッセージを取得するためのイテレータが得られるので、nextメソッドで取得する。
+→イテレータのnextを使って１件ずつ取り出していることがわかる。 ★</p>
+<p>続いて、取り出されたメッセージを ConsumerRecord
+化してフォーマッタに渡す。 　
+core/src/main/scala/kafka/tools/ConsoleConsumer.scala:118 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">formatter.writeTo(new ConsumerRecord(msg.topic, msg.partition, msg.offset, msg.timestamp,</span><br><span class="line">                                     msg.timestampType, 0, 0, 0, msg.key, msg.value, msg.headers), output)</span><br></pre></td></tr></table></figure></p>
 <p>これにより出力が確定する。</p>
 <h2><span id="kafkaconsumer">KafkaConsumer</span></h2>
 <p>つづいて、KafkaConsumerクラスを確認する。</p>
 <h3><span id="トピックアサイン">トピックアサイン</span></h3>
 <p>ここではトピックへの登録を確認する。 ★</p>
 <p>コンシューマグループを使って自動で行うアサインメントを使用する場合。リバランスも行われる。</p>
-<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:936 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  public void subscribe(Collection&lt;String&gt; topics, ConsumerRebalanceListener listener) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
+<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:936
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  public void subscribe(Collection&lt;String&gt; topics, ConsumerRebalanceListener listener) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
 <p>上記はトピックのコレクションを渡すメソッドだが、パターンを指定する方法もある。</p>
-<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:1008 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  public void subscribe(Pattern pattern, ConsumerRebalanceListener listener) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>なお、何らかの理由（詳しくはJavadoc参照）により、リバランスが必要になったら、 第2引数に渡されているリスナがまず呼び出される。</p>
+<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:1008
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  public void subscribe(Pattern pattern, ConsumerRebalanceListener listener) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
+<p>なお、何らかの理由（詳しくはJavadoc参照）により、リバランスが必要になったら、
+第2引数に渡されているリスナがまず呼び出される。</p>
 <p>コンシューマ・グループを利用せず、手動で行うアサインメントの場合は以下の通り。</p>
-<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:1083 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public void assign(Collection&lt;TopicPartition&gt; partitions) &#123;</span><br></pre></td></tr></table></figure></p>
-<p>いずれの場合も内部的には SubscriptionState が管理のために用いられる。 タイプは以下の通り。 clients/src/main/java/org/apache/kafka/clients/consumer/internals/SubscriptionState.java:72 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private enum SubscriptionType &#123;</span><br><span class="line">    NONE, AUTO_TOPICS, AUTO_PATTERN, USER_ASSIGNED</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>またコンシューマの管理を行う ConsumerCoordinator には、 updatePatternSubscription メソッドがある。</p>
-<p>org/apache/kafka/clients/consumer/internals/ConsumerCoordinator.java:192 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public void updatePatternSubscription(Cluster cluster) &#123;</span><br><span class="line">    final Set&lt;String&gt; topicsToSubscribe = cluster.topics().stream()</span><br><span class="line">            .filter(subscriptions::matchesSubscribedPattern)</span><br><span class="line">            .collect(Collectors.toSet());</span><br><span class="line">    if (subscriptions.subscribeFromPattern(topicsToSubscribe))</span><br><span class="line">        metadata.requestUpdateForNewTopics();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>matchesSubscribedPattern を用いて、現在クラスタが抱えているトピックの中から、 サブスクライブ対象のトピックをフィルタして取得し、SubscriptionState#subscribeFromPattern メソッドを呼ぶ。 これにより、当該コンシューマの購読するトピックが更新される。 この更新はいくつかのタイミングで発動するが、例えば KafkaConsumer#poll(java.time.Duration) の 中で呼ばれる updateAssignmentMetadataIfNeeded メソッドを通じて呼び出される。</p>
+<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:1083
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public void assign(Collection&lt;TopicPartition&gt; partitions) &#123;</span><br></pre></td></tr></table></figure></p>
+<p>いずれの場合も内部的には SubscriptionState が管理のために用いられる。
+タイプは以下の通り。
+clients/src/main/java/org/apache/kafka/clients/consumer/internals/SubscriptionState.java:72
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private enum SubscriptionType &#123;</span><br><span class="line">    NONE, AUTO_TOPICS, AUTO_PATTERN, USER_ASSIGNED</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>またコンシューマの管理を行う ConsumerCoordinator には、
+updatePatternSubscription メソッドがある。</p>
+<p>org/apache/kafka/clients/consumer/internals/ConsumerCoordinator.java:192
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public void updatePatternSubscription(Cluster cluster) &#123;</span><br><span class="line">    final Set&lt;String&gt; topicsToSubscribe = cluster.topics().stream()</span><br><span class="line">            .filter(subscriptions::matchesSubscribedPattern)</span><br><span class="line">            .collect(Collectors.toSet());</span><br><span class="line">    if (subscriptions.subscribeFromPattern(topicsToSubscribe))</span><br><span class="line">        metadata.requestUpdateForNewTopics();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>matchesSubscribedPattern
+を用いて、現在クラスタが抱えているトピックの中から、
+サブスクライブ対象のトピックをフィルタして取得し、SubscriptionState#subscribeFromPattern
+メソッドを呼ぶ。
+これにより、当該コンシューマの購読するトピックが更新される。
+この更新はいくつかのタイミングで発動するが、例えば
+KafkaConsumer#poll(java.time.Duration) の 中で呼ばれる
+updateAssignmentMetadataIfNeeded メソッドを通じて呼び出される。</p>
 <h3><span id="コンシューマ故障の検知">コンシューマ故障の検知</span></h3>
-<p>基本的にはハートビート（ heartbeat.interval.ms で設定）が session.timeout.ms を 超えて届かなくなると、故障したとみなされる。 その結果、当該クライアント（この場合はコンシューマ）がグループから外され、 リバランスが起きる。</p>
-<p>なお、ハートビートはコーディネータに対して送られる。 コーディネータは以下のように定義されている。 org/apache/kafka/clients/consumer/internals/AbstractCoordinator.java:128 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private Node coordinator = null;</span><br></pre></td></tr></table></figure></p>
-<p>org/apache/kafka/clients/consumer/internals/AbstractCoordinator.java:692 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AbstractCoordinator.this.coordinator = new Node(</span><br><span class="line">        coordinatorConnectionId,</span><br><span class="line">        findCoordinatorResponse.data().host(),</span><br><span class="line">        findCoordinatorResponse.data().port());</span><br></pre></td></tr></table></figure></p>
-<p>AbstractCoordinator#sendFindCoordinatorRequest メソッドが呼ばれる契機は複数あるが、 例えば、コンシューマがポールするときなどにコーディネータが更新される。</p>
-<p>なお、コーディネータにクライアントを登録する際、 セッションタイムアウトの値も渡され、対応される。 予め定められた group.min.session.timeout.ms や group.max.session.timeout.ms を満たす セッションタイムアウトが用いられる。</p>
+<p>基本的にはハートビート（ heartbeat.interval.ms で設定）が
+session.timeout.ms を 超えて届かなくなると、故障したとみなされる。
+その結果、当該クライアント（この場合はコンシューマ）がグループから外され、
+リバランスが起きる。</p>
+<p>なお、ハートビートはコーディネータに対して送られる。
+コーディネータは以下のように定義されている。
+org/apache/kafka/clients/consumer/internals/AbstractCoordinator.java:128
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private Node coordinator = null;</span><br></pre></td></tr></table></figure></p>
+<p>org/apache/kafka/clients/consumer/internals/AbstractCoordinator.java:692
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AbstractCoordinator.this.coordinator = new Node(</span><br><span class="line">        coordinatorConnectionId,</span><br><span class="line">        findCoordinatorResponse.data().host(),</span><br><span class="line">        findCoordinatorResponse.data().port());</span><br></pre></td></tr></table></figure></p>
+<p>AbstractCoordinator#sendFindCoordinatorRequest
+メソッドが呼ばれる契機は複数あるが、
+例えば、コンシューマがポールするときなどにコーディネータが更新される。</p>
+<p>なお、コーディネータにクライアントを登録する際、
+セッションタイムアウトの値も渡され、対応される。 予め定められた
+group.min.session.timeout.ms や group.max.session.timeout.ms を満たす
+セッションタイムアウトが用いられる。</p>
 <p>セッションタイムアウトの値は、例えば以下のように設定される。</p>
 <p>kafka/coordinator/group/GroupCoordinator.scala:146 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doJoinGroup(group, memberId, groupInstanceId, clientId, clientHost, rebalanceTimeoutMs, sessionTimeoutMs, protocolType, protocols, responseCallback)</span><br></pre></td></tr></table></figure></p>
-<p>この値は、最終的に MemberMetadata に渡されて用いられる。 例えばハートビートのデッドラインの計算などに用いられることになる。</p>
+<p>この値は、最終的に MemberMetadata に渡されて用いられる。
+例えばハートビートのデッドラインの計算などに用いられることになる。</p>
 <p>kafka/coordinator/group/MemberMetadata.scala:56 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">private[group] class MemberMetadata(var memberId: String,</span><br><span class="line">                                    val groupId: String,</span><br><span class="line">                                    val groupInstanceId: Option[String],</span><br><span class="line">                                    val clientId: String,</span><br><span class="line">                                    val clientHost: String,</span><br><span class="line">                                    val rebalanceTimeoutMs: Int,</span><br><span class="line">                                    val sessionTimeoutMs: Int,</span><br><span class="line">                                    val protocolType: String,</span><br><span class="line">                                    var supportedProtocols: List[(String, Array[Byte])]) &#123;</span><br></pre></td></tr></table></figure></p>
 
         
@@ -1197,7 +1407,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/23/Kafka-Console-Consumer/" data-id="cl2nztnml008e5xqiiuadcc9h" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/23/Kafka-Console-Consumer/" data-id="cl2o9pbgv014v18rzoa3tas79" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1318,69 +1528,121 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参照">参照</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#introduction">1. Introduction</a></li>
-<li><a href="#eight-rules-for-stream-processing">2. Eight rules for stream processing</a><ul>
-<li><a href="#rule-1-keep-the-data-moving">Rule 1: Keep the Data Moving</a></li>
-<li><a href="#rule-2-query-using-sql-on-streams-streamsql">Rule 2: Query using SQL on Streams (StreamSQL)</a></li>
-<li><a href="#rule-3-handle-stream-imperfections-delayed-missing-and-out-of-order-data">Rule 3: Handle Stream Imperfections (Delayed, Missing and Out-of-Order Data)</a></li>
-<li><a href="#rule-4-generate-predictable-outcomes">Rule 4: Generate Predictable Outcomes</a></li>
-<li><a href="#rule-5-integrate-stored-and-streaming-data">Rule 5: Integrate Stored and Streaming Data</a></li>
-<li><a href="#rule-6-guarantee-data-safety-and-availability">Rule 6: Guarantee Data Safety and Availability</a></li>
-<li><a href="#rule-7-partition-and-scale-applications-automatically">Rule 7: Partition and Scale Applications Automatically</a></li>
-<li><a href="#rule-8-process-and-respond-instantaneously">Rule 8: Process and Respond Instantaneously</a></li>
+<li><a href="#参照" id="toc-参照">参照</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#introduction" id="toc-introduction">1.
+Introduction</a></li>
+<li><a href="#eight-rules-for-stream-processing" id="toc-eight-rules-for-stream-processing">2. Eight rules for stream
+processing</a>
+<ul>
+<li><a href="#rule-1-keep-the-data-moving" id="toc-rule-1-keep-the-data-moving">Rule 1: Keep the Data
+Moving</a></li>
+<li><a href="#rule-2-query-using-sql-on-streams-streamsql" id="toc-rule-2-query-using-sql-on-streams-streamsql">Rule 2: Query using
+SQL on Streams (StreamSQL)</a></li>
+<li><a href="#rule-3-handle-stream-imperfections-delayed-missing-and-out-of-order-data" id="toc-rule-3-handle-stream-imperfections-delayed-missing-and-out-of-order-data">Rule
+3: Handle Stream Imperfections (Delayed, Missing and Out-of-Order
+Data)</a></li>
+<li><a href="#rule-4-generate-predictable-outcomes" id="toc-rule-4-generate-predictable-outcomes">Rule 4: Generate
+Predictable Outcomes</a></li>
+<li><a href="#rule-5-integrate-stored-and-streaming-data" id="toc-rule-5-integrate-stored-and-streaming-data">Rule 5: Integrate
+Stored and Streaming Data</a></li>
+<li><a href="#rule-6-guarantee-data-safety-and-availability" id="toc-rule-6-guarantee-data-safety-and-availability">Rule 6: Guarantee
+Data Safety and Availability</a></li>
+<li><a href="#rule-7-partition-and-scale-applications-automatically" id="toc-rule-7-partition-and-scale-applications-automatically">Rule 7:
+Partition and Scale Applications Automatically</a></li>
+<li><a href="#rule-8-process-and-respond-instantaneously" id="toc-rule-8-process-and-respond-instantaneously">Rule 8: Process and
+Respond Instantaneously</a></li>
 </ul></li>
-<li><a href="#software-technologies-for-stream-processing">3. SOFTWARE TECHNOLOGIES for STREAM PROCESSING</a><ul>
-<li><a href="#tabular-results">3.3 Tabular results</a></li>
+<li><a href="#software-technologies-for-stream-processing" id="toc-software-technologies-for-stream-processing">3. SOFTWARE
+TECHNOLOGIES for STREAM PROCESSING</a>
+<ul>
+<li><a href="#tabular-results" id="toc-tabular-results">3.3 Tabular
+results</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参照">参照</span></h1>
 <ul>
-<li><a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf" target="_blank" rel="noopener">The 8 Requirements of Real-Time Stream Processing</a></li>
+<li><a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf" target="_blank" rel="noopener">The 8
+Requirements of Real-Time Stream Processing</a></li>
 <li><a href="https://dl.acm.org/citation.cfm?id=1107504" target="_blank" rel="noopener">ACMページ</a></li>
 <li><a href="https://ai.google/research/pubs/pub41378" target="_blank" rel="noopener">MillWheel</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://ai.google/research/pubs/pub41378" target="_blank" rel="noopener">MillWheel</a> でも触れられているストリーム処理について書かれた論文。 2005年。 時代は古いが当時の考察は現在でも有用と考える。</p>
+<p><a href="https://ai.google/research/pubs/pub41378" target="_blank" rel="noopener">MillWheel</a>
+でも触れられているストリーム処理について書かれた論文。 2005年。
+時代は古いが当時の考察は現在でも有用と考える。</p>
 <h2><span id="1-introduction">1. Introduction</span></h2>
-<p>ウォール街のデータ処理量は大きい。 2005年時点で122,000msg/sec。年率2倍で増大。 しかも処理レイテンシが秒では遅い。 金融に限らず異常検知、センサーデータ活用などのユースケースでは同様の課題感だろう。</p>
-<p>「メインメモリDBMS」、「ルールベースエンジン」などがこの手のユースケースのために再注目されたが、 その後いわゆる「ストリーム処理エンジン」も登場。</p>
-<h2><span id="2-eight-rules-for-stream-processing">2. Eight rules for stream processing</span></h2>
+<p>ウォール街のデータ処理量は大きい。
+2005年時点で122,000msg/sec。年率2倍で増大。
+しかも処理レイテンシが秒では遅い。
+金融に限らず異常検知、センサーデータ活用などのユースケースでは同様の課題感だろう。</p>
+<p>「メインメモリDBMS」、「ルールベースエンジン」などがこの手のユースケースのために再注目されたが、
+その後いわゆる「ストリーム処理エンジン」も登場。</p>
+<h2><span id="2-eight-rules-for-streamprocessing">2. Eight rules for stream
+processing</span></h2>
 <h3><span id="rule-1-keep-the-data-moving">Rule 1: Keep the Data Moving</span></h3>
 <p>ストレージに書き込むなどしてレイテンシを悪化させてはならない。</p>
-<p>ポーリングもレイテンシを悪化させる。 そこでイベント駆動のアプローチを用いることがよく考えられる。</p>
-<h3><span id="rule-2-query-using-sql-on-streams-streamsql">Rule 2: Query using SQL on Streams (StreamSQL)</span></h3>
+<p>ポーリングもレイテンシを悪化させる。
+そこでイベント駆動のアプローチを用いることがよく考えられる。</p>
+<h3><span id="rule-2-query-usingsql-on-streams-streamsql">Rule 2: Query using
+SQL on Streams (StreamSQL)</span></h3>
 <p>ハイレベルAPIを用いることで、開発サイクルを加速し、保守性を上げる。</p>
-<p>StreamSQL：ストリーム処理固有の機能を有するSQL リッチなウィンドウ関数、マージなど。</p>
-<h3><span id="rule-3-handle-stream-imperfections-delayed-missing-and-out-of-order-data">Rule 3: Handle Stream Imperfections (Delayed, Missing and Out-of-Order Data)</span></h3>
-<p>例えば複数のストリームからなるデータを処理する際、 あるストリームからのデータが到着しないとき、タイムアウトして結果を出す必要がある。</p>
+<p>StreamSQL：ストリーム処理固有の機能を有するSQL
+リッチなウィンドウ関数、マージなど。</p>
+<h3><span id="rule3-handle-stream-imperfections-delayed-missing-and-out-of-orderdata">Rule
+3: Handle Stream Imperfections (Delayed, Missing and Out-of-Order
+Data)</span></h3>
+<p>例えば複数のストリームからなるデータを処理する際、
+あるストリームからのデータが到着しないとき、タイムアウトして結果を出す必要がある。</p>
 <p>同じようにout-of-orderデータについてもウィンドウに応じてタイムアウトしないといけない。</p>
-<h3><span id="rule-4-generate-predictable-outcomes">Rule 4: Generate Predictable Outcomes</span></h3>
+<h3><span id="rule-4-generatepredictable-outcomes">Rule 4: Generate
+Predictable Outcomes</span></h3>
 <p>結果がdeterministicであり、再現性があること。</p>
 <p>計算そのものだけではなく、対故障性の観点でも重要。</p>
-<h3><span id="rule-5-integrate-stored-and-streaming-data">Rule 5: Integrate Stored and Streaming Data</span></h3>
-<p>過去データに基づき、何らかのパターンなどを見つける処理はよくある。 そのためステート管理の仕組み（データストア）は重要。</p>
-<p>例えば金融のトレーディングで、あるパターンを見つける、など。 他にも異常検知も。</p>
+<h3><span id="rule-5-integratestored-and-streaming-data">Rule 5: Integrate
+Stored and Streaming Data</span></h3>
+<p>過去データに基づき、何らかのパターンなどを見つける処理はよくある。
+そのためステート管理の仕組み（データストア）は重要。</p>
+<p>例えば金融のトレーディングで、あるパターンを見つける、など。
+他にも異常検知も。</p>
 <p>過去データを使いながら、実時間のデータにキャッチアップするケースもあるだろう。</p>
 <p>このようにヒストリカルデータとライブデータをシームレスにつなぐ機能は重要。</p>
-<h3><span id="rule-6-guarantee-data-safety-and-availability">Rule 6: Guarantee Data Safety and Availability</span></h3>
-<p>HAは悩ましい課題。 故障が発生してフェールオーバするとして、バックアップハードウェアを 立ち上げて処理可能な状態にするような待ち時間は許容できない。</p>
+<h3><span id="rule-6-guaranteedata-safety-and-availability">Rule 6: Guarantee
+Data Safety and Availability</span></h3>
+<p>HAは悩ましい課題。
+故障が発生してフェールオーバするとして、バックアップハードウェアを
+立ち上げて処理可能な状態にするような待ち時間は許容できない。</p>
 <p>そこでタンデム構成を取ることは現実的にありえる。</p>
-<h3><span id="rule-7-partition-and-scale-applications-automatically">Rule 7: Partition and Scale Applications Automatically</span></h3>
-<p>ローレベルの実装を経ずに、分散処理できること。 またマルチスレッド処理可能なこと。</p>
-<h3><span id="rule-8-process-and-respond-instantaneously">Rule 8: Process and Respond Instantaneously</span></h3>
-<p>数万メッセージ/secの量を処理する。 さらにレイテンシはマイクロ秒オーダから、ミリ秒オーダ。</p>
+<h3><span id="rule-7partition-and-scale-applications-automatically">Rule 7:
+Partition and Scale Applications Automatically</span></h3>
+<p>ローレベルの実装を経ずに、分散処理できること。
+またマルチスレッド処理可能なこと。</p>
+<h3><span id="rule-8-process-andrespond-instantaneously">Rule 8: Process and
+Respond Instantaneously</span></h3>
+<p>数万メッセージ/secの量を処理する。
+さらにレイテンシはマイクロ秒オーダから、ミリ秒オーダ。</p>
 <p>そのためには極力コンポーネント間をまたぐ処理をしないこと。</p>
-<h2><span id="3-software-technologies-for-stream-processing">3. SOFTWARE TECHNOLOGIES for STREAM PROCESSING</span></h2>
+<h2><span id="3-softwaretechnologies-for-stream-processing">3. SOFTWARE
+TECHNOLOGIES for STREAM PROCESSING</span></h2>
 <p>基本的なアーキテクチャは、DBMS、ルールベースエンジン、ストリーム処理エンジン。</p>
 <p>DBMSはデータをストアしてから処理する。データを動かしつづけるわけではない。</p>
 <p>またSPEはSQLスタイルでのストリームデータの処理を可能とする。</p>
-<p>SPEとルールベースエンジンは、ブロックおよびタイムアウトを実現しやすい。 DBMSはそのあたりはアプリケーションに委ねられる。 仮にトリガを用いたとしても…。</p>
-<p>いずれのアーキテクチャにおいても、予測可能な結果を得るためには、 deterministicな処理を実現しないといけない（例えばタイムスタンプの並びを利用、など） SPEとルールベースエンジンはそれを実現しやすいが、DBMSのACID特性は あくまでトラディショナルなデータベースのためのもであり、ストリームデータ処理のための ものではない。</p>
-<p>状態を保存するデータストアとしてDBMSを見たとき、サーバ・クライアントモデルのDBMSは 主にレイテンシの面で不十分である。 唯一受け入れられるとしたら、アプリケーション内に埋め込めるDBMSの場合である。 一方ルールベースエンジンはストリームデータを扱うのは得意だが、 大規模な状態管理と状態に対する柔軟なクエリが苦手である。</p>
+<p>SPEとルールベースエンジンは、ブロックおよびタイムアウトを実現しやすい。
+DBMSはそのあたりはアプリケーションに委ねられる。
+仮にトリガを用いたとしても…。</p>
+<p>いずれのアーキテクチャにおいても、予測可能な結果を得るためには、
+deterministicな処理を実現しないといけない（例えばタイムスタンプの並びを利用、など）
+SPEとルールベースエンジンはそれを実現しやすいが、DBMSのACID特性は
+あくまでトラディショナルなデータベースのためのもであり、ストリームデータ処理のための
+ものではない。</p>
+<p>状態を保存するデータストアとしてDBMSを見たとき、サーバ・クライアントモデルのDBMSは
+主にレイテンシの面で不十分である。
+唯一受け入れられるとしたら、アプリケーション内に埋め込めるDBMSの場合である。
+一方ルールベースエンジンはストリームデータを扱うのは得意だが、
+大規模な状態管理と状態に対する柔軟なクエリが苦手である。</p>
 <h3><span id="33-tabular-results">3.3 Tabular results</span></h3>
 <p>このあたりにまとめ表が載っている。</p>
 
@@ -1393,7 +1655,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/22/The-8-Requirements-of-Real-Time-Stream-Processing/" data-id="cl2nztnom00en5xqivjg0u1re" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/22/The-8-Requirements-of-Real-Time-Stream-Processing/" data-id="cl2o9pb8900ad18rzrozhraku" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1514,17 +1776,25 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#introduction">1. Introduction</a></li>
-<li><a href="#motivation-and-requirements">2. Motivation and requirements</a></li>
-<li><a href="#system-overview">3. System overview</a></li>
-<li><a href="#core-concept">4. Core concept</a></li>
-<li><a href="#api">5. API</a></li>
-<li><a href="#fault-tolerance">6. Fault tolerance</a></li>
-<li><a href="#system-implementation">7. System Implementation</a></li>
-<li><a href="#evaluation">8. Evaluation</a></li>
-<li><a href="#related-work">9. Related work</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#introduction" id="toc-introduction">1.
+Introduction</a></li>
+<li><a href="#motivation-and-requirements" id="toc-motivation-and-requirements">2. Motivation and
+requirements</a></li>
+<li><a href="#system-overview" id="toc-system-overview">3. System
+overview</a></li>
+<li><a href="#core-concept" id="toc-core-concept">4. Core
+concept</a></li>
+<li><a href="#api" id="toc-api">5. API</a></li>
+<li><a href="#fault-tolerance" id="toc-fault-tolerance">6. Fault
+tolerance</a></li>
+<li><a href="#system-implementation" id="toc-system-implementation">7.
+System Implementation</a></li>
+<li><a href="#evaluation" id="toc-evaluation">8. Evaluation</a></li>
+<li><a href="#related-work" id="toc-related-work">9. Related
+work</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1532,15 +1802,22 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://ai.google/research/pubs/pub41378" target="_blank" rel="noopener">Googleの公開サイト</a></li>
 <li><a href="http://www.school.ctc-g.co.jp/columns/nakai2/nakai210.html" target="_blank" rel="noopener">「MillWheel」から学ぶストリーミング処理の基礎</a></li>
-<li><a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf" target="_blank" rel="noopener">The 8 Requirements of Real-Time Stream Processing</a></li>
+<li><a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf" target="_blank" rel="noopener">The 8
+Requirements of Real-Time Stream Processing</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>昔のメモをここに転記。</p>
 <h2><span id="1-introduction">1. Introduction</span></h2>
-<p>故障耐性、ステート永続化、スケーラビリティが重要。 Googleでは多数の分散処理システムを運用しているので、何かしらおかしなことが置き続けている。</p>
+<p>故障耐性、ステート永続化、スケーラビリティが重要。
+Googleでは多数の分散処理システムを運用しているので、何かしらおかしなことが置き続けている。</p>
 <p>MillWheelはMapReduceと同様にフレームワーク。ただし、ストリーム処理やローレイテンシでの処理のため。</p>
-<p>Spark StreamingとSonoraは、チェックポイント機能持つが、実装のためのオペレータが限られている。 S4は故障耐性が不十分。 Stormはexactly onceで動作するが、Tridentは厳密な順序保証が必要。</p>
-<p>MapReduce的な考えをストリーム処理に持ち込んでも、妥協した柔軟性しか得られていない。 ストリーミングSQLは簡潔な手段をもたらしているが、ステートの抽象化、複雑なアプリケーションの実装しやすさという意味では、 オペレーショナルなフローに基づくアプローチのほうが有利。</p>
+<p>Spark
+StreamingとSonoraは、チェックポイント機能持つが、実装のためのオペレータが限られている。
+S4は故障耐性が不十分。 Stormはexactly
+onceで動作するが、Tridentは厳密な順序保証が必要。</p>
+<p>MapReduce的な考えをストリーム処理に持ち込んでも、妥協した柔軟性しか得られていない。
+ストリーミングSQLは簡潔な手段をもたらしているが、ステートの抽象化、複雑なアプリケーションの実装しやすさという意味では、
+オペレーショナルなフローに基づくアプローチのほうが有利。</p>
 <ul>
 <li>分散処理の専門家でなくても複雑なストリーム処理を実装できること</li>
 <li>実行可能性</li>
@@ -1556,34 +1833,69 @@ ga('send', 'pageview');
 <p>Zeitgeistの例で言えば、検索クエリが入力データであり、データ流量がスパイクしたり、凹んだりしたことが出力データ。</p>
 <p>データ形式：key、value、timestamp</p>
 <h2><span id="4-core-concept">4. Core concept</span></h2>
-<p>キーごとに計算され、並列処理化される。 また、キーがアグリゲーションや比較の軸になる。 Zeitgeistの例では、例えば検索クエリそのものをキーとすることが考えられる。 また、キー抽出のための関数を定義して用いる。</p>
-<p>ストリーム：データの流れ。 コンピューテーションは複数のストリームを出力することもある。</p>
-<p>ウィンドウ修正するときなどに用いられるステートを保持する。 そのための抽象化の仕組みがある。 キーごとのステート。</p>
-<p>Low Watermarkの仕組みがあり、Wall timeが進むごとにWatermarkが進む。 時間経過とともにWatermarkを越したデータに対し、計算が行われる。</p>
-<p>タイマー機能あり。 Low Watermarkもタイマーでキックされる、と考えて良い。</p>
+<p>キーごとに計算され、並列処理化される。
+また、キーがアグリゲーションや比較の軸になる。
+Zeitgeistの例では、例えば検索クエリそのものをキーとすることが考えられる。
+また、キー抽出のための関数を定義して用いる。</p>
+<p>ストリーム：データの流れ。
+コンピューテーションは複数のストリームを出力することもある。</p>
+<p>ウィンドウ修正するときなどに用いられるステートを保持する。
+そのための抽象化の仕組みがある。 キーごとのステート。</p>
+<p>Low Watermarkの仕組みがあり、Wall timeが進むごとにWatermarkが進む。
+時間経過とともにWatermarkを越したデータに対し、計算が行われる。</p>
+<p>タイマー機能あり。 Low
+Watermarkもタイマーでキックされる、と考えて良い。</p>
 <h2><span id="5-api">5. API</span></h2>
-<p>計算APIは、キーごとのステートをフェッチ、加工し、必要に応じてレコード生成し、タイマーを セットする。</p>
-<p>Injector：MillWheelに外部データを入力する。 injector low watermarkも生成可能。</p>
-<p>なお、low watermarkを逸脱するデータが生じた場合は、 ユーザアプリでは捨てるか、それとも現在の集計に組み込むか決められる。</p>
+<p>計算APIは、キーごとのステートをフェッチ、加工し、必要に応じてレコード生成し、タイマーを
+セットする。</p>
+<p>Injector：MillWheelに外部データを入力する。 injector low
+watermarkも生成可能。</p>
+<p>なお、low watermarkを逸脱するデータが生じた場合は、
+ユーザアプリでは捨てるか、それとも現在の集計に組み込むか決められる。</p>
 <h2><span id="6-fault-tolerance">6. Fault tolerance</span></h2>
 <p>到達保証の考え方としては、ユーザアプリで冪等性を考慮しなくて良いようにする、という点が挙げられる。</p>
-<p>基本的にAckがなければデータが再送される設計に基づいているが、 受信者がAckを返す直前に何らかの理由で故障した場合、データが重複して処理される可能性がある。 そこでユニークIDを付与し、重複デーかどうかを確かめられるようにする。 判定にはブルームフィルタも利用する。 ID管理の仕組みにはガベージコレクションの仕組みもある。</p>
-<p>チェックポイントの仕組みもある。 バックエンドストレージにはBigtableなどを想定。</p>
-<p>なお、性能を重視しチェックポイントを無効化することもできるが、 そうすると何らかの故障が生じて、データ送信元へのAckが遅れることがある。 パイプラインが並列化すると、それだけシステム内のどこかで故障が生じる可能性は上がる。 そこで、滞留するデータについては部分的にチェックポイントすることで、 計算コストとエンドツーエンドレイテンシのバランスを保つ。 ★</p>
-<p>永続化されたステートの一貫性を保つため、アトミックなオペレーションでラップする。 ただし、マシンのフェールオーバ時などにゾンビ化したWriterが存在する可能性を考慮し、 シークエンサートークンを用いるようにする。 つまり、新たに現れたWriterは古いシークエンサートークンを無効化してから、 動作を開始するようにしている。</p>
+<p>基本的にAckがなければデータが再送される設計に基づいているが、
+受信者がAckを返す直前に何らかの理由で故障した場合、データが重複して処理される可能性がある。
+そこでユニークIDを付与し、重複デーかどうかを確かめられるようにする。
+判定にはブルームフィルタも利用する。
+ID管理の仕組みにはガベージコレクションの仕組みもある。</p>
+<p>チェックポイントの仕組みもある。
+バックエンドストレージにはBigtableなどを想定。</p>
+<p>なお、性能を重視しチェックポイントを無効化することもできるが、
+そうすると何らかの故障が生じて、データ送信元へのAckが遅れることがある。
+パイプラインが並列化すると、それだけシステム内のどこかで故障が生じる可能性は上がる。
+そこで、滞留するデータについては部分的にチェックポイントすることで、
+計算コストとエンドツーエンドレイテンシのバランスを保つ。 ★</p>
+<p>永続化されたステートの一貫性を保つため、アトミックなオペレーションでラップする。
+ただし、マシンのフェールオーバ時などにゾンビ化したWriterが存在する可能性を考慮し、
+シークエンサートークンを用いるようにする。
+つまり、新たに現れたWriterは古いシークエンサートークンを無効化してから、
+動作を開始するようにしている。</p>
 <h2><span id="7-system-implementation">7. System Implementation</span></h2>
-<p>MillWheelはステート管理のためにデータストア（BigTableなど）を使う。 故障発生時にはデータストアからメモリ情報を再現する。</p>
+<p>MillWheelはステート管理のためにデータストア（BigTableなど）を使う。
+故障発生時にはデータストアからメモリ情報を再現する。</p>
 <p>low watermarkのジャーナルはデータストアに保存される。</p>
-<p>感想：このあたりデータストアの性能は、最終的なパフォーマンスに大きく影響しそうだ。 ★</p>
+<p>感想：このあたりデータストアの性能は、最終的なパフォーマンスに大きく影響しそうだ。
+★</p>
 <h2><span id="8-evaluation">8. Evaluation</span></h2>
-<p>単純なシャッフル処理では、レイテンシの中央値は数ミリ秒。95パーセンタイルで30ミリ秒。 Exactly onceなどを有効化すると中央値は33.7ミリ秒。95パーセンタイルで93.8ミリ秒。</p>
+<p>単純なシャッフル処理では、レイテンシの中央値は数ミリ秒。95パーセンタイルで30ミリ秒。
+Exactly
+onceなどを有効化すると中央値は33.7ミリ秒。95パーセンタイルで93.8ミリ秒。</p>
 <p>CPU数をスケールアウトしても、レイテンシに著しい劣化は見られない。（逆に言うと、99パーセンタイルではある程度の劣化が見られる）</p>
-<p>low watermarkは処理のステージをまたぐと、実時間に対してラグが生じる。 このあたりは活発に改善を進められているところ。</p>
-<p>ステート管理などにストレージ（BitTableなど）を使う。 これによりリード・ライトがたくさん発生する。 ワーカにおけるキャッシュは有効。</p>
-<p>実際のユースケースは、広告関係。 そのほか、Google Street Viewでのパノラマ画像の生成など。 ★</p>
+<p>low watermarkは処理のステージをまたぐと、実時間に対してラグが生じる。
+このあたりは活発に改善を進められているところ。</p>
+<p>ステート管理などにストレージ（BitTableなど）を使う。
+これによりリード・ライトがたくさん発生する。
+ワーカにおけるキャッシュは有効。</p>
+<p>実際のユースケースは、広告関係。 そのほか、Google Street
+Viewでのパノラマ画像の生成など。 ★</p>
 <h2><span id="9-related-work">9. Related work</span></h2>
-<p>ストリーム処理システムが必要とするものは、以下の論文に記載されている。 <a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf" target="_blank" rel="noopener">The 8 Requirements of Real-Time Stream Processing</a></p>
-<p>Spark Streamingに対しては、MillWheelの方がgeneralであると主張。 RDDへの依存性がユーザに制約をもたらす、とも。 またチェックポイントの間隔はMillWheelの方が粒度が細かい。</p>
+<p>ストリーム処理システムが必要とするものは、以下の論文に記載されている。
+<a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf" target="_blank" rel="noopener">The 8 Requirements
+of Real-Time Stream Processing</a></p>
+<p>Spark Streamingに対しては、MillWheelの方がgeneralであると主張。
+RDDへの依存性がユーザに制約をもたらす、とも。
+またチェックポイントの間隔はMillWheelの方が粒度が細かい。</p>
 
         
         </div>
@@ -1594,7 +1906,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/14/MillWheel-Paper/" data-id="cl2nztnn600aa5xqi0uaxwm5r" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/14/MillWheel-Paper/" data-id="cl2o9pb6y007d18rznfpghnki" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1715,16 +2027,21 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://sicklylife.jp/ubuntu/1804/settings.html" target="_blank" rel="noopener">Ubuntu 18.04 LTSをインストールした直後に行う設定 &amp; インストールするソフト</a></li>
+<li><a href="https://sicklylife.jp/ubuntu/1804/settings.html" target="_blank" rel="noopener">Ubuntu
+18.04 LTSをインストールした直後に行う設定 &amp;
+インストールするソフト</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://sicklylife.jp/ubuntu/1804/settings.html" target="_blank" rel="noopener">Ubuntu 18.04 LTSをインストールした直後に行う設定 &amp; インストールするソフト</a> に記載されているとおり、 GNOME Shell ExtensionsからSystem-monitorをインストールすると、タスクバー上にシステムモニターを表示できる。</p>
+<p><a href="https://sicklylife.jp/ubuntu/1804/settings.html" target="_blank" rel="noopener">Ubuntu
+18.04 LTSをインストールした直後に行う設定 &amp;
+インストールするソフト</a> に記載されているとおり、 GNOME Shell
+ExtensionsからSystem-monitorをインストールすると、タスクバー上にシステムモニターを表示できる。</p>
 
         
         </div>
@@ -1735,7 +2052,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/12/System-monitor-on-Ubuntu18/" data-id="cl2nztnon00eq5xqi31zrtdhd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/12/System-monitor-on-Ubuntu18/" data-id="cl2o9pb84009y18rzf6je451s" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1856,16 +2173,21 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://sicklylife.jp/ubuntu/1804/settings.html#alt-tab" target="_blank" rel="noopener">Ubuntu 18.04 LTSをインストールした直後に行う設定 &amp; インストールするソフト</a></li>
+<li><a href="https://sicklylife.jp/ubuntu/1804/settings.html#alt-tab" target="_blank" rel="noopener">Ubuntu
+18.04 LTSをインストールした直後に行う設定 &amp;
+インストールするソフト</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://sicklylife.jp/ubuntu/1804/settings.html#alt-tab" target="_blank" rel="noopener">Ubuntu 18.04 LTSをインストールした直後に行う設定 &amp; インストールするソフト</a> に諸々記載されている。 設定から変えられる。</p>
+<p><a href="https://sicklylife.jp/ubuntu/1804/settings.html#alt-tab" target="_blank" rel="noopener">Ubuntu
+18.04 LTSをインストールした直後に行う設定 &amp;
+インストールするソフト</a> に諸々記載されている。
+設定から変えられる。</p>
 
         
         </div>
@@ -1876,7 +2198,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/11/Alt-Tab-on-Ubuntu18/" data-id="cl2nztnk4001h5xqii4zca41c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/11/Alt-Tab-on-Ubuntu18/" data-id="cl2o9pb4f001318rzras29g1w" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1997,16 +2319,21 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://qiita.com/gentaro/items/7dec88e663f59b472de6" target="_blank" rel="noopener">Docker for WindowsをWSLから使う時のVolumeの扱い方</a></li>
+<li><a href="https://qiita.com/gentaro/items/7dec88e663f59b472de6" target="_blank" rel="noopener">Docker for
+WindowsをWSLから使う時のVolumeの扱い方</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://qiita.com/gentaro/items/7dec88e663f59b472de6" target="_blank" rel="noopener">Docker for WindowsをWSLから使う時のVolumeの扱い方</a> に起債されている通りだが、 うっかり <code>-v /tmp/hoge:/hoge</code> とかやると、Docker Desktopで使用しているDocker起動用の仮想マシン中の <code>/tmp/hoge</code> をマウントすることになる。</p>
+<p><a href="https://qiita.com/gentaro/items/7dec88e663f59b472de6" target="_blank" rel="noopener">Docker
+for WindowsをWSLから使う時のVolumeの扱い方</a>
+に起債されている通りだが、 うっかり <code>-v /tmp/hoge:/hoge</code>
+とかやると、Docker Desktopで使用しているDocker起動用の仮想マシン中の
+<code>/tmp/hoge</code> をマウントすることになる。</p>
 
         
         </div>
@@ -2017,7 +2344,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/09/Mount-volums-on-WSL/" data-id="cl2nztnn800ag5xqib26oibqh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/09/Mount-volums-on-WSL/" data-id="cl2o9pb75007j18rz3z757t6h" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2247,5 +2574,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

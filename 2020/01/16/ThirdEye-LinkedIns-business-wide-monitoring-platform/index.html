@@ -5,18 +5,18 @@
     
     <title>ThirdEye LinkedIn’s business-wide monitoring platform | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ セッションメモ ブログメモ    参考  ThirdEye LinkedIn’s business-wide monitoring platform thirdeyeの実装  メモ セッションメモ Strataの ThirdEye LinkedIn’s business-wide monitoring platform のメモ。 LinkedInで運用されている異常検知と原因分析">
+    <meta name="description" content="参考 メモ  セッションメモ ブログメモ    参考  ThirdEye LinkedIn’s business-wide monitoring platform thirdeyeの実装  メモ セッションメモ Strataの ThirdEye LinkedIn’s business-wide monitoring platform のメモ。 LinkedInで運用されている異常検知と原因分">
 <meta name="keywords" content="LinkedIn,Monitering">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ThirdEye LinkedIn’s business-wide monitoring platform">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/01/16/ThirdEye-LinkedIns-business-wide-monitoring-platform/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ セッションメモ ブログメモ    参考  ThirdEye LinkedIn’s business-wide monitoring platform thirdeyeの実装  メモ セッションメモ Strataの ThirdEye LinkedIn’s business-wide monitoring platform のメモ。 LinkedInで運用されている異常検知と原因分析">
+<meta property="og:description" content="参考 メモ  セッションメモ ブログメモ    参考  ThirdEye LinkedIn’s business-wide monitoring platform thirdeyeの実装  メモ セッションメモ Strataの ThirdEye LinkedIn’s business-wide monitoring platform のメモ。 LinkedInで運用されている異常検知と原因分">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ThirdEye LinkedIn’s business-wide monitoring platform">
-<meta name="twitter:description" content="参考 メモ セッションメモ ブログメモ    参考  ThirdEye LinkedIn’s business-wide monitoring platform thirdeyeの実装  メモ セッションメモ Strataの ThirdEye LinkedIn’s business-wide monitoring platform のメモ。 LinkedInで運用されている異常検知と原因分析">
+<meta name="twitter:description" content="参考 メモ  セッションメモ ブログメモ    参考  ThirdEye LinkedIn’s business-wide monitoring platform thirdeyeの実装  メモ セッションメモ Strataの ThirdEye LinkedIn’s business-wide monitoring platform のメモ。 LinkedInで運用されている異常検知と原因分">
     
 
     
@@ -251,41 +251,53 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#セッションメモ">セッションメモ</a></li>
-<li><a href="#ブログメモ">ブログメモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#セッションメモ" id="toc-セッションメモ">セッションメモ</a></li>
+<li><a href="#ブログメモ" id="toc-ブログメモ">ブログメモ</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://conferences.oreilly.com/strata/strata-ny-2019/public/schedule/detail/77219" target="_blank" rel="noopener">ThirdEye LinkedIn’s business-wide monitoring platform</a></li>
+<li><a href="https://conferences.oreilly.com/strata/strata-ny-2019/public/schedule/detail/77219" target="_blank" rel="noopener">ThirdEye
+LinkedIn’s business-wide monitoring platform</a></li>
 <li><a href="https://github.com/apache/incubator-pinot/tree/master/thirdeye" target="_blank" rel="noopener">thirdeyeの実装</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="セッションメモ">セッションメモ</span></h2>
-<p>Strataの <a href="https://conferences.oreilly.com/strata/strata-ny-2019/public/schedule/detail/77219" target="_blank" rel="noopener">ThirdEye LinkedIn’s business-wide monitoring platform</a> のメモ。</p>
-<p>LinkedInで運用されている異常検知と原因分析のためのプラットフォーム。 オープンソースになっているようだ。 -&gt; <a href="https://github.com/apache/incubator-pinot/tree/master/thirdeye" target="_blank" rel="noopener">thirdeyeの実装</a></p>
+<p>Strataの <a href="https://conferences.oreilly.com/strata/strata-ny-2019/public/schedule/detail/77219" target="_blank" rel="noopener">ThirdEye
+LinkedIn’s business-wide monitoring platform</a> のメモ。</p>
+<p>LinkedInで運用されている異常検知と原因分析のためのプラットフォーム。
+オープンソースになっているようだ。 -&gt; <a href="https://github.com/apache/incubator-pinot/tree/master/thirdeye" target="_blank" rel="noopener">thirdeyeの実装</a></p>
 <p>主に以下の内容が記載されていた。</p>
 <ul>
 <li>MTTD: Mean time to detect</li>
 <li>MTTR: Mean time to repair</li>
 </ul>
-<p>50 チーム以上がThirdEyeを利用。 何千もの時系列データが監視されている？</p>
+<p>50 チーム以上がThirdEyeを利用。
+何千もの時系列データが監視されている？</p>
 <p>攻撃を検知したり、AIモデル周りの監視。</p>
 <p>アーキ図あり。</p>
 <p>異常検知における課題：スケーラビリティ、性能</p>
 <p>手動でのコンフィグ、監視は現実的でない。</p>
 <p>ルールベースの単純な仕組みは不十分。 多すぎるアラートは邪魔。</p>
 <h2><span id="ブログメモ">ブログメモ</span></h2>
-<p><a href="https://engineering.linkedin.com/blog/2020/analyzing-anomalies-with-thirdeye" target="_blank" rel="noopener">Analyzing anomalies with ThirdEye</a> のメモ。</p>
-<p>データキューブについて。 LinkedInではPinotを使って事前にキューブ化されている。</p>
-<p>ディメンジョン・ヒートマップの利用。 あるディメンジョンにおける問題の原因分析に有用。</p>
+<p><a href="https://engineering.linkedin.com/blog/2020/analyzing-anomalies-with-thirdeye" target="_blank" rel="noopener">Analyzing
+anomalies with ThirdEye</a> のメモ。</p>
+<p>データキューブについて。
+LinkedInではPinotを使って事前にキューブ化されている。</p>
+<p>ディメンジョン・ヒートマップの利用。
+あるディメンジョンにおける問題の原因分析に有用。</p>
 <p>変化の検出の仕方について。</p>
-<p>ただし単独のディメンジョンの問題を検出するだけでは不十分。 複数のディメンジョンにまたがって分析してわかる問題を検出したい。</p>
-<p>ディメンジョンをツリー構成。 ベースラインと現在の値でツリーを構成。</p>
-<p>ノードの親子関係を利用。 各ノードとその親ノードの変化を式に組み入れることで、木構造に基づく傾向（？）を考慮しながら、 変化の重大さを算出する。</p>
+<p>ただし単独のディメンジョンの問題を検出するだけでは不十分。
+複数のディメンジョンにまたがって分析してわかる問題を検出したい。</p>
+<p>ディメンジョンをツリー構成。
+ベースラインと現在の値でツリーを構成。</p>
+<p>ノードの親子関係を利用。
+各ノードとその親ノードの変化を式に組み入れることで、木構造に基づく傾向（？）を考慮しながら、
+変化の重大さを算出する。</p>
 <p>上記仕組みを利用することで、データマネージャのバグ、機械学習モデルサービングにおけるバグを見つけた。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -298,7 +310,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/01/16/ThirdEye-LinkedIns-business-wide-monitoring-platform/" data-id="cl2nztnoo00et5xqinlme7qgc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/01/16/ThirdEye-LinkedIns-business-wide-monitoring-platform/" data-id="cl2o9pb8c00am18rzh1p4sw61" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -549,5 +561,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

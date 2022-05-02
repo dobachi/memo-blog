@@ -5,18 +5,18 @@
     
     <title>dansbecker/data-leakage | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ Leaky Predictor どう対処するのか？  Leaky Validation Strategy どう対処するのか？  クレジットカードのデータの例    参考  Kaggleのdansbecker data-leakage  メモ Leaky Predictor 例では、肺炎発症と抗生物質摂取のケースが挙げられていた。 肺炎が発症したあとで、抗生物質を摂取する。 抗生物">
+    <meta name="description" content="参考 メモ  Leaky Predictor  どう対処するのか？  Leaky Validation Strategy  どう対処するのか？  クレジットカードのデータの例    参考  Kaggleのdansbecker data-leakage  メモ Leaky Predictor 例では、肺炎発症と抗生物質摂取のケースが挙げられていた。 肺炎が発症したあとで、抗生物質を摂取する。">
 <meta name="keywords" content="Machine Learning,Kaggle,Model,Data Leakage">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dansbecker&#x2F;data-leakage">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/04/14/dansbecker-data-leakage/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ Leaky Predictor どう対処するのか？  Leaky Validation Strategy どう対処するのか？  クレジットカードのデータの例    参考  Kaggleのdansbecker data-leakage  メモ Leaky Predictor 例では、肺炎発症と抗生物質摂取のケースが挙げられていた。 肺炎が発症したあとで、抗生物質を摂取する。 抗生物">
+<meta property="og:description" content="参考 メモ  Leaky Predictor  どう対処するのか？  Leaky Validation Strategy  どう対処するのか？  クレジットカードのデータの例    参考  Kaggleのdansbecker data-leakage  メモ Leaky Predictor 例では、肺炎発症と抗生物質摂取のケースが挙げられていた。 肺炎が発症したあとで、抗生物質を摂取する。">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dansbecker&#x2F;data-leakage">
-<meta name="twitter:description" content="参考 メモ Leaky Predictor どう対処するのか？  Leaky Validation Strategy どう対処するのか？  クレジットカードのデータの例    参考  Kaggleのdansbecker data-leakage  メモ Leaky Predictor 例では、肺炎発症と抗生物質摂取のケースが挙げられていた。 肺炎が発症したあとで、抗生物質を摂取する。 抗生物">
+<meta name="twitter:description" content="参考 メモ  Leaky Predictor  どう対処するのか？  Leaky Validation Strategy  どう対処するのか？  クレジットカードのデータの例    参考  Kaggleのdansbecker data-leakage  メモ Leaky Predictor 例では、肺炎発症と抗生物質摂取のケースが挙げられていた。 肺炎が発症したあとで、抗生物質を摂取する。">
     
 
     
@@ -251,35 +251,50 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#leaky-predictor">Leaky Predictor</a><ul>
-<li><a href="#どう対処するのか">どう対処するのか？</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#leaky-predictor" id="toc-leaky-predictor">Leaky
+Predictor</a>
+<ul>
+<li><a href="#どう対処するのか" id="toc-どう対処するのか">どう対処するのか？</a></li>
 </ul></li>
-<li><a href="#leaky-validation-strategy">Leaky Validation Strategy</a><ul>
-<li><a href="#どう対処するのか-1">どう対処するのか？</a></li>
+<li><a href="#leaky-validation-strategy" id="toc-leaky-validation-strategy">Leaky Validation Strategy</a>
+<ul>
+<li><a href="#どう対処するのか-1" id="toc-どう対処するのか-1">どう対処するのか？</a></li>
 </ul></li>
-<li><a href="#クレジットカードのデータの例">クレジットカードのデータの例</a></li>
+<li><a href="#クレジットカードのデータの例" id="toc-クレジットカードのデータの例">クレジットカードのデータの例</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://www.kaggle.com/dansbecker/data-leakage" target="_blank" rel="noopener">Kaggleのdansbecker data-leakage</a></li>
+<li><a href="https://www.kaggle.com/dansbecker/data-leakage" target="_blank" rel="noopener">Kaggleのdansbecker
+data-leakage</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="leaky-predictor">Leaky Predictor</span></h2>
 <p>例では、肺炎発症と抗生物質摂取のケースが挙げられていた。</p>
-<p>肺炎が発症したあとで、抗生物質を摂取する。 抗生物質を摂取したかどうかは、肺炎発症の前後で値が変わる。 値が変わることを考慮しないと、抗生物質を摂取しない人は肺炎にならない、というモデルが出来上がる可能性がある。</p>
+<p>肺炎が発症したあとで、抗生物質を摂取する。
+抗生物質を摂取したかどうかは、肺炎発症の前後で値が変わる。
+値が変わることを考慮しないと、抗生物質を摂取しない人は肺炎にならない、というモデルが出来上がる可能性がある。</p>
 <h3><span id="どう対処するのか">どう対処するのか？</span></h3>
-<p>汎用的な対処方法はなく、データや要件に強く依存する。 Leaky Predictorを発見する <strong>コツ</strong> は、強い相関のある特徴同士に着目する、 とても高いaccuracyを得られたときに気をつける、など。</p>
+<p>汎用的な対処方法はなく、データや要件に強く依存する。 Leaky
+Predictorを発見する <strong>コツ</strong>
+は、強い相関のある特徴同士に着目する、
+とても高いaccuracyを得られたときに気をつける、など。</p>
 <h2><span id="leaky-validation-strategy">Leaky Validation Strategy</span></h2>
 <p>例では、train-testスプリットの前に前処理を行おうケースが挙げられていた。</p>
-<p>バリデーション対象には、前処理も含めないといけない。 そうでないと、バリデーションで高いモデル性能が得られたとしても、 実際の判定処理で期待したモデル性能が得られない可能性がある。</p>
+<p>バリデーション対象には、前処理も含めないといけない。
+そうでないと、バリデーションで高いモデル性能が得られたとしても、
+実際の判定処理で期待したモデル性能が得られない可能性がある。</p>
 <h3><span id="どう対処するのか">どう対処するのか？</span></h3>
-<p>パイプラインを組むときに、例えばクロスバリデーションの処理内に、 前処理を入れるようにする、など。</p>
+<p>パイプラインを組むときに、例えばクロスバリデーションの処理内に、
+前処理を入れるようにする、など。</p>
 <h2><span id="クレジットカードのデータの例">クレジットカードのデータの例</span></h2>
-<p>クレジットカードの使用がアプリケーションで認められたかどうか、を判定する例。 ここでは、クレジットカードの使用量の特徴が、Leaky Predictorとして挙げられていた。</p>
+<p>クレジットカードの使用がアプリケーションで認められたかどうか、を判定する例。
+ここでは、クレジットカードの使用量の特徴が、Leaky
+Predictorとして挙げられていた。</p>
 
         
         </div>
@@ -290,7 +305,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/14/dansbecker-data-leakage/" data-id="cl2nztnpq00hy5xqigw356oji" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/14/dansbecker-data-leakage/" data-id="cl2o9pb9a00d218rzz8n6gwbp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -541,5 +556,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

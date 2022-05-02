@@ -250,36 +250,49 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#前提">前提</a></li>
-<li><a href="#createrelationから確認する">createRelationから確認する</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#前提" id="toc-前提">前提</a></li>
+<li><a href="#createrelationから確認する" id="toc-createrelationから確認する">createRelationから確認する</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <h1><span id="メモ">メモ</span></h1>
-<p>Delta LakeのDelta LogのIDがいつ確定するのか、というのが気になり確認した。</p>
+<p>Delta LakeのDelta
+LogのIDがいつ確定するのか、というのが気になり確認した。</p>
 <h2><span id="前提">前提</span></h2>
 <ul>
 <li>Delta Lakeバージョン：0.8.0</li>
 </ul>
 <h2><span id="createrelationから確認する">createRelationから確認する</span></h2>
-<p><code>org.apache.spark.sql.delta.sources.DeltaDataSource#createRelation</code> をエントリポイントとする。</p>
-<p>ポイントは、<code>DeltaLog</code> がインスタンス化されるときである。</p>
+<p><code>org.apache.spark.sql.delta.sources.DeltaDataSource#createRelation</code>
+をエントリポイントとする。</p>
+<p>ポイントは、<code>DeltaLog</code>
+がインスタンス化されるときである。</p>
 <p>まず最初にインスタンス化されるのは以下。</p>
 <p>org/apache/spark/sql/delta/sources/DeltaDataSource.scala:141</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> deltaLog = <span class="type">DeltaLog</span>.forTable(sqlContext.sparkSession, path)</span><br></pre></td></tr></table></figure>
-<p><code>org.apache.spark.sql.delta.DeltaLog</code> は、 <code>org.apache.spark.sql.delta.SnapshotManagement</code> トレイトをミックスインしている。 当該トレイトには、 <code>currentSnapshot</code> というメンバ変数があり、これは <code>org.apache.spark.sql.delta.SnapshotManagement#getSnapshotAtInit</code> メソッドを利用し得られる。</p>
+<p><code>org.apache.spark.sql.delta.DeltaLog</code> は、
+<code>org.apache.spark.sql.delta.SnapshotManagement</code>
+トレイトをミックスインしている。 当該トレイトには、
+<code>currentSnapshot</code> というメンバ変数があり、これは
+<code>org.apache.spark.sql.delta.SnapshotManagement#getSnapshotAtInit</code>
+メソッドを利用し得られる。</p>
 <p>org/apache/spark/sql/delta/SnapshotManagement.scala:47</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@volatile</span> <span class="keyword">protected</span> <span class="keyword">var</span> currentSnapshot: <span class="type">Snapshot</span> = getSnapshotAtInit</span><br></pre></td></tr></table></figure>
 <p>このメソッドは以下のように定義されている。</p>
 <p>org/apache/spark/sql/delta/SnapshotManagement.scala:184</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">def</span> <span class="title">getSnapshotAtInit</span></span>: <span class="type">Snapshot</span> = &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> segment = getLogSegmentFrom(lastCheckpoint)</span><br><span class="line">    <span class="keyword">val</span> startCheckpoint = segment.checkpointVersion</span><br><span class="line">      .map(v =&gt; <span class="string">s" starting from checkpoint <span class="subst">$v</span>."</span>).getOrElse(<span class="string">"."</span>)</span><br><span class="line">    logInfo(<span class="string">s"Loading version <span class="subst">$&#123;segment.version&#125;</span><span class="subst">$startCheckpoint</span>"</span>)</span><br><span class="line">    <span class="keyword">val</span> snapshot = createSnapshot(</span><br><span class="line">      segment,</span><br><span class="line">      minFileRetentionTimestamp,</span><br><span class="line">      segment.lastCommitTimestamp)</span><br><span class="line"></span><br><span class="line">    lastUpdateTimestamp = clock.getTimeMillis()</span><br><span class="line">    logInfo(<span class="string">s"Returning initial snapshot <span class="subst">$snapshot</span>"</span>)</span><br><span class="line">    snapshot</span><br><span class="line">  &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> e: <span class="type">FileNotFoundException</span> =&gt;</span><br><span class="line">      logInfo(<span class="string">s"Creating initial snapshot without metadata, because the directory is empty"</span>)</span><br><span class="line">      <span class="comment">// The log directory may not exist</span></span><br><span class="line">      <span class="keyword">new</span> <span class="type">InitialSnapshot</span>(logPath, <span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>ポイントは、スナップショットを作る際に用いられるセグメントである。 セグメントにバージョン情報が持たれている。</p>
+<p>ポイントは、スナップショットを作る際に用いられるセグメントである。
+セグメントにバージョン情報が持たれている。</p>
 <p>ここでは3行目の</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> segment = getLogSegmentFrom(lastCheckpoint)</span><br></pre></td></tr></table></figure>
-<p>にて <code>org.apache.spark.sql.delta.SnapshotManagement#getLogSegmentFrom</code> メソッドを用いて、 前回チェックポイントからセグメントの情報が生成される。</p>
+<p>にて
+<code>org.apache.spark.sql.delta.SnapshotManagement#getLogSegmentFrom</code>
+メソッドを用いて、
+前回チェックポイントからセグメントの情報が生成される。</p>
 <p>なお、参考までにLogSegmentクラスの定義は以下の通り。</p>
 <p>org/apache/spark/sql/delta/SnapshotManagement.scala:392</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">LogSegment</span>(<span class="params"></span></span></span><br><span class="line"><span class="class"><span class="params">    logPath: <span class="type">Path</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">    version: <span class="type">Long</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">    deltas: <span class="type">Seq</span>[<span class="type">FileStatus</span>],</span></span></span><br><span class="line"><span class="class"><span class="params">    checkpoint: <span class="type">Seq</span>[<span class="type">FileStatus</span>],</span></span></span><br><span class="line"><span class="class"><span class="params">    checkpointVersion: <span class="type">Option</span>[<span class="type">Long</span>],</span></span></span><br><span class="line"><span class="class"><span class="params">    lastCommitTimestamp: <span class="type">Long</span></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">hashCode</span></span>(): <span class="type">Int</span> = logPath.hashCode() * <span class="number">31</span> + (lastCommitTimestamp % <span class="number">10000</span>).toInt</span><br><span class="line"></span><br><span class="line">  (snip)</span><br></pre></td></tr></table></figure>
@@ -298,7 +311,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/04/When-DeltaLog-ID-is-created/" data-id="cl2nztnp600g75xqik7nthtfq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/04/When-DeltaLog-ID-is-created/" data-id="cl2o9pb8q00bo18rzkxyslhep" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -419,8 +432,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -440,7 +453,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/02/12/Power-Grid-Data/" data-id="cl2nztnnh00ba5xqidc68wn65" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/02/12/Power-Grid-Data/" data-id="cl2o9pb7d008318rznhjb4lsl" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -561,19 +574,22 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#メッシュwifiルータ">メッシュWiFiルータ</a></li>
-<li><a href="#jpne-v6plus">JPNE v6plus</a></li>
-<li><a href="#so-net">So-net</a></li>
-<li><a href="#au光">au光</a></li>
-<li><a href="#動作確認">動作確認</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#メッシュwifiルータ" id="toc-メッシュwifiルータ">メッシュWiFiルータ</a></li>
+<li><a href="#jpne-v6plus" id="toc-jpne-v6plus">JPNE v6plus</a></li>
+<li><a href="#so-net" id="toc-so-net">So-net</a></li>
+<li><a href="#au光" id="toc-au光">au光</a></li>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a></li>
 </ul></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#メッシュwifi">メッシュWiFi</a></li>
-<li><a href="#jpne-v6プラス">JPNE v6プラス</a></li>
-<li><a href="#auひかりのhgwホームゲートウェイ">auひかりのHGW（ホームゲートウェイ）</a></li>
-<li><a href="#so-net-1">so-net</a></li>
-<li><a href="#ipv6の動作確認">IPv6の動作確認</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#メッシュwifi" id="toc-メッシュwifi">メッシュWiFi</a></li>
+<li><a href="#jpne-v6プラス" id="toc-jpne-v6プラス">JPNE
+v6プラス</a></li>
+<li><a href="#auひかりのhgwホームゲートウェイ" id="toc-auひかりのhgwホームゲートウェイ">auひかりのHGW（ホームゲートウェイ）</a></li>
+<li><a href="#so-net-1" id="toc-so-net-1">so-net</a></li>
+<li><a href="#ipv6の動作確認" id="toc-ipv6の動作確認">IPv6の動作確認</a></li>
 </ul></li>
 </ul>
 </div>
@@ -581,7 +597,8 @@ ga('send', 'pageview');
 <h2><span id="メッシュwifiルータ">メッシュWiFiルータ</span></h2>
 <ul>
 <li><a href="https://cero-t.hatenadiary.jp/entry/2019/12/02/212259" target="_blank" rel="noopener">メッシュルーターの選び方について整理した</a></li>
-<li><a href="https://www2.elecom.co.jp/network/wireless-lan/column/wifi_column/00083/" target="_blank" rel="noopener">Vol.83 メッシュ（Mesh）Wi-Fiって何？メリットと活用方法を紹介</a></li>
+<li><a href="https://www2.elecom.co.jp/network/wireless-lan/column/wifi_column/00083/" target="_blank" rel="noopener">Vol.83
+メッシュ（Mesh）Wi-Fiって何？メリットと活用方法を紹介</a></li>
 <li><a href="https://www.synology.com/en-us/products/MR2200ac" target="_blank" rel="noopener">MR2200ac</a></li>
 </ul>
 <h2><span id="jpne-v6plus">JPNE v6plus</span></h2>
@@ -591,13 +608,17 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="so-net">So-net</span></h2>
 <ul>
-<li><a href="https://www.so-net.ne.jp/guide/catalog/hikari/withf/e_index.html?page=tab_about" target="_blank" rel="noopener">So-net 光 with フレッツ S 東日本</a></li>
-<li><a href="https://www.so-net.ne.jp/access/hikari/v6plus/" target="_blank" rel="noopener">So-net 光 プラスの次世代通信 v6プラス</a></li>
-<li><a href="https://www.so-net.ne.jp/access/hikari/collabo/" target="_blank" rel="noopener">So-net 光 プラス</a></li>
+<li><a href="https://www.so-net.ne.jp/guide/catalog/hikari/withf/e_index.html?page=tab_about" target="_blank" rel="noopener">So-net
+光 with フレッツ S 東日本</a></li>
+<li><a href="https://www.so-net.ne.jp/access/hikari/v6plus/" target="_blank" rel="noopener">So-net 光
+プラスの次世代通信 v6プラス</a></li>
+<li><a href="https://www.so-net.ne.jp/access/hikari/collabo/" target="_blank" rel="noopener">So-net 光
+プラス</a></li>
 </ul>
 <h2><span id="au光">au光</span></h2>
 <ul>
-<li><a href="https://www.lets-hikari.com/auhikari-homegateway/" target="_blank" rel="noopener">auひかりのホームゲートウェイはいらない? 知っておきたい不都合な真実</a></li>
+<li><a href="https://www.lets-hikari.com/auhikari-homegateway/" target="_blank" rel="noopener">auひかりのホームゲートウェイはいらない?
+知っておきたい不都合な真実</a></li>
 <li><a href="https://qiita.com/Barisaku/items/1fdb8be1ce4707e3229a" target="_blank" rel="noopener">au光で市販のルーターを使う</a></li>
 <li><a href="https://www.tp-link.com/jp/support/faq/2000/" target="_blank" rel="noopener">ブリッジモードにせずDMZの下でルーターモードで利用するには</a></li>
 </ul>
@@ -607,29 +628,49 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="メッシュwifi">メッシュWiFi</span></h2>
-<p>メッシュWiFiとは、Elecomの <a href="https://www2.elecom.co.jp/network/wireless-lan/column/wifi_column/00083/" target="_blank" rel="noopener">Vol.83 メッシュ（Mesh）Wi-Fiって何？メリットと活用方法を紹介</a> 記事の通り。 戸建ての家などでは、広く安定してカバーできるはず、ということで。</p>
-<p>日本国内においてどの機器を使うか？については、 <a href="https://cero-t.hatenadiary.jp/entry/2019/12/02/212259" target="_blank" rel="noopener">メッシュルーターの選び方について整理した</a> がわかりやすい。</p>
-<p>個人的にはIPv6対応している点で、「Synology MR2200ac」が候補に上がった。 仕様は <a href="https://www.synology.com/en-us/products/MR2200ac" target="_blank" rel="noopener">MR2200ac</a> を参照されたし。</p>
+<p>メッシュWiFiとは、Elecomの <a href="https://www2.elecom.co.jp/network/wireless-lan/column/wifi_column/00083/" target="_blank" rel="noopener">Vol.83
+メッシュ（Mesh）Wi-Fiって何？メリットと活用方法を紹介</a> 記事の通り。
+戸建ての家などでは、広く安定してカバーできるはず、ということで。</p>
+<p>日本国内においてどの機器を使うか？については、 <a href="https://cero-t.hatenadiary.jp/entry/2019/12/02/212259" target="_blank" rel="noopener">メッシュルーターの選び方について整理した</a>
+がわかりやすい。</p>
+<p>個人的にはIPv6対応している点で、「Synology
+MR2200ac」が候補に上がった。 仕様は <a href="https://www.synology.com/en-us/products/MR2200ac" target="_blank" rel="noopener">MR2200ac</a>
+を参照されたし。</p>
 <h2><span id="jpne-v6プラス">JPNE v6プラス</span></h2>
-<p><a href="https://www.jpne.co.jp/service/v6plus/" target="_blank" rel="noopener">v6プラス(IPv6/IPv4インターネットサービス)</a> によると、</p>
+<p><a href="https://www.jpne.co.jp/service/v6plus/" target="_blank" rel="noopener">v6プラス(IPv6/IPv4インターネットサービス)</a>
+によると、</p>
 <blockquote>
-<p>「v6プラス」は、NTT東西の次世代ネットワーク（NGN）を利用しインターネット接続を提供するISP事業者が、 IPv6及びIPv4の設備を持たずに、インターネット接続をお客さま(エンドユーザ)にご提供いただくためのサービスです。</p>
+<p>「v6プラス」は、NTT東西の次世代ネットワーク（NGN）を利用しインターネット接続を提供するISP事業者が、
+IPv6及びIPv4の設備を持たずに、インターネット接続をお客さま(エンドユーザ)にご提供いただくためのサービスです。</p>
 </blockquote>
 <p>とのこと。</p>
-<p><a href="https://oyamadenshi.com/mr2200ac-v6plus/" target="_blank" rel="noopener">Synology製Wi-FiルーターMR2200acでv6プラス接続設定</a> によると、MR2200acでv6plusを利用する方法が記載されている。</p>
+<p><a href="https://oyamadenshi.com/mr2200ac-v6plus/" target="_blank" rel="noopener">Synology製Wi-FiルーターMR2200acでv6プラス接続設定</a>
+によると、MR2200acでv6plusを利用する方法が記載されている。</p>
 <h2><span id="auひかりのhgwホームゲートウェイ">auひかりのHGW（ホームゲートウェイ）</span></h2>
-<p><a href="https://www.lets-hikari.com/auhikari-homegateway/" target="_blank" rel="noopener">auひかりのホームゲートウェイはいらない? 知っておきたい不都合な真実</a> にも記載の通り、</p>
+<p><a href="https://www.lets-hikari.com/auhikari-homegateway/" target="_blank" rel="noopener">auひかりのホームゲートウェイはいらない?
+知っておきたい不都合な真実</a> にも記載の通り、</p>
 <blockquote>
-<p>先ほどから触れてるとおり、auひかりはホームゲートウェイが無ければインターネットに接続することができません。 その理由は、ホームゲートウェイ内に、KDDIの認証を取る機能があるからです。</p>
+<p>先ほどから触れてるとおり、auひかりはホームゲートウェイが無ければインターネットに接続することができません。
+その理由は、ホームゲートウェイ内に、KDDIの認証を取る機能があるからです。</p>
 </blockquote>
 <p>とのこと。</p>
-<p>そこで、自前のルータを利用したい場合は、 DMZ機能を利用して、ルータ機能をHGWと自前ルータの療法で動かす設定をすることもある。</p>
-<p><a href="https://qiita.com/Barisaku/items/1fdb8be1ce4707e3229a" target="_blank" rel="noopener">au光で市販のルーターを使う</a>が参考になる。 <a href="https://www.tp-link.com/jp/support/faq/2000/" target="_blank" rel="noopener">ブリッジモードにせずDMZの下でルーターモードで利用するには</a> も参考になる。こちらはtp-linkのブログ。</p>
+<p>そこで、自前のルータを利用したい場合は、
+DMZ機能を利用して、ルータ機能をHGWと自前ルータの療法で動かす設定をすることもある。</p>
+<p><a href="https://qiita.com/Barisaku/items/1fdb8be1ce4707e3229a" target="_blank" rel="noopener">au光で市販のルーターを使う</a>が参考になる。
+<a href="https://www.tp-link.com/jp/support/faq/2000/" target="_blank" rel="noopener">ブリッジモードにせずDMZの下でルーターモードで利用するには</a>
+も参考になる。こちらはtp-linkのブログ。</p>
 <h2><span id="so-net">so-net</span></h2>
-<p><a href="https://www.so-net.ne.jp/guide/catalog/hikari/withf/e_index.html?page=tab_about" target="_blank" rel="noopener">So-net 光 with フレッツ S 東日本</a> は、フレッツ光の契約と思われる。</p>
-<p><a href="https://www.so-net.ne.jp/access/hikari/v6plus/" target="_blank" rel="noopener">So-net 光 プラスの次世代通信 v6プラス</a> は v6プラス を利用したサービスと思われる。 <a href="https://www.so-net.ne.jp/access/hikari/v6plus/detail.html#anc-3" target="_blank" rel="noopener">So-net 光 プラスの次世代通信 v6プラスの対象サービス</a> によると、 <a href="https://www.so-net.ne.jp/access/hikari/collabo/" target="_blank" rel="noopener">So-net 光 プラス</a> などが対応している。 その他フレッツ系のサービスが対応しているようだ。</p>
+<p><a href="https://www.so-net.ne.jp/guide/catalog/hikari/withf/e_index.html?page=tab_about" target="_blank" rel="noopener">So-net
+光 with フレッツ S 東日本</a> は、フレッツ光の契約と思われる。</p>
+<p><a href="https://www.so-net.ne.jp/access/hikari/v6plus/" target="_blank" rel="noopener">So-net 光
+プラスの次世代通信 v6プラス</a> は v6プラス
+を利用したサービスと思われる。 <a href="https://www.so-net.ne.jp/access/hikari/v6plus/detail.html#anc-3" target="_blank" rel="noopener">So-net
+光 プラスの次世代通信 v6プラスの対象サービス</a> によると、 <a href="https://www.so-net.ne.jp/access/hikari/collabo/" target="_blank" rel="noopener">So-net 光
+プラス</a> などが対応している。
+その他フレッツ系のサービスが対応しているようだ。</p>
 <h2><span id="ipv6の動作確認">IPv6の動作確認</span></h2>
-<p><a href="https://ipv6-test.com/speedtest/" target="_blank" rel="noopener">ipv6 test</a> にアクセスると良い。</p>
+<p><a href="https://ipv6-test.com/speedtest/" target="_blank" rel="noopener">ipv6 test</a>
+にアクセスると良い。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -641,7 +682,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/31/Mesh-wifi/" data-id="cl2nztnn500a65xqi1xhvk9e7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/31/Mesh-wifi/" data-id="cl2o9pb6x007a18rzpfe5xugd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -762,14 +803,17 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://martinfowler.com/articles/data-monolith-to-mesh.html" target="_blank" rel="noopener">Zhamak DehghaniによるHow to Move Beyond a Monolithic Data Laketo a Distributed Data Mesh</a> を読んで簡単にまとめた。</p>
-<p>この文章では、ドメインが所有し、提供するデータプロダクトの相互利用に基づく「データメッシュ」の考え方を提唱するものである。 固有技術そのものではなく、アーキテクチャ検討の前の「データを基礎としたサービス開発、ソフトウェア開発のためのデータの取り回し方」に関する示唆を与えようとしたもの、という理解。</p>
+<p><a href="https://martinfowler.com/articles/data-monolith-to-mesh.html" target="_blank" rel="noopener">Zhamak
+DehghaniによるHow to Move Beyond a Monolithic Data Laketo a Distributed
+Data Mesh</a> を読んで簡単にまとめた。</p>
+<p>この文章では、ドメインが所有し、提供するデータプロダクトの相互利用に基づく「データメッシュ」の考え方を提唱するものである。
+固有技術そのものではなく、アーキテクチャ検討の前の「データを基礎としたサービス開発、ソフトウェア開発のためのデータの取り回し方」に関する示唆を与えようとしたもの、という理解。</p>
 <iframe src="https://onedrive.live.com/embed?cid=C6E669622F542498&amp;resid=C6E669622F542498%21102281&amp;authkey=AMeTPUnKXIG6qVA&amp;em=2" width="402" height="327" frameborder="0" scrolling="no">
 </iframe>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
@@ -783,7 +827,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/" data-id="cl2nztnn300a25xqit3duosck" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/" data-id="cl2o9pb6t006y18rz9hasywrm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -904,17 +948,23 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf" target="_blank" rel="noopener">Lakehouse A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics</a></li>
+<li><a href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf" target="_blank" rel="noopener">Lakehouse
+A New Generation of Open Platforms that Unify Data Warehousing and
+Advanced Analytics</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf" target="_blank" rel="noopener">Lakehouse A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics</a> の論文を確認し、 簡単なメモを作成した。</p>
-<p>考え方を節異名しつつ、Delta Lake、Delta Engineを使用した際のTPC−DSの実行結果、クエリ実行コストの情報が記載されていた。 また関連研究、参考文献も過去から現在のトレンドの背景を知る上で参考になるものが多い。</p>
+<p><a href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf" target="_blank" rel="noopener">Lakehouse
+A New Generation of Open Platforms that Unify Data Warehousing and
+Advanced Analytics</a> の論文を確認し、 簡単なメモを作成した。</p>
+<p>考え方を節異名しつつ、Delta Lake、Delta
+Engineを使用した際のTPC−DSの実行結果、クエリ実行コストの情報が記載されていた。
+また関連研究、参考文献も過去から現在のトレンドの背景を知る上で参考になるものが多い。</p>
 <iframe src="https://onedrive.live.com/embed?cid=C6E669622F542498&amp;resid=C6E669622F542498%21102238&amp;authkey=AMG-TLUEl21EV8I&amp;em=2" width="402" height="327" frameborder="0" scrolling="no">
 </iframe>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
@@ -928,7 +978,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/16/Memo-of-Lakehouse-A-New-Generation-of-Open-Platforms-that-Unify-Data-Warehousing-and-Advanced-Analytics/" data-id="cl2nztnn2009z5xqi92hc8isq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/16/Memo-of-Lakehouse-A-New-Generation-of-Open-Platforms-that-Unify-Data-Warehousing-and-Advanced-Analytics/" data-id="cl2o9pb6w007518rzt2snnabn" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1049,60 +1099,80 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#公式サイト">公式サイト</a></li>
-<li><a href="#ブログ">ブログ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#公式サイト" id="toc-公式サイト">公式サイト</a></li>
+<li><a href="#ブログ" id="toc-ブログ">ブログ</a></li>
 </ul></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#暗号化されたファイルの作成">暗号化されたファイルの作成</a></li>
-<li><a href="#参考復号して平文化">（参考）復号して平文化</a></li>
-<li><a href="#参考暗号化されたファイルの編集">（参考）暗号化されたファイルの編集</a></li>
-<li><a href="#参考vaultパスワードをファイルとして渡す">（参考）Vaultパスワードをファイルとして渡す</a></li>
-<li><a href="#プレイブック内で変数として利用">プレイブック内で変数として利用</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#暗号化されたファイルの作成" id="toc-暗号化されたファイルの作成">暗号化されたファイルの作成</a></li>
+<li><a href="#参考復号して平文化" id="toc-参考復号して平文化">（参考）復号して平文化</a></li>
+<li><a href="#参考暗号化されたファイルの編集" id="toc-参考暗号化されたファイルの編集">（参考）暗号化されたファイルの編集</a></li>
+<li><a href="#参考vaultパスワードをファイルとして渡す" id="toc-参考vaultパスワードをファイルとして渡す">（参考）Vaultパスワードをファイルとして渡す</a></li>
+<li><a href="#プレイブック内で変数として利用" id="toc-プレイブック内で変数として利用">プレイブック内で変数として利用</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <h2><span id="公式サイト">公式サイト</span></h2>
 <ul>
-<li><a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html#managing-vault-passwords" target="_blank" rel="noopener">Encrypting content with Ansible Vault</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html#managing-vault-passwords" target="_blank" rel="noopener">Encrypting
+content with Ansible Vault</a></li>
 </ul>
 <h2><span id="ブログ">ブログ</span></h2>
 <ul>
 <li><a href="https://qiita.com/takuya599/items/2420fb286318c4279a02" target="_blank" rel="noopener">Ansible-Vaultを用いた機密情報の暗号化のTips</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>Ansible内で使用する変数を平文でファイルに記載し、プレイブック集に入れ込むのに不安を感じるときがある。 そのようなとき、Ansible Vaultを利用すると暗号化された状態で変数を管理できる。 Ansible Vaultで管理された変数をプレイブック内で通常の変数と同様に扱えるため見通しが良くなる。</p>
-<p>公式サイトの <a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html#managing-vault-passwords" target="_blank" rel="noopener">Encrypting content with Ansible Vault</a> が網羅的でわかりやすいのだが、 具体例が足りない気がしたので以下に一例を示しておく。 ここに挙げた以外の使い方は、公式サイトを参照されたし。</p>
-<p><a href="https://qiita.com/takuya599/items/2420fb286318c4279a02" target="_blank" rel="noopener">Ansible-Vaultを用いた機密情報の暗号化のTips</a> も参考になった。</p>
+<p>Ansible内で使用する変数を平文でファイルに記載し、プレイブック集に入れ込むのに不安を感じるときがある。
+そのようなとき、Ansible
+Vaultを利用すると暗号化された状態で変数を管理できる。 Ansible
+Vaultで管理された変数をプレイブック内で通常の変数と同様に扱えるため見通しが良くなる。</p>
+<p>公式サイトの <a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html#managing-vault-passwords" target="_blank" rel="noopener">Encrypting
+content with Ansible Vault</a> が網羅的でわかりやすいのだが、
+具体例が足りない気がしたので以下に一例を示しておく。
+ここに挙げた以外の使い方は、公式サイトを参照されたし。</p>
+<p><a href="https://qiita.com/takuya599/items/2420fb286318c4279a02" target="_blank" rel="noopener">Ansible-Vaultを用いた機密情報の暗号化のTips</a>
+も参考になった。</p>
 <h2><span id="暗号化されたファイルの作成">暗号化されたファイルの作成</span></h2>
-<p><code>secret.yml</code> 内に変数を記述し、暗号化する。 後ほど暗号化されたファイルを変数定義ファイルとして読み込む。</p>
+<p><code>secret.yml</code> 内に変数を記述し、暗号化する。
+後ほど暗号化されたファイルを変数定義ファイルとして読み込む。</p>
 <p>ここでは以下のような内容とする。</p>
 <p>secret.yml</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hoge:</span></span><br><span class="line"><span class="attr">  fuga:</span> <span class="string">foo</span></span><br></pre></td></tr></table></figure>
 <p>ファイルを暗号化する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault create secret.yml</span></span><br></pre></td></tr></table></figure>
-<p>上記ファイルを作成する際、Vault用パスワードを聞かれるので適切なパスワードを入力すること。 あとでパスワードは利用する。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault create secret.yml</span><br></pre></td></tr></table></figure>
+<p>上記ファイルを作成する際、Vault用パスワードを聞かれるので適切なパスワードを入力すること。
+あとでパスワードは利用する。</p>
 <h2><span id="参考復号して平文化">（参考）復号して平文化</span></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault decrypt secret.yml</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault decrypt secret.yml</span><br></pre></td></tr></table></figure>
 <h2><span id="参考暗号化されたファイルの編集">（参考）暗号化されたファイルの編集</span></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault edit secret.yml</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault edit secret.yml</span><br></pre></td></tr></table></figure>
 <h2><span id="参考vaultパスワードをファイルとして渡す">（参考）Vaultパスワードをファイルとして渡す</span></h2>
-<p>プロンプトで入力する代わりに、どこかプレイブック集の外などにVaultパスワードを保存し利用することもできる。 ここでは、 <code>~/.vault_password</code> にパスワードを記載したファイルを準備したものとする。 編集する例を示す。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault edit secret.yml --vault-password-file ~/.vault_password</span></span><br></pre></td></tr></table></figure>
+<p>プロンプトで入力する代わりに、どこかプレイブック集の外などにVaultパスワードを保存し利用することもできる。
+ここでは、 <code>~/.vault_password</code>
+にパスワードを記載したファイルを準備したものとする。
+編集する例を示す。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault edit secret.yml --vault-password-file ~/.vault_password</span><br></pre></td></tr></table></figure>
 <h2><span id="プレイブック内で変数として利用">プレイブック内で変数として利用</span></h2>
-<p>変数定義ファイルとして渡し、プレイブック内で変数として利用する。 以下のようなプレイブックを作る。</p>
+<p>変数定義ファイルとして渡し、プレイブック内で変数として利用する。
+以下のようなプレイブックを作る。</p>
 <p>test.yml</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">- hosts:</span> <span class="string">localhost</span></span><br><span class="line"><span class="attr">  vars_files:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">secret.yml</span></span><br><span class="line"><span class="attr">  tasks:</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">debug</span></span><br><span class="line"><span class="attr">      debug:</span></span><br><span class="line"><span class="attr">        msg:</span> <span class="string">"<span class="template-variable">&#123;&#123; hoge.fuga &#125;&#125;</span>"</span></span><br></pre></td></tr></table></figure>
 <p>以下、簡単な説明。</p>
 <ul>
-<li>変数定義ファイルとして <code>secret.yml</code> を指定（ <code>vars_files</code> の箇所）</li>
+<li>変数定義ファイルとして <code>secret.yml</code> を指定（
+<code>vars_files</code> の箇所）</li>
 <li>今回はdebugモジュールを利用し、変数内の値を表示することとする。</li>
-<li>暗号化された変数定義ファイル <code>secret.yml</code> に記載されたとおり、構造化された変数 <code>hoge.fuga</code> の値を利用する。</li>
-<li>結果として、<code>foo</code> という内容がSTDOUTに表示されるはず。</li>
+<li>暗号化された変数定義ファイル <code>secret.yml</code>
+に記載されたとおり、構造化された変数 <code>hoge.fuga</code>
+の値を利用する。</li>
+<li>結果として、<code>foo</code>
+という内容がSTDOUTに表示されるはず。</li>
 </ul>
 <p>プレイブックを実行する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-playbook test.yml --ask-vault-pass</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-playbook test.yml --ask-vault-pass</span><br></pre></td></tr></table></figure>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -1114,7 +1184,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/07/Getting-started-of-Ansible-Vault/" data-id="cl2nztnlt00625xqipghrf4nh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/07/Getting-started-of-Ansible-Vault/" data-id="cl2o9pb5p004318rzzp9to6i1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1235,18 +1305,24 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://bitto.jp/posts/%E6%8A%80%E8%A1%93/Hexo/hexo-add-image/" target="_blank" rel="noopener">Hexo 記事に画像を貼り付ける</a></li>
+<li><a href="https://bitto.jp/posts/%E6%8A%80%E8%A1%93/Hexo/hexo-add-image/" target="_blank" rel="noopener">Hexo
+記事に画像を貼り付ける</a></li>
 <li><a href="https://hexo.io/docs/asset-folders#Global-Asset-Folder" target="_blank" rel="noopener">Global-Asset-Folder</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://bitto.jp/posts/%E6%8A%80%E8%A1%93/Hexo/hexo-add-image/" target="_blank" rel="noopener">Hexo 記事に画像を貼り付ける</a> を参考に、もともとCacooのリンクを使っていた箇所を すべてスタティックな画像を利用するようにした。</p>
-<p>post_asset_folderを利用して、記事ごとの画像ディレクトリを利用することも考えたが、 画像はひとところに集まっていてほしいので、 <a href="https://hexo.io/docs/asset-folders#Global-Asset-Folder" target="_blank" rel="noopener">Global-Asset-Folder</a> を利用することにした。</p>
+<p><a href="https://bitto.jp/posts/%E6%8A%80%E8%A1%93/Hexo/hexo-add-image/" target="_blank" rel="noopener">Hexo
+記事に画像を貼り付ける</a>
+を参考に、もともとCacooのリンクを使っていた箇所を
+すべてスタティックな画像を利用するようにした。</p>
+<p>post_asset_folderを利用して、記事ごとの画像ディレクトリを利用することも考えたが、
+画像はひとところに集まっていてほしいので、 <a href="https://hexo.io/docs/asset-folders#Global-Asset-Folder" target="_blank" rel="noopener">Global-Asset-Folder</a>
+を利用することにした。</p>
 <p>なお、上記ブログでは</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">プロジェクトトップ/images/site</span><br></pre></td></tr></table></figure>
 <p>以下に画像を置き、</p>
@@ -1268,7 +1344,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Use-static-image-on-Hexo-blog/" data-id="cl2nztnp100ft5xqiwnzmgfn5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Use-static-image-on-Hexo-blog/" data-id="cl2o9pb8o00bi18rzz9be067i" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1389,18 +1465,22 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#論文">論文</a></li>
-<li><a href="#hadoop環境">Hadoop環境</a></li>
-<li><a href="#alluxioドキュメント">Alluxioドキュメント</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#論文" id="toc-論文">論文</a></li>
+<li><a href="#hadoop環境" id="toc-hadoop環境">Hadoop環境</a></li>
+<li><a href="#alluxioドキュメント" id="toc-alluxioドキュメント">Alluxioドキュメント</a></li>
 </ul></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#疑似分散で動作確認">疑似分散で動作確認</a><ul>
-<li><a href="#実行環境の準備">実行環境の準備</a></li>
-<li><a href="#フォーマット起動">フォーマット、起動</a></li>
-<li><a href="#sparkの起動確認">Sparkの起動確認</a></li>
-<li><a href="#delta-lakeを通じて書き込む動作確認">Delta Lakeを通じて書き込む動作確認</a></li>
-<li><a href="#補足hdfs上のディレクトリ権限に関するエラー">（補足）HDFS上のディレクトリ権限に関するエラー</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#疑似分散で動作確認" id="toc-疑似分散で動作確認">疑似分散で動作確認</a>
+<ul>
+<li><a href="#実行環境の準備" id="toc-実行環境の準備">実行環境の準備</a></li>
+<li><a href="#フォーマット起動" id="toc-フォーマット起動">フォーマット、起動</a></li>
+<li><a href="#sparkの起動確認" id="toc-sparkの起動確認">Sparkの起動確認</a></li>
+<li><a href="#delta-lakeを通じて書き込む動作確認" id="toc-delta-lakeを通じて書き込む動作確認">Delta
+Lakeを通じて書き込む動作確認</a></li>
+<li><a href="#補足hdfs上のディレクトリ権限に関するエラー" id="toc-補足hdfs上のディレクトリ権限に関するエラー">（補足）HDFS上のディレクトリ権限に関するエラー</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -1408,8 +1488,12 @@ ga('send', 'pageview');
 <h1><span id="参考">参考</span></h1>
 <h2><span id="論文">論文</span></h2>
 <ul>
-<li><a href="https://databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf" target="_blank" rel="noopener">Delta Lake High-Performance ACID Table Storage over Cloud Object Stores</a></li>
-<li><a href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf" target="_blank" rel="noopener">Lakehouse A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics</a></li>
+<li><a href="https://databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf" target="_blank" rel="noopener">Delta
+Lake High-Performance ACID Table Storage over Cloud Object
+Stores</a></li>
+<li><a href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf" target="_blank" rel="noopener">Lakehouse
+A New Generation of Open Platforms that Unify Data Warehousing and
+Advanced Analytics</a></li>
 </ul>
 <h2><span id="hadoop環境">Hadoop環境</span></h2>
 <ul>
@@ -1417,15 +1501,24 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="alluxioドキュメント">Alluxioドキュメント</span></h2>
 <ul>
-<li><a href="https://docs.alluxio.io/os/user/stable/en/compute/Spark.html#examples-use-alluxio-as-input-and-output" target="_blank" rel="noopener">Examples: Use Alluxio as Input and Output</a></li>
-<li><a href="https://docs.alluxio.io/os/user/stable/en/operation/Security.html" target="_blank" rel="noopener">Alluxio Security</a></li>
+<li><a href="https://docs.alluxio.io/os/user/stable/en/compute/Spark.html#examples-use-alluxio-as-input-and-output" target="_blank" rel="noopener">Examples:
+Use Alluxio as Input and Output</a></li>
+<li><a href="https://docs.alluxio.io/os/user/stable/en/operation/Security.html" target="_blank" rel="noopener">Alluxio
+Security</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf" target="_blank" rel="noopener">Delta Lake High-Performance ACID Table Storage over Cloud Object Stores</a> や <a href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf" target="_blank" rel="noopener">Lakehouse A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics</a> の論文の通り、 Delta Lakeはキャッシュとの組み合わせが可能である。</p>
+<p><a href="https://databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf" target="_blank" rel="noopener">Delta
+Lake High-Performance ACID Table Storage over Cloud Object Stores</a> や
+<a href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf" target="_blank" rel="noopener">Lakehouse
+A New Generation of Open Platforms that Unify Data Warehousing and
+Advanced Analytics</a> の論文の通り、 Delta
+Lakeはキャッシュとの組み合わせが可能である。</p>
 <p>今回は、ストレージにHDFS、キャッシュにAlluxioを使って動作確認する。</p>
 <h2><span id="疑似分散で動作確認">疑似分散で動作確認</span></h2>
 <h3><span id="実行環境の準備">実行環境の準備</span></h3>
-<p><a href="https://github.com/dobachi/ansible-bigdata.git" target="_blank" rel="noopener">ansible-bigdata</a> あたりを参考に、Hadoopの疑似分散環境を構築する。 Bigtopベースの2.8.5とした。</p>
+<p><a href="https://github.com/dobachi/ansible-bigdata.git" target="_blank" rel="noopener">ansible-bigdata</a>
+あたりを参考に、Hadoopの疑似分散環境を構築する。
+Bigtopベースの2.8.5とした。</p>
 <p>併せて、同Ansibleプレイブック集などを用いて、Spark3.1.1のコミュニティ版を配備した。</p>
 <p>併せて、Alluxioは2.5.0-2を利用。</p>
 <p>Alluxioに関しては、以下のようにコンパイルしてパッケージ化して用いることできる。</p>
@@ -1442,59 +1535,85 @@ ga('send', 'pageview');
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo -u alluxio ./bin/alluxio format</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo -u alluxio ./bin/alluxio-start.sh <span class="built_in">local</span> SudoMount</span></span><br></pre></td></tr></table></figure>
 <p>テストを実行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo -u alluxio ./bin/alluxio runTests</span></span><br></pre></td></tr></table></figure>
-<p>もしエラーが生じた場合は、例えばHDFSの/alluxioディレクトリに、 適切な権限設定、所有者設定がされているかどうかを確認すること。</p>
+<p>もしエラーが生じた場合は、例えばHDFSの/alluxioディレクトリに、
+適切な権限設定、所有者設定がされているかどうかを確認すること。</p>
 <p>Alluxioが起動すると以下のようなUIを確認できる（ポート19999）</p>
 <figure>
-<img src="/memo-blog/images/20210101_alluxio_started.PNG" alt=""><figcaption>AlluxioのUI</figcaption>
+<img src="/memo-blog/images/20210101_alluxio_started.PNG" alt="AlluxioのUI">
+<figcaption aria-hidden="true">AlluxioのUI</figcaption>
 </figure>
 <p>先程テストで書き込まれたファイル群が見られるはず。</p>
 <figure>
-<img src="/memo-blog/images/20210104_alluxio_testfiles.PNG" alt=""><figcaption>Alluxioに書き込まれたテストファイル群I</figcaption>
+<img src="/memo-blog/images/20210104_alluxio_testfiles.PNG" alt="Alluxioに書き込まれたテストファイル群I">
+<figcaption aria-hidden="true">Alluxioに書き込まれたテストファイル群I</figcaption>
 </figure>
 <p>ここでは、上記の通り、環境を整えた前提で以下説明する。</p>
 <h3><span id="sparkの起動確認">Sparkの起動確認</span></h3>
-<p><a href="https://docs.alluxio.io/os/user/stable/en/compute/Spark.html#examples-use-alluxio-as-input-and-output" target="_blank" rel="noopener">Examples: Use Alluxio as Input and Output</a> を参考に、Alluxio経由での読み書きを試す。</p>
+<p><a href="https://docs.alluxio.io/os/user/stable/en/compute/Spark.html#examples-use-alluxio-as-input-and-output" target="_blank" rel="noopener">Examples:
+Use Alluxio as Input and Output</a>
+を参考に、Alluxio経由での読み書きを試す。</p>
 <p>予め、今回の動作確認で使用するテキストデータ（AlluxioのREADME）をアップロードしておく。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u alluxio /opt/alluxio/default//bin/alluxio fs copyFromLocal /opt/alluxio/default/LICENSE /LICENSE</span><br></pre></td></tr></table></figure>
-<p>予め、以下のような設定をspark-defaults.confに入れておく。 Alluxioのクライアントライブラリを用いられるように。</p>
+<p>予め、以下のような設定をspark-defaults.confに入れておく。
+Alluxioのクライアントライブラリを用いられるように。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark.driver.extraClassPath   /opt/alluxio/default/client/alluxio-2.5.0-2-client.jar</span><br><span class="line">spark.executor.extraClassPath /opt/alluxio/default/client/alluxio-2.5.0-2-client.jar</span><br></pre></td></tr></table></figure>
-<p>Sparkが起動することを確認する。ここではDelta Lakeも含めて起動する。</p>
+<p>Sparkが起動することを確認する。ここではDelta
+Lakeも含めて起動する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /usr/<span class="built_in">local</span>/spark/default/bin/spark-shell \</span></span><br><span class="line">  --packages io.delta:delta-core_2.12:0.8.0 \</span><br><span class="line">  --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \</span><br><span class="line">  --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"</span><br></pre></td></tr></table></figure>
 <p>起動したシェルでAlluxio上のREADMEファイルを読み取り、行数を確認する。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> pathOnAlluxio = <span class="string">"alluxio://localhost:19998/LICENSE"</span></span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> testDF = spark.read.text(pathOnAlluxio)</span><br><span class="line"></span><br><span class="line">scala&gt; testDF.count</span><br><span class="line">res0: <span class="type">Long</span> = <span class="number">482</span></span><br></pre></td></tr></table></figure>
-<h3><span id="delta-lakeを通じて書き込む動作確認">Delta Lakeを通じて書き込む動作確認</span></h3>
+<h3><span id="deltalakeを通じて書き込む動作確認">Delta
+Lakeを通じて書き込む動作確認</span></h3>
 <p>準備として、Alluxio上に、<code>dobachi</code>ユーザ用のディレクトリを作成してみる。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo -u alluxio /opt/alluxio/default/bin/alluxio fs mkdir /users</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo -u alluxio /opt/alluxio/default/bin/alluxio fs mkdir /users/dobachi</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo -u alluxio /opt/alluxio/default/bin/alluxio fs chown dobachi:dobachi /users/dobachi</span></span><br></pre></td></tr></table></figure>
-<p>先程起動しておいたシェルで、Delta Lake形式のデータを書き込んで見る。</p>
+<p>先程起動しておいたシェルで、Delta
+Lake形式のデータを書き込んで見る。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> data = spark.range(<span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">data: org.apache.spark.sql.<span class="type">Dataset</span>[<span class="type">Long</span>] = [id: bigint]</span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> outputUrl = <span class="string">"alluxio://localhost:19998/users/dobachi/numbers"</span></span><br><span class="line"></span><br><span class="line">scala&gt; data.write.format(<span class="string">"delta"</span>).save(outputUrl)</span><br></pre></td></tr></table></figure>
 <p>すると以下のようなエラーが生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; data.write.format(&quot;delta&quot;).save(outputUrl)</span><br><span class="line">21/01/05 22:47:50 ERROR HDFSLogStore: The error typically occurs when the default LogStore implementation, that</span><br><span class="line"> is, HDFSLogStore, is used to write into a Delta table on a non-HDFS storage system.</span><br><span class="line"> In order to get the transactional ACID guarantees on table updates, you have to use the</span><br><span class="line"> correct implementation of LogStore that is appropriate for your storage system.</span><br><span class="line"> See https://docs.delta.io/latest/delta-storage.html &quot; for details.</span><br><span class="line"></span><br><span class="line">org.apache.hadoop.fs.UnsupportedFileSystemException: fs.AbstractFileSystem.alluxio.impl=null: No AbstractFileSystem configured for scheme: alluxio</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
-<p>当たり前だが、Delta Lakeの下回りのストレージとして標準では、 Alluxioが対応しておらず、LogStoreからエラーが生じた、ということのようだ。</p>
-<p>一瞬、LogStoreを新たに開発しないといけないか？と思ったものの、よく考えたら、HDFSHadoopFileSystemLogStoreから Alluxioのスキーマを認識させてアクセスできるようにすればよいだけでは？と思った。 そこで、Hadoopの設定でAlluxioFileSystemをalluxioスキーマ（ファイルシステムのスキーマ）に明示的に登録してみる。</p>
+<p>当たり前だが、Delta Lakeの下回りのストレージとして標準では、
+Alluxioが対応しておらず、LogStoreからエラーが生じた、ということのようだ。</p>
+<p>一瞬、LogStoreを新たに開発しないといけないか？と思ったものの、よく考えたら、HDFSHadoopFileSystemLogStoreから
+Alluxioのスキーマを認識させてアクセスできるようにすればよいだけでは？と思った。
+そこで、Hadoopの設定でAlluxioFileSystemをalluxioスキーマ（ファイルシステムのスキーマ）に明示的に登録してみる。</p>
 <p>/etc/hadoop/conf/core-site.xmlに以下を追記。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.AbstractFileSystem.alluxio.impl<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>alluxio.hadoop.AlluxioFileSystem<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>The FileSystem for alluxio uris.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>再びSparkを立ち上げ、適当なデータを書き込み。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> data = spark.range(<span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> outputUrl = <span class="string">"alluxio://localhost:19998/users/dobachi/numbers"</span></span><br><span class="line"></span><br><span class="line">scala&gt; data.write.format(<span class="string">"delta"</span>).save(outputUrl)</span><br></pre></td></tr></table></figure>
 <figure>
-<img src="/memo-blog/images/20210430_alluxio_deltalake.png" alt=""><figcaption>Alluxio上にDelta Lakeで保存された様子</figcaption>
+<img src="/memo-blog/images/20210430_alluxio_deltalake.png" alt="Alluxio上にDelta Lakeで保存された様子">
+<figcaption aria-hidden="true">Alluxio上にDelta
+Lakeで保存された様子</figcaption>
 </figure>
 <p>以上のように書き込みに成功した。</p>
 <p>つづいて、テーブルとして読み出す。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> df = spark.read.format(<span class="string">"delta"</span>).load(outputUrl)</span><br><span class="line">scala&gt; df.show</span><br><span class="line">+---+</span><br><span class="line">| id|</span><br><span class="line">+---+</span><br><span class="line">|  <span class="number">1</span>|</span><br><span class="line">|  <span class="number">2</span>|</span><br><span class="line">|  <span class="number">3</span>|</span><br><span class="line">|  <span class="number">4</span>|</span><br><span class="line">|  <span class="number">0</span>|</span><br><span class="line">+---+</span><br></pre></td></tr></table></figure>
 <p>テーブルへの追記。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> addData = spark.range(<span class="number">5</span>, <span class="number">10</span>)</span><br><span class="line">scala&gt; addData.write.format(<span class="string">"delta"</span>).mode(<span class="string">"append"</span>).save(outputUrl)</span><br><span class="line">scala&gt; df.show</span><br><span class="line">+---+</span><br><span class="line">| id|</span><br><span class="line">+---+</span><br><span class="line">|  <span class="number">3</span>|</span><br><span class="line">|  <span class="number">9</span>|</span><br><span class="line">|  <span class="number">6</span>|</span><br><span class="line">|  <span class="number">5</span>|</span><br><span class="line">|  <span class="number">1</span>|</span><br><span class="line">|  <span class="number">8</span>|</span><br><span class="line">|  <span class="number">4</span>|</span><br><span class="line">|  <span class="number">2</span>|</span><br><span class="line">|  <span class="number">7</span>|</span><br><span class="line">|  <span class="number">0</span>|</span><br><span class="line">+---+</span><br></pre></td></tr></table></figure>
-<p>また、追記書き込みをしたのでDeltaログが増えていることが分かる。 （3回ぶんのログがあるのは、↑には記載していないがミスったため）</p>
+<p>また、追記書き込みをしたのでDeltaログが増えていることが分かる。
+（3回ぶんのログがあるのは、↑には記載していないがミスったため）</p>
 <figure>
-<img src="/memo-blog/images/20210430_alluxio_deltalake2.png" alt=""><figcaption>Alluxio上にDelta LakeのDeltaログ</figcaption>
+<img src="/memo-blog/images/20210430_alluxio_deltalake2.png" alt="Alluxio上にDelta LakeのDeltaログ">
+<figcaption aria-hidden="true">Alluxio上にDelta
+LakeのDeltaログ</figcaption>
 </figure>
 <h3><span id="補足hdfs上のディレクトリ権限に関するエラー">（補足）HDFS上のディレクトリ権限に関するエラー</span></h3>
-<p>Sparkでの処理実行時にYARNで実行していたところ、Executorにおける処理からAlluxioを呼び出すときにエラー。 yarnユーザでのアクセスとなり、HDFS上の <code>/alluxio</code> へのアクセス権がなかったと考えられる。</p>
+<p>Sparkでの処理実行時にYARNで実行していたところ、Executorにおける処理からAlluxioを呼び出すときにエラー。
+yarnユーザでのアクセスとなり、HDFS上の <code>/alluxio</code>
+へのアクセス権がなかったと考えられる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">21/01/05 02:54:35 WARN TaskSetManager: Lost task 0.0 in stage 0.0 (TID 0, hadoop-pseudo, executor 2): alluxio.exception.status.UnauthenticatedException: Channel authentication failed with code:UNAUTHENTICATED. Channel: GrpcChannelKey&#123;ClientType=FileSystemMasterClient, ClientHostname=hadoop-pseudo.mshome.net, ServerAddress=GrpcServerAddress&#123;HostName=localhost, SocketAddress=localhost:19998&#125;, ChannelId=81f7d97f-8e32-4289-bcab-ea6008d5ffac&#125;, AuthType: SIMPLE, Error: alluxio.exception.status.UnauthenticatedException: Plain authentication failed: Failed to authenticate client user=&quot;yarn&quot; connecting to Alluxio server and impersonating as impersonationUser=&quot;vagrant&quot; to access Alluxio file system. User &quot;yarn&quot; is not configured to allow any impersonation. Please read the guide to configure impersonation at https://docs.alluxio.io/os/user/2.4/en/operation/Security.html</span><br><span class="line">        at alluxio.exception.status.AlluxioStatusException.from(AlluxioStatusException.java:141)</span><br></pre></td></tr></table></figure>
-<p><a href="https://docs.alluxio.io/os/user/stable/en/operation/Security.html" target="_blank" rel="noopener">Alluxio Security</a> のドキュメント中に「Client-Side Hadoop Impersonation」を読むと、 「なりすまし」を許可する設定があるようだ。</p>
-<p>そこで、<code>yarn</code>ユーザが様々なユーザになりすませるような簡易設定を以下のように加えることにした。 実際の運用する際は、なりすましのスコープに注意したほうが良さそうだ。</p>
+<p><a href="https://docs.alluxio.io/os/user/stable/en/operation/Security.html" target="_blank" rel="noopener">Alluxio
+Security</a> のドキュメント中に「Client-Side Hadoop
+Impersonation」を読むと、 「なりすまし」を許可する設定があるようだ。</p>
+<p>そこで、<code>yarn</code>ユーザが様々なユーザになりすませるような簡易設定を以下のように加えることにした。
+実際の運用する際は、なりすましのスコープに注意したほうが良さそうだ。</p>
 <p>conf/alluxio-site.properties</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alluxio.master.security.impersonation.yarn.users=*</span><br><span class="line">alluxio.master.security.impersonation.yarn.groups=*</span><br></pre></td></tr></table></figure>
-<p>ドキュメントではクライアントで <code>alluxio.security.login.impersonation.username</code> も指定するよう書かれていたが、 起動時にしてしなくてもアクセスできるようになった。 あとで実装を調べたほうが良さそうだ。</p>
+<p>ドキュメントではクライアントで
+<code>alluxio.security.login.impersonation.username</code>
+も指定するよう書かれていたが、
+起動時にしてしなくてもアクセスできるようになった。
+あとで実装を調べたほうが良さそうだ。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -1506,7 +1625,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Delta-Lake-with-Alluxio/" data-id="cl2nztnl500405xqi5aenitzk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Delta-Lake-with-Alluxio/" data-id="cl2o9pbgg014718rzc1vymzti" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1627,21 +1746,25 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#ガートナー">ガートナー</a></li>
-<li><a href="#データファブリック">データ・ファブリック</a></li>
-<li><a href="#dnaコンピューティング">DNAコンピューティング</a></li>
-<li><a href="#アダプティブラーニング">アダプティブラーニング</a></li>
-<li><a href="#デジタルツイン">デジタル・ツイン</a></li>
-<li><a href="#iown">IOWN</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#ガートナー" id="toc-ガートナー">ガートナー</a></li>
+<li><a href="#データファブリック" id="toc-データファブリック">データ・ファブリック</a></li>
+<li><a href="#dnaコンピューティング" id="toc-dnaコンピューティング">DNAコンピューティング</a></li>
+<li><a href="#アダプティブラーニング" id="toc-アダプティブラーニング">アダプティブラーニング</a></li>
+<li><a href="#デジタルツイン" id="toc-デジタルツイン">デジタル・ツイン</a></li>
+<li><a href="#iown" id="toc-iown">IOWN</a></li>
 </ul></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#先進テクノロジのハイプサイクル2020年">先進テクノロジのハイプ・サイクル：2020年</a><ul>
-<li><a href="#挙げられていたトレンドと所感">挙げられていたトレンドと所感</a></li>
-<li><a href="#個人的にピックアップしたキーワードと所感">個人的にピックアップしたキーワードと所感</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#先進テクノロジのハイプサイクル2020年" id="toc-先進テクノロジのハイプサイクル2020年">先進テクノロジのハイプ・サイクル：2020年</a>
+<ul>
+<li><a href="#挙げられていたトレンドと所感" id="toc-挙げられていたトレンドと所感">挙げられていたトレンドと所感</a></li>
+<li><a href="#個人的にピックアップしたキーワードと所感" id="toc-個人的にピックアップしたキーワードと所感">個人的にピックアップしたキーワードと所感</a></li>
 </ul></li>
-<li><a href="#週刊ダイヤモンド-2020年1212号">週刊ダイヤモンド 2020年12/12号</a></li>
-<li><a href="#iown公開情報">IOWN公開情報</a></li>
+<li><a href="#週刊ダイヤモンド-2020年1212号" id="toc-週刊ダイヤモンド-2020年1212号">週刊ダイヤモンド
+2020年12/12号</a></li>
+<li><a href="#iown公開情報" id="toc-iown公開情報">IOWN公開情報</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1654,10 +1777,13 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://www.netone.co.jp/knowledge-center/netone-blog/20191030-1/#:~:text=%E3%83%87%E3%83%BC%E3%82%BF%E3%83%95%E3%82%A1%E3%83%96%E3%83%AA%E3%83%83%E3%82%AF%E3%81%A8%E3%81%AF%E3%80%81%E3%82%AA%E3%83%B3%E3%83%97%E3%83%AC%E3%83%9F%E3%82%B9,%E3%82%92%E4%B9%97%E3%82%8A%E8%B6%8A%E3%81%88%E3%82%8B%E5%BF%85%E8%A6%81%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener">データファブリックを実現するクラウドデータサービス</a></li>
 <li><a href="https://enterprisezine.jp/news/detail/12195" target="_blank" rel="noopener">ネットアップとNEC、国内初となるデータファブリックソリューションの提供を開始</a></li>
-<li><a href="https://tintri.co.jp/blog/netapp/" target="_blank" rel="noopener">NetAppのデータ ファブリックは時代遅れなのか？</a></li>
+<li><a href="https://tintri.co.jp/blog/netapp/" target="_blank" rel="noopener">NetAppのデータ
+ファブリックは時代遅れなのか？</a></li>
 <li><a href="https://www.gii.co.jp/report/go901984-data-fabric.html" target="_blank" rel="noopener">世界のデータファブリックの市場</a></li>
-<li><a href="https://www.talend.com/jp/products/data-fabric/" target="_blank" rel="noopener">Talend Data Fabric</a></li>
-<li><a href="https://www.splunk.com/ja_jp/resources/enterprise-machine-data-fabric.html" target="_blank" rel="noopener">Splunk エンタープライズ マシン データ ファブリック</a></li>
+<li><a href="https://www.talend.com/jp/products/data-fabric/" target="_blank" rel="noopener">Talend
+Data Fabric</a></li>
+<li><a href="https://www.splunk.com/ja_jp/resources/enterprise-machine-data-fabric.html" target="_blank" rel="noopener">Splunk
+エンタープライズ マシン データ ファブリック</a></li>
 </ul>
 <h2><span id="dnaコンピューティング">DNAコンピューティング</span></h2>
 <ul>
@@ -1666,30 +1792,39 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="アダプティブラーニング">アダプティブラーニング</span></h2>
 <ul>
-<li><a href="https://www.itmedia.co.jp/news/articles/2002/20/news015.html" target="_blank" rel="noopener">米軍の教育でもAIが活躍　「アダプティブ・ラーニング」の可能性 (1/4)</a></li>
+<li><a href="https://www.itmedia.co.jp/news/articles/2002/20/news015.html" target="_blank" rel="noopener">米軍の教育でもAIが活躍　「アダプティブ・ラーニング」の可能性
+(1/4)</a></li>
 </ul>
 <h2><span id="デジタルツイン">デジタル・ツイン</span></h2>
 <ul>
-<li><a href="https://www.ntt.co.jp/journal/2001/JN20200117_h.html" target="_blank" rel="noopener">ヒトと社会のデジタル化世界 ─ デジタルツインコンピューティング ─</a></li>
+<li><a href="https://www.ntt.co.jp/journal/2001/JN20200117_h.html" target="_blank" rel="noopener">ヒトと社会のデジタル化世界
+─ デジタルツインコンピューティング ─</a></li>
 <li><a href="https://businessnetwork.jp/Detail/tabid/65/artid/7753/Default.aspx" target="_blank" rel="noopener">IOWNでヒトもデジタル化　“私のコピー”が仮想空間で仕事する世界</a></li>
 </ul>
 <h2><span id="iown">IOWN</span></h2>
 <ul>
-<li><a href="https://magazine.dmkt-sp.jp/magazine/0040/0131/00035437" target="_blank" rel="noopener">週刊ダイヤモンド 2020年12/12号</a></li>
+<li><a href="https://magazine.dmkt-sp.jp/magazine/0040/0131/00035437" target="_blank" rel="noopener">週刊ダイヤモンド
+2020年12/12号</a></li>
 <li><a href="https://www.rd.ntt/iown/" target="_blank" rel="noopener">IOWN公式ウェブサイト</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>オープンになっている情報を中心に既存情報を軽くまとめる。 特にデータ処理、データ活用との関連を探る。</p>
+<p>オープンになっている情報を中心に既存情報を軽くまとめる。
+特にデータ処理、データ活用との関連を探る。</p>
 <h2><span id="先進テクノロジのハイプサイクル2020年">先進テクノロジのハイプ・サイクル：2020年</span></h2>
-<p><a href="https://www.gartner.com/jp/newsroom/press-releases/pr-20200819" target="_blank" rel="noopener">ガートナー、「先進テクノロジのハイプ・サイクル：2020年」を発表</a> の記事によると、 2020/8/19にハイプ・サイクルが発表された。</p>
-<p>記事冒頭で触れられているとおり、COVID-19の影響は否定できない。 例ではヘルス・パスポート、ソーシャル・ディスタンシング・テクノロジが挙げられていた。 記載されているととおり、「過度な期待」として初登場する技術は少ないのだが、 それに該当するということで注目されている。</p>
+<p><a href="https://www.gartner.com/jp/newsroom/press-releases/pr-20200819" target="_blank" rel="noopener">ガートナー、「先進テクノロジのハイプ・サイクル：2020年」を発表</a>
+の記事によると、 2020/8/19にハイプ・サイクルが発表された。</p>
+<p>記事冒頭で触れられているとおり、COVID-19の影響は否定できない。
+例ではヘルス・パスポート、ソーシャル・ディスタンシング・テクノロジが挙げられていた。
+記載されているととおり、「過度な期待」として初登場する技術は少ないのだが、
+それに該当するということで注目されている。</p>
 <h3><span id="挙げられていたトレンドと所感">挙げられていたトレンドと所感</span></h3>
 <ul>
 <li>デジタル・ミー
 <ul>
 <li>つまりは、デジタル・ツイン</li>
 <li>多分にもれずデジタル・ツイン関連は取り上げられていた。</li>
-<li>過去になかったデータを使うようになるという側面はあるが、 それに合わせた新たなアーキテクチャが必要になるか。
+<li>過去になかったデータを使うようになるという側面はあるが、
+それに合わせた新たなアーキテクチャが必要になるか。
 <ul>
 <li>過去のブーム面との例
 <ul>
@@ -1736,7 +1871,8 @@ ga('send', 'pageview');
 <li>近年ではAIの普及もあり、機械的な支援をもとに実現することも増えてきたか。</li>
 <li>参考
 <ul>
-<li><a href="https://www.itmedia.co.jp/news/articles/2002/20/news015.html" target="_blank" rel="noopener">米軍の教育でもAIが活躍　「アダプティブ・ラーニング」の可能性 (1/4)</a></li>
+<li><a href="https://www.itmedia.co.jp/news/articles/2002/20/news015.html" target="_blank" rel="noopener">米軍の教育でもAIが活躍　「アダプティブ・ラーニング」の可能性
+(1/4)</a></li>
 </ul></li>
 </ul></li>
 <li>シチズン・ツイン
@@ -1746,25 +1882,36 @@ ga('send', 'pageview');
 <li>人のデジタル・ツイン
 <ul>
 <li>シチズン・ツインと同様、モノのデジタル化に続いて、ヒトのデジタル化を目指す、ということか。</li>
-<li>NTTサービスイノベーション総合研究所の提唱する「デジタルツインコンピューティング」では、 層の中間層を設けることが重要とされている。</li>
+<li>NTTサービスイノベーション総合研究所の提唱する「デジタルツインコンピューティング」では、
+層の中間層を設けることが重要とされている。</li>
 <li>参考</li>
-<li><a href="https://www.ntt.co.jp/journal/2001/JN20200117_h.html" target="_blank" rel="noopener">ヒトと社会のデジタル化世界 ─ デジタルツインコンピューティング ─</a></li>
+<li><a href="https://www.ntt.co.jp/journal/2001/JN20200117_h.html" target="_blank" rel="noopener">ヒトと社会のデジタル化世界
+─ デジタルツインコンピューティング ─</a></li>
 <li><a href="https://businessnetwork.jp/Detail/tabid/65/artid/7753/Default.aspx" target="_blank" rel="noopener">IOWNでヒトもデジタル化　“私のコピー”が仮想空間で仕事する世界</a></li>
 </ul></li>
 <li>データ・ファブリック
 <ul>
-<li>「オンプレ、クラウドに点在するデータを最適な場所に配置し、いつでも利用可能にする」というコンセプトは特徴的だが、 ベンダによって実際の定義が異なるように感じる。</li>
+<li>「オンプレ、クラウドに点在するデータを最適な場所に配置し、いつでも利用可能にする」というコンセプトは特徴的だが、
+ベンダによって実際の定義が異なるように感じる。</li>
 <li>「データ民主化」と同様のコンセプトに感じる。</li>
 <li>ポイントはストレージとしての特徴ではなく、「統合」を実現する側面か</li>
 <li>参考情報
 <ul>
-<li><a href="https://www.netone.co.jp/knowledge-center/netone-blog/20191030-1/#:~:text=%E3%83%87%E3%83%BC%E3%82%BF%E3%83%95%E3%82%A1%E3%83%96%E3%83%AA%E3%83%83%E3%82%AF%E3%81%A8%E3%81%AF%E3%80%81%E3%82%AA%E3%83%B3%E3%83%97%E3%83%AC%E3%83%9F%E3%82%B9,%E3%82%92%E4%B9%97%E3%82%8A%E8%B6%8A%E3%81%88%E3%82%8B%E5%BF%85%E8%A6%81%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener">データファブリックを実現するクラウドデータサービス</a>、<a href="https://enterprisezine.jp/news/detail/12195" target="_blank" rel="noopener">ネットアップとNEC、国内初となるデータファブリックソリューションの提供を開始</a>、 <a href="https://tintri.co.jp/blog/netapp/" target="_blank" rel="noopener">NetAppのデータ ファブリックは時代遅れなのか？</a>、<a href="https://www.gii.co.jp/report/go901984-data-fabric.html" target="_blank" rel="noopener">世界のデータファブリックの市場</a>、<a href="https://www.talend.com/jp/products/data-fabric/" target="_blank" rel="noopener">Talend Data Fabric</a>、 <a href="https://www.splunk.com/ja_jp/resources/enterprise-machine-data-fabric.html" target="_blank" rel="noopener">Splunk エンタープライズ マシン データ ファブリック</a></li>
+<li><a href="https://www.netone.co.jp/knowledge-center/netone-blog/20191030-1/#:~:text=%E3%83%87%E3%83%BC%E3%82%BF%E3%83%95%E3%82%A1%E3%83%96%E3%83%AA%E3%83%83%E3%82%AF%E3%81%A8%E3%81%AF%E3%80%81%E3%82%AA%E3%83%B3%E3%83%97%E3%83%AC%E3%83%9F%E3%82%B9,%E3%82%92%E4%B9%97%E3%82%8A%E8%B6%8A%E3%81%88%E3%82%8B%E5%BF%85%E8%A6%81%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener">データファブリックを実現するクラウドデータサービス</a>、<a href="https://enterprisezine.jp/news/detail/12195" target="_blank" rel="noopener">ネットアップとNEC、国内初となるデータファブリックソリューションの提供を開始</a>、
+<a href="https://tintri.co.jp/blog/netapp/" target="_blank" rel="noopener">NetAppのデータ
+ファブリックは時代遅れなのか？</a>、<a href="https://www.gii.co.jp/report/go901984-data-fabric.html" target="_blank" rel="noopener">世界のデータファブリックの市場</a>、<a href="https://www.talend.com/jp/products/data-fabric/" target="_blank" rel="noopener">Talend Data
+Fabric</a>、 <a href="https://www.splunk.com/ja_jp/resources/enterprise-machine-data-fabric.html" target="_blank" rel="noopener">Splunk
+エンタープライズ マシン データ ファブリック</a></li>
 </ul></li>
 </ul></li>
 </ul>
-<h2><span id="週刊ダイヤモンド-2020年1212号">週刊ダイヤモンド 2020年12/12号</span></h2>
-<p><a href="https://magazine.dmkt-sp.jp/magazine/0040/0131/00035437" target="_blank" rel="noopener">週刊ダイヤモンド 2020年12/12号</a> の中に、 「NTT帝国の逆襲」という特集記事がある。</p>
-<p>技術というより、事業職が強いが念の為に（あえて）技術に関連するキーワードだけ述べる。 なお、この書籍で重要なのは、本来はどちらかというとビジネス戦略側面である。 詳細は当該書籍を参照されたし。</p>
+<h2><span id="週刊ダイヤモンド2020年1212号">週刊ダイヤモンド
+2020年12/12号</span></h2>
+<p><a href="https://magazine.dmkt-sp.jp/magazine/0040/0131/00035437" target="_blank" rel="noopener">週刊ダイヤモンド
+2020年12/12号</a> の中に、 「NTT帝国の逆襲」という特集記事がある。</p>
+<p>技術というより、事業職が強いが念の為に（あえて）技術に関連するキーワードだけ述べる。
+なお、この書籍で重要なのは、本来はどちらかというとビジネス戦略側面である。
+詳細は当該書籍を参照されたし。</p>
 <p>技術キーワード</p>
 <ul>
 <li>IOWN構想
@@ -1816,7 +1963,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/26/Information-about-trends-in-2020/" data-id="cl2nztnma007c5xqiypeay6x1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/26/Information-about-trends-in-2020/" data-id="cl2o9pbgt014r18rz1gi1h8b6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1937,15 +2084,18 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#kafka-connect-syslog">kafka-connect-syslog</a><ul>
-<li><a href="#動作確認">動作確認</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#kafka-connect-syslog" id="toc-kafka-connect-syslog">kafka-connect-syslog</a>
+<ul>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a></li>
 </ul></li>
-<li><a href="#kafka-connect-datagen">kafka-connect-datagen</a><ul>
-<li><a href="#概要">概要</a></li>
-<li><a href="#実装状況">実装状況</a></li>
-<li><a href="#動作確認-1">動作確認</a></li>
+<li><a href="#kafka-connect-datagen" id="toc-kafka-connect-datagen">kafka-connect-datagen</a>
+<ul>
+<li><a href="#概要" id="toc-概要">概要</a></li>
+<li><a href="#実装状況" id="toc-実装状況">実装状況</a></li>
+<li><a href="#動作確認-1" id="toc-動作確認-1">動作確認</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -1957,17 +2107,24 @@ ga('send', 'pageview');
 <li><a href="https://github.com/confluentinc/kafka-connect-datagen" target="_blank" rel="noopener">kafka-connect-datagenのGitHub</a></li>
 <li><a href="https://github.com/confluentinc" target="_blank" rel="noopener">ConfluentのGitHub</a></li>
 <li><a href="https://kafka.apache.org/documentation/#quickstart" target="_blank" rel="noopener">Kafkaのクイックスタート</a></li>
-<li><a href="https://docs.confluent.io/platform/current/installation/versions-interoperability.html#cp-and-apache-ak-compatibility" target="_blank" rel="noopener">Confluent Platform and Apache Kafka Compatibility</a></li>
+<li><a href="https://docs.confluent.io/platform/current/installation/versions-interoperability.html#cp-and-apache-ak-compatibility" target="_blank" rel="noopener">Confluent
+Platform and Apache Kafka Compatibility</a></li>
 <li><a href="https://github.com/confluentinc/avro-random-generator" target="_blank" rel="noopener">avro-random-generator</a></li>
 <li><a href="https://github.com/confluentinc/kafka-connect-datagen/tree/master/src/main/resources" target="_blank" rel="noopener">kafka-connect-datagenのサンプルスキーマ</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>2020/12時点で、Kafka Connectのプラグインの参考になるもの探す。</p>
 <h2><span id="kafka-connect-syslog">kafka-connect-syslog</span></h2>
-<p><a href="https://www.confluent.io/hub/confluentinc/kafka-connect-syslog" target="_blank" rel="noopener">kafka-connect-syslog</a> が最も簡易に動作確認できそうだった。 ただ、 <a href="https://github.com/confluentinc" target="_blank" rel="noopener">ConfluentのGitHub</a> を見る限り、GitHub上には実装が公開されていないようだった。</p>
+<p><a href="https://www.confluent.io/hub/confluentinc/kafka-connect-syslog" target="_blank" rel="noopener">kafka-connect-syslog</a>
+が最も簡易に動作確認できそうだった。 ただ、 <a href="https://github.com/confluentinc" target="_blank" rel="noopener">ConfluentのGitHub</a>
+を見る限り、GitHub上には実装が公開されていないようだった。</p>
 <h3><span id="動作確認">動作確認</span></h3>
-<p>ここでは、ローカルに簡易実験用の1プロセスのKafkaを起動した前提とする。 起動方法は <a href="https://kafka.apache.org/documentation/#quickstart" target="_blank" rel="noopener">Kafkaのクイックスタート</a> を参照。</p>
-<p><a href="https://www.confluent.io/hub/confluentinc/kafka-connect-syslog" target="_blank" rel="noopener">kafka-connect-syslog</a> のパッケージをダウンロードして <code>/opt/connectors</code> 以下に展開。</p>
+<p>ここでは、ローカルに簡易実験用の1プロセスのKafkaを起動した前提とする。
+起動方法は <a href="https://kafka.apache.org/documentation/#quickstart" target="_blank" rel="noopener">Kafkaのクイックスタート</a>
+を参照。</p>
+<p><a href="https://www.confluent.io/hub/confluentinc/kafka-connect-syslog" target="_blank" rel="noopener">kafka-connect-syslog</a>
+のパッケージをダウンロードして <code>/opt/connectors</code>
+以下に展開。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd /opt/connectors</span><br><span class="line">$ sudo unzip confluentinc-kafka-connect-syslog-1.3.2.zip</span><br><span class="line">$ sudo chown -R kafka:kafka confluentinc-kafka-connect-syslog-1.3.2</span><br></pre></td></tr></table></figure>
 <p>というパッケージが展開される。</p>
 <p>動作確認に使用するプロパティは以下。</p>
@@ -1975,8 +2132,10 @@ ga('send', 'pageview');
 <p>また、Connectの設定には以下を追加する。</p>
 <p>/opt/kafka_pseudo/default/config/connect-standalone.properties</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">plugin.path=/usr/local/share/java,/usr/local/share/kafka/plugins,/opt/connectors,</span><br></pre></td></tr></table></figure>
-<p>プラグインを置く場所として、 <code>/opt/connectors</code> を指定した。</p>
-<p><code>/opt/kafka_pseudo/default/bin/connect-standalone.sh</code> を利用して、 スタンドアローンモードでKafka Connectを起動。</p>
+<p>プラグインを置く場所として、 <code>/opt/connectors</code>
+を指定した。</p>
+<p><code>/opt/kafka_pseudo/default/bin/connect-standalone.sh</code>
+を利用して、 スタンドアローンモードでKafka Connectを起動。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo -u kafka /opt/kafka_pseudo/default/bin/connect-standalone.sh /opt/kafka_pseudo/default/config/connect-standalone.properties \</span></span><br><span class="line">  /opt/connectors/confluentinc-kafka-connect-syslog-1.3.2/etc/minimal-tcp.properties</span><br></pre></td></tr></table></figure>
 <p>起動したのを確認し、別の端末から適当なデータを送信。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"&lt;34&gt;1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - Your refrigerator is running"</span> | nc -v -w 1 localhost 5515</span></span><br></pre></td></tr></table></figure>
@@ -1984,78 +2143,117 @@ ga('send', 'pageview');
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> <span class="variable">$&#123;KAFKA_HOME&#125;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic syslog --from-beginning</span></span><br></pre></td></tr></table></figure>
 <p>先程書き込んだものが表示されるはずである。</p>
 <h2><span id="kafka-connect-datagen">kafka-connect-datagen</span></h2>
-<p><a href="https://www.confluent.io/hub/confluentinc/kafka-connect-datagen" target="_blank" rel="noopener">kafka-connect-datagen</a> もあった。 <a href="https://github.com/confluentinc/kafka-connect-datagen" target="_blank" rel="noopener">kafka-connect-datagenのGitHub</a> に実装も公開されているように見える。 ドキュメントのリンクから、当該レポジトリのREADMEにジャンプしたため、そのように判断。</p>
+<p><a href="https://www.confluent.io/hub/confluentinc/kafka-connect-datagen" target="_blank" rel="noopener">kafka-connect-datagen</a>
+もあった。 <a href="https://github.com/confluentinc/kafka-connect-datagen" target="_blank" rel="noopener">kafka-connect-datagenのGitHub</a>
+に実装も公開されているように見える。
+ドキュメントのリンクから、当該レポジトリのREADMEにジャンプしたため、そのように判断。</p>
 <p>以降、v0.4.0を対象として確認したものである。</p>
 <h3><span id="概要">概要</span></h3>
-<p>指定されたスキーマで、ダミーデータを生成するコネクタ。 <a href="https://github.com/confluentinc/avro-random-generator" target="_blank" rel="noopener">avro-random-generator</a> を内部的に利用している。</p>
-<p>スキーマ指定はAvroのスキーマファイルを渡す方法もあるし、 組み込みのスキーマを指定する方法もある。 <a href="https://github.com/confluentinc/kafka-connect-datagen/tree/master/src/main/resources" target="_blank" rel="noopener">kafka-connect-datagenのサンプルスキーマ</a> を参照。</p>
-<p>また、Kafkaに出力する際のフォーマットは指定可能。 Kafka Connect自体の一般的なパラメータである、 <code>value.converter</code> を指定すれば良い。 例えば以下の通り。</p>
+<p>指定されたスキーマで、ダミーデータを生成するコネクタ。 <a href="https://github.com/confluentinc/avro-random-generator" target="_blank" rel="noopener">avro-random-generator</a>
+を内部的に利用している。</p>
+<p>スキーマ指定はAvroのスキーマファイルを渡す方法もあるし、
+組み込みのスキーマを指定する方法もある。 <a href="https://github.com/confluentinc/kafka-connect-datagen/tree/master/src/main/resources" target="_blank" rel="noopener">kafka-connect-datagenのサンプルスキーマ</a>
+を参照。</p>
+<p>また、Kafkaに出力する際のフォーマットは指定可能。 Kafka
+Connect自体の一般的なパラメータである、 <code>value.converter</code>
+を指定すれば良い。 例えば以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;value.converter&quot;: &quot;org.apache.kafka.connect.json.JsonConverter&quot;,</span><br></pre></td></tr></table></figure>
 <h3><span id="実装状況">実装状況</span></h3>
 <p>2020/12/21時点では本プロジェクトのバージョンは0.4.0であり、</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.confluent<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>common-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>の通り、Confluent Platformのバージョンとしては、6系である。</p>
-<p><a href="https://docs.confluent.io/platform/current/installation/versions-interoperability.html#cp-and-apache-ak-compatibility" target="_blank" rel="noopener">Confluent Platform and Apache Kafka Compatibility</a> によると、 Confluent Platform 6系のKafkaバージョンは2.6.Xである。</p>
+<p><a href="https://docs.confluent.io/platform/current/installation/versions-interoperability.html#cp-and-apache-ak-compatibility" target="_blank" rel="noopener">Confluent
+Platform and Apache Kafka Compatibility</a> によると、 Confluent
+Platform 6系のKafkaバージョンは2.6.Xである。</p>
 <h4><span id="ioconfluentkafkaconnectdatagendatagenconnector">io.confluent.kafka.connect.datagen.DatagenConnector</span></h4>
-<p><code>io.confluent.kafka.connect.datagen.DatagenConnector</code> クラスは、 <code>org.apache.kafka.connect.source.SourceConnector</code> を継承している。 割と素直な実装。</p>
-<p><code>io.confluent.kafka.connect.datagen.DatagenConnector#start</code> メソッドは特別なことはしておらず、 コンフィグをロードするだけ。</p>
-<p><code>io.confluent.kafka.connect.datagen.DatagenConnector#taskConfigs</code> メソッドも 特別なことはしていない。start時に受け取ったプロパティから taskConfigを生成して返す。</p>
-<p><code>io.confluent.kafka.connect.datagen.DatagenConnector#stop</code> メソッド および、 <code>io.confluent.kafka.connect.datagen.DatagenConnector#config</code> もほぼ何もしない。</p>
-<p>タスクには <code>io.confluent.kafka.connect.datagen.DatagenTask</code> クラスを利用する。</p>
-<h4><span id="ioconfluentkafkaconnectdatagendatagentask-クラス">io.confluent.kafka.connect.datagen.DatagenTask クラス</span></h4>
-<p><code>io.confluent.kafka.connect.datagen.DatagenTask#start</code> メソッドが overrideされている。 以下、ポイントを確認する。</p>
+<p><code>io.confluent.kafka.connect.datagen.DatagenConnector</code>
+クラスは、 <code>org.apache.kafka.connect.source.SourceConnector</code>
+を継承している。 割と素直な実装。</p>
+<p><code>io.confluent.kafka.connect.datagen.DatagenConnector#start</code>
+メソッドは特別なことはしておらず、 コンフィグをロードするだけ。</p>
+<p><code>io.confluent.kafka.connect.datagen.DatagenConnector#taskConfigs</code>
+メソッドも 特別なことはしていない。start時に受け取ったプロパティから
+taskConfigを生成して返す。</p>
+<p><code>io.confluent.kafka.connect.datagen.DatagenConnector#stop</code>
+メソッド および、
+<code>io.confluent.kafka.connect.datagen.DatagenConnector#config</code>
+もほぼ何もしない。</p>
+<p>タスクには
+<code>io.confluent.kafka.connect.datagen.DatagenTask</code>
+クラスを利用する。</p>
+<h4><span id="ioconfluentkafkaconnectdatagendatagentaskクラス">io.confluent.kafka.connect.datagen.DatagenTask
+クラス</span></h4>
+<p><code>io.confluent.kafka.connect.datagen.DatagenTask#start</code>
+メソッドが overrideされている。 以下、ポイントを確認する。</p>
 <p>オフセット管理の仕組みあり。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:133</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; offset = context.offsetStorageReader().offset(sourcePartition);</span><br><span class="line"><span class="keyword">if</span> (offset != <span class="keyword">null</span>) &#123;</span><br><span class="line">  <span class="comment">//  The offset as it is stored contains our next state, so restore it as-is.</span></span><br><span class="line">  taskGeneration = ((Long) offset.get(TASK_GENERATION)).intValue();</span><br><span class="line">  count = ((Long) offset.get(CURRENT_ITERATION));</span><br><span class="line">  random.setSeed((Long) offset.get(RANDOM_SEED));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>io.confluent.avro.random.generator.Generator</code> のジェネレータ（のビルダ）を利用する。</p>
+<p><code>io.confluent.avro.random.generator.Generator</code>
+のジェネレータ（のビルダ）を利用する。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:141</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Generator.Builder generatorBuilder = <span class="keyword">new</span> Generator.Builder()</span><br><span class="line">    .random(random)</span><br><span class="line">    .generation(count);</span><br></pre></td></tr></table></figure>
 <p>クイックスタートの設定があれば、それに従ってスキーマを読み込む。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:144</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">String quickstartName = config.getQuickstart();</span><br><span class="line"><span class="keyword">if</span> (quickstartName != <span class="string">""</span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    quickstart = Quickstart.valueOf(quickstartName.toUpperCase());</span><br><span class="line">    <span class="keyword">if</span> (quickstart != <span class="keyword">null</span>) &#123;</span><br><span class="line">      schemaFilename = quickstart.getSchemaFilename();</span><br><span class="line">      schemaKeyField = schemaKeyField.equals(<span class="string">""</span>)</span><br><span class="line">          ? quickstart.getSchemaKeyField() : schemaKeyField;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        generator = generatorBuilder</span><br><span class="line">            .schemaStream(getClass().getClassLoader().getResourceAsStream(schemaFilename))</span><br><span class="line">            .build();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ConnectException(<span class="string">"Unable to read the '"</span></span><br><span class="line">            + schemaFilename + <span class="string">"' schema file"</span>, e);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</span><br><span class="line">    log.warn(<span class="string">"Quickstart '&#123;&#125;' not found: "</span>, quickstartName, e);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>指定されたクイックスタート名に従い、パッケージに含まれるスキーマファイルを読み込み、 それを適用しながらジェネレータを生成する。</p>
+<p>指定されたクイックスタート名に従い、パッケージに含まれるスキーマファイルを読み込み、
+それを適用しながらジェネレータを生成する。</p>
 <p>なお、クイックスタートのたぐいはenumで定義されている。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:75</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">enum</span> Quickstart &#123;</span><br><span class="line">  CLICKSTREAM_CODES(<span class="string">"clickstream_codes_schema.avro"</span>, <span class="string">"code"</span>),</span><br><span class="line">  CLICKSTREAM(<span class="string">"clickstream_schema.avro"</span>, <span class="string">"ip"</span>),</span><br><span class="line">  CLICKSTREAM_USERS(<span class="string">"clickstream_users_schema.avro"</span>, <span class="string">"user_id"</span>),</span><br><span class="line">  ORDERS(<span class="string">"orders_schema.avro"</span>, <span class="string">"orderid"</span>),</span><br><span class="line">  RATINGS(<span class="string">"ratings_schema.avro"</span>, <span class="string">"rating_id"</span>),</span><br><span class="line">  USERS(<span class="string">"users_schema.avro"</span>, <span class="string">"userid"</span>),</span><br><span class="line">  USERS_(<span class="string">"users_array_map_schema.avro"</span>, <span class="string">"userid"</span>),</span><br><span class="line">  PAGEVIEWS(<span class="string">"pageviews_schema.avro"</span>, <span class="string">"viewtime"</span>),</span><br><span class="line">  STOCK_TRADES(<span class="string">"stock_trades_schema.avro"</span>, <span class="string">"symbol"</span>),</span><br><span class="line">  INVENTORY(<span class="string">"inventory.avro"</span>, <span class="string">"id"</span>),</span><br><span class="line">  PRODUCT(<span class="string">"product.avro"</span>, <span class="string">"id"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> String schemaFilename;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> String keyName;</span><br><span class="line"></span><br><span class="line">  Quickstart(String schemaFilename, String keyName) &#123;</span><br><span class="line">    <span class="keyword">this</span>.schemaFilename = schemaFilename;</span><br><span class="line">    <span class="keyword">this</span>.keyName = keyName;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getSchemaFilename</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> schemaFilename;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getSchemaKeyField</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> keyName;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>クイックスタートが設定されておらず、スキーマの文字列が与えられた場合は、 それを用いてジェネレータが生成される。</p>
+<p>クイックスタートが設定されておらず、スキーマの文字列が与えられた場合は、
+それを用いてジェネレータが生成される。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:164</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (schemaString != <span class="string">""</span>) &#123;</span><br><span class="line">  generator = generatorBuilder.schemaString(schemaString).build();</span><br></pre></td></tr></table></figure>
-<p>それ以外の場合、つまりスキーマ定義の書かれたファイルを指定する場合は、 以下の通り。</p>
+<p>それ以外の場合、つまりスキーマ定義の書かれたファイルを指定する場合は、
+以下の通り。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:166</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      String err = <span class="string">"Unable to read the '"</span> + schemaFilename + <span class="string">"' schema file"</span>;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        generator = generatorBuilder.schemaStream(<span class="keyword">new</span> FileInputStream(schemaFilename)).build();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">        <span class="comment">// also look in jars on the classpath</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          generator = generatorBuilder</span><br><span class="line">              .schemaStream(DatagenTask.class.getClassLoader().getResourceAsStream(schemaFilename))</span><br><span class="line">              .build();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException inner) &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> ConnectException(err, e);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ConnectException(err, e);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>最後のAvroに関連する情報を生成して終了。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:184</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">avroSchema = generator.schema();</span><br><span class="line">avroData = <span class="keyword">new</span> AvroData(<span class="number">1</span>);</span><br><span class="line">ksqlSchema = avroData.toConnectSchema(avroSchema);</span><br></pre></td></tr></table></figure>
-<p><code>io.confluent.kafka.connect.datagen.DatagenTask#poll</code> メソッドもoverrideされている。 以下、ポイントを記載する。</p>
+<p><code>io.confluent.kafka.connect.datagen.DatagenTask#poll</code>
+メソッドもoverrideされている。 以下、ポイントを記載する。</p>
 <p>インターバル機能あり。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:192</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (maxInterval &gt; <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    Thread.sleep((<span class="keyword">long</span>) (maxInterval * Math.random()));</span><br><span class="line">  &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">    Thread.interrupted();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>ジェネレータを利用し、オブジェクトを生成する。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:201</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> Object generatedObject = generator.generate();</span><br><span class="line"><span class="keyword">if</span> (!(generatedObject <span class="keyword">instanceof</span> GenericRecord)) &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(</span><br><span class="line">      <span class="string">"Expected Avro Random Generator to return instance of GenericRecord, found %s instead"</span>,</span><br><span class="line">      generatedObject.getClass().getName()</span><br><span class="line">  ));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">final</span> GenericRecord randomAvroMessage = (GenericRecord) generatedObject;</span><br></pre></td></tr></table></figure>
-<p>生成されたオブジェクトから、スキーマ定義に基づいてフィールドの値を取り出し、 バリューのArrayListを生成する。</p>
+<p>生成されたオブジェクトから、スキーマ定義に基づいてフィールドの値を取り出し、
+バリューのArrayListを生成する。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:210</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> List&lt;Object&gt; genericRowValues = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (org.apache.avro.Schema.Field field : avroSchema.getFields()) &#123;</span><br><span class="line">  <span class="keyword">final</span> Object value = randomAvroMessage.get(field.name());</span><br><span class="line">  <span class="keyword">if</span> (value <span class="keyword">instanceof</span> Record) &#123;</span><br><span class="line">    <span class="keyword">final</span> Record record = (Record) value;</span><br><span class="line">    <span class="keyword">final</span> Object ksqlValue = avroData.toConnectData(record.getSchema(), record).value();</span><br><span class="line">    Object optionValue = getOptionalValue(ksqlSchema.field(field.name()).schema(), ksqlValue);</span><br><span class="line">    genericRowValues.add(optionValue);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    genericRowValues.add(value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>キーも同様に取り出し、Kafka Connectの形式に変換する。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:224</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SchemaAndValue key = <span class="keyword">new</span> SchemaAndValue(DEFAULT_KEY_SCHEMA, <span class="keyword">null</span>);</span><br><span class="line"><span class="keyword">if</span> (!schemaKeyField.isEmpty()) &#123;</span><br><span class="line">  key = avroData.toConnectData(</span><br><span class="line">      randomAvroMessage.getSchema().getField(schemaKeyField).schema(),</span><br><span class="line">      randomAvroMessage.get(schemaKeyField)</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>先程ArrayListとして取り出したバリューもKafka Connect形式に変換する。</p>
+<p>先程ArrayListとして取り出したバリューもKafka
+Connect形式に変換する。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:233</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> org.apache.kafka.connect.data.Schema messageSchema = avroData.toConnectSchema(avroSchema);</span><br><span class="line"><span class="keyword">final</span> Object messageValue = avroData.toConnectData(avroSchema, randomAvroMessage).value();</span><br></pre></td></tr></table></figure>
 <p>イテレートのたびに、メタデータを更新する。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:246</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The source offsets will be the values that the next task lifetime will restore from</span></span><br><span class="line"><span class="comment">// Essentially, the "next" state of the connector after this loop completes</span></span><br><span class="line">Map&lt;String, Object&gt; sourceOffset = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="comment">// The next lifetime will be a member of the next generation.</span></span><br><span class="line">sourceOffset.put(TASK_GENERATION, taskGeneration + <span class="number">1</span>);</span><br><span class="line"><span class="comment">// We will have produced this record</span></span><br><span class="line">sourceOffset.put(CURRENT_ITERATION, count + <span class="number">1</span>);</span><br><span class="line"><span class="comment">// This is the seed that we just re-seeded for our own next iteration.</span></span><br><span class="line">sourceOffset.put(RANDOM_SEED, seed);</span><br></pre></td></tr></table></figure>
-<p>最後に、SourceRecordのリスト形式に変換し、 レコードとして生成して戻り値として返す。</p>
+<p>最後に、SourceRecordのリスト形式に変換し、
+レコードとして生成して戻り値として返す。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:261</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> List&lt;SourceRecord&gt; records = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">SourceRecord record = <span class="keyword">new</span> SourceRecord(</span><br><span class="line">    sourcePartition,</span><br><span class="line">    sourceOffset,</span><br><span class="line">    topic,</span><br><span class="line">    <span class="keyword">null</span>,</span><br><span class="line">    key.schema(),</span><br><span class="line">    key.value(),</span><br><span class="line">    messageSchema,</span><br><span class="line">    messageValue,</span><br><span class="line">    <span class="keyword">null</span>,</span><br><span class="line">    headers</span><br><span class="line">);</span><br><span class="line">records.add(record);</span><br><span class="line">count += records.size();</span><br><span class="line"><span class="keyword">return</span> records;</span><br></pre></td></tr></table></figure>
-<p>つづいて、 <code>io.confluent.kafka.connect.datagen.DatagenTask#stop</code> メソッドだが、 これは特に何もしない。</p>
-<p><code>io.confluent.kafka.connect.datagen.DatagenTask#getOptionalSchema</code> という オプショナルなフィールドに関するスキーマを取得するためのヘルパーメソッドもある。 <code>io.confluent.kafka.connect.datagen.DatagenTask#getOptionalValue</code> メソッドもある。</p>
+<p>つづいて、
+<code>io.confluent.kafka.connect.datagen.DatagenTask#stop</code>
+メソッドだが、 これは特に何もしない。</p>
+<p><code>io.confluent.kafka.connect.datagen.DatagenTask#getOptionalSchema</code>
+という
+オプショナルなフィールドに関するスキーマを取得するためのヘルパーメソッドもある。
+<code>io.confluent.kafka.connect.datagen.DatagenTask#getOptionalValue</code>
+メソッドもある。</p>
 <h3><span id="動作確認">動作確認</span></h3>
-<p>confluentinc-kafka-connect-datagen-0.4.0.zip をダウンロードし、 <code>/opt/connectors</code>以下に展開したものとする。</p>
-<p>今回は以下の設定ファイルを参考に、データ生成してみる。 なお、イテレーション回数は適度に修正して用いることを推奨する。</p>
+<p>confluentinc-kafka-connect-datagen-0.4.0.zip をダウンロードし、
+<code>/opt/connectors</code>以下に展開したものとする。</p>
+<p>今回は以下の設定ファイルを参考に、データ生成してみる。
+なお、イテレーション回数は適度に修正して用いることを推奨する。</p>
 <p>confluentinc-kafka-connect-datagen-0.4.0/etc/connector_users.config</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"datagen-users"</span>,</span><br><span class="line">  <span class="attr">"config"</span>: &#123;</span><br><span class="line">    <span class="attr">"connector.class"</span>: <span class="string">"io.confluent.kafka.connect.datagen.DatagenConnector"</span>,</span><br><span class="line">    <span class="attr">"kafka.topic"</span>: <span class="string">"users"</span>,</span><br><span class="line">    <span class="attr">"quickstart"</span>: <span class="string">"users"</span>,</span><br><span class="line">    <span class="attr">"key.converter"</span>: <span class="string">"org.apache.kafka.connect.storage.StringConverter"</span>,</span><br><span class="line">    <span class="attr">"value.converter"</span>: <span class="string">"org.apache.kafka.connect.json.JsonConverter"</span>,</span><br><span class="line">    <span class="attr">"value.converter.schemas.enable"</span>: <span class="string">"false"</span>,</span><br><span class="line">    <span class="attr">"max.interval"</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">"iterations"</span>: <span class="number">10000000</span>,</span><br><span class="line">    <span class="attr">"tasks.max"</span>: <span class="string">"1"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上記はconfluentコマンド用で利用する際のコンフィグファイルである。 そこで以下のようなKafka Connect用の設定ファイルを生成する。</p>
+<p>上記はconfluentコマンド用で利用する際のコンフィグファイルである。
+そこで以下のようなKafka Connect用の設定ファイルを生成する。</p>
 <p>/opt/connectors/confluentinc-kafka-connect-datagen-0.4.0/etc/connector_users.properties</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">name=users</span><br><span class="line">connector.class=io.confluent.kafka.connect.datagen.DatagenConnector</span><br><span class="line">kafka.topic=users</span><br><span class="line">quickstart=users</span><br><span class="line">key.converter=org.apache.kafka.connect.storage.StringConverter</span><br><span class="line">value.converter=org.apache.kafka.connect.json.JsonConverter</span><br><span class="line">value.converter.schemas.enable=false</span><br><span class="line">max.interval=1000</span><br><span class="line">iterations=10</span><br><span class="line">tasks.max=1</span><br></pre></td></tr></table></figure>
 <p>スタンドアローンモードでKafka Connectを起動する。</p>
@@ -2077,7 +2275,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/16/Reference-of-connector-plugin/" data-id="cl2nztnnu00ci5xqifdw6vzzj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/16/Reference-of-connector-plugin/" data-id="cl2o9pbir019918rzlmrbeuaw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2307,5 +2505,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

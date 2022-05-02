@@ -5,18 +5,18 @@
     
     <title>The 8 Requirements of Real-Time Stream Processing | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参照 メモ 1. Introduction 2. Eight rules for stream processing Rule 1: Keep the Data Moving Rule 2: Query using SQL on Streams (StreamSQL) Rule 3: Handle Stream Imperfections (Delayed, Missing and Out-">
+    <meta name="description" content="参照 メモ  1. Introduction 2. Eight rules for stream processing  Rule 1: Keep the Data Moving Rule 2: Query using SQL on Streams (StreamSQL) Rule 3: Handle Stream Imperfections (Delayed, Missing and Ou">
 <meta name="keywords" content="Stream Processing,Paper,Stonebraker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The 8 Requirements of Real-Time Stream Processing">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/06/22/The-8-Requirements-of-Real-Time-Stream-Processing/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参照 メモ 1. Introduction 2. Eight rules for stream processing Rule 1: Keep the Data Moving Rule 2: Query using SQL on Streams (StreamSQL) Rule 3: Handle Stream Imperfections (Delayed, Missing and Out-">
+<meta property="og:description" content="参照 メモ  1. Introduction 2. Eight rules for stream processing  Rule 1: Keep the Data Moving Rule 2: Query using SQL on Streams (StreamSQL) Rule 3: Handle Stream Imperfections (Delayed, Missing and Ou">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The 8 Requirements of Real-Time Stream Processing">
-<meta name="twitter:description" content="参照 メモ 1. Introduction 2. Eight rules for stream processing Rule 1: Keep the Data Moving Rule 2: Query using SQL on Streams (StreamSQL) Rule 3: Handle Stream Imperfections (Delayed, Missing and Out-">
+<meta name="twitter:description" content="参照 メモ  1. Introduction 2. Eight rules for stream processing  Rule 1: Keep the Data Moving Rule 2: Query using SQL on Streams (StreamSQL) Rule 3: Handle Stream Imperfections (Delayed, Missing and Ou">
     
 
     
@@ -251,69 +251,121 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参照">参照</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#introduction">1. Introduction</a></li>
-<li><a href="#eight-rules-for-stream-processing">2. Eight rules for stream processing</a><ul>
-<li><a href="#rule-1-keep-the-data-moving">Rule 1: Keep the Data Moving</a></li>
-<li><a href="#rule-2-query-using-sql-on-streams-streamsql">Rule 2: Query using SQL on Streams (StreamSQL)</a></li>
-<li><a href="#rule-3-handle-stream-imperfections-delayed-missing-and-out-of-order-data">Rule 3: Handle Stream Imperfections (Delayed, Missing and Out-of-Order Data)</a></li>
-<li><a href="#rule-4-generate-predictable-outcomes">Rule 4: Generate Predictable Outcomes</a></li>
-<li><a href="#rule-5-integrate-stored-and-streaming-data">Rule 5: Integrate Stored and Streaming Data</a></li>
-<li><a href="#rule-6-guarantee-data-safety-and-availability">Rule 6: Guarantee Data Safety and Availability</a></li>
-<li><a href="#rule-7-partition-and-scale-applications-automatically">Rule 7: Partition and Scale Applications Automatically</a></li>
-<li><a href="#rule-8-process-and-respond-instantaneously">Rule 8: Process and Respond Instantaneously</a></li>
+<li><a href="#参照" id="toc-参照">参照</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#introduction" id="toc-introduction">1.
+Introduction</a></li>
+<li><a href="#eight-rules-for-stream-processing" id="toc-eight-rules-for-stream-processing">2. Eight rules for stream
+processing</a>
+<ul>
+<li><a href="#rule-1-keep-the-data-moving" id="toc-rule-1-keep-the-data-moving">Rule 1: Keep the Data
+Moving</a></li>
+<li><a href="#rule-2-query-using-sql-on-streams-streamsql" id="toc-rule-2-query-using-sql-on-streams-streamsql">Rule 2: Query using
+SQL on Streams (StreamSQL)</a></li>
+<li><a href="#rule-3-handle-stream-imperfections-delayed-missing-and-out-of-order-data" id="toc-rule-3-handle-stream-imperfections-delayed-missing-and-out-of-order-data">Rule
+3: Handle Stream Imperfections (Delayed, Missing and Out-of-Order
+Data)</a></li>
+<li><a href="#rule-4-generate-predictable-outcomes" id="toc-rule-4-generate-predictable-outcomes">Rule 4: Generate
+Predictable Outcomes</a></li>
+<li><a href="#rule-5-integrate-stored-and-streaming-data" id="toc-rule-5-integrate-stored-and-streaming-data">Rule 5: Integrate
+Stored and Streaming Data</a></li>
+<li><a href="#rule-6-guarantee-data-safety-and-availability" id="toc-rule-6-guarantee-data-safety-and-availability">Rule 6: Guarantee
+Data Safety and Availability</a></li>
+<li><a href="#rule-7-partition-and-scale-applications-automatically" id="toc-rule-7-partition-and-scale-applications-automatically">Rule 7:
+Partition and Scale Applications Automatically</a></li>
+<li><a href="#rule-8-process-and-respond-instantaneously" id="toc-rule-8-process-and-respond-instantaneously">Rule 8: Process and
+Respond Instantaneously</a></li>
 </ul></li>
-<li><a href="#software-technologies-for-stream-processing">3. SOFTWARE TECHNOLOGIES for STREAM PROCESSING</a><ul>
-<li><a href="#tabular-results">3.3 Tabular results</a></li>
+<li><a href="#software-technologies-for-stream-processing" id="toc-software-technologies-for-stream-processing">3. SOFTWARE
+TECHNOLOGIES for STREAM PROCESSING</a>
+<ul>
+<li><a href="#tabular-results" id="toc-tabular-results">3.3 Tabular
+results</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参照">参照</span></h1>
 <ul>
-<li><a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf" target="_blank" rel="noopener">The 8 Requirements of Real-Time Stream Processing</a></li>
+<li><a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf" target="_blank" rel="noopener">The 8
+Requirements of Real-Time Stream Processing</a></li>
 <li><a href="https://dl.acm.org/citation.cfm?id=1107504" target="_blank" rel="noopener">ACMページ</a></li>
 <li><a href="https://ai.google/research/pubs/pub41378" target="_blank" rel="noopener">MillWheel</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://ai.google/research/pubs/pub41378" target="_blank" rel="noopener">MillWheel</a> でも触れられているストリーム処理について書かれた論文。 2005年。 時代は古いが当時の考察は現在でも有用と考える。</p>
+<p><a href="https://ai.google/research/pubs/pub41378" target="_blank" rel="noopener">MillWheel</a>
+でも触れられているストリーム処理について書かれた論文。 2005年。
+時代は古いが当時の考察は現在でも有用と考える。</p>
 <h2><span id="1-introduction">1. Introduction</span></h2>
-<p>ウォール街のデータ処理量は大きい。 2005年時点で122,000msg/sec。年率2倍で増大。 しかも処理レイテンシが秒では遅い。 金融に限らず異常検知、センサーデータ活用などのユースケースでは同様の課題感だろう。</p>
-<p>「メインメモリDBMS」、「ルールベースエンジン」などがこの手のユースケースのために再注目されたが、 その後いわゆる「ストリーム処理エンジン」も登場。</p>
-<h2><span id="2-eight-rules-for-stream-processing">2. Eight rules for stream processing</span></h2>
+<p>ウォール街のデータ処理量は大きい。
+2005年時点で122,000msg/sec。年率2倍で増大。
+しかも処理レイテンシが秒では遅い。
+金融に限らず異常検知、センサーデータ活用などのユースケースでは同様の課題感だろう。</p>
+<p>「メインメモリDBMS」、「ルールベースエンジン」などがこの手のユースケースのために再注目されたが、
+その後いわゆる「ストリーム処理エンジン」も登場。</p>
+<h2><span id="2-eight-rules-for-streamprocessing">2. Eight rules for stream
+processing</span></h2>
 <h3><span id="rule-1-keep-the-data-moving">Rule 1: Keep the Data Moving</span></h3>
 <p>ストレージに書き込むなどしてレイテンシを悪化させてはならない。</p>
-<p>ポーリングもレイテンシを悪化させる。 そこでイベント駆動のアプローチを用いることがよく考えられる。</p>
-<h3><span id="rule-2-query-using-sql-on-streams-streamsql">Rule 2: Query using SQL on Streams (StreamSQL)</span></h3>
+<p>ポーリングもレイテンシを悪化させる。
+そこでイベント駆動のアプローチを用いることがよく考えられる。</p>
+<h3><span id="rule-2-query-usingsql-on-streams-streamsql">Rule 2: Query using
+SQL on Streams (StreamSQL)</span></h3>
 <p>ハイレベルAPIを用いることで、開発サイクルを加速し、保守性を上げる。</p>
-<p>StreamSQL：ストリーム処理固有の機能を有するSQL リッチなウィンドウ関数、マージなど。</p>
-<h3><span id="rule-3-handle-stream-imperfections-delayed-missing-and-out-of-order-data">Rule 3: Handle Stream Imperfections (Delayed, Missing and Out-of-Order Data)</span></h3>
-<p>例えば複数のストリームからなるデータを処理する際、 あるストリームからのデータが到着しないとき、タイムアウトして結果を出す必要がある。</p>
+<p>StreamSQL：ストリーム処理固有の機能を有するSQL
+リッチなウィンドウ関数、マージなど。</p>
+<h3><span id="rule3-handle-stream-imperfections-delayed-missing-and-out-of-orderdata">Rule
+3: Handle Stream Imperfections (Delayed, Missing and Out-of-Order
+Data)</span></h3>
+<p>例えば複数のストリームからなるデータを処理する際、
+あるストリームからのデータが到着しないとき、タイムアウトして結果を出す必要がある。</p>
 <p>同じようにout-of-orderデータについてもウィンドウに応じてタイムアウトしないといけない。</p>
-<h3><span id="rule-4-generate-predictable-outcomes">Rule 4: Generate Predictable Outcomes</span></h3>
+<h3><span id="rule-4-generatepredictable-outcomes">Rule 4: Generate
+Predictable Outcomes</span></h3>
 <p>結果がdeterministicであり、再現性があること。</p>
 <p>計算そのものだけではなく、対故障性の観点でも重要。</p>
-<h3><span id="rule-5-integrate-stored-and-streaming-data">Rule 5: Integrate Stored and Streaming Data</span></h3>
-<p>過去データに基づき、何らかのパターンなどを見つける処理はよくある。 そのためステート管理の仕組み（データストア）は重要。</p>
-<p>例えば金融のトレーディングで、あるパターンを見つける、など。 他にも異常検知も。</p>
+<h3><span id="rule-5-integratestored-and-streaming-data">Rule 5: Integrate
+Stored and Streaming Data</span></h3>
+<p>過去データに基づき、何らかのパターンなどを見つける処理はよくある。
+そのためステート管理の仕組み（データストア）は重要。</p>
+<p>例えば金融のトレーディングで、あるパターンを見つける、など。
+他にも異常検知も。</p>
 <p>過去データを使いながら、実時間のデータにキャッチアップするケースもあるだろう。</p>
 <p>このようにヒストリカルデータとライブデータをシームレスにつなぐ機能は重要。</p>
-<h3><span id="rule-6-guarantee-data-safety-and-availability">Rule 6: Guarantee Data Safety and Availability</span></h3>
-<p>HAは悩ましい課題。 故障が発生してフェールオーバするとして、バックアップハードウェアを 立ち上げて処理可能な状態にするような待ち時間は許容できない。</p>
+<h3><span id="rule-6-guaranteedata-safety-and-availability">Rule 6: Guarantee
+Data Safety and Availability</span></h3>
+<p>HAは悩ましい課題。
+故障が発生してフェールオーバするとして、バックアップハードウェアを
+立ち上げて処理可能な状態にするような待ち時間は許容できない。</p>
 <p>そこでタンデム構成を取ることは現実的にありえる。</p>
-<h3><span id="rule-7-partition-and-scale-applications-automatically">Rule 7: Partition and Scale Applications Automatically</span></h3>
-<p>ローレベルの実装を経ずに、分散処理できること。 またマルチスレッド処理可能なこと。</p>
-<h3><span id="rule-8-process-and-respond-instantaneously">Rule 8: Process and Respond Instantaneously</span></h3>
-<p>数万メッセージ/secの量を処理する。 さらにレイテンシはマイクロ秒オーダから、ミリ秒オーダ。</p>
+<h3><span id="rule-7partition-and-scale-applications-automatically">Rule 7:
+Partition and Scale Applications Automatically</span></h3>
+<p>ローレベルの実装を経ずに、分散処理できること。
+またマルチスレッド処理可能なこと。</p>
+<h3><span id="rule-8-process-andrespond-instantaneously">Rule 8: Process and
+Respond Instantaneously</span></h3>
+<p>数万メッセージ/secの量を処理する。
+さらにレイテンシはマイクロ秒オーダから、ミリ秒オーダ。</p>
 <p>そのためには極力コンポーネント間をまたぐ処理をしないこと。</p>
-<h2><span id="3-software-technologies-for-stream-processing">3. SOFTWARE TECHNOLOGIES for STREAM PROCESSING</span></h2>
+<h2><span id="3-softwaretechnologies-for-stream-processing">3. SOFTWARE
+TECHNOLOGIES for STREAM PROCESSING</span></h2>
 <p>基本的なアーキテクチャは、DBMS、ルールベースエンジン、ストリーム処理エンジン。</p>
 <p>DBMSはデータをストアしてから処理する。データを動かしつづけるわけではない。</p>
 <p>またSPEはSQLスタイルでのストリームデータの処理を可能とする。</p>
-<p>SPEとルールベースエンジンは、ブロックおよびタイムアウトを実現しやすい。 DBMSはそのあたりはアプリケーションに委ねられる。 仮にトリガを用いたとしても…。</p>
-<p>いずれのアーキテクチャにおいても、予測可能な結果を得るためには、 deterministicな処理を実現しないといけない（例えばタイムスタンプの並びを利用、など） SPEとルールベースエンジンはそれを実現しやすいが、DBMSのACID特性は あくまでトラディショナルなデータベースのためのもであり、ストリームデータ処理のための ものではない。</p>
-<p>状態を保存するデータストアとしてDBMSを見たとき、サーバ・クライアントモデルのDBMSは 主にレイテンシの面で不十分である。 唯一受け入れられるとしたら、アプリケーション内に埋め込めるDBMSの場合である。 一方ルールベースエンジンはストリームデータを扱うのは得意だが、 大規模な状態管理と状態に対する柔軟なクエリが苦手である。</p>
+<p>SPEとルールベースエンジンは、ブロックおよびタイムアウトを実現しやすい。
+DBMSはそのあたりはアプリケーションに委ねられる。
+仮にトリガを用いたとしても…。</p>
+<p>いずれのアーキテクチャにおいても、予測可能な結果を得るためには、
+deterministicな処理を実現しないといけない（例えばタイムスタンプの並びを利用、など）
+SPEとルールベースエンジンはそれを実現しやすいが、DBMSのACID特性は
+あくまでトラディショナルなデータベースのためのもであり、ストリームデータ処理のための
+ものではない。</p>
+<p>状態を保存するデータストアとしてDBMSを見たとき、サーバ・クライアントモデルのDBMSは
+主にレイテンシの面で不十分である。
+唯一受け入れられるとしたら、アプリケーション内に埋め込めるDBMSの場合である。
+一方ルールベースエンジンはストリームデータを扱うのは得意だが、
+大規模な状態管理と状態に対する柔軟なクエリが苦手である。</p>
 <h3><span id="33-tabular-results">3.3 Tabular results</span></h3>
 <p>このあたりにまとめ表が載っている。</p>
 
@@ -326,7 +378,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/22/The-8-Requirements-of-Real-Time-Stream-Processing/" data-id="cl2nztnom00en5xqivjg0u1re" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/22/The-8-Requirements-of-Real-Time-Stream-Processing/" data-id="cl2o9pb8900ad18rzrozhraku" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -577,5 +629,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

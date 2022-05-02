@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="メモ 参考   メモ Get-VM を利用して、VMの名称を確認する。 12345PS C:\Windows\system32&amp;gt; Get-VM   (snip)ubu18    Running 0           9344              24.00:30:35.9900000 正常稼働中 9.0 入れ子になった仮想化による仮想マシンでの Hyper-V の実行 の通り、">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nest VM on Hyper-V">
 <meta name="twitter:description" content="メモ 参考   メモ Get-VM を利用して、VMの名称を確認する。 12345PS C:\Windows\system32&amp;gt; Get-VM   (snip)ubu18    Running 0           9344              24.00:30:35.9900000 正常稼働中 9.0 入れ子になった仮想化による仮想マシンでの Hyper-V の実行 の通り、">
@@ -251,19 +251,22 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#メモ">メモ</a></li>
-<li><a href="#参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
 </ul>
 </div>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://docs.microsoft.com/ja-jp/powershell/module/hyper-v/get-vm?view=windowsserver2019-ps" target="_blank" rel="noopener">Get-VM</a> を利用して、VMの名称を確認する。</p>
+<p><a href="https://docs.microsoft.com/ja-jp/powershell/module/hyper-v/get-vm?view=windowsserver2019-ps" target="_blank" rel="noopener">Get-VM</a>
+を利用して、VMの名称を確認する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Windows\system32&gt; Get-VM   </span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">ubu18    Running 0           9344              24.00:30:35.9900000 正常稼働中 9.0</span><br></pre></td></tr></table></figure>
-<p><a href="https://docs.microsoft.com/ja-jp/virtualization/hyper-v-on-windows/user-guide/nested-virtualization" target="_blank" rel="noopener">入れ子になった仮想化による仮想マシンでの Hyper-V の実行</a> の通り、VM 名称を指定しながら設定変更する。</p>
+<p><a href="https://docs.microsoft.com/ja-jp/virtualization/hyper-v-on-windows/user-guide/nested-virtualization" target="_blank" rel="noopener">入れ子になった仮想化による仮想マシンでの
+Hyper-V の実行</a> の通り、VM 名称を指定しながら設定変更する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Windows\system32&gt; Set-VMProcessor -VMName ubu18 -ExposeVirtualizationExtensions $true</span><br></pre></td></tr></table></figure>
 <h1><span id="参考">参考</span></h1>
 <ul>
 <li><a href="https://docs.microsoft.com/ja-jp/powershell/module/hyper-v/get-vm?view=windowsserver2019-ps" target="_blank" rel="noopener">Get-VM</a></li>
-<li><a href="https://docs.microsoft.com/ja-jp/virtualization/hyper-v-on-windows/user-guide/nested-virtualization" target="_blank" rel="noopener">入れ子になった仮想化による仮想マシンでの Hyper-V の実行</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/virtualization/hyper-v-on-windows/user-guide/nested-virtualization" target="_blank" rel="noopener">入れ子になった仮想化による仮想マシンでの
+Hyper-V の実行</a></li>
 </ul>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -276,7 +279,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="cl2nztnnb00as5xqidnxowevz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="cl2o9pb78007p18rzy9ftpk2m" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -518,5 +521,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

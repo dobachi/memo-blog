@@ -5,18 +5,18 @@
     
     <title>TFoSparkのTFManager | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="概要 実装の確認 startメソッド connectメソッド    概要 以下の通り、マルチプロセッシング処理におけるプロセス間通信を担うマネージャ。 tensorflowonspark/TFManager.py:15 1&amp;quot;&amp;quot;&amp;quot;Python multiprocessing.Manager for distributed, multi-process commun">
+    <meta name="description" content="概要 実装の確認  startメソッド connectメソッド    概要 以下の通り、マルチプロセッシング処理におけるプロセス間通信を担うマネージャ。 tensorflowonspark/TFManager.py:15 1&amp;quot;&amp;quot;&amp;quot;Python multiprocessing.Manager for distributed, multi-process commu">
 <meta name="keywords" content="Spark,TensorFlow,PySpark,TensorFlowOnSpark">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TFoSparkのTFManager">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/12/06/TFManager-of-TFoSpark/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="概要 実装の確認 startメソッド connectメソッド    概要 以下の通り、マルチプロセッシング処理におけるプロセス間通信を担うマネージャ。 tensorflowonspark/TFManager.py:15 1&amp;quot;&amp;quot;&amp;quot;Python multiprocessing.Manager for distributed, multi-process commun">
+<meta property="og:description" content="概要 実装の確認  startメソッド connectメソッド    概要 以下の通り、マルチプロセッシング処理におけるプロセス間通信を担うマネージャ。 tensorflowonspark/TFManager.py:15 1&amp;quot;&amp;quot;&amp;quot;Python multiprocessing.Manager for distributed, multi-process commu">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TFoSparkのTFManager">
-<meta name="twitter:description" content="概要 実装の確認 startメソッド connectメソッド    概要 以下の通り、マルチプロセッシング処理におけるプロセス間通信を担うマネージャ。 tensorflowonspark/TFManager.py:15 1&amp;quot;&amp;quot;&amp;quot;Python multiprocessing.Manager for distributed, multi-process commun">
+<meta name="twitter:description" content="概要 実装の確認  startメソッド connectメソッド    概要 以下の通り、マルチプロセッシング処理におけるプロセス間通信を担うマネージャ。 tensorflowonspark/TFManager.py:15 1&amp;quot;&amp;quot;&amp;quot;Python multiprocessing.Manager for distributed, multi-process commu">
     
 
     
@@ -251,22 +251,25 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#概要">概要</a></li>
-<li><a href="#実装の確認">実装の確認</a><ul>
-<li><a href="#startメソッド">startメソッド</a></li>
-<li><a href="#connectメソッド">connectメソッド</a></li>
+<li><a href="#概要" id="toc-概要">概要</a></li>
+<li><a href="#実装の確認" id="toc-実装の確認">実装の確認</a>
+<ul>
+<li><a href="#startメソッド" id="toc-startメソッド">startメソッド</a></li>
+<li><a href="#connectメソッド" id="toc-connectメソッド">connectメソッド</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="概要">概要</span></h1>
 <p>以下の通り、マルチプロセッシング処理におけるプロセス間通信を担うマネージャ。</p>
 <p>tensorflowonspark/TFManager.py:15 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;Python multiprocessing.Manager for distributed, multi-process communication.&quot;&quot;&quot;</span><br></pre></td></tr></table></figure></p>
-<p>キューやキーバリューの辞書を管理。 キューは、SparkのExecutorとTFのWorkerの間の通信に用いられるようだ。</p>
+<p>キューやキーバリューの辞書を管理。
+キューは、SparkのExecutorとTFのWorkerの間の通信に用いられるようだ。</p>
 <h1><span id="実装の確認">実装の確認</span></h1>
 <p>また以下の通り、BaseManagerを継承している。</p>
 <p>tensorflowonspark/TFManager.py:14 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class TFManager(BaseManager):</span><br></pre></td></tr></table></figure></p>
 <h2><span id="startメソッド">startメソッド</span></h2>
-<p>startメソッドではリモートの接続を受け付けるかどうかを確認しながら、 BaseManager#startメソッドを使ってマネージャ機能を開始する。</p>
+<p>startメソッドではリモートの接続を受け付けるかどうかを確認しながら、
+BaseManager#startメソッドを使ってマネージャ機能を開始する。</p>
 <p>tensorflowonspark/TFManager.py:60 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if mode == &apos;remote&apos;:</span><br><span class="line">  mgr = TFManager(address=(&apos;&apos;, 0), authkey=authkey)</span><br><span class="line">else:</span><br><span class="line">  mgr = TFManager(authkey=authkey)</span><br><span class="line">mgr.start()</span><br></pre></td></tr></table></figure></p>
 <h2><span id="connectメソッド">connectメソッド</span></h2>
 <p>アドレスと鍵を指定しながらTFManagerに接続する。</p>
@@ -281,7 +284,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/06/TFManager-of-TFoSpark/" data-id="cl2nztnoj00ef5xqi91nl8z1f" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/06/TFManager-of-TFoSpark/" data-id="cl2o9pb8700a618rz8v7lrr4r" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -532,5 +535,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

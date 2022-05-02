@@ -5,18 +5,18 @@
     
     <title>When DeltaLog ID is created | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 前提 createRelationから確認する    参考 メモ Delta LakeのDelta LogのIDがいつ確定するのか、というのが気になり確認した。 前提  Delta Lakeバージョン：0.8.0  createRelationから確認する org.apache.spark.sql.delta.sources.DeltaDataSource#createRelat">
+    <meta name="description" content="参考 メモ  前提 createRelationから確認する    参考 メモ Delta LakeのDelta LogのIDがいつ確定するのか、というのが気になり確認した。 前提  Delta Lakeバージョン：0.8.0  createRelationから確認する org.apache.spark.sql.delta.sources.DeltaDataSource#createRela">
 <meta name="keywords" content="Delta Lake">
 <meta property="og:type" content="article">
 <meta property="og:title" content="When DeltaLog ID is created">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2021/04/04/When-DeltaLog-ID-is-created/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 前提 createRelationから確認する    参考 メモ Delta LakeのDelta LogのIDがいつ確定するのか、というのが気になり確認した。 前提  Delta Lakeバージョン：0.8.0  createRelationから確認する org.apache.spark.sql.delta.sources.DeltaDataSource#createRelat">
+<meta property="og:description" content="参考 メモ  前提 createRelationから確認する    参考 メモ Delta LakeのDelta LogのIDがいつ確定するのか、というのが気になり確認した。 前提  Delta Lakeバージョン：0.8.0  createRelationから確認する org.apache.spark.sql.delta.sources.DeltaDataSource#createRela">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="When DeltaLog ID is created">
-<meta name="twitter:description" content="参考 メモ 前提 createRelationから確認する    参考 メモ Delta LakeのDelta LogのIDがいつ確定するのか、というのが気になり確認した。 前提  Delta Lakeバージョン：0.8.0  createRelationから確認する org.apache.spark.sql.delta.sources.DeltaDataSource#createRelat">
+<meta name="twitter:description" content="参考 メモ  前提 createRelationから確認する    参考 メモ Delta LakeのDelta LogのIDがいつ確定するのか、というのが気になり確認した。 前提  Delta Lakeバージョン：0.8.0  createRelationから確認する org.apache.spark.sql.delta.sources.DeltaDataSource#createRela">
     
 
     
@@ -251,36 +251,49 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#前提">前提</a></li>
-<li><a href="#createrelationから確認する">createRelationから確認する</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#前提" id="toc-前提">前提</a></li>
+<li><a href="#createrelationから確認する" id="toc-createrelationから確認する">createRelationから確認する</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <h1><span id="メモ">メモ</span></h1>
-<p>Delta LakeのDelta LogのIDがいつ確定するのか、というのが気になり確認した。</p>
+<p>Delta LakeのDelta
+LogのIDがいつ確定するのか、というのが気になり確認した。</p>
 <h2><span id="前提">前提</span></h2>
 <ul>
 <li>Delta Lakeバージョン：0.8.0</li>
 </ul>
 <h2><span id="createrelationから確認する">createRelationから確認する</span></h2>
-<p><code>org.apache.spark.sql.delta.sources.DeltaDataSource#createRelation</code> をエントリポイントとする。</p>
-<p>ポイントは、<code>DeltaLog</code> がインスタンス化されるときである。</p>
+<p><code>org.apache.spark.sql.delta.sources.DeltaDataSource#createRelation</code>
+をエントリポイントとする。</p>
+<p>ポイントは、<code>DeltaLog</code>
+がインスタンス化されるときである。</p>
 <p>まず最初にインスタンス化されるのは以下。</p>
 <p>org/apache/spark/sql/delta/sources/DeltaDataSource.scala:141</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> deltaLog = <span class="type">DeltaLog</span>.forTable(sqlContext.sparkSession, path)</span><br></pre></td></tr></table></figure>
-<p><code>org.apache.spark.sql.delta.DeltaLog</code> は、 <code>org.apache.spark.sql.delta.SnapshotManagement</code> トレイトをミックスインしている。 当該トレイトには、 <code>currentSnapshot</code> というメンバ変数があり、これは <code>org.apache.spark.sql.delta.SnapshotManagement#getSnapshotAtInit</code> メソッドを利用し得られる。</p>
+<p><code>org.apache.spark.sql.delta.DeltaLog</code> は、
+<code>org.apache.spark.sql.delta.SnapshotManagement</code>
+トレイトをミックスインしている。 当該トレイトには、
+<code>currentSnapshot</code> というメンバ変数があり、これは
+<code>org.apache.spark.sql.delta.SnapshotManagement#getSnapshotAtInit</code>
+メソッドを利用し得られる。</p>
 <p>org/apache/spark/sql/delta/SnapshotManagement.scala:47</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@volatile</span> <span class="keyword">protected</span> <span class="keyword">var</span> currentSnapshot: <span class="type">Snapshot</span> = getSnapshotAtInit</span><br></pre></td></tr></table></figure>
 <p>このメソッドは以下のように定義されている。</p>
 <p>org/apache/spark/sql/delta/SnapshotManagement.scala:184</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">def</span> <span class="title">getSnapshotAtInit</span></span>: <span class="type">Snapshot</span> = &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> segment = getLogSegmentFrom(lastCheckpoint)</span><br><span class="line">    <span class="keyword">val</span> startCheckpoint = segment.checkpointVersion</span><br><span class="line">      .map(v =&gt; <span class="string">s" starting from checkpoint <span class="subst">$v</span>."</span>).getOrElse(<span class="string">"."</span>)</span><br><span class="line">    logInfo(<span class="string">s"Loading version <span class="subst">$&#123;segment.version&#125;</span><span class="subst">$startCheckpoint</span>"</span>)</span><br><span class="line">    <span class="keyword">val</span> snapshot = createSnapshot(</span><br><span class="line">      segment,</span><br><span class="line">      minFileRetentionTimestamp,</span><br><span class="line">      segment.lastCommitTimestamp)</span><br><span class="line"></span><br><span class="line">    lastUpdateTimestamp = clock.getTimeMillis()</span><br><span class="line">    logInfo(<span class="string">s"Returning initial snapshot <span class="subst">$snapshot</span>"</span>)</span><br><span class="line">    snapshot</span><br><span class="line">  &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> e: <span class="type">FileNotFoundException</span> =&gt;</span><br><span class="line">      logInfo(<span class="string">s"Creating initial snapshot without metadata, because the directory is empty"</span>)</span><br><span class="line">      <span class="comment">// The log directory may not exist</span></span><br><span class="line">      <span class="keyword">new</span> <span class="type">InitialSnapshot</span>(logPath, <span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>ポイントは、スナップショットを作る際に用いられるセグメントである。 セグメントにバージョン情報が持たれている。</p>
+<p>ポイントは、スナップショットを作る際に用いられるセグメントである。
+セグメントにバージョン情報が持たれている。</p>
 <p>ここでは3行目の</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> segment = getLogSegmentFrom(lastCheckpoint)</span><br></pre></td></tr></table></figure>
-<p>にて <code>org.apache.spark.sql.delta.SnapshotManagement#getLogSegmentFrom</code> メソッドを用いて、 前回チェックポイントからセグメントの情報が生成される。</p>
+<p>にて
+<code>org.apache.spark.sql.delta.SnapshotManagement#getLogSegmentFrom</code>
+メソッドを用いて、
+前回チェックポイントからセグメントの情報が生成される。</p>
 <p>なお、参考までにLogSegmentクラスの定義は以下の通り。</p>
 <p>org/apache/spark/sql/delta/SnapshotManagement.scala:392</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">LogSegment</span>(<span class="params"></span></span></span><br><span class="line"><span class="class"><span class="params">    logPath: <span class="type">Path</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">    version: <span class="type">Long</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">    deltas: <span class="type">Seq</span>[<span class="type">FileStatus</span>],</span></span></span><br><span class="line"><span class="class"><span class="params">    checkpoint: <span class="type">Seq</span>[<span class="type">FileStatus</span>],</span></span></span><br><span class="line"><span class="class"><span class="params">    checkpointVersion: <span class="type">Option</span>[<span class="type">Long</span>],</span></span></span><br><span class="line"><span class="class"><span class="params">    lastCommitTimestamp: <span class="type">Long</span></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">hashCode</span></span>(): <span class="type">Int</span> = logPath.hashCode() * <span class="number">31</span> + (lastCommitTimestamp % <span class="number">10000</span>).toInt</span><br><span class="line"></span><br><span class="line">  (snip)</span><br></pre></td></tr></table></figure>
@@ -299,7 +312,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/04/When-DeltaLog-ID-is-created/" data-id="cl2nztnp600g75xqik7nthtfq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/04/When-DeltaLog-ID-is-created/" data-id="cl2o9pb8q00bo18rzkxyslhep" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -550,5 +563,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

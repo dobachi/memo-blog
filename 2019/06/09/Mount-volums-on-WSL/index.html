@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  Docker for WindowsをWSLから使う時のVolumeの扱い方  メモ Docker for WindowsをWSLから使う時のVolumeの扱い方 に起債されている通りだが、 うっかり -v /tmp/hoge:/hoge とかやると、Docker Desktopで使用しているDocker起動用の仮想マシン中の /tmp/hoge をマウントすることに">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker DesktopをWSLから利用している場合のマウントについて">
 <meta name="twitter:description" content="参考 メモ   参考  Docker for WindowsをWSLから使う時のVolumeの扱い方  メモ Docker for WindowsをWSLから使う時のVolumeの扱い方 に起債されている通りだが、 うっかり -v /tmp/hoge:/hoge とかやると、Docker Desktopで使用しているDocker起動用の仮想マシン中の /tmp/hoge をマウントすることに">
@@ -251,16 +251,21 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://qiita.com/gentaro/items/7dec88e663f59b472de6" target="_blank" rel="noopener">Docker for WindowsをWSLから使う時のVolumeの扱い方</a></li>
+<li><a href="https://qiita.com/gentaro/items/7dec88e663f59b472de6" target="_blank" rel="noopener">Docker for
+WindowsをWSLから使う時のVolumeの扱い方</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://qiita.com/gentaro/items/7dec88e663f59b472de6" target="_blank" rel="noopener">Docker for WindowsをWSLから使う時のVolumeの扱い方</a> に起債されている通りだが、 うっかり <code>-v /tmp/hoge:/hoge</code> とかやると、Docker Desktopで使用しているDocker起動用の仮想マシン中の <code>/tmp/hoge</code> をマウントすることになる。</p>
+<p><a href="https://qiita.com/gentaro/items/7dec88e663f59b472de6" target="_blank" rel="noopener">Docker
+for WindowsをWSLから使う時のVolumeの扱い方</a>
+に起債されている通りだが、 うっかり <code>-v /tmp/hoge:/hoge</code>
+とかやると、Docker Desktopで使用しているDocker起動用の仮想マシン中の
+<code>/tmp/hoge</code> をマウントすることになる。</p>
 
         
         </div>
@@ -271,7 +276,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/09/Mount-volums-on-WSL/" data-id="cl2nztnn800ag5xqib26oibqh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/09/Mount-volums-on-WSL/" data-id="cl2o9pb75007j18rz3z757t6h" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -522,5 +527,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -5,18 +5,18 @@
     
     <title>AWS Kinesisのコンシューマのサンプルを探す | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="公式ドキュメント Kinesis Clinet Library Javaでの実装例 C言語のバインディングはないのか？     公式ドキュメント Amazon Kinesis Data Streams コンシューマーの開発 を見ると、  Kinesis Client Library 1.x を使う場合 Kinesis Data Streams API および AWS SDK for Java">
+    <meta name="description" content="公式ドキュメント  Kinesis Clinet Library  Javaでの実装例 C言語のバインディングはないのか？     公式ドキュメント Amazon Kinesis Data Streams コンシューマーの開発 を見ると、  Kinesis Client Library 1.x を使う場合 Kinesis Data Streams API および AWS SDK for Ja">
 <meta name="keywords" content="AWS,Kinesis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AWS Kinesisのコンシューマのサンプルを探す">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/09/20/kinesis-consumer-samples/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="公式ドキュメント Kinesis Clinet Library Javaでの実装例 C言語のバインディングはないのか？     公式ドキュメント Amazon Kinesis Data Streams コンシューマーの開発 を見ると、  Kinesis Client Library 1.x を使う場合 Kinesis Data Streams API および AWS SDK for Java">
+<meta property="og:description" content="公式ドキュメント  Kinesis Clinet Library  Javaでの実装例 C言語のバインディングはないのか？     公式ドキュメント Amazon Kinesis Data Streams コンシューマーの開発 を見ると、  Kinesis Client Library 1.x を使う場合 Kinesis Data Streams API および AWS SDK for Ja">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AWS Kinesisのコンシューマのサンプルを探す">
-<meta name="twitter:description" content="公式ドキュメント Kinesis Clinet Library Javaでの実装例 C言語のバインディングはないのか？     公式ドキュメント Amazon Kinesis Data Streams コンシューマーの開発 を見ると、  Kinesis Client Library 1.x を使う場合 Kinesis Data Streams API および AWS SDK for Java">
+<meta name="twitter:description" content="公式ドキュメント  Kinesis Clinet Library  Javaでの実装例 C言語のバインディングはないのか？     公式ドキュメント Amazon Kinesis Data Streams コンシューマーの開発 を見ると、  Kinesis Client Library 1.x を使う場合 Kinesis Data Streams API および AWS SDK for Ja">
     
 
     
@@ -251,24 +251,30 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#公式ドキュメント">公式ドキュメント</a><ul>
-<li><a href="#kinesis-clinet-library">Kinesis Clinet Library</a><ul>
-<li><a href="#javaでの実装例">Javaでの実装例</a></li>
-<li><a href="#c言語のバインディングはないのか">C言語のバインディングはないのか？</a></li>
+<li><a href="#公式ドキュメント" id="toc-公式ドキュメント">公式ドキュメント</a>
+<ul>
+<li><a href="#kinesis-clinet-library" id="toc-kinesis-clinet-library">Kinesis Clinet Library</a>
+<ul>
+<li><a href="#javaでの実装例" id="toc-javaでの実装例">Javaでの実装例</a></li>
+<li><a href="#c言語のバインディングはないのか" id="toc-c言語のバインディングはないのか">C言語のバインディングはないのか？</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="公式ドキュメント">公式ドキュメント</span></h1>
-<p><a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/shared-fan-out-consumers.html" target="_blank" rel="noopener">Amazon Kinesis Data Streams コンシューマーの開発</a> を見ると、</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/shared-fan-out-consumers.html" target="_blank" rel="noopener">Amazon
+Kinesis Data Streams コンシューマーの開発</a> を見ると、</p>
 <ul>
 <li>Kinesis Client Library 1.x を使う場合</li>
 <li>Kinesis Data Streams API および AWS SDK for Javaを使う場合</li>
 </ul>
 <p>の2種類があることが分かりました。</p>
-<p>一旦、 <a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-java.html" target="_blank" rel="noopener">Kinesis Client Library 1.x を使う場合</a> を見てみることにします。</p>
+<p>一旦、 <a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-java.html" target="_blank" rel="noopener">Kinesis
+Client Library 1.x を使う場合</a> を見てみることにします。</p>
 <h2><span id="kinesis-clinet-library">Kinesis Clinet Library</span></h2>
-<p><a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-java.html" target="_blank" rel="noopener">Kinesis Client Library 1.x を使う場合</a> によると、以下の言語に対応しているように見えます。</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-java.html" target="_blank" rel="noopener">Kinesis
+Client Library 1.x を使う場合</a>
+によると、以下の言語に対応しているように見えます。</p>
 <ul>
 <li>Java</li>
 <li>Node.js</li>
@@ -277,11 +283,21 @@ ga('send', 'pageview');
 <li>Ruby</li>
 </ul>
 <h3><span id="javaでの実装例">Javaでの実装例</span></h3>
-<p><a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-java.html" target="_blank" rel="noopener">Java での Kinesis Client Library コンシューマーの開発</a> を見ると、Javaライブラリの使い方が載っていました。 Kinesisから読んでどこかに書き出すときに使えそうです。</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-java.html" target="_blank" rel="noopener">Java
+での Kinesis Client Library コンシューマーの開発</a>
+を見ると、Javaライブラリの使い方が載っていました。
+Kinesisから読んでどこかに書き出すときに使えそうです。</p>
 <h3><span id="c言語のバインディングはないのか">C言語のバインディングはないのか？</span></h3>
-<p>少々気になるのは、c言語のバインディングがないかもしれない、ことです。 <a href="https://github.com/awslabs/amazon-kinesis-client#amazon-kcl-support-for-other-languages" target="_blank" rel="noopener">Amazon KCL support for other languages</a> を参照すると、MultiLangDaemonなるものを立てて使え、とありました。 他にも、 <a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-py.html" target="_blank" rel="noopener">Python での Kinesis Client Library コンシューマーの開発</a> においても、</p>
+<p>少々気になるのは、c言語のバインディングがないかもしれない、ことです。
+<a href="https://github.com/awslabs/amazon-kinesis-client#amazon-kcl-support-for-other-languages" target="_blank" rel="noopener">Amazon
+KCL support for other languages</a>
+を参照すると、MultiLangDaemonなるものを立てて使え、とありました。
+他にも、 <a href="https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-record-processor-implementation-app-py.html" target="_blank" rel="noopener">Python
+での Kinesis Client Library コンシューマーの開発</a> においても、</p>
 <blockquote>
-<p>KCL は Java ライブラリです。Java 以外の言語のサポートは、MultiLangDaemon という多言語インターフェイスを使用して提供されます。</p>
+<p>KCL は Java ライブラリです。Java
+以外の言語のサポートは、MultiLangDaemon
+という多言語インターフェイスを使用して提供されます。</p>
 </blockquote>
 <p>と記載されています。</p>
 <p>いずれにせよ、Java以外の開発では一癖ありそうな予感がしました。</p>
@@ -295,7 +311,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/09/20/kinesis-consumer-samples/" data-id="cl2nztnpx00ii5xqipuo1ro41" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/09/20/kinesis-consumer-samples/" data-id="cl2o9pb9m00dv18rzte0n8ze1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -546,5 +562,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

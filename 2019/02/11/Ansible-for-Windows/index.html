@@ -5,18 +5,18 @@
     
     <title>Ansible for Windows | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 最初の環境のはじめ方 Ansibleのインストール、実行環境 パッケージ管理  注意点 Ansible環境 Windows環境での実行ユーザ   シェルの実行 WSL導入   参考  WindowsをAnsibleで管理する方法を説明するブログ Windows10 に ゼロから Ansible をインストールする(Ansible for Windows) AnsibleでWind">
+    <meta name="description" content="参考 メモ  最初の環境のはじめ方  Ansibleのインストール、実行環境 パッケージ管理  注意点  Ansible環境 Windows環境での実行ユーザ   シェルの実行 WSL導入   参考  WindowsをAnsibleで管理する方法を説明するブログ Windows10 に ゼロから Ansible をインストールする(Ansible for Windows) AnsibleでW">
 <meta name="keywords" content="Windows,Ansible,Configuration Management">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ansible for Windows">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/02/11/Ansible-for-Windows/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 最初の環境のはじめ方 Ansibleのインストール、実行環境 パッケージ管理  注意点 Ansible環境 Windows環境での実行ユーザ   シェルの実行 WSL導入   参考  WindowsをAnsibleで管理する方法を説明するブログ Windows10 に ゼロから Ansible をインストールする(Ansible for Windows) AnsibleでWind">
+<meta property="og:description" content="参考 メモ  最初の環境のはじめ方  Ansibleのインストール、実行環境 パッケージ管理  注意点  Ansible環境 Windows環境での実行ユーザ   シェルの実行 WSL導入   参考  WindowsをAnsibleで管理する方法を説明するブログ Windows10 に ゼロから Ansible をインストールする(Ansible for Windows) AnsibleでW">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.441Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ansible for Windows">
-<meta name="twitter:description" content="参考 メモ 最初の環境のはじめ方 Ansibleのインストール、実行環境 パッケージ管理  注意点 Ansible環境 Windows環境での実行ユーザ   シェルの実行 WSL導入   参考  WindowsをAnsibleで管理する方法を説明するブログ Windows10 に ゼロから Ansible をインストールする(Ansible for Windows) AnsibleでWind">
+<meta name="twitter:description" content="参考 メモ  最初の環境のはじめ方  Ansibleのインストール、実行環境 パッケージ管理  注意点  Ansible環境 Windows環境での実行ユーザ   シェルの実行 WSL導入   参考  WindowsをAnsibleで管理する方法を説明するブログ Windows10 に ゼロから Ansible をインストールする(Ansible for Windows) AnsibleでW">
     
 
     
@@ -251,25 +251,29 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#最初の環境のはじめ方">最初の環境のはじめ方</a><ul>
-<li><a href="#ansibleのインストール実行環境">Ansibleのインストール、実行環境</a></li>
-<li><a href="#パッケージ管理">パッケージ管理</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#最初の環境のはじめ方" id="toc-最初の環境のはじめ方">最初の環境のはじめ方</a>
+<ul>
+<li><a href="#ansibleのインストール実行環境" id="toc-ansibleのインストール実行環境">Ansibleのインストール、実行環境</a></li>
+<li><a href="#パッケージ管理" id="toc-パッケージ管理">パッケージ管理</a></li>
 </ul></li>
-<li><a href="#注意点">注意点</a><ul>
-<li><a href="#ansible環境">Ansible環境</a></li>
-<li><a href="#windows環境での実行ユーザ">Windows環境での実行ユーザ</a></li>
+<li><a href="#注意点" id="toc-注意点">注意点</a>
+<ul>
+<li><a href="#ansible環境" id="toc-ansible環境">Ansible環境</a></li>
+<li><a href="#windows環境での実行ユーザ" id="toc-windows環境での実行ユーザ">Windows環境での実行ユーザ</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#シェルの実行">シェルの実行</a></li>
-<li><a href="#wsl導入">WSL導入</a></li>
+<li><a href="#シェルの実行" id="toc-シェルの実行">シェルの実行</a></li>
+<li><a href="#wsl導入" id="toc-wsl導入">WSL導入</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
 <li><a href="http://shigeluma-tech.hatenablog.com/entry/start-ansible-windows-server" target="_blank" rel="noopener">WindowsをAnsibleで管理する方法を説明するブログ</a></li>
-<li><a href="https://qiita.com/Tkm_Kit/items/58e1fb7990387a2e9c76" target="_blank" rel="noopener">Windows10 に ゼロから Ansible をインストールする(Ansible for Windows)</a></li>
+<li><a href="https://qiita.com/Tkm_Kit/items/58e1fb7990387a2e9c76" target="_blank" rel="noopener">Windows10 に
+ゼロから Ansible をインストールする(Ansible for Windows)</a></li>
 <li><a href="https://docs.ansible.com/ansible/latest/user_guide/windows_usage.html" target="_blank" rel="noopener">AnsibleでWindowsのシェル実行</a></li>
 <li><a href="https://chocolatey.org/" target="_blank" rel="noopener">chocolatey</a></li>
 <li><a href="https://laboradian.com/simple-way-to-use-wsl-may-2018/" target="_blank" rel="noopener">WSL導入手順の説明のブログ</a></li>
@@ -278,26 +282,33 @@ ga('send', 'pageview');
 <p><a href="http://shigeluma-tech.hatenablog.com/entry/start-ansible-windows-server" target="_blank" rel="noopener">WindowsをAnsibleで管理する方法を説明するブログ</a>で基本的に問題ない。</p>
 <h2><span id="最初の環境のはじめ方">最初の環境のはじめ方</span></h2>
 <h3><span id="ansibleのインストール-実行環境">Ansibleのインストール、実行環境</span></h3>
-<p><a href="https://qiita.com/Tkm_Kit/items/58e1fb7990387a2e9c76" target="_blank" rel="noopener">Windows10 に ゼロから Ansible をインストールする(Ansible for Windows)</a> ではDocker for Windowsで環境構築をしているが、 WSLを使う方法はどうだろうか？</p>
+<p><a href="https://qiita.com/Tkm_Kit/items/58e1fb7990387a2e9c76" target="_blank" rel="noopener">Windows10 に
+ゼロから Ansible をインストールする(Ansible for Windows)</a> ではDocker
+for Windowsで環境構築をしているが、 WSLを使う方法はどうだろうか？</p>
 <h3><span id="パッケージ管理">パッケージ管理</span></h3>
 <p><a href="https://chocolatey.org/" target="_blank" rel="noopener">chocolatey</a>を利用すればよいだろう。</p>
 <h2><span id="注意点">注意点</span></h2>
 <h3><span id="ansible環境">Ansible環境</span></h3>
-<p>自身の環境では、UbuntuのレポジトリからインストールしたAnsibleを使用していたが、 pywinrmを有効にする手間がかかりそうだったので、condaで環境を作った。</p>
+<p>自身の環境では、UbuntuのレポジトリからインストールしたAnsibleを使用していたが、
+pywinrmを有効にする手間がかかりそうだったので、condaで環境を作った。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ conda create -n ansible python</span><br><span class="line">$ conda activate ansible</span><br><span class="line">$ pip install ansible pywinrm</span><br></pre></td></tr></table></figure>
 <p>とした。</p>
 <h3><span id="windows環境での実行ユーザ">Windows環境での実行ユーザ</span></h3>
-<p>MSアカウントに対しての実行が手間取りそうだったので、 ここではAdministratorで実験した。</p>
+<p>MSアカウントに対しての実行が手間取りそうだったので、
+ここではAdministratorで実験した。</p>
 <p>Ansibleのインベントリは以下のようなものを用意した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[win]</span><br><span class="line">&lt;対象となるWin環境&gt;</span><br><span class="line"></span><br><span class="line">[win:vars]</span><br><span class="line">ansible_ssh_user=Administrator</span><br><span class="line">ansible_ssh_port=5986</span><br><span class="line">ansible_connection=winrm</span><br><span class="line">ansible_winrm_transport=ntlm</span><br><span class="line">ansible_winrm_server_cert_validation=ignore</span><br></pre></td></tr></table></figure>
-<p>Pingコマンドは以下の通り。 （パスワードを聞かれるので予め設定したAdministratorのパスワードを入れる）</p>
+<p>Pingコマンドは以下の通り。
+（パスワードを聞かれるので予め設定したAdministratorのパスワードを入れる）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ansible -i hosts.win -m win_ping win -k</span><br></pre></td></tr></table></figure>
 <p>パッケージインストールの動作確認は以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ansible -i hosts.win -m win_chocolatey -a &quot;name=googlechrome state=present&quot; win -k</span><br><span class="line">$ ansible -i hosts.win -m win_chocolatey -a &quot;name=vim state=present&quot; win -k</span><br></pre></td></tr></table></figure>
 <h1><span id="シェルの実行">シェルの実行</span></h1>
-<p><a href="https://docs.ansible.com/ansible/latest/user_guide/windows_usage.html" target="_blank" rel="noopener">AnsibleでWindowsのシェル実行</a> によると、<code>win_shell</code>、<code>win_command</code>、<code>script</code>モジュールを使うと良いようだ。</p>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/windows_usage.html" target="_blank" rel="noopener">AnsibleでWindowsのシェル実行</a>
+によると、<code>win_shell</code>、<code>win_command</code>、<code>script</code>モジュールを使うと良いようだ。</p>
 <h1><span id="wsl導入">WSL導入</span></h1>
-<p><a href="https://laboradian.com/simple-way-to-use-wsl-may-2018/" target="_blank" rel="noopener">WSL導入手順の説明のブログ</a> の通り、PowerShellをAnsibleの<code>win_shell</code>モジュール使ってインストールする。</p>
+<p><a href="https://laboradian.com/simple-way-to-use-wsl-may-2018/" target="_blank" rel="noopener">WSL導入手順の説明のブログ</a>
+の通り、PowerShellをAnsibleの<code>win_shell</code>モジュール使ってインストールする。</p>
 
         
         </div>
@@ -308,7 +319,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/11/Ansible-for-Windows/" data-id="cl2nztnk6001n5xqiz3an9fm2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/11/Ansible-for-Windows/" data-id="cl2o9pb4i001818rz7rris79y" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -559,5 +570,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

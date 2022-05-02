@@ -250,35 +250,50 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#leaky-predictor">Leaky Predictor</a><ul>
-<li><a href="#どう対処するのか">どう対処するのか？</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#leaky-predictor" id="toc-leaky-predictor">Leaky
+Predictor</a>
+<ul>
+<li><a href="#どう対処するのか" id="toc-どう対処するのか">どう対処するのか？</a></li>
 </ul></li>
-<li><a href="#leaky-validation-strategy">Leaky Validation Strategy</a><ul>
-<li><a href="#どう対処するのか-1">どう対処するのか？</a></li>
+<li><a href="#leaky-validation-strategy" id="toc-leaky-validation-strategy">Leaky Validation Strategy</a>
+<ul>
+<li><a href="#どう対処するのか-1" id="toc-どう対処するのか-1">どう対処するのか？</a></li>
 </ul></li>
-<li><a href="#クレジットカードのデータの例">クレジットカードのデータの例</a></li>
+<li><a href="#クレジットカードのデータの例" id="toc-クレジットカードのデータの例">クレジットカードのデータの例</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://www.kaggle.com/dansbecker/data-leakage" target="_blank" rel="noopener">Kaggleのdansbecker data-leakage</a></li>
+<li><a href="https://www.kaggle.com/dansbecker/data-leakage" target="_blank" rel="noopener">Kaggleのdansbecker
+data-leakage</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="leaky-predictor">Leaky Predictor</span></h2>
 <p>例では、肺炎発症と抗生物質摂取のケースが挙げられていた。</p>
-<p>肺炎が発症したあとで、抗生物質を摂取する。 抗生物質を摂取したかどうかは、肺炎発症の前後で値が変わる。 値が変わることを考慮しないと、抗生物質を摂取しない人は肺炎にならない、というモデルが出来上がる可能性がある。</p>
+<p>肺炎が発症したあとで、抗生物質を摂取する。
+抗生物質を摂取したかどうかは、肺炎発症の前後で値が変わる。
+値が変わることを考慮しないと、抗生物質を摂取しない人は肺炎にならない、というモデルが出来上がる可能性がある。</p>
 <h3><span id="どう対処するのか">どう対処するのか？</span></h3>
-<p>汎用的な対処方法はなく、データや要件に強く依存する。 Leaky Predictorを発見する <strong>コツ</strong> は、強い相関のある特徴同士に着目する、 とても高いaccuracyを得られたときに気をつける、など。</p>
+<p>汎用的な対処方法はなく、データや要件に強く依存する。 Leaky
+Predictorを発見する <strong>コツ</strong>
+は、強い相関のある特徴同士に着目する、
+とても高いaccuracyを得られたときに気をつける、など。</p>
 <h2><span id="leaky-validation-strategy">Leaky Validation Strategy</span></h2>
 <p>例では、train-testスプリットの前に前処理を行おうケースが挙げられていた。</p>
-<p>バリデーション対象には、前処理も含めないといけない。 そうでないと、バリデーションで高いモデル性能が得られたとしても、 実際の判定処理で期待したモデル性能が得られない可能性がある。</p>
+<p>バリデーション対象には、前処理も含めないといけない。
+そうでないと、バリデーションで高いモデル性能が得られたとしても、
+実際の判定処理で期待したモデル性能が得られない可能性がある。</p>
 <h3><span id="どう対処するのか">どう対処するのか？</span></h3>
-<p>パイプラインを組むときに、例えばクロスバリデーションの処理内に、 前処理を入れるようにする、など。</p>
+<p>パイプラインを組むときに、例えばクロスバリデーションの処理内に、
+前処理を入れるようにする、など。</p>
 <h2><span id="クレジットカードのデータの例">クレジットカードのデータの例</span></h2>
-<p>クレジットカードの使用がアプリケーションで認められたかどうか、を判定する例。 ここでは、クレジットカードの使用量の特徴が、Leaky Predictorとして挙げられていた。</p>
+<p>クレジットカードの使用がアプリケーションで認められたかどうか、を判定する例。
+ここでは、クレジットカードの使用量の特徴が、Leaky
+Predictorとして挙げられていた。</p>
 
         
         </div>
@@ -289,7 +304,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/14/dansbecker-data-leakage/" data-id="cl2nztnpq00hy5xqigw356oji" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/14/dansbecker-data-leakage/" data-id="cl2o9pb9a00d218rzz8n6gwbp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -410,20 +425,24 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#いつ使うか">いつ使うか？</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#いつ使うか" id="toc-いつ使うか">いつ使うか？</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://www.kaggle.com/dansbecker/cross-validation" target="_blank" rel="noopener">Kaggleのdansbecker cross-validation</a></li>
+<li><a href="https://www.kaggle.com/dansbecker/cross-validation" target="_blank" rel="noopener">Kaggleのdansbecker
+cross-validation</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="いつ使うか">いつ使うか？</span></h2>
-<p>端的には、データ量が少ないときの効果が大きい。 逆に、データ量が大きいときは、用いなくてもよいかもしれない。</p>
-<p>結果論で言えば、クロスバリデーションして結果が書く回で変わらなかったとき、 それはtrain-testスプリットで十分とも言える。</p>
+<p>端的には、データ量が少ないときの効果が大きい。
+逆に、データ量が大きいときは、用いなくてもよいかもしれない。</p>
+<p>結果論で言えば、クロスバリデーションして結果が書く回で変わらなかったとき、
+それはtrain-testスプリットで十分とも言える。</p>
 
         
         </div>
@@ -434,7 +453,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/13/dansbecker-cross-validation/" data-id="cl2nztnpk00he5xqi1kdkt4a1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/13/dansbecker-cross-validation/" data-id="cl2o9pb9800cy18rzm1t6pdec" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -555,32 +574,39 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#pdpはモデルが学習されたあとに計算可能">PDPはモデルが学習されたあとに計算可能</a></li>
-<li><a href="#pdpの計算方法">PDPの計算方法</a></li>
-<li><a href="#タイタニックの例">タイタニックの例</a></li>
-<li><a href="#考察に関する議論">「考察」に関する議論</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#pdpはモデルが学習されたあとに計算可能" id="toc-pdpはモデルが学習されたあとに計算可能">PDPはモデルが学習されたあとに計算可能</a></li>
+<li><a href="#pdpの計算方法" id="toc-pdpの計算方法">PDPの計算方法</a></li>
+<li><a href="#タイタニックの例" id="toc-タイタニックの例">タイタニックの例</a></li>
+<li><a href="#考察に関する議論" id="toc-考察に関する議論">「考察」に関する議論</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://www.kaggle.com/dansbecker/partial-dependence-plots" target="_blank" rel="noopener">Kaggleのdansbecker partial-dependence-plots</a></li>
-<li><a href="https://linus-mk.hatenablog.com/entry/2018/10/07/222909" target="_blank" rel="noopener">機械学習モデルを解釈する方法 Permutation Importance / Partial Dependence Plot</a></li>
+<li><a href="https://www.kaggle.com/dansbecker/partial-dependence-plots" target="_blank" rel="noopener">Kaggleのdansbecker
+partial-dependence-plots</a></li>
+<li><a href="https://linus-mk.hatenablog.com/entry/2018/10/07/222909" target="_blank" rel="noopener">機械学習モデルを解釈する方法
+Permutation Importance / Partial Dependence Plot</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="pdpはモデルが学習されたあとに計算可能">PDPはモデルが学習されたあとに計算可能</span></h2>
 <p>ただし、様々なモデルに適用可能。</p>
 <h2><span id="pdpの計算方法">PDPの計算方法</span></h2>
 <p>以下のような感じ。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">my_plots = plot_partial_dependence(my_model,       </span><br><span class="line">                                   features=[0, 1, 2], # column numbers of plots we want to show</span><br><span class="line">                                   X=X,            # raw predictors data.</span><br><span class="line">                                   feature_names=[&apos;Distance&apos;, &apos;Landsize&apos;, &apos;BuildingArea&apos;], # labels on graphs</span><br><span class="line">                                   grid_resolution=10) # number of values to plot on x axis</span><br></pre></td></tr></table></figure></p>
-<p>注意点として挙げられていたのは、<code>grid_resolution</code>を細かくしたときに、 乱れたグラフが見られたとしても、その細かな挙動に対して文脈を考えすぎること。 どうしてもランダム性があるので、細かな挙動にいちいち気にしているとミスリードになる。</p>
-<p>なお、<code>partial_dependence</code>という関数を用いると、グラフを出力するのではなく、数値データそのものを得られる。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">my_plots2 = partial_dependence(my_model,       </span><br><span class="line">                                   target_variables=[0, 1, 2], # column numbers of plots we want to show</span><br><span class="line">                                   X=X,            # raw predictors data.</span><br><span class="line">                                   grid_resolution=10) # number of values to plot on x axis</span><br></pre></td></tr></table></figure></p>
+<p>注意点として挙げられていたのは、<code>grid_resolution</code>を細かくしたときに、
+乱れたグラフが見られたとしても、その細かな挙動に対して文脈を考えすぎること。
+どうしてもランダム性があるので、細かな挙動にいちいち気にしているとミスリードになる。</p>
+<p>なお、<code>partial_dependence</code>という関数を用いると、グラフを出力するのではなく、数値データそのものを得られる。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">my_plots2 = partial_dependence(my_model,       </span><br><span class="line">                                   target_variables=[0, 1, 2], # column numbers of plots we want to show</span><br><span class="line">                                   X=X,            # raw predictors data.</span><br><span class="line">                                   grid_resolution=10) # number of values to plot on x axis</span><br></pre></td></tr></table></figure></p>
 <p>なお、微妙にオプションが異なることに注意…。</p>
 <h2><span id="タイタニックの例">タイタニックの例</span></h2>
 <p>PDPを見ることで、年齢や支払い料金と生存結果の関係を解釈する例が記載されていた。</p>
 <h2><span id="考察に関する議論">「考察」に関する議論</span></h2>
-<p>PDPで得られた結果を考察すること自体について、議論があるようだ。 意味のある・なし、という点において。</p>
+<p>PDPで得られた結果を考察すること自体について、議論があるようだ。
+意味のある・なし、という点において。</p>
 
         
         </div>
@@ -591,7 +617,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/13/dansbecker-partial-dependence-plots/" data-id="cl2nztnpp00hu5xqirof1o0zs" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/13/dansbecker-partial-dependence-plots/" data-id="cl2o9pb9d00d918rzcwmqq703" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -712,15 +738,17 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#チューニングパラメータ">チューニングパラメータ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#チューニングパラメータ" id="toc-チューニングパラメータ">チューニングパラメータ</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://www.kaggle.com/dansbecker/xgboost" target="_blank" rel="noopener">Kaggleのdansbecker xgboost</a></li>
+<li><a href="https://www.kaggle.com/dansbecker/xgboost" target="_blank" rel="noopener">Kaggleのdansbecker
+xgboost</a></li>
 <li><a href="https://qiita.com/yh0sh/items/1df89b12a8dcd15bd5aa" target="_blank" rel="noopener">XGBoostの主な特徴と理論の概要</a></li>
 <li><a href="http://kefism.hatenablog.com/entry/2017/06/11/182959" target="_blank" rel="noopener">XGBoostの概要</a>
 <ul>
@@ -737,7 +765,8 @@ ga('send', 'pageview');
 </ul></li>
 <li><code>early_stopping_rounds</code>
 <ul>
-<li><code>n_estimators</code> を大きめにしておいて、本パラメータで学習を止めるのが良さそう</li>
+<li><code>n_estimators</code>
+を大きめにしておいて、本パラメータで学習を止めるのが良さそう</li>
 </ul></li>
 <li><code>learning_rate</code>
 <ul>
@@ -758,7 +787,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/12/dansbecker-xgboost/" data-id="cl2nztnpn00hq5xqio41kyn0k" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/12/dansbecker-xgboost/" data-id="cl2o9pb9g00de18rzvghbzmln" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -879,12 +908,13 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#カテゴリ値の判定にカージナリティを利用">カテゴリ値の判定にカージナリティを利用</a></li>
-<li><a href="#カラムのdtype確認">カラムのdtype確認</a></li>
-<li><a href="#pandasのget_dummies">Pandasのget_dummies</a></li>
-<li><a href="#学習データとテストデータの列の並びを揃える">学習データとテストデータの列の並びを揃える</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#カテゴリ値の判定にカージナリティを利用" id="toc-カテゴリ値の判定にカージナリティを利用">カテゴリ値の判定にカージナリティを利用</a></li>
+<li><a href="#カラムのdtype確認" id="toc-カラムのdtype確認">カラムのdtype確認</a></li>
+<li><a href="#pandasのget_dummies" id="toc-pandasのget_dummies">Pandasのget_dummies</a></li>
+<li><a href="#学習データとテストデータの列の並びを揃える" id="toc-学習データとテストデータの列の並びを揃える">学習データとテストデータの列の並びを揃える</a></li>
 </ul></li>
 </ul>
 </div>
@@ -895,7 +925,9 @@ ga('send', 'pageview');
 <h1><span id="メモ">メモ</span></h1>
 <p>one hot encodingについて。 Kaggleのラーニングコースを読んでみた。</p>
 <h2><span id="カテゴリ値の判定にカージナリティを利用">カテゴリ値の判定にカージナリティを利用</span></h2>
-<p>コメントにもやや恣意的な…と書かれてはいたが、 カージナリティが低く、dtypeが objectであるカラムをカテゴリ値としたようだ。</p>
+<p>コメントにもやや恣意的な…と書かれてはいたが、
+カージナリティが低く、dtypeが
+objectであるカラムをカテゴリ値としたようだ。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">low_cardinality_cols = [cname for cname in candidate_train_predictors.columns if </span><br><span class="line">                                candidate_train_predictors[cname].nunique() &lt; 10 and</span><br><span class="line">                                candidate_train_predictors[cname].dtype == &quot;object&quot;]</span><br><span class="line">numeric_cols = [cname for cname in candidate_train_predictors.columns if </span><br><span class="line">                                candidate_train_predictors[cname].dtype in [&apos;int64&apos;, &apos;float64&apos;]]</span><br></pre></td></tr></table></figure>
 <h2><span id="カラムのdtype確認">カラムのdtype確認</span></h2>
 <p>こんな感じで確かめられる。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_predictors.dtypes.sample(10)</span><br></pre></td></tr></table></figure></p>
@@ -903,7 +935,10 @@ ga('send', 'pageview');
 <h2><span id="pandasのget_dummies">Pandasのget_dummies</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">one_hot_encoded_training_predictors = pd.get_dummies(train_predictors)</span><br></pre></td></tr></table></figure>
 <h2><span id="学習データとテストデータの列の並びを揃える">学習データとテストデータの列の並びを揃える</span></h2>
-<p>学習データとテストデータをそれぞれone hot encodingすると、 それぞれの列の並びが揃わないことがある。 scikit-learnは、列の並びに敏感である。 そこで、DataFrame#alignを用いて並びを揃える。</p>
+<p>学習データとテストデータをそれぞれone hot encodingすると、
+それぞれの列の並びが揃わないことがある。
+scikit-learnは、列の並びに敏感である。
+そこで、DataFrame#alignを用いて並びを揃える。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">one_hot_encoded_training_predictors = pd.get_dummies(train_predictors)</span><br><span class="line">one_hot_encoded_test_predictors = pd.get_dummies(test_predictors)</span><br><span class="line">final_train, final_test = one_hot_encoded_training_predictors.align(one_hot_encoded_test_predictors,</span><br><span class="line">                                                                    join=&apos;left&apos;, </span><br><span class="line">                                                                    axis=1)</span><br></pre></td></tr></table></figure>
 <p>なお、joinオプションはSQLにおけるJOINのルールと同等だと考えれば良い。</p>
 
@@ -916,7 +951,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/12/dansbecker-using-categorical-data-with-one-hot-encoding/" data-id="cl2nztnpr00i25xqie3u7rjn1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/12/dansbecker-using-categorical-data-with-one-hot-encoding/" data-id="cl2o9pb9f00dc18rzqjscixtc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1037,11 +1072,12 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#欠落のあるカラムの排除">欠落のあるカラムの排除</a></li>
-<li><a href="#欠落を埋める">欠落を埋める</a></li>
-<li><a href="#欠落を埋めつつ欠落していたことを真理値として保持">欠落を埋めつつ、欠落していたことを真理値として保持</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#欠落のあるカラムの排除" id="toc-欠落のあるカラムの排除">欠落のあるカラムの排除</a></li>
+<li><a href="#欠落を埋める" id="toc-欠落を埋める">欠落を埋める</a></li>
+<li><a href="#欠落を埋めつつ欠落していたことを真理値として保持" id="toc-欠落を埋めつつ欠落していたことを真理値として保持">欠落を埋めつつ、欠落していたことを真理値として保持</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1051,9 +1087,11 @@ ga('send', 'pageview');
 <li><a href="https://scikit-learn.org/stable/modules/impute.html" target="_blank" rel="noopener">scikit-learnのimputeの説明</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://www.kaggle.com/dansbecker/handling-missing-values" target="_blank" rel="noopener">Kaggleのhandling-missing-values</a> の内容から気になった箇所をメモ。</p>
+<p><a href="https://www.kaggle.com/dansbecker/handling-missing-values" target="_blank" rel="noopener">Kaggleのhandling-missing-values</a>
+の内容から気になった箇所をメモ。</p>
 <h2><span id="欠落のあるカラムの排除">欠落のあるカラムの排除</span></h2>
-<p>最もシンプルな方法として、欠落のあるカラムを排除する方法が挙げられていた。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cols_with_missing = [col for col in X_train.columns </span><br><span class="line">                                 if X_train[col].isnull().any()]</span><br><span class="line">reduced_X_train = X_train.drop(cols_with_missing, axis=1)</span><br><span class="line">reduced_X_test  = X_test.drop(cols_with_missing, axis=1)</span><br></pre></td></tr></table></figure></p>
+<p>最もシンプルな方法として、欠落のあるカラムを排除する方法が挙げられていた。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cols_with_missing = [col for col in X_train.columns </span><br><span class="line">                                 if X_train[col].isnull().any()]</span><br><span class="line">reduced_X_train = X_train.drop(cols_with_missing, axis=1)</span><br><span class="line">reduced_X_test  = X_test.drop(cols_with_missing, axis=1)</span><br></pre></td></tr></table></figure></p>
 <p><code>X_train[col].isnull().any()</code>のところで、カラム内の値のいずれかがNULL値かどうかを確認している。</p>
 <h2><span id="欠落を埋める">欠落を埋める</span></h2>
 <p>欠落を埋める。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.impute import SimpleImputer</span><br><span class="line"></span><br><span class="line">my_imputer = SimpleImputer()</span><br><span class="line">imputed_X_train = my_imputer.fit_transform(X_train)</span><br><span class="line">imputed_X_test = my_imputer.transform(X_test)</span><br></pre></td></tr></table></figure></p>
@@ -1071,7 +1109,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/12/dansbecker-handling-missing-values/" data-id="cl2nztnpm00hm5xqibz9rescd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/12/dansbecker-handling-missing-values/" data-id="cl2o9pb9b00d518rzozpo7n4t" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1192,21 +1230,25 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#エントリポイント">エントリポイント</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#エントリポイント" id="toc-エントリポイント">エントリポイント</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://www.kaggle.com/learn/machine-learning" target="_blank" rel="noopener">Kaggle Learn (Machine Learning)</a></li>
+<li><a href="https://www.kaggle.com/learn/machine-learning" target="_blank" rel="noopener">Kaggle Learn
+(Machine Learning)</a></li>
 <li><a href="https://qiita.com/jeayoon/items/17d24a43c1b71bc37337" target="_blank" rel="noopener">Kaggleを始める人に役に立つ記事</a></li>
-<li><a href="https://www.kaggle.com/learn/overview" target="_blank" rel="noopener">Faster Data Science Education</a></li>
+<li><a href="https://www.kaggle.com/learn/overview" target="_blank" rel="noopener">Faster Data Science
+Education</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="エントリポイント">エントリポイント</span></h2>
-<p>Kaggleの環境やお作法？になれる目的で、<a href="https://www.kaggle.com/learn/overview" target="_blank" rel="noopener">Faster Data Science Education</a>を見始めた。</p>
+<p>Kaggleの環境やお作法？になれる目的で、<a href="https://www.kaggle.com/learn/overview" target="_blank" rel="noopener">Faster Data Science
+Education</a>を見始めた。</p>
 
         
         </div>
@@ -1217,7 +1259,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/10/Introductoin-Kaggle/" data-id="cl2nztnmd007o5xqik5htj7mr" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/10/Introductoin-Kaggle/" data-id="cl2o9pb65005718rz2ao7cg8s" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1327,7 +1369,6 @@ ga('send', 'pageview');
         
             
             
-
         
         </div>
         <footer class="article-footer">
@@ -1337,7 +1378,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/08/Word2Vec-with-Python/" data-id="cl2nztnpb00gn5xqi4xkyssb3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/08/Word2Vec-with-Python/" data-id="cl2o9pb8w00c318rzcrtjuqxr" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1458,8 +1499,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -1478,7 +1519,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/07/Init-git-log-of-an-existing-repository/" data-id="cl2nztnmb007g5xqip2xi3b2y" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/07/Init-git-log-of-an-existing-repository/" data-id="cl2o9pb62005118rz626up0rd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1599,8 +1640,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -1609,7 +1650,8 @@ ga('send', 'pageview');
 <li><a href="http://propg.ee-mall.info/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0/python-inflector%E3%81%99%E3%82%8B%E5%8D%98%E6%95%B0%E5%BD%A2%E3%82%92%E8%A4%87%E6%95%B0%E5%BD%A2%E3%81%AB%E5%A4%89%E6%8F%9B%E3%81%97%E3%81%9F%E3%82%8A/" target="_blank" rel="noopener">Inflectorする(単数形を複数形に変換したり..)</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><code>conda</code>コマンドではインストールできなかったので、<code>pip</code>コマンドでインストールした。 使い方は、公式ウェブサイトの通り。</p>
+<p><code>conda</code>コマンドではインストールできなかったので、<code>pip</code>コマンドでインストールした。
+使い方は、公式ウェブサイトの通り。</p>
 <p>なお、関係ない単語にもそのまま適用してみたが動くは動くようだ。</p>
 
         
@@ -1621,7 +1663,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/06/Singularization-with-Python/" data-id="cl2nztnnx00cs5xqidbh0kbb0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/06/Singularization-with-Python/" data-id="cl2o9pb7t009518rzo2nq9iah" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1851,5 +1893,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

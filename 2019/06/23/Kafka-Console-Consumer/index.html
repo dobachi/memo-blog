@@ -5,18 +5,18 @@
     
     <title>Kafkaコンソールコンシューマを起点とした確認 | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ ConsoleConsumer KafkaConsumer トピックアサイン コンシューマ故障の検知     参考 メモ 2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。 ConsoleConsumer コンシューマの実装を確認するにあたっては、コンソール・コンシューマが良いのではないか。 bin/kafka-console-consume">
+    <meta name="description" content="参考 メモ  ConsoleConsumer KafkaConsumer  トピックアサイン コンシューマ故障の検知     参考 メモ 2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。 ConsoleConsumer コンシューマの実装を確認するにあたっては、コンソール・コンシューマが良いのではないか。 bin/kafka-console-consu">
 <meta name="keywords" content="Kafka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kafkaコンソールコンシューマを起点とした確認">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/06/23/Kafka-Console-Consumer/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ ConsoleConsumer KafkaConsumer トピックアサイン コンシューマ故障の検知     参考 メモ 2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。 ConsoleConsumer コンシューマの実装を確認するにあたっては、コンソール・コンシューマが良いのではないか。 bin/kafka-console-consume">
+<meta property="og:description" content="参考 メモ  ConsoleConsumer KafkaConsumer  トピックアサイン コンシューマ故障の検知     参考 メモ 2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。 ConsoleConsumer コンシューマの実装を確認するにあたっては、コンソール・コンシューマが良いのではないか。 bin/kafka-console-consu">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafkaコンソールコンシューマを起点とした確認">
-<meta name="twitter:description" content="参考 メモ ConsoleConsumer KafkaConsumer トピックアサイン コンシューマ故障の検知     参考 メモ 2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。 ConsoleConsumer コンシューマの実装を確認するにあたっては、コンソール・コンシューマが良いのではないか。 bin/kafka-console-consume">
+<meta name="twitter:description" content="参考 メモ  ConsoleConsumer KafkaConsumer  トピックアサイン コンシューマ故障の検知     参考 メモ 2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。 ConsoleConsumer コンシューマの実装を確認するにあたっては、コンソール・コンシューマが良いのではないか。 bin/kafka-console-consu">
     
 
     
@@ -251,69 +251,119 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#consoleconsumer">ConsoleConsumer</a></li>
-<li><a href="#kafkaconsumer">KafkaConsumer</a><ul>
-<li><a href="#トピックアサイン">トピックアサイン</a></li>
-<li><a href="#コンシューマ故障の検知">コンシューマ故障の検知</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#consoleconsumer" id="toc-consoleconsumer">ConsoleConsumer</a></li>
+<li><a href="#kafkaconsumer" id="toc-kafkaconsumer">KafkaConsumer</a>
+<ul>
+<li><a href="#トピックアサイン" id="toc-トピックアサイン">トピックアサイン</a></li>
+<li><a href="#コンシューマ故障の検知" id="toc-コンシューマ故障の検知">コンシューマ故障の検知</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <h1><span id="メモ">メモ</span></h1>
-<p>2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。</p>
+<p>2019/6/23時点でのtrunkで再確認した内容。
+ほぼ昔のメモのままコピペ・・・。</p>
 <h2><span id="consoleconsumer">ConsoleConsumer</span></h2>
 <p>コンシューマの実装を確認するにあたっては、コンソール・コンシューマが良いのではないか。</p>
 <p>bin/kafka-console-consumer.sh:21 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsoleConsumer &quot;$@&quot;</span><br></pre></td></tr></table></figure></p>
-<p>から、 kafka.tools.ConsoleConsumer クラスあたりを確認すると良いだろう。</p>
+<p>から、 kafka.tools.ConsoleConsumer
+クラスあたりを確認すると良いだろう。</p>
 <p>mainを確認すると、ConsumerConfigのインスタンスを生成し、runメソッドに渡すことがわかる。</p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:54 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val conf = new ConsumerConfig(args)</span><br><span class="line">try &#123;</span><br><span class="line">  run(conf)</span><br></pre></td></tr></table></figure></p>
-<p>ここで、ConsumerConfigはコンソールからパラメータを受け取るためのクラス。 実態はrunメソッドである。</p>
-<p>まず大事な箇所として、 KafkaConsumer クラスのインスタンスを生成している箇所がある。 ★</p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:67 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val consumer = new KafkaConsumer(consumerProps(conf), new ByteArrayDeserializer, new ByteArrayDeserializer)</span><br></pre></td></tr></table></figure></p>
-<p>この KafkaConsumer クラスがコンシューマの実態である。 なお、コンソール・コンシューマでは、これをラップした便利クラス ConsumerWrapper が定義されており、 そちらを通じて主に使う。</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:54
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val conf = new ConsumerConfig(args)</span><br><span class="line">try &#123;</span><br><span class="line">  run(conf)</span><br></pre></td></tr></table></figure></p>
+<p>ここで、ConsumerConfigはコンソールからパラメータを受け取るためのクラス。
+実態はrunメソッドである。</p>
+<p>まず大事な箇所として、 KafkaConsumer
+クラスのインスタンスを生成している箇所がある。 ★</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:67
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val consumer = new KafkaConsumer(consumerProps(conf), new ByteArrayDeserializer, new ByteArrayDeserializer)</span><br></pre></td></tr></table></figure></p>
+<p>この KafkaConsumer クラスがコンシューマの実態である。
+なお、コンソール・コンシューマでは、これをラップした便利クラス
+ConsumerWrapper が定義されており、 そちらを通じて主に使う。</p>
 <p>またシャットダウンフックを定義している。</p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:75 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addShutdownHook(consumerWrapper, conf)</span><br></pre></td></tr></table></figure></p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:87 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def addShutdownHook(consumer: ConsumerWrapper, conf: ConsumerConfig) &#123;</span><br><span class="line">  Runtime.getRuntime.addShutdownHook(new Thread() &#123;</span><br><span class="line">    override def run() &#123;</span><br><span class="line">      consumer.wakeup()</span><br><span class="line"></span><br><span class="line">      shutdownLatch.await()</span><br><span class="line"></span><br><span class="line">      if (conf.enableSystestEventsLogging) &#123;</span><br><span class="line">        System.out.println(&quot;shutdown_complete&quot;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:75
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addShutdownHook(consumerWrapper, conf)</span><br></pre></td></tr></table></figure></p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:87
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def addShutdownHook(consumer: ConsumerWrapper, conf: ConsumerConfig) &#123;</span><br><span class="line">  Runtime.getRuntime.addShutdownHook(new Thread() &#123;</span><br><span class="line">    override def run() &#123;</span><br><span class="line">      consumer.wakeup()</span><br><span class="line"></span><br><span class="line">      shutdownLatch.await()</span><br><span class="line"></span><br><span class="line">      if (conf.enableSystestEventsLogging) &#123;</span><br><span class="line">        System.out.println(&quot;shutdown_complete&quot;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>これはグレースフルにシャットダウンするには大切。 ★</p>
 <p>またデータ処理の実態は、以下の process メソッドである。</p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:77 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">try process(conf.maxMessages, conf.formatter, consumerWrapper, System.out, conf.skipMessageOnError)</span><br></pre></td></tr></table></figure></p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:101 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def process(maxMessages: Integer, formatter: MessageFormatter, consumer: ConsumerWrapper, output: PrintStream,</span><br><span class="line">            skipMessageOnError: Boolean) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>処理するメッセージ最大数、出力ストリームに渡す形を整形するメッセージフォーマッタ、コンシューマのラッパ、出力ストリーム、 エラーのときに呼び飛ばすかどうかのフラグが渡される。</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:77
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">try process(conf.maxMessages, conf.formatter, consumerWrapper, System.out, conf.skipMessageOnError)</span><br></pre></td></tr></table></figure></p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:101
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def process(maxMessages: Integer, formatter: MessageFormatter, consumer: ConsumerWrapper, output: PrintStream,</span><br><span class="line">            skipMessageOnError: Boolean) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
+<p>処理するメッセージ最大数、出力ストリームに渡す形を整形するメッセージフォーマッタ、コンシューマのラッパ、出力ストリーム、
+エラーのときに呼び飛ばすかどうかのフラグが渡される。</p>
 <p>少し処理の中身を確認する。 まず以下のようにメッセージを取得する。</p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:104 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    val msg: ConsumerRecord[Array[Byte], Array[Byte]] = try &#123;</span><br><span class="line">      consumer.receive()</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:104
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    val msg: ConsumerRecord[Array[Byte], Array[Byte]] = try &#123;</span><br><span class="line">      consumer.receive()</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
 <p>上記の receive は、先程の通り、ラッパーのreceiveメソッドである。</p>
-<p>receiveメソッドは以下のようにコンシューマのポール機能を使い、 メッセージを取得する。</p>
-<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:437 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def receive(): ConsumerRecord[Array[Byte], Array[Byte]] = &#123;</span><br><span class="line">  if (!recordIter.hasNext) &#123;</span><br><span class="line">    recordIter = consumer.poll(Duration.ofMillis(timeoutMs)).iterator</span><br><span class="line">    if (!recordIter.hasNext)</span><br><span class="line">      throw new TimeoutException()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  recordIter.next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>メッセージを取得するためのイテレータが得られるので、nextメソッドで取得する。 →イテレータのnextを使って１件ずつ取り出していることがわかる。 ★</p>
-<p>続いて、取り出されたメッセージを ConsumerRecord 化してフォーマッタに渡す。 　 core/src/main/scala/kafka/tools/ConsoleConsumer.scala:118 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">formatter.writeTo(new ConsumerRecord(msg.topic, msg.partition, msg.offset, msg.timestamp,</span><br><span class="line">                                     msg.timestampType, 0, 0, 0, msg.key, msg.value, msg.headers), output)</span><br></pre></td></tr></table></figure></p>
+<p>receiveメソッドは以下のようにコンシューマのポール機能を使い、
+メッセージを取得する。</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:437
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def receive(): ConsumerRecord[Array[Byte], Array[Byte]] = &#123;</span><br><span class="line">  if (!recordIter.hasNext) &#123;</span><br><span class="line">    recordIter = consumer.poll(Duration.ofMillis(timeoutMs)).iterator</span><br><span class="line">    if (!recordIter.hasNext)</span><br><span class="line">      throw new TimeoutException()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  recordIter.next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>メッセージを取得するためのイテレータが得られるので、nextメソッドで取得する。
+→イテレータのnextを使って１件ずつ取り出していることがわかる。 ★</p>
+<p>続いて、取り出されたメッセージを ConsumerRecord
+化してフォーマッタに渡す。 　
+core/src/main/scala/kafka/tools/ConsoleConsumer.scala:118 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">formatter.writeTo(new ConsumerRecord(msg.topic, msg.partition, msg.offset, msg.timestamp,</span><br><span class="line">                                     msg.timestampType, 0, 0, 0, msg.key, msg.value, msg.headers), output)</span><br></pre></td></tr></table></figure></p>
 <p>これにより出力が確定する。</p>
 <h2><span id="kafkaconsumer">KafkaConsumer</span></h2>
 <p>つづいて、KafkaConsumerクラスを確認する。</p>
 <h3><span id="トピックアサイン">トピックアサイン</span></h3>
 <p>ここではトピックへの登録を確認する。 ★</p>
 <p>コンシューマグループを使って自動で行うアサインメントを使用する場合。リバランスも行われる。</p>
-<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:936 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  public void subscribe(Collection&lt;String&gt; topics, ConsumerRebalanceListener listener) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
+<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:936
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  public void subscribe(Collection&lt;String&gt; topics, ConsumerRebalanceListener listener) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
 <p>上記はトピックのコレクションを渡すメソッドだが、パターンを指定する方法もある。</p>
-<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:1008 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  public void subscribe(Pattern pattern, ConsumerRebalanceListener listener) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>なお、何らかの理由（詳しくはJavadoc参照）により、リバランスが必要になったら、 第2引数に渡されているリスナがまず呼び出される。</p>
+<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:1008
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  public void subscribe(Pattern pattern, ConsumerRebalanceListener listener) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
+<p>なお、何らかの理由（詳しくはJavadoc参照）により、リバランスが必要になったら、
+第2引数に渡されているリスナがまず呼び出される。</p>
 <p>コンシューマ・グループを利用せず、手動で行うアサインメントの場合は以下の通り。</p>
-<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:1083 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public void assign(Collection&lt;TopicPartition&gt; partitions) &#123;</span><br></pre></td></tr></table></figure></p>
-<p>いずれの場合も内部的には SubscriptionState が管理のために用いられる。 タイプは以下の通り。 clients/src/main/java/org/apache/kafka/clients/consumer/internals/SubscriptionState.java:72 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private enum SubscriptionType &#123;</span><br><span class="line">    NONE, AUTO_TOPICS, AUTO_PATTERN, USER_ASSIGNED</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>またコンシューマの管理を行う ConsumerCoordinator には、 updatePatternSubscription メソッドがある。</p>
-<p>org/apache/kafka/clients/consumer/internals/ConsumerCoordinator.java:192 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public void updatePatternSubscription(Cluster cluster) &#123;</span><br><span class="line">    final Set&lt;String&gt; topicsToSubscribe = cluster.topics().stream()</span><br><span class="line">            .filter(subscriptions::matchesSubscribedPattern)</span><br><span class="line">            .collect(Collectors.toSet());</span><br><span class="line">    if (subscriptions.subscribeFromPattern(topicsToSubscribe))</span><br><span class="line">        metadata.requestUpdateForNewTopics();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>matchesSubscribedPattern を用いて、現在クラスタが抱えているトピックの中から、 サブスクライブ対象のトピックをフィルタして取得し、SubscriptionState#subscribeFromPattern メソッドを呼ぶ。 これにより、当該コンシューマの購読するトピックが更新される。 この更新はいくつかのタイミングで発動するが、例えば KafkaConsumer#poll(java.time.Duration) の 中で呼ばれる updateAssignmentMetadataIfNeeded メソッドを通じて呼び出される。</p>
+<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:1083
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public void assign(Collection&lt;TopicPartition&gt; partitions) &#123;</span><br></pre></td></tr></table></figure></p>
+<p>いずれの場合も内部的には SubscriptionState が管理のために用いられる。
+タイプは以下の通り。
+clients/src/main/java/org/apache/kafka/clients/consumer/internals/SubscriptionState.java:72
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private enum SubscriptionType &#123;</span><br><span class="line">    NONE, AUTO_TOPICS, AUTO_PATTERN, USER_ASSIGNED</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>またコンシューマの管理を行う ConsumerCoordinator には、
+updatePatternSubscription メソッドがある。</p>
+<p>org/apache/kafka/clients/consumer/internals/ConsumerCoordinator.java:192
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public void updatePatternSubscription(Cluster cluster) &#123;</span><br><span class="line">    final Set&lt;String&gt; topicsToSubscribe = cluster.topics().stream()</span><br><span class="line">            .filter(subscriptions::matchesSubscribedPattern)</span><br><span class="line">            .collect(Collectors.toSet());</span><br><span class="line">    if (subscriptions.subscribeFromPattern(topicsToSubscribe))</span><br><span class="line">        metadata.requestUpdateForNewTopics();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>matchesSubscribedPattern
+を用いて、現在クラスタが抱えているトピックの中から、
+サブスクライブ対象のトピックをフィルタして取得し、SubscriptionState#subscribeFromPattern
+メソッドを呼ぶ。
+これにより、当該コンシューマの購読するトピックが更新される。
+この更新はいくつかのタイミングで発動するが、例えば
+KafkaConsumer#poll(java.time.Duration) の 中で呼ばれる
+updateAssignmentMetadataIfNeeded メソッドを通じて呼び出される。</p>
 <h3><span id="コンシューマ故障の検知">コンシューマ故障の検知</span></h3>
-<p>基本的にはハートビート（ heartbeat.interval.ms で設定）が session.timeout.ms を 超えて届かなくなると、故障したとみなされる。 その結果、当該クライアント（この場合はコンシューマ）がグループから外され、 リバランスが起きる。</p>
-<p>なお、ハートビートはコーディネータに対して送られる。 コーディネータは以下のように定義されている。 org/apache/kafka/clients/consumer/internals/AbstractCoordinator.java:128 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private Node coordinator = null;</span><br></pre></td></tr></table></figure></p>
-<p>org/apache/kafka/clients/consumer/internals/AbstractCoordinator.java:692 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AbstractCoordinator.this.coordinator = new Node(</span><br><span class="line">        coordinatorConnectionId,</span><br><span class="line">        findCoordinatorResponse.data().host(),</span><br><span class="line">        findCoordinatorResponse.data().port());</span><br></pre></td></tr></table></figure></p>
-<p>AbstractCoordinator#sendFindCoordinatorRequest メソッドが呼ばれる契機は複数あるが、 例えば、コンシューマがポールするときなどにコーディネータが更新される。</p>
-<p>なお、コーディネータにクライアントを登録する際、 セッションタイムアウトの値も渡され、対応される。 予め定められた group.min.session.timeout.ms や group.max.session.timeout.ms を満たす セッションタイムアウトが用いられる。</p>
+<p>基本的にはハートビート（ heartbeat.interval.ms で設定）が
+session.timeout.ms を 超えて届かなくなると、故障したとみなされる。
+その結果、当該クライアント（この場合はコンシューマ）がグループから外され、
+リバランスが起きる。</p>
+<p>なお、ハートビートはコーディネータに対して送られる。
+コーディネータは以下のように定義されている。
+org/apache/kafka/clients/consumer/internals/AbstractCoordinator.java:128
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private Node coordinator = null;</span><br></pre></td></tr></table></figure></p>
+<p>org/apache/kafka/clients/consumer/internals/AbstractCoordinator.java:692
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AbstractCoordinator.this.coordinator = new Node(</span><br><span class="line">        coordinatorConnectionId,</span><br><span class="line">        findCoordinatorResponse.data().host(),</span><br><span class="line">        findCoordinatorResponse.data().port());</span><br></pre></td></tr></table></figure></p>
+<p>AbstractCoordinator#sendFindCoordinatorRequest
+メソッドが呼ばれる契機は複数あるが、
+例えば、コンシューマがポールするときなどにコーディネータが更新される。</p>
+<p>なお、コーディネータにクライアントを登録する際、
+セッションタイムアウトの値も渡され、対応される。 予め定められた
+group.min.session.timeout.ms や group.max.session.timeout.ms を満たす
+セッションタイムアウトが用いられる。</p>
 <p>セッションタイムアウトの値は、例えば以下のように設定される。</p>
 <p>kafka/coordinator/group/GroupCoordinator.scala:146 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doJoinGroup(group, memberId, groupInstanceId, clientId, clientHost, rebalanceTimeoutMs, sessionTimeoutMs, protocolType, protocols, responseCallback)</span><br></pre></td></tr></table></figure></p>
-<p>この値は、最終的に MemberMetadata に渡されて用いられる。 例えばハートビートのデッドラインの計算などに用いられることになる。</p>
+<p>この値は、最終的に MemberMetadata に渡されて用いられる。
+例えばハートビートのデッドラインの計算などに用いられることになる。</p>
 <p>kafka/coordinator/group/MemberMetadata.scala:56 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">private[group] class MemberMetadata(var memberId: String,</span><br><span class="line">                                    val groupId: String,</span><br><span class="line">                                    val groupInstanceId: Option[String],</span><br><span class="line">                                    val clientId: String,</span><br><span class="line">                                    val clientHost: String,</span><br><span class="line">                                    val rebalanceTimeoutMs: Int,</span><br><span class="line">                                    val sessionTimeoutMs: Int,</span><br><span class="line">                                    val protocolType: String,</span><br><span class="line">                                    var supportedProtocols: List[(String, Array[Byte])]) &#123;</span><br></pre></td></tr></table></figure></p>
 
         
@@ -325,7 +375,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/23/Kafka-Console-Consumer/" data-id="cl2nztnml008e5xqiiuadcc9h" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/23/Kafka-Console-Consumer/" data-id="cl2o9pbgv014v18rzoa3tas79" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -576,5 +626,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

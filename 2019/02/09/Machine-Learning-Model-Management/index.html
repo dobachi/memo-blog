@@ -5,18 +5,18 @@
     
     <title>Machine Learning Model Management Tools | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 Strata studio.ml ModelDB MLflow Clipper Azure Machine Learning Studio Hydrosphere Serving  studio.ml 注意事項 インストールと動作確認  ModelDB 注意点 概要 Light APIの例 Native API利用の例 ウェブUIの例  MLflow 概要 動機 機能   Clippe">
+    <meta name="description" content="参考  Strata studio.ml ModelDB MLflow Clipper Azure Machine Learning Studio Hydrosphere Serving  studio.ml  注意事項 インストールと動作確認  ModelDB  注意点 概要 Light APIの例 Native API利用の例 ウェブUIの例  MLflow  概要  動機 機能   C">
 <meta name="keywords" content="Machine Learning,Model Management">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Machine Learning Model Management Tools">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/02/09/Machine-Learning-Model-Management/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 Strata studio.ml ModelDB MLflow Clipper Azure Machine Learning Studio Hydrosphere Serving  studio.ml 注意事項 インストールと動作確認  ModelDB 注意点 概要 Light APIの例 Native API利用の例 ウェブUIの例  MLflow 概要 動機 機能   Clippe">
+<meta property="og:description" content="参考  Strata studio.ml ModelDB MLflow Clipper Azure Machine Learning Studio Hydrosphere Serving  studio.ml  注意事項 インストールと動作確認  ModelDB  注意点 概要 Light APIの例 Native API利用の例 ウェブUIの例  MLflow  概要  動機 機能   C">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Machine Learning Model Management Tools">
-<meta name="twitter:description" content="参考 Strata studio.ml ModelDB MLflow Clipper Azure Machine Learning Studio Hydrosphere Serving  studio.ml 注意事項 インストールと動作確認  ModelDB 注意点 概要 Light APIの例 Native API利用の例 ウェブUIの例  MLflow 概要 動機 機能   Clippe">
+<meta name="twitter:description" content="参考  Strata studio.ml ModelDB MLflow Clipper Azure Machine Learning Studio Hydrosphere Serving  studio.ml  注意事項 インストールと動作確認  ModelDB  注意点 概要 Light APIの例 Native API利用の例 ウェブUIの例  MLflow  概要  動機 機能   C">
     
 
     
@@ -251,57 +251,73 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#strata">Strata</a></li>
-<li><a href="#studio.ml">studio.ml</a></li>
-<li><a href="#modeldb">ModelDB</a></li>
-<li><a href="#mlflow">MLflow</a></li>
-<li><a href="#clipper">Clipper</a></li>
-<li><a href="#azure-machine-learning-studio">Azure Machine Learning Studio</a></li>
-<li><a href="#hydrosphere-serving">Hydrosphere Serving</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#strata" id="toc-strata">Strata</a></li>
+<li><a href="#studio.ml" id="toc-studio.ml">studio.ml</a></li>
+<li><a href="#modeldb" id="toc-modeldb">ModelDB</a></li>
+<li><a href="#mlflow" id="toc-mlflow">MLflow</a></li>
+<li><a href="#clipper" id="toc-clipper">Clipper</a></li>
+<li><a href="#azure-machine-learning-studio" id="toc-azure-machine-learning-studio">Azure Machine Learning
+Studio</a></li>
+<li><a href="#hydrosphere-serving" id="toc-hydrosphere-serving">Hydrosphere Serving</a></li>
 </ul></li>
-<li><a href="#studio.ml-1">studio.ml</a><ul>
-<li><a href="#注意事項">注意事項</a></li>
-<li><a href="#インストールと動作確認">インストールと動作確認</a></li>
+<li><a href="#studio.ml-1" id="toc-studio.ml-1">studio.ml</a>
+<ul>
+<li><a href="#注意事項" id="toc-注意事項">注意事項</a></li>
+<li><a href="#インストールと動作確認" id="toc-インストールと動作確認">インストールと動作確認</a></li>
 </ul></li>
-<li><a href="#modeldb-1">ModelDB</a><ul>
-<li><a href="#注意点">注意点</a></li>
-<li><a href="#概要">概要</a></li>
-<li><a href="#light-apiの例">Light APIの例</a></li>
-<li><a href="#native-api利用の例">Native API利用の例</a></li>
-<li><a href="#ウェブuiの例">ウェブUIの例</a></li>
+<li><a href="#modeldb-1" id="toc-modeldb-1">ModelDB</a>
+<ul>
+<li><a href="#注意点" id="toc-注意点">注意点</a></li>
+<li><a href="#概要" id="toc-概要">概要</a></li>
+<li><a href="#light-apiの例" id="toc-light-apiの例">Light
+APIの例</a></li>
+<li><a href="#native-api利用の例" id="toc-native-api利用の例">Native
+API利用の例</a></li>
+<li><a href="#ウェブuiの例" id="toc-ウェブuiの例">ウェブUIの例</a></li>
 </ul></li>
-<li><a href="#mlflow-1">MLflow</a><ul>
-<li><a href="#概要-1">概要</a><ul>
-<li><a href="#動機">動機</a></li>
-<li><a href="#機能">機能</a></li>
+<li><a href="#mlflow-1" id="toc-mlflow-1">MLflow</a>
+<ul>
+<li><a href="#概要-1" id="toc-概要-1">概要</a>
+<ul>
+<li><a href="#動機" id="toc-動機">動機</a></li>
+<li><a href="#機能" id="toc-機能">機能</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#clipper-1">Clipper</a><ul>
-<li><a href="#clipper-a-low-latency-online-prediction-serving-system">Clipper: A Low-Latency Online Prediction Serving System</a><ul>
-<li><a href="#アーキ概要">アーキ概要</a></li>
+<li><a href="#clipper-1" id="toc-clipper-1">Clipper</a>
+<ul>
+<li><a href="#clipper-a-low-latency-online-prediction-serving-system" id="toc-clipper-a-low-latency-online-prediction-serving-system">Clipper:
+A Low-Latency Online Prediction Serving System</a>
+<ul>
+<li><a href="#アーキ概要" id="toc-アーキ概要">アーキ概要</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#azure-machine-learning-studio-1">Azure Machine Learning Studio</a></li>
-<li><a href="#hydrosphere-serving-1">Hydrosphere Serving</a></li>
+<li><a href="#azure-machine-learning-studio-1" id="toc-azure-machine-learning-studio-1">Azure Machine Learning
+Studio</a></li>
+<li><a href="#hydrosphere-serving-1" id="toc-hydrosphere-serving-1">Hydrosphere Serving</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <h2><span id="strata">Strata</span></h2>
 <ul>
-<li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/stopic/2833?utm_medium=content+synd&amp;utm_source=oreilly.com&amp;utm_campaign=stny18&amp;utm_content=mlflow+a+platform+for+managing+the+machine+learning+lifecycle+top+cta" target="_blank" rel="noopener">Strata Model Lifecycle Management</a></li>
+<li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/stopic/2833?utm_medium=content+synd&amp;utm_source=oreilly.com&amp;utm_campaign=stny18&amp;utm_content=mlflow+a+platform+for+managing+the+machine+learning+lifecycle+top+cta" target="_blank" rel="noopener">Strata
+Model Lifecycle Management</a></li>
 </ul>
 <h2><span id="studioml">studio.ml</span></h2>
 <ul>
 <li><a href="https://www.studio.ml/" target="_blank" rel="noopener">studio.ml</a></li>
-<li><a href="https://github.com/studioml/studio/issues/330" target="_blank" rel="noopener">studio.ml Issue-330</a></li>
+<li><a href="https://github.com/studioml/studio/issues/330" target="_blank" rel="noopener">studio.ml
+Issue-330</a></li>
 <li><a href="https://github.com/studioml/studio" target="_blank" rel="noopener">studio.mlの公式GitHub</a></li>
 </ul>
 <h2><span id="modeldb">ModelDB</span></h2>
 <ul>
 <li><a href="https://github.com/mitdbg/modeldb" target="_blank" rel="noopener">ModelDBの公式GitHub</a></li>
-<li><a href="https://databricks.com/session/modeldb-a-system-to-manage-machine-learning-models" target="_blank" rel="noopener">ModelDB紹介 at Spark Summit</a></li>
-<li><a href="http://modeldb.csail.mit.edu:8000/user/TqNzCVawBirw/tree" target="_blank" rel="noopener">ModelDB Clientの例</a></li>
+<li><a href="https://databricks.com/session/modeldb-a-system-to-manage-machine-learning-models" target="_blank" rel="noopener">ModelDB紹介
+at Spark Summit</a></li>
+<li><a href="http://modeldb.csail.mit.edu:8000/user/TqNzCVawBirw/tree" target="_blank" rel="noopener">ModelDB
+Clientの例</a></li>
 </ul>
 <h2><span id="mlflow">MLflow</span></h2>
 <ul>
@@ -309,46 +325,62 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="clipper">Clipper</span></h2>
 <ul>
-<li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/detail/69861" target="_blank" rel="noopener">Strata NY 2018でのClipper</a></li>
+<li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/detail/69861" target="_blank" rel="noopener">Strata
+NY 2018でのClipper</a></li>
 <li><a href="https://rise.cs.berkeley.edu/projects/clipper/" target="_blank" rel="noopener">RISELabのページ</a></li>
 <li><a href="https://rise.cs.berkeley.edu/wp-content/uploads/2017/02/clipper_final.pdf" target="_blank" rel="noopener">Clipperの論文</a></li>
 <li><a href="https://www.slideshare.net/greenmidori83/ss-28443892" target="_blank" rel="noopener">バンディットアルゴリズムについての説明</a></li>
 </ul>
-<h2><span id="azure-machine-learning-studio">Azure Machine Learning Studio</span></h2>
+<h2><span id="azure-machine-learningstudio">Azure Machine Learning
+Studio</span></h2>
 <ul>
-<li><a href="https://azure.microsoft.com/ja-jp/services/machine-learning-studio/" target="_blank" rel="noopener">Azure Machine Learning Studio</a></li>
-<li><a href="https://docs.microsoft.com/ja-jp/azure/machine-learning/studio/" target="_blank" rel="noopener">Azure Machine Learning Studio公式ドキュメント</a></li>
+<li><a href="https://azure.microsoft.com/ja-jp/services/machine-learning-studio/" target="_blank" rel="noopener">Azure
+Machine Learning Studio</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/machine-learning/studio/" target="_blank" rel="noopener">Azure
+Machine Learning Studio公式ドキュメント</a></li>
 </ul>
 <h2><span id="hydrosphere-serving">Hydrosphere Serving</span></h2>
-<p><a href="/memo-blog/2019/03/22/Hydrosphere-io/">Hydrosphere.io</a> のページを参照。</p>
+<p><a href="/memo-blog/2019/03/22/Hydrosphere-io/">Hydrosphere.io</a>
+のページを参照。</p>
 <h1><span id="studioml">studio.ml</span></h1>
-<p>Pythonベースの機械学習モデル管理のフレームワーク。 対応しているのは、Keras、TensorFlow、scikit-learnあたり。</p>
+<p>Pythonベースの機械学習モデル管理のフレームワーク。
+対応しているのは、Keras、TensorFlow、scikit-learnあたり。</p>
 <h2><span id="注意事項">注意事項</span></h2>
-<p><a href="https://github.com/studioml/studio" target="_blank" rel="noopener">studio.mlの公式GitHub</a>のREADMEを読むと「Authentication」の項目があり、 studio.mlに何らかの手段で認証しないといけないようである。 ゲストモードがあるようだが極力アカウント情報を渡さずに使おうとしたが うまく動作しなかった。</p>
+<p><a href="https://github.com/studioml/studio" target="_blank" rel="noopener">studio.mlの公式GitHub</a>のREADMEを読むと「Authentication」の項目があり、
+studio.mlに何らかの手段で認証しないといけないようである。
+ゲストモードがあるようだが極力アカウント情報を渡さずに使おうとしたが
+うまく動作しなかった。</p>
 <h2><span id="インストールと動作確認">インストールと動作確認</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ /opt/Anaconda/default/bin/conda create -n studioml python</span><br><span class="line">$ conda activate stduioml</span><br><span class="line">$ pip install studioml</span><br></pre></td></tr></table></figure>
 <p>以下のようなエラーが生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awscli 1.16.101 has requirement rsa&lt;=3.5.0,&gt;=3.1.2, but you&apos;ll have rsa 4.0 which is incompatible.</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/Sources</span><br><span class="line">$ git clone https://github.com/studioml/studio.git</span><br><span class="line">$ cd studio</span><br><span class="line">$ cd examples/keras/</span><br></pre></td></tr></table></figure>
-<p>ここでGitHub上のREADMEに記載のとおり、<code>~/.studioml/config.yaml</code>のdatabaseセクションに <code>guest: true</code>を追加した。</p>
+<p>ここでGitHub上のREADMEに記載のとおり、<code>~/.studioml/config.yaml</code>のdatabaseセクションに
+<code>guest: true</code>を追加した。</p>
 <p>いったんUIを起動してみる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ studio ui</span><br></pre></td></tr></table></figure>
 <p>以下のようなエラーが出た。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  File &quot;/home/******/.conda/envs/studioml/lib/python3.7/site-packages/flask/app.py&quot;, line 1813, in full_dispatch_request    rv = self.dispatch_request()  File &quot;/home/******/.conda/envs/studioml/lib/python3.7/site-packages/flask/app.py&quot;, line 1799, in dispatch_request    return self.view_functions[rule.endpoint](**req.view_args)  File &quot;/home/******/.conda/envs/studioml/lib/python3.7/site-packages/studio/apiserver.py&quot;, line 37, in dashboard    return _render(&apos;dashboard.html&apos;)  File &quot;/home/******/.conda/envs/studioml/lib/python3.7/site-packages/studio/apiserver.py&quot;, line 518, in _render    auth = get_auth(get_auth_config())  File &quot;/home/******/.conda/envs/studioml/lib/python3.7/site-packages/studio/apiserver.py&quot;, line 511, in get_auth_config    return get_config()[&apos;server&apos;][&apos;authentication&apos;]</span><br><span class="line"></span><br><span class="line">KeyError: &apos;server&apos;</span><br></pre></td></tr></table></figure>
-<p>参考: <a href="https://github.com/studioml/studio/issues/330" target="_blank" rel="noopener">studio.ml Issue-330</a></p>
+<p>参考: <a href="https://github.com/studioml/studio/issues/330" target="_blank" rel="noopener">studio.ml
+Issue-330</a></p>
 <p>設定を以下のように変えてみた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">--- /home/dobachi/.studioml/config.yaml.2019021001      2019-02-10 01:04:10.751282800 +0900</span><br><span class="line">+++ /home/dobachi/.studioml/config.yaml 2019-02-10 01:17:20.178761700 +0900</span><br><span class="line">@@ -2,6 +2,10 @@</span><br><span class="line">     type: http     serverUrl: https://zoo.studio.ml</span><br><span class="line">     authentication: github</span><br><span class="line">+    guest: true</span><br><span class="line">+</span><br><span class="line">+server:</span><br><span class="line">+    authentication: None</span><br><span class="line"></span><br><span class="line"> storage:</span><br><span class="line">     type: gcloud</span><br></pre></td></tr></table></figure>
-<p>ブラウザで<code>http://localhost:5000</code>にアクセスした所、開けたような気がしたが、 GitHubの404ページが表示された。</p>
+<p>ブラウザで<code>http://localhost:5000</code>にアクセスした所、開けたような気がしたが、
+GitHubの404ページが表示された。</p>
 <p>コンソール上のエラーは以下のとおり。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.exceptions.ConnectionError: HTTPSConnectionPool(host=&apos;zoo.studio.ml&apos;, port=443): Max retries exceeded with url: /api/get_user_experiments (Caused by NewConnectionError(&apos;&lt;urllib3.connection.VerifiedHTTPSConnection object at 0x7ff5a64a3da0&gt;: Failed to establisha new connection: [Errno -2] Name or service not known&apos;))</span><br></pre></td></tr></table></figure>
 <h1><span id="modeldb">ModelDB</span></h1>
 <h2><span id="注意点">注意点</span></h2>
 <p><a href="https://github.com/mitdbg/modeldb" target="_blank" rel="noopener">ModelDBの公式GitHub</a>を見ると、20190211時点で最近更新されていないようだ。（最新が6ヶ月前の更新）</p>
 <h2><span id="概要">概要</span></h2>
-<p>モデルの情報を構造的に管理するための仕組み。 「ModelDB's Light API」を通じて、モデルのメトリクスとメタデータを管理できるようになる。 spark.mlとscikit-learnはネイティブクライアントを利用する。 ★要確認</p>
+<p>モデルの情報を構造的に管理するための仕組み。 「ModelDB's Light
+API」を通じて、モデルのメトリクスとメタデータを管理できるようになる。
+spark.mlとscikit-learnはネイティブクライアントを利用する。 ★要確認</p>
 <p><a href="https://github.com/mitdbg/modeldb" target="_blank" rel="noopener">ModelDBの公式GitHub</a>のREADMEにわかりやすいフロントエンドの紹介がある。</p>
 <h2><span id="light-apiの例">Light APIの例</span></h2>
-<p><a href="https://github.com/mitdbg/modeldb/blob/master/client/python/samples/basic/BasicWorkflow.py" target="_blank" rel="noopener">ModelDB BasicWorkflow.py</a>がワークフローの基本が分かる例。 基本は、 <code>Syncer</code>を使ってモデルの情報を登録する。 この例では、</p>
+<p><a href="https://github.com/mitdbg/modeldb/blob/master/client/python/samples/basic/BasicWorkflow.py" target="_blank" rel="noopener">ModelDB
+BasicWorkflow.py</a>がワークフローの基本が分かる例。 基本は、
+<code>Syncer</code>を使ってモデルの情報を登録する。 この例では、</p>
 <ul>
 <li>データセット</li>
 <li>モデル</li>
@@ -356,14 +388,18 @@ ga('send', 'pageview');
 <li>モデルのメトリクス</li>
 </ul>
 <p>をModelDBに登録する。</p>
-<p><a href="https://github.com/mitdbg/modeldb/blob/master/client/python/samples/basic/BasicSyncAll.py" target="_blank" rel="noopener">ModelDB BasicSyncAll.py</a>がYAMLで登録する例。</p>
+<p><a href="https://github.com/mitdbg/modeldb/blob/master/client/python/samples/basic/BasicSyncAll.py" target="_blank" rel="noopener">ModelDB
+BasicSyncAll.py</a>がYAMLで登録する例。</p>
 <h2><span id="native-api利用の例">Native API利用の例</span></h2>
-<p><a href="http://modeldb.csail.mit.edu:8000/user/TqNzCVawBirw/tree" target="_blank" rel="noopener">ModelDB Clientの例</a>に<code>modeldb.sklearn_native.SyncableMetrics</code>の利用例が記載されている。</p>
+<p><a href="http://modeldb.csail.mit.edu:8000/user/TqNzCVawBirw/tree" target="_blank" rel="noopener">ModelDB
+Clientの例</a>に<code>modeldb.sklearn_native.SyncableMetrics</code>の利用例が記載されている。</p>
 <h2><span id="ウェブuiの例">ウェブUIの例</span></h2>
-<p><a href="http://modeldb.csail.mit.edu:3000/projects" target="_blank" rel="noopener">ModelDB ウェブUIの例</a>に例が載っている。</p>
+<p><a href="http://modeldb.csail.mit.edu:3000/projects" target="_blank" rel="noopener">ModelDB
+ウェブUIの例</a>に例が載っている。</p>
 <h1><span id="mlflow">MLflow</span></h1>
 <h2><span id="概要">概要</span></h2>
-<p><a href="https://www.oreilly.com/ideas/mlflow-a-platform-for-managing-the-machine-learning-lifecycle" target="_blank" rel="noopener">MLflowのO'Reilly記事</a>に動機と機能概要が書かれている。 また動画でウェブUIの使い方が示されている。</p>
+<p><a href="https://www.oreilly.com/ideas/mlflow-a-platform-for-managing-the-machine-learning-lifecycle" target="_blank" rel="noopener">MLflowのO'Reilly記事</a>に動機と機能概要が書かれている。
+また動画でウェブUIの使い方が示されている。</p>
 <h3><span id="動機">動機</span></h3>
 <ul>
 <li>無数のツールを組み合わせるのが難しい</li>
@@ -389,20 +425,33 @@ ga('send', 'pageview');
 </ul></li>
 </ul>
 <h1><span id="clipper">Clipper</span></h1>
-<p><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/detail/69861" target="_blank" rel="noopener">Strata NY 2018でのClipper</a> が講演のようだが、スライドが公開されていない。</p>
-<h2><span id="clipper-a-low-latency-online-prediction-serving-system">Clipper: A Low-Latency Online Prediction Serving System</span></h2>
-<p><a href="https://rise.cs.berkeley.edu/wp-content/uploads/2017/02/clipper_final.pdf" target="_blank" rel="noopener">Clipperの論文</a>によると、「A Low-Latency Online Prediction Serving System」と定義されている。 上記論文の図1を見るかぎり、モデルサービングを担い、複数の機械学習モデルをまとめ上げる「中層化」層の 役割も担うようだ。 また、モデル選択の機能、キャッシングなどの機能も含まれているようである。</p>
-<p>これまでの研究では、学習フェーズに焦点が当たることが多かったが、 この研究では推論フェーズに焦点を当てている。</p>
+<p><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/detail/69861" target="_blank" rel="noopener">Strata
+NY 2018でのClipper</a>
+が講演のようだが、スライドが公開されていない。</p>
+<h2><span id="clippera-low-latency-online-prediction-serving-system">Clipper:
+A Low-Latency Online Prediction Serving System</span></h2>
+<p><a href="https://rise.cs.berkeley.edu/wp-content/uploads/2017/02/clipper_final.pdf" target="_blank" rel="noopener">Clipperの論文</a>によると、「A
+Low-Latency Online Prediction Serving System」と定義されている。
+上記論文の図1を見るかぎり、モデルサービングを担い、複数の機械学習モデルをまとめ上げる「中層化」層の
+役割も担うようだ。
+また、モデル選択の機能、キャッシングなどの機能も含まれているようである。</p>
+<p>これまでの研究では、学習フェーズに焦点が当たることが多かったが、
+この研究では推論フェーズに焦点を当てている。</p>
 <h3><span id="アーキ概要">アーキ概要</span></h3>
 <ul>
 <li>モデル抽象化層</li>
 <li>モデル選択層</li>
 </ul>
 <p>論文Figure 1参照。</p>
-<h1><span id="azure-machine-learning-studio">Azure Machine Learning Studio</span></h1>
-<p><a href="https://azure.microsoft.com/ja-jp/services/machine-learning-studio/" target="_blank" rel="noopener">Azure Machine Learning Studio</a>には、「完全に管理されたクラウド サービスで、ユーザーは簡単に予測分析ソリューションを構築、デプロイ、共有できます。」と 記載されている。</p>
+<h1><span id="azure-machine-learningstudio">Azure Machine Learning
+Studio</span></h1>
+<p><a href="https://azure.microsoft.com/ja-jp/services/machine-learning-studio/" target="_blank" rel="noopener">Azure
+Machine Learning Studio</a>には、「完全に管理されたクラウド
+サービスで、ユーザーは簡単に予測分析ソリューションを構築、デプロイ、共有できます。」と
+記載されている。</p>
 <h1><span id="hydrosphere-serving">Hydrosphere Serving</span></h1>
-<p><a href="/memo-blog/2019/03/22/Hydrosphere-io/">Hydrosphere.io</a> のページを参照。</p>
+<p><a href="/memo-blog/2019/03/22/Hydrosphere-io/">Hydrosphere.io</a>
+のページを参照。</p>
 
         
         </div>
@@ -413,7 +462,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/09/Machine-Learning-Model-Management/" data-id="cl2nztnmy009k5xqi0j8h0h65" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/09/Machine-Learning-Model-Management/" data-id="cl2o9pbgx014z18rzcvovkpa3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -664,5 +713,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

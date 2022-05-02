@@ -5,18 +5,18 @@
     
     <title>PixieDustを試してみる | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 公式サイトの確認 Scalaでも使える？ Jupyterに独自のカーネルをインストールして使う  動作確認 PixieDust 1 - Easy Visualizationsで気になったこと    参考  公式GitHub Qiitaの紹介ブログ  公式サイトの確認 ここでは気になったことを記しておく。 Scalaでも使える？ 公式GitHubのREADMEには、 Use in pyt">
+    <meta name="description" content="参考 公式サイトの確認  Scalaでも使える？ Jupyterに独自のカーネルをインストールして使う  動作確認  PixieDust 1 - Easy Visualizationsで気になったこと    参考  公式GitHub Qiitaの紹介ブログ  公式サイトの確認 ここでは気になったことを記しておく。 Scalaでも使える？ 公式GitHubのREADMEには、 Use in p">
 <meta name="keywords" content="Python,Data Analytics,Tools,Jupyter">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PixieDustを試してみる">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/12/13/PixieDust/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 公式サイトの確認 Scalaでも使える？ Jupyterに独自のカーネルをインストールして使う  動作確認 PixieDust 1 - Easy Visualizationsで気になったこと    参考  公式GitHub Qiitaの紹介ブログ  公式サイトの確認 ここでは気になったことを記しておく。 Scalaでも使える？ 公式GitHubのREADMEには、 Use in pyt">
+<meta property="og:description" content="参考 公式サイトの確認  Scalaでも使える？ Jupyterに独自のカーネルをインストールして使う  動作確認  PixieDust 1 - Easy Visualizationsで気になったこと    参考  公式GitHub Qiitaの紹介ブログ  公式サイトの確認 ここでは気になったことを記しておく。 Scalaでも使える？ 公式GitHubのREADMEには、 Use in p">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PixieDustを試してみる">
-<meta name="twitter:description" content="参考 公式サイトの確認 Scalaでも使える？ Jupyterに独自のカーネルをインストールして使う  動作確認 PixieDust 1 - Easy Visualizationsで気になったこと    参考  公式GitHub Qiitaの紹介ブログ  公式サイトの確認 ここでは気になったことを記しておく。 Scalaでも使える？ 公式GitHubのREADMEには、 Use in pyt">
+<meta name="twitter:description" content="参考 公式サイトの確認  Scalaでも使える？ Jupyterに独自のカーネルをインストールして使う  動作確認  PixieDust 1 - Easy Visualizationsで気になったこと    参考  公式GitHub Qiitaの紹介ブログ  公式サイトの確認 ここでは気になったことを記しておく。 Scalaでも使える？ 公式GitHubのREADMEには、 Use in p">
     
 
     
@@ -251,13 +251,16 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#公式サイトの確認">公式サイトの確認</a><ul>
-<li><a href="#scalaでも使える">Scalaでも使える？</a></li>
-<li><a href="#jupyterに独自のカーネルをインストールして使う">Jupyterに独自のカーネルをインストールして使う</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#公式サイトの確認" id="toc-公式サイトの確認">公式サイトの確認</a>
+<ul>
+<li><a href="#scalaでも使える" id="toc-scalaでも使える">Scalaでも使える？</a></li>
+<li><a href="#jupyterに独自のカーネルをインストールして使う" id="toc-jupyterに独自のカーネルをインストールして使う">Jupyterに独自のカーネルをインストールして使う</a></li>
 </ul></li>
-<li><a href="#動作確認">動作確認</a><ul>
-<li><a href="#pixiedust-1---easy-visualizationsで気になったこと">PixieDust 1 - Easy Visualizationsで気になったこと</a></li>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a>
+<ul>
+<li><a href="#pixiedust-1---easy-visualizationsで気になったこと" id="toc-pixiedust-1---easy-visualizationsで気になったこと">PixieDust 1 -
+Easy Visualizationsで気になったこと</a></li>
 </ul></li>
 </ul>
 </div>
@@ -269,16 +272,23 @@ ga('send', 'pageview');
 <h1><span id="公式サイトの確認">公式サイトの確認</span></h1>
 <p>ここでは気になったことを記しておく。</p>
 <h2><span id="scalaでも使える">Scalaでも使える？</span></h2>
-<p>公式GitHubのREADMEには、 <a href="https://github.com/pixiedust/pixiedust#use-in-python-or-scala" target="_blank" rel="noopener">Use in python or scala</a> という項目があり、 そこには以下のような記述がある。</p>
+<p>公式GitHubのREADMEには、 <a href="https://github.com/pixiedust/pixiedust#use-in-python-or-scala" target="_blank" rel="noopener">Use
+in python or scala</a> という項目があり、
+そこには以下のような記述がある。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PixieDust lets you bring robust Python visualization options to your Scala notebooks.</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Scala Bridge. Use Scala directly in your Python notebook. Variables are automatically transfered from Python to Scala and vice-versa. Learn more.</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spark progress monitor. Track the status of your Spark job. No more waiting in the dark. Notebook users can now see how a cell&apos;s code is running behind the scenes.</span><br></pre></td></tr></table></figure>
 <h2><span id="jupyterに独自のカーネルをインストールして使う">Jupyterに独自のカーネルをインストールして使う</span></h2>
-<p>カーネルを追加することで、ユーザが自身の環境に依存するライブラリ（Sparkなど）をインストールしなくても 簡単に使えるようになっているようだ？ ★要確認</p>
+<p>カーネルを追加することで、ユーザが自身の環境に依存するライブラリ（Sparkなど）をインストールしなくても
+簡単に使えるようになっているようだ？ ★要確認</p>
 <h1><span id="動作確認">動作確認</span></h1>
-<p>まずは、<a href="https://pixiedust.github.io/pixiedust/install.html" target="_blank" rel="noopener">公式ウェブサイトのインストール手順</a> を読みつつ、 <a href="https://qiita.com/ishida330/items/53f1b0df2247fab5c6dd?fbclid=IwAR0fc_xvmkX2dIo9BYYcwygdCc8s1CtCDXkY_-qsmFQOWK0d5QZH-OZ2mtI" target="_blank" rel="noopener">Qiitaの紹介ブログ</a> を読みながら、軽く試してみることにした。 Anacondaを使っているものとし、Condaで環境を作る。</p>
+<p>まずは、<a href="https://pixiedust.github.io/pixiedust/install.html" target="_blank" rel="noopener">公式ウェブサイトのインストール手順</a>
+を読みつつ、 <a href="https://qiita.com/ishida330/items/53f1b0df2247fab5c6dd?fbclid=IwAR0fc_xvmkX2dIo9BYYcwygdCc8s1CtCDXkY_-qsmFQOWK0d5QZH-OZ2mtI" target="_blank" rel="noopener">Qiitaの紹介ブログ</a>
+を読みながら、軽く試してみることにした。
+Anacondaを使っているものとし、Condaで環境を作る。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ conda create -n PixieDustExample python=3.5 jupyter</span><br><span class="line">$ conda activate PixieDustExample</span><br></pre></td></tr></table></figure>
-<p>また <a href="https://pixiedust.github.io/pixiedust/install.html" target="_blank" rel="noopener">公式ウェブサイトのインストール手順</a> には、以下のような記述があり、 Pythonは2.7もしくは3.5が良いようだ。</p>
+<p>また <a href="https://pixiedust.github.io/pixiedust/install.html" target="_blank" rel="noopener">公式ウェブサイトのインストール手順</a>
+には、以下のような記述があり、 Pythonは2.7もしくは3.5が良いようだ。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Note PixieDust supports both Python 2.7 and Python 3.5.</span><br></pre></td></tr></table></figure>
 <p>pipでpixiedustを探すと、エコシステムが形成されているようだった。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ pip search pixiedust</span><br><span class="line">pixiedust-node (0.2.5)                    - Pixiedust extension for Node.js</span><br><span class="line">pixiedust-flightpredict (0.12)            - Flight delay predictor application with PixieDust</span><br><span class="line">pixiedust-wordcloud (0.2.2)               - Word Cloud Visualization Plugin for PixieDust</span><br><span class="line">pixiedust-twitterdemo1 (0.1)              - Pixiedust demo of the Twitter Sentiment Analysis tutorials</span><br><span class="line">pixiedust-twitterdemo (0.4)               - Pixiedust demo of the Twitter Sentiment Analysis tutorials</span><br><span class="line">pixiedust (1.1.14)                        - Productivity library for Jupyter Notebook</span><br><span class="line">pixiedust-optimus (1.4.0)                 - Productivity library for Spark Python Notebook</span><br><span class="line">pixiegateway (0.8)                        - Server for sharing PixieDust chart and running PixieApps</span><br><span class="line">stem-ladiespixiedust-twitterdemo (0.2.2)  - Pixiedust demo of the Twitter Sentiment Analysis tutorialsfor the STEM activity wall</span><br></pre></td></tr></table></figure>
@@ -288,21 +298,32 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">twisted 18.7.0 requires PyHamcrest&gt;=1.9.0, which is not installed.</span><br></pre></td></tr></table></figure>
 <p>condaでインストールする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ conda install PyHamcrest</span><br></pre></td></tr></table></figure>
-<p>PixieDust向けのJupyterカーネルをインストールする。 なお、本手順の前に、JDKがインストールされ、JAVA_HOMEがインストールされていることを前提とする。</p>
+<p>PixieDust向けのJupyterカーネルをインストールする。
+なお、本手順の前に、JDKがインストールされ、JAVA_HOMEがインストールされていることを前提とする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jupyter pixiedust install</span><br></pre></td></tr></table></figure>
 <p>エラー。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ jupyter pixiedust install</span><br><span class="line">Step 1: PIXIEDUST_HOME: /home/dobachi/pixiedust</span><br><span class="line">        Keep y/n [y]? y</span><br><span class="line">Step 2: SPARK_HOME: /home/dobachi/pixiedust/bin/spark</span><br><span class="line">        Keep y/n [y]? y</span><br><span class="line">Directory /home/dobachi/pixiedust/bin/spark does not contain a valid SPARK install</span><br><span class="line">        Download Spark y/n [y]? y</span><br><span class="line">What version would you like to download? 1.6.3, 2.0.2, 2.1.0, 2.2.0, 2.3.0 [2.3.0]: </span><br><span class="line">SPARK_HOME will be set to /home/dobachi/pixiedust/bin/spark/spark-2.3.0-bin-hadoop2.7</span><br><span class="line">Downloading Spark 2.3.0</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">  File &quot;/home/dobachi/.conda/envs/PixieDustExample/lib/python3.7/site-packages/install/createKernel.py&quot;, line 408, in download_spark</span><br><span class="line">    temp_file = self.download_file(spark_download_url)</span><br><span class="line">  File &quot;/home/dobachi/.conda/envs/PixieDustExample/lib/python3.7/site-packages/install/createKernel.py&quot;, line 455, in download_file</span><br><span class="line">    raise Exception(&quot;&#123;&#125;&quot;.format(response.status_code))</span><br><span class="line">Exception: 404</span><br></pre></td></tr></table></figure>
-<p>Sparkのダウンロードで失敗しているようだ。 軽くデバッグしたところ、URLとして渡されているのは、 <code>http://apache.claz.org/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz</code>のようだった。 確かに、リンク切れ？のようだった。いったん、Spark公式サイトのダウンロードページで 指定されるURLからダウンロードするよう、createKernel.pyを修正して実行することにした。</p>
-<p>なお、上記手順により、指定したディレクトリにSparkとScalaがインストールされる。 成功すると、以下のようなメッセージが見られる。</p>
+<p>Sparkのダウンロードで失敗しているようだ。
+軽くデバッグしたところ、URLとして渡されているのは、
+<code>http://apache.claz.org/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz</code>のようだった。
+確かに、リンク切れ？のようだった。いったん、Spark公式サイトのダウンロードページで
+指定されるURLからダウンロードするよう、createKernel.pyを修正して実行することにした。</p>
+<p>なお、上記手順により、指定したディレクトリにSparkとScalaがインストールされる。
+成功すると、以下のようなメッセージが見られる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">####################################################################################################</span><br><span class="line">#       Congratulations: Kernel Python-with-Pixiedust_Spark-2.3 was successfully created in /home/dobachi/.local/share/jupyter/kernels/pythonwithpixiedustspark23</span><br><span class="line">#       You can start the Notebook server with the following command:</span><br><span class="line">#               jupyter notebook /home/dobachi/pixiedust/notebooks</span><br><span class="line">####################################################################################################</span><br></pre></td></tr></table></figure>
-<p>なお、そのまま実行したら、以下のライブラリが足りないと言われたので予めインストールすることとする。 （bokeh、seabornはついでにインストール。インストールしないとRendererの選択肢が出てこない）</p>
+<p>なお、そのまま実行したら、以下のライブラリが足りないと言われたので予めインストールすることとする。
+（bokeh、seabornはついでにインストール。インストールしないとRendererの選択肢が出てこない）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ conda install matplotlib pandas PyYaml bokeh seaborn</span><br></pre></td></tr></table></figure>
-<p>さて、 <a href="https://qiita.com/ishida330/items/53f1b0df2247fab5c6dd?fbclid=IwAR0fc_xvmkX2dIo9BYYcwygdCc8s1CtCDXkY_-qsmFQOWK0d5QZH-OZ2mtI" target="_blank" rel="noopener">Qiitaの紹介ブログ</a> では、PixieDustのカーネルインストール時に一緒にインストールされるノートブックではなく、 日本語でわかりやすい紹介記事が書かれているが、ここではいったん、上記のインストール時のメッセージに従うこととする。</p>
+<p>さて、 <a href="https://qiita.com/ishida330/items/53f1b0df2247fab5c6dd?fbclid=IwAR0fc_xvmkX2dIo9BYYcwygdCc8s1CtCDXkY_-qsmFQOWK0d5QZH-OZ2mtI" target="_blank" rel="noopener">Qiitaの紹介ブログ</a>
+では、PixieDustのカーネルインストール時に一緒にインストールされるノートブックではなく、
+日本語でわかりやすい紹介記事が書かれているが、ここではいったん、上記のインストール時のメッセージに従うこととする。</p>
 <p>Jupyterを起動</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jupyter notebook /home/dobachi/pixiedust/notebooks</span><br></pre></td></tr></table></figure>
 <p>あとは、適当にノートブックを眺めて実行する。</p>
-<h2><span id="pixiedust-1-easy-visualizationsで気になったこと">PixieDust 1 - Easy Visualizationsで気になったこと</span></h2>
-<p><code>Loading External Data</code>節でD3 Rendererを試したところ、以下のようなエラー。</p>
+<h2><span id="pixiedust-1-easy-visualizationsで気になったこと">PixieDust 1 -
+Easy Visualizationsで気になったこと</span></h2>
+<p><code>Loading External Data</code>節でD3
+Rendererを試したところ、以下のようなエラー。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object of type ndarray is not JSON serializable</span><br></pre></td></tr></table></figure>
 
         
@@ -314,7 +335,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/13/PixieDust/" data-id="cl2nztnnj00bh5xqivv8q6mea" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/13/PixieDust/" data-id="cl2o9pb7e008618rz31ppgttk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -565,5 +586,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

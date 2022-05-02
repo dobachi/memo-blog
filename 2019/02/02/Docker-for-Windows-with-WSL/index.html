@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ コマンド   参考  動かし方を紹介するブログ  メモ 上記ブログ 動かし方を紹介するブログ の内容で基本的に問題ない。 ただし、一般ユーザの.bashrcに環境変数DOCKER_HOSTを指定したので、 一般ユーザでDockerを起動できるようにしておいた。 （当該一般ユーザをdockerグループに加えた） コマンド コンテナ確認 12$ docker ps$ docker p">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker for Windows with WSL">
 <meta name="twitter:description" content="参考 メモ コマンド   参考  動かし方を紹介するブログ  メモ 上記ブログ 動かし方を紹介するブログ の内容で基本的に問題ない。 ただし、一般ユーザの.bashrcに環境変数DOCKER_HOSTを指定したので、 一般ユーザでDockerを起動できるようにしておいた。 （当該一般ユーザをdockerグループに加えた） コマンド コンテナ確認 12$ docker ps$ docker p">
@@ -251,9 +251,9 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
-<li><a href="#コマンド">コマンド</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
+<li><a href="#コマンド" id="toc-コマンド">コマンド</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -261,11 +261,16 @@ ga('send', 'pageview');
 <li><a href="https://qiita.com/tettekete/items/086ea3bc8a798cae33f5" target="_blank" rel="noopener">動かし方を紹介するブログ</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>上記ブログ <a href="https://qiita.com/tettekete/items/086ea3bc8a798cae33f5" target="_blank" rel="noopener">動かし方を紹介するブログ</a> の内容で基本的に問題ない。 ただし、一般ユーザの<code>.bashrc</code>に環境変数DOCKER_HOSTを指定したので、 一般ユーザでDockerを起動できるようにしておいた。 （当該一般ユーザをdockerグループに加えた）</p>
+<p>上記ブログ <a href="https://qiita.com/tettekete/items/086ea3bc8a798cae33f5" target="_blank" rel="noopener">動かし方を紹介するブログ</a>
+の内容で基本的に問題ない。
+ただし、一般ユーザの<code>.bashrc</code>に環境変数DOCKER_HOSTを指定したので、
+一般ユーザでDockerを起動できるようにしておいた。
+（当該一般ユーザをdockerグループに加えた）</p>
 <h1><span id="コマンド">コマンド</span></h1>
 <p>コンテナ確認</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">$ docker ps -a</span><br></pre></td></tr></table></figure>
-<p><code>-v</code>を用いてボリュームをマウント。 ついでに<code>--rm</code>を用いて停止後に削除することにする。</p>
+<p><code>-v</code>を用いてボリュームをマウント。
+ついでに<code>--rm</code>を用いて停止後に削除することにする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it --rm -v c:/Users/&lt;user name&gt;:/mnt/&lt;user name&gt; &lt;image id&gt; /bin/bash</span><br></pre></td></tr></table></figure>
 
         
@@ -277,7 +282,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/02/Docker-for-Windows-with-WSL/" data-id="cl2nztnl8004a5xqibe3yzgi3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/02/Docker-for-Windows-with-WSL/" data-id="cl2o9pb54002n18rzgdh02v4d" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -528,5 +533,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

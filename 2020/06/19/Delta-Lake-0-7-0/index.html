@@ -5,18 +5,18 @@
     
     <title>Delta Lake 0.7.0 | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ SQL DDLへの対応やHive メタストアの対応 起動時のオプション例 パーサの呼び出し流れ カスタムカタログ ScalaやPythonでの例 SQLでのマージ処理  Presto / Athena用のメタデータの自動生成 テーブル履歴の切り詰めの管理 ユーザメタデータ AzureのData Lake Storage Gen2 ストリーム処理のone-timeトリガの改善">
+    <meta name="description" content="参考 メモ  SQL DDLへの対応やHive メタストアの対応  起動時のオプション例 パーサの呼び出し流れ カスタムカタログ ScalaやPythonでの例 SQLでのマージ処理  Presto / Athena用のメタデータの自動生成 テーブル履歴の切り詰めの管理 ユーザメタデータ AzureのData Lake Storage Gen2 ストリーム処理のone-timeトリガの改善">
 <meta name="keywords" content="Delta Lake">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Delta Lake 0.7.0">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/06/19/Delta-Lake-0-7-0/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ SQL DDLへの対応やHive メタストアの対応 起動時のオプション例 パーサの呼び出し流れ カスタムカタログ ScalaやPythonでの例 SQLでのマージ処理  Presto / Athena用のメタデータの自動生成 テーブル履歴の切り詰めの管理 ユーザメタデータ AzureのData Lake Storage Gen2 ストリーム処理のone-timeトリガの改善">
+<meta property="og:description" content="参考 メモ  SQL DDLへの対応やHive メタストアの対応  起動時のオプション例 パーサの呼び出し流れ カスタムカタログ ScalaやPythonでの例 SQLでのマージ処理  Presto / Athena用のメタデータの自動生成 テーブル履歴の切り詰めの管理 ユーザメタデータ AzureのData Lake Storage Gen2 ストリーム処理のone-timeトリガの改善">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Delta Lake 0.7.0">
-<meta name="twitter:description" content="参考 メモ SQL DDLへの対応やHive メタストアの対応 起動時のオプション例 パーサの呼び出し流れ カスタムカタログ ScalaやPythonでの例 SQLでのマージ処理  Presto / Athena用のメタデータの自動生成 テーブル履歴の切り詰めの管理 ユーザメタデータ AzureのData Lake Storage Gen2 ストリーム処理のone-timeトリガの改善">
+<meta name="twitter:description" content="参考 メモ  SQL DDLへの対応やHive メタストアの対応  起動時のオプション例 パーサの呼び出し流れ カスタムカタログ ScalaやPythonでの例 SQLでのマージ処理  Presto / Athena用のメタデータの自動生成 テーブル履歴の切り詰めの管理 ユーザメタデータ AzureのData Lake Storage Gen2 ストリーム処理のone-timeトリガの改善">
     
 
     
@@ -251,63 +251,113 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#sql-ddlへの対応やhive-メタストアの対応">SQL DDLへの対応やHive メタストアの対応</a><ul>
-<li><a href="#起動時のオプション例">起動時のオプション例</a></li>
-<li><a href="#パーサの呼び出し流れ">パーサの呼び出し流れ</a></li>
-<li><a href="#カスタムカタログ">カスタムカタログ</a></li>
-<li><a href="#scalaやpythonでの例">ScalaやPythonでの例</a></li>
-<li><a href="#sqlでのマージ処理">SQLでのマージ処理</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#sql-ddlへの対応やhive-メタストアの対応" id="toc-sql-ddlへの対応やhive-メタストアの対応">SQL DDLへの対応やHive
+メタストアの対応</a>
+<ul>
+<li><a href="#起動時のオプション例" id="toc-起動時のオプション例">起動時のオプション例</a></li>
+<li><a href="#パーサの呼び出し流れ" id="toc-パーサの呼び出し流れ">パーサの呼び出し流れ</a></li>
+<li><a href="#カスタムカタログ" id="toc-カスタムカタログ">カスタムカタログ</a></li>
+<li><a href="#scalaやpythonでの例" id="toc-scalaやpythonでの例">ScalaやPythonでの例</a></li>
+<li><a href="#sqlでのマージ処理" id="toc-sqlでのマージ処理">SQLでのマージ処理</a></li>
 </ul></li>
-<li><a href="#presto-athena用のメタデータの自動生成">Presto / Athena用のメタデータの自動生成</a></li>
-<li><a href="#テーブル履歴の切り詰めの管理">テーブル履歴の切り詰めの管理</a></li>
-<li><a href="#ユーザメタデータ">ユーザメタデータ</a></li>
-<li><a href="#azureのdata-lake-storage-gen2">AzureのData Lake Storage Gen2</a></li>
-<li><a href="#ストリーム処理のone-timeトリガの改善">ストリーム処理のone-timeトリガの改善</a></li>
+<li><a href="#presto-athena用のメタデータの自動生成" id="toc-presto-athena用のメタデータの自動生成">Presto /
+Athena用のメタデータの自動生成</a></li>
+<li><a href="#テーブル履歴の切り詰めの管理" id="toc-テーブル履歴の切り詰めの管理">テーブル履歴の切り詰めの管理</a></li>
+<li><a href="#ユーザメタデータ" id="toc-ユーザメタデータ">ユーザメタデータ</a></li>
+<li><a href="#azureのdata-lake-storage-gen2" id="toc-azureのdata-lake-storage-gen2">AzureのData Lake Storage
+Gen2</a></li>
+<li><a href="#ストリーム処理のone-timeトリガの改善" id="toc-ストリーム処理のone-timeトリガの改善">ストリーム処理のone-timeトリガの改善</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://github.com/delta-io/delta/releases" target="_blank" rel="noopener">Delta Lake リリースノート</a></li>
+<li><a href="https://github.com/delta-io/delta/releases" target="_blank" rel="noopener">Delta Lake
+リリースノート</a></li>
 <li><a href="https://docs.delta.io/0.7.0/delta-batch.html" target="_blank" rel="noopener">0.7.0のテーブル読み書き</a></li>
 <li><a href="https://docs.delta.io/0.6.1/delta-batch.html" target="_blank" rel="noopener">0.6.1のテーブル読み書き</a></li>
 <li><a href="https://github.com/delta-io/delta/issues/307#issuecomment-582186407" target="_blank" rel="noopener">Spark3系でないとHiveメタストアに対応できない理由</a></li>
 <li><a href="https://github.com/delta-io/delta/blob/master/examples/scala/src/main/scala/example/QuickstartSQL.scala#L58" target="_blank" rel="noopener">SQLを用いたマージの例</a></li>
-<li><a href="https://docs.delta.io/0.7.0/delta-batch.html#table-properties" target="_blank" rel="noopener">Table Properties</a></li>
-<li><a href="https://docs.delta.io/0.7.0/delta-batch.html#table-properties" target="_blank" rel="noopener">Table Properties</a></li>
-<li><a href="https://docs.delta.io/0.7.0/delta-storage.html#azure-data-lake-storage-gen2" target="_blank" rel="noopener">0.7.0で対応したAzure Data Lake Storage Gen2</a></li>
+<li><a href="https://docs.delta.io/0.7.0/delta-batch.html#table-properties" target="_blank" rel="noopener">Table
+Properties</a></li>
+<li><a href="https://docs.delta.io/0.7.0/delta-batch.html#table-properties" target="_blank" rel="noopener">Table
+Properties</a></li>
+<li><a href="https://docs.delta.io/0.7.0/delta-storage.html#azure-data-lake-storage-gen2" target="_blank" rel="noopener">0.7.0で対応したAzure
+Data Lake Storage Gen2</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>0.7.0が出たので、本リリースの特徴を確認する。</p>
-<h2><span id="sql-ddlへの対応やhive-メタストアの対応">SQL DDLへの対応やHive メタストアの対応</span></h2>
-<p>0.6系まではScala、Python APIのみであったが、SQL DDLにも対応した。 <a href="https://docs.delta.io/0.7.0/delta-batch.html" target="_blank" rel="noopener">0.7.0のテーブル読み書き</a> と <a href="https://docs.delta.io/0.6.1/delta-batch.html" target="_blank" rel="noopener">0.6.1のテーブル読み書き</a> を見比べると、SQLの例が載っていることがわかる。 対応するSQL構文については <code>src/main/antlr4/io/delta/sql/parser/DeltaSqlBase.g4</code> あたりを見ると良い。</p>
-<p>なお、 <a href="https://github.com/delta-io/delta/issues/307#issuecomment-582186407" target="_blank" rel="noopener">Spark3系でないとHiveメタストアに対応できない理由</a> を見る限り、 Spark3系のAPI（や、DataSourceV2も、かな）を使わないと、Data SourceのカスタムAPIを利用できないため、 これまでHiveメタストアのような外部メタストアと連携したDelta Lakeのメタデータ管理ができなかった、とのこと。</p>
-<p>なお、今回の対応でSparkのカタログ機能を利用することになったので、起動時もしくはSparkSession生成時の オプション指定が必要になった。 その代わり、ライブラリの明示的なインポートが不要であり、クエリはDelta Lakeのパーサで解釈された後、 解釈できないようであれば通常のパーサで処理されるようになる。</p>
+<h2><span id="sql-ddlへの対応やhiveメタストアの対応">SQL DDLへの対応やHive
+メタストアの対応</span></h2>
+<p>0.6系まではScala、Python APIのみであったが、SQL DDLにも対応した。 <a href="https://docs.delta.io/0.7.0/delta-batch.html" target="_blank" rel="noopener">0.7.0のテーブル読み書き</a>
+と <a href="https://docs.delta.io/0.6.1/delta-batch.html" target="_blank" rel="noopener">0.6.1のテーブル読み書き</a>
+を見比べると、SQLの例が載っていることがわかる。
+対応するSQL構文については
+<code>src/main/antlr4/io/delta/sql/parser/DeltaSqlBase.g4</code>
+あたりを見ると良い。</p>
+<p>なお、 <a href="https://github.com/delta-io/delta/issues/307#issuecomment-582186407" target="_blank" rel="noopener">Spark3系でないとHiveメタストアに対応できない理由</a>
+を見る限り、 Spark3系のAPI（や、DataSourceV2も、かな）を使わないと、Data
+SourceのカスタムAPIを利用できないため、
+これまでHiveメタストアのような外部メタストアと連携したDelta
+Lakeのメタデータ管理ができなかった、とのこと。</p>
+<p>なお、今回の対応でSparkのカタログ機能を利用することになったので、起動時もしくはSparkSession生成時の
+オプション指定が必要になった。
+その代わり、ライブラリの明示的なインポートが不要であり、クエリはDelta
+Lakeのパーサで解釈された後、
+解釈できないようであれば通常のパーサで処理されるようになる。</p>
 <h3><span id="起動時のオプション例">起動時のオプション例</span></h3>
 <p>例：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-shell --packages io.delta:delta-core_2.12:0.7.0 --conf <span class="string">"spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension"</span> --conf <span class="string">"spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"</span></span></span><br></pre></td></tr></table></figure>
-<p>なお、ここでは <code>SparkSessionExtensions</code> を利用し、SparkSession生成時にカスタムルール等を挿入している。 この機能は2020/06/19時点でSpark本体側でExperimentalであることに注意。 今後もSpark本体側の仕様変更に引きずられる可能性はある。</p>
+<p>なお、ここでは <code>SparkSessionExtensions</code>
+を利用し、SparkSession生成時にカスタムルール等を挿入している。
+この機能は2020/06/19時点でSpark本体側でExperimentalであることに注意。
+今後もSpark本体側の仕様変更に引きずられる可能性はある。</p>
 <h3><span id="パーサの呼び出し流れ">パーサの呼び出し流れ</span></h3>
 <p>セッション拡張機能を利用し、パーサが差し替えられている。</p>
 <p>io/delta/sql/DeltaSparkSessionExtension.scala:73</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DeltaSparkSessionExtension</span> <span class="keyword">extends</span> (<span class="params"><span class="type">SparkSessionExtensions</span> =&gt; <span class="type">Unit</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">apply</span></span>(extensions: <span class="type">SparkSessionExtensions</span>): <span class="type">Unit</span> = &#123;</span><br><span class="line">    extensions.injectParser &#123; (session, parser) =&gt;</span><br><span class="line">      <span class="keyword">new</span> <span class="type">DeltaSqlParser</span>(parser)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
-<p><code>io.delta.sql.parser.DeltaSqlParser</code> クラスでは デリゲート用のパーサを受け取り、自身のパーサで処理できなかった場合に処理をデリゲートパーサに渡す。</p>
+<p><code>io.delta.sql.parser.DeltaSqlParser</code> クラスでは
+デリゲート用のパーサを受け取り、自身のパーサで処理できなかった場合に処理をデリゲートパーサに渡す。</p>
 <p>io/delta/sql/parser/DeltaSqlParser.scala:66</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DeltaSqlParser</span>(<span class="params">val delegate: <span class="type">ParserInterface</span></span>) <span class="keyword">extends</span> <span class="title">ParserInterface</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">val</span> builder = <span class="keyword">new</span> <span class="type">DeltaSqlAstBuilder</span></span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
-<p>例えば、 <code>SparkSession</code> の <code>sql</code> メソッドを使って呼び出す場合を例にする。 このとき、内部では、 <code>org.apache.spark.sql.catalyst.parser.ParserInterface#parsePlan</code> メソッドが呼ばれて、 渡されたクエリ文 <code>sqlText</code> が処理される。</p>
+<p>例えば、 <code>SparkSession</code> の <code>sql</code>
+メソッドを使って呼び出す場合を例にする。 このとき、内部では、
+<code>org.apache.spark.sql.catalyst.parser.ParserInterface#parsePlan</code>
+メソッドが呼ばれて、 渡されたクエリ文 <code>sqlText</code>
+が処理される。</p>
 <p>org/apache/spark/sql/SparkSession.scala:601</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sql</span></span>(sqlText: <span class="type">String</span>): <span class="type">DataFrame</span> = withActive &#123;</span><br><span class="line">  <span class="keyword">val</span> tracker = <span class="keyword">new</span> <span class="type">QueryPlanningTracker</span></span><br><span class="line">  <span class="keyword">val</span> plan = tracker.measurePhase(<span class="type">QueryPlanningTracker</span>.<span class="type">PARSING</span>) &#123;</span><br><span class="line">    sessionState.sqlParser.parsePlan(sqlText)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">Dataset</span>.ofRows(self, plan, tracker)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>この <code>parsePlan</code> がoverrideされており、以下のように定義されている。</p>
+<p>この <code>parsePlan</code>
+がoverrideされており、以下のように定義されている。</p>
 <p>io/delta/sql/parser/DeltaSqlParser.scala:69</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">parsePlan</span></span>(sqlText: <span class="type">String</span>): <span class="type">LogicalPlan</span> = parse(sqlText) &#123; parser =&gt;</span><br><span class="line">  builder.visit(parser.singleStatement()) <span class="keyword">match</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> plan: <span class="type">LogicalPlan</span> =&gt; plan</span><br><span class="line">    <span class="keyword">case</span> _ =&gt; delegate.parsePlan(sqlText)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>まずは <code>io.delta.sql.parser.DeltaSqlParser#parse</code> メソッドを利用してパースがここ見られるが、 LogicalPlanが戻らなかったときは、デリゲート用パーサが呼び出されるようになっている。</p>
+<p>まずは <code>io.delta.sql.parser.DeltaSqlParser#parse</code>
+メソッドを利用してパースがここ見られるが、
+LogicalPlanが戻らなかったときは、デリゲート用パーサが呼び出されるようになっている。</p>
 <h3><span id="カスタムカタログ">カスタムカタログ</span></h3>
-<p>Spark3ではDataSourvV2の中で、プラガブルなカタログに対応した。 Delta Lake 0.7.0はこれを利用し、カスタムカタログを用いる。（これにより、Hiveメタストアを経由してDelta Lake形式のデータを読み書きできるようになっている） 使われているカタログは <code>org.apache.spark.sql.delta.catalog.DeltaCatalog</code> である。 （SparkSessionのインスタンス生成する際、もしくは起動時のオプション指定）</p>
-<p>当該カタログ内部では、例えば <code>org.apache.spark.sql.delta.catalog.DeltaCatalog#createDeltaTable</code> メソッドが定義されており、 <code>org.apache.spark.sql.delta.catalog.DeltaCatalog#createTable</code> ※ しようとするときなどに呼び出されるようになっている。</p>
-<p>※ <code>org.apache.spark.sql.connector.catalog.DelegatingCatalogExtension#createTable</code> をoverrideしている</p>
-<p>なお、このクラスもデリゲート用のカタログを用いるようになっている。 <code>org.apache.spark.sql.delta.catalog.DeltaCatalog#createTable</code> メソッドは以下のようになっており、 データソースが delta 出ない場合は、親クラスの <code>createTable</code> （つまり標準的なもの）が呼び出されるようになっている。</p>
+<p>Spark3ではDataSourvV2の中で、プラガブルなカタログに対応した。 Delta
+Lake
+0.7.0はこれを利用し、カスタムカタログを用いる。（これにより、Hiveメタストアを経由してDelta
+Lake形式のデータを読み書きできるようになっている）
+使われているカタログは
+<code>org.apache.spark.sql.delta.catalog.DeltaCatalog</code> である。
+（SparkSessionのインスタンス生成する際、もしくは起動時のオプション指定）</p>
+<p>当該カタログ内部では、例えば
+<code>org.apache.spark.sql.delta.catalog.DeltaCatalog#createDeltaTable</code>
+メソッドが定義されており、
+<code>org.apache.spark.sql.delta.catalog.DeltaCatalog#createTable</code>
+※ しようとするときなどに呼び出されるようになっている。</p>
+<p>※
+<code>org.apache.spark.sql.connector.catalog.DelegatingCatalogExtension#createTable</code>
+をoverrideしている</p>
+<p>なお、このクラスもデリゲート用のカタログを用いるようになっている。
+<code>org.apache.spark.sql.delta.catalog.DeltaCatalog#createTable</code>
+メソッドは以下のようになっており、 データソースが delta
+出ない場合は、親クラスの <code>createTable</code>
+（つまり標準的なもの）が呼び出されるようになっている。</p>
 <p>org/apache/spark/sql/delta/catalog/DeltaCatalog.scala:149</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">createTable</span></span>(</span><br><span class="line">    ident: <span class="type">Identifier</span>,</span><br><span class="line">    schema: <span class="type">StructType</span>,</span><br><span class="line">    partitions: <span class="type">Array</span>[<span class="type">Transform</span>],</span><br><span class="line">    properties: util.<span class="type">Map</span>[<span class="type">String</span>, <span class="type">String</span>]): <span class="type">Table</span> = &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="type">DeltaSourceUtils</span>.isDeltaDataSourceName(getProvider(properties))) &#123;</span><br><span class="line">    createDeltaTable(</span><br><span class="line">      ident, schema, partitions, properties, sourceQuery = <span class="type">None</span>, <span class="type">TableCreationModes</span>.<span class="type">Create</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.createTable(ident, schema, partitions, properties)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3><span id="scalaやpythonでの例">ScalaやPythonでの例</span></h3>
@@ -315,25 +365,38 @@ ga('send', 'pageview');
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df.write.format(<span class="string">"delta"</span>).saveAsTable(<span class="string">"events"</span>)      <span class="comment">// create table in the metastore</span></span><br><span class="line"></span><br><span class="line">df.write.format(<span class="string">"delta"</span>).save(<span class="string">"/delta/events"</span>)  <span class="comment">// create table by path</span></span><br></pre></td></tr></table></figure>
 <p>Hiveメタストア経由で書き込むケースと、ストレージ上に直接書き出すケースが載っている。</p>
 <h3><span id="sqlでのマージ処理">SQLでのマージ処理</span></h3>
-<p><a href="https://github.com/delta-io/delta/blob/master/examples/scala/src/main/scala/example/QuickstartSQL.scala#L58" target="_blank" rel="noopener">SQLを用いたマージの例</a> の通り、Delta Lakeの特徴であるマージ機能もSQLから呼び出させる。</p>
+<p><a href="https://github.com/delta-io/delta/blob/master/examples/scala/src/main/scala/example/QuickstartSQL.scala#L58" target="_blank" rel="noopener">SQLを用いたマージの例</a>
+の通り、Delta Lakeの特徴であるマージ機能もSQLから呼び出させる。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spark.sql(<span class="string">s""</span><span class="string">"MERGE INTO $tableName USING newData</span></span><br><span class="line"><span class="string">    ON $&#123;tableName&#125;.id = newData.id</span></span><br><span class="line"><span class="string">    WHEN MATCHED THEN</span></span><br><span class="line"><span class="string">      UPDATE SET $&#123;tableName&#125;.id = newData.id</span></span><br><span class="line"><span class="string">    WHEN NOT MATCHED THEN INSERT *</span></span><br><span class="line"><span class="string">"</span><span class="string">""</span>)</span><br></pre></td></tr></table></figure>
-<p>Spark SQLのカタログに登録されたDelta LakeのテーブルからDeltaTableを生成することもできる。</p>
+<p>Spark SQLのカタログに登録されたDelta
+LakeのテーブルからDeltaTableを生成することもできる。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">import</span> io.delta.tables.<span class="type">DeltaTable</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> tbl = <span class="type">DeltaTable</span>.forName(tableName)</span><br></pre></td></tr></table></figure>
-<h2><span id="presto-athena用のメタデータの自動生成">Presto / Athena用のメタデータの自動生成</span></h2>
-<p>Delta LakeはPresto、Athena用のメタデータを生成できるが、更新があった際にパーティションごとに自動で再生成できるようになった。</p>
+<h2><span id="presto-athena用のメタデータの自動生成">Presto /
+Athena用のメタデータの自動生成</span></h2>
+<p>Delta
+LakeはPresto、Athena用のメタデータを生成できるが、更新があった際にパーティションごとに自動で再生成できるようになった。</p>
 <h2><span id="テーブル履歴の切り詰めの管理">テーブル履歴の切り詰めの管理</span></h2>
-<p>Delta Lakeは更新の履歴を保持することも特徴の一つだが、 データ本体とログのそれぞれの切り詰め対象期間を指定できる。</p>
-<p>CREATEやALTER句内で、TBLPROPERTIESとして指定することになっている。 例えば以下。</p>
+<p>Delta Lakeは更新の履歴を保持することも特徴の一つだが、
+データ本体とログのそれぞれの切り詰め対象期間を指定できる。</p>
+<p>CREATEやALTER句内で、TBLPROPERTIESとして指定することになっている。
+例えば以下。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark.sql(<span class="string">s"CREATE TABLE <span class="subst">$tableName</span>(id LONG) USING delta TBLPROPERTIES ('delta.logRetentionDuration' = 'interval 1 day', 'delta.deletedFileRetentionDuration' = 'interval 1 day')"</span>)</span><br><span class="line">spark.sql(<span class="string">s"ALTER TABLE <span class="subst">$tableName</span> SET TBLPROPERTIES ('delta.logRetentionDuration' = 'interval 1 day', 'delta.deletedFileRetentionDuration' = 'interval 1 day')"</span>)</span><br></pre></td></tr></table></figure>
 <h2><span id="ユーザメタデータ">ユーザメタデータ</span></h2>
-<p>spark.databricks.delta.commitInfo.userMetadata プロパティを利用して、ユーザメタデータを付与できる。</p>
+<p>spark.databricks.delta.commitInfo.userMetadata
+プロパティを利用して、ユーザメタデータを付与できる。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.write.option(<span class="string">"spark.databricks.delta.commitInfo.userMetadata"</span>, <span class="string">"test"</span>).format(<span class="string">"delta"</span>).mode(<span class="string">"append"</span>).save(<span class="string">"/tmp/test"</span>)</span><br></pre></td></tr></table></figure>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; spark.sql(<span class="string">"SET spark.databricks.delta.commitInfo.userMetadata=test"</span>)</span><br><span class="line">scala&gt; spark.sql(<span class="string">s"INSERT INTO <span class="subst">$tableName</span> VALUES 0, 1, 2, 3, 4"</span>)</span><br></pre></td></tr></table></figure>
-<h2><span id="azureのdata-lake-storage-gen2">AzureのData Lake Storage Gen2</span></h2>
+<h2><span id="azureのdata-lake-storagegen2">AzureのData Lake Storage
+Gen2</span></h2>
 <p>対応した。</p>
-<p>しかし、 <a href="https://docs.delta.io/0.7.0/delta-storage.html#azure-data-lake-storage-gen2" target="_blank" rel="noopener">0.7.0で対応したAzure Data Lake Storage Gen2</a> の通り、 前提となっている各種ソフトウェアバージョンは高め。</p>
+<p>しかし、 <a href="https://docs.delta.io/0.7.0/delta-storage.html#azure-data-lake-storage-gen2" target="_blank" rel="noopener">0.7.0で対応したAzure
+Data Lake Storage Gen2</a> の通り、
+前提となっている各種ソフトウェアバージョンは高め。</p>
 <h2><span id="ストリーム処理のone-timeトリガの改善">ストリーム処理のone-timeトリガの改善</span></h2>
-<p>DataStreamReaderのオプションでmaxFilesPerTriggerを設定しているとしても、 one-time triggerでは一度に溜まったすべてのデータを読み込むようになった。（Spark 3系の話）  <!-- vim: set et tw=0 ts=2 sw=2: --></p>
+<p>DataStreamReaderのオプションでmaxFilesPerTriggerを設定しているとしても、
+one-time
+triggerでは一度に溜まったすべてのデータを読み込むようになった。（Spark
+3系の話）  <!-- vim: set et tw=0 ts=2 sw=2: --></p>
 
         
         </div>
@@ -344,7 +407,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/06/19/Delta-Lake-0-7-0/" data-id="cl2nztnl3003s5xqipqyudxd0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/06/19/Delta-Lake-0-7-0/" data-id="cl2o9pbge014418rzlnun0j1p" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -595,5 +658,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -5,18 +5,18 @@
     
     <title>Kafkaコンソールプロデューサを起点とした確認 | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ ConsoleProducer KafkaProducer コンストラクタを確認する     参考  Confluentのトランザクションに関する説明  メモ 2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。 ConsoleProducer エントリポイントとして、Kafkaのコンソールプロデューサを選ぶ。 bin/kafka-consol">
+    <meta name="description" content="参考 メモ  ConsoleProducer KafkaProducer  コンストラクタを確認する     参考  Confluentのトランザクションに関する説明  メモ 2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。 ConsoleProducer エントリポイントとして、Kafkaのコンソールプロデューサを選ぶ。 bin/kafka-cons">
 <meta name="keywords" content="Kafka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kafkaコンソールプロデューサを起点とした確認">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/06/26/Kafka-Console-Producer/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ ConsoleProducer KafkaProducer コンストラクタを確認する     参考  Confluentのトランザクションに関する説明  メモ 2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。 ConsoleProducer エントリポイントとして、Kafkaのコンソールプロデューサを選ぶ。 bin/kafka-consol">
+<meta property="og:description" content="参考 メモ  ConsoleProducer KafkaProducer  コンストラクタを確認する     参考  Confluentのトランザクションに関する説明  メモ 2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。 ConsoleProducer エントリポイントとして、Kafkaのコンソールプロデューサを選ぶ。 bin/kafka-cons">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafkaコンソールプロデューサを起点とした確認">
-<meta name="twitter:description" content="参考 メモ ConsoleProducer KafkaProducer コンストラクタを確認する     参考  Confluentのトランザクションに関する説明  メモ 2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。 ConsoleProducer エントリポイントとして、Kafkaのコンソールプロデューサを選ぶ。 bin/kafka-consol">
+<meta name="twitter:description" content="参考 メモ  ConsoleProducer KafkaProducer  コンストラクタを確認する     参考  Confluentのトランザクションに関する説明  メモ 2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。 ConsoleProducer エントリポイントとして、Kafkaのコンソールプロデューサを選ぶ。 bin/kafka-cons">
     
 
     
@@ -251,11 +251,13 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#consoleproducer">ConsoleProducer</a></li>
-<li><a href="#kafkaproducer">KafkaProducer</a><ul>
-<li><a href="#コンストラクタを確認する">コンストラクタを確認する</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#consoleproducer" id="toc-consoleproducer">ConsoleProducer</a></li>
+<li><a href="#kafkaproducer" id="toc-kafkaproducer">KafkaProducer</a>
+<ul>
+<li><a href="#コンストラクタを確認する" id="toc-コンストラクタを確認する">コンストラクタを確認する</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -265,29 +267,40 @@ ga('send', 'pageview');
 <li><a href="https://www.confluent.io/blog/transactions-apache-kafka/" target="_blank" rel="noopener">Confluentのトランザクションに関する説明</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>2019/6/23時点でのtrunkで再確認した内容。 ほぼ昔のメモのままコピペ・・・。</p>
+<p>2019/6/23時点でのtrunkで再確認した内容。
+ほぼ昔のメモのままコピペ・・・。</p>
 <h2><span id="consoleproducer">ConsoleProducer</span></h2>
 <p>エントリポイントとして、Kafkaのコンソールプロデューサを選ぶ。</p>
 <p>bin/kafka-console-producer.sh:20 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsoleProducer &quot;$@&quot;</span><br></pre></td></tr></table></figure></p>
 <p>コンソールプロデューサの実態は、KafkaProducerである。</p>
 <p>kafka/tools/ConsoleProducer.scala:45 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val producer = new KafkaProducer[Array[Byte], Array[Byte]](producerProps(config))</span><br></pre></td></tr></table></figure></p>
-<p>なお、 ConsoleProducerにはsendメソッドが定義されており、 以下のように標準入力からデータを読み出してはメッセージを送信する、を繰り返す。</p>
+<p>なお、 ConsoleProducerにはsendメソッドが定義されており、
+以下のように標準入力からデータを読み出してはメッセージを送信する、を繰り返す。</p>
 <p>kafka/tools/ConsoleProducer.scala:54 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">do &#123;</span><br><span class="line">  record = reader.readMessage()</span><br><span class="line">  if (record != null)</span><br><span class="line">    send(producer, record, config.sync)</span><br><span class="line">&#125; while (record != null)</span><br></pre></td></tr></table></figure></p>
 <p>kafka/tools/ConsoleProducer.scala:70 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private def send(producer: KafkaProducer[Array[Byte], Array[Byte]],</span><br><span class="line">                       record: ProducerRecord[Array[Byte], Array[Byte]], sync: Boolean): Unit = &#123;</span><br><span class="line">  if (sync)</span><br><span class="line">    producer.send(record).get()</span><br><span class="line">  else</span><br><span class="line">    producer.send(record, new ErrorLoggingCallback(record.topic, record.key, record.value, false))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2><span id="kafkaproducer">KafkaProducer</span></h2>
 <p>それでは実態であるKafkaProducerを確認する。</p>
 <h3><span id="コンストラクタを確認する">コンストラクタを確認する</span></h3>
 <p>まずクライアントのIDが定義される。</p>
-<p>org/apache/kafka/clients/producer/KafkaProducer.java:332 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String clientId = config.getString(ProducerConfig.CLIENT_ID_CONFIG);</span><br><span class="line">if (clientId.length() &lt;= 0)</span><br><span class="line">    clientId = &quot;producer-&quot; + PRODUCER_CLIENT_ID_SEQUENCE.getAndIncrement();</span><br><span class="line">this.clientId = clientId;</span><br></pre></td></tr></table></figure></p>
+<p>org/apache/kafka/clients/producer/KafkaProducer.java:332
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String clientId = config.getString(ProducerConfig.CLIENT_ID_CONFIG);</span><br><span class="line">if (clientId.length() &lt;= 0)</span><br><span class="line">    clientId = &quot;producer-&quot; + PRODUCER_CLIENT_ID_SEQUENCE.getAndIncrement();</span><br><span class="line">this.clientId = clientId;</span><br></pre></td></tr></table></figure></p>
 <p>続いてトランザクションIDが定義される。</p>
-<p>org/apache/kafka/clients/producer/KafkaProducer.java:337 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String transactionalId = userProvidedConfigs.containsKey(ProducerConfig.TRANSACTIONAL_ID_CONFIG) ?</span><br><span class="line">        (String) userProvidedConfigs.get(ProducerConfig.TRANSACTIONAL_ID_CONFIG) : null;</span><br></pre></td></tr></table></figure></p>
-<p>Kafkaのトランザクションについては、 <a href="https://www.confluent.io/blog/transactions-apache-kafka/" target="_blank" rel="noopener">Confluentのトランザクションに関する説明</a> を参照。</p>
-<p>その後、ログ設定、メトリクス設定、キー・バリューのシリアライザ設定。 その後、各種設定値を定義する。</p>
-<p>特徴的なところとしては、メッセージを送信するときにメッセージをいったんまとめこむ accumulator も このときに定義される。</p>
-<p>org/apache/kafka/clients/producer/KafkaProducer.java:396 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">this.accumulator = new RecordAccumulator(logContext,</span><br><span class="line">        config.getInt(ProducerConfig.BATCH_SIZE_CONFIG),</span><br><span class="line">        this.compressionType,</span><br><span class="line">        lingerMs(config),</span><br><span class="line">        retryBackoffMs,</span><br><span class="line">        deliveryTimeoutMs,</span><br><span class="line">        metrics,</span><br><span class="line">        PRODUCER_METRIC_GROUP_NAME,</span><br><span class="line">        time,</span><br><span class="line">        apiVersions,</span><br><span class="line">        transactionManager,</span><br><span class="line">        new BufferPool(this.totalMemorySize, config.getInt(ProducerConfig.BATCH_SIZE_CONFIG), metrics, time, PRODUCER_METRIC_GROUP_NAME));</span><br></pre></td></tr></table></figure></p>
-<p>他には Sendor も挙げられる。 例えば、上記で示したaccumulatorも、Sendorのコンストラクタに渡され、内部で利用される。</p>
-<p>org/apache/kafka/clients/producer/KafkaProducer.java:422 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.sender = newSender(logContext, kafkaClient, this.metadata);</span><br></pre></td></tr></table></figure></p>
-<p>org/apache/kafka/clients/producer/KafkaProducer.java:463 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">return new Sender(logContext,</span><br><span class="line">        client,</span><br><span class="line">        metadata,</span><br><span class="line">        this.accumulator,</span><br><span class="line">        maxInflightRequests == 1,</span><br><span class="line">        producerConfig.getInt(ProducerConfig.MAX_REQUEST_SIZE_CONFIG),</span><br><span class="line">        acks,</span><br><span class="line">        retries,</span><br><span class="line">        metricsRegistry.senderMetrics,</span><br><span class="line">        time,</span><br><span class="line">        requestTimeoutMs,</span><br><span class="line">        producerConfig.getLong(ProducerConfig.RETRY_BACKOFF_MS_CONFIG),</span><br><span class="line">        this.transactionManager,</span><br><span class="line">        apiVersions);</span><br></pre></td></tr></table></figure></p>
+<p>org/apache/kafka/clients/producer/KafkaProducer.java:337
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String transactionalId = userProvidedConfigs.containsKey(ProducerConfig.TRANSACTIONAL_ID_CONFIG) ?</span><br><span class="line">        (String) userProvidedConfigs.get(ProducerConfig.TRANSACTIONAL_ID_CONFIG) : null;</span><br></pre></td></tr></table></figure></p>
+<p>Kafkaのトランザクションについては、 <a href="https://www.confluent.io/blog/transactions-apache-kafka/" target="_blank" rel="noopener">Confluentのトランザクションに関する説明</a>
+を参照。</p>
+<p>その後、ログ設定、メトリクス設定、キー・バリューのシリアライザ設定。
+その後、各種設定値を定義する。</p>
+<p>特徴的なところとしては、メッセージを送信するときにメッセージをいったんまとめこむ
+accumulator も このときに定義される。</p>
+<p>org/apache/kafka/clients/producer/KafkaProducer.java:396
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">this.accumulator = new RecordAccumulator(logContext,</span><br><span class="line">        config.getInt(ProducerConfig.BATCH_SIZE_CONFIG),</span><br><span class="line">        this.compressionType,</span><br><span class="line">        lingerMs(config),</span><br><span class="line">        retryBackoffMs,</span><br><span class="line">        deliveryTimeoutMs,</span><br><span class="line">        metrics,</span><br><span class="line">        PRODUCER_METRIC_GROUP_NAME,</span><br><span class="line">        time,</span><br><span class="line">        apiVersions,</span><br><span class="line">        transactionManager,</span><br><span class="line">        new BufferPool(this.totalMemorySize, config.getInt(ProducerConfig.BATCH_SIZE_CONFIG), metrics, time, PRODUCER_METRIC_GROUP_NAME));</span><br></pre></td></tr></table></figure></p>
+<p>他には Sendor も挙げられる。
+例えば、上記で示したaccumulatorも、Sendorのコンストラクタに渡され、内部で利用される。</p>
+<p>org/apache/kafka/clients/producer/KafkaProducer.java:422
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.sender = newSender(logContext, kafkaClient, this.metadata);</span><br></pre></td></tr></table></figure></p>
+<p>org/apache/kafka/clients/producer/KafkaProducer.java:463
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">return new Sender(logContext,</span><br><span class="line">        client,</span><br><span class="line">        metadata,</span><br><span class="line">        this.accumulator,</span><br><span class="line">        maxInflightRequests == 1,</span><br><span class="line">        producerConfig.getInt(ProducerConfig.MAX_REQUEST_SIZE_CONFIG),</span><br><span class="line">        acks,</span><br><span class="line">        retries,</span><br><span class="line">        metricsRegistry.senderMetrics,</span><br><span class="line">        time,</span><br><span class="line">        requestTimeoutMs,</span><br><span class="line">        producerConfig.getLong(ProducerConfig.RETRY_BACKOFF_MS_CONFIG),</span><br><span class="line">        this.transactionManager,</span><br><span class="line">        apiVersions);</span><br></pre></td></tr></table></figure></p>
 <p>その他にはトランザクション・マネージャなども。</p>
 
         
@@ -299,7 +312,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/26/Kafka-Console-Producer/" data-id="cl2nztnmm008h5xqipyh6fcd7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/26/Kafka-Console-Producer/" data-id="cl2o9pb6d005q18rz23szz97u" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -550,5 +563,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

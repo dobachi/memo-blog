@@ -5,18 +5,18 @@
     
     <title>Error about the memory configuration of Minikube | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="メモ 現状の結論（2022/1/10時点） 雑記  参考   メモ 現状の結論（2022/1/10時点） 解決まで至ってはいなく、状況整理したのみ。 雑記 minikube 1.23 Your cgroup does not allow setting memory #12842 にも記載されているエラーが以下の環境で生じた。 環境 12345678910111213141516dobach">
+    <meta name="description" content="メモ  現状の結論（2022/1/10時点） 雑記  参考   メモ 現状の結論（2022/1/10時点） 解決まで至ってはいなく、状況整理したのみ。 雑記 minikube 1.23 Your cgroup does not allow setting memory #12842 にも記載されているエラーが以下の環境で生じた。 環境 12345678910111213141516dobac">
 <meta name="keywords" content="Kubernetes,Minikube,Troubleshoot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Error about the memory configuration of Minikube">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2022/01/10/Error-about-the-memory-configuration-of-Minikube/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="メモ 現状の結論（2022/1/10時点） 雑記  参考   メモ 現状の結論（2022/1/10時点） 解決まで至ってはいなく、状況整理したのみ。 雑記 minikube 1.23 Your cgroup does not allow setting memory #12842 にも記載されているエラーが以下の環境で生じた。 環境 12345678910111213141516dobach">
+<meta property="og:description" content="メモ  現状の結論（2022/1/10時点） 雑記  参考   メモ 現状の結論（2022/1/10時点） 解決まで至ってはいなく、状況整理したのみ。 雑記 minikube 1.23 Your cgroup does not allow setting memory #12842 にも記載されているエラーが以下の環境で生じた。 環境 12345678910111213141516dobac">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Error about the memory configuration of Minikube">
-<meta name="twitter:description" content="メモ 現状の結論（2022/1/10時点） 雑記  参考   メモ 現状の結論（2022/1/10時点） 解決まで至ってはいなく、状況整理したのみ。 雑記 minikube 1.23 Your cgroup does not allow setting memory #12842 にも記載されているエラーが以下の環境で生じた。 環境 12345678910111213141516dobach">
+<meta name="twitter:description" content="メモ  現状の結論（2022/1/10時点） 雑記  参考   メモ 現状の結論（2022/1/10時点） 解決まで至ってはいなく、状況整理したのみ。 雑記 minikube 1.23 Your cgroup does not allow setting memory #12842 にも記載されているエラーが以下の環境で生じた。 環境 12345678910111213141516dobac">
     
 
     
@@ -251,38 +251,51 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#現状の結論2022110時点">現状の結論（2022/1/10時点）</a></li>
-<li><a href="#雑記">雑記</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#現状の結論2022110時点" id="toc-現状の結論2022110時点">現状の結論（2022/1/10時点）</a></li>
+<li><a href="#雑記" id="toc-雑記">雑記</a></li>
 </ul></li>
-<li><a href="#参考">参考</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
 </ul>
 </div>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="現状の結論2022110時点">現状の結論（2022/1/10時点）</span></h2>
 <p>解決まで至ってはいなく、状況整理したのみ。</p>
 <h2><span id="雑記">雑記</span></h2>
-<p><a href="https://github.com/kubernetes/minikube/issues/12842" target="_blank" rel="noopener">minikube 1.23 Your cgroup does not allow setting memory #12842</a> にも記載されているエラーが以下の環境で生じた。</p>
+<p><a href="https://github.com/kubernetes/minikube/issues/12842" target="_blank" rel="noopener">minikube 1.23
+Your cgroup does not allow setting memory #12842</a>
+にも記載されているエラーが以下の環境で生じた。</p>
 <p>環境</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">dobachi@ubu18:~$ minikube version</span><br><span class="line">minikube version: v1.24.0</span><br><span class="line">commit: 76b94fb3c4e8ac5062daf70d60cf03ddcc0a741b</span><br><span class="line"></span><br><span class="line">dobachi@ubu18:~$ cat /etc/lsb-release</span><br><span class="line">DISTRIB_ID=Ubuntu</span><br><span class="line">DISTRIB_RELEASE=18.04</span><br><span class="line">DISTRIB_CODENAME=bionic</span><br><span class="line">DISTRIB_DESCRIPTION="Ubuntu 18.04.6 LTS"</span><br><span class="line"></span><br><span class="line">dobachi@ubu18:~$ uname -a</span><br><span class="line">Linux ubu18 5.4.0-92-generic #103~18.04.2-Ubuntu SMP Wed Dec 1 16:50:36 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux</span><br><span class="line"></span><br><span class="line">dobachi@ubu18:~$ grep cgroup /proc/filesystems</span><br><span class="line">nodev   cgroup</span><br><span class="line">nodev   cgroup2</span><br></pre></td></tr></table></figure>
-<p>上記のIssueに記載されている通り、Minikubeでは、cgroupでメモリリミットを設定できるかどうかを確認する際、 以下のような関数を利用する。</p>
+<p>上記のIssueに記載されている通り、Minikubeでは、cgroupでメモリリミットを設定できるかどうかを確認する際、
+以下のような関数を利用する。</p>
 <p><a href="https://github.com/kubernetes/minikube/blob/25d17c2dde4920c00b4fe6f42aece999ce92cd5c/pkg/drivers/kic/oci/oci.go#L111-L124" target="_blank" rel="noopener">oci.go#L111-L124</a></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HasMemoryCgroup</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	memcg := <span class="literal">true</span></span><br><span class="line">	<span class="keyword">if</span> runtime.GOOS == <span class="string">"linux"</span> &#123;</span><br><span class="line">		<span class="keyword">var</span> memory <span class="keyword">string</span></span><br><span class="line">		<span class="keyword">if</span> cgroup2, err := IsCgroup2UnifiedMode(); err == <span class="literal">nil</span> &amp;&amp; cgroup2 &#123;</span><br><span class="line">			memory = <span class="string">"/sys/fs/cgroup/memory/memsw.limit_in_bytes"</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> _, err := os.Stat(memory); os.IsNotExist(err) &#123;</span><br><span class="line">			klog.Warning(<span class="string">"Your kernel does not support memory limit capabilities or the cgroup is not mounted."</span>)</span><br><span class="line">			memcg = <span class="literal">false</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> memcg</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>以下のファイルをstatしているのだが…</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memory = <span class="string">"/sys/fs/cgroup/memory/memsw.limit_in_bytes"</span></span><br></pre></td></tr></table></figure>
 <p>これは上記環境では存在しない。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dobachi@ubu18:~$ sudo stat /sys/fs/cgroup/memory/memsw.limit_in_bytes</span><br><span class="line">stat: '/sys/fs/cgroup/memory/memsw.limit_in_bytes' を stat できません: そのようなファイルやディレクトリはありません</span><br></pre></td></tr></table></figure>
-<p>一方、 <code>/sys/fs/cgroup/memory/memory.soft_limit_in_bytes</code> なら存在する。</p>
+<p>一方、 <code>/sys/fs/cgroup/memory/memory.soft_limit_in_bytes</code>
+なら存在する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dobachi@ubu18:~$ sudo stat /sys/fs/cgroup/memory/memory.soft_limit_in_bytes</span><br><span class="line">  File: /sys/fs/cgroup/memory/memory.soft_limit_in_bytes</span><br><span class="line">  Size: 0               Blocks: 0          IO Block: 4096   通常の空ファイル</span><br><span class="line">Device: 23h/35d Inode: 11          Links: 1</span><br><span class="line">Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)</span><br><span class="line">Access: 2022-01-10 21:39:31.409626300 +0900</span><br><span class="line">Modify: 2022-01-10 21:39:31.409626300 +0900</span><br><span class="line">Change: 2022-01-10 21:39:31.409626300 +0900</span><br><span class="line"> Birth: -</span><br></pre></td></tr></table></figure>
-<p>なお、 エラーメッセージにある通り、 <a href="https://docs.docker.com/engine/install/linux-postinstall/#your-kernel-does-not-support-cgroup-swap-limit-capabilities" target="_blank" rel="noopener">Your kernel does not support cgroup swap limit capabilities</a> にしたがってGRUP設定を変更・反映し、リブートしても状況は変わらない。</p>
-<p>PodmanのIssueではあるが、関連する議論が <a href="https://github.com/containers/podman/issues/6365" target="_blank" rel="noopener">podman unable to limit memory (-m flag) on Ubuntu/Debian distros #6365</a> に記載されている。</p>
+<p>なお、 エラーメッセージにある通り、 <a href="https://docs.docker.com/engine/install/linux-postinstall/#your-kernel-does-not-support-cgroup-swap-limit-capabilities" target="_blank" rel="noopener">Your
+kernel does not support cgroup swap limit capabilities</a>
+にしたがってGRUP設定を変更・反映し、リブートしても状況は変わらない。</p>
+<p>PodmanのIssueではあるが、関連する議論が <a href="https://github.com/containers/podman/issues/6365" target="_blank" rel="noopener">podman unable to
+limit memory (-m flag) on Ubuntu/Debian distros #6365</a>
+に記載されている。</p>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://github.com/kubernetes/minikube/issues/12842" target="_blank" rel="noopener">minikube 1.23 Your cgroup does not allow setting memory #12842</a></li>
+<li><a href="https://github.com/kubernetes/minikube/issues/12842" target="_blank" rel="noopener">minikube 1.23
+Your cgroup does not allow setting memory #12842</a></li>
 <li><a href="https://github.com/kubernetes/minikube/blob/25d17c2dde4920c00b4fe6f42aece999ce92cd5c/pkg/drivers/kic/oci/oci.go#L111-L124" target="_blank" rel="noopener">oci.go#L111-L124</a></li>
-<li><a href="https://docs.docker.com/engine/install/linux-postinstall/#your-kernel-does-not-support-cgroup-swap-limit-capabilities" target="_blank" rel="noopener">Your kernel does not support cgroup swap limit capabilities</a></li>
-<li><a href="https://stackoverflow.com/questions/65646317/sys-fs-cgroup-memory-memory-limit-in-bytes-not-present-in-fedora-33" target="_blank" rel="noopener">/sys/fs/cgroup/memory/memory.limit_in_bytes not present in Fedora 33</a></li>
-<li><a href="https://github.com/containers/podman/issues/6365" target="_blank" rel="noopener">podman unable to limit memory (-m flag) on Ubuntu/Debian distros #6365</a></li>
+<li><a href="https://docs.docker.com/engine/install/linux-postinstall/#your-kernel-does-not-support-cgroup-swap-limit-capabilities" target="_blank" rel="noopener">Your
+kernel does not support cgroup swap limit capabilities</a></li>
+<li><a href="https://stackoverflow.com/questions/65646317/sys-fs-cgroup-memory-memory-limit-in-bytes-not-present-in-fedora-33" target="_blank" rel="noopener">/sys/fs/cgroup/memory/memory.limit_in_bytes
+not present in Fedora 33</a></li>
+<li><a href="https://github.com/containers/podman/issues/6365" target="_blank" rel="noopener">podman
+unable to limit memory (-m flag) on Ubuntu/Debian distros #6365</a></li>
 </ul>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -295,7 +308,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/10/Error-about-the-memory-configuration-of-Minikube/" data-id="cl2nztnld004n5xqigzb2ieqs" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/10/Error-about-the-memory-configuration-of-Minikube/" data-id="cl2o9pb59002z18rzifx4awea" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -546,5 +559,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

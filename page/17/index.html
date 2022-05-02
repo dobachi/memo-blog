@@ -240,8 +240,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -250,7 +250,11 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>よく忘れると思われる、Jupyterをクライアントとしての起動方法をメモ。</p>
-<p><a href="https://spark.apache.org/docs/2.4.0/configuration.html#environment-variables" target="_blank" rel="noopener">Sparkのドキュメント（Environment Variables）</a> の記載の通り、環境変数PYSPARK_DRIVER_PYTHONを使い、 ドライバが用いるPythonを指定する。 <a href="https://github.com/apache/spark/blob/e4cb42ad89307ebc5a1bd9660c86219340d71ff6/bin/pyspark#L27" target="_blank" rel="noopener">GitHub上のpysparkの実装#27</a> の通り、環境変数PYSPARK_DRIVER_PYTHON_OPTSを使い、 オプションを指定する。</p>
+<p><a href="https://spark.apache.org/docs/2.4.0/configuration.html#environment-variables" target="_blank" rel="noopener">Sparkのドキュメント（Environment
+Variables）</a> の記載の通り、環境変数PYSPARK_DRIVER_PYTHONを使い、
+ドライバが用いるPythonを指定する。 <a href="https://github.com/apache/spark/blob/e4cb42ad89307ebc5a1bd9660c86219340d71ff6/bin/pyspark#L27" target="_blank" rel="noopener">GitHub上のpysparkの実装#27</a>
+の通り、環境変数PYSPARK_DRIVER_PYTHON_OPTSを使い、
+オプションを指定する。</p>
 <p>例</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PYSPARK_DRIVER_PYTHON=jupyter PYSPARK_DRIVER_PYTHON_OPTS=&apos;notebook&apos; ~/Spark/default/bin/pyspark</span><br></pre></td></tr></table></figure>
 <p>ちなみに、ガイドにも一応記載されている。</p>
@@ -265,7 +269,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/11/Jupyter-with-Spark/" data-id="cl2nztnmf007u5xqiqe3fmaop" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/11/Jupyter-with-Spark/" data-id="cl2o9pb68005e18rzvh32qcct" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -386,53 +390,83 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#まとめサイト">まとめサイト</a><ul>
-<li><a href="#hpc-japan">HPC Japan</a></li>
-<li><a href="#list-of-machine-learning-deep-learning-conferences-in-2019">List of Machine Learning / Deep Learning conferences in 2019</a></li>
-<li><a href="#the-16-ai-and-ml-conferences-you-should-attend-in-2019">The 16 AI and ML conferences you should attend in 2019</a></li>
+<li><a href="#まとめサイト" id="toc-まとめサイト">まとめサイト</a>
+<ul>
+<li><a href="#hpc-japan" id="toc-hpc-japan">HPC Japan</a></li>
+<li><a href="#list-of-machine-learning-deep-learning-conferences-in-2019" id="toc-list-of-machine-learning-deep-learning-conferences-in-2019">List
+of Machine Learning / Deep Learning conferences in 2019</a></li>
+<li><a href="#the-16-ai-and-ml-conferences-you-should-attend-in-2019" id="toc-the-16-ai-and-ml-conferences-you-should-attend-in-2019">The 16
+AI and ML conferences you should attend in 2019</a></li>
 </ul></li>
-<li><a href="#ieee関連">IEEE関連</a><ul>
-<li><a href="#ieee-congress-2019">IEEE Congress 2019</a></li>
-<li><a href="#the-6th-ieee-international-conference-on-big-data-and-smart-computing">The 6th IEEE International Conference on Big Data and Smart Computing</a></li>
-<li><a href="#ieee-2019-summit-on-future-technology-for-smart-cities">IEEE 2019 Summit On Future Technology For Smart Cities</a></li>
-<li><a href="#the-ieee-international-conference-on-cloud-engineering-ic2e">The IEEE International Conference on Cloud Engineering (IC2E)</a></li>
-<li><a href="#the-5th-ieee-international-conference-on-cloud-and-big-data-computing-cbdcom-2019">The 5th IEEE International Conference on Cloud and Big Data Computing (CBDCom 2019)</a></li>
+<li><a href="#ieee関連" id="toc-ieee関連">IEEE関連</a>
+<ul>
+<li><a href="#ieee-congress-2019" id="toc-ieee-congress-2019">IEEE
+Congress 2019</a></li>
+<li><a href="#the-6th-ieee-international-conference-on-big-data-and-smart-computing" id="toc-the-6th-ieee-international-conference-on-big-data-and-smart-computing">The
+6th IEEE International Conference on Big Data and Smart
+Computing</a></li>
+<li><a href="#ieee-2019-summit-on-future-technology-for-smart-cities" id="toc-ieee-2019-summit-on-future-technology-for-smart-cities">IEEE
+2019 Summit On Future Technology For Smart Cities</a></li>
+<li><a href="#the-ieee-international-conference-on-cloud-engineering-ic2e" id="toc-the-ieee-international-conference-on-cloud-engineering-ic2e">The
+IEEE International Conference on Cloud Engineering (IC2E)</a></li>
+<li><a href="#the-5th-ieee-international-conference-on-cloud-and-big-data-computing-cbdcom-2019" id="toc-the-5th-ieee-international-conference-on-cloud-and-big-data-computing-cbdcom-2019">The
+5th IEEE International Conference on Cloud and Big Data Computing
+(CBDCom 2019)</a></li>
 </ul></li>
-<li><a href="#usenix">USENIX</a><ul>
-<li><a href="#usenix-conference-on-operational-machine-learning">2019 USENIX Conference on Operational Machine Learning</a></li>
-<li><a href="#usenix-annual-technical-conference">2019 USENIX Annual Technical Conference</a></li>
-<li><a href="#usenix-conference-on-operational-machine-learning-1">2019 USENIX Conference on Operational Machine Learning</a></li>
+<li><a href="#usenix" id="toc-usenix">USENIX</a>
+<ul>
+<li><a href="#usenix-conference-on-operational-machine-learning" id="toc-usenix-conference-on-operational-machine-learning">2019 USENIX
+Conference on Operational Machine Learning</a></li>
+<li><a href="#usenix-annual-technical-conference" id="toc-usenix-annual-technical-conference">2019 USENIX Annual Technical
+Conference</a></li>
+<li><a href="#usenix-conference-on-operational-machine-learning-1" id="toc-usenix-conference-on-operational-machine-learning-1">2019 USENIX
+Conference on Operational Machine Learning</a></li>
 </ul></li>
-<li><a href="#oreilly">O'Reilly</a><ul>
-<li><a href="#strata">Strata</a><ul>
-<li><a href="#strata-san-francisco-2019">Strata San Francisco 2019</a></li>
-<li><a href="#strata-london-2019">Strata London 2019</a></li>
-<li><a href="#strata-new-york-2019">Strata New York 2019</a></li>
+<li><a href="#oreilly" id="toc-oreilly">O'Reilly</a>
+<ul>
+<li><a href="#strata" id="toc-strata">Strata</a>
+<ul>
+<li><a href="#strata-san-francisco-2019" id="toc-strata-san-francisco-2019">Strata San Francisco 2019</a></li>
+<li><a href="#strata-london-2019" id="toc-strata-london-2019">Strata
+London 2019</a></li>
+<li><a href="#strata-new-york-2019" id="toc-strata-new-york-2019">Strata
+New York 2019</a></li>
 </ul></li>
-<li><a href="#ai-conference">AI Conference</a><ul>
-<li><a href="#ai-conference-new-york-2019">AI Conference New York 2019</a></li>
-<li><a href="#ai-conference-san-jose-2019">AI Conference San Jose 2019</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#vldb">VLDB</a><ul>
-<li><a href="#vldb-2019">VLDB 2019</a></li>
-</ul></li>
-<li><a href="#情報処理学会">情報処理学会</a></li>
-<li><a href="#電子情報通信学会">電子情報通信学会</a><ul>
-<li><a href="#ibisml">IBISML</a><ul>
-<li><a href="#lois">LOIS</a></li>
-<li><a href="#sc">SC</a></li>
+<li><a href="#ai-conference" id="toc-ai-conference">AI Conference</a>
+<ul>
+<li><a href="#ai-conference-new-york-2019" id="toc-ai-conference-new-york-2019">AI Conference New York
+2019</a></li>
+<li><a href="#ai-conference-san-jose-2019" id="toc-ai-conference-san-jose-2019">AI Conference San Jose
+2019</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#機械学習工学研究会mlse">機械学習工学研究会（MLSE）</a></li>
-<li><a href="#その他">その他</a><ul>
-<li><a href="#sysml-2019">SysML 2019</a></li>
-<li><a href="#ai-for-government-summit">AI for Government Summit</a></li>
-<li><a href="#mlconf-new-york">MLCONF NEW YORK</a></li>
-<li><a href="#ai-world-conference-expo">AI World Conference &amp; Expo</a></li>
-<li><a href="#global-artificial-intelligence-conference">Global Artificial Intelligence Conference</a></li>
-<li><a href="#applied-artificial-intelligence-conference">Applied Artificial Intelligence Conference</a></li>
-<li><a href="#ai-torontobig-data-toronto">AI Toronto/Big Data Toronto</a></li>
+<li><a href="#vldb" id="toc-vldb">VLDB</a>
+<ul>
+<li><a href="#vldb-2019" id="toc-vldb-2019">VLDB 2019</a></li>
+</ul></li>
+<li><a href="#情報処理学会" id="toc-情報処理学会">情報処理学会</a></li>
+<li><a href="#電子情報通信学会" id="toc-電子情報通信学会">電子情報通信学会</a>
+<ul>
+<li><a href="#ibisml" id="toc-ibisml">IBISML</a>
+<ul>
+<li><a href="#lois" id="toc-lois">LOIS</a></li>
+<li><a href="#sc" id="toc-sc">SC</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#機械学習工学研究会mlse" id="toc-機械学習工学研究会mlse">機械学習工学研究会（MLSE）</a></li>
+<li><a href="#その他" id="toc-その他">その他</a>
+<ul>
+<li><a href="#sysml-2019" id="toc-sysml-2019">SysML 2019</a></li>
+<li><a href="#ai-for-government-summit" id="toc-ai-for-government-summit">AI for Government Summit</a></li>
+<li><a href="#mlconf-new-york" id="toc-mlconf-new-york">MLCONF NEW
+YORK</a></li>
+<li><a href="#ai-world-conference-expo" id="toc-ai-world-conference-expo">AI World Conference &amp;
+Expo</a></li>
+<li><a href="#global-artificial-intelligence-conference" id="toc-global-artificial-intelligence-conference">Global Artificial
+Intelligence Conference</a></li>
+<li><a href="#applied-artificial-intelligence-conference" id="toc-applied-artificial-intelligence-conference">Applied Artificial
+Intelligence Conference</a></li>
+<li><a href="#ai-torontobig-data-toronto" id="toc-ai-torontobig-data-toronto">AI Toronto/Big Data Toronto</a></li>
 </ul></li>
 </ul>
 </div>
@@ -440,39 +474,55 @@ ga('send', 'pageview');
 <h1><span id="まとめサイト">まとめサイト</span></h1>
 <h2><span id="hpc-japan">HPC Japan</span></h2>
 <p>http://www.hpcwire.jp/events</p>
-<h2><span id="list-of-machine-learning-deep-learning-conferences-in-2019">List of Machine Learning / Deep Learning conferences in 2019</span></h2>
+<h2><span id="listof-machine-learning-deep-learning-conferences-in-2019">List
+of Machine Learning / Deep Learning conferences in 2019</span></h2>
 <p>https://tryolabs.com/blog/machine-learning-deep-learning-conferences/</p>
-<h2><span id="the-16-ai-and-ml-conferences-you-should-attend-in-2019">The 16 AI and ML conferences you should attend in 2019</span></h2>
+<h2><span id="the-16ai-and-ml-conferences-you-should-attend-in-2019">The 16
+AI and ML conferences you should attend in 2019</span></h2>
 <p>https://www.hpe.com/us/en/insights/articles/the-16-ai-and-ml-conferences-you-should-attend-in-2019-1811.html</p>
 <h1><span id="ieee関連">IEEE関連</span></h1>
 <h2><span id="ieee-congress-2019">IEEE Congress 2019</span></h2>
 <p>http://conferences.computer.org/bigdatacongress/2019/</p>
 <p>JULY 8-13, 2019, MILAN, ITALY</p>
 <blockquote>
-<p>2019 International Congress on Big Data (BigData Congress 2019) aims to provide an international forum that formally explores various business insights of all kinds of value-added “services.” Big Data is a key enabler of exploring business insights and economics of services.</p>
+<p>2019 International Congress on Big Data (BigData Congress 2019) aims
+to provide an international forum that formally explores various
+business insights of all kinds of value-added “services.” Big Data is a
+key enabler of exploring business insights and economics of
+services.</p>
 </blockquote>
-<h2><span id="the-6th-ieee-international-conference-on-big-data-and-smart-computing">The 6th IEEE International Conference on Big Data and Smart Computing</span></h2>
+<h2><span id="the6th-ieee-international-conference-on-big-data-and-smart-computing">The
+6th IEEE International Conference on Big Data and Smart Computing</span></h2>
 <p>February 27th - March 2nd, 2019 Kyoto, JAPAN</p>
 <p>http://www.bigcomputing.org/</p>
-<h2><span id="ieee-2019-summit-on-future-technology-for-smart-cities">IEEE 2019 Summit On Future Technology For Smart Cities</span></h2>
+<h2><span id="ieee2019-summit-on-future-technology-for-smart-cities">IEEE
+2019 Summit On Future Technology For Smart Cities</span></h2>
 <p>April 6, 2019</p>
 <p>San Francisco East Bay, California, USA</p>
 <p>http://www.big-dataservice.net/html/summit.html</p>
-<h2><span id="the-ieee-international-conference-on-cloud-engineering-ic2e">The IEEE International Conference on Cloud Engineering (IC2E)</span></h2>
+<h2><span id="theieee-international-conference-on-cloud-engineering-ic2e">The
+IEEE International Conference on Cloud Engineering (IC2E)</span></h2>
 <p>June 24-27, 2019, Prague, Czech Republic</p>
-<p>http://conferences.computer.org/IC2E/2019/index.htm http://www.hpcwire.jp/event/international-conference-on-cloud-engineering-ic2e-2019</p>
-<h2><span id="the-5th-ieee-international-conference-on-cloud-and-big-data-computing-cbdcom-2019">The 5th IEEE International Conference on Cloud and Big Data Computing (CBDCom 2019)</span></h2>
+<p>http://conferences.computer.org/IC2E/2019/index.htm
+http://www.hpcwire.jp/event/international-conference-on-cloud-engineering-ic2e-2019</p>
+<h2><span id="the5th-ieee-international-conference-on-cloud-and-big-data-computingcbdcom-2019">The
+5th IEEE International Conference on Cloud and Big Data Computing
+(CBDCom 2019)</span></h2>
 <p>August 5-8 2019, Fukuoka, Japan</p>
 <p>http://cyber-science.org/2019/cbdcom/</p>
 <h1><span id="usenix">USENIX</span></h1>
-<h2><span id="2019-usenix-conference-on-operational-machine-learning">2019 USENIX Conference on Operational Machine Learning</span></h2>
+<h2><span id="2019-usenixconference-on-operational-machine-learning">2019 USENIX
+Conference on Operational Machine Learning</span></h2>
 <p>MAY 20, 2019 SANTA CLARA, CA, USA</p>
 <p>https://www.usenix.org/conference/opml19</p>
-<h2><span id="2019-usenix-annual-technical-conference">2019 USENIX Annual Technical Conference</span></h2>
+<h2><span id="2019-usenix-annual-technicalconference">2019 USENIX Annual Technical
+Conference</span></h2>
 <p>JULY 10–12, 2019 RENTON, WA, USA</p>
 <p>https://www.usenix.org/conference/atc19</p>
-<h2><span id="2019-usenix-conference-on-operational-machine-learning">2019 USENIX Conference on Operational Machine Learning</span></h2>
-<p>MAY 20, 2019 SANTA CLARA, CA, USA Papers and talk proposals due Wednesday, February 13, 2019</p>
+<h2><span id="2019-usenixconference-on-operational-machine-learning">2019 USENIX
+Conference on Operational Machine Learning</span></h2>
+<p>MAY 20, 2019 SANTA CLARA, CA, USA Papers and talk proposals due
+Wednesday, February 13, 2019</p>
 <p>https://www.usenix.org/conference/opml19</p>
 <h1><span id="oreilly">O'Reilly</span></h1>
 <h2><span id="strata">Strata</span></h2>
@@ -502,9 +552,11 @@ ga('send', 'pageview');
 <h2><span id="ibisml">IBISML</span></h2>
 <p>https://www.ieice.org/ken/form/index.php?tgs_regid=552bd5f74c86aa9e100ee3878422e7760e89f6c41f180eebb9271daee1030b58&amp;cmd=info&amp;lang=</p>
 <h3><span id="lois">LOIS</span></h3>
-<p>2019年3月7日(木) - 3月8日(金) 宮古島市中央公民館 視聴覚室 ライフログ活用技術、オフィスインフォメーションシステム、ライフインテリジェンス、および一般</p>
+<p>2019年3月7日(木) - 3月8日(金) 宮古島市中央公民館 視聴覚室
+ライフログ活用技術、オフィスインフォメーションシステム、ライフインテリジェンス、および一般</p>
 <h3><span id="sc">SC</span></h3>
-<p>開催日 2019-03-15 - 2019-03-15 会場 国立情報学研究所 発表申込締切日 2019-01-07 議題 「サービスと機械学習」および一般</p>
+<p>開催日 2019-03-15 - 2019-03-15 会場 国立情報学研究所 発表申込締切日
+2019-01-07 議題 「サービスと機械学習」および一般</p>
 <p>機械学習工学研究会 ★重要 と共催</p>
 <h1><span id="機械学習工学研究会mlse">機械学習工学研究会（MLSE）</span></h1>
 <p>https://mlxse.connpass.com/</p>
@@ -522,10 +574,12 @@ ga('send', 'pageview');
 <h2><span id="ai-world-conference-amp-expo">AI World Conference &amp; Expo</span></h2>
 <p>https://aiworld.com/</p>
 <p>October 23-25, 2019 Boston, MA</p>
-<h2><span id="global-artificial-intelligence-conference">Global Artificial Intelligence Conference</span></h2>
+<h2><span id="global-artificialintelligence-conference">Global Artificial
+Intelligence Conference</span></h2>
 <p>http://www.globalbigdataconference.com/</p>
 <p>January 6-11, 2019, Santa Clara, CA;</p>
-<h2><span id="applied-artificial-intelligence-conference">Applied Artificial Intelligence Conference</span></h2>
+<h2><span id="applied-artificialintelligence-conference">Applied Artificial
+Intelligence Conference</span></h2>
 <p>https://bootstraplabs.com/artificial-intelligence/applied-artificial-intelligence-conference-2019/</p>
 <p>April 18, 2019</p>
 <h2><span id="ai-torontobig-data-toronto">AI Toronto/Big Data Toronto</span></h2>
@@ -541,7 +595,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/05/Conferences-in-2019/" data-id="cl2nztnkw003b5xqib6pkviob" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/05/Conferences-in-2019/" data-id="cl2o9pb4x002518rzl5irrnh9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -662,10 +716,10 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#hyper">Hyper</a></li>
-<li><a href="#conemu">ConEmu</a></li>
-<li><a href="#cmder">cmder</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#hyper" id="toc-hyper">Hyper</a></li>
+<li><a href="#conemu" id="toc-conemu">ConEmu</a></li>
+<li><a href="#cmder" id="toc-cmder">cmder</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -676,12 +730,19 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="hyper">Hyper</span></h1>
 <p>ウェブ界隈の技術を活用したターミナル。 <a href="https://hyper.is/" target="_blank" rel="noopener">Hyper</a> からダウンロードできる。</p>
-<p>インストールすると <code>%USERPROFILE%\.hyper.js</code> に設定ファイルが作成される。 デフォルトはcmd.exeが起動されるようになっているので、WSLを使うように変更する。</p>
+<p>インストールすると <code>%USERPROFILE%\.hyper.js</code>
+に設定ファイルが作成される。
+デフォルトはcmd.exeが起動されるようになっているので、WSLを使うように変更する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ diff -u /mnt/c/Users/dobachi/.hyper.js&#123;.2018010101,&#125;</span><br><span class="line">--- /mnt/c/Users/dobachi/.hyper.js.2018010101   2019-01-01 23:26:47.691869000 +0900</span><br><span class="line">+++ /mnt/c/Users/dobachi/.hyper.js      2019-01-01 23:28:25.273185100 +0900</span><br><span class="line">@@ -9,7 +9,7 @@</span><br><span class="line">     updateChannel: &apos;stable&apos;,</span><br><span class="line"></span><br><span class="line">     // default font size in pixels for all tabs</span><br><span class="line">-    fontSize: 12,</span><br><span class="line">+    fontSize: 15,</span><br><span class="line"></span><br><span class="line">     // font family with optional fallbacks</span><br><span class="line">     fontFamily: &apos;Menlo, &quot;DejaVu Sans Mono&quot;, Consolas, &quot;Lucida Console&quot;, monospace&apos;,</span><br><span class="line">@@ -107,7 +107,7 @@</span><br><span class="line"></span><br><span class="line">     // for setting shell arguments (i.e. for using interactive shellArgs: `[&apos;-i&apos;]`)</span><br><span class="line">     // by default `[&apos;--login&apos;]` will be used</span><br><span class="line">-    shellArgs: [&apos;--login&apos;],</span><br><span class="line">+    shellArgs: [&apos;/C&apos;, &apos;wsl&apos;],</span><br><span class="line"></span><br><span class="line">     // for environment variables</span><br><span class="line">     env: &#123;&#125;,</span><br></pre></td></tr></table></figure>
 <h1><span id="conemu">ConEmu</span></h1>
-<p><a href="https://conemu.github.io/" target="_blank" rel="noopener">ConEmu</a> からダウンロードできる。 ただし、手元のGPD Pocket上のWSLで使用した時には、ctrl + lで画面クリアするときに 意図と異なる動作をした。</p>
+<p><a href="https://conemu.github.io/" target="_blank" rel="noopener">ConEmu</a>
+からダウンロードできる。 ただし、手元のGPD
+Pocket上のWSLで使用した時には、ctrl + lで画面クリアするときに
+意図と異なる動作をした。</p>
 <h1><span id="cmder">cmder</span></h1>
-<p><a href="http://cmder.net/" target="_blank" rel="noopener">cmder</a> からダウンロードできる。 ただし、手元のGPD Pocket上のWSLで使用した時には、ctrl + lで画面クリアするときに 意図と異なる動作をした。</p>
+<p><a href="http://cmder.net/" target="_blank" rel="noopener">cmder</a> からダウンロードできる。
+ただし、手元のGPD Pocket上のWSLで使用した時には、ctrl +
+lで画面クリアするときに 意図と異なる動作をした。</p>
 
         
         </div>
@@ -692,7 +753,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/01/Terminal-tools-for-WSL/" data-id="cl2nztnol00ej5xqia9w0i8g4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/01/Terminal-tools-for-WSL/" data-id="cl2o9pb8800aa18rzr38norle" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -813,8 +874,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -822,7 +883,8 @@ ga('send', 'pageview');
 <li><a href="https://forums.ubuntulinux.jp/viewtopic.php?id=12459" target="_blank" rel="noopener">現象についての議論</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://forums.ubuntulinux.jp/viewtopic.php?id=12459" target="_blank" rel="noopener">現象についての議論</a> の通り、<code>~/.vimrc</code>に以下を追記して回避した。</p>
+<p><a href="https://forums.ubuntulinux.jp/viewtopic.php?id=12459" target="_blank" rel="noopener">現象についての議論</a>
+の通り、<code>~/.vimrc</code>に以下を追記して回避した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set ambiwidth=double</span><br></pre></td></tr></table></figure>
 
         
@@ -834,7 +896,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/31/Fonts-overlap-on-Vim-on-Ubuntu/" data-id="cl2nztnll005b5xqiy9mfwudi" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/31/Fonts-overlap-on-Vim-on-Ubuntu/" data-id="cl2o9pb5h003m18rz1qre6uid" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -955,13 +1017,15 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#windows側">Windows側</a></li>
-<li><a href="#wsl側">WSL側</a><ul>
-<li><a href="#最低限のインストール">最低限のインストール</a></li>
-<li><a href="#日本語関連">日本語関連</a></li>
-<li><a href="#例gui-vimのインストール">例：GUI vimのインストール</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#windows側" id="toc-windows側">Windows側</a></li>
+<li><a href="#wsl側" id="toc-wsl側">WSL側</a>
+<ul>
+<li><a href="#最低限のインストール" id="toc-最低限のインストール">最低限のインストール</a></li>
+<li><a href="#日本語関連" id="toc-日本語関連">日本語関連</a></li>
+<li><a href="#例gui-vimのインストール" id="toc-例gui-vimのインストール">例：GUI vimのインストール</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -971,23 +1035,35 @@ ga('send', 'pageview');
 <li><a href="https://estuarine.jp/2017/11/wsl-x-window/" target="_blank" rel="noopener">一通りの流れが説明されたブログ</a></li>
 <li><a href="https://sourceforge.net/projects/vcxsrv/files/latest/download" target="_blank" rel="noopener">VcXsrvのダウンロード</a></li>
 <li><a href="https://www.yokoweb.net/2018/03/07/windows10-wsl-xserver-appl/" target="_blank" rel="noopener">VcXsrvの自動起動設定</a></li>
-<li><a href="http://moguno.hatenablog.jp/entry/2017/10/08/155023" target="_blank" rel="noopener">WSLを使ってWindowsでmikutterを動かす</a> -&gt; こちらの方が良いかも</li>
-<li><a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a> -&gt; こちらの方が良いかも</li>
-<li><a href="https://qiita.com/maromaro3721/items/be8ce6e3cec4cbcdac00" target="_blank" rel="noopener">Ubuntu 18.04 な WSL 上に日本語入力環境を構築する</a></li>
+<li><a href="http://moguno.hatenablog.jp/entry/2017/10/08/155023" target="_blank" rel="noopener">WSLを使ってWindowsでmikutterを動かす</a>
+-&gt; こちらの方が良いかも</li>
+<li><a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a>
+-&gt; こちらの方が良いかも</li>
+<li><a href="https://qiita.com/maromaro3721/items/be8ce6e3cec4cbcdac00" target="_blank" rel="noopener">Ubuntu
+18.04 な WSL 上に日本語入力環境を構築する</a></li>
 <li><a href="https://qiita.com/dozo/items/97ac6c80f4cd13b84558" target="_blank" rel="noopener">fcitxで作るWSL日本語開発環境</a></li>
-<li><a href="http://hisagi.hateblo.jp/entry/2017/10/21/234202" target="_blank" rel="noopener">WSL で gnome-terminal を動かすお話</a></li>
+<li><a href="http://hisagi.hateblo.jp/entry/2017/10/21/234202" target="_blank" rel="noopener">WSL で
+gnome-terminal を動かすお話</a></li>
 <li><a href="https://demura.net/lecture/15290.html" target="_blank" rel="noopener">Xサーバーを自動起動しよう！</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="windows側">Windows側</span></h2>
-<p><a href="https://estuarine.jp/2017/11/wsl-x-window/" target="_blank" rel="noopener">一通りの流れが説明されたブログ</a> に記載の通り試した。 <a href="https://sourceforge.net/projects/vcxsrv/files/latest/download" target="_blank" rel="noopener">VcXsrvのダウンロード</a>からダウンロードしたパッケージをインストールする。</p>
-<p>なお、インストールすると「XLaunch」がスタートメニューに追加される。 これを都度起動することになるが、スタートアップメニューにショートカットを登録し、 自動起動するようにした。 （ <a href="https://demura.net/lecture/15290.html" target="_blank" rel="noopener">Xサーバーを自動起動しよう！</a> を参考にする）</p>
+<p><a href="https://estuarine.jp/2017/11/wsl-x-window/" target="_blank" rel="noopener">一通りの流れが説明されたブログ</a>
+に記載の通り試した。 <a href="https://sourceforge.net/projects/vcxsrv/files/latest/download" target="_blank" rel="noopener">VcXsrvのダウンロード</a>からダウンロードしたパッケージをインストールする。</p>
+<p>なお、インストールすると「XLaunch」がスタートメニューに追加される。
+これを都度起動することになるが、スタートアップメニューにショートカットを登録し、
+自動起動するようにした。 （ <a href="https://demura.net/lecture/15290.html" target="_blank" rel="noopener">Xサーバーを自動起動しよう！</a>
+を参考にする）</p>
 <h2><span id="wsl側">WSL側</span></h2>
 <h3><span id="最低限のインストール">最低限のインストール</span></h3>
 <p>関連パッケージのインストール <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install git build-essential libssl-dev libreadline-dev zlib1g-dev x11-apps x11-utils x11-xserver-utils libsqlite3-dev nodejs fonts-ipafont libxml2-dev libxslt1-dev</span><br></pre></td></tr></table></figure></p>
 <p><code>~/.bashrc</code>に環境変数DISPLAYの値を追加 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">--- /home/dobachi/.bashrc.2018123001    2018-12-30 23:21:48.626055900 +0900</span><br><span class="line">+++ /home/dobachi/.bashrc       2018-12-30 23:20:26.333894000 +0900</span><br><span class="line">@@ -115,3 +115,5 @@</span><br><span class="line">     . /etc/bash_completion</span><br><span class="line">   fi</span><br><span class="line"> fi</span><br><span class="line">+</span><br><span class="line">+export DISPLAY=localhost:0.0</span><br></pre></td></tr></table></figure></p>
 <h3><span id="日本語関連">日本語関連</span></h3>
-<p>上記手順だけでは日本語入力環境が整わないので、 <a href="http://moguno.hatenablog.jp/entry/2017/10/08/155023" target="_blank" rel="noopener">WSLを使ってWindowsでmikutterを動かす</a> と <a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a> を参考に日本語環境を構築する。 まず、<a href="http://moguno.hatenablog.jp/entry/2017/10/08/155023" target="_blank" rel="noopener">WSLを使ってWindowsでmikutterを動かす</a> のとおり、uim-anthyをインストールし、 <a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a> のとおり、<code>~/.uim</code>を設定する。 結局は、<a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a>のとおりで良さそうではある。</p>
+<p>上記手順だけでは日本語入力環境が整わないので、 <a href="http://moguno.hatenablog.jp/entry/2017/10/08/155023" target="_blank" rel="noopener">WSLを使ってWindowsでmikutterを動かす</a>
+と <a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a>
+を参考に日本語環境を構築する。 まず、<a href="http://moguno.hatenablog.jp/entry/2017/10/08/155023" target="_blank" rel="noopener">WSLを使ってWindowsでmikutterを動かす</a>
+のとおり、uim-anthyをインストールし、 <a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a>
+のとおり、<code>~/.uim</code>を設定する。 結局は、<a href="https://xztaityozx.hatenablog.com/entry/2017/12/01/001544" target="_blank" rel="noopener">お前らのWSLはそれじゃダメだ</a>のとおりで良さそうではある。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install language-pack-ja</span><br><span class="line">$ sudo update-locale LANG=ja_JP.UTF-8</span><br><span class="line">$ sudo apt install -y uim uim-xim uim-fep uim-anthy dbus-x11</span><br><span class="line">$ cat &lt;&lt; EOF &gt; ~/.uim</span><br><span class="line">  (define default-im-name &apos;anthy)</span><br><span class="line">  (define-key generic-on-key? &apos;(&quot;&lt;Control&gt; &quot;))</span><br><span class="line">  (define-key generic-off-key? &apos;(&quot;&lt;Control&gt; &quot;))</span><br><span class="line">  EOF</span><br><span class="line">$ cat &lt;&lt; EOF &gt;&gt; ~/.profile</span><br><span class="line">  export GTK_IM_MODULE=uim</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
 <h3><span id="例gui-vimのインストール">例：GUI vimのインストール</span></h3>
 <p>使いたいツールをインストール。</p>
@@ -1006,7 +1082,7 @@ $ gvim</code></pre>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/X-window-on-wsl-for-Ubuntu/" data-id="cl2nztnpd00gv5xqiyolwm9bd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/X-window-on-wsl-for-Ubuntu/" data-id="cl2o9pb8x00c618rzzr0rulxo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1127,10 +1203,11 @@ $ gvim</code></pre>
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#当たった症状">当たった症状</a></li>
-<li><a href="#対処">対処</a><ul>
-<li><a href="#備考ブログとの差分">備考：ブログとの差分</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#当たった症状" id="toc-当たった症状">当たった症状</a></li>
+<li><a href="#対処" id="toc-対処">対処</a>
+<ul>
+<li><a href="#備考ブログとの差分" id="toc-備考ブログとの差分">備考：ブログとの差分</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1139,23 +1216,34 @@ $ gvim</code></pre>
 <li><a href="https://www.wingfield.gr.jp/blog/2017/09/19/p6407/#bluetooth" target="_blank" rel="noopener">関連情報を含むブログ記事</a></li>
 </ul>
 <h1><span id="当たった症状">当たった症状</span></h1>
-<p>Digio2のBluetoothトラックボールを使っていたところ、唐突に使用できなくなる現象にあたった。 そのとき、Windowsの設定画面「Bluetoothとその他のデバイス」を開いたところ、 当該トラックボールは「接続済み」と表示されていた。 デバイスの削除と再度追加、ドライバの更新（結局最新版だった）を試みるも現象は収まらなかった。</p>
+<p>Digio2のBluetoothトラックボールを使っていたところ、唐突に使用できなくなる現象にあたった。
+そのとき、Windowsの設定画面「Bluetoothとその他のデバイス」を開いたところ、
+当該トラックボールは「接続済み」と表示されていた。
+デバイスの削除と再度追加、ドライバの更新（結局最新版だった）を試みるも現象は収まらなかった。</p>
 <h1><span id="対処">対処</span></h1>
-<p><a href="https://www.wingfield.gr.jp/blog/2017/09/19/p6407/#bluetooth" target="_blank" rel="noopener">関連情報を含むブログ記事</a> で記載の通り、デバイスマネージャから節電関係の機能を オフにすることで現象は解消したように見える。 おおむね上記ブログのとおりだが、一部デバイス名に差分があったので、 手元で試した方法を記載する。</p>
+<p><a href="https://www.wingfield.gr.jp/blog/2017/09/19/p6407/#bluetooth" target="_blank" rel="noopener">関連情報を含むブログ記事</a>
+で記載の通り、デバイスマネージャから節電関係の機能を
+オフにすることで現象は解消したように見える。
+おおむね上記ブログのとおりだが、一部デバイス名に差分があったので、
+手元で試した方法を記載する。</p>
 <ul>
 <li>Windowsのランチャーからデバイスマネージャを開く</li>
-<li>「ヒューマン インターフェイス デバイス」-&gt; 「Bluetooth HID デバイス」のプロパティを開く。
+<li>「ヒューマン インターフェイス デバイス」-&gt; 「Bluetooth HID
+デバイス」のプロパティを開く。
 <ul>
 <li>「電源の管理」を開き、「電力の節電のために…（省略）」のチェックボックスを外す</li>
 <li>なお、手元の環境では当該デバイスは2件表示されたので両方とも対応した</li>
 </ul></li>
-<li>おなじくデバイスマネージャ上で「bluetooth」-&gt;「Bluetooth 無線」のプロパティを開く。
+<li>おなじくデバイスマネージャ上で「bluetooth」-&gt;「Bluetooth
+無線」のプロパティを開く。
 <ul>
 <li>「電源の管理」を開き、「電力の節電のために…（省略）」のチェックボックスを外す</li>
 </ul></li>
 </ul>
 <h2><span id="備考ブログとの差分">備考：ブログとの差分</span></h2>
-<p>なお、<a href="https://www.wingfield.gr.jp/blog/2017/09/19/p6407/#bluetooth" target="_blank" rel="noopener">関連情報を含むブログ記事</a>では、「Bluetooth HID デバイス」のところが 「Bluetooth 低エネルギーGTT 対応 HID デバイス」となっていたようだ。</p>
+<p>なお、<a href="https://www.wingfield.gr.jp/blog/2017/09/19/p6407/#bluetooth" target="_blank" rel="noopener">関連情報を含むブログ記事</a>では、「Bluetooth
+HID デバイス」のところが 「Bluetooth 低エネルギーGTT 対応 HID
+デバイス」となっていたようだ。</p>
 
         
         </div>
@@ -1166,7 +1254,7 @@ $ gvim</code></pre>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/GPD-Pocket-unexpected-behavior-of-Bluetooth-mouse/" data-id="cl2nztnlm005f5xqid9emmver" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/GPD-Pocket-unexpected-behavior-of-Bluetooth-mouse/" data-id="cl2o9pb5j003p18rzslfzhqo9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1287,8 +1375,8 @@ $ gvim</code></pre>
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -1296,7 +1384,9 @@ $ gvim</code></pre>
 <li><a href="https://github.com/tmux/tmux/issues/1419" target="_blank" rel="noopener">tmux-1419</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://github.com/tmux/tmux/issues/1419" target="_blank" rel="noopener">tmux-1419</a> に記載の通り、<code>~/.tmux.conf</code>に以下のように記載すると、 強制的に改行されるようになるようだ。</p>
+<p><a href="https://github.com/tmux/tmux/issues/1419" target="_blank" rel="noopener">tmux-1419</a>
+に記載の通り、<code>~/.tmux.conf</code>に以下のように記載すると、
+強制的に改行されるようになるようだ。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set -as terminal-overrides &apos;,*:indn@&apos;</span><br></pre></td></tr></table></figure>
 
         
@@ -1308,7 +1398,7 @@ $ gvim</code></pre>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/Unexpected-behaviour-of-tmux-with-ctrl-l/" data-id="cl2nztnov00fb5xqilj9fnli8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/Unexpected-behaviour-of-tmux-with-ctrl-l/" data-id="cl2o9pb8g00ay18rzop5287dl" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1429,19 +1519,20 @@ $ gvim</code></pre>
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#簡単な動作確認">簡単な動作確認</a><ul>
-<li><a href="#挿入のクエリ">挿入のクエリ</a></li>
-<li><a href="#接続の取得と実行">接続の取得と実行</a></li>
-<li><a href="#複数ステートメントの実行">複数ステートメントの実行</a></li>
-<li><a href="#select">SELECT</a></li>
-<li><a href="#オペレータの結合">オペレータの結合</a></li>
-<li><a href="#テキストで実行">テキストで実行</a></li>
-<li><a href="#グループ">グループ</a></li>
-<li><a href="#結合">結合</a></li>
-<li><a href="#変数バインド">変数バインド</a></li>
-<li><a href="#その他の機能">その他の機能</a></li>
-<li><a href="#update">Update</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#簡単な動作確認" id="toc-簡単な動作確認">簡単な動作確認</a>
+<ul>
+<li><a href="#挿入のクエリ" id="toc-挿入のクエリ">挿入のクエリ</a></li>
+<li><a href="#接続の取得と実行" id="toc-接続の取得と実行">接続の取得と実行</a></li>
+<li><a href="#複数ステートメントの実行" id="toc-複数ステートメントの実行">複数ステートメントの実行</a></li>
+<li><a href="#select" id="toc-select">SELECT</a></li>
+<li><a href="#オペレータの結合" id="toc-オペレータの結合">オペレータの結合</a></li>
+<li><a href="#テキストで実行" id="toc-テキストで実行">テキストで実行</a></li>
+<li><a href="#グループ" id="toc-グループ">グループ</a></li>
+<li><a href="#結合" id="toc-結合">結合</a></li>
+<li><a href="#変数バインド" id="toc-変数バインド">変数バインド</a></li>
+<li><a href="#その他の機能" id="toc-その他の機能">その他の機能</a></li>
+<li><a href="#update" id="toc-update">Update</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1450,9 +1541,12 @@ $ gvim</code></pre>
 <li><a href="https://docs.sqlalchemy.org/en/latest/core/tutorial.html" target="_blank" rel="noopener">SQLAlchemy公式のチュートリアル</a></li>
 </ul>
 <h1><span id="簡単な動作確認">簡単な動作確認</span></h1>
-<p>エンジンの定義。（今回はSQLiteのインメモリモードを使用） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy import create_engine</span><br><span class="line">engine = create_engine(&apos;sqlite:///:memory:&apos;, echo=True)</span><br></pre></td></tr></table></figure></p>
-<p>テーブルの作成。今回は2種類のテーブルを作成。 ユーザのIDをプライマリキーとして使用。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey</span><br><span class="line">metadata = MetaData()</span><br><span class="line">users = Table(&apos;users&apos;, metadata,</span><br><span class="line">    Column(&apos;id&apos;, Integer, primary_key=True),</span><br><span class="line">    Column(&apos;name&apos;, String),</span><br><span class="line">    Column(&apos;fullname&apos;, String),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">addresses = Table(&apos;addresses&apos;, metadata,</span><br><span class="line">  Column(&apos;id&apos;, Integer, primary_key=True),</span><br><span class="line">  Column(&apos;user_id&apos;, None, ForeignKey(&apos;users.id&apos;)),</span><br><span class="line">  Column(&apos;email_address&apos;, String, nullable=False)</span><br><span class="line"> )</span><br></pre></td></tr></table></figure></p>
-<p>実際にSQLite内でテーブルを定義する。このとき、テーブルの存在を確認するので複数回実行してもよい。（べき等である） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">metadata.create_all(engine)</span><br></pre></td></tr></table></figure></p>
+<p>エンジンの定義。（今回はSQLiteのインメモリモードを使用）
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy import create_engine</span><br><span class="line">engine = create_engine(&apos;sqlite:///:memory:&apos;, echo=True)</span><br></pre></td></tr></table></figure></p>
+<p>テーブルの作成。今回は2種類のテーブルを作成。
+ユーザのIDをプライマリキーとして使用。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey</span><br><span class="line">metadata = MetaData()</span><br><span class="line">users = Table(&apos;users&apos;, metadata,</span><br><span class="line">    Column(&apos;id&apos;, Integer, primary_key=True),</span><br><span class="line">    Column(&apos;name&apos;, String),</span><br><span class="line">    Column(&apos;fullname&apos;, String),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">addresses = Table(&apos;addresses&apos;, metadata,</span><br><span class="line">  Column(&apos;id&apos;, Integer, primary_key=True),</span><br><span class="line">  Column(&apos;user_id&apos;, None, ForeignKey(&apos;users.id&apos;)),</span><br><span class="line">  Column(&apos;email_address&apos;, String, nullable=False)</span><br><span class="line"> )</span><br></pre></td></tr></table></figure></p>
+<p>実際にSQLite内でテーブルを定義する。このとき、テーブルの存在を確認するので複数回実行してもよい。（べき等である）
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">metadata.create_all(engine)</span><br></pre></td></tr></table></figure></p>
 <h2><span id="挿入のクエリ">挿入のクエリ</span></h2>
 <p>まずは空のクエリを定義。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ins = users.insert()</span><br></pre></td></tr></table></figure></p>
 <p>strを使うと、SQLを確認できる。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str(ins)</span><br><span class="line">--</span><br><span class="line">&apos;INSERT INTO users (id, name, fullname) VALUES (:id, :name, :fullname)&apos;</span><br></pre></td></tr></table></figure></p>
@@ -1468,7 +1562,8 @@ $ gvim</code></pre>
 <p>まずはクエリを実行。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy.sql import select</span><br><span class="line">s = select([users])</span><br><span class="line">result = conn.execute(s)</span><br><span class="line">--</span><br><span class="line">2018-12-24 14:16:11,363 INFO sqlalchemy.engine.base.Engine SELECT users.id, users.name, users.fullname </span><br><span class="line">FROM users</span><br><span class="line">2018-12-24 14:16:11,363 INFO sqlalchemy.engine.base.Engine ()</span><br></pre></td></tr></table></figure></p>
 <p>結果のパース。タプルライクに取得。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for row in result:</span><br><span class="line">    print(row)</span><br><span class="line">--</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;)</span><br></pre></td></tr></table></figure></p>
 <p>辞書ライクに取得。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">result = conn.execute(s)</span><br><span class="line">row = result.fetchone()</span><br><span class="line">print(&quot;name:&quot;, row[&apos;name&apos;], &quot;; fullname:&quot;, row[&apos;fullname&apos;])</span><br><span class="line">--</span><br><span class="line">name: jack ; fullname: Jack Jones</span><br></pre></td></tr></table></figure></p>
-<p>conn.execute()の結果はイテレータっぽく扱えるので以下のような書き方ができる。 今回は2個のテーブルのカルテシアン積を求める例。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for row in conn.execute(select([users, addresses])):</span><br><span class="line">    print(row)</span><br><span class="line">--</span><br><span class="line">2018-12-24 14:20:14,164 INFO sqlalchemy.engine.base.Engine SELECT users.id, users.name, users.fullname, addresses.id, addresses.user_id, addresses.email_address </span><br><span class="line">FROM users, addresses</span><br><span class="line">2018-12-24 14:20:14,164 INFO sqlalchemy.engine.base.Engine ()</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 1, 1, &apos;jack@yahoo.com&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 2, 1, &apos;jack@msn.com&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 3, 2, &apos;www@www.org&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 4, 2, &apos;wendy@aol.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 1, 1, &apos;jack@yahoo.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 2, 1, &apos;jack@msn.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 3, 2, &apos;www@www.org&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 4, 2, &apos;wendy@aol.com&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>conn.execute()の結果はイテレータっぽく扱えるので以下のような書き方ができる。
+今回は2個のテーブルのカルテシアン積を求める例。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for row in conn.execute(select([users, addresses])):</span><br><span class="line">    print(row)</span><br><span class="line">--</span><br><span class="line">2018-12-24 14:20:14,164 INFO sqlalchemy.engine.base.Engine SELECT users.id, users.name, users.fullname, addresses.id, addresses.user_id, addresses.email_address </span><br><span class="line">FROM users, addresses</span><br><span class="line">2018-12-24 14:20:14,164 INFO sqlalchemy.engine.base.Engine ()</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 1, 1, &apos;jack@yahoo.com&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 2, 1, &apos;jack@msn.com&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 3, 2, &apos;www@www.org&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 4, 2, &apos;wendy@aol.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 1, 1, &apos;jack@yahoo.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 2, 1, &apos;jack@msn.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 3, 2, &apos;www@www.org&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 4, 2, &apos;wendy@aol.com&apos;)</span><br></pre></td></tr></table></figure></p>
 <p>どちらかというと、こちらの方がイメージに近いか。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">for row in conn.execute(select([users, addresses]).where(users.c.id == addresses.c.user_id)):</span><br><span class="line">    print(row)</span><br><span class="line">--</span><br><span class="line">2018-12-24 14:22:46,769 INFO sqlalchemy.engine.base.Engine SELECT users.id, users.name, users.fullname, addresses.id, addresses.user_id, addresses.email_address </span><br><span class="line">FROM users, addresses </span><br><span class="line">WHERE users.id = addresses.user_id</span><br><span class="line">2018-12-24 14:22:46,769 INFO sqlalchemy.engine.base.Engine ()</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 1, 1, &apos;jack@yahoo.com&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 2, 1, &apos;jack@msn.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 3, 2, &apos;www@www.org&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 4, 2, &apos;wendy@aol.com&apos;)</span><br></pre></td></tr></table></figure></p>
 <h2><span id="オペレータの結合">オペレータの結合</span></h2>
 <p><code>and_</code>などを用いる例。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy.sql import and_, or_, not_</span><br><span class="line">s = select([(users.c.fullname +</span><br><span class="line">              &quot;, &quot; + addresses.c.email_address).</span><br><span class="line">               label(&apos;title&apos;)]).\</span><br><span class="line">       where(</span><br><span class="line">          and_(</span><br><span class="line">              users.c.id == addresses.c.user_id,</span><br><span class="line">              users.c.name.between(&apos;m&apos;, &apos;z&apos;),</span><br><span class="line">              or_(</span><br><span class="line">                 addresses.c.email_address.like(&apos;%@aol.com&apos;),</span><br><span class="line">                 addresses.c.email_address.like(&apos;%@msn.com&apos;)</span><br><span class="line">              )</span><br><span class="line">          )</span><br><span class="line">       )</span><br><span class="line">conn.execute(s).fetchall()</span><br></pre></td></tr></table></figure></p>
@@ -1509,7 +1604,7 @@ $ gvim</code></pre>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/24/Basic-of-SQLAlchemy/" data-id="cl2nztnkj002h5xqix97cu5yq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/24/Basic-of-SQLAlchemy/" data-id="cl2o9pbg1013g18rzhwsd25gf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1630,25 +1725,29 @@ $ gvim</code></pre>
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#シェルで動作確認">シェルで動作確認</a><ul>
-<li><a href="#dockerコンテナのビルド">Dockerコンテナのビルド</a></li>
-<li><a href="#アプリ作成と実行">アプリ作成と実行</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#シェルで動作確認" id="toc-シェルで動作確認">シェルで動作確認</a>
+<ul>
+<li><a href="#dockerコンテナのビルド" id="toc-dockerコンテナのビルド">Dockerコンテナのビルド</a></li>
+<li><a href="#アプリ作成と実行" id="toc-アプリ作成と実行">アプリ作成と実行</a></li>
 </ul></li>
-<li><a href="#アプリから動作確認">アプリから動作確認</a><ul>
-<li><a href="#アプリ作成">アプリ作成</a></li>
-<li><a href="#実行">実行</a></li>
+<li><a href="#アプリから動作確認" id="toc-アプリから動作確認">アプリから動作確認</a>
+<ul>
+<li><a href="#アプリ作成" id="toc-アプリ作成">アプリ作成</a></li>
+<li><a href="#実行" id="toc-実行">実行</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
 <li><a href="http://flask-sqlalchemy.pocoo.org/2.3/quickstart/" target="_blank" rel="noopener">flask-sqlalchemyのクイックスタート</a></li>
-<li><a href="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/">Flask on Dockerのブログ</a></li>
+<li><a href="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/">Flask
+on Dockerのブログ</a></li>
 </ul>
 <h1><span id="シェルで動作確認">シェルで動作確認</span></h1>
 <h2><span id="dockerコンテナのビルド">Dockerコンテナのビルド</span></h2>
-<p><a href="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/">Flask on Dockerのブログ</a> と同様にDockerfileを作り、ビルドする。</p>
+<p><a href="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/">Flask
+on Dockerのブログ</a> と同様にDockerfileを作り、ビルドする。</p>
 <p>ファイルを作成</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/sqlalchemy</span><br><span class="line">$ cd ~/Sources/docker_flask/sqlalchemy</span><br><span class="line">$ cat &lt;&lt; EOF &gt; Dockerfile</span><br><span class="line">  FROM ubuntu:latest</span><br><span class="line">  </span><br><span class="line">  RUN apt-get update</span><br><span class="line">  RUN apt-get install python3 python3-pip -y</span><br><span class="line">  </span><br><span class="line">  RUN pip3 install flask flask_sqlalchemy</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
 <p>ビルド</p>
@@ -1662,13 +1761,16 @@ $ gvim</code></pre>
 <p>sqlite3コマンドで接続して内容を確認。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@a5d5ee81df78:/usr/local/apps# apt install sqlite3</span><br><span class="line">root@a5d5ee81df78:/usr/local/apps# sqlite3 /tmp/test.db</span><br><span class="line">sqlite&gt; .databases</span><br><span class="line">main: /tmp/test.db</span><br><span class="line">sqlite&gt; .tables</span><br><span class="line">user</span><br><span class="line">sqlite&gt; select * from user;</span><br><span class="line">1|admin|admin@example.com</span><br><span class="line">2|guest|guest@example.com</span><br></pre></td></tr></table></figure>
 <h1><span id="アプリから動作確認">アプリから動作確認</span></h1>
-<p>上記と同様の流れをアプリから動作確認する。 Dockerイメージは上記で作ったものをベースとする。</p>
+<p>上記と同様の流れをアプリから動作確認する。
+Dockerイメージは上記で作ったものをベースとする。</p>
 <h2><span id="アプリ作成">アプリ作成</span></h2>
-<p>ここでは/registにアクセスすると、登録画面が出て、 登録するとリスト（/list）が表示されるアプリを作成する。</p>
+<p>ここでは/registにアクセスすると、登録画面が出て、
+登録するとリスト（/list）が表示されるアプリを作成する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/sqlalchemy_app</span><br><span class="line">$ cd ~/Sources/docker_flask/sqlalchemy_app</span><br><span class="line">$ mkdir apps</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/app.py</span><br><span class="line">  from flask import Flask, url_for, request, render_template, redirect</span><br><span class="line">  from flask_sqlalchemy import SQLAlchemy</span><br><span class="line">  </span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  app.config[&apos;SQLALCHEMY_DATABASE_URI&apos;] = &apos;sqlite:////tmp/test.db&apos;</span><br><span class="line">  db = SQLAlchemy(app)</span><br><span class="line">  </span><br><span class="line">  class User(db.Model):</span><br><span class="line">      id = db.Column(db.Integer, primary_key=True)</span><br><span class="line">      username = db.Column(db.String(80), unique=True, nullable=False)</span><br><span class="line">      email = db.Column(db.String(120), unique=True, nullable=False)</span><br><span class="line">  </span><br><span class="line">      def __repr__(self):</span><br><span class="line">          return &apos;&lt;User %r&gt;&apos; % self.username</span><br><span class="line">  </span><br><span class="line">  db.create_all()</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/regist&apos;, methods=[&apos;POST&apos;, &apos;GET&apos;])</span><br><span class="line">  def regist():</span><br><span class="line">      if request.method == &apos;POST&apos;:</span><br><span class="line">          user = User(username=request.form[&apos;username&apos;], email=request.form[&apos;email&apos;])</span><br><span class="line">          db.session.add(user)</span><br><span class="line">          db.session.commit()</span><br><span class="line">          return redirect(url_for(&apos;list&apos;))</span><br><span class="line">      # the code below is executed if the request method</span><br><span class="line">      # was GET or the credentials were invalid</span><br><span class="line">      return render_template(&apos;regist.html&apos;)</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/list&apos;)</span><br><span class="line">  def list():</span><br><span class="line">      users = User.query.order_by(User.username).all()</span><br><span class="line">      return render_template(&apos;list.html&apos;, users=users)</span><br><span class="line">  EOF</span><br><span class="line">$ mkdir -p apps/templates</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/regist.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Registration&lt;/title&gt;</span><br><span class="line">  &lt;form action=&quot;/regist&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    &lt;div&gt;username: &lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;email: &lt;input type=&quot;text&quot; name=&quot;email&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;send&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;reset&quot; value=&quot;reset&quot;&gt;</span><br><span class="line">  &lt;/form&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;a href=&quot;/list&quot;&gt;list&lt;/a&gt;</span><br><span class="line">  EOF</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/list.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;List ordered by username&lt;/title&gt;</span><br><span class="line">  &lt;table&gt;</span><br><span class="line">      &lt;thead&gt;</span><br><span class="line">          &lt;tr&gt;</span><br><span class="line">              &lt;th&gt;id&lt;/th&gt;</span><br><span class="line">              &lt;th&gt;username&lt;/th&gt;</span><br><span class="line">              &lt;th&gt;email&lt;/th&gt;</span><br><span class="line">          &lt;/tr&gt;</span><br><span class="line">        &lt;/thead&gt;</span><br><span class="line">      &lt;tbody&gt;</span><br><span class="line">          &#123;% for item in users %&#125;</span><br><span class="line">          &lt;tr&gt;</span><br><span class="line">              &lt;td&gt;</span><br><span class="line">                  &#123;&#123; item.id &#125;&#125;</span><br><span class="line">              &lt;/td&gt;</span><br><span class="line">              &lt;td&gt;</span><br><span class="line">                  &#123;&#123; item.username &#125;&#125;</span><br><span class="line">              &lt;/td&gt;</span><br><span class="line">              &lt;td&gt;</span><br><span class="line">                  &#123;&#123; item.email &#125;&#125;</span><br><span class="line">              &lt;/td&gt;</span><br><span class="line">          &lt;/tr&gt;</span><br><span class="line">          &#123;% endfor %&#125;</span><br><span class="line">      &lt;/tbody&gt;</span><br><span class="line">  &lt;/table&gt;</span><br><span class="line">  &lt;a href=&quot;/regist&quot;&gt;registration&lt;/a&gt;</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
 <h2><span id="実行">実行</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -it --rm -p 5000:5000 -v $(pwd)/apps:/usr/local/apps -e &quot;FLASK_APP=app.py&quot; -w /usr/local/apps -e &quot;LC_ALL=C.UTF-8&quot; -e &quot;LANG=UTF-8&quot; dobachi/flask_sqlalchemy:1.0 flask run --host 0.0.0.0</span><br></pre></td></tr></table></figure>
-<p>なお、上記の実装はエラーハンドリング等を一切実施していないので 例えば同じユーザ名、メールアドレスで登録しようとすると例外が生じる。</p>
+<p>なお、上記の実装はエラーハンドリング等を一切実施していないので
+例えば同じユーザ名、メールアドレスで登録しようとすると例外が生じる。</p>
 
         
         </div>
@@ -1679,7 +1781,7 @@ $ gvim</code></pre>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/Flask-SQLAlchemy/" data-id="cl2nztnlj00565xqivyinwyt9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/Flask-SQLAlchemy/" data-id="cl2o9pb5d003a18rz8nrgkgd0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1800,8 +1902,8 @@ $ gvim</code></pre>
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#方法">方法</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#方法" id="toc-方法">方法</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -1809,7 +1911,11 @@ $ gvim</code></pre>
 <li><a href="https://qiita.com/ijiest/items/4a42e8543df373babcf2" target="_blank" rel="noopener">矩形選択にも言及のあるブログ</a></li>
 </ul>
 <h1><span id="方法">方法</span></h1>
-<p>tmuxを使ってコピーするとき、矩形選択したいときがある。 <a href="https://qiita.com/ijiest/items/4a42e8543df373babcf2" target="_blank" rel="noopener">矩形選択にも言及のあるブログ</a> にも記載あるが、 <code>&lt;prefix&gt; + [</code> でコピーモードに入った後、 該当箇所まで移動し、スペースキーを押して選択開始、その後 <code>v</code> を押すと矩形選択になる。 （初期状態では、行選択になっているはず）</p>
+<p>tmuxを使ってコピーするとき、矩形選択したいときがある。 <a href="https://qiita.com/ijiest/items/4a42e8543df373babcf2" target="_blank" rel="noopener">矩形選択にも言及のあるブログ</a>
+にも記載あるが、 <code>&lt;prefix&gt; + [</code>
+でコピーモードに入った後、
+該当箇所まで移動し、スペースキーを押して選択開始、その後 <code>v</code>
+を押すと矩形選択になる。 （初期状態では、行選択になっているはず）</p>
 
         
         </div>
@@ -1820,7 +1926,7 @@ $ gvim</code></pre>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/tmux-rectangle-select/" data-id="cl2nztnqc00jo5xqidcb6w9jm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/tmux-rectangle-select/" data-id="cl2o9pba500f018rz0iprul49" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2050,5 +2156,20 @@ $ gvim</code></pre>
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

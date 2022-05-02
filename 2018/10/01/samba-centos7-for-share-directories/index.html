@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考情報 基本的な流れ   参考情報  CentOS 7とsambaでWindows用ファイルサーバーを設定する。古いサーバーの有効利用に最適 Mac と Windows からパスワードなしで Samba サーバーにアクセスする  基本的な流れ CentOS 7とsambaでWindows用ファイルサーバーを設定する。古いサーバーの有効利用に最適 の流れで 基本的に問題なかったのですが、上記">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7でテキトーにSambaで共有するディレクトリを作成する">
 <meta name="twitter:description" content="参考情報 基本的な流れ   参考情報  CentOS 7とsambaでWindows用ファイルサーバーを設定する。古いサーバーの有効利用に最適 Mac と Windows からパスワードなしで Samba サーバーにアクセスする  基本的な流れ CentOS 7とsambaでWindows用ファイルサーバーを設定する。古いサーバーの有効利用に最適 の流れで 基本的に問題なかったのですが、上記">
@@ -251,17 +251,25 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考情報">参考情報</a></li>
-<li><a href="#基本的な流れ">基本的な流れ</a></li>
+<li><a href="#参考情報" id="toc-参考情報">参考情報</a></li>
+<li><a href="#基本的な流れ" id="toc-基本的な流れ">基本的な流れ</a></li>
 </ul>
 </div>
 <h1><span id="参考情報">参考情報</span></h1>
 <ul>
-<li><a href="https://www.rem-system.com/centos-samba/" target="_blank" rel="noopener">CentOS 7とsambaでWindows用ファイルサーバーを設定する。古いサーバーの有効利用に最適</a></li>
-<li><a href="https://ryogan.org/blog/2012/12/31/mac-%E3%81%A8-windows-%E3%81%8B%E3%82%89%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%81%AA%E3%81%97%E3%81%A7-samba-%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9/" target="_blank" rel="noopener">Mac と Windows からパスワードなしで Samba サーバーにアクセスする</a></li>
+<li><a href="https://www.rem-system.com/centos-samba/" target="_blank" rel="noopener">CentOS
+7とsambaでWindows用ファイルサーバーを設定する。古いサーバーの有効利用に最適</a></li>
+<li><a href="https://ryogan.org/blog/2012/12/31/mac-%E3%81%A8-windows-%E3%81%8B%E3%82%89%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%81%AA%E3%81%97%E3%81%A7-samba-%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9/" target="_blank" rel="noopener">Mac
+と Windows からパスワードなしで Samba サーバーにアクセスする</a></li>
 </ul>
 <h1><span id="基本的な流れ">基本的な流れ</span></h1>
-<p><a href="https://www.rem-system.com/centos-samba/" target="_blank" rel="noopener">CentOS 7とsambaでWindows用ファイルサーバーを設定する。古いサーバーの有効利用に最適</a> の流れで 基本的に問題なかったのですが、上記ブログでは匿名ユーザの利用を前提としていませんでした。 そこで、 <a href="https://ryogan.org/blog/2012/12/31/mac-%E3%81%A8-windows-%E3%81%8B%E3%82%89%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%81%AA%E3%81%97%E3%81%A7-samba-%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9/" target="_blank" rel="noopener">Mac と Windows からパスワードなしで Samba サーバーにアクセスする</a> を参考に匿名ユーザでのアクセスを許可しました。</p>
+<p><a href="https://www.rem-system.com/centos-samba/" target="_blank" rel="noopener">CentOS
+7とsambaでWindows用ファイルサーバーを設定する。古いサーバーの有効利用に最適</a>
+の流れで
+基本的に問題なかったのですが、上記ブログでは匿名ユーザの利用を前提としていませんでした。
+そこで、 <a href="https://ryogan.org/blog/2012/12/31/mac-%E3%81%A8-windows-%E3%81%8B%E3%82%89%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%81%AA%E3%81%97%E3%81%A7-samba-%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9/" target="_blank" rel="noopener">Mac
+と Windows からパスワードなしで Samba サーバーにアクセスする</a>
+を参考に匿名ユーザでのアクセスを許可しました。</p>
 
         
         </div>
@@ -272,7 +280,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/10/01/samba-centos7-for-share-directories/" data-id="cl2nztnq600jb5xqiwubnkrl0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/10/01/samba-centos7-for-share-directories/" data-id="cl2o9pb9w00el18rz539ydepg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -523,5 +531,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  Apache Kafka Core Internals: A Deep Dive How Kafka’s Storage Internals Work Confluent Platform Quick Start (Docker) kafka-connect-twitter  メモ How Kafka’s Storage Internals Work にログファイルの">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafkaのログ周りの調査メモ">
 <meta name="twitter:description" content="参考 メモ   参考  Apache Kafka Core Internals: A Deep Dive How Kafka’s Storage Internals Work Confluent Platform Quick Start (Docker) kafka-connect-twitter  メモ How Kafka’s Storage Internals Work にログファイルの">
@@ -251,20 +251,26 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://www.confluent.io/thank-you/apache-kafka-core-internals-deep-dive/" target="_blank" rel="noopener">Apache Kafka Core Internals: A Deep Dive</a></li>
-<li><a href="https://thehoard.blog/how-kafkas-storage-internals-work-3a29b02e026" target="_blank" rel="noopener">How Kafka’s Storage Internals Work</a></li>
-<li><a href="https://docs.confluent.io/current/quickstart/ce-docker-quickstart.html" target="_blank" rel="noopener">Confluent Platform Quick Start (Docker)</a></li>
+<li><a href="https://www.confluent.io/thank-you/apache-kafka-core-internals-deep-dive/" target="_blank" rel="noopener">Apache
+Kafka Core Internals: A Deep Dive</a></li>
+<li><a href="https://thehoard.blog/how-kafkas-storage-internals-work-3a29b02e026" target="_blank" rel="noopener">How
+Kafka’s Storage Internals Work</a></li>
+<li><a href="https://docs.confluent.io/current/quickstart/ce-docker-quickstart.html" target="_blank" rel="noopener">Confluent
+Platform Quick Start (Docker)</a></li>
 <li><a href="https://github.com/jcustenborder/kafka-connect-twitter" target="_blank" rel="noopener">kafka-connect-twitter</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://thehoard.blog/how-kafkas-storage-internals-work-3a29b02e026" target="_blank" rel="noopener">How Kafka’s Storage Internals Work</a> にログファイルの中身の読み方が載っているので試してみる。</p>
-<p>予め、 <a href="https://github.com/jcustenborder/kafka-connect-twitter" target="_blank" rel="noopener">kafka-connect-twitter</a> のKafka Connectコネクタを用い、Twitterデータを投入しておいた。</p>
+<p><a href="https://thehoard.blog/how-kafkas-storage-internals-work-3a29b02e026" target="_blank" rel="noopener">How
+Kafka’s Storage Internals Work</a>
+にログファイルの中身の読み方が載っているので試してみる。</p>
+<p>予め、 <a href="https://github.com/jcustenborder/kafka-connect-twitter" target="_blank" rel="noopener">kafka-connect-twitter</a>
+のKafka Connectコネクタを用い、Twitterデータを投入しておいた。</p>
 <p>トピック（パーティション）の確認 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls /var/lib/kafka/data/twitter-status-0</span><br><span class="line">00000000000000000000.index  00000000000000000000.log  00000000000000000000.timeindex  leader-epoch-checkpoint</span><br></pre></td></tr></table></figure></p>
 <p>インデックスの確認。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ kafka-run-class kafka.tools.DumpLogSegments --deep-iteration --print-data-log --files /var/lib/kafka/data/twitter-status-0/00000000000000000000.index | head</span><br><span class="line"></span><br><span class="line">Dumping /var/lib/kafka/data/twitter-status-0/00000000000000000000.index</span><br><span class="line">offset: 1 position: 16674</span><br><span class="line">offset: 2 position: 33398</span><br><span class="line">offset: 3 position: 50562</span><br><span class="line">offset: 4 position: 67801</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
 <p>上記の通り、オフセットと位置が記載されている。</p>
@@ -280,7 +286,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/03/08/Log-of-Kafka/" data-id="cl2nztnmw009d5xqizauvad06" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/03/08/Log-of-Kafka/" data-id="cl2o9pb6o006p18rzpohzzn2p" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -531,5 +537,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

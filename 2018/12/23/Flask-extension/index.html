@@ -5,18 +5,18 @@
     
     <title>Flask extension | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 flask_adminを試す Dockerfileを作成してビルド アプリ作成と実行    参考  Flask公式ウェブサイト flask-adminのドキュメント Flask on Dockerのブログ  flask_adminを試す flask-adminのドキュメント を見ながら進める。 またFlask on Dockerのブログ で作成したDockerイメージを使って環境を作る">
-<meta name="keywords" content="Docker,Dockerfile,Flask">
+    <meta name="description" content="参考 flask_adminを試す  Dockerfileを作成してビルド アプリ作成と実行    参考  Flask公式ウェブサイト flask-adminのドキュメント Flask on Dockerのブログ  flask_adminを試す flask-adminのドキュメント を見ながら進める。 またFlask on Dockerのブログ で作成したDockerイメージを使って環境を作">
+<meta name="keywords" content="Docker,Flask,Dockerfile">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flask extension">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/12/23/Flask-extension/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 flask_adminを試す Dockerfileを作成してビルド アプリ作成と実行    参考  Flask公式ウェブサイト flask-adminのドキュメント Flask on Dockerのブログ  flask_adminを試す flask-adminのドキュメント を見ながら進める。 またFlask on Dockerのブログ で作成したDockerイメージを使って環境を作る">
+<meta property="og:description" content="参考 flask_adminを試す  Dockerfileを作成してビルド アプリ作成と実行    参考  Flask公式ウェブサイト flask-adminのドキュメント Flask on Dockerのブログ  flask_adminを試す flask-adminのドキュメント を見ながら進める。 またFlask on Dockerのブログ で作成したDockerイメージを使って環境を作">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flask extension">
-<meta name="twitter:description" content="参考 flask_adminを試す Dockerfileを作成してビルド アプリ作成と実行    参考  Flask公式ウェブサイト flask-adminのドキュメント Flask on Dockerのブログ  flask_adminを試す flask-adminのドキュメント を見ながら進める。 またFlask on Dockerのブログ で作成したDockerイメージを使って環境を作る">
+<meta name="twitter:description" content="参考 flask_adminを試す  Dockerfileを作成してビルド アプリ作成と実行    参考  Flask公式ウェブサイト flask-adminのドキュメント Flask on Dockerのブログ  flask_adminを試す flask-adminのドキュメント を見ながら進める。 またFlask on Dockerのブログ で作成したDockerイメージを使って環境を作">
     
 
     
@@ -251,10 +251,11 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#flask_adminを試す">flask_adminを試す</a><ul>
-<li><a href="#dockerfileを作成してビルド">Dockerfileを作成してビルド</a></li>
-<li><a href="#アプリ作成と実行">アプリ作成と実行</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#flask_adminを試す" id="toc-flask_adminを試す">flask_adminを試す</a>
+<ul>
+<li><a href="#dockerfileを作成してビルド" id="toc-dockerfileを作成してビルド">Dockerfileを作成してビルド</a></li>
+<li><a href="#アプリ作成と実行" id="toc-アプリ作成と実行">アプリ作成と実行</a></li>
 </ul></li>
 </ul>
 </div>
@@ -262,10 +263,13 @@ ga('send', 'pageview');
 <ul>
 <li><a href="http://flask.pocoo.org/extensions/" target="_blank" rel="noopener">Flask公式ウェブサイト</a></li>
 <li><a href="https://flask-admin.readthedocs.io/en/latest/introduction/" target="_blank" rel="noopener">flask-adminのドキュメント</a></li>
-<li><a href="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/">Flask on Dockerのブログ</a></li>
+<li><a href="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/">Flask
+on Dockerのブログ</a></li>
 </ul>
 <h1><span id="flask_adminを試す">flask_adminを試す</span></h1>
-<p><a href="https://flask-admin.readthedocs.io/en/latest/introduction/" target="_blank" rel="noopener">flask-adminのドキュメント</a> を見ながら進める。 また<a href="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/">Flask on Dockerのブログ</a> で作成したDockerイメージを使って環境を作る。</p>
+<p><a href="https://flask-admin.readthedocs.io/en/latest/introduction/" target="_blank" rel="noopener">flask-adminのドキュメント</a>
+を見ながら進める。 また<a href="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/">Flask
+on Dockerのブログ</a> で作成したDockerイメージを使って環境を作る。</p>
 <h2><span id="dockerfileを作成してビルド">Dockerfileを作成してビルド</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/docker_admin</span><br><span class="line">$ cd ~/Sources/docker_flask/docker_admin</span><br><span class="line">$ cat &lt;&lt; EOF &gt; Dockerfile</span><br><span class="line">  FROM ubuntu:latest</span><br><span class="line">  </span><br><span class="line">  RUN apt-get update</span><br><span class="line">  RUN apt-get install python3 python3-pip -y</span><br><span class="line">  </span><br><span class="line">  RUN pip3 install flask flask_admin</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker build . -t dobachi/flask_admin:1.0</span><br></pre></td></tr></table></figure>
@@ -281,7 +285,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/Flask-extension/" data-id="cl2nztnli00525xqil1vfwrpv" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/Flask-extension/" data-id="cl2o9pb5e003e18rz34pbu31m" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -532,5 +536,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

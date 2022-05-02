@@ -5,18 +5,18 @@
     
     <title>Kafka Admin Commands | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ Confluentドキュメント 実装    参考  Kafka公式ドキュメント Confluentドキュメント Clouderaのドキュメント（Kafka Administration Using Command Line Tools） ConfluentドキュメントのAdminister章  メモ 意外とまとまった説明は Kafka公式ドキュメント や Confluentドキュ">
+    <meta name="description" content="参考 メモ  Confluentドキュメント 実装    参考  Kafka公式ドキュメント Confluentドキュメント Clouderaのドキュメント（Kafka Administration Using Command Line Tools） ConfluentドキュメントのAdminister章  メモ 意外とまとまった説明は Kafka公式ドキュメント や Confluentドキ">
 <meta name="keywords" content="Kafka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kafka Admin Commands">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/11/04/Kafka-Admin-Commands/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ Confluentドキュメント 実装    参考  Kafka公式ドキュメント Confluentドキュメント Clouderaのドキュメント（Kafka Administration Using Command Line Tools） ConfluentドキュメントのAdminister章  メモ 意外とまとまった説明は Kafka公式ドキュメント や Confluentドキュ">
+<meta property="og:description" content="参考 メモ  Confluentドキュメント 実装    参考  Kafka公式ドキュメント Confluentドキュメント Clouderaのドキュメント（Kafka Administration Using Command Line Tools） ConfluentドキュメントのAdminister章  メモ 意外とまとまった説明は Kafka公式ドキュメント や Confluentドキ">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka Admin Commands">
-<meta name="twitter:description" content="参考 メモ Confluentドキュメント 実装    参考  Kafka公式ドキュメント Confluentドキュメント Clouderaのドキュメント（Kafka Administration Using Command Line Tools） ConfluentドキュメントのAdminister章  メモ 意外とまとまった説明は Kafka公式ドキュメント や Confluentドキュ">
+<meta name="twitter:description" content="参考 メモ  Confluentドキュメント 実装    参考  Kafka公式ドキュメント Confluentドキュメント Clouderaのドキュメント（Kafka Administration Using Command Line Tools） ConfluentドキュメントのAdminister章  メモ 意外とまとまった説明は Kafka公式ドキュメント や Confluentドキ">
     
 
     
@@ -251,10 +251,11 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#confluentドキュメント">Confluentドキュメント</a></li>
-<li><a href="#実装">実装</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#confluentドキュメント" id="toc-confluentドキュメント">Confluentドキュメント</a></li>
+<li><a href="#実装" id="toc-実装">実装</a></li>
 </ul></li>
 </ul>
 </div>
@@ -262,17 +263,27 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://kafka.apache.org/documentation/" target="_blank" rel="noopener">Kafka公式ドキュメント</a></li>
 <li><a href="https://docs.confluent.io/current/index.html" target="_blank" rel="noopener">Confluentドキュメント</a></li>
-<li><a href="https://docs.cloudera.com/documentation/enterprise/latest/topics/kafka_admin_cli.html#kafka_log_dirs" target="_blank" rel="noopener">Clouderaのドキュメント（Kafka Administration Using Command Line Tools）</a></li>
+<li><a href="https://docs.cloudera.com/documentation/enterprise/latest/topics/kafka_admin_cli.html#kafka_log_dirs" target="_blank" rel="noopener">Clouderaのドキュメント（Kafka
+Administration Using Command Line Tools）</a></li>
 <li><a href="https://docs.confluent.io/current/administer.html" target="_blank" rel="noopener">ConfluentドキュメントのAdminister章</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>意外とまとまった説明は <a href="https://kafka.apache.org/documentation/" target="_blank" rel="noopener">Kafka公式ドキュメント</a> や <a href="https://docs.confluent.io/current/index.html" target="_blank" rel="noopener">Confluentドキュメント</a> にはない。 Getting startedや運用面のドキュメントに一部含まれている。</p>
-<p>丁寧なのは、 <a href="https://docs.cloudera.com/documentation/enterprise/latest/topics/kafka_admin_cli.html#kafka_log_dirs" target="_blank" rel="noopener">Clouderaのドキュメント（Kafka Administration Using Command Line Tools）</a> である。</p>
+<p>意外とまとまった説明は <a href="https://kafka.apache.org/documentation/" target="_blank" rel="noopener">Kafka公式ドキュメント</a>
+や <a href="https://docs.confluent.io/current/index.html" target="_blank" rel="noopener">Confluentドキュメント</a>
+にはない。 Getting startedや運用面のドキュメントに一部含まれている。</p>
+<p>丁寧なのは、 <a href="https://docs.cloudera.com/documentation/enterprise/latest/topics/kafka_admin_cli.html#kafka_log_dirs" target="_blank" rel="noopener">Clouderaのドキュメント（Kafka
+Administration Using Command Line Tools）</a> である。</p>
 <h2><span id="confluentドキュメント">Confluentドキュメント</span></h2>
-<p><a href="https://docs.confluent.io/current/administer.html" target="_blank" rel="noopener">ConfluentドキュメントのAdminister章</a> には、ツールとしてのまとまりではなく、 Admin作業単位で説明があり、その中にいくつかツールの説明が含まれている。</p>
+<p><a href="https://docs.confluent.io/current/administer.html" target="_blank" rel="noopener">ConfluentドキュメントのAdminister章</a>
+には、ツールとしてのまとまりではなく、
+Admin作業単位で説明があり、その中にいくつかツールの説明が含まれている。</p>
 <h2><span id="実装">実装</span></h2>
-<p><code>kafka.admin</code> パッケージ以下にAminコマンドの実装が含まれている。 またそれらのクラスは、 <code>bin</code>以下に含まれている。</p>
-<p>例えば、 <code>kafka-log-dirs</code> コマンドでは、<code>kafka.admin.LogDirsCommand</code> クラスが使われている、など。</p>
+<p><code>kafka.admin</code>
+パッケージ以下にAminコマンドの実装が含まれている。
+またそれらのクラスは、 <code>bin</code>以下に含まれている。</p>
+<p>例えば、 <code>kafka-log-dirs</code>
+コマンドでは、<code>kafka.admin.LogDirsCommand</code>
+クラスが使われている、など。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
         
@@ -284,7 +295,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/11/04/Kafka-Admin-Commands/" data-id="cl2nztnmi00835xqietfcweab" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/11/04/Kafka-Admin-Commands/" data-id="cl2o9pb6b005i18rzkuzl3d7q" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -535,5 +546,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

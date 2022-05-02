@@ -5,18 +5,18 @@
     
     <title>dein on windows | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 Windows環境でのKaoriya版のvimへのインストール 基本的な手順 設定    参考  公式GitHub windows10にdein.vimをインストールする手順を示したブログ dein.vimインストール手順や_vimrcをまとめたレポジトリ  Windows環境でのKaoriya版のvimへのインストール 基本的な手順 基本的には、 windows10にdein.vim">
+    <meta name="description" content="参考 Windows環境でのKaoriya版のvimへのインストール  基本的な手順 設定    参考  公式GitHub windows10にdein.vimをインストールする手順を示したブログ dein.vimインストール手順や_vimrcをまとめたレポジトリ  Windows環境でのKaoriya版のvimへのインストール 基本的な手順 基本的には、 windows10にdein.vi">
 <meta name="keywords" content="vim,dein,windows">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dein on windows">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/11/02/dein-on-windows/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 Windows環境でのKaoriya版のvimへのインストール 基本的な手順 設定    参考  公式GitHub windows10にdein.vimをインストールする手順を示したブログ dein.vimインストール手順や_vimrcをまとめたレポジトリ  Windows環境でのKaoriya版のvimへのインストール 基本的な手順 基本的には、 windows10にdein.vim">
+<meta property="og:description" content="参考 Windows環境でのKaoriya版のvimへのインストール  基本的な手順 設定    参考  公式GitHub windows10にdein.vimをインストールする手順を示したブログ dein.vimインストール手順や_vimrcをまとめたレポジトリ  Windows環境でのKaoriya版のvimへのインストール 基本的な手順 基本的には、 windows10にdein.vi">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dein on windows">
-<meta name="twitter:description" content="参考 Windows環境でのKaoriya版のvimへのインストール 基本的な手順 設定    参考  公式GitHub windows10にdein.vimをインストールする手順を示したブログ dein.vimインストール手順や_vimrcをまとめたレポジトリ  Windows環境でのKaoriya版のvimへのインストール 基本的な手順 基本的には、 windows10にdein.vim">
+<meta name="twitter:description" content="参考 Windows環境でのKaoriya版のvimへのインストール  基本的な手順 設定    参考  公式GitHub windows10にdein.vimをインストールする手順を示したブログ dein.vimインストール手順や_vimrcをまとめたレポジトリ  Windows環境でのKaoriya版のvimへのインストール 基本的な手順 基本的には、 windows10にdein.vi">
     
 
     
@@ -251,10 +251,11 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#windows環境でのkaoriya版のvimへのインストール">Windows環境でのKaoriya版のvimへのインストール</a><ul>
-<li><a href="#基本的な手順">基本的な手順</a></li>
-<li><a href="#設定">設定</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#windows環境でのkaoriya版のvimへのインストール" id="toc-windows環境でのkaoriya版のvimへのインストール">Windows環境でのKaoriya版のvimへのインストール</a>
+<ul>
+<li><a href="#基本的な手順" id="toc-基本的な手順">基本的な手順</a></li>
+<li><a href="#設定" id="toc-設定">設定</a></li>
 </ul></li>
 </ul>
 </div>
@@ -266,12 +267,16 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="windows環境でのkaoriya版のvimへのインストール">Windows環境でのKaoriya版のvimへのインストール</span></h1>
 <h2><span id="基本的な手順">基本的な手順</span></h2>
-<p>基本的には、 <a href="http://neko-mac.blogspot.com/p/windowsvim.html" target="_blank" rel="noopener">windows10にdein.vimをインストールする手順を示したブログ</a> に記載の方法で問題なかった。 ただし、vim81系でないと正常動作しないことに注意。（一度、うっかり74系で使ってしまった）</p>
-<p>ただ_vimrcに追記する設定のうち、PATHはインストーラで出力されたものではなく、 「~」を使って相対PATH指定にした。</p>
+<p>基本的には、 <a href="http://neko-mac.blogspot.com/p/windowsvim.html" target="_blank" rel="noopener">windows10にdein.vimをインストールする手順を示したブログ</a>
+に記載の方法で問題なかった。
+ただし、vim81系でないと正常動作しないことに注意。（一度、うっかり74系で使ってしまった）</p>
+<p>ただ_vimrcに追記する設定のうち、PATHはインストーラで出力されたものではなく、
+「~」を使って相対PATH指定にした。</p>
 <p>例:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot; Required:</span><br><span class="line">set runtimepath+=~/vimfiles/bundles/repos/github.com/Shougo/dein.vim</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <h2><span id="設定">設定</span></h2>
-<p>今のところの設定は、 <a href="https://github.com/dobachi/vim_config" target="_blank" rel="noopener">dein.vimインストール手順や_vimrcをまとめたレポジトリ</a> に格納した。→ <a href="https://github.com/dobachi/vim_config/blob/master/_vimrc" target="_blank" rel="noopener">_vimrc</a></p>
+<p>今のところの設定は、 <a href="https://github.com/dobachi/vim_config" target="_blank" rel="noopener">dein.vimインストール手順や_vimrcをまとめたレポジトリ</a>
+に格納した。→ <a href="https://github.com/dobachi/vim_config/blob/master/_vimrc" target="_blank" rel="noopener">_vimrc</a></p>
 <p>END</p>
 
         
@@ -283,7 +288,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/02/dein-on-windows/" data-id="cl2nztnps00i65xqiqocokgh7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/02/dein-on-windows/" data-id="cl2o9pb9h00dh18rzhfbvqqcl" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -534,5 +539,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

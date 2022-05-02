@@ -5,18 +5,18 @@
     
     <title>Recent hot activities of Delta Sharing | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ いま何がどのくらいできるようになっているのか？ クライアント、開発言語バインディング サーバの参考実装 プロトコル テーブルメタデータ  Support writing to Delta Shares Add pre-signed URL request logging to server Support Azure Storage in Delta Sharing Server">
+    <meta name="description" content="参考 メモ  いま何がどのくらいできるようになっているのか？  クライアント、開発言語バインディング サーバの参考実装 プロトコル テーブルメタデータ  Support writing to Delta Shares Add pre-signed URL request logging to server Support Azure Storage in Delta Sharing Serv">
 <meta name="keywords" content="Delta Lake,Delta Sharing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Recent hot activities of Delta Sharing">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2021/08/27/Recent-hot-activities-of-Delta-Sharing/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ いま何がどのくらいできるようになっているのか？ クライアント、開発言語バインディング サーバの参考実装 プロトコル テーブルメタデータ  Support writing to Delta Shares Add pre-signed URL request logging to server Support Azure Storage in Delta Sharing Server">
+<meta property="og:description" content="参考 メモ  いま何がどのくらいできるようになっているのか？  クライアント、開発言語バインディング サーバの参考実装 プロトコル テーブルメタデータ  Support writing to Delta Shares Add pre-signed URL request logging to server Support Azure Storage in Delta Sharing Serv">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Recent hot activities of Delta Sharing">
-<meta name="twitter:description" content="参考 メモ いま何がどのくらいできるようになっているのか？ クライアント、開発言語バインディング サーバの参考実装 プロトコル テーブルメタデータ  Support writing to Delta Shares Add pre-signed URL request logging to server Support Azure Storage in Delta Sharing Server">
+<meta name="twitter:description" content="参考 メモ  いま何がどのくらいできるようになっているのか？  クライアント、開発言語バインディング サーバの参考実装 プロトコル テーブルメタデータ  Support writing to Delta Shares Add pre-signed URL request logging to server Support Azure Storage in Delta Sharing Serv">
     
 
     
@@ -251,40 +251,54 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#いま何がどのくらいできるようになっているのか">いま何がどのくらいできるようになっているのか？</a><ul>
-<li><a href="#クライアント開発言語バインディング">クライアント、開発言語バインディング</a></li>
-<li><a href="#サーバの参考実装">サーバの参考実装</a></li>
-<li><a href="#プロトコル">プロトコル</a></li>
-<li><a href="#テーブルメタデータ">テーブルメタデータ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#いま何がどのくらいできるようになっているのか" id="toc-いま何がどのくらいできるようになっているのか">いま何がどのくらいできるようになっているのか？</a>
+<ul>
+<li><a href="#クライアント開発言語バインディング" id="toc-クライアント開発言語バインディング">クライアント、開発言語バインディング</a></li>
+<li><a href="#サーバの参考実装" id="toc-サーバの参考実装">サーバの参考実装</a></li>
+<li><a href="#プロトコル" id="toc-プロトコル">プロトコル</a></li>
+<li><a href="#テーブルメタデータ" id="toc-テーブルメタデータ">テーブルメタデータ</a></li>
 </ul></li>
-<li><a href="#support-writing-to-delta-shares">Support writing to Delta Shares</a></li>
-<li><a href="#add-pre-signed-url-request-logging-to-server">Add pre-signed URL request logging to server</a></li>
-<li><a href="#support-azure-storage-in-delta-sharing-server">Support Azure Storage in Delta Sharing Server</a></li>
-<li><a href="#support-google-cloud-storage-in-delta-sharing-server">Support Google Cloud Storage in Delta Sharing Server</a></li>
+<li><a href="#support-writing-to-delta-shares" id="toc-support-writing-to-delta-shares">Support writing to Delta
+Shares</a></li>
+<li><a href="#add-pre-signed-url-request-logging-to-server" id="toc-add-pre-signed-url-request-logging-to-server">Add pre-signed URL
+request logging to server</a></li>
+<li><a href="#support-azure-storage-in-delta-sharing-server" id="toc-support-azure-storage-in-delta-sharing-server">Support Azure
+Storage in Delta Sharing Server</a></li>
+<li><a href="#support-google-cloud-storage-in-delta-sharing-server" id="toc-support-google-cloud-storage-in-delta-sharing-server">Support
+Google Cloud Storage in Delta Sharing Server</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://github.com/delta-io/delta-sharing" target="_blank" rel="noopener">Delta Sharing公式GitHub</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md" target="_blank" rel="noopener">Delta Sharing Protocal</a></li>
+<li><a href="https://github.com/delta-io/delta-sharing" target="_blank" rel="noopener">Delta
+Sharing公式GitHub</a></li>
+<li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md" target="_blank" rel="noopener">Delta
+Sharing Protocal</a></li>
 <li><a href="https://github.com/delta-io/delta-sharing/blob/main/server/src/universal/conf/delta-sharing-server.yaml.template" target="_blank" rel="noopener">delta-sharing-server.yaml.template</a></li>
 <li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts" target="_blank" rel="noopener">Concept</a></li>
 <li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#metadata" target="_blank" rel="noopener">Metadata</a></li>
 </ul>
 <ul>
-<li><a href="https://github.com/delta-io/delta-sharing/issues/33" target="_blank" rel="noopener">Support writing to Delta Shares #33</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/issues/39" target="_blank" rel="noopener">Add pre-signed URL request logging to server</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/issues/21" target="_blank" rel="noopener">Support Azure Storage in Delta Sharing Server</a></li>
-<li><a href="https://docs.microsoft.com/en-us/rest/api/storageservices/delegate-access-with-shared-access-signature" target="_blank" rel="noopener">Delegate access with a shared access signature</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/issues/20" target="_blank" rel="noopener">Support Google Cloud Storage in Delta Sharing Server</a></li>
+<li><a href="https://github.com/delta-io/delta-sharing/issues/33" target="_blank" rel="noopener">Support
+writing to Delta Shares #33</a></li>
+<li><a href="https://github.com/delta-io/delta-sharing/issues/39" target="_blank" rel="noopener">Add
+pre-signed URL request logging to server</a></li>
+<li><a href="https://github.com/delta-io/delta-sharing/issues/21" target="_blank" rel="noopener">Support Azure
+Storage in Delta Sharing Server</a></li>
+<li><a href="https://docs.microsoft.com/en-us/rest/api/storageservices/delegate-access-with-shared-access-signature" target="_blank" rel="noopener">Delegate
+access with a shared access signature</a></li>
+<li><a href="https://github.com/delta-io/delta-sharing/issues/20" target="_blank" rel="noopener">Support
+Google Cloud Storage in Delta Sharing Server</a></li>
 <li><a href="https://cloud.google.com/storage/docs/access-control/signed-urls" target="_blank" rel="noopener">署名付きURL</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="いま何がどのくらいできるようになっているのか">いま何がどのくらいできるようになっているのか？</span></h2>
-<p>2021/9時点で何ができるのか？ <a href="https://github.com/delta-io/delta-sharing" target="_blank" rel="noopener">Delta Sharing公式GitHub</a> のREADMEによると以下の通り。</p>
+<p>2021/9時点で何ができるのか？ <a href="https://github.com/delta-io/delta-sharing" target="_blank" rel="noopener">Delta
+Sharing公式GitHub</a> のREADMEによると以下の通り。</p>
 <h3><span id="クライアント-開発言語バインディング">クライアント、開発言語バインディング</span></h3>
 <ul>
 <li>SQL（Spark SQL）</li>
@@ -294,10 +308,15 @@ ga('send', 'pageview');
 <li>R</li>
 </ul>
 <h3><span id="サーバの参考実装">サーバの参考実装</span></h3>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md" target="_blank" rel="noopener">Delta Sharing Protocal</a> に乗っ取ってデータ共有の動作確認が可能な 参考実装が公開されている。</p>
-<p>ただし、この実装にはセキュリティ周りの機能が十分に実装されておらず、 もし公開して利用する場合はプロキシの裏側で使うことが推奨されている。</p>
-<p>サーバを立ち上げるときに共有するデータの定義を渡せる。 <a href="https://github.com/delta-io/delta-sharing/blob/main/server/src/universal/conf/delta-sharing-server.yaml.template" target="_blank" rel="noopener">delta-sharing-server.yaml.template</a> にコンフィグのサンプルが載っている。</p>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts" target="_blank" rel="noopener">Concept</a> にデータモデル、主要なコンポーネントが載っている。</p>
+<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md" target="_blank" rel="noopener">Delta
+Sharing Protocal</a> に乗っ取ってデータ共有の動作確認が可能な
+参考実装が公開されている。</p>
+<p>ただし、この実装にはセキュリティ周りの機能が十分に実装されておらず、
+もし公開して利用する場合はプロキシの裏側で使うことが推奨されている。</p>
+<p>サーバを立ち上げるときに共有するデータの定義を渡せる。 <a href="https://github.com/delta-io/delta-sharing/blob/main/server/src/universal/conf/delta-sharing-server.yaml.template" target="_blank" rel="noopener">delta-sharing-server.yaml.template</a>
+にコンフィグのサンプルが載っている。</p>
+<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts" target="_blank" rel="noopener">Concept</a>
+にデータモデル、主要なコンポーネントが載っている。</p>
 <ul>
 <li>Share（シェア）:
 <ul>
@@ -322,7 +341,9 @@ ga('send', 'pageview');
 </ul></li>
 </ul>
 <h3><span id="プロトコル">プロトコル</span></h3>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md" target="_blank" rel="noopener">Delta Sharing Protocal</a> に載っている通り、 Delta Sharingのサーバとクライアントの間のプロトコルが規定されている。</p>
+<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md" target="_blank" rel="noopener">Delta
+Sharing Protocal</a> に載っている通り、 Delta
+Sharingのサーバとクライアントの間のプロトコルが規定されている。</p>
 <ul>
 <li>シェアをリスト</li>
 <li>シェア内のスキーマをリスト</li>
@@ -338,22 +359,41 @@ ga('send', 'pageview');
 </ul></li>
 </ul>
 <h3><span id="テーブルメタデータ">テーブルメタデータ</span></h3>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#metadata" target="_blank" rel="noopener">Metadata</a> にテーブルに付帯できるメタデータの定義が載っている。 スキーマやフォーマットなどの情報に加え、任意の説明を保持できるようだ。</p>
-<h2><span id="support-writing-to-delta-shares">Support writing to Delta Shares</span></h2>
-<p><a href="https://github.com/delta-io/delta-sharing/issues/33" target="_blank" rel="noopener">Support writing to Delta Shares #33</a></p>
-<p>書き込みへの対応について提案がなされたが、2021/8/27現在は保留となっている。 いったん読み込みに注力、とのこと。</p>
-<p>なお、Treasure DataのTaroさんがTreasure Dataにおける対応例を紹介している。 （が、それに対する応答はない）</p>
-<h2><span id="add-pre-signed-url-request-logging-to-server">Add pre-signed URL request logging to server</span></h2>
-<p><a href="https://github.com/delta-io/delta-sharing/issues/39" target="_blank" rel="noopener">Add pre-signed URL request logging to server</a></p>
-<p>今のところ、プリサインドURLの件数を知る術がない。 そこで、DEBUGログにプリサインドURLの発行情報を出力するのはどうか、というチケットが挙がっていた。</p>
-<h2><span id="support-azure-storage-in-delta-sharing-server">Support Azure Storage in Delta Sharing Server</span></h2>
-<p><a href="https://github.com/delta-io/delta-sharing/issues/21" target="_blank" rel="noopener">Support Azure Storage in Delta Sharing Server</a></p>
-<p>Azureでは、 <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/delegate-access-with-shared-access-signature" target="_blank" rel="noopener">Delegate access with a shared access signature</a> の機能が提供されているので、割と対応しやすいのでは？という議論になっている。 AzureのSASは、定められたパーミッションで定められた期間だけリソースにアクセス可能にする。</p>
-<p>なお、SASにはアカウントレベル、サービスレベル、ユーザデリゲーションの3種類がある。 それぞれスコープやできることが異なる。</p>
-<p>Delta Sharingがストレージに特化しているのであれば、まずはBlobに対するデリゲーションURLを発行できれば良さそうである。</p>
-<h2><span id="support-google-cloud-storage-in-delta-sharing-server">Support Google Cloud Storage in Delta Sharing Server</span></h2>
-<p><a href="https://github.com/delta-io/delta-sharing/issues/20" target="_blank" rel="noopener">Support Google Cloud Storage in Delta Sharing Server</a></p>
-<p>Azureと同じく、 <a href="https://cloud.google.com/storage/docs/access-control/signed-urls" target="_blank" rel="noopener">署名付きURL</a> に対応しているため、そこまで難しくは無いだろう、というコメントがあった。</p>
+<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#metadata" target="_blank" rel="noopener">Metadata</a>
+にテーブルに付帯できるメタデータの定義が載っている。
+スキーマやフォーマットなどの情報に加え、任意の説明を保持できるようだ。</p>
+<h2><span id="support-writing-to-deltashares">Support writing to Delta
+Shares</span></h2>
+<p><a href="https://github.com/delta-io/delta-sharing/issues/33" target="_blank" rel="noopener">Support
+writing to Delta Shares #33</a></p>
+<p>書き込みへの対応について提案がなされたが、2021/8/27現在は保留となっている。
+いったん読み込みに注力、とのこと。</p>
+<p>なお、Treasure DataのTaroさんがTreasure
+Dataにおける対応例を紹介している。 （が、それに対する応答はない）</p>
+<h2><span id="add-pre-signed-urlrequest-logging-to-server">Add pre-signed URL
+request logging to server</span></h2>
+<p><a href="https://github.com/delta-io/delta-sharing/issues/39" target="_blank" rel="noopener">Add
+pre-signed URL request logging to server</a></p>
+<p>今のところ、プリサインドURLの件数を知る術がない。
+そこで、DEBUGログにプリサインドURLの発行情報を出力するのはどうか、というチケットが挙がっていた。</p>
+<h2><span id="support-azurestorage-in-delta-sharing-server">Support Azure
+Storage in Delta Sharing Server</span></h2>
+<p><a href="https://github.com/delta-io/delta-sharing/issues/21" target="_blank" rel="noopener">Support
+Azure Storage in Delta Sharing Server</a></p>
+<p>Azureでは、 <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/delegate-access-with-shared-access-signature" target="_blank" rel="noopener">Delegate
+access with a shared access signature</a>
+の機能が提供されているので、割と対応しやすいのでは？という議論になっている。
+AzureのSASは、定められたパーミッションで定められた期間だけリソースにアクセス可能にする。</p>
+<p>なお、SASにはアカウントレベル、サービスレベル、ユーザデリゲーションの3種類がある。
+それぞれスコープやできることが異なる。</p>
+<p>Delta
+Sharingがストレージに特化しているのであれば、まずはBlobに対するデリゲーションURLを発行できれば良さそうである。</p>
+<h2><span id="supportgoogle-cloud-storage-in-delta-sharing-server">Support
+Google Cloud Storage in Delta Sharing Server</span></h2>
+<p><a href="https://github.com/delta-io/delta-sharing/issues/20" target="_blank" rel="noopener">Support
+Google Cloud Storage in Delta Sharing Server</a></p>
+<p>Azureと同じく、 <a href="https://cloud.google.com/storage/docs/access-control/signed-urls" target="_blank" rel="noopener">署名付きURL</a>
+に対応しているため、そこまで難しくは無いだろう、というコメントがあった。</p>
 <p>これはどうだろうか？</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -366,7 +406,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/08/27/Recent-hot-activities-of-Delta-Sharing/" data-id="cl2nztnno00bx5xqi7iuw7e0g" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/08/27/Recent-hot-activities-of-Delta-Sharing/" data-id="cl2o9pb7l008o18rz82nh3he8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -617,5 +657,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

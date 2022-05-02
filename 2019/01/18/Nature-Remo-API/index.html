@@ -5,18 +5,18 @@
     
     <title>Nature Remo API | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 ブログもとに試す センサーの値を取り出してみる Python化  ローカルAPIを試してみる   参考  Nature Remo APIガイド ローカルAPI グローバルAPI API解説のブログ Nature Remo で温度超過時にアラート通知をする NatureRemoのAPIを活用する準備 curl to python  ブログもとに試す API解説のブログを参考に試してみる。">
+    <meta name="description" content="参考 ブログもとに試す  センサーの値を取り出してみる Python化  ローカルAPIを試してみる   参考  Nature Remo APIガイド ローカルAPI グローバルAPI API解説のブログ Nature Remo で温度超過時にアラート通知をする NatureRemoのAPIを活用する準備 curl to python  ブログもとに試す API解説のブログを参考に試してみる">
 <meta name="keywords" content="Nature Remo,Smart Home">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nature Remo API">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/01/18/Nature-Remo-API/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 ブログもとに試す センサーの値を取り出してみる Python化  ローカルAPIを試してみる   参考  Nature Remo APIガイド ローカルAPI グローバルAPI API解説のブログ Nature Remo で温度超過時にアラート通知をする NatureRemoのAPIを活用する準備 curl to python  ブログもとに試す API解説のブログを参考に試してみる。">
+<meta property="og:description" content="参考 ブログもとに試す  センサーの値を取り出してみる Python化  ローカルAPIを試してみる   参考  Nature Remo APIガイド ローカルAPI グローバルAPI API解説のブログ Nature Remo で温度超過時にアラート通知をする NatureRemoのAPIを活用する準備 curl to python  ブログもとに試す API解説のブログを参考に試してみる">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nature Remo API">
-<meta name="twitter:description" content="参考 ブログもとに試す センサーの値を取り出してみる Python化  ローカルAPIを試してみる   参考  Nature Remo APIガイド ローカルAPI グローバルAPI API解説のブログ Nature Remo で温度超過時にアラート通知をする NatureRemoのAPIを活用する準備 curl to python  ブログもとに試す API解説のブログを参考に試してみる。">
+<meta name="twitter:description" content="参考 ブログもとに試す  センサーの値を取り出してみる Python化  ローカルAPIを試してみる   参考  Nature Remo APIガイド ローカルAPI グローバルAPI API解説のブログ Nature Remo で温度超過時にアラート通知をする NatureRemoのAPIを活用する準備 curl to python  ブログもとに試す API解説のブログを参考に試してみる">
     
 
     
@@ -251,37 +251,47 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#ブログもとに試す">ブログもとに試す</a><ul>
-<li><a href="#センサーの値を取り出してみる">センサーの値を取り出してみる</a></li>
-<li><a href="#python化">Python化</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#ブログもとに試す" id="toc-ブログもとに試す">ブログもとに試す</a>
+<ul>
+<li><a href="#センサーの値を取り出してみる" id="toc-センサーの値を取り出してみる">センサーの値を取り出してみる</a></li>
+<li><a href="#python化" id="toc-python化">Python化</a></li>
 </ul></li>
-<li><a href="#ローカルapiを試してみる">ローカルAPIを試してみる</a></li>
+<li><a href="#ローカルapiを試してみる" id="toc-ローカルapiを試してみる">ローカルAPIを試してみる</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://developer.nature.global/" target="_blank" rel="noopener">Nature Remo APIガイド</a></li>
+<li><a href="https://developer.nature.global/" target="_blank" rel="noopener">Nature Remo
+APIガイド</a></li>
 <li><a href="http://local.swagger.nature.global/" target="_blank" rel="noopener">ローカルAPI</a></li>
 <li><a href="http://swagger.nature.global/" target="_blank" rel="noopener">グローバルAPI</a></li>
 <li><a href="https://qiita.com/sohsatoh/items/b710ab3fa05e77ab2b0a" target="_blank" rel="noopener">API解説のブログ</a></li>
-<li><a href="https://qiita.com/magaming/items/47739e13aec22fea60f4" target="_blank" rel="noopener">Nature Remo で温度超過時にアラート通知をする</a></li>
+<li><a href="https://qiita.com/magaming/items/47739e13aec22fea60f4" target="_blank" rel="noopener">Nature Remo
+で温度超過時にアラート通知をする</a></li>
 <li><a href="https://qiita.com/onm/items/8462b5b792132f42336d" target="_blank" rel="noopener">NatureRemoのAPIを活用する準備</a></li>
 <li><a href="https://curl.trillworks.com/" target="_blank" rel="noopener">curl to python</a></li>
 </ul>
 <h1><span id="ブログもとに試す">ブログもとに試す</span></h1>
 <p><a href="https://qiita.com/sohsatoh/items/b710ab3fa05e77ab2b0a" target="_blank" rel="noopener">API解説のブログ</a>を参考に試してみる。</p>
-<p><a href="https://home.nature.global/" target="_blank" rel="noopener">home.nature.global</a> につなぎ、アクセストークンを発行する。 なお、アクセストークンは決して漏らしてはならない。 ここではローカルファイルシステムに<code>na.txt</code>として保存して利用することにする。</p>
+<p><a href="https://home.nature.global/" target="_blank" rel="noopener">home.nature.global</a>
+につなぎ、アクセストークンを発行する。
+なお、アクセストークンは決して漏らしてはならない。
+ここではローカルファイルシステムに<code>na.txt</code>として保存して利用することにする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X GET &quot;https://api.nature.global/1/devices&quot; -H &quot;accept: application/json&quot; -k --header &quot;Authorization: Bearer `cat na.txt`&quot; | jq</span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;name&quot;: &quot;リビング&quot;,</span><br><span class="line">    &quot;id&quot;: &quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">    &quot;created_at&quot;: &quot;xxxxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">    &quot;updated_at&quot;: &quot;xxxxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">    &quot;mac_address&quot;: &quot;xxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">    &quot;serial_number&quot;: &quot;xxxxxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">    &quot;firmware_version&quot;: &quot;Remo/1.0.62-gabbf5bd&quot;,</span><br><span class="line">    &quot;temperature_offset&quot;: 0,</span><br><span class="line">    &quot;humidity_offset&quot;: 0,</span><br><span class="line">    &quot;users&quot;: [</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;id&quot;: &quot;xxxxxxxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">        &quot;nickname&quot;: &quot;xxxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">        &quot;superuser&quot;: xxxxxx</span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;newest_events&quot;: &#123;</span><br><span class="line">      &quot;hu&quot;: &#123;</span><br><span class="line">        &quot;val&quot;: 20,</span><br><span class="line">        &quot;created_at&quot;: &quot;xxxxxxxxxxxxxxx&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;il&quot;: &#123;</span><br><span class="line">        &quot;val&quot;: 104.4,</span><br><span class="line">        &quot;created_at&quot;: &quot;xxxxxxxxxxxxxxxxxx&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;te&quot;: &#123;</span><br><span class="line">        &quot;val&quot;: 22.2,</span><br><span class="line">        &quot;created_at&quot;: &quot;xxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X GET &quot;https://api.nature.global/1/appliances&quot; -H &quot;accept: application/json&quot; -k --header &quot;Authorization: Bearer `cat na.txt`&quot; | jq</span><br></pre></td></tr></table></figure>
 <h2><span id="センサーの値を取り出してみる">センサーの値を取り出してみる</span></h2>
-<p><a href="https://qiita.com/magaming/items/47739e13aec22fea60f4" target="_blank" rel="noopener">Nature Remo で温度超過時にアラート通知をする</a> を参考に試す。 先の例と同様に、/1/devicesを叩くと、その戻りの中にセンサーの値が含まれているようだ。 そこでjqコマンドを使って取り出す。</p>
+<p><a href="https://qiita.com/magaming/items/47739e13aec22fea60f4" target="_blank" rel="noopener">Nature Remo
+で温度超過時にアラート通知をする</a> を参考に試す。
+先の例と同様に、/1/devicesを叩くと、その戻りの中にセンサーの値が含まれているようだ。
+そこでjqコマンドを使って取り出す。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X GET &quot;https://api.nature.global/1/devices&quot; -H &quot;accept: application/json&quot; -k --header &quot;Authorization: Bearer `cat na.txt`&quot; | jq &apos;.[].newest_events&apos;</span><br></pre></td></tr></table></figure>
 <p>結果の例</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;hu&quot;: &#123;</span><br><span class="line">    &quot;val&quot;: 20,</span><br><span class="line">    &quot;created_at&quot;: &quot;2019-01-18T15:01:43Z&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;il&quot;: &#123;</span><br><span class="line">    &quot;val&quot;: 104.4,</span><br><span class="line">    &quot;created_at&quot;: &quot;2019-01-18T13:26:58Z&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;te&quot;: &#123;</span><br><span class="line">    &quot;val&quot;: 21,</span><br><span class="line">    &quot;created_at&quot;: &quot;2019-01-18T14:24:23Z&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>これを保存しておけばよさそう。</p>
 <h2><span id="python化">Python化</span></h2>
-<p><a href="https://curl.trillworks.com/" target="_blank" rel="noopener">curl to python</a> のサイトを利用し、上記curlをPythonスクリプトに変換した。</p>
+<p><a href="https://curl.trillworks.com/" target="_blank" rel="noopener">curl to python</a>
+のサイトを利用し、上記curlをPythonスクリプトに変換した。</p>
 <h1><span id="ローカルapiを試してみる">ローカルAPIを試してみる</span></h1>
 <p>Remoを探すため、公式サイトでは以下のように示されていた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">% dns-sd -B _remo._tcp</span><br></pre></td></tr></table></figure>
@@ -297,7 +307,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/18/Nature-Remo-API/" data-id="cl2nztnna00ao5xqiu4kvsm09" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/18/Nature-Remo-API/" data-id="cl2o9pb76007l18rz431o6aix" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -548,5 +558,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

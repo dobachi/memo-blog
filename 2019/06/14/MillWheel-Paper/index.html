@@ -5,18 +5,18 @@
     
     <title>MillWheel Paper | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 1. Introduction 2. Motivation and requirements 3. System overview 4. Core concept 5. API 6. Fault tolerance 7. System Implementation 8. Evaluation 9. Related work    参考  Googleの公開サイト 「MillWhe">
+    <meta name="description" content="参考 メモ  1. Introduction 2. Motivation and requirements 3. System overview 4. Core concept 5. API 6. Fault tolerance 7. System Implementation 8. Evaluation 9. Related work    参考  Googleの公開サイト 「MillWh">
 <meta name="keywords" content="Stream Processing,Paper,MillWheel,Google">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MillWheel Paper">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/06/14/MillWheel-Paper/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 1. Introduction 2. Motivation and requirements 3. System overview 4. Core concept 5. API 6. Fault tolerance 7. System Implementation 8. Evaluation 9. Related work    参考  Googleの公開サイト 「MillWhe">
+<meta property="og:description" content="参考 メモ  1. Introduction 2. Motivation and requirements 3. System overview 4. Core concept 5. API 6. Fault tolerance 7. System Implementation 8. Evaluation 9. Related work    参考  Googleの公開サイト 「MillWh">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MillWheel Paper">
-<meta name="twitter:description" content="参考 メモ 1. Introduction 2. Motivation and requirements 3. System overview 4. Core concept 5. API 6. Fault tolerance 7. System Implementation 8. Evaluation 9. Related work    参考  Googleの公開サイト 「MillWhe">
+<meta name="twitter:description" content="参考 メモ  1. Introduction 2. Motivation and requirements 3. System overview 4. Core concept 5. API 6. Fault tolerance 7. System Implementation 8. Evaluation 9. Related work    参考  Googleの公開サイト 「MillWh">
     
 
     
@@ -251,17 +251,25 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#introduction">1. Introduction</a></li>
-<li><a href="#motivation-and-requirements">2. Motivation and requirements</a></li>
-<li><a href="#system-overview">3. System overview</a></li>
-<li><a href="#core-concept">4. Core concept</a></li>
-<li><a href="#api">5. API</a></li>
-<li><a href="#fault-tolerance">6. Fault tolerance</a></li>
-<li><a href="#system-implementation">7. System Implementation</a></li>
-<li><a href="#evaluation">8. Evaluation</a></li>
-<li><a href="#related-work">9. Related work</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#introduction" id="toc-introduction">1.
+Introduction</a></li>
+<li><a href="#motivation-and-requirements" id="toc-motivation-and-requirements">2. Motivation and
+requirements</a></li>
+<li><a href="#system-overview" id="toc-system-overview">3. System
+overview</a></li>
+<li><a href="#core-concept" id="toc-core-concept">4. Core
+concept</a></li>
+<li><a href="#api" id="toc-api">5. API</a></li>
+<li><a href="#fault-tolerance" id="toc-fault-tolerance">6. Fault
+tolerance</a></li>
+<li><a href="#system-implementation" id="toc-system-implementation">7.
+System Implementation</a></li>
+<li><a href="#evaluation" id="toc-evaluation">8. Evaluation</a></li>
+<li><a href="#related-work" id="toc-related-work">9. Related
+work</a></li>
 </ul></li>
 </ul>
 </div>
@@ -269,15 +277,22 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://ai.google/research/pubs/pub41378" target="_blank" rel="noopener">Googleの公開サイト</a></li>
 <li><a href="http://www.school.ctc-g.co.jp/columns/nakai2/nakai210.html" target="_blank" rel="noopener">「MillWheel」から学ぶストリーミング処理の基礎</a></li>
-<li><a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf" target="_blank" rel="noopener">The 8 Requirements of Real-Time Stream Processing</a></li>
+<li><a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf" target="_blank" rel="noopener">The 8
+Requirements of Real-Time Stream Processing</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>昔のメモをここに転記。</p>
 <h2><span id="1-introduction">1. Introduction</span></h2>
-<p>故障耐性、ステート永続化、スケーラビリティが重要。 Googleでは多数の分散処理システムを運用しているので、何かしらおかしなことが置き続けている。</p>
+<p>故障耐性、ステート永続化、スケーラビリティが重要。
+Googleでは多数の分散処理システムを運用しているので、何かしらおかしなことが置き続けている。</p>
 <p>MillWheelはMapReduceと同様にフレームワーク。ただし、ストリーム処理やローレイテンシでの処理のため。</p>
-<p>Spark StreamingとSonoraは、チェックポイント機能持つが、実装のためのオペレータが限られている。 S4は故障耐性が不十分。 Stormはexactly onceで動作するが、Tridentは厳密な順序保証が必要。</p>
-<p>MapReduce的な考えをストリーム処理に持ち込んでも、妥協した柔軟性しか得られていない。 ストリーミングSQLは簡潔な手段をもたらしているが、ステートの抽象化、複雑なアプリケーションの実装しやすさという意味では、 オペレーショナルなフローに基づくアプローチのほうが有利。</p>
+<p>Spark
+StreamingとSonoraは、チェックポイント機能持つが、実装のためのオペレータが限られている。
+S4は故障耐性が不十分。 Stormはexactly
+onceで動作するが、Tridentは厳密な順序保証が必要。</p>
+<p>MapReduce的な考えをストリーム処理に持ち込んでも、妥協した柔軟性しか得られていない。
+ストリーミングSQLは簡潔な手段をもたらしているが、ステートの抽象化、複雑なアプリケーションの実装しやすさという意味では、
+オペレーショナルなフローに基づくアプローチのほうが有利。</p>
 <ul>
 <li>分散処理の専門家でなくても複雑なストリーム処理を実装できること</li>
 <li>実行可能性</li>
@@ -293,34 +308,69 @@ ga('send', 'pageview');
 <p>Zeitgeistの例で言えば、検索クエリが入力データであり、データ流量がスパイクしたり、凹んだりしたことが出力データ。</p>
 <p>データ形式：key、value、timestamp</p>
 <h2><span id="4-core-concept">4. Core concept</span></h2>
-<p>キーごとに計算され、並列処理化される。 また、キーがアグリゲーションや比較の軸になる。 Zeitgeistの例では、例えば検索クエリそのものをキーとすることが考えられる。 また、キー抽出のための関数を定義して用いる。</p>
-<p>ストリーム：データの流れ。 コンピューテーションは複数のストリームを出力することもある。</p>
-<p>ウィンドウ修正するときなどに用いられるステートを保持する。 そのための抽象化の仕組みがある。 キーごとのステート。</p>
-<p>Low Watermarkの仕組みがあり、Wall timeが進むごとにWatermarkが進む。 時間経過とともにWatermarkを越したデータに対し、計算が行われる。</p>
-<p>タイマー機能あり。 Low Watermarkもタイマーでキックされる、と考えて良い。</p>
+<p>キーごとに計算され、並列処理化される。
+また、キーがアグリゲーションや比較の軸になる。
+Zeitgeistの例では、例えば検索クエリそのものをキーとすることが考えられる。
+また、キー抽出のための関数を定義して用いる。</p>
+<p>ストリーム：データの流れ。
+コンピューテーションは複数のストリームを出力することもある。</p>
+<p>ウィンドウ修正するときなどに用いられるステートを保持する。
+そのための抽象化の仕組みがある。 キーごとのステート。</p>
+<p>Low Watermarkの仕組みがあり、Wall timeが進むごとにWatermarkが進む。
+時間経過とともにWatermarkを越したデータに対し、計算が行われる。</p>
+<p>タイマー機能あり。 Low
+Watermarkもタイマーでキックされる、と考えて良い。</p>
 <h2><span id="5-api">5. API</span></h2>
-<p>計算APIは、キーごとのステートをフェッチ、加工し、必要に応じてレコード生成し、タイマーを セットする。</p>
-<p>Injector：MillWheelに外部データを入力する。 injector low watermarkも生成可能。</p>
-<p>なお、low watermarkを逸脱するデータが生じた場合は、 ユーザアプリでは捨てるか、それとも現在の集計に組み込むか決められる。</p>
+<p>計算APIは、キーごとのステートをフェッチ、加工し、必要に応じてレコード生成し、タイマーを
+セットする。</p>
+<p>Injector：MillWheelに外部データを入力する。 injector low
+watermarkも生成可能。</p>
+<p>なお、low watermarkを逸脱するデータが生じた場合は、
+ユーザアプリでは捨てるか、それとも現在の集計に組み込むか決められる。</p>
 <h2><span id="6-fault-tolerance">6. Fault tolerance</span></h2>
 <p>到達保証の考え方としては、ユーザアプリで冪等性を考慮しなくて良いようにする、という点が挙げられる。</p>
-<p>基本的にAckがなければデータが再送される設計に基づいているが、 受信者がAckを返す直前に何らかの理由で故障した場合、データが重複して処理される可能性がある。 そこでユニークIDを付与し、重複デーかどうかを確かめられるようにする。 判定にはブルームフィルタも利用する。 ID管理の仕組みにはガベージコレクションの仕組みもある。</p>
-<p>チェックポイントの仕組みもある。 バックエンドストレージにはBigtableなどを想定。</p>
-<p>なお、性能を重視しチェックポイントを無効化することもできるが、 そうすると何らかの故障が生じて、データ送信元へのAckが遅れることがある。 パイプラインが並列化すると、それだけシステム内のどこかで故障が生じる可能性は上がる。 そこで、滞留するデータについては部分的にチェックポイントすることで、 計算コストとエンドツーエンドレイテンシのバランスを保つ。 ★</p>
-<p>永続化されたステートの一貫性を保つため、アトミックなオペレーションでラップする。 ただし、マシンのフェールオーバ時などにゾンビ化したWriterが存在する可能性を考慮し、 シークエンサートークンを用いるようにする。 つまり、新たに現れたWriterは古いシークエンサートークンを無効化してから、 動作を開始するようにしている。</p>
+<p>基本的にAckがなければデータが再送される設計に基づいているが、
+受信者がAckを返す直前に何らかの理由で故障した場合、データが重複して処理される可能性がある。
+そこでユニークIDを付与し、重複デーかどうかを確かめられるようにする。
+判定にはブルームフィルタも利用する。
+ID管理の仕組みにはガベージコレクションの仕組みもある。</p>
+<p>チェックポイントの仕組みもある。
+バックエンドストレージにはBigtableなどを想定。</p>
+<p>なお、性能を重視しチェックポイントを無効化することもできるが、
+そうすると何らかの故障が生じて、データ送信元へのAckが遅れることがある。
+パイプラインが並列化すると、それだけシステム内のどこかで故障が生じる可能性は上がる。
+そこで、滞留するデータについては部分的にチェックポイントすることで、
+計算コストとエンドツーエンドレイテンシのバランスを保つ。 ★</p>
+<p>永続化されたステートの一貫性を保つため、アトミックなオペレーションでラップする。
+ただし、マシンのフェールオーバ時などにゾンビ化したWriterが存在する可能性を考慮し、
+シークエンサートークンを用いるようにする。
+つまり、新たに現れたWriterは古いシークエンサートークンを無効化してから、
+動作を開始するようにしている。</p>
 <h2><span id="7-system-implementation">7. System Implementation</span></h2>
-<p>MillWheelはステート管理のためにデータストア（BigTableなど）を使う。 故障発生時にはデータストアからメモリ情報を再現する。</p>
+<p>MillWheelはステート管理のためにデータストア（BigTableなど）を使う。
+故障発生時にはデータストアからメモリ情報を再現する。</p>
 <p>low watermarkのジャーナルはデータストアに保存される。</p>
-<p>感想：このあたりデータストアの性能は、最終的なパフォーマンスに大きく影響しそうだ。 ★</p>
+<p>感想：このあたりデータストアの性能は、最終的なパフォーマンスに大きく影響しそうだ。
+★</p>
 <h2><span id="8-evaluation">8. Evaluation</span></h2>
-<p>単純なシャッフル処理では、レイテンシの中央値は数ミリ秒。95パーセンタイルで30ミリ秒。 Exactly onceなどを有効化すると中央値は33.7ミリ秒。95パーセンタイルで93.8ミリ秒。</p>
+<p>単純なシャッフル処理では、レイテンシの中央値は数ミリ秒。95パーセンタイルで30ミリ秒。
+Exactly
+onceなどを有効化すると中央値は33.7ミリ秒。95パーセンタイルで93.8ミリ秒。</p>
 <p>CPU数をスケールアウトしても、レイテンシに著しい劣化は見られない。（逆に言うと、99パーセンタイルではある程度の劣化が見られる）</p>
-<p>low watermarkは処理のステージをまたぐと、実時間に対してラグが生じる。 このあたりは活発に改善を進められているところ。</p>
-<p>ステート管理などにストレージ（BitTableなど）を使う。 これによりリード・ライトがたくさん発生する。 ワーカにおけるキャッシュは有効。</p>
-<p>実際のユースケースは、広告関係。 そのほか、Google Street Viewでのパノラマ画像の生成など。 ★</p>
+<p>low watermarkは処理のステージをまたぐと、実時間に対してラグが生じる。
+このあたりは活発に改善を進められているところ。</p>
+<p>ステート管理などにストレージ（BitTableなど）を使う。
+これによりリード・ライトがたくさん発生する。
+ワーカにおけるキャッシュは有効。</p>
+<p>実際のユースケースは、広告関係。 そのほか、Google Street
+Viewでのパノラマ画像の生成など。 ★</p>
 <h2><span id="9-related-work">9. Related work</span></h2>
-<p>ストリーム処理システムが必要とするものは、以下の論文に記載されている。 <a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf" target="_blank" rel="noopener">The 8 Requirements of Real-Time Stream Processing</a></p>
-<p>Spark Streamingに対しては、MillWheelの方がgeneralであると主張。 RDDへの依存性がユーザに制約をもたらす、とも。 またチェックポイントの間隔はMillWheelの方が粒度が細かい。</p>
+<p>ストリーム処理システムが必要とするものは、以下の論文に記載されている。
+<a href="http://cs.brown.edu/~ugur/8rulesSigRec.pdf" target="_blank" rel="noopener">The 8 Requirements
+of Real-Time Stream Processing</a></p>
+<p>Spark Streamingに対しては、MillWheelの方がgeneralであると主張。
+RDDへの依存性がユーザに制約をもたらす、とも。
+またチェックポイントの間隔はMillWheelの方が粒度が細かい。</p>
 
         
         </div>
@@ -331,7 +381,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/14/MillWheel-Paper/" data-id="cl2nztnn600aa5xqi0uaxwm5r" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/14/MillWheel-Paper/" data-id="cl2o9pb6y007d18rznfpghnki" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -582,5 +632,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

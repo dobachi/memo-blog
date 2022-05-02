@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考 メモ Zhamak DehghaniによるHow to Move Beyond a Monolithic Data Laketo a Distributed Data Mesh を読んで簡単にまとめた。 この文章では、ドメインが所有し、提供するデータプロダクトの相互利用に基づく「データメッシュ」の考え方を提唱するものである。 固有技術そのものではなく、アーキテクチャ検">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Memo of How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh">
 <meta name="twitter:description" content="参考 メモ   参考 メモ Zhamak DehghaniによるHow to Move Beyond a Monolithic Data Laketo a Distributed Data Mesh を読んで簡単にまとめた。 この文章では、ドメインが所有し、提供するデータプロダクトの相互利用に基づく「データメッシュ」の考え方を提唱するものである。 固有技術そのものではなく、アーキテクチャ検">
@@ -251,14 +251,17 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://martinfowler.com/articles/data-monolith-to-mesh.html" target="_blank" rel="noopener">Zhamak DehghaniによるHow to Move Beyond a Monolithic Data Laketo a Distributed Data Mesh</a> を読んで簡単にまとめた。</p>
-<p>この文章では、ドメインが所有し、提供するデータプロダクトの相互利用に基づく「データメッシュ」の考え方を提唱するものである。 固有技術そのものではなく、アーキテクチャ検討の前の「データを基礎としたサービス開発、ソフトウェア開発のためのデータの取り回し方」に関する示唆を与えようとしたもの、という理解。</p>
+<p><a href="https://martinfowler.com/articles/data-monolith-to-mesh.html" target="_blank" rel="noopener">Zhamak
+DehghaniによるHow to Move Beyond a Monolithic Data Laketo a Distributed
+Data Mesh</a> を読んで簡単にまとめた。</p>
+<p>この文章では、ドメインが所有し、提供するデータプロダクトの相互利用に基づく「データメッシュ」の考え方を提唱するものである。
+固有技術そのものではなく、アーキテクチャ検討の前の「データを基礎としたサービス開発、ソフトウェア開発のためのデータの取り回し方」に関する示唆を与えようとしたもの、という理解。</p>
 <iframe src="https://onedrive.live.com/embed?cid=C6E669622F542498&amp;resid=C6E669622F542498%21102281&amp;authkey=AMeTPUnKXIG6qVA&amp;em=2" width="402" height="327" frameborder="0" scrolling="no">
 </iframe>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
@@ -272,7 +275,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/" data-id="cl2nztnn300a25xqit3duosck" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/" data-id="cl2o9pb6t006y18rz9hasywrm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -523,5 +526,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

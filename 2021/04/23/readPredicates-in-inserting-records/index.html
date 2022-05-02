@@ -5,18 +5,18 @@
     
     <title>readPredicates in inserting records | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 前提 動機 準備 簡単な動作確認 readPredicatesに書き込みが生じるケース    参考 メモ 前提 Delta Lake 0.7.0 動機 Delta Lakeのトランザクション管理について、 org.apache.spark.sql.delta.OptimisticTransactionImpl#readPredicates がどのように利用されるか、を確認した。">
+    <meta name="description" content="参考 メモ  前提 動機 準備 簡単な動作確認 readPredicatesに書き込みが生じるケース    参考 メモ 前提 Delta Lake 0.7.0 動機 Delta Lakeのトランザクション管理について、 org.apache.spark.sql.delta.OptimisticTransactionImpl#readPredicates がどのように利用されるか、を確認した。">
 <meta name="keywords" content="Delta Lake">
 <meta property="og:type" content="article">
 <meta property="og:title" content="readPredicates in inserting records">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2021/04/23/readPredicates-in-inserting-records/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 前提 動機 準備 簡単な動作確認 readPredicatesに書き込みが生じるケース    参考 メモ 前提 Delta Lake 0.7.0 動機 Delta Lakeのトランザクション管理について、 org.apache.spark.sql.delta.OptimisticTransactionImpl#readPredicates がどのように利用されるか、を確認した。">
+<meta property="og:description" content="参考 メモ  前提 動機 準備 簡単な動作確認 readPredicatesに書き込みが生じるケース    参考 メモ 前提 Delta Lake 0.7.0 動機 Delta Lakeのトランザクション管理について、 org.apache.spark.sql.delta.OptimisticTransactionImpl#readPredicates がどのように利用されるか、を確認した。">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="readPredicates in inserting records">
-<meta name="twitter:description" content="参考 メモ 前提 動機 準備 簡単な動作確認 readPredicatesに書き込みが生じるケース    参考 メモ 前提 Delta Lake 0.7.0 動機 Delta Lakeのトランザクション管理について、 org.apache.spark.sql.delta.OptimisticTransactionImpl#readPredicates がどのように利用されるか、を確認した。">
+<meta name="twitter:description" content="参考 メモ  前提 動機 準備 簡単な動作確認 readPredicatesに書き込みが生じるケース    参考 メモ 前提 Delta Lake 0.7.0 動機 Delta Lakeのトランザクション管理について、 org.apache.spark.sql.delta.OptimisticTransactionImpl#readPredicates がどのように利用されるか、を確認した。">
     
 
     
@@ -251,13 +251,14 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#前提">前提</a></li>
-<li><a href="#動機">動機</a></li>
-<li><a href="#準備">準備</a></li>
-<li><a href="#簡単な動作確認">簡単な動作確認</a></li>
-<li><a href="#readpredicatesに書き込みが生じるケース">readPredicatesに書き込みが生じるケース</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#前提" id="toc-前提">前提</a></li>
+<li><a href="#動機" id="toc-動機">動機</a></li>
+<li><a href="#準備" id="toc-準備">準備</a></li>
+<li><a href="#簡単な動作確認" id="toc-簡単な動作確認">簡単な動作確認</a></li>
+<li><a href="#readpredicatesに書き込みが生じるケース" id="toc-readpredicatesに書き込みが生じるケース">readPredicatesに書き込みが生じるケース</a></li>
 </ul></li>
 </ul>
 </div>
@@ -266,12 +267,15 @@ ga('send', 'pageview');
 <h2><span id="前提">前提</span></h2>
 <p>Delta Lake 0.7.0</p>
 <h2><span id="動機">動機</span></h2>
-<p>Delta Lakeのトランザクション管理について、 <code>org.apache.spark.sql.delta.OptimisticTransactionImpl#readPredicates</code> がどのように利用されるか、を確認した。</p>
+<p>Delta Lakeのトランザクション管理について、
+<code>org.apache.spark.sql.delta.OptimisticTransactionImpl#readPredicates</code>
+がどのように利用されるか、を確認した。</p>
 <p>特にInsert時に、競合確認するかどうかを決めるにあたって重要な変数である。</p>
 <p>org/apache/spark/sql/delta/OptimisticTransaction.scala:600</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> predicatesMatchingAddedFiles = <span class="type">ExpressionSet</span>(readPredicates).iterator.flatMap &#123; p =&gt;</span><br><span class="line">  <span class="keyword">val</span> conflictingFile = <span class="type">DeltaLog</span>.filterFileList(</span><br><span class="line">    metadata.partitionSchema,</span><br><span class="line">    addedFilesToCheckForConflicts.toDF(), p :: <span class="type">Nil</span>).as[<span class="type">AddFile</span>].take(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">  conflictingFile.headOption.map(f =&gt; getPrettyPartitionMessage(f.partitionValues))</span><br><span class="line">&#125;.take(<span class="number">1</span>).toArray</span><br></pre></td></tr></table></figure>
 <h2><span id="準備">準備</span></h2>
-<p>SparkをDelta Lakeと一緒に起動する。 （ここではついでにデバッガをアタッチするコンフィグを付与している。不要なら、--driver-java-optionsを除外する）</p>
+<p>SparkをDelta Lakeと一緒に起動する。
+（ここではついでにデバッガをアタッチするコンフィグを付与している。不要なら、--driver-java-optionsを除外する）</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dobachi@home:~/tmp$ /opt/spark/default/bin/spark-shell --packages io.delta:delta-core_2.12:0.7.0 --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" --driver-java-options "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:5005"</span><br></pre></td></tr></table></figure>
 <p>ファイルはSparkに含まれているサンプルファイルを使うことにする。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> filePath = <span class="string">"/home/dobachi/Sources/spark/examples/src/main/resources/users.parquet"</span></span><br><span class="line">filePath: <span class="type">String</span> = /home/dobachi/<span class="type">Sources</span>/spark/examples/src/main/resources/users.parquet</span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> df = spark.read.parquet(filePath)</span><br><span class="line">df: org.apache.spark.sql.<span class="type">DataFrame</span> = [name: string, favorite_color: string ... <span class="number">1</span> more field]</span><br></pre></td></tr></table></figure>
@@ -293,13 +297,18 @@ ga('send', 'pageview');
 <p>ターミナル1の処理で使用しているデバッガで、以下のあたりにブレイクポイントをおいて確認した。</p>
 <p>org/apache/spark/sql/delta/OptimisticTransaction.scala:595</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> addedFilesToCheckForConflicts = commitIsolationLevel <span class="keyword">match</span> &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Serializable</span> =&gt; changedDataAddedFiles ++ blindAppendAddedFiles</span><br><span class="line">  <span class="keyword">case</span> <span class="type">WriteSerializable</span> =&gt; changedDataAddedFiles <span class="comment">// don't conflict with blind appends</span></span><br><span class="line">  <span class="keyword">case</span> <span class="type">SnapshotIsolation</span> =&gt; <span class="type">Seq</span>.empty</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>この場合、<code>org.apache.spark.sql.delta.OptimisticTransactionImpl#readPredicates</code> はこのタイミングでは空のArrayBufferだった。</p>
+<p>この場合、<code>org.apache.spark.sql.delta.OptimisticTransactionImpl#readPredicates</code>
+はこのタイミングでは空のArrayBufferだった。</p>
 <h2><span id="readpredicatesに書き込みが生じるケース">readPredicatesに書き込みが生じるケース</span></h2>
 <p>以下の通り。</p>
 <p>org/apache/spark/sql/delta/OptimisticTransaction.scala:239</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">filterFiles</span></span>(filters: <span class="type">Seq</span>[<span class="type">Expression</span>]): <span class="type">Seq</span>[<span class="type">AddFile</span>] = &#123;</span><br><span class="line">  <span class="keyword">val</span> scan = snapshot.filesForScan(<span class="type">Nil</span>, filters)</span><br><span class="line">  <span class="keyword">val</span> partitionFilters = filters.filter &#123; f =&gt;</span><br><span class="line">    <span class="type">DeltaTableUtils</span>.isPredicatePartitionColumnsOnly(f, metadata.partitionColumns, spark)</span><br><span class="line">  &#125;</span><br><span class="line">  readPredicates += partitionFilters.reduceLeftOption(<span class="type">And</span>).getOrElse(<span class="type">Literal</span>(<span class="literal">true</span>))</span><br><span class="line">  readFiles ++= scan.files</span><br><span class="line">  scan.files</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Mark the entire table as tainted by this transaction. */</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readWholeTable</span></span>(): <span class="type">Unit</span> = &#123;</span><br><span class="line">  readPredicates += <span class="type">Literal</span>(<span class="literal">true</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>org.apache.spark.sql.delta.OptimisticTransactionImpl#filterFiles</code> メソッドは主にファイルを消すときに用いられる。 DELETEするとき、Updateするとき、Overwriteするとき（条件付き含む）など。</p>
-<p><code>org.apache.spark.sql.delta.OptimisticTransactionImpl#readWholeTable</code> メソッドは ストリーム処理で書き込む際に用いられる。 書き込もうとしているテーブルを読んでいる場合はreadPredicatesに真値を追加する。</p>
+<p><code>org.apache.spark.sql.delta.OptimisticTransactionImpl#filterFiles</code>
+メソッドは主にファイルを消すときに用いられる。
+DELETEするとき、Updateするとき、Overwriteするとき（条件付き含む）など。</p>
+<p><code>org.apache.spark.sql.delta.OptimisticTransactionImpl#readWholeTable</code>
+メソッドは ストリーム処理で書き込む際に用いられる。
+書き込もうとしているテーブルを読んでいる場合はreadPredicatesに真値を追加する。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -311,7 +320,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/23/readPredicates-in-inserting-records/" data-id="cl2nztnq700jd5xqinv34hikn" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/23/readPredicates-in-inserting-records/" data-id="cl2o9pba100ep18rz3roembwb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -562,5 +571,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

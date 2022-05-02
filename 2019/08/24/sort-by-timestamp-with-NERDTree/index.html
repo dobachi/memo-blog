@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  Support sorting files and directories by modification time. #901 NERDTree.txt  メモ vimでNERDTreeを使うとき、直近ファイルを参照したいことが多いため、デフォルトのソート順を変えることにした。 Support sorting files and directories by mod">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sort by timestamp with NERDTree">
 <meta name="twitter:description" content="参考 メモ   参考  Support sorting files and directories by modification time. #901 NERDTree.txt  メモ vimでNERDTreeを使うとき、直近ファイルを参照したいことが多いため、デフォルトのソート順を変えることにした。 Support sorting files and directories by mod">
@@ -251,21 +251,28 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://github.com/scrooloose/nerdtree/pull/901" target="_blank" rel="noopener">Support sorting files and directories by modification time. #901</a></li>
+<li><a href="https://github.com/scrooloose/nerdtree/pull/901" target="_blank" rel="noopener">Support
+sorting files and directories by modification time. #901</a></li>
 <li><a href="https://github.com/scrooloose/nerdtree/blob/master/doc/NERDTree.txt" target="_blank" rel="noopener">NERDTree.txt</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>vimでNERDTreeを使うとき、直近ファイルを参照したいことが多いため、デフォルトのソート順を変えることにした。</p>
-<p><a href="https://github.com/scrooloose/nerdtree/pull/901" target="_blank" rel="noopener">Support sorting files and directories by modification time. #901</a> を参照し、タイムスタンプでソートする機能が取り込まれていることがわかったので、 <a href="https://github.com/scrooloose/nerdtree/blob/master/doc/NERDTree.txt" target="_blank" rel="noopener">NERDTree.txt</a> を参照して設定した。 具体的には、 <code>NERDTreeSortOrder</code> の節を参照。</p>
+<p><a href="https://github.com/scrooloose/nerdtree/pull/901" target="_blank" rel="noopener">Support
+sorting files and directories by modification time. #901</a>
+を参照し、タイムスタンプでソートする機能が取り込まれていることがわかったので、
+<a href="https://github.com/scrooloose/nerdtree/blob/master/doc/NERDTree.txt" target="_blank" rel="noopener">NERDTree.txt</a>
+を参照して設定した。 具体的には、 <code>NERDTreeSortOrder</code>
+の節を参照。</p>
 <p>vimrcには、</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let NERDTreeSortOrder=[&apos;\/$&apos;, &apos;*&apos;, &apos;\.swp$&apos;,  &apos;\.bak$&apos;, &apos;\~$&apos;, &apos;[[-timestamp]]&apos;]</span><br></pre></td></tr></table></figure>
-<p>を追記した。デフォルトのオーダに対し、 <code>[[-timestamp]]</code> を追加し、タイムスタンプ降順でソートするようにした。</p>
+<p>を追記した。デフォルトのオーダに対し、 <code>[[-timestamp]]</code>
+を追加し、タイムスタンプ降順でソートするようにした。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
         
@@ -277,7 +284,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/24/sort-by-timestamp-with-NERDTree/" data-id="cl2nztnq900jh5xqi2fo7i0bo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/24/sort-by-timestamp-with-NERDTree/" data-id="cl2o9pba200et18rzck1lgj2k" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -528,5 +535,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

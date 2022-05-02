@@ -5,19 +5,19 @@
     
     <title>Handle pictures in delta lake and hudi | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 Delta Lake まずはjpgをSparkで読み込む Delta Lakeで扱う 書き込み 読み出し 更新  Parquetの内容を確認する スキーマ メタデータ  Pythonで画像処理してみる  Hudi 画像読み込み 書き込み 読み込み 更新 Parquetの内容を確認する スキーマ メタデータ     参考  Spark公式ドキュメントのImage data source">
+    <meta name="description" content="参考 Delta Lake  まずはjpgをSparkで読み込む Delta Lakeで扱う  書き込み 読み出し 更新  Parquetの内容を確認する  スキーマ メタデータ  Pythonで画像処理してみる  Hudi  画像読み込み 書き込み 読み込み 更新 Parquetの内容を確認する  スキーマ メタデータ     参考  Spark公式ドキュメントのImage data so">
 <meta name="keywords" content="Spark,Delta Lake">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Handle pictures in delta lake and hudi">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/05/12/Handle-pictures-in-delta-lake/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 Delta Lake まずはjpgをSparkで読み込む Delta Lakeで扱う 書き込み 読み出し 更新  Parquetの内容を確認する スキーマ メタデータ  Pythonで画像処理してみる  Hudi 画像読み込み 書き込み 読み込み 更新 Parquetの内容を確認する スキーマ メタデータ     参考  Spark公式ドキュメントのImage data source">
+<meta property="og:description" content="参考 Delta Lake  まずはjpgをSparkで読み込む Delta Lakeで扱う  書き込み 読み出し 更新  Parquetの内容を確認する  スキーマ メタデータ  Pythonで画像処理してみる  Hudi  画像読み込み 書き込み 読み込み 更新 Parquetの内容を確認する  スキーマ メタデータ     参考  Spark公式ドキュメントのImage data so">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/3LsygT3y9k3jCjbJ-EB945.png">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Handle pictures in delta lake and hudi">
-<meta name="twitter:description" content="参考 Delta Lake まずはjpgをSparkで読み込む Delta Lakeで扱う 書き込み 読み出し 更新  Parquetの内容を確認する スキーマ メタデータ  Pythonで画像処理してみる  Hudi 画像読み込み 書き込み 読み込み 更新 Parquetの内容を確認する スキーマ メタデータ     参考  Spark公式ドキュメントのImage data source">
+<meta name="twitter:description" content="参考 Delta Lake  まずはjpgをSparkで読み込む Delta Lakeで扱う  書き込み 読み出し 更新  Parquetの内容を確認する  スキーマ メタデータ  Pythonで画像処理してみる  Hudi  画像読み込み 書き込み 読み込み 更新 Parquetの内容を確認する  スキーマ メタデータ     参考  Spark公式ドキュメントのImage data so">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/3LsygT3y9k3jCjbJ-EB945.png">
     
 
@@ -253,37 +253,46 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#delta-lake">Delta Lake</a><ul>
-<li><a href="#まずはjpgをsparkで読み込む">まずはjpgをSparkで読み込む</a></li>
-<li><a href="#delta-lakeで扱う">Delta Lakeで扱う</a><ul>
-<li><a href="#書き込み">書き込み</a></li>
-<li><a href="#読み出し">読み出し</a></li>
-<li><a href="#更新">更新</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#delta-lake" id="toc-delta-lake">Delta Lake</a>
+<ul>
+<li><a href="#まずはjpgをsparkで読み込む" id="toc-まずはjpgをsparkで読み込む">まずはjpgをSparkで読み込む</a></li>
+<li><a href="#delta-lakeで扱う" id="toc-delta-lakeで扱う">Delta
+Lakeで扱う</a>
+<ul>
+<li><a href="#書き込み" id="toc-書き込み">書き込み</a></li>
+<li><a href="#読み出し" id="toc-読み出し">読み出し</a></li>
+<li><a href="#更新" id="toc-更新">更新</a></li>
 </ul></li>
-<li><a href="#parquetの内容を確認する">Parquetの内容を確認する</a><ul>
-<li><a href="#スキーマ">スキーマ</a></li>
-<li><a href="#メタデータ">メタデータ</a></li>
+<li><a href="#parquetの内容を確認する" id="toc-parquetの内容を確認する">Parquetの内容を確認する</a>
+<ul>
+<li><a href="#スキーマ" id="toc-スキーマ">スキーマ</a></li>
+<li><a href="#メタデータ" id="toc-メタデータ">メタデータ</a></li>
 </ul></li>
-<li><a href="#pythonで画像処理してみる">Pythonで画像処理してみる</a></li>
+<li><a href="#pythonで画像処理してみる" id="toc-pythonで画像処理してみる">Pythonで画像処理してみる</a></li>
 </ul></li>
-<li><a href="#hudi">Hudi</a><ul>
-<li><a href="#画像読み込み">画像読み込み</a></li>
-<li><a href="#書き込み-1">書き込み</a></li>
-<li><a href="#読み込み">読み込み</a></li>
-<li><a href="#更新-1">更新</a></li>
-<li><a href="#parquetの内容を確認する-1">Parquetの内容を確認する</a><ul>
-<li><a href="#スキーマ-1">スキーマ</a></li>
-<li><a href="#メタデータ-1">メタデータ</a></li>
+<li><a href="#hudi" id="toc-hudi">Hudi</a>
+<ul>
+<li><a href="#画像読み込み" id="toc-画像読み込み">画像読み込み</a></li>
+<li><a href="#書き込み-1" id="toc-書き込み-1">書き込み</a></li>
+<li><a href="#読み込み" id="toc-読み込み">読み込み</a></li>
+<li><a href="#更新-1" id="toc-更新-1">更新</a></li>
+<li><a href="#parquetの内容を確認する-1" id="toc-parquetの内容を確認する-1">Parquetの内容を確認する</a>
+<ul>
+<li><a href="#スキーマ-1" id="toc-スキーマ-1">スキーマ</a></li>
+<li><a href="#メタデータ-1" id="toc-メタデータ-1">メタデータ</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://spark.apache.org/docs/latest/ml-datasource#image-data-source" target="_blank" rel="noopener">Spark公式ドキュメントのImage data source</a></li>
+<li><a href="https://spark.apache.org/docs/latest/ml-datasource#image-data-source" target="_blank" rel="noopener">Spark公式ドキュメントのImage
+data source</a></li>
 <li><a href="https://www.kaggle.com/scolianni/mnistasjpg/data" target="_blank" rel="noopener">Kaggleのmnistデータ</a></li>
-<li><a href="https://machinelearningmastery.com/how-to-load-and-manipulate-images-for-deep-learning-in-python-with-pil-pillow/" target="_blank" rel="noopener">How to Load and Manipulate Images for Deep Learning in Python With PIL/Pillow</a></li>
+<li><a href="https://machinelearningmastery.com/how-to-load-and-manipulate-images-for-deep-learning-in-python-with-pil-pillow/" target="_blank" rel="noopener">How
+to Load and Manipulate Images for Deep Learning in Python With
+PIL/Pillow</a></li>
 <li><a href="https://hudi.apache.org/docs/quick-start-guide.html#setup" target="_blank" rel="noopener">Hudiのquick-start-guide</a></li>
 <li><a href="https://github.com/apache/parquet-mr" target="_blank" rel="noopener">parquet-mr</a></li>
 </ul>
@@ -291,7 +300,10 @@ ga('send', 'pageview');
 <h2><span id="まずはjpgをsparkで読み込む">まずはjpgをSparkで読み込む</span></h2>
 <p>予め、Delta Lakeを読み込みながら起動する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-shell --packages io.delta:delta-core_2.11:0.6.0</span></span><br></pre></td></tr></table></figure>
-<p><a href="https://spark.apache.org/docs/latest/ml-datasource#image-data-source" target="_blank" rel="noopener">Spark公式ドキュメントのImage data source</a> を利用し、jpgをDataFrameとして読み込んでみる。 データは、 <a href="https://www.kaggle.com/scolianni/mnistasjpg/data" target="_blank" rel="noopener">Kaggleのmnistデータ</a> を利用。このデータはjpgになっているので便利。</p>
+<p><a href="https://spark.apache.org/docs/latest/ml-datasource#image-data-source" target="_blank" rel="noopener">Spark公式ドキュメントのImage
+data source</a> を利用し、jpgをDataFrameとして読み込んでみる。
+データは、 <a href="https://www.kaggle.com/scolianni/mnistasjpg/data" target="_blank" rel="noopener">Kaggleのmnistデータ</a>
+を利用。このデータはjpgになっているので便利。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> home = sys.env(<span class="string">"HOME"</span>)</span><br><span class="line">scala&gt; <span class="keyword">val</span> imageDir = <span class="string">"Downloads/mnist_jpg/trainingSet/trainingSet/0"</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> df = spark.read.format(<span class="string">"image"</span>).option(<span class="string">"dropInvalid"</span>, <span class="literal">true</span>).load(home + <span class="string">"/"</span> + imageDir)</span><br></pre></td></tr></table></figure>
 <p>データをDataFrameにする定義ができた。 内容は以下の通り。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; df.select(<span class="string">"image.origin"</span>, <span class="string">"image.width"</span>, <span class="string">"image.height"</span>).show(<span class="number">3</span>, truncate=<span class="literal">false</span>)</span><br><span class="line">+-------------------------------------------------------------------------------+-----+------+</span><br><span class="line">|origin                                                                         |width|height|</span><br><span class="line">+-------------------------------------------------------------------------------+-----+------+</span><br><span class="line">|file:<span class="comment">///home/centos/Downloads/mnist_jpg/trainingSet/trainingSet/0/img_20188.jpg|28   |28    |</span></span><br><span class="line">|file:<span class="comment">///home/centos/Downloads/mnist_jpg/trainingSet/trainingSet/0/img_12634.jpg|28   |28    |</span></span><br><span class="line">|file:<span class="comment">///home/centos/Downloads/mnist_jpg/trainingSet/trainingSet/0/img_26812.jpg|28   |28    |</span></span><br><span class="line">+-------------------------------------------------------------------------------+-----+------+</span><br></pre></td></tr></table></figure>
@@ -302,7 +314,8 @@ ga('send', 'pageview');
 <li>width: IntegerType (width of the image)</li>
 <li>nChannels: IntegerType (number of image channels)</li>
 <li>mode: IntegerType (OpenCV-compatible type)</li>
-<li>data: BinaryType (Image bytes in OpenCV-compatible order: row-wise BGR in most cases)</li>
+<li>data: BinaryType (Image bytes in OpenCV-compatible order: row-wise
+BGR in most cases)</li>
 </ul>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; df.printSchema</span><br><span class="line">root</span><br><span class="line"> |-- image: struct (nullable = <span class="literal">true</span>)</span><br><span class="line"> |    |-- origin: string (nullable = <span class="literal">true</span>)</span><br><span class="line"> |    |-- height: integer (nullable = <span class="literal">true</span>)</span><br><span class="line"> |    |-- width: integer (nullable = <span class="literal">true</span>)</span><br><span class="line"> |    |-- nChannels: integer (nullable = <span class="literal">true</span>)</span><br><span class="line"> |    |-- mode: integer (nullable = <span class="literal">true</span>)</span><br><span class="line"> |    |-- data: binary (nullable = <span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
 <h2><span id="delta-lakeで扱う">Delta Lakeで扱う</span></h2>
@@ -313,23 +326,30 @@ ga('send', 'pageview');
 <p>できた。試しにDeltaTableとして読み出してみる。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">import</span> io.delta.tables._</span><br><span class="line">scala&gt; <span class="keyword">import</span> org.apache.spark.sql.functions._</span><br><span class="line">scala&gt; <span class="keyword">val</span> deltaTable = <span class="type">DeltaTable</span>.forPath(deltaImagePath)</span><br></pre></td></tr></table></figure>
 <h3><span id="更新">更新</span></h3>
-<p>mergeを試す。 マージのためにキーを明示的に与えつつデータを準備する。</p>
+<p>mergeを試す。
+マージのためにキーを明示的に与えつつデータを準備する。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> targetDf = df.select($<span class="string">"image.origin"</span>, $<span class="string">"image"</span>)</span><br><span class="line">scala&gt; <span class="keyword">val</span> targetImagePath = <span class="string">"/tmp/delta-table"</span></span><br><span class="line">scala&gt; targetDf.write.format(<span class="string">"delta"</span>).save(targetImagePath)</span><br><span class="line">scala&gt; <span class="keyword">val</span> sourcePath = <span class="string">"Downloads/mnist_jpg/trainingSet/trainingSet/1"</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> sourceDf = spark.read.format(<span class="string">"image"</span>).option(<span class="string">"dropInvalid"</span>, <span class="literal">true</span>).load(home + <span class="string">"/"</span> + sourcePath).select($<span class="string">"image.origin"</span>, $<span class="string">"image"</span>)</span><br></pre></td></tr></table></figure>
 <p>Delta Tableを定義。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> deltaTable = <span class="type">DeltaTable</span>.forPath(targetImagePath)</span><br><span class="line">scala&gt; deltaTable</span><br><span class="line">        .as(<span class="string">"target"</span>)</span><br><span class="line">        .merge(</span><br><span class="line">          sourceDf.as(<span class="string">"source"</span>),</span><br><span class="line">          <span class="string">"target.origin = source.origin"</span>)</span><br><span class="line">        .whenMatched</span><br><span class="line">        .updateExpr(<span class="type">Map</span>(</span><br><span class="line">          <span class="string">"image"</span> -&gt; <span class="string">"source.image"</span>))</span><br><span class="line">        .whenNotMatched</span><br><span class="line">        .insertExpr(<span class="type">Map</span>(</span><br><span class="line">          <span class="string">"origin"</span> -&gt; <span class="string">"source.origin"</span>,</span><br><span class="line">          <span class="string">"image"</span> -&gt; <span class="string">"source.image"</span>))</span><br><span class="line">        .execute()</span><br></pre></td></tr></table></figure>
 <p>実際に、追加データが入っていることが確かめられる。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; deltaTable.toDF.where($<span class="string">"origin"</span> contains <span class="string">"trainingSet/1"</span>).select(<span class="string">"image.origin"</span>, <span class="string">"image.width"</span>, <span class="string">"image.height"</span>).show(<span class="number">3</span>, truncate=<span class="literal">false</span>)</span><br><span class="line">+-------------------------------------------------------------------------------+-----+------+</span><br><span class="line">|origin                                                                         |width|height|</span><br><span class="line">+-------------------------------------------------------------------------------+-----+------+</span><br><span class="line">|file:<span class="comment">///home/centos/Downloads/mnist_jpg/trainingSet/trainingSet/1/img_10266.jpg|28   |28    |</span></span><br><span class="line">|file:<span class="comment">///home/centos/Downloads/mnist_jpg/trainingSet/trainingSet/1/img_10665.jpg|28   |28    |</span></span><br><span class="line">|file:<span class="comment">///home/centos/Downloads/mnist_jpg/trainingSet/trainingSet/1/img_10772.jpg|28   |28    |</span></span><br><span class="line">+-------------------------------------------------------------------------------+-----+------+</span><br><span class="line">only showing top <span class="number">3</span> rows</span><br></pre></td></tr></table></figure>
-<p>SparkのImage Data Sourceは、メタデータと画像本体（バイナリ）を構造で扱っているだけなので、 実は特に工夫することなく扱えた。</p>
-<p>公式ドキュメントによると、OpenCV形式バイナリで保持されている。 これから先は、Python使って処理したいので、改めて開き直す。</p>
+<p>SparkのImage Data
+Sourceは、メタデータと画像本体（バイナリ）を構造で扱っているだけなので、
+実は特に工夫することなく扱えた。</p>
+<p>公式ドキュメントによると、OpenCV形式バイナリで保持されている。
+これから先は、Python使って処理したいので、改めて開き直す。</p>
 <h2><span id="parquetの内容を確認する">Parquetの内容を確認する</span></h2>
-<p><a href="https://github.com/apache/parquet-mr" target="_blank" rel="noopener">parquet-mr</a> の <code>parquet-tools</code> を利用して、Parquetの内容を確認する。</p>
-<p>なお、Hudi v0.5.2におけるParquetのバージョンは以下の通り、1.10.1である。</p>
+<p><a href="https://github.com/apache/parquet-mr" target="_blank" rel="noopener">parquet-mr</a> の
+<code>parquet-tools</code> を利用して、Parquetの内容を確認する。</p>
+<p>なお、Hudi
+v0.5.2におけるParquetのバージョンは以下の通り、1.10.1である。</p>
 <p>pom.xml:84</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">parquet.version</span>&gt;</span>1.10.1<span class="tag">&lt;/<span class="name">parquet.version</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>当該バージョンに対応するタグをチェックアウトし、予めparquet-toolsをパッケージしておくこと。</p>
 <h3><span id="スキーマ">スキーマ</span></h3>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -jar target/parquet-tools-1.10.1.jar schema /tmp/delta-lake-image/part-00000-c3d03d70-1785-435f-b055-b2a78903e732-c000.snappy.parquet</span></span><br><span class="line">message spark_schema &#123;</span><br><span class="line">  optional group image &#123;</span><br><span class="line">    optional binary origin (UTF8);</span><br><span class="line">    optional int32 height;</span><br><span class="line">    optional int32 width;</span><br><span class="line">    optional int32 nChannels;</span><br><span class="line">    optional int32 mode;</span><br><span class="line">    optional binary data;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>シンプルにParquet内に保持されていることがわかる。 Spark SQLのParquet取扱機能を利用している。</p>
+<p>シンプルにParquet内に保持されていることがわかる。 Spark
+SQLのParquet取扱機能を利用している。</p>
 <h3><span id="メタデータ">メタデータ</span></h3>
 <p>ファイル名やクリエイタなど。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file:        file:/tmp/delta-lake-image/part-00000-c3d03d70-1785-435f-b055-b2a78903e732-c000.snappy.parquet</span><br><span class="line">creator:     parquet-mr version 1.10.1 (build a89df8f9932b6ef6633d06069e50c9b7970bebd1)</span><br><span class="line">extra:       org.apache.spark.sql.parquet.row.metadata = &#123;&quot;type&quot;:&quot;struct&quot;,&quot;fields&quot;:[&#123;&quot;name&quot;:&quot;image&quot;,&quot;type&quot;:&#123;&quot;type&quot;:&quot;struct&quot;,&quot;fields&quot;:[&#123;&quot;name&quot;:&quot;origin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;nullable&quot;:true,&quot;metadata&quot;:&#123;&#125;&#125;,&#123;&quot;name&quot;:&quot;height&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;nullable&quot;:true,&quot;metadata&quot;:&#123;&#125;&#125;,&#123;&quot;name&quot;:&quot;width&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;nullable&quot;:true,&quot;metadata&quot;:&#123;&#125;&#125;,&#123;&quot;name&quot;:&quot;nChannels&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;nullable&quot;:true,&quot;metadata&quot;:&#123;&#125;&#125;,&#123;&quot;name&quot;:&quot;mode&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;nullable&quot;:true,&quot;metadata&quot;:&#123;&#125;&#125;,&#123;&quot;name&quot;:&quot;data&quot;,&quot;type&quot;:&quot;binary&quot;,&quot;nullable&quot;:true,&quot;metadata&quot;:&#123;&#125;&#125;]&#125;,&quot;nullable&quot;:true,&quot;metadata&quot;:&#123;&#125;&#125;]&#125;</span><br></pre></td></tr></table></figure>
@@ -350,9 +370,11 @@ ga('send', 'pageview');
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">nparr = np.frombuffer(img.data, np.uint8).reshape(img.height, img.width, img.nChannels)</span><br><span class="line">edges = cv2.Canny(nparr,<span class="number">100</span>,<span class="number">200</span>)</span><br><span class="line">plt.imshow(edges)</span><br></pre></td></tr></table></figure>
 <p>Jupyter上でエッジ抽出されたことが確かめられただろうか。</p>
 <figure>
-<img src="/memo-blog/images/3LsygT3y9k3jCjbJ-EB945.png" alt=""><figcaption>エッジ抽出された様</figcaption>
+<img src="/memo-blog/images/3LsygT3y9k3jCjbJ-EB945.png" alt="エッジ抽出された様">
+<figcaption aria-hidden="true">エッジ抽出された様</figcaption>
 </figure>
-<p>これをSparkでUDFで実行するようにする。 （とりあえず雑にライブラリをインポート…）</p>
+<p>これをSparkでUDFで実行するようにする。
+（とりあえず雑にライブラリをインポート…）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_edge</span><span class="params">(data, h, w, c)</span>:</span></span><br><span class="line">    <span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">    <span class="keyword">import</span> cv2</span><br><span class="line">    nparr = np.frombuffer(data, np.uint8).reshape(h, w, c)</span><br><span class="line">    edge = cv2.Canny(nparr,<span class="number">100</span>,<span class="number">200</span>)</span><br><span class="line">    <span class="keyword">return</span> edge.tobytes()</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pyspark.sql.functions <span class="keyword">import</span> udf</span><br><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> BinaryType</span><br><span class="line"></span><br><span class="line">get_edge_udf = udf(get_edge, BinaryType())</span><br></pre></td></tr></table></figure>
 <p>エッジ抽出されたndarrayをバイト列に変換し、Spark上ではBinaryTypeで扱うように指定した。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">with_edge = deltaTable.toDF().select(<span class="string">"image.origin"</span>, <span class="string">"image.width"</span>, <span class="string">"image.height"</span>, <span class="string">"image.nChannels"</span>, get_edge_udf(<span class="string">"image.data"</span>, <span class="string">"image.height"</span>, <span class="string">"image.width"</span>, <span class="string">"image.nChannels"</span>).alias(<span class="string">"edge"</span>), <span class="string">"image.data"</span>)</span><br><span class="line"></span><br><span class="line">with_edge.show(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
@@ -362,8 +384,10 @@ ga('send', 'pageview');
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">new_img = with_edge.where(<span class="string">"origin == 'file:///home/centos/Downloads/mnist_jpg/trainingSet/trainingSet/0/img_1.jpg'"</span>).select(<span class="string">"origin"</span>, <span class="string">"width"</span>, <span class="string">"height"</span>, <span class="string">"nChannels"</span>, <span class="string">"data"</span>, <span class="string">"edge"</span>).collect()[<span class="number">0</span>]</span><br><span class="line">new_nparr = np.frombuffer(new_img.edge, np.uint8).reshape(new_img.height, new_img.width)</span><br><span class="line">plt.imshow(new_nparr)</span><br></pre></td></tr></table></figure>
 <h1><span id="hudi">Hudi</span></h1>
 <h2><span id="画像読み込み">画像読み込み</span></h2>
-<p><a href="#まずはjpgをsparkで読み込む">まずはjpgをSparkで読み込む</a> と同様に データを読み込む。</p>
-<p><a href="https://hudi.apache.org/docs/quick-start-guide.html#setup" target="_blank" rel="noopener">Hudiのquick-start-guide</a> を参考にしながら、まずはHudiを読み込みながら、シェルを起動する。</p>
+<p><a href="#まずはjpgをsparkで読み込む">まずはjpgをSparkで読み込む</a>
+と同様に データを読み込む。</p>
+<p><a href="https://hudi.apache.org/docs/quick-start-guide.html#setup" target="_blank" rel="noopener">Hudiのquick-start-guide</a>
+を参考にしながら、まずはHudiを読み込みながら、シェルを起動する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-shell --packages org.apache.hudi:hudi-spark-bundle_2.11:0.5.1-incubating,org.apache.spark:spark-avro_2.11:2.4.5 \</span></span><br><span class="line">  --conf 'spark.serializer=org.apache.spark.serializer.KryoSerializer'</span><br></pre></td></tr></table></figure>
 <p>ライブラリをインポート。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">import</span> org.apache.spark.sql.<span class="type">SaveMode</span>._</span><br><span class="line">scala&gt; <span class="keyword">import</span> org.apache.hudi.<span class="type">DataSourceReadOptions</span>._</span><br><span class="line">scala&gt; <span class="keyword">import</span> org.apache.hudi.<span class="type">DataSourceWriteOptions</span>._</span><br><span class="line">scala&gt; <span class="keyword">import</span> org.apache.hudi.config.<span class="type">HoodieWriteConfig</span>._</span><br></pre></td></tr></table></figure>
@@ -386,7 +410,9 @@ ga('send', 'pageview');
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; hudiImageDf.printSchema</span><br><span class="line">root</span><br><span class="line"> |-- _hoodie_commit_time: string (nullable = <span class="literal">true</span>)</span><br><span class="line"> |-- _hoodie_commit_seqno: string (nullable = <span class="literal">true</span>)</span><br><span class="line"> |-- _hoodie_record_key: string (nullable = <span class="literal">true</span>)</span><br><span class="line"> |-- _hoodie_partition_path: string (nullable = <span class="literal">true</span>)</span><br><span class="line"> |-- _hoodie_file_name: string (nullable = <span class="literal">true</span>)</span><br><span class="line"> |-- origin: string (nullable = <span class="literal">true</span>)</span><br><span class="line"> |-- partitionpath: string (nullable = <span class="literal">true</span>)</span><br><span class="line"> |-- image: struct (nullable = <span class="literal">true</span>)</span><br><span class="line"> |    |-- origin: string (nullable = <span class="literal">true</span>)</span><br><span class="line"> |    |-- height: integer (nullable = <span class="literal">true</span>)</span><br><span class="line"> |    |-- width: integer (nullable = <span class="literal">true</span>)</span><br><span class="line"> |    |-- nChannels: integer (nullable = <span class="literal">true</span>)</span><br><span class="line"> |    |-- mode: integer (nullable = <span class="literal">true</span>)</span><br><span class="line"> |    |-- data: binary (nullable = <span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
 <p>すべてのただの書き込みAPIを試しただけだが、想定通り書き込み・読み込みできている。</p>
 <h2><span id="更新">更新</span></h2>
-<p>Hudiといえば、テーブルを更新可能であることも特徴のひとつなので、試しに更新をしてみる。 元は同じデータであるが、「0」の画像データを新しいデータとしてDataFrameを定義し、更新する。 意図的に、一部のデータだけ更新する。</p>
+<p>Hudiといえば、テーブルを更新可能であることも特徴のひとつなので、試しに更新をしてみる。
+元は同じデータであるが、「0」の画像データを新しいデータとしてDataFrameを定義し、更新する。
+意図的に、一部のデータだけ更新する。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> updateImageDir = <span class="string">"Downloads/mnist_jpg/trainingSet/trainingSet/0"</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> updateDf = spark.read.format(<span class="string">"image"</span>).option(<span class="string">"dropInvalid"</span>, <span class="literal">true</span>).load(home + <span class="string">"/"</span> + updateImageDir)</span><br><span class="line">scala&gt; <span class="keyword">val</span> updateHudiDf = updateDf.select($<span class="string">"image.origin"</span>, partitionPath($<span class="string">"image.origin"</span>) as <span class="string">"partitionpath"</span>, $<span class="string">"*"</span>)</span><br><span class="line">scala&gt; updateHudiDf.write.format(<span class="string">"hudi"</span>).</span><br><span class="line">         option(<span class="type">TABLE_NAME</span>, tableName).</span><br><span class="line">         option(<span class="type">PRECOMBINE_FIELD_OPT_KEY</span>, <span class="string">"origin"</span>).</span><br><span class="line">         option(<span class="type">RECORDKEY_FIELD_OPT_KEY</span>, <span class="string">"origin"</span>).</span><br><span class="line">         option(<span class="type">PARTITIONPATH_FIELD_OPT_KEY</span>, <span class="string">"partitionpath"</span>).</span><br><span class="line">         mode(<span class="type">Append</span>).</span><br><span class="line">         save(basePath)</span><br></pre></td></tr></table></figure>
 <p>以下のように、「0」のデータが更新されていることがわかる。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -R /tmp/hudi_images/</span></span><br><span class="line">/tmp/hudi_images/:</span><br><span class="line">0  1  2  3  4  5  6  7  8  9</span><br><span class="line"></span><br><span class="line">/tmp/hudi_images/0:</span><br><span class="line">86c74288-e541-4a25-addf-0c00e17ef6bf-0_0-29-14074_20200517135104.parquet</span><br><span class="line">86c74288-e541-4a25-addf-0c00e17ef6bf-0_0-60-27759_.parquet</span><br><span class="line"></span><br><span class="line">/tmp/hudi_images/1:</span><br><span class="line">4912032f-3365-4852-b2ae-91ffb5ea9806-0_1-29-14075_20200517135104.parquet</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
@@ -394,11 +420,16 @@ ga('send', 'pageview');
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> updatedHudiImageDf = spark.</span><br><span class="line">         read.</span><br><span class="line">         format(<span class="string">"hudi"</span>).</span><br><span class="line">         load(basePath + <span class="string">"/*"</span>)</span><br></pre></td></tr></table></figure>
 <p>試しに、差分がわかるように「1」と「0」のデータをそれぞれ読んで見る。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; updatedHudiImageDf.select($<span class="string">"_hoodie_commit_time"</span>, $<span class="string">"_hoodie_commit_seqno"</span>, $<span class="string">"_hoodie_partition_path"</span>).filter(<span class="string">"partitionpath == 1"</span>).show(<span class="number">3</span>)</span><br><span class="line">+-------------------+--------------------+----------------------+</span><br><span class="line">|_hoodie_commit_time|_hoodie_commit_seqno|_hoodie_partition_path|</span><br><span class="line">+-------------------+--------------------+----------------------+</span><br><span class="line">|     <span class="number">20200517135104</span>|  <span class="number">20200517135104</span>_1_1|                     <span class="number">1</span>|</span><br><span class="line">|     <span class="number">20200517135104</span>| <span class="number">20200517135104</span>_1_12|                     <span class="number">1</span>|</span><br><span class="line">|     <span class="number">20200517135104</span>| <span class="number">20200517135104</span>_1_45|                     <span class="number">1</span>|</span><br><span class="line">+-------------------+--------------------+----------------------+</span><br><span class="line">only showing top <span class="number">3</span> rows</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">scala&gt; updatedHudiImageDf.select($<span class="string">"_hoodie_commit_time"</span>, $<span class="string">"_hoodie_commit_seqno"</span>, $<span class="string">"_hoodie_partition_path"</span>).filter(<span class="string">"partitionpath == 0"</span>).show(<span class="number">3</span>)</span><br><span class="line">+-------------------+--------------------+----------------------+</span><br><span class="line">|_hoodie_commit_time|_hoodie_commit_seqno|_hoodie_partition_path|</span><br><span class="line">+-------------------+--------------------+----------------------+</span><br><span class="line">|     <span class="number">20200517140006</span>|<span class="number">20200517140006</span>_0_...|                     <span class="number">0</span>|</span><br><span class="line">|     <span class="number">20200517140006</span>|<span class="number">20200517140006</span>_0_...|                     <span class="number">0</span>|</span><br><span class="line">|     <span class="number">20200517140006</span>|<span class="number">20200517140006</span>_0_...|                     <span class="number">0</span>|</span><br><span class="line">+-------------------+--------------------+----------------------+</span><br><span class="line">only showing top <span class="number">3</span> rows</span><br></pre></td></tr></table></figure>
-<p>上記のように、更新されたことがわかる。最新の更新日時は、 <code>2020/05/17 14:00:06UTC</code> である。</p>
-<p>ここで読み込まれたデータも、Delta Lake同様に画像を元にしたベクトルデータとして扱える。 Pythonであれば <code>ndarray</code> に変換して用いれば良い。</p>
+<p>上記のように、更新されたことがわかる。最新の更新日時は、
+<code>2020/05/17 14:00:06UTC</code> である。</p>
+<p>ここで読み込まれたデータも、Delta
+Lake同様に画像を元にしたベクトルデータとして扱える。 Pythonであれば
+<code>ndarray</code> に変換して用いれば良い。</p>
 <h2><span id="parquetの内容を確認する">Parquetの内容を確認する</span></h2>
-<p><a href="https://github.com/apache/parquet-mr" target="_blank" rel="noopener">parquet-mr</a> の <code>parquet-tools</code> を利用して、Parquetの内容を確認する。</p>
-<p>なお、Hudi v0.5.2におけるParquetのバージョンは以下の通り、1.10.1である。</p>
+<p><a href="https://github.com/apache/parquet-mr" target="_blank" rel="noopener">parquet-mr</a> の
+<code>parquet-tools</code> を利用して、Parquetの内容を確認する。</p>
+<p>なお、Hudi
+v0.5.2におけるParquetのバージョンは以下の通り、1.10.1である。</p>
 <p>pom.xml:84</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">parquet.version</span>&gt;</span>1.10.1<span class="tag">&lt;/<span class="name">parquet.version</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>当該バージョンに対応するタグをチェックアウトし、予めparquet-toolsをパッケージしておくこと。</p>
@@ -413,7 +444,8 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">extra:                  org.apache.hudi.bloomfilter = ///</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <p>レコードキーやAvroスキーマ</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">extra:                  hoodie_min_record_key = file:///home/centos/Downloads/mnist_jpg/trainingSet/trainingSet/0/img_1.jpg</span><br><span class="line">extra:                  parquet.avro.schema = &#123;&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;hudi_images_record&quot;,&quot;namespace&quot;:&quot;hoodie.hudi_images&quot;,&quot;fields&quot;:[&#123;&quot;name&quot;:&quot;_hoodie_commit_time&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;doc&quot;:&quot;&quot;,&quot;default&quot;:null&#125;,&#123;&quot;name&quot;:&quot;_hoodie_commit_seqno&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;doc&quot;:&quot;&quot;,&quot;default&quot;:null&#125;,&#123;&quot;name&quot;:&quot;_hoodie_record_key&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;doc&quot;:&quot;&quot;,&quot;default&quot;:null&#125;,&#123;&quot;name&quot;:&quot;_hoodie_partition_path&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;doc&quot;:&quot;&quot;,&quot;default&quot;:null&#125;,&#123;&quot;name&quot;:&quot;_hoodie_file_name&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;doc&quot;:&quot;&quot;,&quot;default&quot;:null&#125;,&#123;&quot;name&quot;:&quot;origin&quot;,&quot;type&quot;:[&quot;string&quot;,&quot;null&quot;]&#125;,&#123;&quot;name&quot;:&quot;partitionpath&quot;,&quot;type&quot;:[&quot;string&quot;,&quot;null&quot;]&#125;,&#123;&quot;name&quot;:&quot;image&quot;,&quot;type&quot;:[&#123;&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;image&quot;,&quot;namespace&quot;:&quot;hoodie.hudi_images.hudi_images_record&quot;,&quot;fields&quot;:[&#123;&quot;name&quot;:&quot;origin&quot;,&quot;type&quot;:[&quot;string&quot;,&quot;null&quot;]&#125;,&#123;&quot;name&quot;:&quot;height&quot;,&quot;type&quot;:[&quot;int&quot;,&quot;null&quot;]&#125;,&#123;&quot;name&quot;:&quot;width&quot;,&quot;type&quot;:[&quot;int&quot;,&quot;null&quot;]&#125;,&#123;&quot;name&quot;:&quot;nChannels&quot;,&quot;type&quot;:[&quot;int&quot;,&quot;null&quot;]&#125;,&#123;&quot;name&quot;:&quot;mode&quot;,&quot;type&quot;:[&quot;int&quot;,&quot;null&quot;]&#125;,&#123;&quot;name&quot;:&quot;data&quot;,&quot;type&quot;:[&quot;bytes&quot;,&quot;null&quot;]&#125;]&#125;,&quot;null&quot;]&#125;]&#125;</span><br><span class="line">extra:                  writer.model.name = avro</span><br><span class="line">extra:                  hoodie_max_record_key = file:///home/centos/Downloads/mnist_jpg/trainingSet/trainingSet/0/img_9996.jpg</span><br></pre></td></tr></table></figure>
-<p>上記の通り、Hudiでは <code>parquet-avro</code> を利用し、Avro形式でParquet内のデータを保持する。</p>
+<p>上記の通り、Hudiでは <code>parquet-avro</code>
+を利用し、Avro形式でParquet内のデータを保持する。</p>
 <p>スキーマ詳細</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">file schema:            hoodie.hudi_images.hudi_images_record</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">_hoodie_commit_time:    OPTIONAL BINARY O:UTF8 R:0 D:1</span><br><span class="line">_hoodie_commit_seqno:   OPTIONAL BINARY O:UTF8 R:0 D:1</span><br><span class="line">_hoodie_record_key:     OPTIONAL BINARY O:UTF8 R:0 D:1</span><br><span class="line">_hoodie_partition_path: OPTIONAL BINARY O:UTF8 R:0 D:1</span><br><span class="line">_hoodie_file_name:      OPTIONAL BINARY O:UTF8 R:0 D:1</span><br><span class="line">origin:                 OPTIONAL BINARY O:UTF8 R:0 D:1</span><br><span class="line">partitionpath:          OPTIONAL BINARY O:UTF8 R:0 D:1</span><br><span class="line">image:                  OPTIONAL F:6</span><br><span class="line">.origin:                OPTIONAL BINARY O:UTF8 R:0 D:2</span><br><span class="line">.height:                OPTIONAL INT32 R:0 D:2</span><br><span class="line">.width:                 OPTIONAL INT32 R:0 D:2</span><br><span class="line">.nChannels:             OPTIONAL INT32 R:0 D:2</span><br><span class="line">.mode:                  OPTIONAL INT32 R:0 D:2</span><br><span class="line">.data:                  OPTIONAL BINARY R:0 D:2</span><br></pre></td></tr></table></figure>
 <p>Rowグループ</p>
@@ -429,7 +461,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/05/12/Handle-pictures-in-delta-lake/" data-id="cl2nztnm2006l5xqinl17x4pp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/05/12/Handle-pictures-in-delta-lake/" data-id="cl2o9pbjl01bf18rz1f7n5h7h" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -680,5 +712,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

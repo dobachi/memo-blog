@@ -5,18 +5,18 @@
     
     <title>Abstract of Analytics Zoo | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 動作確認 Python環境構築     参考  Analytics Zooの公式ドキュメント Analytics Zoo 0.6.0の公式ドキュメント  メモ Analytics Zooの公式ドキュメント の内容から、ひとことで書いてある文言を拾うと...以下の通り。 0.2.0時代：  Analytics + AI Platform for Apache Spark and B">
+    <meta name="description" content="参考 メモ  動作確認  Python環境構築     参考  Analytics Zooの公式ドキュメント Analytics Zoo 0.6.0の公式ドキュメント  メモ Analytics Zooの公式ドキュメント の内容から、ひとことで書いてある文言を拾うと...以下の通り。 0.2.0時代：  Analytics + AI Platform for Apache Spark and">
 <meta name="keywords" content="Machine Learning,Analytics Zoo,Intel,BigDL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Abstract of Analytics Zoo">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/12/02/Abstract-of-Analytics-Zoo/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 動作確認 Python環境構築     参考  Analytics Zooの公式ドキュメント Analytics Zoo 0.6.0の公式ドキュメント  メモ Analytics Zooの公式ドキュメント の内容から、ひとことで書いてある文言を拾うと...以下の通り。 0.2.0時代：  Analytics + AI Platform for Apache Spark and B">
+<meta property="og:description" content="参考 メモ  動作確認  Python環境構築     参考  Analytics Zooの公式ドキュメント Analytics Zoo 0.6.0の公式ドキュメント  メモ Analytics Zooの公式ドキュメント の内容から、ひとことで書いてある文言を拾うと...以下の通り。 0.2.0時代：  Analytics + AI Platform for Apache Spark and">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.441Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Abstract of Analytics Zoo">
-<meta name="twitter:description" content="参考 メモ 動作確認 Python環境構築     参考  Analytics Zooの公式ドキュメント Analytics Zoo 0.6.0の公式ドキュメント  メモ Analytics Zooの公式ドキュメント の内容から、ひとことで書いてある文言を拾うと...以下の通り。 0.2.0時代：  Analytics + AI Platform for Apache Spark and B">
+<meta name="twitter:description" content="参考 メモ  動作確認  Python環境構築     参考  Analytics Zooの公式ドキュメント Analytics Zoo 0.6.0の公式ドキュメント  メモ Analytics Zooの公式ドキュメント の内容から、ひとことで書いてある文言を拾うと...以下の通り。 0.2.0時代：  Analytics + AI Platform for Apache Spark and">
     
 
     
@@ -251,28 +251,35 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#動作確認">動作確認</a><ul>
-<li><a href="#python環境構築">Python環境構築</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a>
+<ul>
+<li><a href="#python環境構築" id="toc-python環境構築">Python環境構築</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://analytics-zoo.github.io/master/index.html" target="_blank" rel="noopener">Analytics Zooの公式ドキュメント</a></li>
-<li><a href="https://analytics-zoo.github.io/0.6.0/index.html" target="_blank" rel="noopener">Analytics Zoo 0.6.0の公式ドキュメント</a></li>
+<li><a href="https://analytics-zoo.github.io/master/index.html" target="_blank" rel="noopener">Analytics
+Zooの公式ドキュメント</a></li>
+<li><a href="https://analytics-zoo.github.io/0.6.0/index.html" target="_blank" rel="noopener">Analytics
+Zoo 0.6.0の公式ドキュメント</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://analytics-zoo.github.io/master/index.html" target="_blank" rel="noopener">Analytics Zooの公式ドキュメント</a> の内容から、ひとことで書いてある文言を拾うと...以下の通り。</p>
+<p><a href="https://analytics-zoo.github.io/master/index.html" target="_blank" rel="noopener">Analytics
+Zooの公式ドキュメント</a>
+の内容から、ひとことで書いてある文言を拾うと...以下の通り。</p>
 <p>0.2.0時代：</p>
 <blockquote>
 <p>Analytics + AI Platform for Apache Spark and BigDL.</p>
 </blockquote>
 <p>2019/12現在：</p>
 <blockquote>
-<p>A unified analytics + AI platform for distributed TensorFlow, Keras, PyTorch and BigDL on Apache Spark</p>
+<p>A unified analytics + AI platform for distributed TensorFlow, Keras,
+PyTorch and BigDL on Apache Spark</p>
 </blockquote>
 <p>とのこと。対応範囲が拡大していることがわかる。</p>
 <h2><span id="動作確認">動作確認</span></h2>
@@ -289,15 +296,26 @@ ga('send', 'pageview');
 <li>wordcloud</li>
 <li>jupyter</li>
 </ul>
-<p>pipenvファイルは以下の通り。 https://github.com/dobachi/analytics-zoo-example/blob/master/Pipfile</p>
-<p>なお、 <a href="https://analytics-zoo.github.io/master/index.html" target="_blank" rel="noopener">Analytics Zooの公式ドキュメント</a> では、Hadoop YARNでローンチする方法などいくつかの方法が掲載されている。</p>
-<p>Exampleを動かしてみようとするが、pipでインストールしたところ <code>jupyter-with-zoo.sh</code> は以下の箇所にあった。</p>
+<p>pipenvファイルは以下の通り。
+https://github.com/dobachi/analytics-zoo-example/blob/master/Pipfile</p>
+<p>なお、 <a href="https://analytics-zoo.github.io/master/index.html" target="_blank" rel="noopener">Analytics
+Zooの公式ドキュメント</a> では、Hadoop
+YARNでローンチする方法などいくつかの方法が掲載されている。</p>
+<p>Exampleを動かしてみようとするが、pipでインストールしたところ
+<code>jupyter-with-zoo.sh</code> は以下の箇所にあった。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/.local/share/virtualenvs/analytics-zoo-example-hS4gvn-H/lib/python3.6/site-packages/zoo/share/bin/jupyter-with-zoo.sh</span><br></pre></td></tr></table></figure>
 <p>そこで環境変数を以下のように設定した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ export ANALYTICS_ZOO_HOME=`pipenv --venv`/lib/python3.6/site-packages/zoo/share</span><br><span class="line">$ export SPARK_HOME=`pipenv --venv`/lib/python3.6/site-packages/pyspark</span><br></pre></td></tr></table></figure>
-<p>この状態で、 <code>${ANALYTICS_ZOO_HOME}/bin/jupyter-with-zoo.sh --master local[*]</code> を実行しようとしたのだが、 <code>jupyter-with-zoo.sh</code> 内で用いられている <code>analytics-zoo-base.sh</code> の中で、</p>
+<p>この状態で、
+<code>${ANALYTICS_ZOO_HOME}/bin/jupyter-with-zoo.sh --master local[*]</code>
+を実行しようとしたのだが、 <code>jupyter-with-zoo.sh</code>
+内で用いられている <code>analytics-zoo-base.sh</code> の中で、</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if [[ ! -f $&#123;ANALYTICS_ZOO_PY_ZIP&#125; ]]; then</span><br><span class="line">    echo &quot;Cannot find $&#123;ANALYTICS_ZOO_PY_ZIP&#125;&quot;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-<p>の箇所に引っかかりエラーになってしまう。 そもそも環境変数 <code>ANALYTICS_ZOO_PY_ZIP</code> は任意のオプションの値を指定するための環境変数であるため、このハンドリングがおかしいと思われる。 どうやら、pipenvでインストールした0.6.0では、Jupyterとの連係周りがまだ付け焼き刃のようだ。 とりあえず、今回の動作確認では利用しない環境変数であるため、関係個所をコメントアウトして実行することとする。</p>
+<p>の箇所に引っかかりエラーになってしまう。 そもそも環境変数
+<code>ANALYTICS_ZOO_PY_ZIP</code>
+は任意のオプションの値を指定するための環境変数であるため、このハンドリングがおかしいと思われる。
+どうやら、pipenvでインストールした0.6.0では、Jupyterとの連係周りがまだ付け焼き刃のようだ。
+とりあえず、今回の動作確認では利用しない環境変数であるため、関係個所をコメントアウトして実行することとする。</p>
 <p>上記対応の後、以下のようにpipenv経由でJupyter PySparkを起動。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv run $&#123;ANALYTICS_ZOO_HOME&#125;/bin/jupyter-with-zoo.sh --master local[*]</span><br></pre></td></tr></table></figure>
 <p>試しに実行しようとしたが、以下のエラー</p>
@@ -313,7 +331,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/12/02/Abstract-of-Analytics-Zoo/" data-id="cl2nztnk100175xqiford0nyl" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/12/02/Abstract-of-Analytics-Zoo/" data-id="cl2o9pb48000r18rz7gytwqoy" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -564,5 +582,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

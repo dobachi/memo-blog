@@ -5,18 +5,18 @@
     
     <title>Docker on VMWare | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ Docker環境    参考  Docker ToolboxをVMware Workstationで使う Hyper-VでなくVMwareでDocker for Windows を使う Get Docker Engine - Community for Ubuntu  メモ Hyper-VでなくVMwareでDocker for Windows を使う に習った。 Docker環">
+    <meta name="description" content="参考 メモ  Docker環境    参考  Docker ToolboxをVMware Workstationで使う Hyper-VでなくVMwareでDocker for Windows を使う Get Docker Engine - Community for Ubuntu  メモ Hyper-VでなくVMwareでDocker for Windows を使う に習った。 Docker">
 <meta name="keywords" content="Windows,Docker,VMWare">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker on VMWare">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/11/09/Docker-on-VMWare/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ Docker環境    参考  Docker ToolboxをVMware Workstationで使う Hyper-VでなくVMwareでDocker for Windows を使う Get Docker Engine - Community for Ubuntu  メモ Hyper-VでなくVMwareでDocker for Windows を使う に習った。 Docker環">
+<meta property="og:description" content="参考 メモ  Docker環境    参考  Docker ToolboxをVMware Workstationで使う Hyper-VでなくVMwareでDocker for Windows を使う Get Docker Engine - Community for Ubuntu  メモ Hyper-VでなくVMwareでDocker for Windows を使う に習った。 Docker">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker on VMWare">
-<meta name="twitter:description" content="参考 メモ Docker環境    参考  Docker ToolboxをVMware Workstationで使う Hyper-VでなくVMwareでDocker for Windows を使う Get Docker Engine - Community for Ubuntu  メモ Hyper-VでなくVMwareでDocker for Windows を使う に習った。 Docker環">
+<meta name="twitter:description" content="参考 メモ  Docker環境    参考  Docker ToolboxをVMware Workstationで使う Hyper-VでなくVMwareでDocker for Windows を使う Get Docker Engine - Community for Ubuntu  メモ Hyper-VでなくVMwareでDocker for Windows を使う に習った。 Docker">
     
 
     
@@ -251,24 +251,35 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#docker環境">Docker環境</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#docker環境" id="toc-docker環境">Docker環境</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://qiita.com/NaokiTsuchiya/items/b3680e97cd7378f9049d" target="_blank" rel="noopener">Docker ToolboxをVMware Workstationで使う</a></li>
-<li><a href="https://a5m2.mmatsubara.com/wp/?p=463" target="_blank" rel="noopener">Hyper-VでなくVMwareでDocker for Windows を使う</a></li>
-<li><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository" target="_blank" rel="noopener">Get Docker Engine - Community for Ubuntu</a></li>
+<li><a href="https://qiita.com/NaokiTsuchiya/items/b3680e97cd7378f9049d" target="_blank" rel="noopener">Docker
+ToolboxをVMware Workstationで使う</a></li>
+<li><a href="https://a5m2.mmatsubara.com/wp/?p=463" target="_blank" rel="noopener">Hyper-VでなくVMwareでDocker
+for Windows を使う</a></li>
+<li><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository" target="_blank" rel="noopener">Get
+Docker Engine - Community for Ubuntu</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://a5m2.mmatsubara.com/wp/?p=463" target="_blank" rel="noopener">Hyper-VでなくVMwareでDocker for Windows を使う</a> に習った。</p>
+<p><a href="https://a5m2.mmatsubara.com/wp/?p=463" target="_blank" rel="noopener">Hyper-VでなくVMwareでDocker
+for Windows を使う</a> に習った。</p>
 <h2><span id="docker環境">Docker環境</span></h2>
-<p>手元の環境は Windows + VMWare だったので、Vagrant + VMWareで環境を構築し、その中にDockerをインストールすることにした。</p>
-<p><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository" target="_blank" rel="noopener">Get Docker Engine - Community for Ubuntu</a> を参考に、dockerをインストールするようにした。 参考までに、Vagrantfileは以下のような感じである。 ubuntu18系をベースとしつつ、プロビジョニングの際にDockerをインストールする。</p>
-<p>ただし、以下のVagrantfileのプロビジョニングでは、DockerサービスにTCPで接続することを許可するようにしている。 これはセキュリティ上問題があるため、注意して取り扱うこと。（あくまで動作確認程度に留めるのがよさそう）</p>
+<p>手元の環境は Windows + VMWare だったので、Vagrant +
+VMWareで環境を構築し、その中にDockerをインストールすることにした。</p>
+<p><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository" target="_blank" rel="noopener">Get
+Docker Engine - Community for Ubuntu</a>
+を参考に、dockerをインストールするようにした。
+参考までに、Vagrantfileは以下のような感じである。
+ubuntu18系をベースとしつつ、プロビジョニングの際にDockerをインストールする。</p>
+<p>ただし、以下のVagrantfileのプロビジョニングでは、DockerサービスにTCPで接続することを許可するようにしている。
+これはセキュリティ上問題があるため、注意して取り扱うこと。（あくまで動作確認程度に留めるのがよさそう）</p>
 <p>Vagrantfile <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Vagrant.configure(&quot;2&quot;) do |config|</span><br><span class="line">  config.vm.define &quot;docker-01&quot; do |config|</span><br><span class="line">        config.vm.box = &quot;bento/ubuntu-18.04&quot;</span><br><span class="line">        config.vm.network :private_network, ip: &quot;172.16.19.220&quot;</span><br><span class="line">        config.vm.hostname = &quot;docker-01&quot;</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  config.vm.provision &quot;shell&quot;, inline: &lt;&lt;-SHELL</span><br><span class="line">    apt-get update</span><br><span class="line">    apt-get install -y \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    gnupg-agent \</span><br><span class="line">    software-properties-common</span><br><span class="line">    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -</span><br><span class="line">    apt-key fingerprint 0EBFCD88</span><br><span class="line">    add-apt-repository \</span><br><span class="line">    &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span><br><span class="line">    $(lsb_release -cs) \</span><br><span class="line">    stable&quot;</span><br><span class="line">    apt-get update</span><br><span class="line">    apt-get install -y docker-ce docker-ce-cli containerd.io</span><br><span class="line">    sed -i &quot;s;fd://;tcp://0.0.0.0:2375;g&quot; /lib/systemd/system/docker.service</span><br><span class="line">  SHELL</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
 <p>WSLなどから以下のようにすることで、VM内のDockerにアクセスできる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker --host tcp://172.16.19.220:2375 run hello-world</span><br></pre></td></tr></table></figure>
@@ -284,7 +295,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/11/09/Docker-on-VMWare/" data-id="cl2nztnl9004f5xqikpimgd68" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/11/09/Docker-on-VMWare/" data-id="cl2o9pb55002q18rzru8cj6xq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -535,5 +546,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

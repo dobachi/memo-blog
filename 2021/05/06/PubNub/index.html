@@ -5,21 +5,21 @@
     
     <title>PubNub | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 公式ドキュメント blog サンプル  メモ 概要 動作確認 アカウント作成 （補足）公式チュートリアルのソースコード プロジェクトディレクトリ作成 ファイル （補足）ERROR: Could not find a version that satisfies the requirement pubnub&amp;gt;=4.5.1     参考 aa 公式ドキュメント  The PubNub">
+    <meta name="description" content="参考  公式ドキュメント blog サンプル  メモ  概要 動作確認  アカウント作成 （補足）公式チュートリアルのソースコード プロジェクトディレクトリ作成 ファイル （補足）ERROR: Could not find a version that satisfies the requirement pubnub&amp;gt;=4.5.1     参考 aa 公式ドキュメント  The Pub">
 <meta name="keywords" content="Messaging System,BaaS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PubNub">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2021/05/06/PubNub/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 公式ドキュメント blog サンプル  メモ 概要 動作確認 アカウント作成 （補足）公式チュートリアルのソースコード プロジェクトディレクトリ作成 ファイル （補足）ERROR: Could not find a version that satisfies the requirement pubnub&amp;gt;=4.5.1     参考 aa 公式ドキュメント  The PubNub">
+<meta property="og:description" content="参考  公式ドキュメント blog サンプル  メモ  概要 動作確認  アカウント作成 （補足）公式チュートリアルのソースコード プロジェクトディレクトリ作成 ファイル （補足）ERROR: Could not find a version that satisfies the requirement pubnub&amp;gt;=4.5.1     参考 aa 公式ドキュメント  The Pub">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20210506_PubNub_quickstarts.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20210506_PubNub_features.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20210506_PubNub_usecases.png">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PubNub">
-<meta name="twitter:description" content="参考 公式ドキュメント blog サンプル  メモ 概要 動作確認 アカウント作成 （補足）公式チュートリアルのソースコード プロジェクトディレクトリ作成 ファイル （補足）ERROR: Could not find a version that satisfies the requirement pubnub&amp;gt;=4.5.1     参考 aa 公式ドキュメント  The PubNub">
+<meta name="twitter:description" content="参考  公式ドキュメント blog サンプル  メモ  概要 動作確認  アカウント作成 （補足）公式チュートリアルのソースコード プロジェクトディレクトリ作成 ファイル （補足）ERROR: Could not find a version that satisfies the requirement pubnub&amp;gt;=4.5.1     参考 aa 公式ドキュメント  The Pub">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/20210506_PubNub_quickstarts.png">
     
 
@@ -255,19 +255,24 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#公式ドキュメント">公式ドキュメント</a></li>
-<li><a href="#blog">blog</a></li>
-<li><a href="#サンプル">サンプル</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#公式ドキュメント" id="toc-公式ドキュメント">公式ドキュメント</a></li>
+<li><a href="#blog" id="toc-blog">blog</a></li>
+<li><a href="#サンプル" id="toc-サンプル">サンプル</a></li>
 </ul></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#概要">概要</a></li>
-<li><a href="#動作確認">動作確認</a><ul>
-<li><a href="#アカウント作成">アカウント作成</a></li>
-<li><a href="#補足公式チュートリアルのソースコード">（補足）公式チュートリアルのソースコード</a></li>
-<li><a href="#プロジェクトディレクトリ作成">プロジェクトディレクトリ作成</a></li>
-<li><a href="#ファイル">ファイル</a></li>
-<li><a href="#補足error-could-not-find-a-version-that-satisfies-the-requirement-pubnub4.5.1">（補足）ERROR: Could not find a version that satisfies the requirement pubnub&gt;=4.5.1</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#概要" id="toc-概要">概要</a></li>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a>
+<ul>
+<li><a href="#アカウント作成" id="toc-アカウント作成">アカウント作成</a></li>
+<li><a href="#補足公式チュートリアルのソースコード" id="toc-補足公式チュートリアルのソースコード">（補足）公式チュートリアルのソースコード</a></li>
+<li><a href="#プロジェクトディレクトリ作成" id="toc-プロジェクトディレクトリ作成">プロジェクトディレクトリ作成</a></li>
+<li><a href="#ファイル" id="toc-ファイル">ファイル</a></li>
+<li><a href="#補足error-could-not-find-a-version-that-satisfies-the-requirement-pubnub4.5.1" id="toc-補足error-could-not-find-a-version-that-satisfies-the-requirement-pubnub4.5.1">（補足）ERROR:
+Could not find a version that satisfies the requirement
+pubnub&gt;=4.5.1</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -276,14 +281,17 @@ ga('send', 'pageview');
 <p>aa</p>
 <h2><span id="公式ドキュメント">公式ドキュメント</span></h2>
 <ul>
-<li><a href="https://www.pubnub.com/docs/" target="_blank" rel="noopener">The PubNub Platform Overview</a></li>
+<li><a href="https://www.pubnub.com/docs/" target="_blank" rel="noopener">The PubNub Platform
+Overview</a></li>
 <li><a href="https://www.pubnub.com/docs/sdks" target="_blank" rel="noopener">SDK</a></li>
 <li><a href="https://github.com/pubnub" target="_blank" rel="noopener">PubNubのGitHub</a></li>
 <li><a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a></li>
-<li><a href="https://www.pubnub.com/docs/sdks/python" target="_blank" rel="noopener">Python API</a></li>
+<li><a href="https://www.pubnub.com/docs/sdks/python" target="_blank" rel="noopener">Python
+API</a></li>
 <li><a href="https://dashboard.pubnub.com/signup" target="_blank" rel="noopener">サインアップ</a></li>
 <li><a href="https://www.pubnub.com/pricing/" target="_blank" rel="noopener">プライシング</a></li>
-<li><a href="https://www.pubnub.com/docs/sdks/python/api-reference/files" target="_blank" rel="noopener">Files API for PubNub Python SDK</a></li>
+<li><a href="https://www.pubnub.com/docs/sdks/python/api-reference/files" target="_blank" rel="noopener">Files
+API for PubNub Python SDK</a></li>
 <li><a href="https://www.pubnub.com/docs/sdks/python/api-reference/files#download-file" target="_blank" rel="noopener">download-file</a></li>
 <li><a href="https://www.pubnub.com/docs/sdks/python/api-reference/files#send-file" target="_blank" rel="noopener">send-file</a></li>
 </ul>
@@ -297,28 +305,41 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="概要">概要</span></h2>
-<p><a href="https://www.pubnub.com/docs/" target="_blank" rel="noopener">The PubNub Platform Overview</a> によると、</p>
+<p><a href="https://www.pubnub.com/docs/" target="_blank" rel="noopener">The PubNub Platform
+Overview</a> によると、</p>
 <figure>
-<img src="/memo-blog/images/20210506_PubNub_quickstarts.png" alt=""><figcaption>クイックスタートの一覧</figcaption>
+<img src="/memo-blog/images/20210506_PubNub_quickstarts.png" alt="クイックスタートの一覧">
+<figcaption aria-hidden="true">クイックスタートの一覧</figcaption>
 </figure>
-<p>とのこと。 概要にIoTと記載されている通り、小型のデバイス利用も想定されているようだ。 主な用途は「メッセージング」と「シグナリング」。</p>
+<p>とのこと。
+概要にIoTと記載されている通り、小型のデバイス利用も想定されているようだ。
+主な用途は「メッセージング」と「シグナリング」。</p>
 <p>特徴は以下の通り。</p>
 <figure>
-<img src="/memo-blog/images/20210506_PubNub_features.png" alt=""><figcaption>特徴の一覧</figcaption>
+<img src="/memo-blog/images/20210506_PubNub_features.png" alt="特徴の一覧">
+<figcaption aria-hidden="true">特徴の一覧</figcaption>
 </figure>
 <p>サイズの小さなメッセージに限らず、画像、動画、ファイルを対象に含めているのがポイントか。</p>
 <p>ユースケースは以下の通り。</p>
 <figure>
-<img src="/memo-blog/images/20210506_PubNub_usecases.png" alt=""><figcaption>ユースケースの一覧</figcaption>
+<img src="/memo-blog/images/20210506_PubNub_usecases.png" alt="ユースケースの一覧">
+<figcaption aria-hidden="true">ユースケースの一覧</figcaption>
 </figure>
 <p>これ自体に特筆すべきポイントはない。</p>
-<p><a href="https://www.pubnub.com/docs/sdks" target="_blank" rel="noopener">SDK</a> に記載のある通り、非常に幅広いSDKを提供している。</p>
-<p><a href="https://github.com/pubnub" target="_blank" rel="noopener">PubNubのGitHub</a> を見る限り、多様なクライアントライブラリがOSSとして公開、開発されているようだ。</p>
+<p><a href="https://www.pubnub.com/docs/sdks" target="_blank" rel="noopener">SDK</a>
+に記載のある通り、非常に幅広いSDKを提供している。</p>
+<p><a href="https://github.com/pubnub" target="_blank" rel="noopener">PubNubのGitHub</a>
+を見る限り、多様なクライアントライブラリがOSSとして公開、開発されているようだ。</p>
 <h2><span id="動作確認">動作確認</span></h2>
-<p><a href="https://www.pubnub.com/pricing/" target="_blank" rel="noopener">プライシング</a> によるとアカウントを作ってお試しする限りでは無料のようだ。 ということで、<a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a> の通り実行してみる。</p>
+<p><a href="https://www.pubnub.com/pricing/" target="_blank" rel="noopener">プライシング</a>
+によるとアカウントを作ってお試しする限りでは無料のようだ。
+ということで、<a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a>
+の通り実行してみる。</p>
 <p>このチュートリアルでは、PubSubモデルのメッセージングを試せる。</p>
 <h3><span id="アカウント作成">アカウント作成</span></h3>
-<p><a href="https://dashboard.pubnub.com/signup" target="_blank" rel="noopener">サインアップ</a> からアカウント作成。 もろもろ情報入れて登録したら、Demo Keysetが得られた。</p>
+<p><a href="https://dashboard.pubnub.com/signup" target="_blank" rel="noopener">サインアップ</a>
+からアカウント作成。 もろもろ情報入れて登録したら、Demo
+Keysetが得られた。</p>
 <h3><span id="補足公式チュートリアルのソースコード">（補足）公式チュートリアルのソースコード</span></h3>
 <p>以下のようにクローンできる。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[dobachi@home Sources]$ git clone git@github.com:pubnub/python-quickstart-platform.git</span><br></pre></td></tr></table></figure>
@@ -328,7 +349,9 @@ ga('send', 'pageview');
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[dobachi@home Sources]$ mkdir pubnub_example</span><br><span class="line">[dobachi@home Sources]$ cd pubnub_example/</span><br></pre></td></tr></table></figure>
 <p>今回は、pyenvを利用してインストールしたPython3.8.10を利用し、venvで環境構築する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[dobachi@home pubnub_example]$ pyenv local 3.8.10</span><br><span class="line">[dobachi@home pubnub_example]$ python -m venv venv</span><br><span class="line">[dobachi@home pubnub_example]$ . ./venv/bin/activate</span><br><span class="line">(venv) [dobachi@home pubnub_example]$ pip install 'pubnub&gt;=4.5.1'</span><br></pre></td></tr></table></figure>
-<p>ここで、<a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a> に従い、2個の実装pub.py、sub.pyを作成する。 このとき、ソースコードのキーのところに先ほどアカウント作成した際に得られたキーを記載するようにする。</p>
+<p>ここで、<a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a>
+に従い、2個の実装pub.py、sub.pyを作成する。
+このとき、ソースコードのキーのところに先ほどアカウント作成した際に得られたキーを記載するようにする。</p>
 <p>ここから端末を2個立ち上げる。</p>
 <p>1個目でサブスクライバーを起動</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(venv) [dobachi@home pubnub_example]$ python sub.py</span><br><span class="line">***************************************************</span><br><span class="line">* Waiting for updates to The Guide about Earth... *</span><br><span class="line">***************************************************</span><br><span class="line">[STATUS: PNConnectedCategory]</span><br><span class="line">connected to channels: ['the_guide', 'the_guide-pnpres']</span><br><span class="line">[PRESENCE: join]</span><br><span class="line">uuid: serverUUID-SUB, channel: the_guide</span><br></pre></td></tr></table></figure>
@@ -337,7 +360,8 @@ ga('send', 'pageview');
 <p>プロンプトが表示されるので、「Harmless」と入力してエンターキーを押下。</p>
 <p>サブスクライバーに以下のように表示される。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[MESSAGE received]</span><br><span class="line">Earth: Harmless</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a> に実装の説明があるが、 基本的には</p>
+<p><a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a>
+に実装の説明があるが、 基本的には</p>
 <ul>
 <li>サブスクライバーはハンドラの実装のみ</li>
 <li>パブリッシャーは標準入力からメッセージを受け取り、それを送信するのみ</li>
@@ -345,22 +369,35 @@ ga('send', 'pageview');
 <p>という単純な仕組み。</p>
 <p>パブリッシャー側のポイントは、</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">envelope = pubnub.publish().channel(CHANNEL).message(the_message).sync()</span><br></pre></td></tr></table></figure>
-<p>まだ詳しくは分からないが、チャンネルやエントリという概念がありそう。 チャンネルを使うと同報できるのだろうか。</p>
-<p><a href="https://www.pubnub.com/docs/sdks/python" target="_blank" rel="noopener">Python API</a> あたりを読むと記載ありそう。</p>
+<p>まだ詳しくは分からないが、チャンネルやエントリという概念がありそう。
+チャンネルを使うと同報できるのだろうか。</p>
+<p><a href="https://www.pubnub.com/docs/sdks/python" target="_blank" rel="noopener">Python API</a>
+あたりを読むと記載ありそう。</p>
 <h3><span id="ファイル">ファイル</span></h3>
-<p><a href="https://www.pubnub.com/docs/sdks/python/api-reference/files" target="_blank" rel="noopener">Files API for PubNub Python SDK</a> を読むと、ファイルを取り扱うAPIがあった。 5MBまでのファイルをアップロードできるようだ。 アプリケーションで画像を取り扱う場合などを想定している様子。</p>
-<p>これを簡単に動作確認してみる。 <a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a> のサンプルコードpub.pyとsub.pyを参考に実装する。 参考実装を <a href="https://github.com/dobachi/PubNubExample" target="_blank" rel="noopener">PubNubExample</a> にまとめておいた。 READMEを参照。</p>
+<p><a href="https://www.pubnub.com/docs/sdks/python/api-reference/files" target="_blank" rel="noopener">Files
+API for PubNub Python SDK</a> を読むと、ファイルを取り扱うAPIがあった。
+5MBまでのファイルをアップロードできるようだ。
+アプリケーションで画像を取り扱う場合などを想定している様子。</p>
+<p>これを簡単に動作確認してみる。 <a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a>
+のサンプルコードpub.pyとsub.pyを参考に実装する。 参考実装を <a href="https://github.com/dobachi/PubNubExample" target="_blank" rel="noopener">PubNubExample</a>
+にまとめておいた。 READMEを参照。</p>
 <p>メッセージングのAPIとは異なるが、簡単に小さなファイルを登録できるのは便利ではある。</p>
-<p>またファイルを登録したことを通知するAPIもあるようだ。 これは使い方としては</p>
+<p>またファイルを登録したことを通知するAPIもあるようだ。
+これは使い方としては</p>
 <ul>
 <li>ファイルを送信し、合わせてファイル送信したことをチャンネルにメッセージ送信</li>
 <li>受信者は、メッセージを受領したら、その情報を使ってファイル受信</li>
 </ul>
-<p>ということだと思われる。 ファイルの送受信自体は、メッセージングのようにSubscribeできず、 単発実行のAPIであり、かつ受信についてはIDを引数に渡さないといけないから、と考えられる。</p>
-<h3><span id="補足error-could-not-find-a-version-that-satisfies-the-requirement-pubnubgt451">（補足）ERROR: Could not find a version that satisfies the requirement pubnub&gt;=4.5.1</span></h3>
+<p>ということだと思われる。
+ファイルの送受信自体は、メッセージングのようにSubscribeできず、
+単発実行のAPIであり、かつ受信についてはIDを引数に渡さないといけないから、と考えられる。</p>
+<h3><span id="補足errorcould-not-find-a-version-that-satisfies-the-requirementpubnubgt451">（補足）ERROR:
+Could not find a version that satisfies the requirement
+pubnub&gt;=4.5.1</span></h3>
 <p>以下のようなエラーが出たら、</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Could not find a version that satisfies the requirement pubnub&gt;=4.5.1</span><br></pre></td></tr></table></figure>
-<p><code>libffi-devel</code> をインストールしたうえで、Pythonをビルドするようにするとよい。</p>
+<p><code>libffi-devel</code>
+をインストールしたうえで、Pythonをビルドするようにするとよい。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(venv) [dobachi@home pubnub_example]$ pyenv uninstall 3.8.10</span><br><span class="line">(venv) [dobachi@home pubnub_example]$ sudo yum install -y libffi-devel</span><br><span class="line">(venv) [dobachi@home pubnub_example]$ pyenv install 3.8.10</span><br></pre></td></tr></table></figure>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -373,7 +410,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/05/06/PubNub/" data-id="cl2nztnnl00bo5xqiw225daxm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/05/06/PubNub/" data-id="cl2o9pb7g008b18rzufbs1m1h" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -624,5 +661,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

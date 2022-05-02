@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  Sparkのドキュメント（Configuration）  メモ よく忘れると思われる、Jupyterをクライアントとしての起動方法をメモ。 Sparkのドキュメント（Environment Variables） の記載の通り、環境変数PYSPARK_DRIVER_PYTHONを使い、 ドライバが用いるPythonを指定する。 GitHub上のpysparkの実装#27">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jupyter with Spark">
 <meta name="twitter:description" content="参考 メモ   参考  Sparkのドキュメント（Configuration）  メモ よく忘れると思われる、Jupyterをクライアントとしての起動方法をメモ。 Sparkのドキュメント（Environment Variables） の記載の通り、環境変数PYSPARK_DRIVER_PYTHONを使い、 ドライバが用いるPythonを指定する。 GitHub上のpysparkの実装#27">
@@ -240,8 +240,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -250,7 +250,11 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>よく忘れると思われる、Jupyterをクライアントとしての起動方法をメモ。</p>
-<p><a href="https://spark.apache.org/docs/2.4.0/configuration.html#environment-variables" target="_blank" rel="noopener">Sparkのドキュメント（Environment Variables）</a> の記載の通り、環境変数PYSPARK_DRIVER_PYTHONを使い、 ドライバが用いるPythonを指定する。 <a href="https://github.com/apache/spark/blob/e4cb42ad89307ebc5a1bd9660c86219340d71ff6/bin/pyspark#L27" target="_blank" rel="noopener">GitHub上のpysparkの実装#27</a> の通り、環境変数PYSPARK_DRIVER_PYTHON_OPTSを使い、 オプションを指定する。</p>
+<p><a href="https://spark.apache.org/docs/2.4.0/configuration.html#environment-variables" target="_blank" rel="noopener">Sparkのドキュメント（Environment
+Variables）</a> の記載の通り、環境変数PYSPARK_DRIVER_PYTHONを使い、
+ドライバが用いるPythonを指定する。 <a href="https://github.com/apache/spark/blob/e4cb42ad89307ebc5a1bd9660c86219340d71ff6/bin/pyspark#L27" target="_blank" rel="noopener">GitHub上のpysparkの実装#27</a>
+の通り、環境変数PYSPARK_DRIVER_PYTHON_OPTSを使い、
+オプションを指定する。</p>
 <p>例</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PYSPARK_DRIVER_PYTHON=jupyter PYSPARK_DRIVER_PYTHON_OPTS=&apos;notebook&apos; ~/Spark/default/bin/pyspark</span><br></pre></td></tr></table></figure>
 <p>ちなみに、ガイドにも一応記載されている。</p>
@@ -265,7 +269,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/11/Jupyter-with-Spark/" data-id="cl2nztnmf007u5xqiqe3fmaop" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/11/Jupyter-with-Spark/" data-id="cl2o9pb68005e18rzvh32qcct" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -516,5 +520,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

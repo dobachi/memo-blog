@@ -5,18 +5,18 @@
     
     <title>Flask on Docker | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 自前のイメージを作って動かす手順 Dockerfileとビルド アプリ作成と実行  公式手順に則ったシンプルな例 準備 実行  フォームを使う例 準備 実行  ファイルのアップロード 準備 実行  クッキー 準備 実行  ロギング 準備 実行  JSON形式でやり取りする例 Dockerfile アプリ 動作確認  nginxと組み合わせて動かす Dockerfile、アプリなど ビル">
-<meta name="keywords" content="Docker,Dockerfile,Flask">
+    <meta name="description" content="参考 自前のイメージを作って動かす手順  Dockerfileとビルド アプリ作成と実行  公式手順に則ったシンプルな例  準備 実行  フォームを使う例  準備 実行  ファイルのアップロード  準備 実行  クッキー  準備 実行  ロギング  準備 実行  JSON形式でやり取りする例  Dockerfile アプリ 動作確認  nginxと組み合わせて動かす  Dockerfile、">
+<meta name="keywords" content="Docker,Flask,Dockerfile">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flask on Docker">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 自前のイメージを作って動かす手順 Dockerfileとビルド アプリ作成と実行  公式手順に則ったシンプルな例 準備 実行  フォームを使う例 準備 実行  ファイルのアップロード 準備 実行  クッキー 準備 実行  ロギング 準備 実行  JSON形式でやり取りする例 Dockerfile アプリ 動作確認  nginxと組み合わせて動かす Dockerfile、アプリなど ビル">
+<meta property="og:description" content="参考 自前のイメージを作って動かす手順  Dockerfileとビルド アプリ作成と実行  公式手順に則ったシンプルな例  準備 実行  フォームを使う例  準備 実行  ファイルのアップロード  準備 実行  クッキー  準備 実行  ロギング  準備 実行  JSON形式でやり取りする例  Dockerfile アプリ 動作確認  nginxと組み合わせて動かす  Dockerfile、">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flask on Docker">
-<meta name="twitter:description" content="参考 自前のイメージを作って動かす手順 Dockerfileとビルド アプリ作成と実行  公式手順に則ったシンプルな例 準備 実行  フォームを使う例 準備 実行  ファイルのアップロード 準備 実行  クッキー 準備 実行  ロギング 準備 実行  JSON形式でやり取りする例 Dockerfile アプリ 動作確認  nginxと組み合わせて動かす Dockerfile、アプリなど ビル">
+<meta name="twitter:description" content="参考 自前のイメージを作って動かす手順  Dockerfileとビルド アプリ作成と実行  公式手順に則ったシンプルな例  準備 実行  フォームを使う例  準備 実行  ファイルのアップロード  準備 実行  クッキー  準備 実行  ロギング  準備 実行  JSON形式でやり取りする例  Dockerfile アプリ 動作確認  nginxと組み合わせて動かす  Dockerfile、">
     
 
     
@@ -251,57 +251,71 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#自前のイメージを作って動かす手順">自前のイメージを作って動かす手順</a><ul>
-<li><a href="#dockerfileとビルド">Dockerfileとビルド</a></li>
-<li><a href="#アプリ作成と実行">アプリ作成と実行</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#自前のイメージを作って動かす手順" id="toc-自前のイメージを作って動かす手順">自前のイメージを作って動かす手順</a>
+<ul>
+<li><a href="#dockerfileとビルド" id="toc-dockerfileとビルド">Dockerfileとビルド</a></li>
+<li><a href="#アプリ作成と実行" id="toc-アプリ作成と実行">アプリ作成と実行</a></li>
 </ul></li>
-<li><a href="#公式手順に則ったシンプルな例">公式手順に則ったシンプルな例</a><ul>
-<li><a href="#準備">準備</a></li>
-<li><a href="#実行">実行</a></li>
+<li><a href="#公式手順に則ったシンプルな例" id="toc-公式手順に則ったシンプルな例">公式手順に則ったシンプルな例</a>
+<ul>
+<li><a href="#準備" id="toc-準備">準備</a></li>
+<li><a href="#実行" id="toc-実行">実行</a></li>
 </ul></li>
-<li><a href="#フォームを使う例">フォームを使う例</a><ul>
-<li><a href="#準備-1">準備</a></li>
-<li><a href="#実行-1">実行</a></li>
+<li><a href="#フォームを使う例" id="toc-フォームを使う例">フォームを使う例</a>
+<ul>
+<li><a href="#準備-1" id="toc-準備-1">準備</a></li>
+<li><a href="#実行-1" id="toc-実行-1">実行</a></li>
 </ul></li>
-<li><a href="#ファイルのアップロード">ファイルのアップロード</a><ul>
-<li><a href="#準備-2">準備</a></li>
-<li><a href="#実行-2">実行</a></li>
+<li><a href="#ファイルのアップロード" id="toc-ファイルのアップロード">ファイルのアップロード</a>
+<ul>
+<li><a href="#準備-2" id="toc-準備-2">準備</a></li>
+<li><a href="#実行-2" id="toc-実行-2">実行</a></li>
 </ul></li>
-<li><a href="#クッキー">クッキー</a><ul>
-<li><a href="#準備-3">準備</a></li>
-<li><a href="#実行-3">実行</a></li>
+<li><a href="#クッキー" id="toc-クッキー">クッキー</a>
+<ul>
+<li><a href="#準備-3" id="toc-準備-3">準備</a></li>
+<li><a href="#実行-3" id="toc-実行-3">実行</a></li>
 </ul></li>
-<li><a href="#ロギング">ロギング</a><ul>
-<li><a href="#準備-4">準備</a></li>
-<li><a href="#実行-4">実行</a></li>
+<li><a href="#ロギング" id="toc-ロギング">ロギング</a>
+<ul>
+<li><a href="#準備-4" id="toc-準備-4">準備</a></li>
+<li><a href="#実行-4" id="toc-実行-4">実行</a></li>
 </ul></li>
-<li><a href="#json形式でやり取りする例">JSON形式でやり取りする例</a><ul>
-<li><a href="#dockerfile">Dockerfile</a></li>
-<li><a href="#アプリ">アプリ</a></li>
-<li><a href="#動作確認">動作確認</a></li>
+<li><a href="#json形式でやり取りする例" id="toc-json形式でやり取りする例">JSON形式でやり取りする例</a>
+<ul>
+<li><a href="#dockerfile" id="toc-dockerfile">Dockerfile</a></li>
+<li><a href="#アプリ" id="toc-アプリ">アプリ</a></li>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a></li>
 </ul></li>
-<li><a href="#nginxと組み合わせて動かす">nginxと組み合わせて動かす</a><ul>
-<li><a href="#dockerfileアプリなど">Dockerfile、アプリなど</a></li>
-<li><a href="#ビルド">ビルド</a></li>
-<li><a href="#実行-5">実行</a></li>
+<li><a href="#nginxと組み合わせて動かす" id="toc-nginxと組み合わせて動かす">nginxと組み合わせて動かす</a>
+<ul>
+<li><a href="#dockerfileアプリなど" id="toc-dockerfileアプリなど">Dockerfile、アプリなど</a></li>
+<li><a href="#ビルド" id="toc-ビルド">ビルド</a></li>
+<li><a href="#実行-5" id="toc-実行-5">実行</a></li>
 </ul></li>
-<li><a href="#nginxと組あわせてspa">nginxと組あわせてSPA</a><ul>
-<li><a href="#dockerfileとアプリ">Dockerfileとアプリ</a></li>
-<li><a href="#ビルド-1">ビルド</a></li>
-<li><a href="#実行-6">実行</a></li>
+<li><a href="#nginxと組あわせてspa" id="toc-nginxと組あわせてspa">nginxと組あわせてSPA</a>
+<ul>
+<li><a href="#dockerfileとアプリ" id="toc-dockerfileとアプリ">Dockerfileとアプリ</a></li>
+<li><a href="#ビルド-1" id="toc-ビルド-1">ビルド</a></li>
+<li><a href="#実行-6" id="toc-実行-6">実行</a></li>
 </ul></li>
-<li><a href="#構造的なプロジェクト">構造的なプロジェクト</a><ul>
-<li><a href="#アーカイブをダウンロード">アーカイブをダウンロード</a></li>
-<li><a href="#ビルド-2">ビルド</a></li>
-<li><a href="#実行-7">実行</a></li>
-<li><a href="#一部修正してみる">一部修正してみる</a></li>
+<li><a href="#構造的なプロジェクト" id="toc-構造的なプロジェクト">構造的なプロジェクト</a>
+<ul>
+<li><a href="#アーカイブをダウンロード" id="toc-アーカイブをダウンロード">アーカイブをダウンロード</a></li>
+<li><a href="#ビルド-2" id="toc-ビルド-2">ビルド</a></li>
+<li><a href="#実行-7" id="toc-実行-7">実行</a></li>
+<li><a href="#一部修正してみる" id="toc-一部修正してみる">一部修正してみる</a></li>
 </ul></li>
-<li><a href="#flask-nginxでsslを使用ここがうまく動かない">flask + NginxでSSLを使用（ここがうまく動かない）</a><ul>
-<li><a href="#アドホックな対応">アドホックな対応</a></li>
+<li><a href="#flask-nginxでsslを使用ここがうまく動かない" id="toc-flask-nginxでsslを使用ここがうまく動かない">flask +
+NginxでSSLを使用（ここがうまく動かない）</a>
+<ul>
+<li><a href="#アドホックな対応" id="toc-アドホックな対応">アドホックな対応</a></li>
 </ul></li>
-<li><a href="#github-uwsgi-nginx-flask-dockerのアーキテクチャ">gitHub: uwsgi-nginx-flask-dockerのアーキテクチャ</a><ul>
-<li><a href="#supervisord化について">Supervisord化について</a></li>
+<li><a href="#github-uwsgi-nginx-flask-dockerのアーキテクチャ" id="toc-github-uwsgi-nginx-flask-dockerのアーキテクチャ">gitHub:
+uwsgi-nginx-flask-dockerのアーキテクチャ</a>
+<ul>
+<li><a href="#supervisord化について" id="toc-supervisord化について">Supervisord化について</a></li>
 </ul></li>
 </ul>
 </div>
@@ -309,30 +323,46 @@ ga('send', 'pageview');
 <ul>
 <li><a href="http://flask.pocoo.org/" target="_blank" rel="noopener">Flask公式</a></li>
 <li><a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a></li>
-<li><a href="https://qiita.com/paperlefthand/items/82ab6df4a348f6070a55" target="_blank" rel="noopener">DockerコンテナでFlaskを起動し, JSONデータのPOSTとGET</a></li>
-<li><a href="https://github.com/dobachi/FlaskOnDockerExamples" target="_blank" rel="noopener">GitHub: FlaskOnDockerExamples</a></li>
-<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker" target="_blank" rel="noopener">GitHub: uwsgi-nginx-flask-docker</a></li>
-<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart" target="_blank" rel="noopener">GitHub: uwsgi-nginx-flask-dockerのクイックスタート</a></li>
-<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart-for-spas" target="_blank" rel="noopener">GitHub: uwsgi-nginx-flask-dockerのSPA</a></li>
-<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart-for-bigger-projects-structured-as-a-python-package" target="_blank" rel="noopener">GitHub: 構造的なプロジェクトの例</a></li>
+<li><a href="https://qiita.com/paperlefthand/items/82ab6df4a348f6070a55" target="_blank" rel="noopener">DockerコンテナでFlaskを起動し,
+JSONデータのPOSTとGET</a></li>
+<li><a href="https://github.com/dobachi/FlaskOnDockerExamples" target="_blank" rel="noopener">GitHub:
+FlaskOnDockerExamples</a></li>
+<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker" target="_blank" rel="noopener">GitHub:
+uwsgi-nginx-flask-docker</a></li>
+<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart" target="_blank" rel="noopener">GitHub:
+uwsgi-nginx-flask-dockerのクイックスタート</a></li>
+<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart-for-spas" target="_blank" rel="noopener">GitHub:
+uwsgi-nginx-flask-dockerのSPA</a></li>
+<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart-for-bigger-projects-structured-as-a-python-package" target="_blank" rel="noopener">GitHub:
+構造的なプロジェクトの例</a></li>
 <li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker/releases/download/v0.3.10/example-flask-package-python3.7.zip" target="_blank" rel="noopener">example-flask-package-python3.7.zip</a></li>
-<li><a href="https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https" target="_blank" rel="noopener">Flask + NginxでのSSL対応に関する記事</a></li>
+<li><a href="https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https" target="_blank" rel="noopener">Flask
++ NginxでのSSL対応に関する記事</a></li>
 </ul>
 <h1><span id="自前のイメージを作って動かす手順">自前のイメージを作って動かす手順</span></h1>
-<p>基本的には <a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a> で記載された内容で問題ない。 自身の環境向けにアレンジは必要。</p>
+<p>基本的には <a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a>
+で記載された内容で問題ない。 自身の環境向けにアレンジは必要。</p>
 <h2><span id="dockerfileとビルド">Dockerfileとビルド</span></h2>
-<p>Dockerfileは <a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a> の通り。</p>
+<p>Dockerfileは <a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a>
+の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/simple</span><br><span class="line">$ cd ~/Sources/docker_flask/simple</span><br><span class="line">$ cat &lt;&lt; EOF &gt; Dockerfile</span><br><span class="line">  FROM ubuntu:latest</span><br><span class="line">  </span><br><span class="line">  RUN apt-get update</span><br><span class="line">  RUN apt-get install python3 python3-pip -y</span><br><span class="line">  </span><br><span class="line">  RUN pip3 install flask</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
 <p>ビルドコマンドは自分の環境に合わせた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker build . -t dobachi/flask:1.0</span><br></pre></td></tr></table></figure>
 <p>インタラクティブにつなげる例も自分の環境に合わせた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it --rm dobachi/flask:1.0 /bin/bash</span><br></pre></td></tr></table></figure>
 <h2><span id="アプリ作成と実行">アプリ作成と実行</span></h2>
-<p>自分の環境に合わせた。 <a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a> では、 <code>/bin/bash</code>を起動してから、<code>python3 &lt;アプリ &gt;</code>としていたが、 ここでは直接指定して実行することにした。</p>
+<p>自分の環境に合わせた。 <a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a>
+では、
+<code>/bin/bash</code>を起動してから、<code>python3 &lt;アプリ &gt;</code>としていたが、
+ここでは直接指定して実行することにした。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir apps</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/app.py</span><br><span class="line">  from flask import Flask</span><br><span class="line">  </span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/&apos;)</span><br><span class="line">  def index():</span><br><span class="line">      return &quot;Hello world!!&quot;</span><br><span class="line">  EOF</span><br><span class="line">$ sudo docker run -it --rm -p 5000:5000 -v $(pwd)/apps:/usr/local/apps -e &quot;FLASK_APP=app.py&quot; -w /usr/local/apps -e &quot;LC_ALL=C.UTF-8&quot; -e &quot;LANG=UTF-8&quot; dobachi/flask:1.0 flask run --host 0.0.0.0</span><br></pre></td></tr></table></figure>
-<p>なお、もともとの <a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a> では、以下のようにPythonコマンドから直接実行するように記載されていたが、 今回は <a href="http://flask.pocoo.org/" target="_blank" rel="noopener">Flask公式</a> に従い、FlaskのCLIを用いることとした。</p>
+<p>なお、もともとの <a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a>
+では、以下のようにPythonコマンドから直接実行するように記載されていたが、
+今回は <a href="http://flask.pocoo.org/" target="_blank" rel="noopener">Flask公式</a>
+に従い、FlaskのCLIを用いることとした。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -it --rm -p 5000:5000 -v $(pwd)/apps:/usr/local/apps dobachi/flask:1.0 python3 /usr/local/apps/app.py</span><br></pre></td></tr></table></figure>
-<p>その際、手元の環境ではLANG等の事情により、いくつか環境変数を設定しないとエラーを吐いたので、 上記のようなコマンドになった。</p>
+<p>その際、手元の環境ではLANG等の事情により、いくつか環境変数を設定しないとエラーを吐いたので、
+上記のようなコマンドになった。</p>
 <h1><span id="公式手順に則ったシンプルな例">公式手順に則ったシンプルな例</span></h1>
 <p>上記で作ったDockerイメージを流用する。</p>
 <h2><span id="準備">準備</span></h2>
@@ -364,7 +394,8 @@ ga('send', 'pageview');
 <h2><span id="実行">実行</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -it --rm -p 5000:5000 -v $(pwd)/apps:/usr/local/apps -e &quot;FLASK_APP=app.py&quot; -w /usr/local/apps -e &quot;LC_ALL=C.UTF-8&quot; -e &quot;LANG=UTF-8&quot; dobachi/flask:1.0 flask run --host 0.0.0.0</span><br></pre></td></tr></table></figure>
 <h1><span id="json形式でやり取りする例">JSON形式でやり取りする例</span></h1>
-<p>基本的には、 <a href="https://qiita.com/paperlefthand/items/82ab6df4a348f6070a55" target="_blank" rel="noopener">DockerコンテナでFlaskを起動し, JSONデータのPOSTとGET</a> の通り。</p>
+<p>基本的には、 <a href="https://qiita.com/paperlefthand/items/82ab6df4a348f6070a55" target="_blank" rel="noopener">DockerコンテナでFlaskを起動し,
+JSONデータのPOSTとGET</a> の通り。</p>
 <h2><span id="dockerfile">Dockerfile</span></h2>
 <p>dockerfileを作る。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/post_json</span><br><span class="line">$ cd ~/Sources/docker_flask/post_json</span><br><span class="line">$ cat &lt;&lt; EOF &gt; Dockerfile</span><br><span class="line">  fROM python:3.6</span><br><span class="line">  </span><br><span class="line">  aRG project_dir=/app/</span><br><span class="line">  </span><br><span class="line">  # ADD requirements.txt \$project_dir</span><br><span class="line">  aDD reply.py \$project_dir</span><br><span class="line">  </span><br><span class="line">  wORKDIR \$project_dir</span><br><span class="line">  </span><br><span class="line">  rUN pip install flask</span><br><span class="line">  # RUN pip install -r requirements.txt</span><br><span class="line">  </span><br><span class="line">  cMD [&quot;python&quot;, &quot;reply.py&quot;]</span><br><span class="line">  eOF</span><br></pre></td></tr></table></figure>
@@ -379,7 +410,9 @@ ga('send', 'pageview');
 <p>動作確認する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://localhost:5000/reply -X POST -H &quot;Content-Type: application/json&quot; -d &apos;&#123;&quot;keyword&quot;: &quot;Keffia&quot;&#125;&apos;</span><br></pre></td></tr></table></figure>
 <h1><span id="nginxと組み合わせて動かす">nginxと組み合わせて動かす</span></h1>
-<p><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker" target="_blank" rel="noopener">gitHub: uwsgi-nginx-flask-docker</a> を参考にする。 <a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart" target="_blank" rel="noopener">gitHub: uwsgi-nginx-flask-dockerのクイックスタート</a> を見ながら試す。</p>
+<p><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker" target="_blank" rel="noopener">gitHub:
+uwsgi-nginx-flask-docker</a> を参考にする。 <a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart" target="_blank" rel="noopener">gitHub:
+uwsgi-nginx-flask-dockerのクイックスタート</a> を見ながら試す。</p>
 <h2><span id="dockerfile-アプリなど">Dockerfile、アプリなど</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/nginx</span><br><span class="line">$ cd ~/Sources/docker_flask/nginx</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt; EOF &gt; Dockerfile</span><br><span class="line">  fROM tiangolo/uwsgi-nginx-flask:python3.7</span><br><span class="line">  </span><br><span class="line">  cOPY ./app /app</span><br><span class="line">  eOF</span><br><span class="line">$ mkdir app</span><br><span class="line">$ cat &lt;&lt; EOF &gt; app/main.py</span><br><span class="line">  from flask import Flask</span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  </span><br><span class="line">  @app.route(&quot;/&quot;)</span><br><span class="line">  def hello():</span><br><span class="line">      return &quot;Hello World from Flask&quot;</span><br><span class="line">  </span><br><span class="line">  if __name__ == &quot;__main__&quot;:</span><br><span class="line">      # Only for debugging while developing</span><br><span class="line">      app.run(host=&apos;0.0.0.0&apos;, debug=True, port=80)</span><br><span class="line">  eOF</span><br></pre></td></tr></table></figure>
@@ -388,7 +421,8 @@ ga('send', 'pageview');
 <h2><span id="実行">実行</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --rm -it -p 8080:80 dobachi/nginx-flask:1.0</span><br></pre></td></tr></table></figure>
 <h1><span id="nginxと組あわせてspa">nginxと組あわせてSPA</span></h1>
-<p><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart-for-spas" target="_blank" rel="noopener">gitHub: uwsgi-nginx-flask-dockerのSPA</a> を参考に進める。</p>
+<p><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart-for-spas" target="_blank" rel="noopener">gitHub:
+uwsgi-nginx-flask-dockerのSPA</a> を参考に進める。</p>
 <h2><span id="dockerfileとアプリ">Dockerfileとアプリ</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/nginx_spa</span><br><span class="line">$ cd ~/Sources/docker_flask/nginx_spa</span><br><span class="line">$ cat &lt;&lt; EOF &gt; Dockerfile</span><br><span class="line">  fROM tiangolo/uwsgi-nginx-flask:python3.7</span><br><span class="line">  </span><br><span class="line">  eNV STATIC_INDEX 1</span><br><span class="line">  </span><br><span class="line">  cOPY ./app /app</span><br><span class="line">  eOF</span><br><span class="line">$ mkdir app</span><br><span class="line">$ cat &lt;&lt; EOF &gt; app/main.py</span><br><span class="line">  import os</span><br><span class="line">  from flask import Flask, send_file</span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  @app.route(&quot;/hello&quot;)</span><br><span class="line">  def hello():</span><br><span class="line">      return &quot;Hello World from Flask&quot;</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  @app.route(&quot;/&quot;)</span><br><span class="line">  def main():</span><br><span class="line">      index_path = os.path.join(app.static_folder, &apos;index.html&apos;)</span><br><span class="line">      return send_file(index_path)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  # Everything not declared before (not a Flask route / API endpoint)...</span><br><span class="line">  @app.route(&apos;/&lt;path:path&gt;&apos;)</span><br><span class="line">  def route_frontend(path):</span><br><span class="line">      # ...could be a static file needed by the front end that</span><br><span class="line">      # doesn&apos;t use the `static` path (like in `&lt;script src=&quot;bundle.js&quot;&gt;`)</span><br><span class="line">      file_path = os.path.join(app.static_folder, path)</span><br><span class="line">      if os.path.isfile(file_path):</span><br><span class="line">          return send_file(file_path)</span><br><span class="line">      # ...or should be handled by the SPA&apos;s &quot;router&quot; in front end</span><br><span class="line">      else:</span><br><span class="line">          index_path = os.path.join(app.static_folder, &apos;index.html&apos;)</span><br><span class="line">          return send_file(index_path)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  if __name__ == &quot;__main__&quot;:</span><br><span class="line">      # Only for debugging while developing</span><br><span class="line">      app.run(host=&apos;0.0.0.0&apos;, debug=True, port=80)</span><br><span class="line">  eOF</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir app/static</span><br><span class="line">$ cat &lt;&lt; EOF &gt; app/static/index.html</span><br><span class="line">  &lt;!DOCTYPE html&gt;</span><br><span class="line">  &lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">      &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">      &lt;title&gt;Index&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">  &lt;h1&gt;Hello World from HTML&lt;/h1&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">  &lt;/html&gt;</span><br><span class="line">  eOF</span><br></pre></td></tr></table></figure>
@@ -397,7 +431,9 @@ ga('send', 'pageview');
 <h2><span id="実行">実行</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --rm -it -p 8080:80 dobachi/nginx-flask-spa:1.0</span><br></pre></td></tr></table></figure>
 <h1><span id="構造的なプロジェクト">構造的なプロジェクト</span></h1>
-<p><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart-for-bigger-projects-structured-as-a-python-package" target="_blank" rel="noopener">gitHub: 構造的なプロジェクトの例</a> に記載の例を示す。 <a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker/releases/download/v0.3.10/example-flask-package-python3.7.zip" target="_blank" rel="noopener">example-flask-package-python3.7.zip</a> をダウンロードしてビルドしてみる。</p>
+<p><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart-for-bigger-projects-structured-as-a-python-package" target="_blank" rel="noopener">gitHub:
+構造的なプロジェクトの例</a> に記載の例を示す。 <a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker/releases/download/v0.3.10/example-flask-package-python3.7.zip" target="_blank" rel="noopener">example-flask-package-python3.7.zip</a>
+をダウンロードしてビルドしてみる。</p>
 <h2><span id="アーカイブをダウンロード">アーカイブをダウンロード</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/</span><br><span class="line">$ wget https://github.com/tiangolo/uwsgi-nginx-flask-docker/releases/download/v0.3.10/example-flask-package-python3.7.zip</span><br><span class="line">$ unzip example-flask-package-python3.7.zip</span><br><span class="line">$ cd example-flask-package-python3.7</span><br></pre></td></tr></table></figure>
 <h2><span id="ビルド">ビルド</span></h2>
@@ -409,22 +445,31 @@ ga('send', 'pageview');
 <p>ファイルを修正 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat example-flask-package-python3.7/app/app/api/api.py </span><br><span class="line">from .endpoints import user</span><br><span class="line">from .endpoints import get_ip</span><br></pre></td></tr></table></figure></p>
 <p>ファイルを追加 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ cat example-flask-package-python3.7/app/app/api/endpoints/get_ip.py </span><br><span class="line">from flask import request</span><br><span class="line">from flask import jsonify</span><br><span class="line"></span><br><span class="line">from ..utils import senseless_print</span><br><span class="line"></span><br><span class="line">from ...main import app</span><br><span class="line"></span><br><span class="line">@app.route(&quot;/get_ip&quot;, methods=[&quot;GET&quot;])</span><br><span class="line">def get_ip():</span><br><span class="line">        return jsonify(&#123;&apos;ip&apos;: request.remote_addr&#125;), 200</span><br></pre></td></tr></table></figure></p>
 <p>ビルドし、実行して、/get_ipにアクセスすると、接続元のIPアドレスが表示される。</p>
-<h1><span id="flask-nginxでsslを使用ここがうまく動かない">flask + NginxでSSLを使用（ここがうまく動かない）</span></h1>
+<h1><span id="flask-nginxでsslを使用ここがうまく動かない">flask +
+NginxでSSLを使用（ここがうまく動かない）</span></h1>
 <h2><span id="アドホックな対応">アドホックな対応</span></h2>
-<p><a href="https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https" target="_blank" rel="noopener">flask + NginxでのSSL対応に関する記事</a> に記載された方法で試す。 また上記で使った<code>example-flask-package-python3.7</code>の例を用いてみる。</p>
+<p><a href="https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https" target="_blank" rel="noopener">flask
++ NginxでのSSL対応に関する記事</a> に記載された方法で試す。
+また上記で使った<code>example-flask-package-python3.7</code>の例を用いてみる。</p>
 <p>まずDockerfileを以下のように変更した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ cat Dockerfile </span><br><span class="line">froM tiangolo/uwsgi-nginx-flask:python3.7</span><br><span class="line"></span><br><span class="line">run apt-get update</span><br><span class="line">run pip install pyopenssl</span><br><span class="line"></span><br><span class="line">copY ./app /app</span><br></pre></td></tr></table></figure>
 <p><code>main.py</code>を以下のように修正し、アドホックなSSL対応を試せるようにする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ cat app/app/main.py </span><br><span class="line">from flask import Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">from .core import app_setup</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    # Only for debugging while developing</span><br><span class="line">    # app.run(host=&apos;0.0.0.0&apos;, debug=True, port=80)</span><br><span class="line">    app.run(host=&apos;0.0.0.0&apos;, debug=True, ssl_context=&apos;adhoc&apos;)</span><br></pre></td></tr></table></figure>
 <p>以上の修正を加えた上で、Dockerイメージをビルドし実行した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker build -t dobachi/nginx-flask-package:1.0 .</span><br><span class="line">$ sudo docker run --rm -it -p 8080:80 dobachi/nginx-flask-package:1.0  /bin/bash</span><br></pre></td></tr></table></figure>
-<h1><span id="github-uwsgi-nginx-flask-dockerのアーキテクチャ">gitHub: uwsgi-nginx-flask-dockerのアーキテクチャ</span></h1>
-<p><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#technical-details" target="_blank" rel="noopener">gitHub: uwsgi-nginx-flask-dockerのテクニカル詳細</a> で書かれている通り。 以下の役割分担。</p>
+<h1><span id="githubuwsgi-nginx-flask-dockerのアーキテクチャ">gitHub:
+uwsgi-nginx-flask-dockerのアーキテクチャ</span></h1>
+<p><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#technical-details" target="_blank" rel="noopener">gitHub:
+uwsgi-nginx-flask-dockerのテクニカル詳細</a> で書かれている通り。
+以下の役割分担。</p>
 <ul>
 <li>ウェブサーバ：Nginx</li>
 <li>wSGIのアプリサーバ：uWSGI</li>
 </ul>
-<p>またアプリはFlaskで書かれていることを前提とし、 プロセスはSupervisordで管理される。 アプリはコンテナ内の<code>/app</code>以下に配備されることを前提とし、その中にとりあえずは動く<code>uwsgi.ini</code>も含まれる。 そのため、Dockerfile内でuwsgi.iniを上書きさせるようにして用いることを想定しているようだ。</p>
+<p>またアプリはFlaskで書かれていることを前提とし、
+プロセスはSupervisordで管理される。
+アプリはコンテナ内の<code>/app</code>以下に配備されることを前提とし、その中にとりあえずは動く<code>uwsgi.ini</code>も含まれる。
+そのため、Dockerfile内でuwsgi.iniを上書きさせるようにして用いることを想定しているようだ。</p>
 <h2><span id="supervisord化について">Supervisord化について</span></h2>
 <p>以下のように/bin/bashを起動して確認した。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --rm -it -p 8080:80 dobachi/nginx-flask-package:1.0  /bin/bash</span><br></pre></td></tr></table></figure>
@@ -446,7 +491,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/" data-id="cl2nztnlo005m5xqirmesnid7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/" data-id="cl2o9pbig018t18rzugcrqasg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -697,5 +742,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

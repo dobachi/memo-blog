@@ -5,18 +5,18 @@
     
     <title>WhereHows by LinkedIn | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 ユースケースについて 機能概要 アーキテクチャ バックエンドのETLについて    参考  ユースケース Wiki Architecture  ユースケースについて ユースケース に背景などが記載されている。 複数のデータソース、複数のデータストア、複数のデータ処理エンジン、そしてワークフロー管理ツール。 LinkedInの場合は以下のとおり。  Analytics Storage s">
+    <meta name="description" content="参考 ユースケースについて 機能概要 アーキテクチャ  バックエンドのETLについて    参考  ユースケース Wiki Architecture  ユースケースについて ユースケース に背景などが記載されている。 複数のデータソース、複数のデータストア、複数のデータ処理エンジン、そしてワークフロー管理ツール。 LinkedInの場合は以下のとおり。  Analytics Storage">
 <meta name="keywords" content="LinkedIn,WhereHows,Data Lineage">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WhereHows by LinkedIn">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/02/06/WhereHows-by-LinkedIN/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 ユースケースについて 機能概要 アーキテクチャ バックエンドのETLについて    参考  ユースケース Wiki Architecture  ユースケースについて ユースケース に背景などが記載されている。 複数のデータソース、複数のデータストア、複数のデータ処理エンジン、そしてワークフロー管理ツール。 LinkedInの場合は以下のとおり。  Analytics Storage s">
+<meta property="og:description" content="参考 ユースケースについて 機能概要 アーキテクチャ  バックエンドのETLについて    参考  ユースケース Wiki Architecture  ユースケースについて ユースケース に背景などが記載されている。 複数のデータソース、複数のデータストア、複数のデータ処理エンジン、そしてワークフロー管理ツール。 LinkedInの場合は以下のとおり。  Analytics Storage">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WhereHows by LinkedIn">
-<meta name="twitter:description" content="参考 ユースケースについて 機能概要 アーキテクチャ バックエンドのETLについて    参考  ユースケース Wiki Architecture  ユースケースについて ユースケース に背景などが記載されている。 複数のデータソース、複数のデータストア、複数のデータ処理エンジン、そしてワークフロー管理ツール。 LinkedInの場合は以下のとおり。  Analytics Storage s">
+<meta name="twitter:description" content="参考 ユースケースについて 機能概要 アーキテクチャ  バックエンドのETLについて    参考  ユースケース Wiki Architecture  ユースケースについて ユースケース に背景などが記載されている。 複数のデータソース、複数のデータストア、複数のデータ処理エンジン、そしてワークフロー管理ツール。 LinkedInの場合は以下のとおり。  Analytics Storage">
     
 
     
@@ -251,11 +251,12 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#ユースケースについて">ユースケースについて</a></li>
-<li><a href="#機能概要">機能概要</a></li>
-<li><a href="#アーキテクチャ">アーキテクチャ</a><ul>
-<li><a href="#バックエンドのetlについて">バックエンドのETLについて</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#ユースケースについて" id="toc-ユースケースについて">ユースケースについて</a></li>
+<li><a href="#機能概要" id="toc-機能概要">機能概要</a></li>
+<li><a href="#アーキテクチャ" id="toc-アーキテクチャ">アーキテクチャ</a>
+<ul>
+<li><a href="#バックエンドのetlについて" id="toc-バックエンドのetlについて">バックエンドのETLについて</a></li>
 </ul></li>
 </ul>
 </div>
@@ -266,9 +267,13 @@ ga('send', 'pageview');
 <li><a href="https://github.com/linkedin/WhereHows/blob/master/wherehows-docs/architecture.md" target="_blank" rel="noopener">Architecture</a></li>
 </ul>
 <h1><span id="ユースケースについて">ユースケースについて</span></h1>
-<p><a href="https://github.com/linkedin/WhereHows/blob/master/wherehows-docs/use-cases.md" target="_blank" rel="noopener">ユースケース</a> に背景などが記載されている。 複数のデータソース、複数のデータストア、複数のデータ処理エンジン、そしてワークフロー管理ツール。 LinkedInの場合は以下のとおり。</p>
+<p><a href="https://github.com/linkedin/WhereHows/blob/master/wherehows-docs/use-cases.md" target="_blank" rel="noopener">ユースケース</a>
+に背景などが記載されている。
+複数のデータソース、複数のデータストア、複数のデータ処理エンジン、そしてワークフロー管理ツール。
+LinkedInの場合は以下のとおり。</p>
 <ul>
-<li>Analytics Storage system: HDFS, Teradata, Hive, Espresso, Kafka, Voldemort</li>
+<li>Analytics Storage system: HDFS, Teradata, Hive, Espresso, Kafka,
+Voldemort</li>
 <li>Execution: MapReduce, Pig, Hive, Teradata SQL.</li>
 <li>Workflow management: Azkaban, Appworx, Oozie</li>
 </ul>
@@ -279,13 +284,18 @@ ga('send', 'pageview');
 <li>ジョブやデータの変更が及ぼす影響を確認する</li>
 </ul>
 <h1><span id="機能概要">機能概要</span></h1>
-<p><a href="https://github.com/LinkedIn/Wherehows/wiki" target="_blank" rel="noopener">Wiki</a>に画面キャプチャ付きで説明がある。 GUIの他、バックエンドAPIもあり、自動化できるようになっている。</p>
+<p><a href="https://github.com/LinkedIn/Wherehows/wiki" target="_blank" rel="noopener">Wiki</a>に画面キャプチャ付きで説明がある。
+GUIの他、バックエンドAPIもあり、自動化できるようになっている。</p>
 <p>例：https://github.com/LinkedIn/Wherehows/wiki/Backend-API#dataset-get</p>
 <h1><span id="アーキテクチャ">アーキテクチャ</span></h1>
-<p><a href="https://github.com/linkedin/WhereHows/blob/master/wherehows-docs/architecture.md" target="_blank" rel="noopener">Architecture</a> に記載されている。 Akkaベースでスケジューラが組まれており、スケジューラによりクローラが動く。</p>
-<p>データセットやオペレーションデータがエンドポイトであり、リネージがそれを結ぶブリッジであると考えられる。 またこれらは極力汎用的に設計されているので、異なるプロダクトのデータを取り入れることができる。</p>
+<p><a href="https://github.com/linkedin/WhereHows/blob/master/wherehows-docs/architecture.md" target="_blank" rel="noopener">Architecture</a>
+に記載されている。
+Akkaベースでスケジューラが組まれており、スケジューラによりクローラが動く。</p>
+<p>データセットやオペレーションデータがエンドポイトであり、リネージがそれを結ぶブリッジであると考えられる。
+またこれらは極力汎用的に設計されているので、異なるプロダクトのデータを取り入れることができる。</p>
 <h2><span id="バックエンドのetlについて">バックエンドのETLについて</span></h2>
-<p>Java、Jython、MySQLで構成。 分析ロジックの実装しやすさとほかシステムとの連携しやすさを両立。</p>
+<p>Java、Jython、MySQLで構成。
+分析ロジックの実装しやすさとほかシステムとの連携しやすさを両立。</p>
 <ul>
 <li>Dataset ETL
 <ul>
@@ -297,7 +307,8 @@ ga('send', 'pageview');
 </ul></li>
 <li>Lineage ETL
 <ul>
-<li>定期的にジョブ情報を取得し、入力データと出力データの定義から リネージを生成する</li>
+<li>定期的にジョブ情報を取得し、入力データと出力データの定義から
+リネージを生成する</li>
 </ul></li>
 </ul>
 
@@ -310,7 +321,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/06/WhereHows-by-LinkedIN/" data-id="cl2nztnp700gb5xqiujmzm1j2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/06/WhereHows-by-LinkedIN/" data-id="cl2o9pb8r00bs18rz4p1vv6j8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -561,5 +572,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

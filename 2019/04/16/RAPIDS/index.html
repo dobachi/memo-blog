@@ -5,18 +5,18 @@
     
     <title>RAPIDS | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 概要 一言で言うと…？ コンポーネント群 処理性能に関する雰囲気 関係者 分散の仕組みはDaskベース？  cuDF バージョン0.7での予定  RAPIDS on Databricks Cloud Condaでの動作確認 前提 動作確認  Dockerで動作確認 参考）Dockerで動作確認する際の試行錯誤 前提 動作確認 サンプルノートブックの確認  参考）Condaで動作確">
+    <meta name="description" content="参考 メモ  概要  一言で言うと…？ コンポーネント群 処理性能に関する雰囲気 関係者 分散の仕組みはDaskベース？  cuDF  バージョン0.7での予定  RAPIDS on Databricks Cloud Condaでの動作確認  前提 動作確認  Dockerで動作確認 参考）Dockerで動作確認する際の試行錯誤  前提 動作確認 サンプルノートブックの確認  参考）Cond">
 <meta name="keywords" content="Machine Learning,Data Analysis,Dask,Data Processing Engine,PAPIDS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RAPIDS">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/04/16/RAPIDS/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 概要 一言で言うと…？ コンポーネント群 処理性能に関する雰囲気 関係者 分散の仕組みはDaskベース？  cuDF バージョン0.7での予定  RAPIDS on Databricks Cloud Condaでの動作確認 前提 動作確認  Dockerで動作確認 参考）Dockerで動作確認する際の試行錯誤 前提 動作確認 サンプルノートブックの確認  参考）Condaで動作確">
+<meta property="og:description" content="参考 メモ  概要  一言で言うと…？ コンポーネント群 処理性能に関する雰囲気 関係者 分散の仕組みはDaskベース？  cuDF  バージョン0.7での予定  RAPIDS on Databricks Cloud Condaでの動作確認  前提 動作確認  Dockerで動作確認 参考）Dockerで動作確認する際の試行錯誤  前提 動作確認 サンプルノートブックの確認  参考）Cond">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RAPIDS">
-<meta name="twitter:description" content="参考 メモ 概要 一言で言うと…？ コンポーネント群 処理性能に関する雰囲気 関係者 分散の仕組みはDaskベース？  cuDF バージョン0.7での予定  RAPIDS on Databricks Cloud Condaでの動作確認 前提 動作確認  Dockerで動作確認 参考）Dockerで動作確認する際の試行錯誤 前提 動作確認 サンプルノートブックの確認  参考）Condaで動作確">
+<meta name="twitter:description" content="参考 メモ  概要  一言で言うと…？ コンポーネント群 処理性能に関する雰囲気 関係者 分散の仕組みはDaskベース？  cuDF  バージョン0.7での予定  RAPIDS on Databricks Cloud Condaでの動作確認  前提 動作確認  Dockerで動作確認 参考）Dockerで動作確認する際の試行錯誤  前提 動作確認 サンプルノートブックの確認  参考）Cond">
     
 
     
@@ -251,31 +251,37 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#概要">概要</a><ul>
-<li><a href="#一言で言うと">一言で言うと…？</a></li>
-<li><a href="#コンポーネント群">コンポーネント群</a></li>
-<li><a href="#処理性能に関する雰囲気">処理性能に関する雰囲気</a></li>
-<li><a href="#関係者">関係者</a></li>
-<li><a href="#分散の仕組みはdaskベース">分散の仕組みはDaskベース？</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#概要" id="toc-概要">概要</a>
+<ul>
+<li><a href="#一言で言うと" id="toc-一言で言うと">一言で言うと…？</a></li>
+<li><a href="#コンポーネント群" id="toc-コンポーネント群">コンポーネント群</a></li>
+<li><a href="#処理性能に関する雰囲気" id="toc-処理性能に関する雰囲気">処理性能に関する雰囲気</a></li>
+<li><a href="#関係者" id="toc-関係者">関係者</a></li>
+<li><a href="#分散の仕組みはdaskベース" id="toc-分散の仕組みはdaskベース">分散の仕組みはDaskベース？</a></li>
 </ul></li>
-<li><a href="#cudf">cuDF</a><ul>
-<li><a href="#バージョン0.7での予定">バージョン0.7での予定</a></li>
+<li><a href="#cudf" id="toc-cudf">cuDF</a>
+<ul>
+<li><a href="#バージョン0.7での予定" id="toc-バージョン0.7での予定">バージョン0.7での予定</a></li>
 </ul></li>
-<li><a href="#rapids-on-databricks-cloud">RAPIDS on Databricks Cloud</a></li>
-<li><a href="#condaでの動作確認">Condaでの動作確認</a><ul>
-<li><a href="#前提">前提</a></li>
-<li><a href="#動作確認">動作確認</a></li>
+<li><a href="#rapids-on-databricks-cloud" id="toc-rapids-on-databricks-cloud">RAPIDS on Databricks Cloud</a></li>
+<li><a href="#condaでの動作確認" id="toc-condaでの動作確認">Condaでの動作確認</a>
+<ul>
+<li><a href="#前提" id="toc-前提">前提</a></li>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a></li>
 </ul></li>
-<li><a href="#dockerで動作確認">Dockerで動作確認</a></li>
-<li><a href="#参考dockerで動作確認する際の試行錯誤">参考）Dockerで動作確認する際の試行錯誤</a><ul>
-<li><a href="#前提-1">前提</a></li>
-<li><a href="#動作確認-1">動作確認</a></li>
-<li><a href="#サンプルノートブックの確認">サンプルノートブックの確認</a></li>
+<li><a href="#dockerで動作確認" id="toc-dockerで動作確認">Dockerで動作確認</a></li>
+<li><a href="#参考dockerで動作確認する際の試行錯誤" id="toc-参考dockerで動作確認する際の試行錯誤">参考）Dockerで動作確認する際の試行錯誤</a>
+<ul>
+<li><a href="#前提-1" id="toc-前提-1">前提</a></li>
+<li><a href="#動作確認-1" id="toc-動作確認-1">動作確認</a></li>
+<li><a href="#サンプルノートブックの確認" id="toc-サンプルノートブックの確認">サンプルノートブックの確認</a></li>
 </ul></li>
-<li><a href="#参考condaで動作確認の試行錯誤メモ">参考）Condaで動作確認の試行錯誤メモ</a><ul>
-<li><a href="#インスタンス種類を変えてみる">インスタンス種類を変えてみる</a></li>
+<li><a href="#参考condaで動作確認の試行錯誤メモ" id="toc-参考condaで動作確認の試行錯誤メモ">参考）Condaで動作確認の試行錯誤メモ</a>
+<ul>
+<li><a href="#インスタンス種類を変えてみる" id="toc-インスタンス種類を変えてみる">インスタンス種類を変えてみる</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -284,11 +290,13 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://rapids.ai/" target="_blank" rel="noopener">RAPIDSの公式ウェブサイト</a></li>
 <li><a href="https://docs.rapids.ai/" target="_blank" rel="noopener">RAPIDSの公式ドキュメント</a></li>
-<li><a href="https://docs.rapids.ai/start" target="_blank" rel="noopener">RAPIDSの公式Getting Started</a></li>
+<li><a href="https://docs.rapids.ai/start" target="_blank" rel="noopener">RAPIDSの公式Getting
+Started</a></li>
 <li><a href="https://rapids.ai/assets/images/Pipeline-FPO-Diagram.png" target="_blank" rel="noopener">コンポーネントの関係図</a></li>
 <li><a href="https://rapids.ai/assets/images/rapids-end-to-end-performance-chart-oss-page-r4.svg" target="_blank" rel="noopener">性能比較のグラフ</a></li>
 <li><a href="https://medium.com/rapids-ai/the-road-to-1-0-building-for-the-long-haul-657ae1afdfd6" target="_blank" rel="noopener">RAPIDS0.6に関する公式ブログ記事</a></li>
-<li><a href="https://medium.com/rapids-ai/rapids-can-now-be-accessed-on-databricks-unified-analytics-platform-666e42284bd1" target="_blank" rel="noopener">RAPIDS on Databricks Cloudのブログ</a></li>
+<li><a href="https://medium.com/rapids-ai/rapids-can-now-be-accessed-on-databricks-unified-analytics-platform-666e42284bd1" target="_blank" rel="noopener">RAPIDS
+on Databricks Cloudのブログ</a></li>
 <li><a href="https://github.com/rapidsai/notebooks-extended/blob/master/tutorials/examples/RAPIDS_PCA_demo_avro_read.ipynb" target="_blank" rel="noopener">RAPIDS_PCA_demo_avro_read.ipynb</a></li>
 <li><a href="https://github.com/rapidsai/notebooks-extended/blob/master/tutorials/examples/Dask_with_cuDF_and_XGBoost.ipynb" target="_blank" rel="noopener">Dask_with_cuDF_and_XGBoost.ipynb</a></li>
 <li><a href="https://docs.rapids.ai/api/rmm/stable/" target="_blank" rel="noopener">RMMの定義</a></li>
@@ -297,49 +305,80 @@ ga('send', 'pageview');
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="概要">概要</span></h2>
 <h3><span id="一言で言うと">一言で言うと…？</span></h3>
-<p>PandasライクなAPI、scikit learnライクなAPIなどを提供するライブラリ群。 CUDAをレバレッジし、GPUを活用しやくしている。</p>
+<p>PandasライクなAPI、scikit
+learnライクなAPIなどを提供するライブラリ群。
+CUDAをレバレッジし、GPUを活用しやくしている。</p>
 <h3><span id="コンポーネント群">コンポーネント群</span></h3>
-<p>公式の <a href="https://rapids.ai/assets/images/Pipeline-FPO-Diagram.png" target="_blank" rel="noopener">コンポーネントの関係図</a> がわかりやすい。 前処理から、データサイエンス（と、公式で言われている）まで一貫して手助けするものである、というのが思想のようだ。</p>
+<p>公式の <a href="https://rapids.ai/assets/images/Pipeline-FPO-Diagram.png" target="_blank" rel="noopener">コンポーネントの関係図</a>
+がわかりやすい。
+前処理から、データサイエンス（と、公式で言われている）まで一貫して手助けするものである、というのが思想のようだ。</p>
 <h3><span id="処理性能に関する雰囲気">処理性能に関する雰囲気</span></h3>
-<p>公式の <a href="https://rapids.ai/assets/images/rapids-end-to-end-performance-chart-oss-page-r4.svg" target="_blank" rel="noopener">性能比較のグラフ</a> がわかりやすい。 2桁台数の「CPUノード」との比較。 DGX-2 1台、もしくはDGX-1 5台。 計算（ロード、特徴エンジニアリング、変換、学習）時間の比較。</p>
+<p>公式の <a href="https://rapids.ai/assets/images/rapids-end-to-end-performance-chart-oss-page-r4.svg" target="_blank" rel="noopener">性能比較のグラフ</a>
+がわかりやすい。 2桁台数の「CPUノード」との比較。 DGX-2
+1台、もしくはDGX-1 5台。
+計算（ロード、特徴エンジニアリング、変換、学習）時間の比較。</p>
 <h3><span id="関係者">関係者</span></h3>
-<p>公式ウェブサイトでは、「Contributors」、「Adopters」、「Open Source」というカテゴリで整理されていた。 Contributorsでは、AnacondaやNVIDIAなどのイメージ通りの企業から、Walmartまであった。 Adoptersでは、Databricksが入っている。</p>
+<p>公式ウェブサイトでは、「Contributors」、「Adopters」、「Open
+Source」というカテゴリで整理されていた。
+Contributorsでは、AnacondaやNVIDIAなどのイメージ通りの企業から、Walmartまであった。
+Adoptersでは、Databricksが入っている。</p>
 <h3><span id="分散の仕組みはdaskベース">分散の仕組みはDaskベース？</span></h3>
-<p>Sparkと組み合わせての動作はまだ対応していないようだが、Daskで分散（なのか、現時点でのシングルマシンでのマルチGPU対応だけなのか）処理できるようだ。 <a href="https://medium.com/rapids-ai/the-road-to-1-0-building-for-the-long-haul-657ae1afdfd6" target="_blank" rel="noopener">RAPIDS0.6に関する公式ブログ記事</a> によると、Dask-CUDA、Dask-cuDFに対応の様子。</p>
+<p>Sparkと組み合わせての動作はまだ対応していないようだが、Daskで分散（なのか、現時点でのシングルマシンでのマルチGPU対応だけなのか）処理できるようだ。
+<a href="https://medium.com/rapids-ai/the-road-to-1-0-building-for-the-long-haul-657ae1afdfd6" target="_blank" rel="noopener">RAPIDS0.6に関する公式ブログ記事</a>
+によると、Dask-CUDA、Dask-cuDFに対応の様子。</p>
 <p>また、Dask-cuMLでは、k-NNと線形回帰に関し、マルチGPU動作を可能にしたようだ。</p>
-<p><a href="https://github.com/rapidsai/notebooks-extended/blob/master/tutorials/examples/Dask_with_cuDF_and_XGBoost.ipynb" target="_blank" rel="noopener">Dask_with_cuDF_and_XGBoost.ipynb</a> を見ると、DaskでcuDFを使う方法が例示されていた。</p>
+<p><a href="https://github.com/rapidsai/notebooks-extended/blob/master/tutorials/examples/Dask_with_cuDF_and_XGBoost.ipynb" target="_blank" rel="noopener">Dask_with_cuDF_and_XGBoost.ipynb</a>
+を見ると、DaskでcuDFを使う方法が例示されていた。</p>
 <p>Daskのクラスタを定義し、 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from dask_cuda import LocalCUDACluster</span><br><span class="line"></span><br><span class="line">cluster = LocalCUDACluster()</span><br><span class="line">client = Client(cluster)</span><br></pre></td></tr></table></figure></p>
 <p>RMM（RAPIDS Memory Manager）を初期化する。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from librmm_cffi import librmm_config as rmm_cfg</span><br><span class="line"></span><br><span class="line">rmm_cfg.use_pool_allocator = True</span><br><span class="line">#rmm_cfg.initial_pool_size = 2&lt;&lt;30 # set to 2GiB. Default is 1/2 total GPU memory</span><br><span class="line">import cudf</span><br><span class="line">return cudf._gdf.rmm_initialize()</span><br></pre></td></tr></table></figure></p>
-<p>また、 <a href="https://docs.rapids.ai/api/rmm/stable/" target="_blank" rel="noopener">RMMの定義</a> にRAPIDS Memory ManagerのAPI定義が記載されている。</p>
-<p><a href="https://docs.rapids.ai/api/cudf/stable/" target="_blank" rel="noopener">cuDFのAPI定義</a> にもDaskでの動作について書かれている。 「Multi-GPU with Dask-cuDF」の項目。</p>
+<p>また、 <a href="https://docs.rapids.ai/api/rmm/stable/" target="_blank" rel="noopener">RMMの定義</a>
+にRAPIDS Memory ManagerのAPI定義が記載されている。</p>
+<p><a href="https://docs.rapids.ai/api/cudf/stable/" target="_blank" rel="noopener">cuDFのAPI定義</a>
+にもDaskでの動作について書かれている。 「Multi-GPU with
+Dask-cuDF」の項目。</p>
 <h2><span id="cudf">cuDF</span></h2>
-<p><a href="https://docs.rapids.ai/api/cudf/stable/" target="_blank" rel="noopener">cuDFのAPI定義</a> に仕様が記載されている。 現状できることなどの記載がある。</p>
+<p><a href="https://docs.rapids.ai/api/cudf/stable/" target="_blank" rel="noopener">cuDFのAPI定義</a>
+に仕様が記載されている。 現状できることなどの記載がある。</p>
 <p>線形なオペレーション、集約処理、グルーピング、結合あたりの基本的な操作対応している。</p>
 <h3><span id="バージョン07での予定">バージョン0.7での予定</span></h3>
-<p><a href="https://medium.com/rapids-ai/the-road-to-1-0-building-for-the-long-haul-657ae1afdfd6" target="_blank" rel="noopener">RAPIDS0.6に関する公式ブログ記事</a> には一部0.7に関する記述もあった。 個人的に気になったのは、Parquetリーダが改善されてGPUを使うようになること、 デバッグメッセージが改善されること、など。</p>
+<p><a href="https://medium.com/rapids-ai/the-road-to-1-0-building-for-the-long-haul-657ae1afdfd6" target="_blank" rel="noopener">RAPIDS0.6に関する公式ブログ記事</a>
+には一部0.7に関する記述もあった。
+個人的に気になったのは、Parquetリーダが改善されてGPUを使うようになること、
+デバッグメッセージが改善されること、など。</p>
 <h2><span id="rapids-on-databricks-cloud">RAPIDS on Databricks Cloud</span></h2>
-<p><a href="https://medium.com/rapids-ai/rapids-can-now-be-accessed-on-databricks-unified-analytics-platform-666e42284bd1" target="_blank" rel="noopener">RAPIDS on Databricks Cloudのブログ</a> を見ると、Databricks CloudでRAPIDSが動くことが書かれている。 ただ、 <a href="https://github.com/rapidsai/notebooks-extended/blob/master/tutorials/examples/RAPIDS_PCA_demo_avro_read.ipynb" target="_blank" rel="noopener">RAPIDS_PCA_demo_avro_read.ipynb</a> を見たら、SparkでロードしたデータをそのままPandasのDataFrameに変換しているようだった。</p>
+<p><a href="https://medium.com/rapids-ai/rapids-can-now-be-accessed-on-databricks-unified-analytics-platform-666e42284bd1" target="_blank" rel="noopener">RAPIDS
+on Databricks Cloudのブログ</a> を見ると、Databricks
+CloudでRAPIDSが動くことが書かれている。 ただ、 <a href="https://github.com/rapidsai/notebooks-extended/blob/master/tutorials/examples/RAPIDS_PCA_demo_avro_read.ipynb" target="_blank" rel="noopener">RAPIDS_PCA_demo_avro_read.ipynb</a>
+を見たら、SparkでロードしたデータをそのままPandasのDataFrameに変換しているようだった。</p>
 <h2><span id="condaでの動作確認">Condaでの動作確認</span></h2>
 <h3><span id="前提">前提</span></h3>
 <p>今回AWS環境を使った。 p3.2xlargeインスタンスを利用。</p>
-<p>予めCUDA9.2をインストールしておいた。 またDockerで試す場合には、<code>nvidia-docker</code>をインストールしておく。</p>
+<p>予めCUDA9.2をインストールしておいた。
+またDockerで試す場合には、<code>nvidia-docker</code>をインストールしておく。</p>
 <h3><span id="動作確認">動作確認</span></h3>
-<p>以下の通り仮想環境を構築し、パッケージをインストールする。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ conda create -n rapids python=3.6 python</span><br><span class="line">$ conda install -c nvidia -c rapidsai -c pytorch -c numba -c conda-forge \</span><br><span class="line">    cudf=0.6 cuml=0.6 python=3.6</span><br></pre></td></tr></table></figure></p>
+<p>以下の通り仮想環境を構築し、パッケージをインストールする。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ conda create -n rapids python=3.6 python</span><br><span class="line">$ conda install -c nvidia -c rapidsai -c pytorch -c numba -c conda-forge \</span><br><span class="line">    cudf=0.6 cuml=0.6 python=3.6</span><br></pre></td></tr></table></figure></p>
 <p>その後、GitHubからノートブックをクローン。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/rapidsai/notebooks.git</span><br></pre></td></tr></table></figure></p>
 <p>ノートブックのディレクトリでJupyterを起動。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jupyter notebook --ip=0.0.0.0 --browser=&quot;&quot;</span><br></pre></td></tr></table></figure></p>
-<p>つづいて、<code>notebooks/cuml/linear_regression_demo.ipynb</code>を試した。 なお、<code>%%time</code>マジックを使っている箇所の変数をバインドできなかったので、 適当にセルをコピーして実行した。</p>
+<p>つづいて、<code>notebooks/cuml/linear_regression_demo.ipynb</code>を試した。
+なお、<code>%%time</code>マジックを使っている箇所の変数をバインドできなかったので、
+適当にセルをコピーして実行した。</p>
 <p>確かに学習が早くなったことは実感できた。</p>
 <p>scikit-learn <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%%time</span><br><span class="line">skols = skLinearRegression(fit_intercept=True,</span><br><span class="line">                  normalize=True)</span><br><span class="line">skols.fit(X_train, y_train)</span><br><span class="line">CPU times: user 21.5 s, sys: 5.33 s, total: 26.9 s</span><br><span class="line">Wall time: 7.51 s</span><br></pre></td></tr></table></figure></p>
 <p>cudf + cuml <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%%time</span><br><span class="line">cuols = cuLinearRegression(fit_intercept=True,</span><br><span class="line">                  normalize=True,</span><br><span class="line">                  algorithm=&apos;eig&apos;)</span><br><span class="line">cuols.fit(X_cudf, y_cudf)</span><br><span class="line">CPU times: user 1.18 s, sys: 350 ms, total: 1.53 s</span><br><span class="line">Wall time: 2.72 s</span><br></pre></td></tr></table></figure></p>
 <h2><span id="dockerで動作確認">Dockerで動作確認</span></h2>
 <p>つづいてDockerで試す。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker pull rapidsai/rapidsai:cuda9.2-runtime-centos7</span><br><span class="line">$ sudo docker run --runtime=nvidia --rm -it -p 8888:8888 -p 8787:8787 -p 8786:8786 \</span><br><span class="line">    rapidsai/rapidsai:cuda9.2-runtime-centos7</span><br></pre></td></tr></table></figure>
-<p>Dockerコンテナが起動したら、以下の通り、Jupyter Labを起動する。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># bash utils/start-jupyter.sh</span><br></pre></td></tr></table></figure></p>
+<p>Dockerコンテナが起動したら、以下の通り、Jupyter Labを起動する。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># bash utils/start-jupyter.sh</span><br></pre></td></tr></table></figure></p>
 <p>線形回帰のサンプルノートブックを試したが、大丈夫だった。</p>
 <h2><span id="参考dockerで動作確認する際の試行錯誤">参考）Dockerで動作確認する際の試行錯誤</span></h2>
-<p><a href="https://docs.rapids.ai/start" target="_blank" rel="noopener">RAPIDSの公式Getting Started</a> を参考に動かしてみる。</p>
+<p><a href="https://docs.rapids.ai/start" target="_blank" rel="noopener">RAPIDSの公式Getting
+Started</a> を参考に動かしてみる。</p>
 <h3><span id="前提">前提</span></h3>
-<p>今回は、AWS環境を使った。 予め、CUDAとnvidia-dockerをインストールしておいた。 今回は、CUDA10系を使ったので、以下のようにDockerイメージを取得。</p>
+<p>今回は、AWS環境を使った。
+予め、CUDAとnvidia-dockerをインストールしておいた。
+今回は、CUDA10系を使ったので、以下のようにDockerイメージを取得。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker pull rapidsai/rapidsai:cuda10.0-runtime-ubuntu18.04</span><br></pre></td></tr></table></figure>
 <p>動作確認。このとき、runtimeにnvidiaを指定する。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --runtime=nvidia --rm nvidia/cuda:10.1-base nvidia-smi</span><br><span class="line">Wed Apr 17 13:28:02 2019</span><br><span class="line">+-----------------------------------------------------------------------------+</span><br><span class="line">| NVIDIA-SMI 418.39       Driver Version: 418.39       CUDA Version: 10.1     |</span><br><span class="line">|-------------------------------+----------------------+----------------------+</span><br><span class="line">| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |</span><br><span class="line">| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |</span><br><span class="line">|===============================+======================+======================|</span><br><span class="line">|   0  Tesla M60           Off  | 00000000:00:1E.0 Off |                    0 |</span><br><span class="line">| N/A   31C    P0    42W / 150W |      0MiB /  7618MiB |     81%      Default |</span><br><span class="line">+-------------------------------+----------------------+----------------------+</span><br><span class="line"></span><br><span class="line">+-----------------------------------------------------------------------------+</span><br><span class="line">| Processes:                                                       GPU Memory |</span><br><span class="line">|  GPU       PID   Type   Process name                             Usage      |</span><br><span class="line">|=============================================================================|</span><br><span class="line">|  No running processes found                                                 |</span><br><span class="line">+-----------------------------------------------------------------------------+</span><br></pre></td></tr></table></figure></p>
 <p>以下のDockerfileを作り、動作確認する。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># FROM defines the base image</span><br><span class="line"># FROM nvidia/cuda:10.0</span><br><span class="line">FROM rapidsai/rapidsai:cuda10.0-runtime-ubuntu18.04</span><br><span class="line"></span><br><span class="line"># RUN executes a shell command</span><br><span class="line"># You can chain multiple commands together with &amp;&amp;</span><br><span class="line"># A \ is used to split long lines to help with readability</span><br><span class="line"># This particular instruction installs the source files</span><br><span class="line"># for deviceQuery by installing the CUDA samples via apt</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \</span><br><span class="line">        cuda-samples-$CUDA_PKG_VERSION &amp;&amp; \    rm -rf /var/lib/apt/lists/*</span><br><span class="line"># set the working directory</span><br><span class="line">WORKDIR /usr/local/cuda/samples/1_Utilities/deviceQuery</span><br><span class="line"></span><br><span class="line">RUN make</span><br><span class="line"># CMD defines the default command to be run in the container</span><br><span class="line"># CMD is overridden by supplying a command + arguments to</span><br><span class="line"># `docker run`, e.g. `nvcc --version` or `bash`CMD ./deviceQuery</span><br></pre></td></tr></table></figure></p>
@@ -364,18 +403,26 @@ ga('send', 'pageview');
 <p>Jupyterノートブックを起動し、<code>cuml/linear_regression_demo</code>を試す。</p>
 <p>cudaをインポートするところで以下のようなエラー。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OSError: cannot load library &apos;/home/centos/.conda/envs/rapids/lib/librmm.so&apos;: libcudart.so.10.0: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
-<p>そこで、 https://github.com/rapidsai/cudf/issues/496 を参照し、cudatoolkitのインストールを試す。 状況が変化し、今度は、<code>libcublas.so.9.2</code>が必要と言われた。</p>
+<p>そこで、 https://github.com/rapidsai/cudf/issues/496
+を参照し、cudatoolkitのインストールを試す。
+状況が変化し、今度は、<code>libcublas.so.9.2</code>が必要と言われた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImportError: libcublas.so.9.2: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
-<p>CUDA9系を指定されているように見える。 しかし実際にインストールしたのはCUDA10系。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/centos/.conda/pkgs/cudatoolkit-10.0.130-0/lib/libcublas.so.10.0</span><br></pre></td></tr></table></figure></p>
-<p>ここでCUDA9系で試すことにする。 改めてCUDA10系をアンインストールし、CUDA9系をインストール後に以下を実行。</p>
+<p>CUDA9系を指定されているように見える。
+しかし実際にインストールしたのはCUDA10系。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/centos/.conda/pkgs/cudatoolkit-10.0.130-0/lib/libcublas.so.10.0</span><br></pre></td></tr></table></figure></p>
+<p>ここでCUDA9系で試すことにする。
+改めてCUDA10系をアンインストールし、CUDA9系をインストール後に以下を実行。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ conda install -c nvidia -c rapidsai -c pytorch -c numba -c conda-forge \</span><br><span class="line">    cudf=0.6 cuml=0.6 python=3.6</span><br></pre></td></tr></table></figure>
 <p>その後、少なくともライブラリインポートはうまくいった。</p>
-<p>余談だが、手元のJupyterノートブック環境では、<code>%%time</code>マジックを使ったときに、 そのとき定義した変数がバインドされなかった。 （Dockerで試したときはうまく行ったような気がするが…）</p>
-<p>cudfをつかうところで以下のエラー発生。改めてcudatoolkitをインストールする。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NvvmSupportError: libNVVM cannot be found. Do `conda install cudatoolkit`:</span><br><span class="line">library nvvm not found</span><br></pre></td></tr></table></figure></p>
+<p>余談だが、手元のJupyterノートブック環境では、<code>%%time</code>マジックを使ったときに、
+そのとき定義した変数がバインドされなかった。
+（Dockerで試したときはうまく行ったような気がするが…）</p>
+<p>cudfをつかうところで以下のエラー発生。改めてcudatoolkitをインストールする。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NvvmSupportError: libNVVM cannot be found. Do `conda install cudatoolkit`:</span><br><span class="line">library nvvm not found</span><br></pre></td></tr></table></figure></p>
 <p>その後再度実行。 改めて以下のエラーを発生。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">what():  CUDA error encountered at: /conda/envs/gdf/conda-bld/libcudf_1553535868363/work/cpp/src/bitmask/valid_ops.cu:170: 48 cudaErrorNoKernelImageForDevice no kernel image is available for execution on the device</span><br></pre></td></tr></table></figure>
 <h3><span id="インスタンス種類を変えてみる">インスタンス種類を変えてみる</span></h3>
-<p>基本的なことに気がついた。 g3.4xlargeではなく、p3.2xlargeに変更してみた。</p>
+<p>基本的なことに気がついた。
+g3.4xlargeではなく、p3.2xlargeに変更してみた。</p>
 <p>うまくいった。</p>
 
         
@@ -387,7 +434,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/16/RAPIDS/" data-id="cl2nztnnn00bu5xqi87xkwf5k" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/16/RAPIDS/" data-id="cl2o9pbh4015a18rz4ls4vloe" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -638,5 +685,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

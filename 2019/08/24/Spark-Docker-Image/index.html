@@ -5,18 +5,18 @@
     
     <title>Spark Docker Image | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ Spark公式のDockerfileを活用 Anaconda等も利用するとして？    参考  Running Spark on Kubernetes Docker Images dockerhubのopenjdk DockerhubのAnacondaのDockerfile GitHub上のAlpine版のAnaconda公式Dockerfile GitHub上のDebianベー">
+    <meta name="description" content="参考 メモ  Spark公式のDockerfileを活用 Anaconda等も利用するとして？    参考  Running Spark on Kubernetes Docker Images dockerhubのopenjdk DockerhubのAnacondaのDockerfile GitHub上のAlpine版のAnaconda公式Dockerfile GitHub上のDebianベ">
 <meta name="keywords" content="Spark,Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spark Docker Image">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/08/24/Spark-Docker-Image/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ Spark公式のDockerfileを活用 Anaconda等も利用するとして？    参考  Running Spark on Kubernetes Docker Images dockerhubのopenjdk DockerhubのAnacondaのDockerfile GitHub上のAlpine版のAnaconda公式Dockerfile GitHub上のDebianベー">
+<meta property="og:description" content="参考 メモ  Spark公式のDockerfileを活用 Anaconda等も利用するとして？    参考  Running Spark on Kubernetes Docker Images dockerhubのopenjdk DockerhubのAnacondaのDockerfile GitHub上のAlpine版のAnaconda公式Dockerfile GitHub上のDebianベ">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark Docker Image">
-<meta name="twitter:description" content="参考 メモ Spark公式のDockerfileを活用 Anaconda等も利用するとして？    参考  Running Spark on Kubernetes Docker Images dockerhubのopenjdk DockerhubのAnacondaのDockerfile GitHub上のAlpine版のAnaconda公式Dockerfile GitHub上のDebianベー">
+<meta name="twitter:description" content="参考 メモ  Spark公式のDockerfileを活用 Anaconda等も利用するとして？    参考  Running Spark on Kubernetes Docker Images dockerhubのopenjdk DockerhubのAnacondaのDockerfile GitHub上のAlpine版のAnaconda公式Dockerfile GitHub上のDebianベ">
     
 
     
@@ -251,43 +251,65 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#spark公式のdockerfileを活用">Spark公式のDockerfileを活用</a></li>
-<li><a href="#anaconda等も利用するとして">Anaconda等も利用するとして？</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#spark公式のdockerfileを活用" id="toc-spark公式のdockerfileを活用">Spark公式のDockerfileを活用</a></li>
+<li><a href="#anaconda等も利用するとして" id="toc-anaconda等も利用するとして">Anaconda等も利用するとして？</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html" target="_blank" rel="noopener">Running Spark on Kubernetes</a></li>
-<li><a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html#docker-images" target="_blank" rel="noopener">Docker Images</a></li>
+<li><a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html" target="_blank" rel="noopener">Running
+Spark on Kubernetes</a></li>
+<li><a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html#docker-images" target="_blank" rel="noopener">Docker
+Images</a></li>
 <li><a href="https://hub.docker.com/_/openjdk" target="_blank" rel="noopener">dockerhubのopenjdk</a></li>
 <li><a href="https://hub.docker.com/r/continuumio/anaconda/dockerfile" target="_blank" rel="noopener">DockerhubのAnacondaのDockerfile</a></li>
 <li><a href="https://github.com/ContinuumIO/docker-images/blob/master/anaconda3/alpine/Dockerfile" target="_blank" rel="noopener">GitHub上のAlpine版のAnaconda公式Dockerfile</a></li>
-<li><a href="https://github.com/docker-library/openjdk/blob/master/8/jdk/Dockerfile" target="_blank" rel="noopener">GitHub上のDebianベースのOpenJDK Dockerfile</a></li>
+<li><a href="https://github.com/docker-library/openjdk/blob/master/8/jdk/Dockerfile" target="_blank" rel="noopener">GitHub上のDebianベースのOpenJDK
+Dockerfile</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="spark公式のdockerfileを活用">Spark公式のDockerfileを活用</span></h2>
-<p>Spark公式ドキュメントの <a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html" target="_blank" rel="noopener">Running Spark on Kubernetes</a> 内にある <a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html#docker-images" target="_blank" rel="noopener">Docker Images</a> によると、 SparkにはDockerfileが含まれている。</p>
+<p>Spark公式ドキュメントの <a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html" target="_blank" rel="noopener">Running
+Spark on Kubernetes</a> 内にある <a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html#docker-images" target="_blank" rel="noopener">Docker
+Images</a> によると、 SparkにはDockerfileが含まれている。</p>
 <p>以下のパッケージで確認。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat RELEASE</span><br><span class="line">Spark 2.4.3 built for Hadoop 2.7.3</span><br><span class="line">Build flags: -B -Pmesos -Pyarn -Pkubernetes -Pflume -Psparkr -Pkafka-0-8 -Phadoop-2.7 -Phive -Phive-thriftserver -DzincPort=3036</span><br></pre></td></tr></table></figure></p>
-<p>Dockerfileは、パッケージ内の <code>kubernetes/dockerfiles/spark/Dockerfile</code> に存在する。 また、これを利用した <code>bin/docker-image-tool.sh</code> というスクリプトが存在し、 Dockerイメージをビルドして、プッシュできる。 今回はこのスクリプトを使ってみる。</p>
+<p>Dockerfileは、パッケージ内の
+<code>kubernetes/dockerfiles/spark/Dockerfile</code> に存在する。
+また、これを利用した <code>bin/docker-image-tool.sh</code>
+というスクリプトが存在し、 Dockerイメージをビルドして、プッシュできる。
+今回はこのスクリプトを使ってみる。</p>
 <p>ヘルプを見ると以下の通り。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$ ./bin/docker-image-tool.sh --help</span><br><span class="line">Usage: ./bin/docker-image-tool.sh [options] [command]</span><br><span class="line">Builds or pushes the built-in Spark Docker image.</span><br><span class="line"></span><br><span class="line">Commands:</span><br><span class="line">  build       Build image. Requires a repository address to be provided if the image will be</span><br><span class="line">              pushed to a different registry.</span><br><span class="line">  push        Push a pre-built image to a registry. Requires a repository address to be provided.</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -f file               Dockerfile to build for JVM based Jobs. By default builds the Dockerfile shipped with Spark.</span><br><span class="line">  -p file               Dockerfile to build for PySpark Jobs. Builds Python dependencies and ships with Spark.</span><br><span class="line">  -R file               Dockerfile to build for SparkR Jobs. Builds R dependencies and ships with Spark.</span><br><span class="line">  -r repo               Repository address.</span><br><span class="line">  -t tag                Tag to apply to the built image, or to identify the image to be pushed.</span><br><span class="line">  -m                    Use minikube&apos;s Docker daemon.</span><br><span class="line">  -n                    Build docker image with --no-cache</span><br><span class="line">  -b arg      Build arg to build or push the image. For multiple build args, this option needs to</span><br><span class="line">              be used separately for each build arg.</span><br><span class="line"></span><br><span class="line">Using minikube when building images will do so directly into minikube&apos;s Docker daemon.</span><br><span class="line">There is no need to push the images into minikube in that case, they&apos;ll be automatically</span><br><span class="line">available when running applications inside the minikube cluster.</span><br><span class="line"></span><br><span class="line">Check the following documentation for more information on using the minikube Docker daemon:</span><br><span class="line"></span><br><span class="line">  https://kubernetes.io/docs/getting-started-guides/minikube/#reusing-the-docker-daemon</span><br><span class="line"></span><br><span class="line">Examples:</span><br><span class="line">  - Build image in minikube with tag &quot;testing&quot;</span><br><span class="line">    ./bin/docker-image-tool.sh -m -t testing build</span><br><span class="line"></span><br><span class="line">  - Build and push image with tag &quot;v2.3.0&quot; to docker.io/myrepo</span><br><span class="line">    ./bin/docker-image-tool.sh -r docker.io/myrepo -t v2.3.0 build</span><br><span class="line">    ./bin/docker-image-tool.sh -r docker.io/myrepo -t v2.3.0 push</span><br></pre></td></tr></table></figure></p>
 <p>つづいて最新版Sparkのバージョンをタグ付けて試す。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ./bin/docker-image-tool.sh -r docker.io/dobachi -t v2.4.3 build</span><br><span class="line">$ sudo ./bin/docker-image-tool.sh -r docker.io/dobachi -t v2.4.3 push</span><br></pre></td></tr></table></figure></p>
-<p>これは成功。 早速起動して試してみる。 なお、Sparkのパッケージは、 <code>/opt/spark</code> 以下に含まれている。</p>
+<p>これは成功。 早速起動して試してみる。 なお、Sparkのパッケージは、
+<code>/opt/spark</code> 以下に含まれている。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --rm -it dobachi/spark:v2.4.3 /bin/bash</span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">bash-4.4# /opt/spark/bin/spark-shell  </span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">Welcome to</span><br><span class="line">      ____              __</span><br><span class="line">     / __/__  ___ _____/ /__</span><br><span class="line">    _\ \/ _ \/ _ `/ __/  &apos;_/</span><br><span class="line">   /___/ .__/\_,_/_/ /_/\_\   version 2.4.3</span><br><span class="line">      /_/</span><br><span class="line"></span><br><span class="line">Using Scala version 2.11.12 (OpenJDK 64-Bit Server VM, Java 1.8.0_212) </span><br><span class="line">Type in expressions to have them evaluated.</span><br><span class="line">Type :help for more information.</span><br><span class="line"></span><br><span class="line">scala&gt;</span><br></pre></td></tr></table></figure>
 <p>データを軽く読み込んでみる。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; val path = &quot;/opt/spark/data/mllib/kmeans_data.txt&quot;</span><br><span class="line">scala&gt; val textFile = spark.read.textFile(path)</span><br><span class="line">scala&gt; textFile.first</span><br><span class="line">res1: String = 0.0 0.0 0.0</span><br><span class="line"></span><br><span class="line">scala&gt; textFile.count</span><br><span class="line">res2: Long = 6</span><br><span class="line"></span><br><span class="line">scala&gt; val csvLike = spark.read.format(&quot;csv&quot;).</span><br><span class="line">         option(&quot;sep&quot;, &quot; &quot;).</span><br><span class="line">         option(&quot;inferSchema&quot;, &quot;true&quot;).</span><br><span class="line">         option(&quot;header&quot;, &quot;false&quot;).</span><br><span class="line">         load(path)</span><br><span class="line"></span><br><span class="line">scala&gt; csvLike.show</span><br><span class="line">+---+---+---+</span><br><span class="line">|_c0|_c1|_c2|</span><br><span class="line">+---+---+---+</span><br><span class="line">|0.0|0.0|0.0|</span><br><span class="line">|0.1|0.1|0.1|</span><br><span class="line">|0.2|0.2|0.2|</span><br><span class="line">|9.0|9.0|9.0|</span><br><span class="line">|9.1|9.1|9.1|</span><br><span class="line">|9.2|9.2|9.2|</span><br><span class="line">+---+---+---+</span><br><span class="line"></span><br><span class="line">scala&gt; csvLike.where($&quot;_c0&quot; &gt; 5).show</span><br><span class="line">+---+---+---+</span><br><span class="line">|_c0|_c1|_c2|</span><br><span class="line">+---+---+---+</span><br><span class="line">|9.0|9.0|9.0|</span><br><span class="line">|9.1|9.1|9.1|</span><br><span class="line">|9.2|9.2|9.2|</span><br><span class="line">+---+---+---+</span><br></pre></td></tr></table></figure></p>
-<p>なお、PySparkが含まれているのは、違うレポジトリであり、 <code>dobachi/spark-py</code> を用いる必要がある。</p>
+<p>なお、PySparkが含まれているのは、違うレポジトリであり、
+<code>dobachi/spark-py</code> を用いる必要がある。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --rm -it dobachi/spark-py:v2.4.3 /bin/bash</span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">bash-4.4# /opt/spark/bin/pyspark </span><br><span class="line">Python 2.7.16 (default, May  6 2019, 19:35:26) </span><br><span class="line">[GCC 8.3.0] on linux2</span><br><span class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span><br><span class="line">Could not open PYTHONSTARTUP</span><br><span class="line">IOError: [Errno 2] No such file or directory: &apos;/opt/spark/python/pyspark/shell.py&apos;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
-<p>この状態だと、OS標準付帯のPythonのみ使える状態に見えた。 実用を考えると、もう少し分析用途のPythonライブラリを整えた方が良さそう。</p>
+<p>この状態だと、OS標準付帯のPythonのみ使える状態に見えた。
+実用を考えると、もう少し分析用途のPythonライブラリを整えた方が良さそう。</p>
 <h2><span id="anaconda等も利用するとして">Anaconda等も利用するとして？</span></h2>
-<p>上記の通り、Spark公式のDockerfileで作るDockerイメージには、Python関係の分析用のライブラリ、ツールが不足している。 そこでこれを補うために、Anaconda等を利用しようとするとして、パッと見でほんの少し議論なのは、 なにをベースにするかという点。</p>
+<p>上記の通り、Spark公式のDockerfileで作るDockerイメージには、Python関係の分析用のライブラリ、ツールが不足している。
+そこでこれを補うために、Anaconda等を利用しようとするとして、パッと見でほんの少し議論なのは、
+なにをベースにするかという点。</p>
 <ul>
-<li>上記で紹介したSparkに含まれるDockerfileおよび <a href="https://hub.docker.com/_/openjdk" target="_blank" rel="noopener">dockerhubのopenjdk</a> に記載の通り、当該DockerイメージはAlpine Linuxをベースとしている。 ただし、OpenJDKのDockerイメージ自体には、 <a href="https://github.com/docker-library/openjdk/blob/master/8/jdk/Dockerfile" target="_blank" rel="noopener">GitHub上のDebianベースのOpenJDK Dockerfile</a> がある。</li>
-<li>AnacondaのDockerイメージは、 <a href="https://hub.docker.com/r/continuumio/anaconda/dockerfile" target="_blank" rel="noopener">DockerhubのAnacondaのDockerfile</a> の通り、Debianをベースとしている。 しかし、 <a href="https://github.com/ContinuumIO/docker-images/blob/master/anaconda3/alpine/Dockerfile" target="_blank" rel="noopener">GitHub上のAlpine版のAnaconda公式Dockerfile</a> によるとAlpine Linux版もありそう。</li>
+<li>上記で紹介したSparkに含まれるDockerfileおよび <a href="https://hub.docker.com/_/openjdk" target="_blank" rel="noopener">dockerhubのopenjdk</a>
+に記載の通り、当該DockerイメージはAlpine Linuxをベースとしている。
+ただし、OpenJDKのDockerイメージ自体には、 <a href="https://github.com/docker-library/openjdk/blob/master/8/jdk/Dockerfile" target="_blank" rel="noopener">GitHub上のDebianベースのOpenJDK
+Dockerfile</a> がある。</li>
+<li>AnacondaのDockerイメージは、 <a href="https://hub.docker.com/r/continuumio/anaconda/dockerfile" target="_blank" rel="noopener">DockerhubのAnacondaのDockerfile</a>
+の通り、Debianをベースとしている。 しかし、 <a href="https://github.com/ContinuumIO/docker-images/blob/master/anaconda3/alpine/Dockerfile" target="_blank" rel="noopener">GitHub上のAlpine版のAnaconda公式Dockerfile</a>
+によるとAlpine Linux版もありそう。</li>
 </ul>
-<p>どっちに合わせるか悩むところだが、Debianベースに置き換えでも良いか、という気持ちではある。 Debianベースのほうが慣れているという気持ちもあり。</p>
-<p>また、Anacondaを合わせて導入するようにしたら、環境変数 <code>PYSPARK_PYTHON</code> も設定しておいたほうが良さそう。</p>
+<p>どっちに合わせるか悩むところだが、Debianベースに置き換えでも良いか、という気持ちではある。
+Debianベースのほうが慣れているという気持ちもあり。</p>
+<p>また、Anacondaを合わせて導入するようにしたら、環境変数
+<code>PYSPARK_PYTHON</code> も設定しておいたほうが良さそう。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
         
@@ -299,7 +321,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/24/Spark-Docker-Image/" data-id="cl2nztno200d45xqimuxhwta2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/24/Spark-Docker-Image/" data-id="cl2o9pb7y009e18rzn58jyu6z" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -550,5 +572,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

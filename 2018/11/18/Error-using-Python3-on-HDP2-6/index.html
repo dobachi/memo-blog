@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ Sparkでのvirtualenv対応   参考  Hortonworksのコミュニティによる情報 2to3を用いる方法の記事 HortonworkによるSparkのvirtualenv対応 SPARK-13587: Support virtualenv in PySpark  メモ 以下のようなコマンドでPython3のipythonをドライバのPythonとして指定しながら起">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python3をHDP2.6のPySparkで用いたときのエラー">
 <meta name="twitter:description" content="参考 メモ Sparkでのvirtualenv対応   参考  Hortonworksのコミュニティによる情報 2to3を用いる方法の記事 HortonworkによるSparkのvirtualenv対応 SPARK-13587: Support virtualenv in PySpark  メモ 以下のようなコマンドでPython3のipythonをドライバのPythonとして指定しながら起">
@@ -251,9 +251,9 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
-<li><a href="#sparkでのvirtualenv対応">Sparkでのvirtualenv対応</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
+<li><a href="#sparkでのvirtualenv対応" id="toc-sparkでのvirtualenv対応">Sparkでのvirtualenv対応</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -261,21 +261,27 @@ ga('send', 'pageview');
 <li><a href="https://community.hortonworks.com/questions/184869/getting-error-in-python3-kernel-for-pyspark-with-h.html" target="_blank" rel="noopener">Hortonworksのコミュニティによる情報</a></li>
 <li><a href="https://stackoverflow.com/questions/52874985/how-to-enable-python3-support-on-hdp-2-6" target="_blank" rel="noopener">2to3を用いる方法の記事</a></li>
 <li><a href="https://community.hortonworks.com/articles/104949/using-virtualenv-with-pyspark-1.html" target="_blank" rel="noopener">HortonworkによるSparkのvirtualenv対応</a></li>
-<li><a href="https://issues.apache.org/jira/browse/SPARK-13587" target="_blank" rel="noopener">SPARK-13587: Support virtualenv in PySpark</a></li>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-13587" target="_blank" rel="noopener">SPARK-13587:
+Support virtualenv in PySpark</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>以下のようなコマンドでPython3のipythonをドライバのPythonとして指定しながら起動したところ、 エラーを生じた。</p>
+<p>以下のようなコマンドでPython3のipythonをドライバのPythonとして指定しながら起動したところ、
+エラーを生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ pyspark --master yarn --conf spark.pyspark.driver.python=ipython</span><br><span class="line"></span><br><span class="line">$ ipython --version</span><br><span class="line">7.1.1</span><br><span class="line">$ python --version</span><br><span class="line">Python 3.6.7 :: Anaconda, Inc.</span><br></pre></td></tr></table></figure>
 <p>エラー内容は以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">18/11/18 12:30:09 WARN ScriptBasedMapping: Exception running /etc/hadoop/conf/topology_script.py 192.168.33.83</span><br><span class="line">ExitCodeException exitCode=1:   File &quot;/etc/hadoop/conf/topology_script.py&quot;, line 63</span><br><span class="line">    print rack</span><br><span class="line">             ^</span><br><span class="line">SyntaxError: Missing parentheses in call to &apos;print&apos;. Did you mean print(rack)?</span><br><span class="line"></span><br><span class="line">        at org.apache.hadoop.util.Shell.runCommand(Shell.java:954)</span><br><span class="line">        at org.apache.hadoop.util.Shell.run(Shell.java:855)</span><br><span class="line">        at org.apache.hadoop.util.Shell$ShellCommandExecutor.execute(Shell.java:1163)</span><br><span class="line">        at org.apache.hadoop.net.ScriptBasedMapping$RawScriptBasedMapping.runResolveComman</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
-<p><a href="https://community.hortonworks.com/questions/184869/getting-error-in-python3-kernel-for-pyspark-with-h.html" target="_blank" rel="noopener">Hortonworksのコミュニティによる情報</a>によると、Python2系しか対応していないというが、本当かどうか確認が必要。 同様のことを指摘している記事として<a href="https://stackoverflow.com/questions/52874985/how-to-enable-python3-support-on-hdp-2-6" target="_blank" rel="noopener">2to3を用いる方法の記事</a>が挙げられるが、そこでは</p>
+<p><a href="https://community.hortonworks.com/questions/184869/getting-error-in-python3-kernel-for-pyspark-with-h.html" target="_blank" rel="noopener">Hortonworksのコミュニティによる情報</a>によると、Python2系しか対応していないというが、本当かどうか確認が必要。
+同様のことを指摘している記事として<a href="https://stackoverflow.com/questions/52874985/how-to-enable-python3-support-on-hdp-2-6" target="_blank" rel="noopener">2to3を用いる方法の記事</a>が挙げられるが、そこでは</p>
 <ul>
 <li>/usr/bin/hdp-select</li>
 <li>/etc/hadoop/conf/topology_script.py</li>
 </ul>
-<p>の2ファイルがPython2でしか動作しない内容で記載されているようだ。 ためしに<code>/usr/bin/hdp-select</code>をのぞいてみたら、確かにPython2系に限定された実装の箇所がチラホラ見受けられた。</p>
+<p>の2ファイルがPython2でしか動作しない内容で記載されているようだ。
+ためしに<code>/usr/bin/hdp-select</code>をのぞいてみたら、確かにPython2系に限定された実装の箇所がチラホラ見受けられた。</p>
 <h1><span id="sparkでのvirtualenv対応">Sparkでのvirtualenv対応</span></h1>
-<p><a href="https://issues.apache.org/jira/browse/SPARK-13587" target="_blank" rel="noopener">SPARK-13587: Support virtualenv in PySpark</a>でHortonworkの人中心に議論されており、 ターゲットバージョンは3.0.1とされている。</p>
+<p><a href="https://issues.apache.org/jira/browse/SPARK-13587" target="_blank" rel="noopener">SPARK-13587:
+Support virtualenv in PySpark</a>でHortonworkの人中心に議論されており、
+ターゲットバージョンは3.0.1とされている。</p>
 <p><a href="https://community.hortonworks.com/articles/104949/using-virtualenv-with-pyspark-1.html" target="_blank" rel="noopener">HortonworkによるSparkのvirtualenv対応</a>に記載の方法は、Hortonworksの独自拡張なのか。</p>
 
         
@@ -287,7 +293,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/18/Error-using-Python3-on-HDP2-6/" data-id="cl2nztnlf004r5xqii9vlx5qc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/18/Error-using-Python3-on-HDP2-6/" data-id="cl2o9pb5c003618rz2y5rvjrv" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -538,5 +544,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

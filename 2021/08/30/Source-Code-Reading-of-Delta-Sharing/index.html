@@ -5,18 +5,18 @@
     
     <title>Source Code Reading of Delta Sharing | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ サーバの参考実装 io.delta.sharing.server.DeltaSharingServiceの概略（起動の流れ） Shareのリストを返す箇所の実装 テーブルのバージョンを返す箇所の実装 io.delta.standalone.internal.DeltaSharedTable クラス ファイルリストを返す箇所の実装 クラスローダについて     参考  Delta">
+    <meta name="description" content="参考 メモ  サーバの参考実装  io.delta.sharing.server.DeltaSharingServiceの概略（起動の流れ） Shareのリストを返す箇所の実装 テーブルのバージョンを返す箇所の実装 io.delta.standalone.internal.DeltaSharedTable クラス ファイルリストを返す箇所の実装 クラスローダについて     参考  Delt">
 <meta name="keywords" content="Delta Lake,Delta Sharing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Source Code Reading of Delta Sharing">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2021/08/30/Source-Code-Reading-of-Delta-Sharing/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ サーバの参考実装 io.delta.sharing.server.DeltaSharingServiceの概略（起動の流れ） Shareのリストを返す箇所の実装 テーブルのバージョンを返す箇所の実装 io.delta.standalone.internal.DeltaSharedTable クラス ファイルリストを返す箇所の実装 クラスローダについて     参考  Delta">
+<meta property="og:description" content="参考 メモ  サーバの参考実装  io.delta.sharing.server.DeltaSharingServiceの概略（起動の流れ） Shareのリストを返す箇所の実装 テーブルのバージョンを返す箇所の実装 io.delta.standalone.internal.DeltaSharedTable クラス ファイルリストを返す箇所の実装 クラスローダについて     参考  Delt">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Source Code Reading of Delta Sharing">
-<meta name="twitter:description" content="参考 メモ サーバの参考実装 io.delta.sharing.server.DeltaSharingServiceの概略（起動の流れ） Shareのリストを返す箇所の実装 テーブルのバージョンを返す箇所の実装 io.delta.standalone.internal.DeltaSharedTable クラス ファイルリストを返す箇所の実装 クラスローダについて     参考  Delta">
+<meta name="twitter:description" content="参考 メモ  サーバの参考実装  io.delta.sharing.server.DeltaSharingServiceの概略（起動の流れ） Shareのリストを返す箇所の実装 テーブルのバージョンを返す箇所の実装 io.delta.standalone.internal.DeltaSharedTable クラス ファイルリストを返す箇所の実装 クラスローダについて     参考  Delt">
     
 
     
@@ -251,133 +251,213 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#サーバの参考実装">サーバの参考実装</a><ul>
-<li><a href="#io.delta.sharing.server.deltasharingserviceの概略起動の流れ">io.delta.sharing.server.DeltaSharingServiceの概略（起動の流れ）</a></li>
-<li><a href="#shareのリストを返す箇所の実装">Shareのリストを返す箇所の実装</a></li>
-<li><a href="#テーブルのバージョンを返す箇所の実装">テーブルのバージョンを返す箇所の実装</a></li>
-<li><a href="#io.delta.standalone.internal.deltasharedtable-クラス">io.delta.standalone.internal.DeltaSharedTable クラス</a></li>
-<li><a href="#ファイルリストを返す箇所の実装">ファイルリストを返す箇所の実装</a></li>
-<li><a href="#クラスローダについて">クラスローダについて</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#サーバの参考実装" id="toc-サーバの参考実装">サーバの参考実装</a>
+<ul>
+<li><a href="#io.delta.sharing.server.deltasharingserviceの概略起動の流れ" id="toc-io.delta.sharing.server.deltasharingserviceの概略起動の流れ">io.delta.sharing.server.DeltaSharingServiceの概略（起動の流れ）</a></li>
+<li><a href="#shareのリストを返す箇所の実装" id="toc-shareのリストを返す箇所の実装">Shareのリストを返す箇所の実装</a></li>
+<li><a href="#テーブルのバージョンを返す箇所の実装" id="toc-テーブルのバージョンを返す箇所の実装">テーブルのバージョンを返す箇所の実装</a></li>
+<li><a href="#io.delta.standalone.internal.deltasharedtable-クラス" id="toc-io.delta.standalone.internal.deltasharedtable-クラス">io.delta.standalone.internal.DeltaSharedTable
+クラス</a></li>
+<li><a href="#ファイルリストを返す箇所の実装" id="toc-ファイルリストを返す箇所の実装">ファイルリストを返す箇所の実装</a></li>
+<li><a href="#クラスローダについて" id="toc-クラスローダについて">クラスローダについて</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://github.com/delta-io/delta-sharing" target="_blank" rel="noopener">Delta Sharingの公式GitHub</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#read-data-from-a-table" target="_blank" rel="noopener">Read Data from a Table</a></li>
+<li><a href="https://github.com/delta-io/delta-sharing" target="_blank" rel="noopener">Delta
+Sharingの公式GitHub</a></li>
+<li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#read-data-from-a-table" target="_blank" rel="noopener">Read
+Data from a Table</a></li>
 </ul>
 <ul>
 <li><a href="https://armeria.dev/" target="_blank" rel="noopener">Armeria</a></li>
-<li><a href="https://armeria.dev/docs/server-annotated-service/" target="_blank" rel="noopener">ArmeriaのAnnotated service</a></li>
+<li><a href="https://armeria.dev/docs/server-annotated-service/" target="_blank" rel="noopener">ArmeriaのAnnotated
+service</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="サーバの参考実装">サーバの参考実装</span></h2>
 <h3><span id="iodeltasharingserverdeltasharingserviceの概略起動の流れ">io.delta.sharing.server.DeltaSharingServiceの概略（起動の流れ）</span></h3>
-<p>サーバ起動スクリプトを見ると、以下のように <code>io.delta.sharing.server.DeltaSharingService</code> クラスが用いられている事が分かる。</p>
+<p>サーバ起動スクリプトを見ると、以下のように
+<code>io.delta.sharing.server.DeltaSharingService</code>
+クラスが用いられている事が分かる。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">declare -r lib_dir="$(realpath "$&#123;app_home&#125;/../lib")"</span><br><span class="line">declare -a app_mainclass=(io.delta.sharing.server.DeltaSharingService)</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">エントリポイントは以下の通り、</span><br><span class="line"></span><br><span class="line">io/delta/sharing/server/DeltaSharingService.scala:276</span><br><span class="line"></span><br><span class="line">```scala</span><br><span class="line">  def main(args: Array[String]): Unit = &#123;</span><br><span class="line">    val ns = parser.parseArgsOrFail(args)</span><br><span class="line">    val serverConfigPath = ns.getString("config")</span><br><span class="line">    val serverConf = ServerConfig.load(serverConfigPath)</span><br><span class="line">    start(serverConf).blockUntilShutdown()</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <h4><span id="コンフィグのロード">コンフィグのロード</span></h4>
 <p>渡された設定ファイルのPATHを用いて、設定を読み込む。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Load the configurations for the server from the config file. If the file name ends with</span></span><br><span class="line"><span class="comment"> * `.yaml` or `.yml`, load it using the YAML parser. Otherwise, throw an error.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load</span></span>(configFile: <span class="type">String</span>): <span class="type">ServerConfig</span> = &#123;</span><br><span class="line">  <span class="keyword">if</span> (configFile.endsWith(<span class="string">".yaml"</span>) || configFile.endsWith(<span class="string">".yml"</span>)) &#123;</span><br><span class="line">    <span class="keyword">val</span> serverConfig =</span><br><span class="line">      createYamlObjectMapper.readValue(<span class="keyword">new</span> <span class="type">File</span>(configFile), classOf[<span class="type">ServerConfig</span>])</span><br><span class="line">    serverConfig.checkConfig()</span><br><span class="line">    serverConfig</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">IOException</span>(<span class="string">"The server config file must be a yml or yaml file"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4><span id="startメソッド">startメソッド</span></h4>
-<p>オブジェクトのmainメソッド。その中で用いられている、 <code>start</code> メソッド内を確認していく。</p>
+<p>オブジェクトのmainメソッド。その中で用いられている、
+<code>start</code> メソッド内を確認していく。</p>
 <p>io/delta/sharing/server/DeltaSharingService.scala:230</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">start</span></span>(serverConfig: <span class="type">ServerConfig</span>): <span class="type">Server</span> = &#123;</span><br><span class="line">  <span class="keyword">lazy</span> <span class="keyword">val</span> server = &#123;</span><br><span class="line">    updateDefaultJsonPrinterForScalaPbConverterUtil()</span><br><span class="line">    <span class="keyword">val</span> builder = <span class="type">Server</span>.builder()</span><br><span class="line">      .defaultHostname(serverConfig.getHost)</span><br><span class="line">      .disableDateHeader()</span><br><span class="line">      .disableServerHeader()</span><br><span class="line">      .annotatedService(serverConfig.endpoint, <span class="keyword">new</span> <span class="type">DeltaSharingService</span>(serverConfig): <span class="type">Any</span>)</span><br><span class="line">    <span class="keyword">if</span> (serverConfig.ssl == <span class="literal">null</span>) &#123;</span><br><span class="line">      builder.http(serverConfig.getPort)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      builder.https(serverConfig.getPort)</span><br><span class="line">      <span class="keyword">if</span> (serverConfig.ssl.selfSigned) &#123;</span><br><span class="line">        builder.tlsSelfSigned()</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (serverConfig.ssl.certificatePasswordFile == <span class="literal">null</span>) &#123;</span><br><span class="line">          builder.tls(</span><br><span class="line">            <span class="keyword">new</span> <span class="type">File</span>(serverConfig.ssl.certificateFile),</span><br><span class="line">            <span class="keyword">new</span> <span class="type">File</span>(serverConfig.ssl.certificateKeyFile))</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          builder.tls(</span><br><span class="line">            <span class="keyword">new</span> <span class="type">File</span>(serverConfig.ssl.certificateFile),</span><br><span class="line">            <span class="keyword">new</span> <span class="type">File</span>(serverConfig.ssl.certificateKeyFile),</span><br><span class="line">            <span class="type">FileUtils</span>.readFileToString(<span class="keyword">new</span> <span class="type">File</span>(serverConfig.ssl.certificatePasswordFile), <span class="type">UTF_8</span>)</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (serverConfig.getAuthorization != <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="comment">// Authorization is set. Set up the authorization using the token in the server config.</span></span><br><span class="line">      <span class="keyword">val</span> authServiceBuilder =</span><br><span class="line">        <span class="type">AuthService</span>.builder.addOAuth2((_: <span class="type">ServiceRequestContext</span>, token: <span class="type">OAuth2Token</span>) =&gt; &#123;</span><br><span class="line">          <span class="comment">// Use `MessageDigest.isEqual` to do a time-constant comparison to avoid timing attacks</span></span><br><span class="line">          <span class="keyword">val</span> authorized = <span class="type">MessageDigest</span>.isEqual(</span><br><span class="line">            token.accessToken.getBytes(<span class="type">UTF_8</span>),</span><br><span class="line">            serverConfig.getAuthorization.getBearerToken.getBytes(<span class="type">UTF_8</span>))</span><br><span class="line">          <span class="type">CompletableFuture</span>.completedFuture(authorized)</span><br><span class="line">        &#125;)</span><br><span class="line">      builder.decorator(authServiceBuilder.newDecorator)</span><br><span class="line">    &#125;</span><br><span class="line">    builder.build()</span><br><span class="line">  &#125;</span><br><span class="line">  server.start().get()</span><br><span class="line">  server</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>一番最後の箇所の通り、</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server.start().get()</span><br><span class="line">server</span><br></pre></td></tr></table></figure>
-<p><code>server</code> は、 <a href="https://armeria.dev/" target="_blank" rel="noopener">Armeria</a> のビルダを用いてインスタンス化されたサーバを起動する。 なお、<code>start</code>メソッド内ではTLS周りの設定、トークンの設定などが行われる。</p>
+<p><code>server</code> は、 <a href="https://armeria.dev/" target="_blank" rel="noopener">Armeria</a>
+のビルダを用いてインスタンス化されたサーバを起動する。
+なお、<code>start</code>メソッド内ではTLS周りの設定、トークンの設定などが行われる。</p>
 <p>なお、サーバに渡されるクラスは以下の通り、</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> builder = <span class="type">Server</span>.builder()</span><br><span class="line">  .defaultHostname(serverConfig.getHost)</span><br><span class="line">  .disableDateHeader()</span><br><span class="line">  .disableServerHeader()</span><br><span class="line">  .annotatedService(serverConfig.endpoint, <span class="keyword">new</span> <span class="type">DeltaSharingService</span>(serverConfig): <span class="type">Any</span>)</span><br></pre></td></tr></table></figure>
-<p><code>com.linecorp.armeria.server.ServerBuilder#annotatedService(java.lang.String, java.lang.Object)</code> メソッドを用いて渡される。 渡されているのは <code>io.delta.sharing.server.DeltaSharingService</code> クラスである。 <code>annotatedService</code> メソッドについては、 <a href="https://armeria.dev/docs/server-annotated-service/" target="_blank" rel="noopener">ArmeriaのAnnotated service</a> を参照。</p>
+<p><code>com.linecorp.armeria.server.ServerBuilder#annotatedService(java.lang.String, java.lang.Object)</code>
+メソッドを用いて渡される。 渡されているのは
+<code>io.delta.sharing.server.DeltaSharingService</code> クラスである。
+<code>annotatedService</code> メソッドについては、 <a href="https://armeria.dev/docs/server-annotated-service/" target="_blank" rel="noopener">ArmeriaのAnnotated
+service</a> を参照。</p>
 <h3><span id="shareのリストを返す箇所の実装">Shareのリストを返す箇所の実装</span></h3>
 <p>以下の通り、</p>
 <p>io/delta/sharing/server/DeltaSharingService.scala:108</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Get</span>(<span class="string">"/shares"</span>)</span><br><span class="line"><span class="meta">@ProducesJson</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">listShares</span></span>(</span><br><span class="line">    <span class="meta">@Param</span>(<span class="string">"maxResults"</span>) <span class="meta">@Default</span>(<span class="string">"500"</span>) maxResults: <span class="type">Int</span>,</span><br><span class="line">    <span class="meta">@Param</span>(<span class="string">"pageToken"</span>) <span class="meta">@Nullable</span> pageToken: <span class="type">String</span>): <span class="type">ListSharesResponse</span> = processRequest &#123;</span><br><span class="line">  <span class="keyword">val</span> (shares, nextPageToken) = sharedTableManager.listShares(<span class="type">Option</span>(pageToken), <span class="type">Some</span>(maxResults))</span><br><span class="line">  <span class="type">ListSharesResponse</span>(shares, nextPageToken)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>io.delta.sharing.server.SharedTableManager#SharedTableManager</code> クラスのインスタンスを利用し、 <code>io.delta.sharing.server.SharedTableManager#listShares</code> メソッドを用いて、 設定ファイルから読み込んだShareのリストを取得し返す。</p>
+<p><code>io.delta.sharing.server.SharedTableManager#SharedTableManager</code>
+クラスのインスタンスを利用し、
+<code>io.delta.sharing.server.SharedTableManager#listShares</code>
+メソッドを用いて、
+設定ファイルから読み込んだShareのリストを取得し返す。</p>
 <p>つまり、このあたりの値を返す時にはデータ本体にアクセスしていない、ということになる。</p>
-<p>仮に...もし設定ファイルに書かれたデータの実体が無かった場合はどうなるのだろうか。 ★要確認</p>
+<p>仮に...もし設定ファイルに書かれたデータの実体が無かった場合はどうなるのだろうか。
+★要確認</p>
 <p>テーブルのリスト取得も同じような感じだった。</p>
 <h3><span id="テーブルのバージョンを返す箇所の実装">テーブルのバージョンを返す箇所の実装</span></h3>
 <p>io/delta/sharing/server/DeltaSharingService.scala:144</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Head</span>(<span class="string">"/shares/&#123;share&#125;/schemas/&#123;schema&#125;/tables/&#123;table&#125;"</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getTableVersion</span></span>(</span><br><span class="line">  <span class="meta">@Param</span>(<span class="string">"share"</span>) share: <span class="type">String</span>,</span><br><span class="line">  <span class="meta">@Param</span>(<span class="string">"schema"</span>) schema: <span class="type">String</span>,</span><br><span class="line">  <span class="meta">@Param</span>(<span class="string">"table"</span>) table: <span class="type">String</span>): <span class="type">HttpResponse</span> = processRequest &#123;</span><br><span class="line">  <span class="keyword">val</span> tableConfig = sharedTableManager.getTable(share, schema, table)</span><br><span class="line">  <span class="keyword">val</span> version = deltaSharedTableLoader.loadTable(tableConfig).tableVersion</span><br><span class="line">  <span class="keyword">val</span> headers = createHeadersBuilderForTableVersion(version).build()</span><br><span class="line">  <span class="type">HttpResponse</span>.of(headers)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>io.delta.sharing.server.SharedTableManager#getTable</code> メソッドを利用し、コンフィグから読み込んだ情報を元に テーブル情報を取得する。</p>
-<p>つづいて、 <code>io.delta.standalone.internal.DeltaSharedTableLoader#loadTable</code> メソッドを利用し、 <code>io.delta.standalone.internal.DeltaSharedTable#DeltaSharedTable</code> クラスのインスタンスを取得する。</p>
-<p><code>DeltaSharedTable</code> クラスは、 <code>DeltaLog</code> クラスをラップした管理用のクラス。</p>
-<h3><span id="iodeltastandaloneinternaldeltasharedtable-クラス">io.delta.standalone.internal.DeltaSharedTable クラス</span></h3>
-<p>このクラスは、<code>DeltaLog</code> クラスをラップしたものであり、サーバの管理機能の主要なコンポーネントである。</p>
+<p><code>io.delta.sharing.server.SharedTableManager#getTable</code>
+メソッドを利用し、コンフィグから読み込んだ情報を元に
+テーブル情報を取得する。</p>
+<p>つづいて、
+<code>io.delta.standalone.internal.DeltaSharedTableLoader#loadTable</code>
+メソッドを利用し、
+<code>io.delta.standalone.internal.DeltaSharedTable#DeltaSharedTable</code>
+クラスのインスタンスを取得する。</p>
+<p><code>DeltaSharedTable</code> クラスは、 <code>DeltaLog</code>
+クラスをラップした管理用のクラス。</p>
+<h3><span id="iodeltastandaloneinternaldeltasharedtableクラス">io.delta.standalone.internal.DeltaSharedTable
+クラス</span></h3>
+<p>このクラスは、<code>DeltaLog</code>
+クラスをラップしたものであり、サーバの管理機能の主要なコンポーネントである。</p>
 <h4><span id="deltalogの取得">deltaLogの取得</span></h4>
 <p>例えば <code>deltaLog</code> インスタンスを取得できる。</p>
 <p>io/delta/standalone/internal/DeltaSharedTableLoader.scala:74</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> deltaLog = withClassLoader &#123;</span><br><span class="line">  <span class="keyword">val</span> tablePath = <span class="keyword">new</span> <span class="type">Path</span>(tableConfig.getLocation)</span><br><span class="line">  <span class="keyword">val</span> fs = tablePath.getFileSystem(conf)</span><br><span class="line">  <span class="keyword">if</span> (!fs.isInstanceOf[<span class="type">S3AFileSystem</span>]) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">IllegalStateException</span>(<span class="string">"Cannot share tables on non S3 file systems"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">DeltaLog</span>.forTable(conf, tablePath).asInstanceOf[<span class="type">DeltaLogImpl</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上記の通り、内部では <code>io.delta.standalone.DeltaLog#forTable(org.apache.hadoop.conf.Configuration, org.apache.hadoop.fs.Path)</code> メソッドが 用いられており、実際にDelta Lake形式で保存されたデータ本体（Delta Lakeのメタデータ）にアクセスする。</p>
+<p>上記の通り、内部では
+<code>io.delta.standalone.DeltaLog#forTable(org.apache.hadoop.conf.Configuration, org.apache.hadoop.fs.Path)</code>
+メソッドが 用いられており、実際にDelta
+Lake形式で保存されたデータ本体（Delta
+Lakeのメタデータ）にアクセスする。</p>
 <h4><span id="テーブルバージョン取得">テーブルバージョン取得</span></h4>
 <p>Delta Logの機能を利用し、テーブルのバージョンを取得できる。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Return the current table version */</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tableVersion</span></span>: <span class="type">Long</span> = withClassLoader &#123;</span><br><span class="line">  <span class="keyword">val</span> snapshot = deltaLog.snapshot</span><br><span class="line">  validateDeltaTable(snapshot)</span><br><span class="line">  snapshot.version</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>この機能は <code>io.delta.sharing.server.DeltaSharingService#getTableVersion</code> の実装に利用されている。</p>
+<p>この機能は
+<code>io.delta.sharing.server.DeltaSharingService#getTableVersion</code>
+の実装に利用されている。</p>
 <h4><span id="クエリ">クエリ</span></h4>
-<p><code>io.delta.standalone.internal.DeltaSharedTable#query</code> メソッドは、 後述の通り、<code>DeltaSharingSerivce</code> 内でファイルリストを取得したり、メタデータを取得したりするときに用いられる。</p>
+<p><code>io.delta.standalone.internal.DeltaSharedTable#query</code>
+メソッドは、 後述の通り、<code>DeltaSharingSerivce</code>
+内でファイルリストを取得したり、メタデータを取得したりするときに用いられる。</p>
 <h3><span id="ファイルリストを返す箇所の実装">ファイルリストを返す箇所の実装</span></h3>
 <p><code>query</code> はファイルリストを返すAPIである。</p>
 <p>io/delta/sharing/server/DeltaSharingService.scala:169</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Post</span>(<span class="string">"/shares/&#123;share&#125;/schemas/&#123;schema&#125;/tables/&#123;table&#125;/query"</span>)</span><br><span class="line"><span class="meta">@ConsumesJson</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">listFiles</span></span>(</span><br><span class="line">    <span class="meta">@Param</span>(<span class="string">"share"</span>) share: <span class="type">String</span>,</span><br><span class="line">    <span class="meta">@Param</span>(<span class="string">"schema"</span>) schema: <span class="type">String</span>,</span><br><span class="line">    <span class="meta">@Param</span>(<span class="string">"table"</span>) table: <span class="type">String</span>,</span><br><span class="line">    queryTableRequest: <span class="type">QueryTableRequest</span>): <span class="type">HttpResponse</span> = processRequest &#123;</span><br><span class="line">  <span class="keyword">val</span> tableConfig = sharedTableManager.getTable(share, schema, table)</span><br><span class="line">  <span class="keyword">val</span> (version, actions) = deltaSharedTableLoader.loadTable(tableConfig).query(</span><br><span class="line">    includeFiles = <span class="literal">true</span>,</span><br><span class="line">    queryTableRequest.predicateHints,</span><br><span class="line">    queryTableRequest.limitHint)</span><br><span class="line">  streamingOutput(version, actions)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>特徴的なのは、 <code>predicateHints</code> や <code>limitHint</code> が渡されており、フィルタ条件が指定できる点。 ただし、公式ドキュメント上では「ベストエフォート」と書かれている。</p>
-<p>このメソッドのポイントは、 <code>io.delta.standalone.internal.DeltaSharedTableLoader#DeltaSharedTableLoader</code> クラスを用いたクエリの部分だと考えられる。 このクラスは、Deltaテーブルの本体にアクセスし、各種情報を読みこむためのもので、コメントを読む限り、キャッシュする機能なども有している。 内部では <code>io.delta.standalone.internal.DeltaSharedTable</code> クラスが利用されている。 <code>DeltaSharedTable</code> クラスは、 <code>DeltaLog</code> をラップしたものであり、Delta Logの各種情報をサーバ内で扱うための機能を提供する。</p>
-<p>特に、今回用いられているのは <code>io.delta.standalone.internal.DeltaSharedTable#query</code> メソッドである。</p>
+<p>特徴的なのは、 <code>predicateHints</code> や <code>limitHint</code>
+が渡されており、フィルタ条件が指定できる点。
+ただし、公式ドキュメント上では「ベストエフォート」と書かれている。</p>
+<p>このメソッドのポイントは、
+<code>io.delta.standalone.internal.DeltaSharedTableLoader#DeltaSharedTableLoader</code>
+クラスを用いたクエリの部分だと考えられる。
+このクラスは、Deltaテーブルの本体にアクセスし、各種情報を読みこむためのもので、コメントを読む限り、キャッシュする機能なども有している。
+内部では <code>io.delta.standalone.internal.DeltaSharedTable</code>
+クラスが利用されている。 <code>DeltaSharedTable</code> クラスは、
+<code>DeltaLog</code> をラップしたものであり、Delta
+Logの各種情報をサーバ内で扱うための機能を提供する。</p>
+<p>特に、今回用いられているのは
+<code>io.delta.standalone.internal.DeltaSharedTable#query</code>
+メソッドである。</p>
 <p>io/delta/standalone/internal/DeltaSharedTableLoader.scala:118</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">query</span></span>(</span><br><span class="line">      includeFiles: <span class="type">Boolean</span>,</span><br><span class="line">      predicateHits: <span class="type">Seq</span>[<span class="type">String</span>],</span><br><span class="line">      limitHint: <span class="type">Option</span>[<span class="type">Int</span>]): (<span class="type">Long</span>, <span class="type">Seq</span>[model.<span class="type">SingleAction</span>]) = withClassLoader &#123;</span><br><span class="line">    <span class="comment">// TODO Support `limitHint`</span></span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <p>メソッドの定義の通り、このクエリは最終的に、</p>
 <p>io/delta/standalone/internal/DeltaSharedTableLoader.scala:165</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snapshot.version -&gt; actions</span><br></pre></td></tr></table></figure>
-<p>Delta Logから情報取得したスナップショットのバージョン、ファイル情報のシーケンスを返す。</p>
-<p>なお、 <code>actions</code> に格納されている <code>SingleAction</code> クラスは以下の通り、 ファイルひとつに関する情報、プロトコルの情報、メタデータについての情報を保持している。</p>
+<p>Delta
+Logから情報取得したスナップショットのバージョン、ファイル情報のシーケンスを返す。</p>
+<p>なお、 <code>actions</code> に格納されている
+<code>SingleAction</code> クラスは以下の通り、
+ファイルひとつに関する情報、プロトコルの情報、メタデータについての情報を保持している。</p>
 <p>io/delta/sharing/server/model.scala:22</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">SingleAction</span>(<span class="params"></span></span></span><br><span class="line"><span class="class"><span class="params">    file: <span class="type">AddFile</span> = null,</span></span></span><br><span class="line"><span class="class"><span class="params">    metaData: <span class="type">Metadata</span> = null,</span></span></span><br><span class="line"><span class="class"><span class="params">    protocol: <span class="type">Protocol</span> = null</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">unwrap</span></span>: <span class="type">Action</span> = &#123;</span><br><span class="line">    <span class="keyword">if</span> (file != <span class="literal">null</span>) &#123;</span><br><span class="line">      file</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (metaData != <span class="literal">null</span>) &#123;</span><br><span class="line">      metaData</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (protocol != <span class="literal">null</span>) &#123;</span><br><span class="line">      protocol</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4><span id="アクションの生成される箇所">アクションの生成される箇所</span></h4>
-<p>上記の通り、ここでいう「アクション」とはデータの実体であるファイル1個に関連する情報の塊である。 生成されるのは以下の箇所。</p>
+<p>上記の通り、ここでいう「アクション」とはデータの実体であるファイル1個に関連する情報の塊である。
+生成されるのは以下の箇所。</p>
 <p>io/delta/standalone/internal/DeltaSharedTableLoader.scala:137</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> actions = <span class="type">Seq</span>(modelProtocol.wrap, modelMetadata.wrap) ++ &#123;</span><br><span class="line">  <span class="keyword">if</span> (includeFiles) &#123;</span><br><span class="line">    <span class="keyword">val</span> selectedFiles = state.activeFiles.values.toSeq</span><br><span class="line">    <span class="keyword">val</span> filteredFilters =</span><br><span class="line">      <span class="keyword">if</span> (evaluatePredicateHints &amp;&amp; modelMetadata.partitionColumns.nonEmpty) &#123;</span><br><span class="line">        <span class="type">PartitionFilterUtils</span>.evaluatePredicate(</span><br><span class="line">          modelMetadata.schemaString,</span><br><span class="line">          modelMetadata.partitionColumns,</span><br><span class="line">          predicateHits,</span><br><span class="line">          selectedFiles</span><br><span class="line">        )</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        selectedFiles</span><br><span class="line">      &#125;</span><br><span class="line">    filteredFilters.map &#123; addFile =&gt;</span><br><span class="line">      <span class="keyword">val</span> cloudPath = absolutePath(deltaLog.dataPath, addFile.path)</span><br><span class="line">      <span class="keyword">val</span> signedUrl = signFile(cloudPath)</span><br><span class="line">      <span class="keyword">val</span> modelAddFile = model.<span class="type">AddFile</span>(url = signedUrl,</span><br><span class="line">        id = <span class="type">Hashing</span>.md5().hashString(addFile.path, <span class="type">UTF_8</span>).toString,</span><br><span class="line">        partitionValues = addFile.partitionValues,</span><br><span class="line">        size = addFile.size,</span><br><span class="line">        stats = addFile.stats)</span><br><span class="line">      modelAddFile.wrap</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="type">Nil</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最初から主要な部分の実装を確認する。</p>
 <p>まず、シーケンスを作る際、先頭にプロトコルとメタデータをラップしたアクションが保持される。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> actions = <span class="type">Seq</span>(modelProtocol.wrap, modelMetadata.wrap) ++ &#123;</span><br></pre></td></tr></table></figure>
-<p>その後、適宜ファイルに関する情報が格納される。 一応 <code>includeFiles</code> で空情報を返すかどうかの判定があるが、ここではTrueだとして話を進める。</p>
+<p>その後、適宜ファイルに関する情報が格納される。 一応
+<code>includeFiles</code>
+で空情報を返すかどうかの判定があるが、ここではTrueだとして話を進める。</p>
 <p>まず、Delta Lakeテーブルのアクティブなファイルが取得される。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> selectedFiles = state.activeFiles.values.toSeq</span><br></pre></td></tr></table></figure>
-<p>つづいて、Predicateヒントがあり、パーティションカラムが設定されている場合は、 それに基づいてフィルタが行われる。</p>
+<p>つづいて、Predicateヒントがあり、パーティションカラムが設定されている場合は、
+それに基づいてフィルタが行われる。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> filteredFilters =</span><br><span class="line">  <span class="keyword">if</span> (evaluatePredicateHints &amp;&amp; modelMetadata.partitionColumns.nonEmpty) &#123;</span><br><span class="line">    <span class="type">PartitionFilterUtils</span>.evaluatePredicate(</span><br><span class="line">      modelMetadata.schemaString,</span><br><span class="line">      modelMetadata.partitionColumns,</span><br><span class="line">      predicateHits,</span><br><span class="line">      selectedFiles</span><br><span class="line">    )</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    selectedFiles</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <p>ヒントを用いてフィルタしている箇所については後述する。</p>
 <p>ここではフィルタされたファイルのリストが返されたとして話を続ける。</p>
-<p>次に、<code>AddFile</code> の情報を用いて、より詳細な情報が確認される。</p>
+<p>次に、<code>AddFile</code>
+の情報を用いて、より詳細な情報が確認される。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">filteredFilters.map &#123; addFile =&gt;</span><br><span class="line">  <span class="keyword">val</span> cloudPath = absolutePath(deltaLog.dataPath, addFile.path)</span><br><span class="line">  <span class="keyword">val</span> signedUrl = signFile(cloudPath)</span><br><span class="line">  <span class="keyword">val</span> modelAddFile = model.<span class="type">AddFile</span>(url = signedUrl,</span><br><span class="line">    id = <span class="type">Hashing</span>.md5().hashString(addFile.path, <span class="type">UTF_8</span>).toString,</span><br><span class="line">    partitionValues = addFile.partitionValues,</span><br><span class="line">    size = addFile.size,</span><br><span class="line">    stats = addFile.stats)</span><br><span class="line">  modelAddFile.wrap</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>絶対PATH（というかURL）の取得、下回りのストレージ（現時点ではS3のみ対応）の署名済みURL取得が行われ、 改めて <code>AddFile</code> に格納されたのち、アクションにラップされて返される。</p>
-<p>ここで、1点だけ署名済みURL取得する部分だけ確認する。 取得には、 <code>io.delta.standalone.internal.DeltaSharedTable#signFile</code> メソッドが用いられる。</p>
+<p>絶対PATH（というかURL）の取得、下回りのストレージ（現時点ではS3のみ対応）の署名済みURL取得が行われ、
+改めて <code>AddFile</code>
+に格納されたのち、アクションにラップされて返される。</p>
+<p>ここで、1点だけ署名済みURL取得する部分だけ確認する。 取得には、
+<code>io.delta.standalone.internal.DeltaSharedTable#signFile</code>
+メソッドが用いられる。</p>
 <p>io/delta/standalone/internal/DeltaSharedTableLoader.scala:192</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">def</span> <span class="title">signFile</span></span>(path: <span class="type">Path</span>): <span class="type">String</span> = &#123;</span><br><span class="line">  <span class="keyword">val</span> absPath = path.toUri</span><br><span class="line">  <span class="keyword">val</span> bucketName = absPath.getHost</span><br><span class="line">  <span class="keyword">val</span> objectKey = absPath.getPath.stripPrefix(<span class="string">"/"</span>)</span><br><span class="line">  signer.sign(bucketName, objectKey).toString</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>このメソッドでは、上記の通り、内部でバケット名やオブジェクトキーを渡しながら、 <code>io.delta.sharing.server.S3FileSigner#sign</code> メソッドが利用されている。</p>
+<p>このメソッドでは、上記の通り、内部でバケット名やオブジェクトキーを渡しながら、
+<code>io.delta.sharing.server.S3FileSigner#sign</code>
+メソッドが利用されている。</p>
 <p>なお、<code>signer</code> インスタンスは以下のようになっており、</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> signer = withClassLoader &#123;</span><br><span class="line">  <span class="keyword">new</span> <span class="type">S3FileSigner</span>(deltaLog.dataPath.toUri, conf, preSignedUrlTimeoutSeconds)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>将来的にS3以外にも対応できるような余地が残されている。</p>
 <p>さて、 <code>sign</code> メソッドに戻る。</p>
 <p>io/delta/sharing/server/CloudFileSigner.scala:41</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">sign</span></span>(bucket: <span class="type">String</span>, objectKey: <span class="type">String</span>): <span class="type">URL</span> = &#123;</span><br><span class="line">  <span class="keyword">val</span> expiration =</span><br><span class="line">    <span class="keyword">new</span> <span class="type">Date</span>(<span class="type">System</span>.currentTimeMillis() + <span class="type">SECONDS</span>.toMillis(preSignedUrlTimeoutSeconds))</span><br><span class="line">  <span class="keyword">val</span> request = <span class="keyword">new</span> <span class="type">GeneratePresignedUrlRequest</span>(bucket, objectKey)</span><br><span class="line">    .withMethod(<span class="type">HttpMethod</span>.<span class="type">GET</span>)</span><br><span class="line">    .withExpiration(expiration)</span><br><span class="line">  s3Client.generatePresignedUrl(request)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上記の通り、 <code>com.amazonaws.services.s3.model.GeneratePresignedUrlRequest#GeneratePresignedUrlRequest(java.lang.String, java.lang.String)</code> メソッドを利用してS3の署名付きURLが取得されている事が分かる。</p>
+<p>上記の通り、
+<code>com.amazonaws.services.s3.model.GeneratePresignedUrlRequest#GeneratePresignedUrlRequest(java.lang.String, java.lang.String)</code>
+メソッドを利用してS3の署名付きURLが取得されている事が分かる。</p>
 <h4><span id="ヒントが利用されている箇所">ヒントが利用されている箇所</span></h4>
-<p>2021/9/18現在では、 <code>predicateHits</code> は用いられているが、<code>limitHint</code> は用いていないように見える。</p>
+<p>2021/9/18現在では、 <code>predicateHits</code>
+は用いられているが、<code>limitHint</code>
+は用いていないように見える。</p>
 <p><code>predicateHints</code> が用いられるのは以下の個所。</p>
 <p>io/delta/standalone/internal/DeltaSharedTableLoader.scala:142</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">PartitionFilterUtils</span>.evaluatePredicate(</span><br><span class="line">  modelMetadata.schemaString,</span><br><span class="line">  modelMetadata.partitionColumns,</span><br><span class="line">  predicateHits,</span><br><span class="line">  selectedFiles</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><code>io.delta.standalone.internal.PartitionFilterUtils$#evaluatePredicate</code> メソッドは、 引数に <code>predicateHits</code> や対象となるDelta Tableに紐づいているアクティブなファイルリストを引数に渡される。 内部で、有効なpredicateかどうかなどをチェックされたのち、有効なpredicate文言があれば、 それに従いファイルリストがフィルタされる。</p>
-<p>なお、内部的にはDelta LakeやSpark（の特にCatalyst）の実装に依存しているような箇所がみられる。</p>
-<p>具体的には、 <code>evaluatePredicate</code> メソッド内の以下の個所。</p>
+<p><code>io.delta.standalone.internal.PartitionFilterUtils$#evaluatePredicate</code>
+メソッドは、 引数に <code>predicateHits</code> や対象となるDelta
+Tableに紐づいているアクティブなファイルリストを引数に渡される。
+内部で、有効なpredicateかどうかなどをチェックされたのち、有効なpredicate文言があれば、
+それに従いファイルリストがフィルタされる。</p>
+<p>なお、内部的にはDelta
+LakeやSpark（の特にCatalyst）の実装に依存しているような箇所がみられる。</p>
+<p>具体的には、 <code>evaluatePredicate</code>
+メソッド内の以下の個所。</p>
 <p>io/delta/standalone/internal/PartitionFilterUtils.scala:61</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">addFiles.filter &#123; addFile =&gt;</span><br><span class="line">  <span class="keyword">val</span> converter = <span class="type">CatalystTypeConverters</span>.createToCatalystConverter(addSchema)</span><br><span class="line">  predicate.eval(converter(addFile).asInstanceOf[<span class="type">InternalRow</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>ここで <code>predicate</code> は <code>org.apache.spark.sql.catalyst.expressions.InterpretedPredicate</code> クラスの インスタンスである。（SparkのCatalystで用いられる、Predicate表現のひとつ） このとき、<code>eval</code> メソッドが呼び出されていることがわかる。</p>
+<p>ここで <code>predicate</code> は
+<code>org.apache.spark.sql.catalyst.expressions.InterpretedPredicate</code>
+クラスの
+インスタンスである。（SparkのCatalystで用いられる、Predicate表現のひとつ）
+このとき、<code>eval</code> メソッドが呼び出されていることがわかる。</p>
 <p>/home/dobachi/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/spark/spark-catalyst_2.12/2.4.7/spark-catalyst_2.12-2.4.7-sources.jar!/org/apache/spark/sql/catalyst/expressions/predicates.scala:39</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">InterpretedPredicate</span>(<span class="params">expression: <span class="type">Expression</span></span>) <span class="keyword">extends</span> <span class="title">BasePredicate</span> </span>&#123;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">eval</span></span>(r: <span class="type">InternalRow</span>): <span class="type">Boolean</span> = expression.eval(r).asInstanceOf[<span class="type">Boolean</span>]</span><br></pre></td></tr></table></figure>
-<p>このように、SparkのCatalystにおいては <code>eval</code> メソッドには、Spark SQLの行の表現である <code>InternalRow</code> のインスタンスが渡され、当該 <code>predicate</code> に合致するかどうかがチェックされる。</p>
+<p>このように、SparkのCatalystにおいては <code>eval</code>
+メソッドには、Spark SQLの行の表現である <code>InternalRow</code>
+のインスタンスが渡され、当該 <code>predicate</code>
+に合致するかどうかがチェックされる。</p>
 <h3><span id="クラスローダについて">クラスローダについて</span></h3>
-<p>このクラスには、 <code>withClassLoader</code> が定義されており、 Armeriaではなく、DeltaSharedTableのクラスローダの下で関数を実行できるようになっている。</p>
+<p>このクラスには、 <code>withClassLoader</code> が定義されており、
+Armeriaではなく、DeltaSharedTableのクラスローダの下で関数を実行できるようになっている。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Run `func` under the classloader of `DeltaSharedTable`. We cannot use the classloader set by</span></span><br><span class="line"><span class="comment"> * Armeria as Hadoop needs to search the classpath to find its classes.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">def</span> <span class="title">withClassLoader</span></span>[<span class="type">T</span>](func: =&gt; <span class="type">T</span>): <span class="type">T</span> = &#123;</span><br><span class="line">  <span class="keyword">val</span> classLoader = <span class="type">Thread</span>.currentThread().getContextClassLoader</span><br><span class="line">  <span class="keyword">if</span> (classLoader == <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="type">Thread</span>.currentThread().setContextClassLoader(<span class="keyword">this</span>.getClass.getClassLoader)</span><br><span class="line">    <span class="keyword">try</span> func <span class="keyword">finally</span> &#123;</span><br><span class="line">      <span class="type">Thread</span>.currentThread().setContextClassLoader(<span class="literal">null</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    func</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -390,7 +470,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/08/30/Source-Code-Reading-of-Delta-Sharing/" data-id="cl2nztno700dj5xqi6rqrmf86" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/08/30/Source-Code-Reading-of-Delta-Sharing/" data-id="cl2o9pbiu019c18rzuk6ij7oh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -641,5 +721,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

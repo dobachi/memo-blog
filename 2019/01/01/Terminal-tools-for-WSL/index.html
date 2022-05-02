@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 Hyper ConEmu cmder   参考  Hyper ConEmu cmder  Hyper ウェブ界隈の技術を活用したターミナル。 Hyper からダウンロードできる。 インストールすると %USERPROFILE%\.hyper.js に設定ファイルが作成される。 デフォルトはcmd.exeが起動されるようになっているので、WSLを使うように変更する。 1234567891">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WSL向けのターミナルツール">
 <meta name="twitter:description" content="参考 Hyper ConEmu cmder   参考  Hyper ConEmu cmder  Hyper ウェブ界隈の技術を活用したターミナル。 Hyper からダウンロードできる。 インストールすると %USERPROFILE%\.hyper.js に設定ファイルが作成される。 デフォルトはcmd.exeが起動されるようになっているので、WSLを使うように変更する。 1234567891">
@@ -251,10 +251,10 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#hyper">Hyper</a></li>
-<li><a href="#conemu">ConEmu</a></li>
-<li><a href="#cmder">cmder</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#hyper" id="toc-hyper">Hyper</a></li>
+<li><a href="#conemu" id="toc-conemu">ConEmu</a></li>
+<li><a href="#cmder" id="toc-cmder">cmder</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -265,12 +265,19 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="hyper">Hyper</span></h1>
 <p>ウェブ界隈の技術を活用したターミナル。 <a href="https://hyper.is/" target="_blank" rel="noopener">Hyper</a> からダウンロードできる。</p>
-<p>インストールすると <code>%USERPROFILE%\.hyper.js</code> に設定ファイルが作成される。 デフォルトはcmd.exeが起動されるようになっているので、WSLを使うように変更する。</p>
+<p>インストールすると <code>%USERPROFILE%\.hyper.js</code>
+に設定ファイルが作成される。
+デフォルトはcmd.exeが起動されるようになっているので、WSLを使うように変更する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ diff -u /mnt/c/Users/dobachi/.hyper.js&#123;.2018010101,&#125;</span><br><span class="line">--- /mnt/c/Users/dobachi/.hyper.js.2018010101   2019-01-01 23:26:47.691869000 +0900</span><br><span class="line">+++ /mnt/c/Users/dobachi/.hyper.js      2019-01-01 23:28:25.273185100 +0900</span><br><span class="line">@@ -9,7 +9,7 @@</span><br><span class="line">     updateChannel: &apos;stable&apos;,</span><br><span class="line"></span><br><span class="line">     // default font size in pixels for all tabs</span><br><span class="line">-    fontSize: 12,</span><br><span class="line">+    fontSize: 15,</span><br><span class="line"></span><br><span class="line">     // font family with optional fallbacks</span><br><span class="line">     fontFamily: &apos;Menlo, &quot;DejaVu Sans Mono&quot;, Consolas, &quot;Lucida Console&quot;, monospace&apos;,</span><br><span class="line">@@ -107,7 +107,7 @@</span><br><span class="line"></span><br><span class="line">     // for setting shell arguments (i.e. for using interactive shellArgs: `[&apos;-i&apos;]`)</span><br><span class="line">     // by default `[&apos;--login&apos;]` will be used</span><br><span class="line">-    shellArgs: [&apos;--login&apos;],</span><br><span class="line">+    shellArgs: [&apos;/C&apos;, &apos;wsl&apos;],</span><br><span class="line"></span><br><span class="line">     // for environment variables</span><br><span class="line">     env: &#123;&#125;,</span><br></pre></td></tr></table></figure>
 <h1><span id="conemu">ConEmu</span></h1>
-<p><a href="https://conemu.github.io/" target="_blank" rel="noopener">ConEmu</a> からダウンロードできる。 ただし、手元のGPD Pocket上のWSLで使用した時には、ctrl + lで画面クリアするときに 意図と異なる動作をした。</p>
+<p><a href="https://conemu.github.io/" target="_blank" rel="noopener">ConEmu</a>
+からダウンロードできる。 ただし、手元のGPD
+Pocket上のWSLで使用した時には、ctrl + lで画面クリアするときに
+意図と異なる動作をした。</p>
 <h1><span id="cmder">cmder</span></h1>
-<p><a href="http://cmder.net/" target="_blank" rel="noopener">cmder</a> からダウンロードできる。 ただし、手元のGPD Pocket上のWSLで使用した時には、ctrl + lで画面クリアするときに 意図と異なる動作をした。</p>
+<p><a href="http://cmder.net/" target="_blank" rel="noopener">cmder</a> からダウンロードできる。
+ただし、手元のGPD Pocket上のWSLで使用した時には、ctrl +
+lで画面クリアするときに 意図と異なる動作をした。</p>
 
         
         </div>
@@ -281,7 +288,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/01/Terminal-tools-for-WSL/" data-id="cl2nztnol00ej5xqia9w0i8g4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/01/Terminal-tools-for-WSL/" data-id="cl2o9pb8800aa18rzr38norle" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -532,5 +539,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

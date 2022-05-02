@@ -250,43 +250,65 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#spark公式のdockerfileを活用">Spark公式のDockerfileを活用</a></li>
-<li><a href="#anaconda等も利用するとして">Anaconda等も利用するとして？</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#spark公式のdockerfileを活用" id="toc-spark公式のdockerfileを活用">Spark公式のDockerfileを活用</a></li>
+<li><a href="#anaconda等も利用するとして" id="toc-anaconda等も利用するとして">Anaconda等も利用するとして？</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html" target="_blank" rel="noopener">Running Spark on Kubernetes</a></li>
-<li><a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html#docker-images" target="_blank" rel="noopener">Docker Images</a></li>
+<li><a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html" target="_blank" rel="noopener">Running
+Spark on Kubernetes</a></li>
+<li><a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html#docker-images" target="_blank" rel="noopener">Docker
+Images</a></li>
 <li><a href="https://hub.docker.com/_/openjdk" target="_blank" rel="noopener">dockerhubのopenjdk</a></li>
 <li><a href="https://hub.docker.com/r/continuumio/anaconda/dockerfile" target="_blank" rel="noopener">DockerhubのAnacondaのDockerfile</a></li>
 <li><a href="https://github.com/ContinuumIO/docker-images/blob/master/anaconda3/alpine/Dockerfile" target="_blank" rel="noopener">GitHub上のAlpine版のAnaconda公式Dockerfile</a></li>
-<li><a href="https://github.com/docker-library/openjdk/blob/master/8/jdk/Dockerfile" target="_blank" rel="noopener">GitHub上のDebianベースのOpenJDK Dockerfile</a></li>
+<li><a href="https://github.com/docker-library/openjdk/blob/master/8/jdk/Dockerfile" target="_blank" rel="noopener">GitHub上のDebianベースのOpenJDK
+Dockerfile</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="spark公式のdockerfileを活用">Spark公式のDockerfileを活用</span></h2>
-<p>Spark公式ドキュメントの <a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html" target="_blank" rel="noopener">Running Spark on Kubernetes</a> 内にある <a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html#docker-images" target="_blank" rel="noopener">Docker Images</a> によると、 SparkにはDockerfileが含まれている。</p>
+<p>Spark公式ドキュメントの <a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html" target="_blank" rel="noopener">Running
+Spark on Kubernetes</a> 内にある <a href="https://spark.apache.org/docs/2.4.3/running-on-kubernetes.html#docker-images" target="_blank" rel="noopener">Docker
+Images</a> によると、 SparkにはDockerfileが含まれている。</p>
 <p>以下のパッケージで確認。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat RELEASE</span><br><span class="line">Spark 2.4.3 built for Hadoop 2.7.3</span><br><span class="line">Build flags: -B -Pmesos -Pyarn -Pkubernetes -Pflume -Psparkr -Pkafka-0-8 -Phadoop-2.7 -Phive -Phive-thriftserver -DzincPort=3036</span><br></pre></td></tr></table></figure></p>
-<p>Dockerfileは、パッケージ内の <code>kubernetes/dockerfiles/spark/Dockerfile</code> に存在する。 また、これを利用した <code>bin/docker-image-tool.sh</code> というスクリプトが存在し、 Dockerイメージをビルドして、プッシュできる。 今回はこのスクリプトを使ってみる。</p>
+<p>Dockerfileは、パッケージ内の
+<code>kubernetes/dockerfiles/spark/Dockerfile</code> に存在する。
+また、これを利用した <code>bin/docker-image-tool.sh</code>
+というスクリプトが存在し、 Dockerイメージをビルドして、プッシュできる。
+今回はこのスクリプトを使ってみる。</p>
 <p>ヘルプを見ると以下の通り。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$ ./bin/docker-image-tool.sh --help</span><br><span class="line">Usage: ./bin/docker-image-tool.sh [options] [command]</span><br><span class="line">Builds or pushes the built-in Spark Docker image.</span><br><span class="line"></span><br><span class="line">Commands:</span><br><span class="line">  build       Build image. Requires a repository address to be provided if the image will be</span><br><span class="line">              pushed to a different registry.</span><br><span class="line">  push        Push a pre-built image to a registry. Requires a repository address to be provided.</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -f file               Dockerfile to build for JVM based Jobs. By default builds the Dockerfile shipped with Spark.</span><br><span class="line">  -p file               Dockerfile to build for PySpark Jobs. Builds Python dependencies and ships with Spark.</span><br><span class="line">  -R file               Dockerfile to build for SparkR Jobs. Builds R dependencies and ships with Spark.</span><br><span class="line">  -r repo               Repository address.</span><br><span class="line">  -t tag                Tag to apply to the built image, or to identify the image to be pushed.</span><br><span class="line">  -m                    Use minikube&apos;s Docker daemon.</span><br><span class="line">  -n                    Build docker image with --no-cache</span><br><span class="line">  -b arg      Build arg to build or push the image. For multiple build args, this option needs to</span><br><span class="line">              be used separately for each build arg.</span><br><span class="line"></span><br><span class="line">Using minikube when building images will do so directly into minikube&apos;s Docker daemon.</span><br><span class="line">There is no need to push the images into minikube in that case, they&apos;ll be automatically</span><br><span class="line">available when running applications inside the minikube cluster.</span><br><span class="line"></span><br><span class="line">Check the following documentation for more information on using the minikube Docker daemon:</span><br><span class="line"></span><br><span class="line">  https://kubernetes.io/docs/getting-started-guides/minikube/#reusing-the-docker-daemon</span><br><span class="line"></span><br><span class="line">Examples:</span><br><span class="line">  - Build image in minikube with tag &quot;testing&quot;</span><br><span class="line">    ./bin/docker-image-tool.sh -m -t testing build</span><br><span class="line"></span><br><span class="line">  - Build and push image with tag &quot;v2.3.0&quot; to docker.io/myrepo</span><br><span class="line">    ./bin/docker-image-tool.sh -r docker.io/myrepo -t v2.3.0 build</span><br><span class="line">    ./bin/docker-image-tool.sh -r docker.io/myrepo -t v2.3.0 push</span><br></pre></td></tr></table></figure></p>
 <p>つづいて最新版Sparkのバージョンをタグ付けて試す。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ./bin/docker-image-tool.sh -r docker.io/dobachi -t v2.4.3 build</span><br><span class="line">$ sudo ./bin/docker-image-tool.sh -r docker.io/dobachi -t v2.4.3 push</span><br></pre></td></tr></table></figure></p>
-<p>これは成功。 早速起動して試してみる。 なお、Sparkのパッケージは、 <code>/opt/spark</code> 以下に含まれている。</p>
+<p>これは成功。 早速起動して試してみる。 なお、Sparkのパッケージは、
+<code>/opt/spark</code> 以下に含まれている。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --rm -it dobachi/spark:v2.4.3 /bin/bash</span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">bash-4.4# /opt/spark/bin/spark-shell  </span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">Welcome to</span><br><span class="line">      ____              __</span><br><span class="line">     / __/__  ___ _____/ /__</span><br><span class="line">    _\ \/ _ \/ _ `/ __/  &apos;_/</span><br><span class="line">   /___/ .__/\_,_/_/ /_/\_\   version 2.4.3</span><br><span class="line">      /_/</span><br><span class="line"></span><br><span class="line">Using Scala version 2.11.12 (OpenJDK 64-Bit Server VM, Java 1.8.0_212) </span><br><span class="line">Type in expressions to have them evaluated.</span><br><span class="line">Type :help for more information.</span><br><span class="line"></span><br><span class="line">scala&gt;</span><br></pre></td></tr></table></figure>
 <p>データを軽く読み込んでみる。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; val path = &quot;/opt/spark/data/mllib/kmeans_data.txt&quot;</span><br><span class="line">scala&gt; val textFile = spark.read.textFile(path)</span><br><span class="line">scala&gt; textFile.first</span><br><span class="line">res1: String = 0.0 0.0 0.0</span><br><span class="line"></span><br><span class="line">scala&gt; textFile.count</span><br><span class="line">res2: Long = 6</span><br><span class="line"></span><br><span class="line">scala&gt; val csvLike = spark.read.format(&quot;csv&quot;).</span><br><span class="line">         option(&quot;sep&quot;, &quot; &quot;).</span><br><span class="line">         option(&quot;inferSchema&quot;, &quot;true&quot;).</span><br><span class="line">         option(&quot;header&quot;, &quot;false&quot;).</span><br><span class="line">         load(path)</span><br><span class="line"></span><br><span class="line">scala&gt; csvLike.show</span><br><span class="line">+---+---+---+</span><br><span class="line">|_c0|_c1|_c2|</span><br><span class="line">+---+---+---+</span><br><span class="line">|0.0|0.0|0.0|</span><br><span class="line">|0.1|0.1|0.1|</span><br><span class="line">|0.2|0.2|0.2|</span><br><span class="line">|9.0|9.0|9.0|</span><br><span class="line">|9.1|9.1|9.1|</span><br><span class="line">|9.2|9.2|9.2|</span><br><span class="line">+---+---+---+</span><br><span class="line"></span><br><span class="line">scala&gt; csvLike.where($&quot;_c0&quot; &gt; 5).show</span><br><span class="line">+---+---+---+</span><br><span class="line">|_c0|_c1|_c2|</span><br><span class="line">+---+---+---+</span><br><span class="line">|9.0|9.0|9.0|</span><br><span class="line">|9.1|9.1|9.1|</span><br><span class="line">|9.2|9.2|9.2|</span><br><span class="line">+---+---+---+</span><br></pre></td></tr></table></figure></p>
-<p>なお、PySparkが含まれているのは、違うレポジトリであり、 <code>dobachi/spark-py</code> を用いる必要がある。</p>
+<p>なお、PySparkが含まれているのは、違うレポジトリであり、
+<code>dobachi/spark-py</code> を用いる必要がある。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --rm -it dobachi/spark-py:v2.4.3 /bin/bash</span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">bash-4.4# /opt/spark/bin/pyspark </span><br><span class="line">Python 2.7.16 (default, May  6 2019, 19:35:26) </span><br><span class="line">[GCC 8.3.0] on linux2</span><br><span class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span><br><span class="line">Could not open PYTHONSTARTUP</span><br><span class="line">IOError: [Errno 2] No such file or directory: &apos;/opt/spark/python/pyspark/shell.py&apos;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
-<p>この状態だと、OS標準付帯のPythonのみ使える状態に見えた。 実用を考えると、もう少し分析用途のPythonライブラリを整えた方が良さそう。</p>
+<p>この状態だと、OS標準付帯のPythonのみ使える状態に見えた。
+実用を考えると、もう少し分析用途のPythonライブラリを整えた方が良さそう。</p>
 <h2><span id="anaconda等も利用するとして">Anaconda等も利用するとして？</span></h2>
-<p>上記の通り、Spark公式のDockerfileで作るDockerイメージには、Python関係の分析用のライブラリ、ツールが不足している。 そこでこれを補うために、Anaconda等を利用しようとするとして、パッと見でほんの少し議論なのは、 なにをベースにするかという点。</p>
+<p>上記の通り、Spark公式のDockerfileで作るDockerイメージには、Python関係の分析用のライブラリ、ツールが不足している。
+そこでこれを補うために、Anaconda等を利用しようとするとして、パッと見でほんの少し議論なのは、
+なにをベースにするかという点。</p>
 <ul>
-<li>上記で紹介したSparkに含まれるDockerfileおよび <a href="https://hub.docker.com/_/openjdk" target="_blank" rel="noopener">dockerhubのopenjdk</a> に記載の通り、当該DockerイメージはAlpine Linuxをベースとしている。 ただし、OpenJDKのDockerイメージ自体には、 <a href="https://github.com/docker-library/openjdk/blob/master/8/jdk/Dockerfile" target="_blank" rel="noopener">GitHub上のDebianベースのOpenJDK Dockerfile</a> がある。</li>
-<li>AnacondaのDockerイメージは、 <a href="https://hub.docker.com/r/continuumio/anaconda/dockerfile" target="_blank" rel="noopener">DockerhubのAnacondaのDockerfile</a> の通り、Debianをベースとしている。 しかし、 <a href="https://github.com/ContinuumIO/docker-images/blob/master/anaconda3/alpine/Dockerfile" target="_blank" rel="noopener">GitHub上のAlpine版のAnaconda公式Dockerfile</a> によるとAlpine Linux版もありそう。</li>
+<li>上記で紹介したSparkに含まれるDockerfileおよび <a href="https://hub.docker.com/_/openjdk" target="_blank" rel="noopener">dockerhubのopenjdk</a>
+に記載の通り、当該DockerイメージはAlpine Linuxをベースとしている。
+ただし、OpenJDKのDockerイメージ自体には、 <a href="https://github.com/docker-library/openjdk/blob/master/8/jdk/Dockerfile" target="_blank" rel="noopener">GitHub上のDebianベースのOpenJDK
+Dockerfile</a> がある。</li>
+<li>AnacondaのDockerイメージは、 <a href="https://hub.docker.com/r/continuumio/anaconda/dockerfile" target="_blank" rel="noopener">DockerhubのAnacondaのDockerfile</a>
+の通り、Debianをベースとしている。 しかし、 <a href="https://github.com/ContinuumIO/docker-images/blob/master/anaconda3/alpine/Dockerfile" target="_blank" rel="noopener">GitHub上のAlpine版のAnaconda公式Dockerfile</a>
+によるとAlpine Linux版もありそう。</li>
 </ul>
-<p>どっちに合わせるか悩むところだが、Debianベースに置き換えでも良いか、という気持ちではある。 Debianベースのほうが慣れているという気持ちもあり。</p>
-<p>また、Anacondaを合わせて導入するようにしたら、環境変数 <code>PYSPARK_PYTHON</code> も設定しておいたほうが良さそう。</p>
+<p>どっちに合わせるか悩むところだが、Debianベースに置き換えでも良いか、という気持ちではある。
+Debianベースのほうが慣れているという気持ちもあり。</p>
+<p>また、Anacondaを合わせて導入するようにしたら、環境変数
+<code>PYSPARK_PYTHON</code> も設定しておいたほうが良さそう。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
         
@@ -298,7 +320,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/24/Spark-Docker-Image/" data-id="cl2nztno200d45xqimuxhwta2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/24/Spark-Docker-Image/" data-id="cl2o9pb7y009e18rzn58jyu6z" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -419,41 +441,55 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#ブログ記事">ブログ？記事？</a></li>
-<li><a href="#github">GitHub</a><ul>
-<li><a href="#readme20190823現在">Readme（2019/08/23現在）</a></li>
-<li><a href="#実装を確認">実装を確認</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#ブログ記事" id="toc-ブログ記事">ブログ？記事？</a></li>
+<li><a href="#github" id="toc-github">GitHub</a>
+<ul>
+<li><a href="#readme20190823現在" id="toc-readme20190823現在">Readme（2019/08/23現在）</a></li>
+<li><a href="#実装を確認" id="toc-実装を確認">実装を確認</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://venturebeat.com/2019/08/20/databricks-launches-automl-toolkit-for-model-building-and-deployment/" target="_blank" rel="noopener">Databricks launches AutoML Toolkit for model building and deployment</a></li>
-<li><a href="https://github.com/databrickslabs/automl-toolkit" target="_blank" rel="noopener">GitHub databrickslabs/automl-toolkit</a></li>
+<li><a href="https://venturebeat.com/2019/08/20/databricks-launches-automl-toolkit-for-model-building-and-deployment/" target="_blank" rel="noopener">Databricks
+launches AutoML Toolkit for model building and deployment</a></li>
+<li><a href="https://github.com/databrickslabs/automl-toolkit" target="_blank" rel="noopener">GitHub
+databrickslabs/automl-toolkit</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="ブログ記事">ブログ？記事？</span></h2>
-<p><a href="https://venturebeat.com/2019/08/20/databricks-launches-automl-toolkit-for-model-building-and-deployment/" target="_blank" rel="noopener">Databricks launches AutoML Toolkit for model building and deployment</a> の内容を確認する。</p>
-<p>MLFlowなどをベースに開発された。 ハイパーパラメタータチューニング、バッチ推論、モデルサーチを自動化する。</p>
+<p><a href="https://venturebeat.com/2019/08/20/databricks-launches-automl-toolkit-for-model-building-and-deployment/" target="_blank" rel="noopener">Databricks
+launches AutoML Toolkit for model building and deployment</a>
+の内容を確認する。</p>
+<p>MLFlowなどをベースに開発された。
+ハイパーパラメタータチューニング、バッチ推論、モデルサーチを自動化する。</p>
 <p>TensorFlowやSageMakerなどと連携。</p>
-<p>データサイエンティストとエンジニアが連携可能という点が他のAutoMLと異なる要素。 またコード実装能力が高い人、そうでない人混ざっているケースに対し、 高い抽象度で実装なく動かせると同時に、細かなカスタマイズも可能にする。</p>
+<p>データサイエンティストとエンジニアが連携可能という点が他のAutoMLと異なる要素。
+またコード実装能力が高い人、そうでない人混ざっているケースに対し、
+高い抽象度で実装なく動かせると同時に、細かなカスタマイズも可能にする。</p>
 <p>DatabricksのAutoMLは、Azureの機械学習サービスとも連携する。（パートナーシップあり）</p>
 <h2><span id="github">GitHub</span></h2>
-<p><a href="https://github.com/databrickslabs/automl-toolkit" target="_blank" rel="noopener">GitHub databrickslabs/automl-toolkit</a> を軽く確認する。</p>
+<p><a href="https://github.com/databrickslabs/automl-toolkit" target="_blank" rel="noopener">GitHub
+databrickslabs/automl-toolkit</a> を軽く確認する。</p>
 <h3><span id="readme20190823現在">Readme（2019/08/23現在）</span></h3>
-<p>「non-supported end-to-end supervised learning solution for automating」と定義されている。 以下の内容をautomationするようだ。</p>
+<p>「non-supported end-to-end supervised learning solution for
+automating」と定義されている。 以下の内容をautomationするようだ。</p>
 <ul>
 <li>Feature clean-up（特徴選択？特徴の前処理？）</li>
 <li>Feature vectorization（特徴のデータのベクトル化）</li>
 <li>Model selection and training（モデル選択と学習）</li>
-<li>Hyper parameter optimization and selection（ハイパーパラメータ最適化と選択）</li>
+<li>Hyper parameter optimization and
+selection（ハイパーパラメータ最適化と選択）</li>
 <li>Batch Prediction（バッチ処理での推論）</li>
-<li>Logging of model results and training runs (using MLFlow)（MLFlowを使ってロギング、学習実行）</li>
+<li>Logging of model results and training runs (using
+MLFlow)（MLFlowを使ってロギング、学習実行）</li>
 </ul>
-<p>対応している学習モデルは以下の通り。 Sparkの機械学習ライブラリを利用しているようなので、それに準ずることになりそう。</p>
+<p>対応している学習モデルは以下の通り。
+Sparkの機械学習ライブラリを利用しているようなので、それに準ずることになりそう。</p>
 <ul>
 <li>Decision Trees (Regressor and Classifier)</li>
 <li>Gradient Boosted Trees (Regressor and Classifier)</li>
@@ -465,7 +501,8 @@ ga('send', 'pageview');
 <li>XGBoost (Regressor and Classifier)</li>
 </ul>
 <p>開発言語はScala（100%）</p>
-<p>DBFS APIを前提としているように見えることから、Databricks Cloud前提か？</p>
+<p>DBFS APIを前提としているように見えることから、Databricks
+Cloud前提か？</p>
 <p>ハイレベルAPI（FamilyRunner）について載っている例から、ポイントを抜粋する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// パッケージを見る限り、Databricksのラボとしての活動のようだ？</span><br><span class="line">import com.databricks.labs.automl.executor.config.ConfigurationGenerator</span><br><span class="line">import com.databricks.labs.automl.executor.FamilyRunner</span><br><span class="line"></span><br><span class="line">val data = spark.table(&quot;ben_demo.adult_data&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// MLFlowの設定値など、最低限の上書き設定を定義する</span><br><span class="line">val overrides = Map(&quot;labelCol&quot; -&gt; &quot;income&quot;,</span><br><span class="line">&quot;mlFlowExperimentName&quot; -&gt; &quot;My First AutoML Run&quot;,</span><br><span class="line"></span><br><span class="line">// Databrciks Cloud上で起動するDeltaの場所を指定</span><br><span class="line">&quot;mlFlowTrackingURI&quot; -&gt; &quot;https://&lt;my shard address&gt;&quot;,</span><br><span class="line">&quot;mlFlowAPIToken&quot; -&gt; dbutils.notebook.getContext().apiToken.get,</span><br><span class="line">&quot;mlFlowModelSaveDirectory&quot; -&gt; &quot;/ml/FirstAutoMLRun/&quot;,</span><br><span class="line">&quot;inferenceConfigSaveLocation&quot; -&gt; &quot;ml/FirstAutoMLRun/inference&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// コンフィグを適切に？自動生成。合わせてどのモデルを使うかを指定している。</span><br><span class="line">val randomForestConfig = ConfigurationGenerator.generateConfigFromMap(&quot;RandomForest&quot;, &quot;classifier&quot;, overrides)</span><br><span class="line">val gbtConfig = ConfigurationGenerator.generateConfigFromMap(&quot;GBT&quot;, &quot;classifier&quot;, overrides)</span><br><span class="line">val logConfig = ConfigurationGenerator.generateConfigFromMap(&quot;LogisticRegression&quot;, &quot;classifier&quot;, overrides)</span><br><span class="line"></span><br><span class="line">// 生成されたコンフィグでランナーを生成し、実行</span><br><span class="line">val runner = FamilyRunner(data, Array(randomForestConfig, gbtConfig, logConfig)).execute()</span><br></pre></td></tr></table></figure>
 <p>上記実装では、以下のようなことが裏で行われる。</p>
@@ -475,39 +512,64 @@ ga('send', 'pageview');
 <li>3種類のモデルについてパラメータチューニング</li>
 </ul>
 <h3><span id="実装を確認">実装を確認</span></h3>
-<p>エントリポイントとしては、 <code>com.databricks.labs.automl.executor.FamilyRunner</code> としてみる。</p>
+<p>エントリポイントとしては、
+<code>com.databricks.labs.automl.executor.FamilyRunner</code>
+としてみる。</p>
 <h4><span id="comdatabrickslabsautomlexecutorfamilyrunner">com.databricks.labs.automl.executor.FamilyRunner</span></h4>
-<p>executeメソッドが例として載っていたので確認。 当該メソッド全体は以下の通り。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:115 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">def execute(): FamilyFinalOutput = &#123;</span><br><span class="line"></span><br><span class="line">  val outputBuffer = ArrayBuffer[FamilyOutput]()</span><br><span class="line"></span><br><span class="line">  configs.foreach &#123; x =&gt;</span><br><span class="line">    val mainConfiguration = ConfigurationGenerator.generateMainConfig(x)</span><br><span class="line"></span><br><span class="line">    val runner: AutomationRunner = new AutomationRunner(data)</span><br><span class="line">      .setMainConfig(mainConfiguration)</span><br><span class="line"></span><br><span class="line">    val preppedData = runner.prepData()</span><br><span class="line"></span><br><span class="line">    val preppedDataOverride = preppedData.copy(modelType = x.predictionType)</span><br><span class="line"></span><br><span class="line">    val output = runner.executeTuning(preppedDataOverride)</span><br><span class="line"></span><br><span class="line">    outputBuffer += new FamilyOutput(x.modelFamily, output.mlFlowOutput) &#123;</span><br><span class="line">      override def modelReport: Array[GenericModelReturn] = output.modelReport</span><br><span class="line">      override def generationReport: Array[GenerationalReport] =</span><br><span class="line">        output.generationReport</span><br><span class="line">      override def modelReportDataFrame: DataFrame =</span><br><span class="line">        augmentDF(x.modelFamily, output.modelReportDataFrame)</span><br><span class="line">      override def generationReportDataFrame: DataFrame =</span><br><span class="line">        augmentDF(x.modelFamily, output.generationReportDataFrame)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  unifyFamilyOutput(outputBuffer.toArray)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>また、再掲ではあるが、当該メソッドは以下のように呼び出されている。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 生成されたコンフィグでランナーを生成し、実行</span><br><span class="line">val runner = FamilyRunner(data, Array(randomForestConfig, gbtConfig, logConfig)).execute()</span><br></pre></td></tr></table></figure></p>
+<p>executeメソッドが例として載っていたので確認。
+当該メソッド全体は以下の通り。</p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:115
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">def execute(): FamilyFinalOutput = &#123;</span><br><span class="line"></span><br><span class="line">  val outputBuffer = ArrayBuffer[FamilyOutput]()</span><br><span class="line"></span><br><span class="line">  configs.foreach &#123; x =&gt;</span><br><span class="line">    val mainConfiguration = ConfigurationGenerator.generateMainConfig(x)</span><br><span class="line"></span><br><span class="line">    val runner: AutomationRunner = new AutomationRunner(data)</span><br><span class="line">      .setMainConfig(mainConfiguration)</span><br><span class="line"></span><br><span class="line">    val preppedData = runner.prepData()</span><br><span class="line"></span><br><span class="line">    val preppedDataOverride = preppedData.copy(modelType = x.predictionType)</span><br><span class="line"></span><br><span class="line">    val output = runner.executeTuning(preppedDataOverride)</span><br><span class="line"></span><br><span class="line">    outputBuffer += new FamilyOutput(x.modelFamily, output.mlFlowOutput) &#123;</span><br><span class="line">      override def modelReport: Array[GenericModelReturn] = output.modelReport</span><br><span class="line">      override def generationReport: Array[GenerationalReport] =</span><br><span class="line">        output.generationReport</span><br><span class="line">      override def modelReportDataFrame: DataFrame =</span><br><span class="line">        augmentDF(x.modelFamily, output.modelReportDataFrame)</span><br><span class="line">      override def generationReportDataFrame: DataFrame =</span><br><span class="line">        augmentDF(x.modelFamily, output.generationReportDataFrame)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  unifyFamilyOutput(outputBuffer.toArray)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>また、再掲ではあるが、当該メソッドは以下のように呼び出されている。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 生成されたコンフィグでランナーを生成し、実行</span><br><span class="line">val runner = FamilyRunner(data, Array(randomForestConfig, gbtConfig, logConfig)).execute()</span><br></pre></td></tr></table></figure></p>
 <p>第1引数はデータ、第2引数は採用するアルゴリズムごとのコンフィグを含んだArray。</p>
 <p>では、executeメソッドを少し細かく見る。</p>
 <p>まずループとなっている箇所があるが、ここはアルゴリズムごとのコンフィグをイテレートしている。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:119 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configs.foreach &#123; x =&gt;</span><br></pre></td></tr></table></figure></p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:119
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configs.foreach &#123; x =&gt;</span><br></pre></td></tr></table></figure></p>
 <p>つづいて、渡されたコンフィグを引数に取りながら、パラメータを生成する。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:120 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val mainConfiguration = ConfigurationGenerator.generateMainConfig(x)</span><br></pre></td></tr></table></figure></p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:120
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val mainConfiguration = ConfigurationGenerator.generateMainConfig(x)</span><br></pre></td></tr></table></figure></p>
 <p>次は上記で生成されたパラメータを引数に取りながら、処理の自動実行用のAutomationRunnerインスタンスを生成する。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:122 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val runner: AutomationRunner = new AutomationRunner(data)</span><br><span class="line">  .setMainConfig(mainConfiguration)</span><br></pre></td></tr></table></figure></p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:122
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val runner: AutomationRunner = new AutomationRunner(data)</span><br><span class="line">  .setMainConfig(mainConfiguration)</span><br></pre></td></tr></table></figure></p>
 <p>つづいてデータを前処理する。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:125 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val preppedData = runner.prepData()</span><br><span class="line"></span><br><span class="line">val preppedDataOverride = preppedData.copy(modelType = x.predictionType)</span><br></pre></td></tr></table></figure></p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:125
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val preppedData = runner.prepData()</span><br><span class="line"></span><br><span class="line">val preppedDataOverride = preppedData.copy(modelType = x.predictionType)</span><br></pre></td></tr></table></figure></p>
 <p>つづいて生成されたAutomationRunnerインスタンスを利用し、パラメータチューニングを実施する。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:129 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val output = runner.executeTuning(preppedDataOverride)</span><br></pre></td></tr></table></figure></p>
-<p>その後、出力内容が整理される。 レポートの類にmodelFamilyの情報を付与したり、など。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:131 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">outputBuffer += new FamilyOutput(x.modelFamily, output.mlFlowOutput) &#123;</span><br><span class="line">  override def modelReport: Array[GenericModelReturn] = output.modelReport</span><br><span class="line">  override def generationReport: Array[GenerationalReport] =</span><br><span class="line">    output.generationReport</span><br><span class="line">  override def modelReportDataFrame: DataFrame =</span><br><span class="line">    augmentDF(x.modelFamily, output.modelReportDataFrame)</span><br><span class="line">  override def generationReportDataFrame: DataFrame =</span><br><span class="line">    augmentDF(x.modelFamily, output.generationReportDataFrame)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>最後に、モデルごとのチューニングのループが完了したあとに、 それにより得られた複数の出力内容をまとめ上げる。 （Arrayをまとめたり、DataFrameをunionしたり、など）</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:142 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unifyFamilyOutput(outputBuffer.toArray)</span><br></pre></td></tr></table></figure></p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:129
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val output = runner.executeTuning(preppedDataOverride)</span><br></pre></td></tr></table></figure></p>
+<p>その後、出力内容が整理される。
+レポートの類にmodelFamilyの情報を付与したり、など。</p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:131
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">outputBuffer += new FamilyOutput(x.modelFamily, output.mlFlowOutput) &#123;</span><br><span class="line">  override def modelReport: Array[GenericModelReturn] = output.modelReport</span><br><span class="line">  override def generationReport: Array[GenerationalReport] =</span><br><span class="line">    output.generationReport</span><br><span class="line">  override def modelReportDataFrame: DataFrame =</span><br><span class="line">    augmentDF(x.modelFamily, output.modelReportDataFrame)</span><br><span class="line">  override def generationReportDataFrame: DataFrame =</span><br><span class="line">    augmentDF(x.modelFamily, output.generationReportDataFrame)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最後に、モデルごとのチューニングのループが完了したあとに、
+それにより得られた複数の出力内容をまとめ上げる。
+（Arrayをまとめたり、DataFrameをunionしたり、など）</p>
+<p>com/databricks/labs/automl/executor/FamilyRunner.scala:142
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unifyFamilyOutput(outputBuffer.toArray)</span><br></pre></td></tr></table></figure></p>
 <h4><span id="comdatabrickslabsautomlautomationrunnerexecutetuning">com.databricks.labs.automl.AutomationRunner#executeTuning</span></h4>
 <p>指定されたモデルごとにうチューニングを行う部分を確認する。</p>
-<p>当該メソッド内では、modelFamilyごとの処理の仕方が定義されている。 以下にRandomForestの場合を示す。</p>
+<p>当該メソッド内では、modelFamilyごとの処理の仕方が定義されている。
+以下にRandomForestの場合を示す。</p>
 <p>com/databricks/labs/automl/AutomationRunner.scala:1597 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">  protected[automl] def executeTuning(payload: DataGeneration): TunerOutput = &#123;</span><br><span class="line"></span><br><span class="line">    val genericResults = new ArrayBuffer[GenericModelReturn]</span><br><span class="line"></span><br><span class="line">    val (resultArray, modelStats, modelSelection, dataframe) =</span><br><span class="line">      _mainConfig.modelFamily match &#123;</span><br><span class="line">        case &quot;RandomForest&quot; =&gt;</span><br><span class="line">          val (results, stats, selection, data) = runRandomForest(payload)</span><br><span class="line">          results.foreach &#123; x =&gt;</span><br><span class="line">            genericResults += GenericModelReturn(</span><br><span class="line">              hyperParams = extractPayload(x.modelHyperParams),</span><br><span class="line">              model = x.model,</span><br><span class="line">              score = x.score,</span><br><span class="line">              metrics = x.evalMetrics,</span><br><span class="line">              generation = x.generation</span><br><span class="line">            )</span><br><span class="line">          &#125;</span><br><span class="line">          (genericResults, stats, selection, data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>なお、2019/8/25現在対応しているモデルは以下の通り。（caseになっていたのを抜粋） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">case &quot;RandomForest&quot; =&gt;</span><br><span class="line">case &quot;XGBoost&quot; =&gt;</span><br><span class="line">case &quot;GBT&quot; =&gt;</span><br><span class="line">case &quot;MLPC&quot; =&gt;</span><br><span class="line">case &quot;LinearRegression&quot; =&gt;</span><br><span class="line">case &quot;LogisticRegression&quot; =&gt;</span><br><span class="line">case &quot;SVM&quot; =&gt;</span><br><span class="line">case &quot;Trees&quot; =&gt;</span><br></pre></td></tr></table></figure></p>
-<p>さて、モデルごとのチューニングの様子を確認する。 RandomForestを例にすると、実態は以下の <code>runRandomForest</code> メソッドに見える。</p>
+<p>なお、2019/8/25現在対応しているモデルは以下の通り。（caseになっていたのを抜粋）
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">case &quot;RandomForest&quot; =&gt;</span><br><span class="line">case &quot;XGBoost&quot; =&gt;</span><br><span class="line">case &quot;GBT&quot; =&gt;</span><br><span class="line">case &quot;MLPC&quot; =&gt;</span><br><span class="line">case &quot;LinearRegression&quot; =&gt;</span><br><span class="line">case &quot;LogisticRegression&quot; =&gt;</span><br><span class="line">case &quot;SVM&quot; =&gt;</span><br><span class="line">case &quot;Trees&quot; =&gt;</span><br></pre></td></tr></table></figure></p>
+<p>さて、モデルごとのチューニングの様子を確認する。
+RandomForestを例にすると、実態は以下の <code>runRandomForest</code>
+メソッドに見える。</p>
 <p>com/databricks/labs/automl/AutomationRunner.scala:1604 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val (results, stats, selection, data) = runRandomForest(payload)</span><br></pre></td></tr></table></figure></p>
-<p><code>runRandomForest</code> メソッドは、以下のようにペイロードを引数にとり、 その中でチューニングを実施する。</p>
+<p><code>runRandomForest</code>
+メソッドは、以下のようにペイロードを引数にとり、
+その中でチューニングを実施する。</p>
 <p>com/databricks/labs/automl/AutomationRunner.scala:46 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  private def runRandomForest(</span><br><span class="line">                               payload: DataGeneration</span><br><span class="line">                             ): (Array[RandomForestModelsWithResults], DataFrame, String, DataFrame) = &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>特徴的なのは、非常にきめ細やかに初期設定している箇所。 これらの設定を上書きしてチューニングできる、はず。</p>
+<p>特徴的なのは、非常にきめ細やかに初期設定している箇所。
+これらの設定を上書きしてチューニングできる、はず。</p>
 <p>com/databricks/labs/automl/AutomationRunner.scala:58 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    val initialize = new RandomForestTuner(cachedData, payload.modelType)</span><br><span class="line">      .setLabelCol(_mainConfig.labelCol)</span><br><span class="line">      .setFeaturesCol(_mainConfig.featuresCol)</span><br><span class="line">      .setRandomForestNumericBoundaries(_mainConfig.numericBoundaries)</span><br><span class="line">      .setRandomForestStringBoundaries(_mainConfig.stringBoundaries)</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>実際にチューニングしているのは、以下の箇所のように見える。 <code>evolveWithScoringDF</code> 内では、 <code>RandomForestTuner</code> クラスのメソッドが呼び出され、 ストラテジ（実装上は、バッチ方式か、continuous方式か）に従ったチューニングが実施される。</p>
+<p>実際にチューニングしているのは、以下の箇所のように見える。
+<code>evolveWithScoringDF</code> 内では、 <code>RandomForestTuner</code>
+クラスのメソッドが呼び出され、
+ストラテジ（実装上は、バッチ方式か、continuous方式か）に従ったチューニングが実施される。</p>
 <p>com/databricks/labs/automl/AutomationRunner.scala:169 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val (modelResultsRaw, modelStatsRaw) = initialize.evolveWithScoringDF()</span><br></pre></td></tr></table></figure></p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
@@ -520,7 +582,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/23/Databricks-AutoML-Toolkit/" data-id="cl2nztnl4003v5xqizgowlijh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/23/Databricks-AutoML-Toolkit/" data-id="cl2o9pbga013w18rzu6ypac36" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -641,40 +703,61 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#hexoでpandasレンダラーを使うために最新版pandocをインストールしたdockerイメージを用意">HexoでPandasレンダラーを使うために最新版PandocをインストールしたDockerイメージを用意</a></li>
-<li><a href="#hexoをcircleciでビルドするための設定ファイルの作成">HexoをCircleCIでビルドするための設定ファイルの作成</a></li>
-<li><a href="#circleci上でプロジェクトを作る">CircleCI上でプロジェクトを作る</a></li>
-<li><a href="#githubへのpush用のssh鍵を登録する">GitHubへのPush用のSSH鍵を登録する</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#hexoでpandasレンダラーを使うために最新版pandocをインストールしたdockerイメージを用意" id="toc-hexoでpandasレンダラーを使うために最新版pandocをインストールしたdockerイメージを用意">HexoでPandasレンダラーを使うために最新版PandocをインストールしたDockerイメージを用意</a></li>
+<li><a href="#hexoをcircleciでビルドするための設定ファイルの作成" id="toc-hexoをcircleciでビルドするための設定ファイルの作成">HexoをCircleCIでビルドするための設定ファイルの作成</a></li>
+<li><a href="#circleci上でプロジェクトを作る" id="toc-circleci上でプロジェクトを作る">CircleCI上でプロジェクトを作る</a></li>
+<li><a href="#githubへのpush用のssh鍵を登録する" id="toc-githubへのpush用のssh鍵を登録する">GitHubへのPush用のSSH鍵を登録する</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="http://jackale.hateblo.jp/entry/2018/01/14/000709" target="_blank" rel="noopener">LaTeXファイルをGithubにpushしたらCircle CIでPDF生成するようにした</a></li>
+<li><a href="http://jackale.hateblo.jp/entry/2018/01/14/000709" target="_blank" rel="noopener">LaTeXファイルをGithubにpushしたらCircle
+CIでPDF生成するようにした</a></li>
 <li><a href="https://qiita.com/sky_y/items/7c29909c5cffa28b23d8" target="_blank" rel="noopener">HexoのレンダリングエンジンとしてPandocを使う</a></li>
 <li><a href="https://github.com/phoenixcw/hexo-renderer-mathjax/blob/master/lib/mathjax.html#L15" target="_blank" rel="noopener">mathjax.html</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="hexoでpandasレンダラーを使うために最新版pandocをインストールしたdockerイメージを用意">HexoでPandasレンダラーを使うために最新版PandocをインストールしたDockerイメージを用意</span></h2>
-<p>ドキュメント等では、circleciのDockerイメージを使うことが記載されているが、 ここでは予め最新版Pandocをインストールしておきたかったので、circleciのDockerイメージをベースにしつつ、 インストーラをwget、dpkgでインストールしたDockerイメージを自作して利用した。</p>
+<p>ドキュメント等では、circleciのDockerイメージを使うことが記載されているが、
+ここでは予め最新版Pandocをインストールしておきたかったので、circleciのDockerイメージをベースにしつつ、
+インストーラをwget、dpkgでインストールしたDockerイメージを自作して利用した。</p>
 <p>Dockerfileは以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM circleci/node:8.10.0</span><br><span class="line"></span><br><span class="line">RUN wget -P /tmp https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb</span><br><span class="line"></span><br><span class="line">RUN sudo dpkg -i /tmp/pandoc-2.7.3-1-amd64.deb</span><br></pre></td></tr></table></figure>
-<p>今回は、これを使って作ったDockerイメージを、予めDocker Hubに登録しておく。 ここでは <code>hoge/fuga:1.0</code> と登録したものとする。</p>
+<p>今回は、これを使って作ったDockerイメージを、予めDocker
+Hubに登録しておく。 ここでは <code>hoge/fuga:1.0</code>
+と登録したものとする。</p>
 <h2><span id="hexoをcircleciでビルドするための設定ファイルの作成">HexoをCircleCIでビルドするための設定ファイルの作成</span></h2>
-<p>上記で作ったDockerイメージを使う、以下のようなCircleCi設定ファイルを作り、 Hexoプロジェクトのトップディレクトリ以下 <code>.circleci/config.yml</code> に保存する。</p>
+<p>上記で作ったDockerイメージを使う、以下のようなCircleCi設定ファイルを作り、
+Hexoプロジェクトのトップディレクトリ以下
+<code>.circleci/config.yml</code> に保存する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">defaults: &amp;defaults </span><br><span class="line">  docker:</span><br><span class="line">    - image: hoge/fuga:1.0</span><br><span class="line">      environment:</span><br><span class="line">        TZ: Asia/Tokyo</span><br><span class="line">  working_directory: ~/work</span><br><span class="line"></span><br><span class="line">version: 2</span><br><span class="line">jobs:</span><br><span class="line">  build:</span><br><span class="line">    &lt;&lt;: *defaults</span><br><span class="line">    steps:</span><br><span class="line">      - checkout</span><br><span class="line">      - run: git submodule init</span><br><span class="line">      - run: git submodule update</span><br><span class="line">      - run: npm install --save</span><br><span class="line">      - run: node_modules/.bin/hexo clean</span><br><span class="line">      - run: sed -i -e &quot;s#http://cdn.mathjax.org/mathjax#https://cdn.mathjax.org/mathjax#&quot; node_modules/hexo-renderer-mathjax/mathjax.html </span><br><span class="line">      - run: cat node_modules/hexo-renderer-mathjax/mathjax.html</span><br><span class="line">      - run: node_modules/.bin/hexo generate</span><br><span class="line">      - run: git config --global user.name &lt;your name&gt;</span><br><span class="line">      - run: git config --global user.email &lt;your email address&gt;</span><br><span class="line">      - run: node_modules/.bin/hexo deploy</span><br><span class="line">      - persist_to_workspace:</span><br><span class="line">          root: .</span><br><span class="line">          paths: [ &apos;*&apos; ]</span><br></pre></td></tr></table></figure>
-<p>上記 <code>config.yml</code> は、今後の拡張性を踏まえて記載してあるので、やや冗長な表現になっている。</p>
+<p>上記 <code>config.yml</code>
+は、今後の拡張性を踏まえて記載してあるので、やや冗長な表現になっている。</p>
 <p>なお、</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- run: sed -i -e &quot;s#http://cdn.mathjax.org/mathjax#https://cdn.mathjax.org/mathjax#&quot; node_modules/hexo-renderer-mathjax/mathjax.html</span><br></pre></td></tr></table></figure>
-<p>としている箇所があるが、これは現在の <code>hexo-renderer-mathjax</code> をインストールすると、httpsではなくhttpを使用するようになっており、 結果としてgithub.ioでサイト公開するとmathjax部分が意図通りに表示されないからである。 <a href="https://qiita.com/sky_y/items/7c29909c5cffa28b23d8" target="_blank" rel="noopener">HexoのレンダリングエンジンとしてPandocを使う</a> にもその旨説明がある。 <a href="https://github.com/phoenixcw/hexo-renderer-mathjax/blob/master/lib/mathjax.html#L15" target="_blank" rel="noopener">mathjax.html</a> を見る限り、GitHub上のmasterブランチでは修正済みのようだ。</p>
+<p>としている箇所があるが、これは現在の
+<code>hexo-renderer-mathjax</code>
+をインストールすると、httpsではなくhttpを使用するようになっており、
+結果としてgithub.ioでサイト公開するとmathjax部分が意図通りに表示されないからである。
+<a href="https://qiita.com/sky_y/items/7c29909c5cffa28b23d8" target="_blank" rel="noopener">HexoのレンダリングエンジンとしてPandocを使う</a>
+にもその旨説明がある。 <a href="https://github.com/phoenixcw/hexo-renderer-mathjax/blob/master/lib/mathjax.html#L15" target="_blank" rel="noopener">mathjax.html</a>
+を見る限り、GitHub上のmasterブランチでは修正済みのようだ。</p>
 <h2><span id="circleci上でプロジェクトを作る">CircleCI上でプロジェクトを作る</span></h2>
-<p>GitHubアカウントを連携している場合、既存のレポジトリが見えるので、 プロジェクトを作成する。</p>
+<p>GitHubアカウントを連携している場合、既存のレポジトリが見えるので、
+プロジェクトを作成する。</p>
 <h2><span id="githubへのpush用のssh鍵を登録する">GitHubへのPush用のSSH鍵を登録する</span></h2>
-<p><a href="http://jackale.hateblo.jp/entry/2018/01/14/000709" target="_blank" rel="noopener">LaTeXファイルをGithubにpushしたらCircle CIでPDF生成するようにした</a> あたりを参考に、SSH鍵の登録を実施。 プロジェクトの設定から、「Checkout SSH keys」を開き、「Add user key」から鍵を生成→登録した。</p>
+<p><a href="http://jackale.hateblo.jp/entry/2018/01/14/000709" target="_blank" rel="noopener">LaTeXファイルをGithubにpushしたらCircle
+CIでPDF生成するようにした</a> あたりを参考に、SSH鍵の登録を実施。
+プロジェクトの設定から、「Checkout SSH keys」を開き、「Add user
+key」から鍵を生成→登録した。</p>
 <p>GitHub側のアカウント設定から鍵が登録されたことが確認できる。</p>
-<p>以上で手順終了。 ブログを追記して、プロジェクトにpushするとCircleCIがhexo generateし、hexo deployするようになる。</p>
+<p>以上で手順終了。
+ブログを追記して、プロジェクトにpushするとCircleCIがhexo
+generateし、hexo deployするようになる。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
         
@@ -686,7 +769,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/23/Manage-the-flow-of-hexo-documentation-with-CircleCI/" data-id="cl2nztnn0009s5xqixtd2lu4w" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/23/Manage-the-flow-of-hexo-documentation-with-CircleCI/" data-id="cl2o9pb6r006w18rzbqcuywq5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -807,24 +890,30 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#motivation">2. MOTIVATION</a><ul>
-<li><a href="#ワークロードを予測しがたい">ワークロードを予測しがたい</a></li>
-<li><a href="#データの多様性">データの多様性</a></li>
-<li><a href="#マルチテナントなコントロールポリシー">マルチテナントなコントロールポリシー</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#motivation" id="toc-motivation">2. MOTIVATION</a>
+<ul>
+<li><a href="#ワークロードを予測しがたい" id="toc-ワークロードを予測しがたい">ワークロードを予測しがたい</a></li>
+<li><a href="#データの多様性" id="toc-データの多様性">データの多様性</a></li>
+<li><a href="#マルチテナントなコントロールポリシー" id="toc-マルチテナントなコントロールポリシー">マルチテナントなコントロールポリシー</a></li>
 </ul></li>
-<li><a href="#background">3. BACKGROUND</a></li>
-<li><a href="#design">4. DESIGN</a><ul>
-<li><a href="#overview">4.1 Overview</a></li>
-<li><a href="#control-mechanism">4.2 Control Mechanism</a></li>
+<li><a href="#background" id="toc-background">3. BACKGROUND</a></li>
+<li><a href="#design" id="toc-design">4. DESIGN</a>
+<ul>
+<li><a href="#overview" id="toc-overview">4.1 Overview</a></li>
+<li><a href="#control-mechanism" id="toc-control-mechanism">4.2 Control
+Mechanism</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://dl.acm.org/citation.cfm?id=3242946" target="_blank" rel="noopener">Chi a scalable and programmable control plane for distributed stream processing systems</a></li>
+<li><a href="https://dl.acm.org/citation.cfm?id=3242946" target="_blank" rel="noopener">Chi a scalable
+and programmable control plane for distributed stream processing
+systems</a></li>
 <li><a href="http://www.vldb.org/pvldb/vol11/p1303-mai.pdf" target="_blank" rel="noopener">VLDBのダウンロードリンク</a></li>
 <li><a href="https://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
 <li><a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/trill-vldb2015.pdf" target="_blank" rel="noopener">Trill</a></li>
@@ -832,46 +921,91 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>2018/6にVLDBに掲載された論文。Microsoftが中心となって執筆？</p>
-<p>多数のパラメータがあり、調整可能性がある場合に、動的な設定を可能にするChiというControll Planeを提案。</p>
-<p>昨今のストリーム処理エンジン（やアプリケーション？）は、様々なSLO（Service Level Objective）を目指し、 多数の調整用パラメータが存在する。 これをチューニングするのは玄人でも一筋縄ではない。</p>
+<p>多数のパラメータがあり、調整可能性がある場合に、動的な設定を可能にするChiというControll
+Planeを提案。</p>
+<p>昨今のストリーム処理エンジン（やアプリケーション？）は、様々なSLO（Service
+Level Objective）を目指し、 多数の調整用パラメータが存在する。
+これをチューニングするのは玄人でも一筋縄ではない。</p>
 <p>重要なのは、動的に設定できることに加え、常にモニタリングしフィードバックすること。</p>
-<p>本論文では、非同期的にコントロールポリシーを適用するモデル（Control Plane）を提案。 ストリームデータを伝搬する機能を利用し、コントロールメッセージを伝搬する。 またコントロールメッセージを扱うためのリアクティブなプログラミングモデルを合わせて提案。これにより、ポリシーを実装するのにハイレベルAPIを利用すればよくなる。 グローバルな同期が不要であることが特徴。</p>
-<p>過去の技術としては、Heron、Flink、Spark Streamingを例に挙げ、限定的な対応にとどまっている旨を指摘。</p>
-<p>Chiは、 <a href="https://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a> の上に構築されたFlare（★補足：Microsoft内部のシステムのようだ）という仕組み上に実装し、試した。 <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/trill-vldb2015.pdf" target="_blank" rel="noopener">Trill</a>も利用しているとのこと。</p>
+<p>本論文では、非同期的にコントロールポリシーを適用するモデル（Control
+Plane）を提案。
+ストリームデータを伝搬する機能を利用し、コントロールメッセージを伝搬する。
+またコントロールメッセージを扱うためのリアクティブなプログラミングモデルを合わせて提案。これにより、ポリシーを実装するのにハイレベルAPIを利用すればよくなる。
+グローバルな同期が不要であることが特徴。</p>
+<p>過去の技術としては、Heron、Flink、Spark
+Streamingを例に挙げ、限定的な対応にとどまっている旨を指摘。</p>
+<p>Chiは、 <a href="https://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a>
+の上に構築されたFlare（★補足：Microsoft内部のシステムのようだ）という仕組み上に実装し、試した。
+<a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/trill-vldb2015.pdf" target="_blank" rel="noopener">Trill</a>も利用しているとのこと。</p>
 <p>★補足：GitHub等に実装が公開されていないか軽く確認したが存在しないようだ。</p>
 <h2><span id="2-motivation">2. MOTIVATION</span></h2>
-<p>メジャーなパブリッククラウド（★補足：ここではAzureのことを指しているのだと思われる）で生じるログを集めて分析したい。 サーバ台数は20万台、数十PB/日。 これはGoogleのログと同様の規模。</p>
+<p>メジャーなパブリッククラウド（★補足：ここではAzureのことを指しているのだと思われる）で生じるログを集めて分析したい。
+サーバ台数は20万台、数十PB/日。 これはGoogleのログと同様の規模。</p>
 <h3><span id="ワークロードを予測しがたい">ワークロードを予測しがたい</span></h3>
-<p>生じるログはバラエティに富んでいる。これはそれを生成するプロセス、コンポーネントがバラエティ豊かだからである。 例えば、何か障害が起きるとそのとたんにバーストトラフィックが発生する。 デバッグモードを有効にするとログ量が増える。</p>
-<p>特徴として、ひとつの種類のストリームの量も、バラエティ豊かであることが挙げられる。 例えば、あるストリームについては1分の間に数千万イベントまで到達するケースもあった。（つまり、バーストトラフィック）</p>
+<p>生じるログはバラエティに富んでいる。これはそれを生成するプロセス、コンポーネントがバラエティ豊かだからである。
+例えば、何か障害が起きるとそのとたんにバーストトラフィックが発生する。
+デバッグモードを有効にするとログ量が増える。</p>
+<p>特徴として、ひとつの種類のストリームの量も、バラエティ豊かであることが挙げられる。
+例えば、あるストリームについては1分の間に数千万イベントまで到達するケースもあった。（つまり、バーストトラフィック）</p>
 <p>これはトラフィックが予測困難であることを示す。</p>
 <h3><span id="データの多様性">データの多様性</span></h3>
 <p>Skewが存在し、多様である。</p>
 <h3><span id="マルチテナントなコントロールポリシー">マルチテナントなコントロールポリシー</span></h3>
-<p>ログにはError、Infoなどのレベルがあり、要件に応じて多様である。 またそれぞれ異なるSLOを求められることがある。 例えばInfoレベルはExactly Onceだが、それ以外はベストエフォート、など。</p>
+<p>ログにはError、Infoなどのレベルがあり、要件に応じて多様である。
+またそれぞれ異なるSLOを求められることがある。 例えばInfoレベルはExactly
+Onceだが、それ以外はベストエフォート、など。</p>
 <p>これをひとつのストリーム処理システムで実現しようとする。</p>
-<p>またControl Policyは、リソース使用の最適化に用いられることもある。 ある処理の中間データがほかの処理で使われるために保持されたり、 データレイアウトやストレージの使い方を最適化したり…など。</p>
-<p>これらの個別の先行研究は存在するが、まとめて管理しようとすると、 Control Planeに柔軟性とスケーラビリティが必要になる。</p>
+<p>またControl Policyは、リソース使用の最適化に用いられることもある。
+ある処理の中間データがほかの処理で使われるために保持されたり、
+データレイアウトやストレージの使い方を最適化したり…など。</p>
+<p>これらの個別の先行研究は存在するが、まとめて管理しようとすると、
+Control Planeに柔軟性とスケーラビリティが必要になる。</p>
 <h2><span id="3-background">3. BACKGROUND</span></h2>
-<p>ここでは、Naiad、StreamScope、Apache Flinkを例にとって説明。 いずれも、オペレータのDAG構造のモデル。</p>
+<p>ここでは、Naiad、StreamScope、Apache Flinkを例にとって説明。
+いずれも、オペレータのDAG構造のモデル。</p>
 <p>ひとつの例として、 LINQスタイルのクエリでWordCountを表現。</p>
 <figure>
-<img src="/memo-blog/images/2dP06tOT2MlXbqGp-38F4F.png" alt=""><figcaption>LINQ風の表現とオペレータのDAG表現の例</figcaption>
+<img src="/memo-blog/images/2dP06tOT2MlXbqGp-38F4F.png" alt="LINQ風の表現とオペレータのDAG表現の例">
+<figcaption aria-hidden="true">LINQ風の表現とオペレータのDAG表現の例</figcaption>
 </figure>
 <!-- ![計算モデル](/memo-blog/images/2dP06tOT2MlXbqGp-64DDD.png) -->
 <p>計算モデルの前提は以下の通り。</p>
-<p>DAGを<span class="math inline">\(\displaystyle G( V,\ E)\)</span>で表す。</p>
-<p><span class="math inline">\(\displaystyle E\)</span>はEdgeのセット、<span class="math inline">\(\displaystyle V\)</span>がOperatorのセット。</p>
-<p><span class="math inline">\(\displaystyle u\ \rightharpoonup v\)</span>はOperator <span class="math inline">\(\displaystyle u\)</span>から<span class="math inline">\(\displaystyle v\)</span>への有向Edgeを表す。</p>
-<p><span class="math inline">\(\displaystyle \{\cdot \rightharpoonup v\}\)</span>が<span class="math inline">\(\displaystyle v\)</span>への入力Edgeを表す。</p>
-<p><span class="math inline">\(\displaystyle \{v\rightharpoonup \cdot \}\)</span>が<span class="math inline">\(\displaystyle v\)</span>からの出力Edgeを表す。</p>
-<p>Operator <span class="math inline">\(\displaystyle v\ \in V\)</span>はトリプル<span class="math inline">\(\displaystyle ( s_{v} \ ,\ f_{v} \ ,\ p_{v})\)</span>で表す。 この時、<span class="math inline">\(\displaystyle s_{v}\)</span>は<span class="math inline">\(\displaystyle v\)</span>のステート、<span class="math inline">\(\displaystyle f_{v}\)</span>は<span class="math inline">\(\displaystyle v\)</span>で実行される関数、<span class="math inline">\(\displaystyle p_{v}\)</span>はステートに含まれないプロパティを表す。</p>
-<p><span class="math inline">\(\displaystyle f_{v}\)</span>の例としては、 <span class="math display">\[\begin{equation*}
-f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#39;_{v} ,\ m&#39;_{e_{i} \in \{v\ \rightharpoonup \ \cdot \}}
+<p>DAGを<span class="math inline">\(\displaystyle G( V,\
+E)\)</span>で表す。</p>
+<p><span class="math inline">\(\displaystyle
+E\)</span>はEdgeのセット、<span class="math inline">\(\displaystyle
+V\)</span>がOperatorのセット。</p>
+<p><span class="math inline">\(\displaystyle u\ \rightharpoonup
+v\)</span>はOperator <span class="math inline">\(\displaystyle
+u\)</span>から<span class="math inline">\(\displaystyle
+v\)</span>への有向Edgeを表す。</p>
+<p><span class="math inline">\(\displaystyle \{\cdot \rightharpoonup
+v\}\)</span>が<span class="math inline">\(\displaystyle
+v\)</span>への入力Edgeを表す。</p>
+<p><span class="math inline">\(\displaystyle \{v\rightharpoonup \cdot
+\}\)</span>が<span class="math inline">\(\displaystyle
+v\)</span>からの出力Edgeを表す。</p>
+<p>Operator <span class="math inline">\(\displaystyle v\ \in
+V\)</span>はトリプル<span class="math inline">\(\displaystyle ( s_{v} \
+,\ f_{v} \ ,\ p_{v})\)</span>で表す。 この時、<span class="math inline">\(\displaystyle s_{v}\)</span>は<span class="math inline">\(\displaystyle v\)</span>のステート、<span class="math inline">\(\displaystyle f_{v}\)</span>は<span class="math inline">\(\displaystyle v\)</span>で実行される関数、<span class="math inline">\(\displaystyle
+p_{v}\)</span>はステートに含まれないプロパティを表す。</p>
+<p><span class="math inline">\(\displaystyle
+f_{v}\)</span>の例としては、 <span class="math display">\[\begin{equation*}
+f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}}
+\rightharpoonup s&#39;_{v} ,\ m&#39;_{e_{i} \in \{v\ \rightharpoonup \
+\cdot \}}
 \end{equation*}\]</span> が挙げられていた。ここで<span class="math inline">\(\displaystyle m\)</span>はメッセージを表す。</p>
-<p>つまり、<span class="math inline">\(\displaystyle m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}}\)</span>は、入力Edge <span class="math inline">\(\displaystyle e_{i}\)</span>から入ってくるメッセージを表す。 また入力を受け取った時点でステート<span class="math inline">\(\displaystyle s_{v}\)</span>だったものを、出力時点で<span class="math inline">\(\displaystyle s&#39;_{v}\)</span>に変える関数を表す。 また、<span class="math inline">\(\displaystyle \ m&#39;_{e_{i} \in \{v\ \rightharpoonup \ \cdot \}}\)</span>は出力メッセージを表す。</p>
+<p>つまり、<span class="math inline">\(\displaystyle m_{e_{i} \in
+\{\cdot \ \rightharpoonup \ v\}}\)</span>は、入力Edge <span class="math inline">\(\displaystyle
+e_{i}\)</span>から入ってくるメッセージを表す。
+また入力を受け取った時点でステート<span class="math inline">\(\displaystyle
+s_{v}\)</span>だったものを、出力時点で<span class="math inline">\(\displaystyle
+s&#39;_{v}\)</span>に変える関数を表す。 また、<span class="math inline">\(\displaystyle \ m&#39;_{e_{i} \in \{v\
+\rightharpoonup \ \cdot \}}\)</span>は出力メッセージを表す。</p>
 <h2><span id="4-design">4. DESIGN</span></h2>
-<p>データ処理と同様のAPIを設け、データ処理のパイプライン（data-plane）を使う。 グローバルな同期を必要とせず、非同期的なControl Operationを可能にする。</p>
+<p>データ処理と同様のAPIを設け、データ処理のパイプライン（data-plane）を使う。
+グローバルな同期を必要とせず、非同期的なControl
+Operationを可能にする。</p>
 <h3><span id="41-overview">4.1 Overview</span></h3>
 <p>前提は以下の通り。</p>
 <ul>
@@ -880,7 +1014,8 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 <li>一度に処理されるメッセージは1個ずつ</li>
 <li>基盤となるSPEはOperatorに関する基本的なオペレーション（起動、停止、Kill）に対応すること</li>
 </ul>
-<p>Control Loopを通じて、Control Messageが伝搬される。 Control Loopの流れは以下の通り。</p>
+<p>Control Loopを通じて、Control Messageが伝搬される。 Control
+Loopの流れは以下の通り。</p>
 <ul>
 <li>Phase 1:
 <ul>
@@ -899,10 +1034,22 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 <li>SinkからControllerにフィードバックされる</li>
 </ul></li>
 </ul>
-<p>[LINQ風の表現とオペレータのDAG表現の例] のDAG表現を用いた例でいえば、 もともと Reducer <span class="math inline">\(\{R_1, R_2\}\)</span> で処理していたのを <span class="math inline">\(\{R_1, R_2, R_3\}\)</span> で処理するように変更する例が載っている。 Control Messageが <span class="math inline">\(\{R_1, R_2\}\)</span> に届くと、ルーティング情報を更新しつつ、ステート情報をCheckpointする。 ステート情報は再分配され、 <span class="math inline">\(R_3\)</span> にも分配される。 <span class="math inline">\(R_3\)</span> は、Control Messageを受け取ると入力チャンネルをブロックし、 <span class="math inline">\(\{R_1, R_2\}\)</span> からのステートがそろうのを待つ。 ステートがそろったら、マージし、新しい関数を動かし始める。</p>
-<p>ControllerがすべてのControl Messageを受け取ったら、スケールアウトは完了である。</p>
+<p>[LINQ風の表現とオペレータのDAG表現の例] のDAG表現を用いた例でいえば、
+もともと Reducer <span class="math inline">\(\{R_1, R_2\}\)</span>
+で処理していたのを <span class="math inline">\(\{R_1, R_2,
+R_3\}\)</span> で処理するように変更する例が載っている。 Control
+Messageが <span class="math inline">\(\{R_1, R_2\}\)</span>
+に届くと、ルーティング情報を更新しつつ、ステート情報をCheckpointする。
+ステート情報は再分配され、 <span class="math inline">\(R_3\)</span>
+にも分配される。 <span class="math inline">\(R_3\)</span> は、Control
+Messageを受け取ると入力チャンネルをブロックし、 <span class="math inline">\(\{R_1, R_2\}\)</span>
+からのステートがそろうのを待つ。
+ステートがそろったら、マージし、新しい関数を動かし始める。</p>
+<p>ControllerがすべてのControl
+Messageを受け取ったら、スケールアウトは完了である。</p>
 <h3><span id="42-control-mechanism">4.2 Control Mechanism</span></h3>
-<h4><span id="421-graph-transitions-through-meta-topology">4.2.1 Graph Transitions through Meta Topology</span></h4>
+<h4><span id="421-graph-transitionsthrough-meta-topology">4.2.1 Graph Transitions
+through Meta Topology</span></h4>
 <p>★この辺を読んでいる</p>
 <p>＜WIP＞</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
@@ -916,7 +1063,7 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/14/Chi-a-scalable-and-programmable-control-plane-for-distributed-stream-processing-systems/" data-id="cl2nztnkq00315xqixxvka1k7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/14/Chi-a-scalable-and-programmable-control-plane-for-distributed-stream-processing-systems/" data-id="cl2o9pbj4019r18rzteiiawr6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1037,20 +1184,28 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="http://ceur-ws.org/Vol-2367/paper_14.pdf" target="_blank" rel="noopener">How to become a (Throughput) Billionaire The Stream Processing Engine PipeFabric</a></li>
-<li><a href="https://dl.gi.de/handle/20.500.12116/21739" target="_blank" rel="noopener">Reliable stream data processing for elastic distributed stream processing systems</a></li>
+<li><a href="http://ceur-ws.org/Vol-2367/paper_14.pdf" target="_blank" rel="noopener">How to become a
+(Throughput) Billionaire The Stream Processing Engine
+PipeFabric</a></li>
+<li><a href="https://dl.gi.de/handle/20.500.12116/21739" target="_blank" rel="noopener">Reliable stream
+data processing for elastic distributed stream processing
+systems</a></li>
 <li><a href="https://github.com/dbis-ilm/pipefabric" target="_blank" rel="noopener">PipeFabricのGitHub</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>2019年の論文</p>
-<p><a href="https://dl.gi.de/handle/20.500.12116/21739" target="_blank" rel="noopener">Reliable stream data processing for elastic distributed stream processing systems</a> が引用されているため気になった。</p>
-<p>ドイツのイルメナウ大学？で開発されているストリーム処理エンジン。 論文アブストラクトでは、「開発中」とされていたが、<a href="https://github.com/dbis-ilm/pipefabric" target="_blank" rel="noopener">PipeFabricのGitHub</a> を見ると、2019/8/14現在で最終更新が7か月前（2019/1）だった。</p>
+<p><a href="https://dl.gi.de/handle/20.500.12116/21739" target="_blank" rel="noopener">Reliable stream
+data processing for elastic distributed stream processing systems</a>
+が引用されているため気になった。</p>
+<p>ドイツのイルメナウ大学？で開発されているストリーム処理エンジン。
+論文アブストラクトでは、「開発中」とされていたが、<a href="https://github.com/dbis-ilm/pipefabric" target="_blank" rel="noopener">PipeFabricのGitHub</a>
+を見ると、2019/8/14現在で最終更新が7か月前（2019/1）だった。</p>
 <p>モダンなHWをどう生かすか？ということがテーマのように見えた。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
@@ -1063,7 +1218,7 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/14/How-to-become-a-Throughput-Billionaire-The-Stream-Processing-Engine-PipeFabric/" data-id="cl2nztnm3006p5xqi9sa03dx3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/14/How-to-become-a-Throughput-Billionaire-The-Stream-Processing-Engine-PipeFabric/" data-id="cl2o9pb5v004k18rz2zos9k8l" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1184,58 +1339,97 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#introduction">1 Introduction</a></li>
-<li><a href="#background">2 Background</a><ul>
-<li><a href="#data-stream-processing">2.1 Data Stream Processing</a></li>
-<li><a href="#apache-flink">2.2 Apache Flink</a></li>
-<li><a href="#fault-tolerance-and-checkpointing-in-apache-flink">2.3 Fault Tolerance and Checkpointing in Apache Flink</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#introduction" id="toc-introduction">1
+Introduction</a></li>
+<li><a href="#background" id="toc-background">2 Background</a>
+<ul>
+<li><a href="#data-stream-processing" id="toc-data-stream-processing">2.1 Data Stream Processing</a></li>
+<li><a href="#apache-flink" id="toc-apache-flink">2.2 Apache
+Flink</a></li>
+<li><a href="#fault-tolerance-and-checkpointing-in-apache-flink" id="toc-fault-tolerance-and-checkpointing-in-apache-flink">2.3 Fault
+Tolerance and Checkpointing in Apache Flink</a></li>
 </ul></li>
-<li><a href="#protocol-description">3 Protocol Description</a><ul>
-<li><a href="#migration-protocol-description">3.2 Migration Protocol Description</a></li>
-<li><a href="#modification-protocols-description">3.3 Modification Protocols Description</a></li>
+<li><a href="#protocol-description" id="toc-protocol-description">3
+Protocol Description</a>
+<ul>
+<li><a href="#migration-protocol-description" id="toc-migration-protocol-description">3.2 Migration Protocol
+Description</a></li>
+<li><a href="#modification-protocols-description" id="toc-modification-protocols-description">3.3 Modification Protocols
+Description</a></li>
 </ul></li>
-<li><a href="#system-architecture">4 System Architecture</a><ul>
-<li><a href="#vanilla-components-overview">4.1 Vanilla Components Overview</a></li>
-<li><a href="#our-changes-on-the-coordinator-side">4.2 Our Changes on the Coordinator Side</a></li>
-<li><a href="#our-changes-on-the-worker-side">4.3 Our Changes on the Worker Side</a></li>
-<li><a href="#query-plan-modifications">4.4 Query Plan Modifications</a></li>
+<li><a href="#system-architecture" id="toc-system-architecture">4 System
+Architecture</a>
+<ul>
+<li><a href="#vanilla-components-overview" id="toc-vanilla-components-overview">4.1 Vanilla Components
+Overview</a></li>
+<li><a href="#our-changes-on-the-coordinator-side" id="toc-our-changes-on-the-coordinator-side">4.2 Our Changes on the
+Coordinator Side</a></li>
+<li><a href="#our-changes-on-the-worker-side" id="toc-our-changes-on-the-worker-side">4.3 Our Changes on the Worker
+Side</a></li>
+<li><a href="#query-plan-modifications" id="toc-query-plan-modifications">4.4 Query Plan Modifications</a></li>
 </ul></li>
-<li><a href="#protocol-implementation">5 Protocol Implementation</a><ul>
-<li><a href="#operator-migration">5.1 Operator Migration</a></li>
-<li><a href="#introduction-of-new-operators-1">5.2 Introduction of new Operators</a></li>
-<li><a href="#changing-the-operator-function">5.3 Changing the Operator Function</a></li>
+<li><a href="#protocol-implementation" id="toc-protocol-implementation">5 Protocol Implementation</a>
+<ul>
+<li><a href="#operator-migration" id="toc-operator-migration">5.1
+Operator Migration</a></li>
+<li><a href="#introduction-of-new-operators-1" id="toc-introduction-of-new-operators-1">5.2 Introduction of new
+Operators</a></li>
+<li><a href="#changing-the-operator-function" id="toc-changing-the-operator-function">5.3 Changing the Operator
+Function</a></li>
 </ul></li>
-<li><a href="#evaluation">6 Evaluation</a><ul>
-<li><a href="#workloads">6.3 Workloads</a></li>
-<li><a href="#migration-protocol-benchmark">6.4 Migration Protocol Benchmark</a></li>
-<li><a href="#introducing-new-operators-at-runtime">6.5 Introducing new operators at runtime</a></li>
-<li><a href="#replacing-the-operator-function-at-runtime">6.6 Replacing the operator function at runtime</a></li>
-<li><a href="#discussion">6.7 Discussion</a></li>
+<li><a href="#evaluation" id="toc-evaluation">6 Evaluation</a>
+<ul>
+<li><a href="#workloads" id="toc-workloads">6.3 Workloads</a></li>
+<li><a href="#migration-protocol-benchmark" id="toc-migration-protocol-benchmark">6.4 Migration Protocol
+Benchmark</a></li>
+<li><a href="#introducing-new-operators-at-runtime" id="toc-introducing-new-operators-at-runtime">6.5 Introducing new
+operators at runtime</a></li>
+<li><a href="#replacing-the-operator-function-at-runtime" id="toc-replacing-the-operator-function-at-runtime">6.6 Replacing the
+operator function at runtime</a></li>
+<li><a href="#discussion" id="toc-discussion">6.7 Discussion</a></li>
 </ul></li>
-<li><a href="#related-work">7 Related work</a></li>
+<li><a href="#related-work" id="toc-related-work">7 Related
+work</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://dl.gi.de/handle/20.500.12116/21739" target="_blank" rel="noopener">On-the-fly Reconfiguration of Query Plans for Stateful Stream Processing Engines</a></li>
+<li><a href="https://dl.gi.de/handle/20.500.12116/21739" target="_blank" rel="noopener">On-the-fly
+Reconfiguration of Query Plans for Stateful Stream Processing
+Engines</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>Bartnik, A., Del Monte, B., Rabl, T. &amp; Markl, V., らの論文。2019年。</p>
-<p>多くのストリーム処理エンジンが、データ量の変動に対して対応するためにクエリの再起動を必要とし、 ステートの再構成（再度の分散化？）にコストを必要とする点に着目し、新たな手法を提案。 Apache Flinkへのアドオンとして対応し、外部のトリガを用いてオペレータの置換を行えることを示した。</p>
-<p>Modificaton Coordinatorを導入し、RPC経由でメッセージ伝搬と同一の方法でModificationに関する情報を 各オペレータインスタンスに伝える。 またステートの保持にはCheckopintの仕組みを導入し、各オペレータインスタンスごとに ステートを永続化する。上流・下流オペレータはその状況を見ながら動作する。</p>
+<p>Bartnik, A., Del Monte, B., Rabl, T. &amp; Markl, V.,
+らの論文。2019年。</p>
+<p>多くのストリーム処理エンジンが、データ量の変動に対して対応するためにクエリの再起動を必要とし、
+ステートの再構成（再度の分散化？）にコストを必要とする点に着目し、新たな手法を提案。
+Apache
+Flinkへのアドオンとして対応し、外部のトリガを用いてオペレータの置換を行えることを示した。</p>
+<p>Modificaton
+Coordinatorを導入し、RPC経由でメッセージ伝搬と同一の方法でModificationに関する情報を
+各オペレータインスタンスに伝える。
+またステートの保持にはCheckopintの仕組みを導入し、各オペレータインスタンスごとに
+ステートを永続化する。上流・下流オペレータはその状況を見ながら動作する。</p>
 <p>多くの先行研究に対し、以下の点が特徴的であると言える。</p>
 <ul>
 <li>並列度の変更だけではなく、データフロー変更、オペレータの追加に対応</li>
 <li>ステートサイズが小さいケースに加え、大きい場合も考慮し実証</li>
-<li>ステートサイズが小さい場合で数秒、ステートサイズが大きい倍で数十秒のオーダで オペレータインスタンスのマイグレーション、オペレータの追加などに対応</li>
+<li>ステートサイズが小さい場合で数秒、ステートサイズが大きい倍で数十秒のオーダで
+オペレータインスタンスのマイグレーション、オペレータの追加などに対応</li>
 <li>Exactly onceセマンティクスを考慮</li>
 </ul>
 <h2><span id="1-introduction">1 Introduction</span></h2>
-<p>ストリームデータの流量について。 ソーシャルメディアの昼夜での差のように予測可能なものもあるが、 スポーツや天気の影響のように予測不可能なものもある。</p>
-<p>最近のSPE（Stream Processing Engine）は、実行中の設定変更に一部対応し始めているが、 基本的には設定変更のためには再実行が必要。 （ここではApache Flink、Apache Storm、Apache Sparkを例にとっている）</p>
+<p>ストリームデータの流量について。
+ソーシャルメディアの昼夜での差のように予測可能なものもあるが、
+スポーツや天気の影響のように予測不可能なものもある。</p>
+<p>最近のSPE（Stream Processing
+Engine）は、実行中の設定変更に一部対応し始めているが、
+基本的には設定変更のためには再実行が必要。 （ここではApache
+Flink、Apache Storm、Apache Sparkを例にとっている）</p>
 <p>そこで、提案手法では、実行中の設定変更を可能にする。</p>
 <ul>
 <li>ネットワークバッファのサイズ変更</li>
@@ -1247,26 +1441,46 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 <p>Apache Flinkに上記内容をプロトタイプし、動作を検証。</p>
 <h2><span id="2-background">2 Background</span></h2>
 <h3><span id="21-data-stream-processing">2.1 Data Stream Processing</span></h3>
-<p>近年のSPEのターゲットは、大量データの並列分散処理。 アプローチは2種類：マイクロバッチ、tuple-at-a-time。</p>
+<p>近年のSPEのターゲットは、大量データの並列分散処理。
+アプローチは2種類：マイクロバッチ、tuple-at-a-time。</p>
 <p>マイクロバッチはスループット重視。</p>
-<p>tuple-at-a-timeは入力レコードに対して、より細かな粒度での処理を可能にするが、 実際のところ物理レベルではバッチ処理のメカニズムを採用している。 <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>SPEでは、基本的にはデータフローの表現にDAGを利用。 Source、Processing、Sink、それをつなぐEdgeで構成される。 Processingノードはステートフル、ステートレスのどちらもあえりえる。</p>
+<p>tuple-at-a-timeは入力レコードに対して、より細かな粒度での処理を可能にするが、
+実際のところ物理レベルではバッチ処理のメカニズムを採用している。 <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>SPEでは、基本的にはデータフローの表現にDAGを利用。
+Source、Processing、Sink、それをつなぐEdgeで構成される。
+Processingノードはステートフル、ステートレスのどちらもあえりえる。</p>
 <h3><span id="22-apache-flink">2.2 Apache Flink</span></h3>
-<p>FlinkはParallelization Contract (PACT)プログラミングモデルを採用。 Flinkは投稿されたクエリをコンパイル（最適化含む）したうえで実行する。</p>
-<p>Flinkはパイプライニングとバッファリングに依存する。 オペレータがデータを送信するときにはバッファを使用しバッファが一杯になったら送るようになっている。 これによりレイテンシを抑えつつ、スループットを稼ぐ。</p>
-<p>Flinkはオペレータのフュージョンにも対応。 フュージョンされたオペレータはプッシュベースで通信する。</p>
+<p>FlinkはParallelization Contract (PACT)プログラミングモデルを採用。
+Flinkは投稿されたクエリをコンパイル（最適化含む）したうえで実行する。</p>
+<p>Flinkはパイプライニングとバッファリングに依存する。
+オペレータがデータを送信するときにはバッファを使用しバッファが一杯になったら送るようになっている。
+これによりレイテンシを抑えつつ、スループットを稼ぐ。</p>
+<p>Flinkはオペレータのフュージョンにも対応。
+フュージョンされたオペレータはプッシュベースで通信する。</p>
 <p>バックプレッシャもある。</p>
-<h3><span id="23-fault-tolerance-and-checkpointing-in-apache-flink">2.3 Fault Tolerance and Checkpointing in Apache Flink</span></h3>
-<p>チェックポイントは、状態情報を保存し、故障の際には復旧させる。 このおかげで、メッセージの送達保証の各セマンティクスを選択できるようになる。 また、セーブポイントのメカニズムを築くことになる。 これにより、計画的に停止、再起動させることができるようになる。</p>
-<p>Flinkの場合、セーブポイントから再開する際に、並列度を変えるだけではなく、 オペレータを追加・削除可能。</p>
-<p>定期的なチェックポイントにより、状態情報が保存される。 状態情報が小さい場合は性能影響は小さい。（逆もしかり）</p>
-<p>Flinkでは、プログラムエラーの際は実行を停止・再開し、最後にチェックポイントした 状態情報から再開する。 このとき、データソースはApache Kafkaのように再取得可能なものを想定している。 そうでないと、クエリの再開時にデータが一部失われることになる。</p>
+<h3><span id="23-faulttolerance-and-checkpointing-in-apache-flink">2.3 Fault
+Tolerance and Checkpointing in Apache Flink</span></h3>
+<p>チェックポイントは、状態情報を保存し、故障の際には復旧させる。
+このおかげで、メッセージの送達保証の各セマンティクスを選択できるようになる。
+また、セーブポイントのメカニズムを築くことになる。
+これにより、計画的に停止、再起動させることができるようになる。</p>
+<p>Flinkの場合、セーブポイントから再開する際に、並列度を変えるだけではなく、
+オペレータを追加・削除可能。</p>
+<p>定期的なチェックポイントにより、状態情報が保存される。
+状態情報が小さい場合は性能影響は小さい。（逆もしかり）</p>
+<p>Flinkでは、プログラムエラーの際は実行を停止・再開し、最後にチェックポイントした
+状態情報から再開する。 このとき、データソースはApache
+Kafkaのように再取得可能なものを想定している。
+そうでないと、クエリの再開時にデータが一部失われることになる。</p>
 <h2><span id="3-protocol-description">3 Protocol Description</span></h2>
 <h4><span id="31-system-model">3.1 System Model</span></h4>
 <figure>
-<img src="/memo-blog/images/39iYCq4GlQUG0dtA-77C78.png" alt=""><figcaption>システムの前提</figcaption>
+<img src="/memo-blog/images/39iYCq4GlQUG0dtA-77C78.png" alt="システムの前提">
+<figcaption aria-hidden="true">システムの前提</figcaption>
 </figure>
-<p>Operatorはそれぞれの並列度を持つ。 論理プランは、Source、Sink、Processing OperatorでDAGを構成する。 実際にSPE上で動作する物理プランをJobと呼ぶ。</p>
+<p>Operatorはそれぞれの並列度を持つ。
+論理プランは、Source、Sink、Processing OperatorでDAGを構成する。
+実際にSPE上で動作する物理プランをJobと呼ぶ。</p>
 <p>Operatorは</p>
 <ul>
 <li>単一の下流のOperatorにレコードを送る</li>
@@ -1274,58 +1488,111 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 <li>何らかのパーティションルールにより送る</li>
 </ul>
 <p>のいずれかの動作をする。</p>
-<p>CheckpointのためにMarkerも送る。 Markerは定期的か、ユーザ指定により送られる。 <code>i</code> は、<code>i</code>番目のCheckpointであることを示す。 内部通信経路でMarkerを受け取ったオペレータは、スナップショットを作成して下流のオペレータにMarkerを送る。 また、スナップショットは非同期的にバックグラウンドの永続化ストレージに保存される。</p>
-<p>ここで、SPEはExactly Onceでの処理を保証するものとする。 SPEはControllerとWorkerで構成される。</p>
-<h3><span id="32-migration-protocol-description">3.2 Migration Protocol Description</span></h3>
+<p>CheckpointのためにMarkerも送る。
+Markerは定期的か、ユーザ指定により送られる。 <code>i</code>
+は、<code>i</code>番目のCheckpointであることを示す。
+内部通信経路でMarkerを受け取ったオペレータは、スナップショットを作成して下流のオペレータにMarkerを送る。
+また、スナップショットは非同期的にバックグラウンドの永続化ストレージに保存される。</p>
+<p>ここで、SPEはExactly Onceでの処理を保証するものとする。
+SPEはControllerとWorkerで構成される。</p>
+<h3><span id="32-migration-protocoldescription">3.2 Migration Protocol
+Description</span></h3>
 <p>Modification Markerを送ることで、マイグレーションを開始する。 <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p>各Operatorは、eventualにMarkerを受けとり、マイグレーションに備えるが、 このとき枚グレート対象となるOperatorの上流・下流のOperatorにも影響することがポイント。 上流のOperatorは、バッファを駆使しつつ、Tupleの順序性を担保する。</p>
-<h3><span id="33-modification-protocols-description">3.3 Modification Protocols Description</span></h3>
-<p>Operatorをマイグレートするだけでなく、Operatorの追加、更新が可能。 ただし、その場合はUDFの配布が必要となる。</p>
-<h4><span id="331-introduction-of-new-operators">3.3.1 Introduction of New Operators</span></h4>
-<p>上流OperatorはMarkerを受け取るとバッファリングし始め、その旨下流に通知する。 すべての上流Operatorのバッファリングが開始されたら、新しいOperatorのインスタンスが起動する。 ただし、実際に起動させる前に、あらかじめUDFを配布しておく。 下流Operatorは、新しく起動されたOperatorに接続を試みる。</p>
+<p>各Operatorは、eventualにMarkerを受けとり、マイグレーションに備えるが、
+このとき枚グレート対象となるOperatorの上流・下流のOperatorにも影響することがポイント。
+上流のOperatorは、バッファを駆使しつつ、Tupleの順序性を担保する。</p>
+<h3><span id="33-modification-protocolsdescription">3.3 Modification Protocols
+Description</span></h3>
+<p>Operatorをマイグレートするだけでなく、Operatorの追加、更新が可能。
+ただし、その場合はUDFの配布が必要となる。</p>
+<h4><span id="331-introduction-of-newoperators">3.3.1 Introduction of New
+Operators</span></h4>
+<p>上流OperatorはMarkerを受け取るとバッファリングし始め、その旨下流に通知する。
+すべての上流Operatorのバッファリングが開始されたら、新しいOperatorのインスタンスが起動する。
+ただし、実際に起動させる前に、あらかじめUDFを配布しておく。
+下流Operatorは、新しく起動されたOperatorに接続を試みる。</p>
 <h2><span id="4-system-architecture">4 System Architecture</span></h2>
 <p>試したFlinkは1.3.2。 ★</p>
-<h3><span id="41-vanilla-components-overview">4.1 Vanilla Components Overview</span></h3>
-<p>まずクライアントがModification ControlメッセージをCoordinatorに送る。 CoordinatorはWorkerに当該情報をいきわたらせる。 このメッセージは、通常のデータとは異なり、RPCとして送られる。 ここではActorモデルに基づく。</p>
+<h3><span id="41-vanilla-componentsoverview">4.1 Vanilla Components
+Overview</span></h3>
+<p>まずクライアントがModification ControlメッセージをCoordinatorに送る。
+CoordinatorはWorkerに当該情報をいきわたらせる。
+このメッセージは、通常のデータとは異なり、RPCとして送られる。
+ここではActorモデルに基づく。</p>
 <p>Flinkの場合、2個のOperator間の通信はProducer/Consumer関係の下やり取りされる。</p>
 <p>各Operatorのインスタンスは、上流からデータを取得するための通信路に責任を持つ。</p>
 <figure>
-<img src="/memo-blog/images/39iYCq4GlQUG0dtA-35807.png" alt=""><figcaption>システムアーキテクチャのイメージ</figcaption>
+<img src="/memo-blog/images/39iYCq4GlQUG0dtA-35807.png" alt="システムアーキテクチャのイメージ">
+<figcaption aria-hidden="true">システムアーキテクチャのイメージ</figcaption>
 </figure>
-<h3><span id="42-our-changes-on-the-coordinator-side">4.2 Our Changes on the Coordinator Side</span></h3>
-<p>Modification Coordinatorは、Modificatoinに関する一切を取り仕切る。 バリデーションも含む。 例えば、現在走っているジョブに対して適用可能か？の面など。</p>
+<h3><span id="42-our-changes-on-thecoordinator-side">4.2 Our Changes on the
+Coordinator Side</span></h3>
+<p>Modification Coordinatorは、Modificatoinに関する一切を取り仕切る。
+バリデーションも含む。
+例えば、現在走っているジョブに対して適用可能か？の面など。</p>
 <p>Modificationの大まかな状態遷移は以下の通り。</p>
 <figure>
-<img src="/memo-blog/images/39iYCq4GlQUG0dtA-B9EC0.png" alt=""><figcaption>Modificationのステート</figcaption>
+<img src="/memo-blog/images/39iYCq4GlQUG0dtA-B9EC0.png" alt="Modificationのステート">
+<figcaption aria-hidden="true">Modificationのステート</figcaption>
 </figure>
 <p>Modificationに関係し、Taskの大まかな状態遷移は以下の通り。</p>
 <figure>
-<img src="/memo-blog/images/39iYCq4GlQUG0dtA-A7E67.png" alt=""><figcaption>Taskのステート</figcaption>
+<img src="/memo-blog/images/39iYCq4GlQUG0dtA-A7E67.png" alt="Taskのステート">
+<figcaption aria-hidden="true">Taskのステート</figcaption>
 </figure>
-<h3><span id="43-our-changes-on-the-worker-side">4.3 Our Changes on the Worker Side</span></h3>
-<p>オペレータ間の通信は、オペレータの関係に依存する。 例えば、同一マシンで動ているProducerインスタンスとConsumerインスタンスの場合はメモリを使ってデータをやり取りする。 一方、異なるマシンで動ている場合はネットワーク通信を挟む。</p>
-<p>さて、Modificationが生じた場合、新しいConsumerが動き始めるまで、上流のインスタンスはバッファリングしないといけない。 提案手法では、ディスクへのスピル機能を含むバッファリングの仕組みを提案。それ専用のキューを設けることとした。</p>
+<h3><span id="43-our-changes-on-the-workerside">4.3 Our Changes on the Worker
+Side</span></h3>
+<p>オペレータ間の通信は、オペレータの関係に依存する。
+例えば、同一マシンで動ているProducerインスタンスとConsumerインスタンスの場合はメモリを使ってデータをやり取りする。
+一方、異なるマシンで動ている場合はネットワーク通信を挟む。</p>
+<p>さて、Modificationが生じた場合、新しいConsumerが動き始めるまで、上流のインスタンスはバッファリングしないといけない。
+提案手法では、ディスクへのスピル機能を含むバッファリングの仕組みを提案。それ専用のキューを設けることとした。</p>
 <h3><span id="44-query-plan-modifications">4.4 Query Plan Modifications</span></h3>
-<p>あるOperatorがModificationを実現するには、上流と下流のOperatorの合わせた対応も必要。 そこでModification CoordinatorがModificationメッセージに、関連情報全体を載せ、RPCを使って各Operatorに伝搬する。</p>
+<p>あるOperatorがModificationを実現するには、上流と下流のOperatorの合わせた対応も必要。
+そこでModification
+CoordinatorがModificationメッセージに、関連情報全体を載せ、RPCを使って各Operatorに伝搬する。</p>
 <h4><span id="441-upstream-operators">4.4.1 Upstream Operators</span></h4>
-<p>Checkpointの間、上流から下流に向けて、Checkpointマーカーを直列に並べることで 故障耐性を実現する。 各オペレータは上流からのマーカーがそろうまでバッファリングを続ける。</p>
-<p>もしオペレータをマイグレートしようとすると、このバッファもマイグレートする必要がある。 しかしこのバッファインの仕組みは、内部的な機能ではない（★要確認）ため、一定の手続きが必要。 Modificationメッセージには次のCheckpointのIDが含まれている。 このIDに該当するCheckpointが発動されたときには、マイグレート対象のオペレータの上流オペレータは CheckpointバリアのメッセージをModificationメッセージと一緒に送る。 このイベント情報は、上流オペレータがレコードをストレージにフラッシュしていることを下流に示すものとなる。 また、これを通じて、マイグレート対象となるオペレータと上流オペレータの間には仕掛中のレコードがないことを確認できる。</p>
-<p>以上を踏まえると、Modificationを安全に進めるためには、Checkpointを待つことになる。 Checkpointインターバルは様々な要因で決まるが、例えばオペレータ数とステートの大きさに依存する。 ステートが大きく、Checkpointインターバルが大きい場合は、それだけModification開始を待たなくてはならない、ということである。</p>
-<h4><span id="442-target-and-downstream-operators">4.4.2 Target and Downstream Operators</span></h4>
+<p>Checkpointの間、上流から下流に向けて、Checkpointマーカーを直列に並べることで
+故障耐性を実現する。
+各オペレータは上流からのマーカーがそろうまでバッファリングを続ける。</p>
+<p>もしオペレータをマイグレートしようとすると、このバッファもマイグレートする必要がある。
+しかしこのバッファインの仕組みは、内部的な機能ではない（★要確認）ため、一定の手続きが必要。
+Modificationメッセージには次のCheckpointのIDが含まれている。
+このIDに該当するCheckpointが発動されたときには、マイグレート対象のオペレータの上流オペレータは
+CheckpointバリアのメッセージをModificationメッセージと一緒に送る。
+このイベント情報は、上流オペレータがレコードをストレージにフラッシュしていることを下流に示すものとなる。
+また、これを通じて、マイグレート対象となるオペレータと上流オペレータの間には仕掛中のレコードがないことを確認できる。</p>
+<p>以上を踏まえると、Modificationを安全に進めるためには、Checkpointを待つことになる。
+Checkpointインターバルは様々な要因で決まるが、例えばオペレータ数とステートの大きさに依存する。
+ステートが大きく、Checkpointインターバルが大きい場合は、それだけModification開始を待たなくてはならない、ということである。</p>
+<h4><span id="442-target-and-downstreamoperators">4.4.2 Target and Downstream
+Operators</span></h4>
 <p>下流のオペレータは、基本的には上流のオペレータの新しい情報を待つのみ。</p>
 <h2><span id="5-protocol-implementation">5 Protocol Implementation</span></h2>
 <h3><span id="51-operator-migration">5.1 Operator Migration</span></h3>
-<p>Modification Coordinatorがトリガーとなるメッセージをソースオペレータから発出。 対象オペレータに加え、上流オペレータも特定する。（上流オペレータは、レコードをディスクにスピルする）</p>
-<p>オペレータはcheckpointのマーカを待つ。 Checkpoint Coordinatorがマーカを発出し、マイグレート対象のオペレータの上流オペレータは 送信を止める。</p>
-<p>各オペレータはPausing状態に移行するとともに、現在の状態情報をModification Coordinatorに送る。</p>
+<p>Modification
+Coordinatorがトリガーとなるメッセージをソースオペレータから発出。
+対象オペレータに加え、上流オペレータも特定する。（上流オペレータは、レコードをディスクにスピルする）</p>
+<p>オペレータはcheckpointのマーカを待つ。 Checkpoint
+Coordinatorがマーカを発出し、マイグレート対象のオペレータの上流オペレータは
+送信を止める。</p>
+<p>各オペレータはPausing状態に移行するとともに、現在の状態情報をModification
+Coordinatorに送る。</p>
 <p>さらに、下流のオペレータに新しいロケーションを伝える。</p>
-<p>各オペレータがPaused状態に移行。 すべてのオペレータがPaused状態に移行したら、オペレータを再起動する。</p>
-<p>その後、Modification Coordinatorが状態ロケーション？をアタッチし、タスクを実行開始する。</p>
+<p>各オペレータがPaused状態に移行。
+すべてのオペレータがPaused状態に移行したら、オペレータを再起動する。</p>
+<p>その後、Modification
+Coordinatorが状態ロケーション？をアタッチし、タスクを実行開始する。</p>
 <p>提案手法では、FlinkのCheckpointの仕組みを使用し、各オペレータの状態情報を取得し、アサインする。</p>
-<h3><span id="52-introduction-of-new-operators">5.2 Introduction of new Operators</span></h3>
-<p>オペレータのModificationと同様の流れで、新しいオペレーションの挿入にも対応する。 上流のオペレータがスピルした後、新しいオペレータが挿入される。 デプロイのペイロードには、コンパイル済のコードが含まれる。</p>
-<h3><span id="53-changing-the-operator-function">5.3 Changing the Operator Function</span></h3>
-<p>Modification CoordinatorがModificationメッセージと一緒に、 新しいUDFを配布する。 Task Managerは非同期的にUFDを取得する。</p>
+<h3><span id="52-introduction-of-newoperators">5.2 Introduction of new
+Operators</span></h3>
+<p>オペレータのModificationと同様の流れで、新しいオペレーションの挿入にも対応する。
+上流のオペレータがスピルした後、新しいオペレータが挿入される。
+デプロイのペイロードには、コンパイル済のコードが含まれる。</p>
+<h3><span id="53-changing-the-operatorfunction">5.3 Changing the Operator
+Function</span></h3>
+<p>Modification CoordinatorがModificationメッセージと一緒に、
+新しいUDFを配布する。 Task Managerは非同期的にUFDを取得する。</p>
 <p>またcallbackを用いて、グローバルCheckpointが完了したときに、新しいUDFを用いるようにする。</p>
 <h2><span id="6-evaluation">6 Evaluation</span></h2>
 <p>ここから先は評価となるが、ここではポイントのみ紹介する。</p>
@@ -1333,68 +1600,100 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 <p>3種類のワークロード、</p>
 <ul>
 <li>小さなステートの場合を確認するため、要素数をカウントするワークロード（SMQ）</li>
-<li>大きなステートの場合を確認するため、Nexmarkベンチマーク <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> のクエリ8（NBQ8）。（オンラインオークションのワークロード）</li>
+<li>大きなステートの場合を確認するため、Nexmarkベンチマーク <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+のクエリ8（NBQ8）。（オンラインオークションのワークロード）</li>
 <li>上記SMQ、NBQ8についてオペレータのマイグレートを実施</li>
 </ul>
-<p>2個めのワークロードではステートサイズが大きいので、インクリメンタルCheckpointを利用。 Flinkの場合は、埋め込みのRocksDB。</p>
-<h3><span id="64-migration-protocol-benchmark">6.4 Migration Protocol Benchmark</span></h3>
-<h4><span id="641-stateful-map-job-performance-drill-down">6.4.1 Stateful Map Job Performance Drill Down</span></h4>
+<p>2個めのワークロードではステートサイズが大きいので、インクリメンタルCheckpointを利用。
+Flinkの場合は、埋め込みのRocksDB。</p>
+<h3><span id="64-migration-protocolbenchmark">6.4 Migration Protocol
+Benchmark</span></h3>
+<h4><span id="641-stateful-map-jobperformance-drill-down">6.4.1 Stateful Map Job
+Performance Drill Down</span></h4>
 <p>レイテンシで見るとスパイクが生じるのは、ストリーム処理のジョブがリスタートするタイミング。</p>
-<p>オペレータのMigration中、1度3500msecのレイテンシのスパイクが生じた。 またコミュニケーションオーバヘッドもあるようだ。</p>
+<p>オペレータのMigration中、1度3500msecのレイテンシのスパイクが生じた。
+またコミュニケーションオーバヘッドもあるようだ。</p>
 <p>概ね、秒オーダ。</p>
-<h4><span id="642-nexmark-benchmark-performance-drill-down">6.4.2 Nexmark Benchmark Performance Drill Down</span></h4>
+<h4><span id="642-nexmarkbenchmark-performance-drill-down">6.4.2 Nexmark
+Benchmark Performance Drill Down</span></h4>
 <p>概ね、100～200秒オーダ。</p>
 <p>ステートサイズは全部で13.5GBで、そのうち2.7GBがステート用のバックエンドに格納され、再現された。</p>
 <p>80個のジェネレータのスループットは、Migration発生時も大きくは変わらなかった。</p>
-<h3><span id="65-introducing-new-operators-at-runtime">6.5 Introducing new operators at runtime</span></h3>
+<h3><span id="65-introducing-newoperators-at-runtime">6.5 Introducing new
+operators at runtime</span></h3>
 <p>SMQのワークロードを用いた検証。 概ね、秒オーダ。</p>
-<h3><span id="66-replacing-the-operator-function-at-runtime">6.6 Replacing the operator function at runtime</span></h3>
+<h3><span id="66-replacing-theoperator-function-at-runtime">6.6 Replacing the
+operator function at runtime</span></h3>
 <p>SMQのワークロードを用いた検証。 概ね、秒オーダ。</p>
 <p>スループットへの影響は小さい。</p>
 <h3><span id="67-discussion">6.7 Discussion</span></h3>
-<p>Checkpointの同期は課題になりがち。 ステートのサイズが小さいときは高頻度で同期も可能かもしれないが、大きいときは頻度高くCheckpointすると、処理に影響が出る。 例えばステートサイズが小さい時には6秒以内にModificationを開始できたが、大きい時には60秒程度になった。</p>
+<p>Checkpointの同期は課題になりがち。
+ステートのサイズが小さいときは高頻度で同期も可能かもしれないが、大きいときは頻度高くCheckpointすると、処理に影響が出る。
+例えばステートサイズが小さい時には6秒以内にModificationを開始できたが、大きい時には60秒程度になった。</p>
 <p>NBQ8の場合、従来のシャットダウンを伴うsavepointの仕組みと比べ、性能上の改善が見られた。</p>
-<p>データソースが永続的であれば再取得することでExactly Onceを実現する。</p>
+<p>データソースが永続的であれば再取得することでExactly
+Onceを実現する。</p>
 <p>実行中のジョブに対し、新しいオペレータを挿入することもできた。概ね10秒程度。</p>
-<p>オペレータの関数を変更することもできた。概ね9秒程度。 これを突き詰めていくと、内部・外部状態に応じて挙動を変える、ということもできるようになるはず。</p>
-<p>★補足： とはいえ、そのような挙動変更は、最初からUDF内に組み込んでおくべきとも考える。（普通に条件文を内部に入れておけば？と） 条件分岐が問題になるほどシビアなレイテンシ要求があるユースケースで、ここで挙げられているようなストリーム処理エンジンを使うとは思えない。 ★補足終わり：</p>
+<p>オペレータの関数を変更することもできた。概ね9秒程度。
+これを突き詰めていくと、内部・外部状態に応じて挙動を変える、ということもできるようになるはず。</p>
+<p>★補足：
+とはいえ、そのような挙動変更は、最初からUDF内に組み込んでおくべきとも考える。（普通に条件文を内部に入れておけば？と）
+条件分岐が問題になるほどシビアなレイテンシ要求があるユースケースで、ここで挙げられているようなストリーム処理エンジンを使うとは思えない。
+★補足終わり：</p>
 <h2><span id="7-related-work">7 Related work</span></h2>
 <p>★補足：特に気になった関連研究を以下に並べる。</p>
 <ul>
-<li>Schneider, S.; Hirzel, M.; Gedik, B.; Wu, K.: Auto-parallelizing stateful distributed streaming applications. ACM PACT, 2012.
+<li>Schneider, S.; Hirzel, M.; Gedik, B.; Wu, K.: Auto-parallelizing
+stateful distributed streaming applications. ACM PACT, 2012.
 <ul>
 <li>並列度の変更に関する先行研究</li>
-<li>本論文の提案手法では、大きなステートサイズの際のexactly onceを対象としている点が異なる</li>
+<li>本論文の提案手法では、大きなステートサイズの際のexactly
+onceを対象としている点が異なる</li>
 </ul></li>
-<li>Wu, Y.; Tan, K. L.: ChronoStream: Elastic stateful stream computation in the cloud. IEEE ICDE, 2015.
+<li>Wu, Y.; Tan, K. L.: ChronoStream: Elastic stateful stream
+computation in the cloud. IEEE ICDE, 2015.
 <ul>
 <li>弾力性の実現に関する先行研究</li>
 <li>ただし別の論文の指摘によると、同期に関する課題がある</li>
 <li>データフロー変更には対応していない。あくまでオペレータのマイグレーションのみ。</li>
 </ul></li>
-<li>Heinze, T.; Pappalardo, V.; Jerzak, Z.; Fetzer, C.: Auto-scaling techniques for elastic data stream processing. In: IEEE ICDE Workshops. 2014. および、 Heinze, T.; Ji, Y.; Roediger, L.; Pappalardo, V.; Meister, A.; Jerzak, Z.; Fetzer, C.: FUGU: Elastic Data Stream Processing with Latency Constraints. IEEE Data Eng. Bull., 2015.
+<li>Heinze, T.; Pappalardo, V.; Jerzak, Z.; Fetzer, C.: Auto-scaling
+techniques for elastic data stream processing. In: IEEE ICDE Workshops.
+2014. および、 Heinze, T.; Ji, Y.; Roediger, L.; Pappalardo, V.;
+Meister, A.; Jerzak, Z.; Fetzer, C.: FUGU: Elastic Data Stream
+Processing with Latency Constraints. IEEE Data Eng. Bull., 2015.
 <ul>
 <li>オートスケールのタイミングを判断する。オンライン機械学習を利用。</li>
 <li>簡単なマイグレーションのシナリオを想定。</li>
 </ul></li>
-<li>Nasir, M.; Morales, G.; Kourtellis, N.; Serafini, M.: When Two Choices Are not Enough: Balancing at Scale in Distributed Stream Processing. CoRR, abs/1510.05714, 2015.
+<li>Nasir, M.; Morales, G.; Kourtellis, N.; Serafini, M.: When Two
+Choices Are not Enough: Balancing at Scale in Distributed Stream
+Processing. CoRR, abs/1510.05714, 2015.
 <ul>
 <li>並列度の調整に関する先行研究</li>
 <li>特にホットキーが存在する場合、そこにオペレータインスタンスを割り当てるように動く。</li>
 <li>データフロー変更などには対応しない。</li>
 </ul></li>
-<li>Mai, L.; Zeng, K.; Potharaju, R.; Xu, L.; Venkataraman, S.; Costa, P.; Kim, T.; Muthukrishnan, S.; Kuppa, V.; Dhulipalla, S.; Rao, S.: Chi: A Scalable and Programmable Control Plane for Distributed Stream Processing Systems. VLDB, 2018.
+<li>Mai, L.; Zeng, K.; Potharaju, R.; Xu, L.; Venkataraman, S.; Costa,
+P.; Kim, T.; Muthukrishnan, S.; Kuppa, V.; Dhulipalla, S.; Rao, S.: Chi:
+A Scalable and Programmable Control Plane for Distributed Stream
+Processing Systems. VLDB, 2018.
 <ul>
 <li>本論文で扱っているのに近い</li>
 <li>ただしステートサイズが大きなケースは対象としていない</li>
 </ul></li>
 </ul>
-<section class="footnotes" role="doc-endnotes">
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1" role="doc-endnote"><p>Carbone, P.; Ewen, S.; Fora, G.; Haridi, S.; Richter, S.; Tzoumas, K.: State Management in Apache Flink: Consistent Stateful Distributed Stream Processing. VLDB, 2017.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>Del Monte, B.: Efficient Migration of Very Large Distributed State for Scalable Stream Processing. VLDB PhD Workshop, 2017.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Tucker, P.; Tufte, K.; Papadimos, V.; Maier, D.: NEXMark - A Benchmark for Queries over Data Streams. 2018.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>Carbone, P.; Ewen, S.; Fora, G.;
+Haridi, S.; Richter, S.; Tzoumas, K.: State Management in Apache Flink:
+Consistent Stateful Distributed Stream Processing. VLDB, 2017.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Del Monte, B.: Efficient Migration of
+Very Large Distributed State for Scalable Stream Processing. VLDB PhD
+Workshop, 2017.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Tucker, P.; Tufte, K.; Papadimos, V.;
+Maier, D.: NEXMark - A Benchmark for Queries over Data Streams. 2018.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -1407,7 +1706,7 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/03/On-the-fly-Reconfiguration-of-Query-Plans-for-Stateful-Stream-Processing-Engines/" data-id="cl2nztnne00az5xqi0ewfalzt" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/03/On-the-fly-Reconfiguration-of-Query-Plans-for-Stateful-Stream-Processing-Engines/" data-id="cl2o9pbim019118rzswun6ehs" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1528,16 +1827,21 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://link.springer.com/article/10.1007/s10586-019-02939-9" target="_blank" rel="noopener">Reliable stream data processing for elastic distributed stream processing systems</a></li>
+<li><a href="https://link.springer.com/article/10.1007/s10586-019-02939-9" target="_blank" rel="noopener">Reliable
+stream data processing for elastic distributed stream processing
+systems</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://link.springer.com/article/10.1007/s10586-019-02939-9" target="_blank" rel="noopener">Reliable stream data processing for elastic distributed stream processing systems</a> では、 弾力性を有するストリーム処理エンジン（Distributed Stream Processing System: DSPS）の さらなる課題について触れている。</p>
+<p><a href="https://link.springer.com/article/10.1007/s10586-019-02939-9" target="_blank" rel="noopener">Reliable
+stream data processing for elastic distributed stream processing
+systems</a> では、 弾力性を有するストリーム処理エンジン（Distributed
+Stream Processing System: DSPS）の さらなる課題について触れている。</p>
 <ul>
 <li>動的にオペレータがスケールアップ、ダウンする中で、データのバックアップの一貫性を保つ故障耐性が必要がある</li>
 <li>チェックポイントへのロールバックが、直近のオートスケール調整を元に戻らせる可能性がある</li>
@@ -1553,7 +1857,7 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/03/Reliable-stream-data-processing-for-elastic-distributed-stream-processing-systems/" data-id="cl2nztnnq00c45xqi3v35a4vz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/03/Reliable-stream-data-processing-for-elastic-distributed-stream-processing-systems/" data-id="cl2o9pb7m008r18rzbstib7nj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1674,17 +1978,22 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://link.springer.com/book/10.1007/978-3-662-58664-8" target="_blank" rel="noopener">Transactions on Large-Scale Data- and Knowledge-Centered Systems XL</a></li>
-<li><a href="https://link.springer.com/chapter/10.1007/978-3-662-58664-8_3" target="_blank" rel="noopener">DABS-Storm A Data-Aware Approach for Elastic Stream Processing</a></li>
+<li><a href="https://link.springer.com/book/10.1007/978-3-662-58664-8" target="_blank" rel="noopener">Transactions
+on Large-Scale Data- and Knowledge-Centered Systems XL</a></li>
+<li><a href="https://link.springer.com/chapter/10.1007/978-3-662-58664-8_3" target="_blank" rel="noopener">DABS-Storm
+A Data-Aware Approach for Elastic Stream Processing</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://link.springer.com/book/10.1007/978-3-662-58664-8" target="_blank" rel="noopener">Transactions on Large-Scale Data- and Knowledge-Centered Systems XL</a> の中に、 <a href="https://link.springer.com/chapter/10.1007/978-3-662-58664-8_3" target="_blank" rel="noopener">DABS-Storm A Data-Aware Approach for Elastic Stream Processing</a> が含まれていて気になった。</p>
+<p><a href="https://link.springer.com/book/10.1007/978-3-662-58664-8" target="_blank" rel="noopener">Transactions
+on Large-Scale Data- and Knowledge-Centered Systems XL</a> の中に、 <a href="https://link.springer.com/chapter/10.1007/978-3-662-58664-8_3" target="_blank" rel="noopener">DABS-Storm
+A Data-Aware Approach for Elastic Stream Processing</a>
+が含まれていて気になった。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
         
@@ -1696,7 +2005,7 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/03/Transactions-on-Large-Scale-Data-and-Knowledge-Centered-Systems-XL/" data-id="cl2nztnor00f05xqiurpqj73e" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/03/Transactions-on-Large-Scale-Data-and-Knowledge-Centered-Systems-XL/" data-id="cl2o9pb8b00aj18rz46sdvtyz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1817,19 +2126,23 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://stackoverflow.com/questions/53386522/add-vim-modeline-in-markdown-document" target="_blank" rel="noopener">Add vim modeline in markdown document</a></li>
+<li><a href="https://stackoverflow.com/questions/53386522/add-vim-modeline-in-markdown-document" target="_blank" rel="noopener">Add
+vim modeline in markdown document</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://stackoverflow.com/questions/53386522/add-vim-modeline-in-markdown-document" target="_blank" rel="noopener">Add vim modeline in markdown document</a> にvimのモードラインをMarkdownファイル内で記載する方法について言及あり。</p>
+<p><a href="https://stackoverflow.com/questions/53386522/add-vim-modeline-in-markdown-document" target="_blank" rel="noopener">Add
+vim modeline in markdown document</a>
+にvimのモードラインをMarkdownファイル内で記載する方法について言及あり。</p>
 <p>結論としては、</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- vim: set ft=markdown: --&gt;</span><br></pre></td></tr></table></figure>
-<p>のように記載する。 <code>markdown:</code> の末尾のコロンがポイント。</p>
+<p>のように記載する。 <code>markdown:</code>
+の末尾のコロンがポイント。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
         
@@ -1841,7 +2154,7 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/07/27/vim-modeline-format-in-MarkDown/" data-id="cl2nztnqi00jx5xqiead7vl0v" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/07/27/vim-modeline-format-in-MarkDown/" data-id="cl2o9pba700f618rzjbvyvgb9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1962,16 +2275,19 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="http://magicant.txt-nifty.com/main/2009/03/vim-modeline-fi.html" target="_blank" rel="noopener">Vim の modeline で fileencoding を設定すべからず</a></li>
+<li><a href="http://magicant.txt-nifty.com/main/2009/03/vim-modeline-fi.html" target="_blank" rel="noopener">Vim
+の modeline で fileencoding を設定すべからず</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="http://magicant.txt-nifty.com/main/2009/03/vim-modeline-fi.html" target="_blank" rel="noopener">Vim の modeline で fileencoding を設定すべからず</a> に、モードラインでfencを設定してはいけない理由が記載されている。</p>
+<p><a href="http://magicant.txt-nifty.com/main/2009/03/vim-modeline-fi.html" target="_blank" rel="noopener">Vim
+の modeline で fileencoding を設定すべからず</a>
+に、モードラインでfencを設定してはいけない理由が記載されている。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
         
@@ -1983,7 +2299,7 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/07/27/vim-modeline-fileencoding/" data-id="cl2nztnqd00jq5xqiwgg3ehed" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/07/27/vim-modeline-fileencoding/" data-id="cl2o9pba600f318rz3u55q8fp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2213,5 +2529,20 @@ f:\ s_{v} \ ,\ m_{e_{i} \in \{\cdot \ \rightharpoonup \ v\}} \rightharpoonup s&#
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -5,18 +5,18 @@
     
     <title>Flow Engine for ML | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 総合 Azkaban  メモ よく名前の挙がるもの 機械的な検索 Airflowの代替     参考 総合  alternativetoでAirflowを検索した結果  Azkaban  Azkabanのフロー書き方  メモ 機械学習で利用されるフロー管理ツールを軽くさらってみる。 よく名前の挙がるもの  Apache Airflow DigDag Oozie  機械的な検索 Airf">
+    <meta name="description" content="参考  総合 Azkaban  メモ  よく名前の挙がるもの 機械的な検索  Airflowの代替     参考 総合  alternativetoでAirflowを検索した結果  Azkaban  Azkabanのフロー書き方  メモ 機械学習で利用されるフロー管理ツールを軽くさらってみる。 よく名前の挙がるもの  Apache Airflow DigDag Oozie  機械的な検索 A">
 <meta name="keywords" content="Flow Engine">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flow Engine for ML">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/02/16/Flow-Engine-for-ML/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 総合 Azkaban  メモ よく名前の挙がるもの 機械的な検索 Airflowの代替     参考 総合  alternativetoでAirflowを検索した結果  Azkaban  Azkabanのフロー書き方  メモ 機械学習で利用されるフロー管理ツールを軽くさらってみる。 よく名前の挙がるもの  Apache Airflow DigDag Oozie  機械的な検索 Airf">
+<meta property="og:description" content="参考  総合 Azkaban  メモ  よく名前の挙がるもの 機械的な検索  Airflowの代替     参考 総合  alternativetoでAirflowを検索した結果  Azkaban  Azkabanのフロー書き方  メモ 機械学習で利用されるフロー管理ツールを軽くさらってみる。 よく名前の挙がるもの  Apache Airflow DigDag Oozie  機械的な検索 A">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flow Engine for ML">
-<meta name="twitter:description" content="参考 総合 Azkaban  メモ よく名前の挙がるもの 機械的な検索 Airflowの代替     参考 総合  alternativetoでAirflowを検索した結果  Azkaban  Azkabanのフロー書き方  メモ 機械学習で利用されるフロー管理ツールを軽くさらってみる。 よく名前の挙がるもの  Apache Airflow DigDag Oozie  機械的な検索 Airf">
+<meta name="twitter:description" content="参考  総合 Azkaban  メモ  よく名前の挙がるもの 機械的な検索  Airflowの代替     参考 総合  alternativetoでAirflowを検索した結果  Azkaban  Azkabanのフロー書き方  メモ 機械学習で利用されるフロー管理ツールを軽くさらってみる。 よく名前の挙がるもの  Apache Airflow DigDag Oozie  機械的な検索 A">
     
 
     
@@ -251,14 +251,17 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#総合">総合</a></li>
-<li><a href="#azkaban">Azkaban</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#総合" id="toc-総合">総合</a></li>
+<li><a href="#azkaban" id="toc-azkaban">Azkaban</a></li>
 </ul></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#よく名前の挙がるもの">よく名前の挙がるもの</a></li>
-<li><a href="#機械的な検索">機械的な検索</a><ul>
-<li><a href="#airflowの代替">Airflowの代替</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#よく名前の挙がるもの" id="toc-よく名前の挙がるもの">よく名前の挙がるもの</a></li>
+<li><a href="#機械的な検索" id="toc-機械的な検索">機械的な検索</a>
+<ul>
+<li><a href="#airflowの代替" id="toc-airflowの代替">Airflowの代替</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -282,7 +285,8 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="機械的な検索">機械的な検索</span></h2>
 <h3><span id="airflowの代替">Airflowの代替</span></h3>
-<p><a href="https://alternativeto.net/software/apache-airflow/" target="_blank" rel="noopener">alternativetoでAirflowを検索した結果</a> では以下の通り。</p>
+<p><a href="https://alternativeto.net/software/apache-airflow/" target="_blank" rel="noopener">alternativetoでAirflowを検索した結果</a>
+では以下の通り。</p>
 <ul>
 <li>RunDeck
 <ul>
@@ -303,7 +307,8 @@ ga('send', 'pageview');
 <li>Azkaban
 <ul>
 <li>ワークフローエンジン</li>
-<li><a href="https://azkaban.readthedocs.io/en/latest/createFlows.html#flow-2-0-basics" target="_blank" rel="noopener">Azkabanのフロー書き方</a> の通り、YAMLで書ける。</li>
+<li><a href="https://azkaban.readthedocs.io/en/latest/createFlows.html#flow-2-0-basics" target="_blank" rel="noopener">Azkabanのフロー書き方</a>
+の通り、YAMLで書ける。</li>
 <li>LinkedIn が主に開発</li>
 </ul></li>
 <li>Metaflow ★
@@ -330,7 +335,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/02/16/Flow-Engine-for-ML/" data-id="cl2nztnlk00595xqi10z63a77" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/02/16/Flow-Engine-for-ML/" data-id="cl2o9pb5g003i18rzn7761qm1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -581,5 +586,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

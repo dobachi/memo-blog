@@ -5,18 +5,18 @@
     
     <title>Latency Guarantee of Stream Processing | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="メモ 特許 論文 ソフトウェア そのほか  参考 特許 論文    メモ ストリーム処理におけるレイテンシ保証の仕組みにどんなものがあるか調査したメモ。 ストリーム処理のレイテンシとして気にするべきは、  正常時のレイテンシ 故障発生時のリカバリ含むレイテンシ  が挙げられそうである。 特許  ストリームデータ処理における性能保証方法および装置  日立製作所 予め複数の計算方法を用意しておき">
+    <meta name="description" content="メモ  特許 論文 ソフトウェア そのほか  参考  特許 論文    メモ ストリーム処理におけるレイテンシ保証の仕組みにどんなものがあるか調査したメモ。 ストリーム処理のレイテンシとして気にするべきは、  正常時のレイテンシ 故障発生時のリカバリ含むレイテンシ  が挙げられそうである。 特許  ストリームデータ処理における性能保証方法および装置  日立製作所 予め複数の計算方法を用意して">
 <meta name="keywords" content="Stream Processing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Latency Guarantee of Stream Processing">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="メモ 特許 論文 ソフトウェア そのほか  参考 特許 論文    メモ ストリーム処理におけるレイテンシ保証の仕組みにどんなものがあるか調査したメモ。 ストリーム処理のレイテンシとして気にするべきは、  正常時のレイテンシ 故障発生時のリカバリ含むレイテンシ  が挙げられそうである。 特許  ストリームデータ処理における性能保証方法および装置  日立製作所 予め複数の計算方法を用意しておき">
+<meta property="og:description" content="メモ  特許 論文 ソフトウェア そのほか  参考  特許 論文    メモ ストリーム処理におけるレイテンシ保証の仕組みにどんなものがあるか調査したメモ。 ストリーム処理のレイテンシとして気にするべきは、  正常時のレイテンシ 故障発生時のリカバリ含むレイテンシ  が挙げられそうである。 特許  ストリームデータ処理における性能保証方法および装置  日立製作所 予め複数の計算方法を用意して">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Latency Guarantee of Stream Processing">
-<meta name="twitter:description" content="メモ 特許 論文 ソフトウェア そのほか  参考 特許 論文    メモ ストリーム処理におけるレイテンシ保証の仕組みにどんなものがあるか調査したメモ。 ストリーム処理のレイテンシとして気にするべきは、  正常時のレイテンシ 故障発生時のリカバリ含むレイテンシ  が挙げられそうである。 特許  ストリームデータ処理における性能保証方法および装置  日立製作所 予め複数の計算方法を用意しておき">
+<meta name="twitter:description" content="メモ  特許 論文 ソフトウェア そのほか  参考  特許 論文    メモ ストリーム処理におけるレイテンシ保証の仕組みにどんなものがあるか調査したメモ。 ストリーム処理のレイテンシとして気にするべきは、  正常時のレイテンシ 故障発生時のリカバリ含むレイテンシ  が挙げられそうである。 特許  ストリームデータ処理における性能保証方法および装置  日立製作所 予め複数の計算方法を用意して">
     
 
     
@@ -251,15 +251,17 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#特許">特許</a></li>
-<li><a href="#論文">論文</a></li>
-<li><a href="#ソフトウェア">ソフトウェア</a></li>
-<li><a href="#そのほか">そのほか</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#特許" id="toc-特許">特許</a></li>
+<li><a href="#論文" id="toc-論文">論文</a></li>
+<li><a href="#ソフトウェア" id="toc-ソフトウェア">ソフトウェア</a></li>
+<li><a href="#そのほか" id="toc-そのほか">そのほか</a></li>
 </ul></li>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#特許-1">特許</a></li>
-<li><a href="#論文-1">論文</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#特許-1" id="toc-特許-1">特許</a></li>
+<li><a href="#論文-1" id="toc-論文-1">論文</a></li>
 </ul></li>
 </ul>
 </div>
@@ -276,7 +278,9 @@ ga('send', 'pageview');
 <li><a href="https://astamuse.com/ja/published/JP/No/2012094996" target="_blank" rel="noopener">ストリームデータ処理における性能保証方法および装置</a>
 <ul>
 <li>日立製作所</li>
-<li>予め複数の計算方法を用意しておき、過去の計算結果から ユーザの要求するレイテンシ、精度を実現する計算方式に 切り替えて処理する仕組みに関する提案
+<li>予め複数の計算方法を用意しておき、過去の計算結果から
+ユーザの要求するレイテンシ、精度を実現する計算方式に
+切り替えて処理する仕組みに関する提案
 <ul>
 <li>切り替え判断の入力とするのは、処理量</li>
 </ul></li>
@@ -293,63 +297,90 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="論文">論文</span></h2>
 <ul>
-<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic Stream Processing with Latency Guarantees</a>
+<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic
+Stream Processing with Latency Guarantees</a>
 <ul>
-<li>アブストラクトを読む限り、パフォーマンスを計測し、 適切なスケーリングを実行時に決定する。 これによりレイテンシ保証する。</li>
+<li>アブストラクトを読む限り、パフォーマンスを計測し、
+適切なスケーリングを実行時に決定する。
+これによりレイテンシ保証する。</li>
 <li>この論文の被引用数は大きいので、これを軸に情報を探すとよいか。</li>
 </ul></li>
-<li><a href="https://dl.acm.org/doi/abs/10.1145/3239576.3239621" target="_blank" rel="noopener">Topology-Aware Task Allocation for Distributed Stream Processing with Latency Guarantee</a>
+<li><a href="https://dl.acm.org/doi/abs/10.1145/3239576.3239621" target="_blank" rel="noopener">Topology-Aware
+Task Allocation for Distributed Stream Processing with Latency
+Guarantee</a>
 <ul>
 <li>レイテンシ保証。転送レイテンシとリソース需要を勘案。</li>
 </ul></li>
-<li><a href="https://www.usenix.org/system/files/nsdi21spring-xu.pdf" target="_blank" rel="noopener">Move Fast and Meet Deadlines: Fine-grained Real-time Stream Processing with Cameo</a>
+<li><a href="https://www.usenix.org/system/files/nsdi21spring-xu.pdf" target="_blank" rel="noopener">Move Fast
+and Meet Deadlines: Fine-grained Real-time Stream Processing with
+Cameo</a>
 <ul>
 <li>Cameoの提案。ユーザが指定したレイテンシ対象に従い、イベントのプライオリティを伝搬し制御する。</li>
 </ul></li>
-<li><a href="https://www.cs.york.ac.uk/rts/static/papers/HaiTaoMe2016a.pdf" target="_blank" rel="noopener">Real-Time Stream Processing in Java</a>
+<li><a href="https://www.cs.york.ac.uk/rts/static/papers/HaiTaoMe2016a.pdf" target="_blank" rel="noopener">Real-Time
+Stream Processing in Java</a>
 <ul>
 <li>Java8でストリーム処理。レイテンシ保証もありそう？</li>
 </ul></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/7959102" target="_blank" rel="noopener">Minimum Backups for Stream Processing With Recovery Latency Guarantees</a>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/7959102" target="_blank" rel="noopener">Minimum
+Backups for Stream Processing With Recovery Latency Guarantees</a>
 <ul>
-<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic Stream Processing with Latency Guarantees</a> を引用している論文として見つけた。</li>
+<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic
+Stream Processing with Latency Guarantees</a>
+を引用している論文として見つけた。</li>
 <li>Fault Tolerancyにおけるレイテンシのトレードオフを扱っている。</li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/8280443" target="_blank" rel="noopener">Integrated recovery and task allocation for stream processing</a> にもFTに関する記載あり</li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/8280443" target="_blank" rel="noopener">Integrated
+recovery and task allocation for stream processing</a>
+にもFTに関する記載あり</li>
 </ul></li>
-<li><a href="https://ieeexplore.ieee.org/document/8048950" target="_blank" rel="noopener">Task Allocation for Stream Processing with Recovery Latency Guarantee</a>
+<li><a href="https://ieeexplore.ieee.org/document/8048950" target="_blank" rel="noopener">Task
+Allocation for Stream Processing with Recovery Latency Guarantee</a>
 <ul>
-<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic Stream Processing with Latency Guarantees</a> を引用している</li>
+<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic
+Stream Processing with Latency Guarantees</a> を引用している</li>
 <li>故障発生時のリカバリ遅延を小さくする工夫</li>
 </ul></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/9251089" target="_blank" rel="noopener">A Reactive Batching Strategy of Apache Kafka for Reliable Stream Processing in Real-time</a>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/9251089" target="_blank" rel="noopener">A
+Reactive Batching Strategy of Apache Kafka for Reliable Stream
+Processing in Real-time</a>
 <ul>
-<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic Stream Processing with Latency Guarantees</a> を引用している</li>
+<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic
+Stream Processing with Latency Guarantees</a> を引用している</li>
 <li>バッチベースのストリーム処理ではバッチサイズがデータロスの様子に影響を与えることに着目し、理アクティブなバッチの仕組みを提案</li>
 </ul></li>
-<li><a href="https://dl.acm.org/doi/abs/10.1145/3419111.3421285" target="_blank" rel="noopener">InferLine: latency-aware provisioning and scaling for prediction serving pipelines</a>
+<li><a href="https://dl.acm.org/doi/abs/10.1145/3419111.3421285" target="_blank" rel="noopener">InferLine:
+latency-aware provisioning and scaling for prediction serving
+pipelines</a>
 <ul>
 <li>ストリーム処理ではなく、機械学習の推論システムだがレイテンシアウェアな処理の話</li>
 </ul></li>
-<li><a href="https://dl.acm.org/doi/abs/10.1145/3328905.3332304" target="_blank" rel="noopener">Self-Adaptive Data Stream Processing in Geo-Distributed Computing Environments</a>
+<li><a href="https://dl.acm.org/doi/abs/10.1145/3328905.3332304" target="_blank" rel="noopener">Self-Adaptive
+Data Stream Processing in Geo-Distributed Computing Environments</a>
 <ul>
 <li>セルフアダプティブな地理分散ストリーム処理。レイテンシ保証の話とは直接関係ないが、エッジコンピューティングとの関連から。</li>
 </ul></li>
 </ul>
-<p>レイテンシ保証の話ではないが、ウォーターマークに関する取り組みもある。 以下は、2021年の論文。</p>
+<p>レイテンシ保証の話ではないが、ウォーターマークに関する取り組みもある。
+以下は、2021年の論文。</p>
 <ul>
-<li><a href="https://dl.acm.org/doi/abs/10.14778/3476311.3476389" target="_blank" rel="noopener">Watermarks in stream processing systems: semantics and comparative analysis of Apache Flink and Google cloud dataflow</a></li>
+<li><a href="https://dl.acm.org/doi/abs/10.14778/3476311.3476389" target="_blank" rel="noopener">Watermarks in
+stream processing systems: semantics and comparative analysis of Apache
+Flink and Google cloud dataflow</a></li>
 </ul>
 <h2><span id="ソフトウェア">ソフトウェア</span></h2>
 <ul>
-<li>いわゆるタイムウィンドウ処理やウォータマークの仕組みは既存の ストリーム処理OSSに採用されている。</li>
+<li>いわゆるタイムウィンドウ処理やウォータマークの仕組みは既存の
+ストリーム処理OSSに採用されている。</li>
 </ul>
 <h2><span id="そのほか">そのほか</span></h2>
 <ul>
-<li><a href="https://www.inderscienceonline.com/doi/pdf/10.1504/IJNVO.2019.097631" target="_blank" rel="noopener">A survey on data stream, big data and real-time</a>
+<li><a href="https://www.inderscienceonline.com/doi/pdf/10.1504/IJNVO.2019.097631" target="_blank" rel="noopener">A
+survey on data stream, big data and real-time</a>
 <ul>
 <li>ストリーム処理に関するサーベイ</li>
 </ul></li>
-<li><a href="https://arxiv.org/abs/2008.00842" target="_blank" rel="noopener">A Survey on the Evolution of Stream Processing Systems</a>
+<li><a href="https://arxiv.org/abs/2008.00842" target="_blank" rel="noopener">A Survey on the Evolution
+of Stream Processing Systems</a>
 <ul>
 <li>ストリーム処理に関するサーベイ</li>
 </ul></li>
@@ -363,19 +394,39 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="論文">論文</span></h2>
 <ul>
-<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic Stream Processing with Latency Guarantees</a></li>
-<li><a href="https://ieeexplore.ieee.org/document/8048950" target="_blank" rel="noopener">Task Allocation for Stream Processing with Recovery Latency Guarantee</a></li>
-<li><a href="https://dl.acm.org/doi/abs/10.1145/3239576.3239621" target="_blank" rel="noopener">Topology-Aware Task Allocation for Distributed Stream Processing with Latency Guarantee</a></li>
-<li><a href="https://www.usenix.org/system/files/nsdi21spring-xu.pdf" target="_blank" rel="noopener">Move Fast and Meet Deadlines: Fine-grained Real-time Stream Processing with Cameo</a></li>
-<li><a href="https://www.cs.york.ac.uk/rts/static/papers/HaiTaoMe2016a.pdf" target="_blank" rel="noopener">Real-Time Stream Processing in Java</a></li>
-<li><a href="https://dl.acm.org/doi/abs/10.14778/3476311.3476389" target="_blank" rel="noopener">Watermarks in stream processing systems: semantics and comparative analysis of Apache Flink and Google cloud dataflow</a></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/7959102" target="_blank" rel="noopener">Minimum Backups for Stream Processing With Recovery Latency Guarantees</a></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/8280443" target="_blank" rel="noopener">Integrated recovery and task allocation for stream processing</a></li>
-<li><a href="https://www.inderscienceonline.com/doi/pdf/10.1504/IJNVO.2019.097631" target="_blank" rel="noopener">A survey on data stream, big data and real-time</a></li>
-<li><a href="https://arxiv.org/abs/2008.00842" target="_blank" rel="noopener">A Survey on the Evolution of Stream Processing Systems</a></li>
-<li><a href="https://dl.acm.org/doi/abs/10.1145/3419111.3421285" target="_blank" rel="noopener">InferLine: latency-aware provisioning and scaling for prediction serving pipelines</a></li>
-<li><a href="https://dl.acm.org/doi/abs/10.1145/3328905.3332304" target="_blank" rel="noopener">Self-Adaptive Data Stream Processing in Geo-Distributed Computing Environments</a></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/9251089" target="_blank" rel="noopener">A Reactive Batching Strategy of Apache Kafka for Reliable Stream Processing in Real-time</a></li>
+<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic
+Stream Processing with Latency Guarantees</a></li>
+<li><a href="https://ieeexplore.ieee.org/document/8048950" target="_blank" rel="noopener">Task
+Allocation for Stream Processing with Recovery Latency
+Guarantee</a></li>
+<li><a href="https://dl.acm.org/doi/abs/10.1145/3239576.3239621" target="_blank" rel="noopener">Topology-Aware
+Task Allocation for Distributed Stream Processing with Latency
+Guarantee</a></li>
+<li><a href="https://www.usenix.org/system/files/nsdi21spring-xu.pdf" target="_blank" rel="noopener">Move Fast
+and Meet Deadlines: Fine-grained Real-time Stream Processing with
+Cameo</a></li>
+<li><a href="https://www.cs.york.ac.uk/rts/static/papers/HaiTaoMe2016a.pdf" target="_blank" rel="noopener">Real-Time
+Stream Processing in Java</a></li>
+<li><a href="https://dl.acm.org/doi/abs/10.14778/3476311.3476389" target="_blank" rel="noopener">Watermarks in
+stream processing systems: semantics and comparative analysis of Apache
+Flink and Google cloud dataflow</a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/7959102" target="_blank" rel="noopener">Minimum
+Backups for Stream Processing With Recovery Latency Guarantees</a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/8280443" target="_blank" rel="noopener">Integrated
+recovery and task allocation for stream processing</a></li>
+<li><a href="https://www.inderscienceonline.com/doi/pdf/10.1504/IJNVO.2019.097631" target="_blank" rel="noopener">A
+survey on data stream, big data and real-time</a></li>
+<li><a href="https://arxiv.org/abs/2008.00842" target="_blank" rel="noopener">A Survey on the Evolution
+of Stream Processing Systems</a></li>
+<li><a href="https://dl.acm.org/doi/abs/10.1145/3419111.3421285" target="_blank" rel="noopener">InferLine:
+latency-aware provisioning and scaling for prediction serving
+pipelines</a></li>
+<li><a href="https://dl.acm.org/doi/abs/10.1145/3328905.3332304" target="_blank" rel="noopener">Self-Adaptive
+Data Stream Processing in Geo-Distributed Computing
+Environments</a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/9251089" target="_blank" rel="noopener">A
+Reactive Batching Strategy of Apache Kafka for Reliable Stream
+Processing in Real-time</a></li>
 </ul>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -388,7 +439,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/" data-id="cl2nztnmt00955xqi32yhzbyd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/" data-id="cl2o9pbhi015u18rz4ntsfg5c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -639,5 +690,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

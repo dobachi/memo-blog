@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  zookeeperAdmin.html#sc_supervision  メモ Heron公式ドキュメントを参照していて改めて気づいたのだが、 ZooKeeperはSupervisor機能で自浄作用を持たせた方がよいだろう。 公式ドキュメントの zookeeperAdmin.html#sc_supervision では、 daemontoolsやSMFをスーパバイザの例">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ZooKeeperをスーパバイザでセルフヒーリングする">
 <meta name="twitter:description" content="参考 メモ   参考  zookeeperAdmin.html#sc_supervision  メモ Heron公式ドキュメントを参照していて改めて気づいたのだが、 ZooKeeperはSupervisor機能で自浄作用を持たせた方がよいだろう。 公式ドキュメントの zookeeperAdmin.html#sc_supervision では、 daemontoolsやSMFをスーパバイザの例">
@@ -251,8 +251,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -260,8 +260,10 @@ ga('send', 'pageview');
 <li><a href="http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_supervision" target="_blank" rel="noopener">zookeeperAdmin.html#sc_supervision</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>Heron公式ドキュメントを参照していて改めて気づいたのだが、 ZooKeeperはSupervisor機能で自浄作用を持たせた方がよいだろう。</p>
-<p>公式ドキュメントの <a href="http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_supervision" target="_blank" rel="noopener">zookeeperAdmin.html#sc_supervision</a> では、 daemontoolsやSMFをスーパバイザの例として挙げていた。</p>
+<p>Heron公式ドキュメントを参照していて改めて気づいたのだが、
+ZooKeeperはSupervisor機能で自浄作用を持たせた方がよいだろう。</p>
+<p>公式ドキュメントの <a href="http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_supervision" target="_blank" rel="noopener">zookeeperAdmin.html#sc_supervision</a>
+では、 daemontoolsやSMFをスーパバイザの例として挙げていた。</p>
 
         
         </div>
@@ -272,7 +274,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/07/08/ZooKeeper-supervision/" data-id="cl2nztnpf00gz5xqi30vdjqz5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/07/08/ZooKeeper-supervision/" data-id="cl2o9pb9100cd18rze47ndis8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -523,5 +525,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

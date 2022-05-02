@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="設定ファイル 設定内容   設定ファイル themes/icarus/_config.yml.example にサンプルがあるので、 コピーして用いる。 12$ cp themes/icarus/_config.yml&amp;#123;.example,&amp;#125;$ vim themes/icarus/_config.yml 設定内容  menuにTags、Categoriesを足した logo">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HexoのIcarusテーマを設定する">
 <meta name="twitter:description" content="設定ファイル 設定内容   設定ファイル themes/icarus/_config.yml.example にサンプルがあるので、 コピーして用いる。 12$ cp themes/icarus/_config.yml&amp;#123;.example,&amp;#125;$ vim themes/icarus/_config.yml 設定内容  menuにTags、Categoriesを足した logo">
@@ -251,23 +251,26 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#設定ファイル">設定ファイル</a></li>
-<li><a href="#設定内容">設定内容</a></li>
+<li><a href="#設定ファイル" id="toc-設定ファイル">設定ファイル</a></li>
+<li><a href="#設定内容" id="toc-設定内容">設定内容</a></li>
 </ul>
 </div>
 <h1><span id="設定ファイル">設定ファイル</span></h1>
-<p><code>themes/icarus/_config.yml.example</code> にサンプルがあるので、 コピーして用いる。</p>
+<p><code>themes/icarus/_config.yml.example</code> にサンプルがあるので、
+コピーして用いる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cp themes/icarus/_config.yml&#123;.example,&#125;</span><br><span class="line">$ vim themes/icarus/_config.yml</span><br></pre></td></tr></table></figure>
 <h1><span id="設定内容">設定内容</span></h1>
 <ul>
 <li><p>menuにTags、Categoriesを足した</p></li>
 <li><p>logo画像を差し替えた</p>
 <ul>
-<li><code>themes/icarus/source/css/images</code> 以下にlogo.pngがあるので差し替えた。</li>
+<li><code>themes/icarus/source/css/images</code>
+以下にlogo.pngがあるので差し替えた。</li>
 </ul></li>
 <li><p>プロフィール（例：アバター画像など）を差し替えた</p>
 <ul>
-<li>アバター画像は. <code>themes/icarus/source/css/images</code> 以下にavatar.pngがあるので差し替えた。</li>
+<li>アバター画像は. <code>themes/icarus/source/css/images</code>
+以下にavatar.pngがあるので差し替えた。</li>
 </ul></li>
 </ul>
 
@@ -280,7 +283,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/10/14/configure-icarus/" data-id="cl2nztnpg00h25xqi9mn0fnx7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/10/14/configure-icarus/" data-id="cl2o9pb9500cn18rz662c52re" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -531,5 +534,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

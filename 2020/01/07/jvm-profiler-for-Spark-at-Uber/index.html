@@ -5,18 +5,18 @@
     
     <title>jvm profiler for Spark at Uber | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 概要 動作確認    参考  公式GitHub Strata NY 2019のセッション ブログ  メモ 概要 Sparkのエグゼキュータ等のJVMプロファイリングを行うためのライブラリ。 JVM起動時に、agentとしてアタッチするようにする。 executorプロセスのUUIDを付与しながらメトリクスを取得できるようだ。 Kafkaに流すことも可能。 公式GitHub のRE">
+    <meta name="description" content="参考 メモ  概要 動作確認    参考  公式GitHub Strata NY 2019のセッション ブログ  メモ 概要 Sparkのエグゼキュータ等のJVMプロファイリングを行うためのライブラリ。 JVM起動時に、agentとしてアタッチするようにする。 executorプロセスのUUIDを付与しながらメトリクスを取得できるようだ。 Kafkaに流すことも可能。 公式GitHub のR">
 <meta name="keywords" content="Apache Spark,Java,Profiler">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jvm profiler for Spark at Uber">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/01/07/jvm-profiler-for-Spark-at-Uber/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 概要 動作確認    参考  公式GitHub Strata NY 2019のセッション ブログ  メモ 概要 Sparkのエグゼキュータ等のJVMプロファイリングを行うためのライブラリ。 JVM起動時に、agentとしてアタッチするようにする。 executorプロセスのUUIDを付与しながらメトリクスを取得できるようだ。 Kafkaに流すことも可能。 公式GitHub のRE">
+<meta property="og:description" content="参考 メモ  概要 動作確認    参考  公式GitHub Strata NY 2019のセッション ブログ  メモ 概要 Sparkのエグゼキュータ等のJVMプロファイリングを行うためのライブラリ。 JVM起動時に、agentとしてアタッチするようにする。 executorプロセスのUUIDを付与しながらメトリクスを取得できるようだ。 Kafkaに流すことも可能。 公式GitHub のR">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm profiler for Spark at Uber">
-<meta name="twitter:description" content="参考 メモ 概要 動作確認    参考  公式GitHub Strata NY 2019のセッション ブログ  メモ 概要 Sparkのエグゼキュータ等のJVMプロファイリングを行うためのライブラリ。 JVM起動時に、agentとしてアタッチするようにする。 executorプロセスのUUIDを付与しながらメトリクスを取得できるようだ。 Kafkaに流すことも可能。 公式GitHub のRE">
+<meta name="twitter:description" content="参考 メモ  概要 動作確認    参考  公式GitHub Strata NY 2019のセッション ブログ  メモ 概要 Sparkのエグゼキュータ等のJVMプロファイリングを行うためのライブラリ。 JVM起動時に、agentとしてアタッチするようにする。 executorプロセスのUUIDを付与しながらメトリクスを取得できるようだ。 Kafkaに流すことも可能。 公式GitHub のR">
     
 
     
@@ -251,33 +251,43 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#概要">概要</a></li>
-<li><a href="#動作確認">動作確認</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#概要" id="toc-概要">概要</a></li>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
 <li><a href="https://github.com/uber-common/jvm-profiler" target="_blank" rel="noopener">公式GitHub</a></li>
-<li><a href="https://conferences.oreilly.com/strata/strata-ny-2019/public/schedule/detail/77540" target="_blank" rel="noopener">Strata NY 2019のセッション</a></li>
+<li><a href="https://conferences.oreilly.com/strata/strata-ny-2019/public/schedule/detail/77540" target="_blank" rel="noopener">Strata
+NY 2019のセッション</a></li>
 <li><a href="https://eng.uber.com/jvm-profiler/" target="_blank" rel="noopener">ブログ</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="概要">概要</span></h2>
 <p>Sparkのエグゼキュータ等のJVMプロファイリングを行うためのライブラリ。</p>
 <p>JVM起動時に、agentとしてアタッチするようにする。</p>
-<p>executorプロセスのUUIDを付与しながらメトリクスを取得できるようだ。 Kafkaに流すことも可能。</p>
-<p><a href="https://github.com/uber-common/jvm-profiler" target="_blank" rel="noopener">公式GitHub</a> のREADMEによると、オフヒープの使用量なども計測できており、チューニングに役立ちそう。</p>
+<p>executorプロセスのUUIDを付与しながらメトリクスを取得できるようだ。
+Kafkaに流すことも可能。</p>
+<p><a href="https://github.com/uber-common/jvm-profiler" target="_blank" rel="noopener">公式GitHub</a>
+のREADMEによると、オフヒープの使用量なども計測できており、チューニングに役立ちそう。</p>
 <p>20200107時点では、2か月前ほどに更新されており、まだ生きているプロジェクトのようだ。</p>
 <h2><span id="動作確認">動作確認</span></h2>
-<p><a href="https://github.com/uber-common/jvm-profiler" target="_blank" rel="noopener">公式GitHub</a> のREADMEに記載されていた手順で、パッケージをビルドし、ローカルモードのSparkで利用してみた。</p>
+<p><a href="https://github.com/uber-common/jvm-profiler" target="_blank" rel="noopener">公式GitHub</a>
+のREADMEに記載されていた手順で、パッケージをビルドし、ローカルモードのSparkで利用してみた。</p>
 <p>ビルド方法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mvn clean package</span><br></pre></td></tr></table></figure>
-<p>パッケージビルド結果は、 <code>target/jvm-profiler-1.0.0.jar</code> に保存される。</p>
-<p>これをjavaagentとして用いる。 渡すオプションは、 <code>--conf spark.executor.driverJavaOptions=-javaagent:${JVMPROFILER_HOME}/target/jvm-profiler-1.0.0.jar</code> である。 環境変数 <code>${JVMPROFILER_HOME}</code> は先ほどビルドしたレポジトリのPATHとする。</p>
-<p>また、今回は com.uber.profiling.reporters.FileOutputReporter を用いて、ファイル出力を試みることとする。</p>
+<p>パッケージビルド結果は、 <code>target/jvm-profiler-1.0.0.jar</code>
+に保存される。</p>
+<p>これをjavaagentとして用いる。 渡すオプションは、
+<code>--conf spark.executor.driverJavaOptions=-javaagent:${JVMPROFILER_HOME}/target/jvm-profiler-1.0.0.jar</code>
+である。 環境変数 <code>${JVMPROFILER_HOME}</code>
+は先ほどビルドしたレポジトリのPATHとする。</p>
+<p>また、今回は com.uber.profiling.reporters.FileOutputReporter
+を用いて、ファイル出力を試みることとする。</p>
 <p>結果的に、Sparkの起動コマンドは、以下のような感じになる。：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ $&#123;SPARK_HOME&#125;/bin/spark-shell --conf spark.driver.extraJavaOptions=-javaagent:/home/ubuntu/Sources/jvm-profiler/target/jvm-profiler-1.0.0.jar=reporter=com.uber.profiling.reporters.FileOutputReporter,outputDir=/tmp/jvm-profile</span><br></pre></td></tr></table></figure>
 <p>ここで</p>
@@ -304,7 +314,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/01/07/jvm-profiler-for-Spark-at-Uber/" data-id="cl2nztnpy00in5xqijduib8v3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/01/07/jvm-profiler-for-Spark-at-Uber/" data-id="cl2o9pb9n00dy18rzwln7y9i4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -555,5 +565,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 手順   参考  Ubuntu18での例 公式GitHub  手順 インストール 123456789$ sudo apt install libcurl4-openssl-dev libsqlite3-dev$ curl -fsS https://dlang.org/install.sh | bash -s dmd$ source ~/dlang/dmd-2.083.1/activat">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="onedrive for linux">
 <meta name="twitter:description" content="参考 手順   参考  Ubuntu18での例 公式GitHub  手順 インストール 123456789$ sudo apt install libcurl4-openssl-dev libsqlite3-dev$ curl -fsS https://dlang.org/install.sh | bash -s dmd$ source ~/dlang/dmd-2.083.1/activat">
@@ -251,8 +251,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#手順">手順</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#手順" id="toc-手順">手順</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -264,7 +264,8 @@ ga('send', 'pageview');
 <p>インストール <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install libcurl4-openssl-dev libsqlite3-dev</span><br><span class="line">$ curl -fsS https://dlang.org/install.sh | bash -s dmd</span><br><span class="line">$ source ~/dlang/dmd-2.083.1/activate</span><br><span class="line">$ cd ~/Sources</span><br><span class="line">$ git clone https://github.com/abraunegg/onedrive.git</span><br><span class="line">$ cd onedrive</span><br><span class="line">$ source ~/dlang/dmd-2.083.1/activate</span><br><span class="line">$ make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure></p>
 <p>一部同期の設定 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p ~/.config/onedrive</span><br><span class="line">$ vim ~/.config/onedrive/sync_list  # 中にディレクトリを並べる</span><br></pre></td></tr></table></figure></p>
 <p>（再）同期 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ onedrive --synchronize --resync</span><br></pre></td></tr></table></figure></p>
-<p>その後、初回同期時はウェブ認証が走るので従う。 白い画面がブラウザで現れたら、そのURLをコピーしてコンソールにペーストし、実行する。</p>
+<p>その後、初回同期時はウェブ認証が走るので従う。
+白い画面がブラウザで現れたら、そのURLをコピーしてコンソールにペーストし、実行する。</p>
 <p>アンインストール <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo make uninstall</span><br></pre></td></tr></table></figure></p>
 
         
@@ -276,7 +277,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/11/onedrive-for-linux/" data-id="cl2nztnq100iv5xqiq6tcseiv" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/11/onedrive-for-linux/" data-id="cl2o9pb9q00e418rz48eji8xy" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -527,5 +528,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

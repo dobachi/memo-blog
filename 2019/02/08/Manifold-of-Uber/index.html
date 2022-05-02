@@ -5,18 +5,18 @@
     
     <title>Manifold of Uber | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 O&apos;Reillyの記事 プロダクト概要 機能 より直感的な皮革のための取り組み アーキテクチャ ユースケース モデルの工夫の効果の確認 False Negativeの低減のための分析     参考  O&apos;Reillyの記事 Uber eatsでの機械学習による配達時間短縮事例 IEEE Transacionの論文  O&apos;Reillyの記事 プロダクト概要 モデル管理をより視覚的に行いや">
+    <meta name="description" content="参考 O&apos;Reillyの記事  プロダクト概要 機能 より直感的な皮革のための取り組み アーキテクチャ ユースケース  モデルの工夫の効果の確認 False Negativeの低減のための分析     参考  O&apos;Reillyの記事 Uber eatsでの機械学習による配達時間短縮事例 IEEE Transacionの論文  O&apos;Reillyの記事 プロダクト概要 モデル管理をより視覚的に行">
 <meta name="keywords" content="Machine Learning,Model Management,Uber">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Manifold of Uber">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/02/08/Manifold-of-Uber/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 O&apos;Reillyの記事 プロダクト概要 機能 より直感的な皮革のための取り組み アーキテクチャ ユースケース モデルの工夫の効果の確認 False Negativeの低減のための分析     参考  O&apos;Reillyの記事 Uber eatsでの機械学習による配達時間短縮事例 IEEE Transacionの論文  O&apos;Reillyの記事 プロダクト概要 モデル管理をより視覚的に行いや">
+<meta property="og:description" content="参考 O&apos;Reillyの記事  プロダクト概要 機能 より直感的な皮革のための取り組み アーキテクチャ ユースケース  モデルの工夫の効果の確認 False Negativeの低減のための分析     参考  O&apos;Reillyの記事 Uber eatsでの機械学習による配達時間短縮事例 IEEE Transacionの論文  O&apos;Reillyの記事 プロダクト概要 モデル管理をより視覚的に行">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Manifold of Uber">
-<meta name="twitter:description" content="参考 O&apos;Reillyの記事 プロダクト概要 機能 より直感的な皮革のための取り組み アーキテクチャ ユースケース モデルの工夫の効果の確認 False Negativeの低減のための分析     参考  O&apos;Reillyの記事 Uber eatsでの機械学習による配達時間短縮事例 IEEE Transacionの論文  O&apos;Reillyの記事 プロダクト概要 モデル管理をより視覚的に行いや">
+<meta name="twitter:description" content="参考 O&apos;Reillyの記事  プロダクト概要 機能 より直感的な皮革のための取り組み アーキテクチャ ユースケース  モデルの工夫の効果の確認 False Negativeの低減のための分析     参考  O&apos;Reillyの記事 Uber eatsでの機械学習による配達時間短縮事例 IEEE Transacionの論文  O&apos;Reillyの記事 プロダクト概要 モデル管理をより視覚的に行">
     
 
     
@@ -251,15 +251,18 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#oreillyの記事">O'Reillyの記事</a><ul>
-<li><a href="#プロダクト概要">プロダクト概要</a></li>
-<li><a href="#機能">機能</a></li>
-<li><a href="#より直感的な皮革のための取り組み">より直感的な皮革のための取り組み</a></li>
-<li><a href="#アーキテクチャ">アーキテクチャ</a></li>
-<li><a href="#ユースケース">ユースケース</a><ul>
-<li><a href="#モデルの工夫の効果の確認">モデルの工夫の効果の確認</a></li>
-<li><a href="#false-negativeの低減のための分析">False Negativeの低減のための分析</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#oreillyの記事" id="toc-oreillyの記事">O'Reillyの記事</a>
+<ul>
+<li><a href="#プロダクト概要" id="toc-プロダクト概要">プロダクト概要</a></li>
+<li><a href="#機能" id="toc-機能">機能</a></li>
+<li><a href="#より直感的な皮革のための取り組み" id="toc-より直感的な皮革のための取り組み">より直感的な皮革のための取り組み</a></li>
+<li><a href="#アーキテクチャ" id="toc-アーキテクチャ">アーキテクチャ</a></li>
+<li><a href="#ユースケース" id="toc-ユースケース">ユースケース</a>
+<ul>
+<li><a href="#モデルの工夫の効果の確認" id="toc-モデルの工夫の効果の確認">モデルの工夫の効果の確認</a></li>
+<li><a href="#false-negativeの低減のための分析" id="toc-false-negativeの低減のための分析">False
+Negativeの低減のための分析</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -267,25 +270,36 @@ ga('send', 'pageview');
 <h1><span id="参考">参考</span></h1>
 <ul>
 <li><a href="https://eng.uber.com/manifold/?utm_medium=email&amp;utm_source=topic+optin&amp;utm_campaign=awareness&amp;utm_content=20190206+data+nl&amp;mkt_tok=eyJpIjoiTXpoaU5qazVZamhrWm1FdyIsInQiOiJIK1AxWGJ4dlRNWWtnMEp4bm9sbE1aVUdaRWx0ZVA1ZURSQkV4bWFCWWdQc2hHaEVJamdZVnBwcU93bVRIaEt3U3RMU0pMS2ZpTUd4M2xUbXlrOEtoSDBUOWhNbHg5VklnaFpcL2VyOVwvUm5wSlB5TXR1V0ZNejVpZUNPZFRndUhQIn0%3D" target="_blank" rel="noopener">O'Reillyの記事</a></li>
-<li><a href="https://eng.uber.com/uber-eats-trip-optimization/" target="_blank" rel="noopener">Uber eatsでの機械学習による配達時間短縮事例</a></li>
-<li><a href="https://arxiv.org/pdf/1808.00196.pdf" target="_blank" rel="noopener">IEEE Transacionの論文</a></li>
+<li><a href="https://eng.uber.com/uber-eats-trip-optimization/" target="_blank" rel="noopener">Uber
+eatsでの機械学習による配達時間短縮事例</a></li>
+<li><a href="https://arxiv.org/pdf/1808.00196.pdf" target="_blank" rel="noopener">IEEE
+Transacionの論文</a></li>
 </ul>
 <h1><span id="oreillyの記事">O'Reillyの記事</span></h1>
 <h2><span id="プロダクト概要">プロダクト概要</span></h2>
-<p>モデル管理をより視覚的に行いやすくするためのツール ManifoldをUberが開発した。 モデル性能劣化の潜在的な要因を探すのに役立つ。 また、あるデータセットに関して、各モデルがどういった性能を示すかを可視化し、 モデル化以前の工夫の効果を測ることが出来る。</p>
-<p>既存のモデル可視化ツールは、特定のツール、アルゴリズムの内部状態を示す物が多かった。 Manifoldはモデル性能を改善／改悪するデータセグメントを見つける。 それらがアグリゲートされた評価も示す。これはアンサンブル手法にとって使いやすい。</p>
+<p>モデル管理をより視覚的に行いやすくするためのツール
+ManifoldをUberが開発した。
+モデル性能劣化の潜在的な要因を探すのに役立つ。
+また、あるデータセットに関して、各モデルがどういった性能を示すかを可視化し、
+モデル化以前の工夫の効果を測ることが出来る。</p>
+<p>既存のモデル可視化ツールは、特定のツール、アルゴリズムの内部状態を示す物が多かった。
+Manifoldはモデル性能を改善／改悪するデータセグメントを見つける。
+それらがアグリゲートされた評価も示す。これはアンサンブル手法にとって使いやすい。</p>
 <p>現時点では、回帰と識別器に対応。</p>
 <p>今のところオープンソース化はされていないようだ。</p>
 <h2><span id="機能">機能</span></h2>
-<p>Visualization and workflow designの箇所に図ありで説明がされている。</p>
+<p>Visualization and workflow
+designの箇所に図ありで説明がされている。</p>
 <ul>
 <li>性能比較ビュー
 <ul>
-<li>横軸：メトリクス、縦軸：データセグメント、色：モデル、という形で視覚的に モデルの傾向を確認できる</li>
+<li>横軸：メトリクス、縦軸：データセグメント、色：モデル、という形で視覚的に
+モデルの傾向を確認できる</li>
 </ul></li>
 <li>特徴ごとの比較ビュー
 <ul>
-<li>横軸：特徴空間、縦軸：データポイント数、色：データセグメント、という形で 視覚的にモデルの傾向を確認できる</li>
+<li>横軸：特徴空間、縦軸：データポイント数、色：データセグメント、という形で
+視覚的にモデルの傾向を確認できる</li>
 </ul></li>
 </ul>
 <p>グラフを表示ながら以下のような操作を加えて確認可能</p>
@@ -300,16 +314,27 @@ ga('send', 'pageview');
 <li>横軸の性能</li>
 <li>縦軸に特徴</li>
 </ul>
-<p>という形で視覚化する方法が挙げられているが、まだ課題も挙げられている。 （例：データ点数が多くなりがちなので抽象化の仕組みが必要、など）</p>
+<p>という形で視覚化する方法が挙げられているが、まだ課題も挙げられている。
+（例：データ点数が多くなりがちなので抽象化の仕組みが必要、など）</p>
 <p>そこでManifoldではデータセグメントをクラスタ化して見やすくする、などの工夫が施されている。</p>
 <h2><span id="アーキテクチャ">アーキテクチャ</span></h2>
-<p>PythonとJavaScriptのそれぞれを好きな方を使える。 これにより、Uber内の他のフレームワークと連携しやすくなっている。</p>
-<p>ただしJavaScriptでクラスタリングなどを計算させると遅いことから、 TensorFlow.jsを用いている。</p>
+<p>PythonとJavaScriptのそれぞれを好きな方を使える。
+これにより、Uber内の他のフレームワークと連携しやすくなっている。</p>
+<p>ただしJavaScriptでクラスタリングなどを計算させると遅いことから、
+TensorFlow.jsを用いている。</p>
 <h2><span id="ユースケース">ユースケース</span></h2>
 <h3><span id="モデルの工夫の効果の確認">モデルの工夫の効果の確認</span></h3>
-<p><a href="https://eng.uber.com/uber-eats-trip-optimization/" target="_blank" rel="noopener">Uber eatsでの機械学習による配達時間短縮事例</a> に記載の事例にて、 モデル比較のため使用。 モデル改善の工夫の評価をする際にManifoldを使用。 これにより、特定のデータセグメントに改善効果があることがわかった。</p>
-<h3><span id="false-negativeの低減のための分析">False Negativeの低減のための分析</span></h3>
-<p>Safetyチームによる利用。 False Negativeレートの改善のために利用。 あるモデルがNegativeとしたデータセグメントについてドリルダウン分析。 当該モデルは、ある特徴の値が小さいときにNegativeと判定する傾向があることがわかった。 しかし実際にはその中にはPositiveなものも含まれいる。 ここから、その特徴に着目し、より差をつけやすい特徴を用いたり、モデルを用いるような工夫を施した。</p>
+<p><a href="https://eng.uber.com/uber-eats-trip-optimization/" target="_blank" rel="noopener">Uber
+eatsでの機械学習による配達時間短縮事例</a> に記載の事例にて、
+モデル比較のため使用。 モデル改善の工夫の評価をする際にManifoldを使用。
+これにより、特定のデータセグメントに改善効果があることがわかった。</p>
+<h3><span id="falsenegativeの低減のための分析">False
+Negativeの低減のための分析</span></h3>
+<p>Safetyチームによる利用。 False Negativeレートの改善のために利用。
+あるモデルがNegativeとしたデータセグメントについてドリルダウン分析。
+当該モデルは、ある特徴の値が小さいときにNegativeと判定する傾向があることがわかった。
+しかし実際にはその中にはPositiveなものも含まれいる。
+ここから、その特徴に着目し、より差をつけやすい特徴を用いたり、モデルを用いるような工夫を施した。</p>
 
         
         </div>
@@ -320,7 +345,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/08/Manifold-of-Uber/" data-id="cl2nztnn1009w5xqit0mm1hyj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/08/Manifold-of-Uber/" data-id="cl2o9pb6v007218rzn1jvjxf9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -571,5 +596,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

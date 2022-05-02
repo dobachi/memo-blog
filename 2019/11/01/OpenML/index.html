@@ -5,18 +5,18 @@
     
     <title>OpenMLを軽く確認してみる | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 概要 Dataset Task Flow Run scikit-learnで試す トラブルシュート  所感    参考  OpenML公式ウェブサイト OpenML公式ドキュメント scikit-learnでの使用 Pythonガイド github.ioのPythonガイド FlowとRunのチュートリアル 実行に用いたpipenvの環境ファイル dobachi openml_s">
-<meta name="keywords" content="Machine Learning,ML Model Management,OpenML">
+    <meta name="description" content="参考 メモ  概要  Dataset Task Flow Run scikit-learnで試す トラブルシュート  所感    参考  OpenML公式ウェブサイト OpenML公式ドキュメント scikit-learnでの使用 Pythonガイド github.ioのPythonガイド FlowとRunのチュートリアル 実行に用いたpipenvの環境ファイル dobachi openml">
+<meta name="keywords" content="Machine Learning,OpenML,ML Model Management">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenMLを軽く確認してみる">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/11/01/OpenML/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 概要 Dataset Task Flow Run scikit-learnで試す トラブルシュート  所感    参考  OpenML公式ウェブサイト OpenML公式ドキュメント scikit-learnでの使用 Pythonガイド github.ioのPythonガイド FlowとRunのチュートリアル 実行に用いたpipenvの環境ファイル dobachi openml_s">
+<meta property="og:description" content="参考 メモ  概要  Dataset Task Flow Run scikit-learnで試す トラブルシュート  所感    参考  OpenML公式ウェブサイト OpenML公式ドキュメント scikit-learnでの使用 Pythonガイド github.ioのPythonガイド FlowとRunのチュートリアル 実行に用いたpipenvの環境ファイル dobachi openml">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenMLを軽く確認してみる">
-<meta name="twitter:description" content="参考 メモ 概要 Dataset Task Flow Run scikit-learnで試す トラブルシュート  所感    参考  OpenML公式ウェブサイト OpenML公式ドキュメント scikit-learnでの使用 Pythonガイド github.ioのPythonガイド FlowとRunのチュートリアル 実行に用いたpipenvの環境ファイル dobachi openml_s">
+<meta name="twitter:description" content="参考 メモ  概要  Dataset Task Flow Run scikit-learnで試す トラブルシュート  所感    参考  OpenML公式ウェブサイト OpenML公式ドキュメント scikit-learnでの使用 Pythonガイド github.ioのPythonガイド FlowとRunのチュートリアル 実行に用いたpipenvの環境ファイル dobachi openml">
     
 
     
@@ -251,17 +251,19 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#概要">概要</a><ul>
-<li><a href="#dataset">Dataset</a></li>
-<li><a href="#task">Task</a></li>
-<li><a href="#flow">Flow</a></li>
-<li><a href="#run">Run</a></li>
-<li><a href="#scikit-learnで試す">scikit-learnで試す</a></li>
-<li><a href="#トラブルシュート">トラブルシュート</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#概要" id="toc-概要">概要</a>
+<ul>
+<li><a href="#dataset" id="toc-dataset">Dataset</a></li>
+<li><a href="#task" id="toc-task">Task</a></li>
+<li><a href="#flow" id="toc-flow">Flow</a></li>
+<li><a href="#run" id="toc-run">Run</a></li>
+<li><a href="#scikit-learnで試す" id="toc-scikit-learnで試す">scikit-learnで試す</a></li>
+<li><a href="#トラブルシュート" id="toc-トラブルシュート">トラブルシュート</a></li>
 </ul></li>
-<li><a href="#所感">所感</a></li>
+<li><a href="#所感" id="toc-所感">所感</a></li>
 </ul></li>
 </ul>
 </div>
@@ -274,16 +276,20 @@ ga('send', 'pageview');
 <li><a href="https://openml.github.io/openml-python/develop/index.html" target="_blank" rel="noopener">github.ioのPythonガイド</a></li>
 <li><a href="https://openml.github.io/openml-python/develop/examples/20_basic/simple_flows_and_runs_tutorial.html#sphx-glr-examples-20-basic-simple-flows-and-runs-tutorial-py" target="_blank" rel="noopener">FlowとRunのチュートリアル</a></li>
 <li><a href="https://github.com/dobachi/openml_sklearn_example/blob/master/Pipfile" target="_blank" rel="noopener">実行に用いたpipenvの環境ファイル</a></li>
-<li><a href="https://github.com/dobachi/openml_sklearn_example" target="_blank" rel="noopener">dobachi openml_sklearn_example</a></li>
+<li><a href="https://github.com/dobachi/openml_sklearn_example" target="_blank" rel="noopener">dobachi
+openml_sklearn_example</a></li>
 <li><a href="https://openml.github.io/openml-python/develop/examples/index.html" target="_blank" rel="noopener">公式Examples</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="概要">概要</span></h2>
-<p><a href="https://docs.openml.org/" target="_blank" rel="noopener">OpenML公式ドキュメント</a> によると、以下の定義。</p>
+<p><a href="https://docs.openml.org/" target="_blank" rel="noopener">OpenML公式ドキュメント</a>
+によると、以下の定義。</p>
 <blockquote>
-<p>An open, collaborative, frictionless, automated machine learning environment.</p>
+<p>An open, collaborative, frictionless, automated machine learning
+environment.</p>
 </blockquote>
-<p><a href="https://www.openml.org/" target="_blank" rel="noopener">OpenML公式ウェブサイト</a> によると、</p>
+<p><a href="https://www.openml.org/" target="_blank" rel="noopener">OpenML公式ウェブサイト</a>
+によると、</p>
 <ul>
 <li>Dataset</li>
 <li>Task
@@ -301,29 +307,48 @@ ga('send', 'pageview');
 </ul>
 <p>のレポジトリが提供されている。 これらはウェブサイトから探索可能。</p>
 <h3><span id="dataset">Dataset</span></h3>
-<p>Datasetが登録されると機械的にアノテーションされたり、分析されたりする。 パット見でデータの品質がわかるようになっている。</p>
+<p>Datasetが登録されると機械的にアノテーションされたり、分析されたりする。
+パット見でデータの品質がわかるようになっている。</p>
 <h3><span id="task">Task</span></h3>
-<p>データセットに対する目標（と言ってよいのか。つまり識別、回帰など）、学習用、テスト用のデータのスプリット、 どのカラムを目的変数とするか、などが セットになったコンテナである。</p>
+<p>データセットに対する目標（と言ってよいのか。つまり識別、回帰など）、学習用、テスト用のデータのスプリット、
+どのカラムを目的変数とするか、などが セットになったコンテナである。</p>
 <p>機械的に読めるようになっている。</p>
 <h3><span id="flow">Flow</span></h3>
-<p>処理パイプラインはFlowとして登録され、再利用可能になる。 特定のTaskに紐づく処理として定義される。</p>
+<p>処理パイプラインはFlowとして登録され、再利用可能になる。
+特定のTaskに紐づく処理として定義される。</p>
 <p>フレームワークにひもづく。</p>
 <h3><span id="run">Run</span></h3>
 <p>OpenML APIを用いて実行ごとに自動登録される。</p>
 <h3><span id="scikit-learnで試す">scikit-learnで試す</span></h3>
-<p><a href="https://openml.github.io/openml-python/develop/usage.html" target="_blank" rel="noopener">Pythonガイド</a> を参考に試してみる。 一通り、Pandas、scikit-learn、openml、pylzmaをインストールする。 なお、あらかじめliblzma-devをインストールしておくこと。 詳しくは以下の「lzmaがインポートできない」節を参照。</p>
-<p><a href="https://github.com/dobachi/openml_sklearn_example/blob/master/Pipfile" target="_blank" rel="noopener">実行に用いたpipenvの環境ファイル</a> に用いたライブラリが載っている。</p>
-<p><a href="https://openml.github.io/openml-python/develop/usage.html" target="_blank" rel="noopener">Pythonガイド</a> を眺めながら進めようと思ったが、 https://openml.github.io/openml-python/develop/examples/introduction_tutorial.html のリンクが切れていた。 何となく見るとgithub.ioだったので探索してみたら、 <a href="https://openml.github.io/openml-python/develop/index.html" target="_blank" rel="noopener">github.ioのPythonガイド</a> が見つかった。</p>
+<p><a href="https://openml.github.io/openml-python/develop/usage.html" target="_blank" rel="noopener">Pythonガイド</a>
+を参考に試してみる。
+一通り、Pandas、scikit-learn、openml、pylzmaをインストールする。
+なお、あらかじめliblzma-devをインストールしておくこと。
+詳しくは以下の「lzmaがインポートできない」節を参照。</p>
+<p><a href="https://github.com/dobachi/openml_sklearn_example/blob/master/Pipfile" target="_blank" rel="noopener">実行に用いたpipenvの環境ファイル</a>
+に用いたライブラリが載っている。</p>
+<p><a href="https://openml.github.io/openml-python/develop/usage.html" target="_blank" rel="noopener">Pythonガイド</a>
+を眺めながら進めようと思ったが、
+https://openml.github.io/openml-python/develop/examples/introduction_tutorial.html
+のリンクが切れていた。 何となく見るとgithub.ioだったので探索してみたら、
+<a href="https://openml.github.io/openml-python/develop/index.html" target="_blank" rel="noopener">github.ioのPythonガイド</a>
+が見つかった。</p>
 <p>こっちを参考にしてみる。</p>
-<p><a href="https://openml.github.io/openml-python/develop/examples/20_basic/simple_flows_and_runs_tutorial.html#sphx-glr-examples-20-basic-simple-flows-and-runs-tutorial-py" target="_blank" rel="noopener">FlowとRunのチュートリアル</a> を元に、チュートリアルを実施。 また特に、 <a href="https://openml.github.io/openml-python/develop/examples/index.html" target="_blank" rel="noopener">公式Examples</a> あたりを参考にした。 詳しくは、 <a href="https://github.com/dobachi/openml_sklearn_example" target="_blank" rel="noopener">dobachi openml_sklearn_example</a> 内のnotebookを参照。</p>
+<p><a href="https://openml.github.io/openml-python/develop/examples/20_basic/simple_flows_and_runs_tutorial.html#sphx-glr-examples-20-basic-simple-flows-and-runs-tutorial-py" target="_blank" rel="noopener">FlowとRunのチュートリアル</a>
+を元に、チュートリアルを実施。 また特に、 <a href="https://openml.github.io/openml-python/develop/examples/index.html" target="_blank" rel="noopener">公式Examples</a>
+あたりを参考にした。 詳しくは、 <a href="https://github.com/dobachi/openml_sklearn_example" target="_blank" rel="noopener">dobachi
+openml_sklearn_example</a> 内のnotebookを参照。</p>
 <h3><span id="トラブルシュート">トラブルシュート</span></h3>
 <h4><span id="lzmaがインポートできない">lzmaがインポートできない</span></h4>
 <p>以下の内容のエラーが生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/home/dobachi/.local/share/virtualenvs/openml_sklearn_example-YW762zpK/lib/python3.7/site-packages/pandas/compat/__init__.py:85: UserWarning: Could not import the lzma module. Your installed Python is incomplete. Attempting to use lzma compression will result in a RuntimeError.</span><br><span class="line">  warnings.warn(msg)</span><br></pre></td></tr></table></figure>
-<p>lzma関連のlibをインストールしておいてから、Python環境を構築すること。 つまりpyenvとpipenvで環境構築する前に<code>liblzma-dev</code>をインストールしておく。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install liblzma-dev</span><br></pre></td></tr></table></figure></p>
+<p>lzma関連のlibをインストールしておいてから、Python環境を構築すること。
+つまりpyenvとpipenvで環境構築する前に<code>liblzma-dev</code>をインストールしておく。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install liblzma-dev</span><br></pre></td></tr></table></figure></p>
 <p>参考： <a href="https://ja.stackoverflow.com/questions/56859/lzma%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%82%92%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%A7%E3%81%8D%E3%81%BE%E3%81%9B%E3%82%93" target="_blank" rel="noopener">lzmaライブラリをインポートできません。</a></p>
 <h2><span id="所感">所感</span></h2>
-<p>歴史があり、情報が集まっている。 ドキュメントが中途半端なせいで、初見ではとっつきづらいかもしれないが、ライブラリひとつでデータ発掘・共有に始まり、処理パイプラインの機械化まで対応しているのは有益。</p>
+<p>歴史があり、情報が集まっている。
+ドキュメントが中途半端なせいで、初見ではとっつきづらいかもしれないが、ライブラリひとつでデータ発掘・共有に始まり、処理パイプラインの機械化まで対応しているのは有益。</p>
 <!-- vim: set tw=0 ts=4 sw=4: -->
 
         
@@ -335,7 +360,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/11/01/OpenML/" data-id="cl2nztnne00b25xqi6ta3wyiz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/11/01/OpenML/" data-id="cl2o9pb7a007v18rzrwkjbfak" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -586,5 +611,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

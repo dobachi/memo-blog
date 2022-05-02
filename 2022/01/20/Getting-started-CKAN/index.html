@@ -5,12 +5,12 @@
     
     <title>Getting_started_CKAN | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="メモ ドキュメントより 特徴 データのモデル DataStoreとDataPusher DataStoreの拡張 バックグラウンドジョブ  Dockerで動作確認 セットアップ データストアとしてMinIO環境を整える AWS CLIでアクセスする CKANのUIで操作 （補足）初期化  （補足）FIWAREのCKANは拡張済？ インストール（パッケージ）  参考 CKAN MinIO AW">
+    <meta name="description" content="メモ  ドキュメントより  特徴 データのモデル DataStoreとDataPusher DataStoreの拡張 バックグラウンドジョブ  Dockerで動作確認  セットアップ データストアとしてMinIO環境を整える AWS CLIでアクセスする CKANのUIで操作 （補足）初期化  （補足）FIWAREのCKANは拡張済？ インストール（パッケージ）  参考  CKAN MinI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Getting_started_CKAN">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="メモ ドキュメントより 特徴 データのモデル DataStoreとDataPusher DataStoreの拡張 バックグラウンドジョブ  Dockerで動作確認 セットアップ データストアとしてMinIO環境を整える AWS CLIでアクセスする CKANのUIで操作 （補足）初期化  （補足）FIWAREのCKANは拡張済？ インストール（パッケージ）  参考 CKAN MinIO AW">
+<meta property="og:description" content="メモ  ドキュメントより  特徴 データのモデル DataStoreとDataPusher DataStoreの拡張 バックグラウンドジョブ  Dockerで動作確認  セットアップ データストアとしてMinIO環境を整える AWS CLIでアクセスする CKANのUIで操作 （補足）初期化  （補足）FIWAREのCKANは拡張済？ インストール（パッケージ）  参考  CKAN MinI">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220121_ckan_minio1.JPG">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220123_ckan_minio2.JPG">
@@ -21,10 +21,10 @@
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220121_ckan_create_dataset1.JPG">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220123_ckan_create_dataset2.JPG">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220123_ckan_create_dataset3.JPG">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Getting_started_CKAN">
-<meta name="twitter:description" content="メモ ドキュメントより 特徴 データのモデル DataStoreとDataPusher DataStoreの拡張 バックグラウンドジョブ  Dockerで動作確認 セットアップ データストアとしてMinIO環境を整える AWS CLIでアクセスする CKANのUIで操作 （補足）初期化  （補足）FIWAREのCKANは拡張済？ インストール（パッケージ）  参考 CKAN MinIO AW">
+<meta name="twitter:description" content="メモ  ドキュメントより  特徴 データのモデル DataStoreとDataPusher DataStoreの拡張 バックグラウンドジョブ  Dockerで動作確認  セットアップ データストアとしてMinIO環境を整える AWS CLIでアクセスする CKANのUIで操作 （補足）初期化  （補足）FIWAREのCKANは拡張済？ インストール（パッケージ）  参考  CKAN MinI">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220121_ckan_minio1.JPG">
     
 
@@ -255,48 +255,60 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#ドキュメントより">ドキュメントより</a><ul>
-<li><a href="#特徴">特徴</a></li>
-<li><a href="#データのモデル">データのモデル</a></li>
-<li><a href="#datastoreとdatapusher">DataStoreとDataPusher</a></li>
-<li><a href="#datastoreの拡張">DataStoreの拡張</a></li>
-<li><a href="#バックグラウンドジョブ">バックグラウンドジョブ</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#ドキュメントより" id="toc-ドキュメントより">ドキュメントより</a>
+<ul>
+<li><a href="#特徴" id="toc-特徴">特徴</a></li>
+<li><a href="#データのモデル" id="toc-データのモデル">データのモデル</a></li>
+<li><a href="#datastoreとdatapusher" id="toc-datastoreとdatapusher">DataStoreとDataPusher</a></li>
+<li><a href="#datastoreの拡張" id="toc-datastoreの拡張">DataStoreの拡張</a></li>
+<li><a href="#バックグラウンドジョブ" id="toc-バックグラウンドジョブ">バックグラウンドジョブ</a></li>
 </ul></li>
-<li><a href="#dockerで動作確認">Dockerで動作確認</a><ul>
-<li><a href="#セットアップ">セットアップ</a></li>
-<li><a href="#データストアとしてminio環境を整える">データストアとしてMinIO環境を整える</a></li>
-<li><a href="#aws-cliでアクセスする">AWS CLIでアクセスする</a></li>
-<li><a href="#ckanのuiで操作">CKANのUIで操作</a></li>
-<li><a href="#補足初期化">（補足）初期化</a></li>
+<li><a href="#dockerで動作確認" id="toc-dockerで動作確認">Dockerで動作確認</a>
+<ul>
+<li><a href="#セットアップ" id="toc-セットアップ">セットアップ</a></li>
+<li><a href="#データストアとしてminio環境を整える" id="toc-データストアとしてminio環境を整える">データストアとしてMinIO環境を整える</a></li>
+<li><a href="#aws-cliでアクセスする" id="toc-aws-cliでアクセスする">AWS
+CLIでアクセスする</a></li>
+<li><a href="#ckanのuiで操作" id="toc-ckanのuiで操作">CKANのUIで操作</a></li>
+<li><a href="#補足初期化" id="toc-補足初期化">（補足）初期化</a></li>
 </ul></li>
-<li><a href="#補足fiwareのckanは拡張済">（補足）FIWAREのCKANは拡張済？</a></li>
-<li><a href="#インストールパッケージ">インストール（パッケージ）</a></li>
+<li><a href="#補足fiwareのckanは拡張済" id="toc-補足fiwareのckanは拡張済">（補足）FIWAREのCKANは拡張済？</a></li>
+<li><a href="#インストールパッケージ" id="toc-インストールパッケージ">インストール（パッケージ）</a></li>
 </ul></li>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#ckan">CKAN</a></li>
-<li><a href="#minio">MinIO</a></li>
-<li><a href="#aws-cli">AWS CLI</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#ckan" id="toc-ckan">CKAN</a></li>
+<li><a href="#minio" id="toc-minio">MinIO</a></li>
+<li><a href="#aws-cli" id="toc-aws-cli">AWS CLI</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://ckan.org/" target="_blank" rel="noopener">CKAN公式サイト</a> によると、CKANはデータマネジメントシステムである。 <a href="https://ckan.org/" target="_blank" rel="noopener">CKAN公式サイト</a> の内容をもとに進める。</p>
+<p><a href="https://ckan.org/" target="_blank" rel="noopener">CKAN公式サイト</a>
+によると、CKANはデータマネジメントシステムである。 <a href="https://ckan.org/" target="_blank" rel="noopener">CKAN公式サイト</a> の内容をもとに進める。</p>
 <p>このメモの時点では、CKAN 2.9.5を対象とする。</p>
-<p>なお、公式ドキュメントによると <code>CKAN is a tool for making open data websites.</code> とされており、 あくまで「オープンデータ向け」であることが伺える。</p>
+<p>なお、公式ドキュメントによると
+<code>CKAN is a tool for making open data websites.</code>
+とされており、 あくまで「オープンデータ向け」であることが伺える。</p>
 <h2><span id="ドキュメントより">ドキュメントより</span></h2>
 <h3><span id="特徴">特徴</span></h3>
-<p><a href="https://ckan.org/features" target="_blank" rel="noopener">CKANの特徴</a> の通り、以下のような特徴を有している。</p>
+<p><a href="https://ckan.org/features" target="_blank" rel="noopener">CKANの特徴</a>
+の通り、以下のような特徴を有している。</p>
 <ul>
 <li>CKAN APIを提供</li>
 <li>バックエンドのデータストア（アドホックなデータ置き場）
 <ul>
 <li>データソースかデータがpullされ、ストアされる</li>
 <li>Data Explorer拡張を利用することでデータのプレビューが可能になる</li>
-<li>検索、更新などをデータ全てをダウンロード・アップロードせずにできる ★要確認</li>
-<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#datapusher-automatically-add-data-to-the-datastore" target="_blank" rel="noopener">DataPusher</a> 機能と一緒に使われることが多い
+<li>検索、更新などをデータ全てをダウンロード・アップロードせずにできる
+★要確認</li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#datapusher-automatically-add-data-to-the-datastore" target="_blank" rel="noopener">DataPusher</a>
+機能と一緒に使われることが多い
 <ul>
-<li>データソースから表形式のデータを取得し、DataStore APIを用いてCKANにデータ登録する仕組み</li>
+<li>データソースから表形式のデータを取得し、DataStore
+APIを用いてCKANにデータ登録する仕組み</li>
 </ul></li>
 </ul></li>
 <li>拡張機能</li>
@@ -310,41 +322,76 @@ ga('send', 'pageview');
 <li>ファイルストア</li>
 </ul>
 <h3><span id="データのモデル">データのモデル</span></h3>
-<p><a href="http://docs.ckan.org/en/2.9/user-guide.html#users-organizations-and-authorization" target="_blank" rel="noopener">Users, organizations and authorization</a> に記載の通り、基本的にはOrganizationに紐づけてDatasetが登録される。 Datasetは任意のフォーマットでよい。CKANにアップロードしてもよいし、単純にURLを登録してもよい。 デフォルトの挙動では、登録されたDatasetはPrivate扱いになり、所有するOrganizationに所属するユーザのみ見られる。</p>
-<p><a href="http://docs.ckan.org/en/2.9/user-guide.html#adding-a-new-dataset" target="_blank" rel="noopener">Adding a new dataset</a> にある通り、Datasetを登録できる。 なお、Licenseに並んでいる項目を見ると、やはりオープンデータとの相性がよさそう、と感じる。</p>
+<p><a href="http://docs.ckan.org/en/2.9/user-guide.html#users-organizations-and-authorization" target="_blank" rel="noopener">Users,
+organizations and authorization</a>
+に記載の通り、基本的にはOrganizationに紐づけてDatasetが登録される。
+Datasetは任意のフォーマットでよい。CKANにアップロードしてもよいし、単純にURLを登録してもよい。
+デフォルトの挙動では、登録されたDatasetはPrivate扱いになり、所有するOrganizationに所属するユーザのみ見られる。</p>
+<p><a href="http://docs.ckan.org/en/2.9/user-guide.html#adding-a-new-dataset" target="_blank" rel="noopener">Adding
+a new dataset</a> にある通り、Datasetを登録できる。
+なお、Licenseに並んでいる項目を見ると、やはりオープンデータとの相性がよさそう、と感じる。</p>
 <h3><span id="datastoreとdatapusher">DataStoreとDataPusher</span></h3>
-<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#datastore-extension" target="_blank" rel="noopener">DataStore Extension</a> に記載の通り、 DataStore拡張機能を利用すると、Data Explorer拡張機能と併用することで自動的にプレビュー可能になる。 またDataStore APIを利用し、データ本体を丸ごとダウンロードすることなく、検索、フィルタ、更新できる。</p>
-<p>自動的にデータを取り込むData Pusher拡張機能と併用されることが多い。</p>
-<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#datapusher-automatically-add-data-to-the-datastore" target="_blank" rel="noopener">DataPusher</a> の通り、データを取り出し自動的にCKANに登録できる。 ただし、注意書きにある通り、制約があるので注意。</p>
-<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#data-dictionary" target="_blank" rel="noopener">Data Dictionary</a> の通り、DataStoreのスキーマ情報はデータ辞書で管理できる。</p>
-<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#downloading-resources" target="_blank" rel="noopener">Downloading Resources</a> の通り、表形式のデータをCSVやエクセルで読み込める形式でダウンロードできる。</p>
-<p>DataStore APIを利用すると、DataStoreリソースを検索したり、インクリメンタルにデータを追加できる。 バリデーションの機能もあるようだ。</p>
-<p>APIについては、 <a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#api-reference" target="_blank" rel="noopener">API reference</a> に記載されている。</p>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#datastore-extension" target="_blank" rel="noopener">DataStore
+Extension</a> に記載の通り、 DataStore拡張機能を利用すると、Data
+Explorer拡張機能と併用することで自動的にプレビュー可能になる。
+またDataStore
+APIを利用し、データ本体を丸ごとダウンロードすることなく、検索、フィルタ、更新できる。</p>
+<p>自動的にデータを取り込むData
+Pusher拡張機能と併用されることが多い。</p>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#datapusher-automatically-add-data-to-the-datastore" target="_blank" rel="noopener">DataPusher</a>
+の通り、データを取り出し自動的にCKANに登録できる。
+ただし、注意書きにある通り、制約があるので注意。</p>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#data-dictionary" target="_blank" rel="noopener">Data
+Dictionary</a>
+の通り、DataStoreのスキーマ情報はデータ辞書で管理できる。</p>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#downloading-resources" target="_blank" rel="noopener">Downloading
+Resources</a>
+の通り、表形式のデータをCSVやエクセルで読み込める形式でダウンロードできる。</p>
+<p>DataStore
+APIを利用すると、DataStoreリソースを検索したり、インクリメンタルにデータを追加できる。
+バリデーションの機能もあるようだ。</p>
+<p>APIについては、 <a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#api-reference" target="_blank" rel="noopener">API
+reference</a> に記載されている。</p>
 <h3><span id="datastoreの拡張">DataStoreの拡張</span></h3>
-<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#extending-datastore" target="_blank" rel="noopener">Extending DataStore</a> に記載の通り、独自のDataStoreを利用可能。 正確には、実装可能。</p>
-<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#ckanext.datastore.backend.DatastoreBackend" target="_blank" rel="noopener">DatastoreBackend</a> がベースクラスである。</p>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#extending-datastore" target="_blank" rel="noopener">Extending
+DataStore</a> に記載の通り、独自のDataStoreを利用可能。
+正確には、実装可能。</p>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#ckanext.datastore.backend.DatastoreBackend" target="_blank" rel="noopener">DatastoreBackend</a>
+がベースクラスである。</p>
 <h3><span id="バックグラウンドジョブ">バックグラウンドジョブ</span></h3>
-<p><a href="http://docs.ckan.org/en/2.9/maintaining/background-tasks.html" target="_blank" rel="noopener">Background jobs</a> の通り、メインのアプリケーションをブロックせずに処理を実行できる。</p>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/background-tasks.html" target="_blank" rel="noopener">Background
+jobs</a>
+の通り、メインのアプリケーションをブロックせずに処理を実行できる。</p>
 <h2><span id="dockerで動作確認">Dockerで動作確認</span></h2>
 <h3><span id="セットアップ">セットアップ</span></h3>
-<p><a href="http://docs.ckan.org/en/2.9/maintaining/installing/install-from-docker-compose.html" target="_blank" rel="noopener">Installing CKAN with Docker Compose</a> を参考に、Docker Composeを利用して簡易的に動作確認する。 事前に、DockerとDocker Composeを導入しておくこと。</p>
-<p>また、 <a href="https://dev.classmethod.jp/articles/try-oss-data-management-system-ckan/" target="_blank" rel="noopener">オープンソースのデータ管理システム「CKAN」を試してみた</a> が分かりやすかったのでおすすめ。</p>
-<p>ソースコードをダウンロード。 ここではステーブルバージョンを利用することにした。</p>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/installing/install-from-docker-compose.html" target="_blank" rel="noopener">Installing
+CKAN with Docker Compose</a> を参考に、Docker
+Composeを利用して簡易的に動作確認する。 事前に、DockerとDocker
+Composeを導入しておくこと。</p>
+<p>また、 <a href="https://dev.classmethod.jp/articles/try-oss-data-management-system-ckan/" target="_blank" rel="noopener">オープンソースのデータ管理システム「CKAN」を試してみた</a>
+が分かりやすかったのでおすすめ。</p>
+<p>ソースコードをダウンロード。
+ここではステーブルバージョンを利用することにした。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p ~/Sources</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/Sources</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/ckan/ckan.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout -b ckan-2.9.5 tags/ckan-2.9.5</span></span><br></pre></td></tr></table></figure>
-<p>設定ファイルのコピー 適宜パスワードを変更するなど。 環境によっては、サイトURLを変更するのを忘れずに。</p>
+<p>設定ファイルのコピー 適宜パスワードを変更するなど。
+環境によっては、サイトURLを変更するのを忘れずに。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cp contrib/docker/.env.template contrib/docker/.env</span></span><br></pre></td></tr></table></figure>
 <p>ビルドと起動</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> contrib/docker</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker-compose up -d --build</span></span><br></pre></td></tr></table></figure>
-<p>後の作業のため、ストレージを変数化（しなくても、作業はできる。ボリュームのパスを覚えておけばよい） （公式サイト手順の「Convenience: paths to named volumes」に記載あり）</p>
+<p>後の作業のため、ストレージを変数化（しなくても、作業はできる。ボリュームのパスを覚えておけばよい）
+（公式サイト手順の「Convenience: paths to named
+volumes」に記載あり）</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> VOL_CKAN_HOME=$(docker volume inspect docker_ckan_home | jq -r -c <span class="string">'.[] | .Mountpoint'</span>)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="variable">$VOL_CKAN_HOME</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> VOL_CKAN_CONFIG=$(docker volume inspect docker_ckan_config | jq -r -c <span class="string">'.[] | .Mountpoint'</span>)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="variable">$VOL_CKAN_CONFIG</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> VOL_CKAN_STORAGE=$(docker volume inspect docker_ckan_storage | jq -r -c <span class="string">'.[] | .Mountpoint'</span>)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="variable">$VOL_CKAN_STORAGE</span></span></span><br></pre></td></tr></table></figure>
-<p>Datastoreとdatapusherを機能させるため、いくつか設定する。 まずはデータベースの設定。</p>
+<p>Datastoreとdatapusherを機能させるため、いくつか設定する。
+まずはデータベースの設定。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> ckan /usr/<span class="built_in">local</span>/bin/ckan -c /etc/ckan/production.ini datastore <span class="built_in">set</span>-permissions | docker <span class="built_in">exec</span> -i db psql -U ckan</span></span><br></pre></td></tr></table></figure>
 <p>プラグインなどの設定</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo vim <span class="variable">$VOL_CKAN_CONFIG</span>/production.ini</span></span><br></pre></td></tr></table></figure>
 <p>なお変更点は以下の通り。</p>
 <figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">$ sudo diff -u $VOL_CKAN_CONFIG/production.ini&#123;.org,&#125;</span><br><span class="line"><span class="comment">--- /var/lib/docker/volumes/docker_ckan_config/_data/production.ini.org 2022-01-22 22:22:11.992878002 +0900</span></span><br><span class="line"><span class="comment">+++ /var/lib/docker/volumes/docker_ckan_config/_data/production.ini     2022-01-22 22:23:56.367637134 +0900</span></span><br><span class="line"><span class="meta">@@ -21,7 +21,7 @@</span></span><br><span class="line"> use = egg:ckan</span><br><span class="line"></span><br><span class="line"> ## Development settings</span><br><span class="line"><span class="deletion">-ckan.devserver.host = localhost</span></span><br><span class="line"><span class="addition">+ckan.devserver.host = ubu18</span></span><br><span class="line"> ckan.devserver.port = 5000</span><br><span class="line"></span><br><span class="line"> @@ -47,10 +47,10 @@                                                                                                                                                                           [2/7337] # who.timeout = 86400</span><br><span class="line"></span><br><span class="line"> ## Database Settings</span><br><span class="line"><span class="deletion">-sqlalchemy.url = postgresql://ckan_default:pass@localhost/ckan_default</span></span><br><span class="line"><span class="addition">+sqlalchemy.url = postgresql://ckan_default:pass@ubu18/ckan_default</span></span><br><span class="line"></span><br><span class="line"><span class="deletion">-#ckan.datastore.write_url = postgresql://ckan_default:pass@localhost/datastore_default</span></span><br><span class="line"><span class="deletion">-#ckan.datastore.read_url = postgresql://datastore_default:pass@localhost/datastore_default</span></span><br><span class="line"><span class="addition">+ckan.datastore.write_url = postgresql://ckan_default:pass@ubu18/datastore_default</span></span><br><span class="line"><span class="addition">+ckan.datastore.read_url = postgresql://datastore_default:pass@ubu18/datastore_default</span></span><br><span class="line"></span><br><span class="line"> # PostgreSQL' full-text search parameters</span><br><span class="line"> ckan.datastore.default_fts_lang = english</span><br><span class="line"><span class="meta">@@ -101,7 +101,7 @@</span></span><br><span class="line"> ## Redis Settings</span><br><span class="line"></span><br><span class="line"> # URL to your Redis instance, including the database to be used.</span><br><span class="line"><span class="deletion">-#ckan.redis.url = redis://localhost:6379/0</span></span><br><span class="line"><span class="addition">+ckan.redis.url = redis://ubu18:6379/0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ## CORS Settings</span><br><span class="line"><span class="meta">@@ -119,7 +119,7 @@</span></span><br><span class="line"> #       Add ``datapusher`` to enable DataPusher</span><br><span class="line"> #              Add ``resource_proxy`` to enable resorce proxying and get around the</span><br><span class="line"> #              same origin policy</span><br><span class="line"><span class="deletion">-ckan.plugins = stats text_view image_view recline_view</span></span><br><span class="line"><span class="addition">+ckan.plugins = stats text_view image_view recline_view datastore datapusher</span></span><br><span class="line"></span><br><span class="line"> # Define which views should be created by default</span><br><span class="line"> # (plugins must be loaded in ckan.plugins)</span><br><span class="line"><span class="meta">@@ -181,7 +181,7 @@</span></span><br><span class="line"></span><br><span class="line"> # Make sure you have set up the DataStore</span><br><span class="line"></span><br><span class="line"><span class="deletion">-#ckan.datapusher.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</span></span><br><span class="line"><span class="addition">+ckan.datapusher.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</span></span><br><span class="line"> #ckan.datapusher.url = http://127.0.0.1:8800/</span><br><span class="line"> #ckan.datapusher.assume_task_stale_after = 3600</span><br><span class="line"></span><br><span class="line"><span class="meta">@@ -206,7 +206,7 @@</span></span><br><span class="line"></span><br><span class="line"> #email_to = errors@example.com</span><br><span class="line"> #error_email_from = ckan-errors@example.com</span><br><span class="line"><span class="deletion">-#smtp.server = localhost</span></span><br><span class="line"><span class="addition">+smtp.server = ubu18</span></span><br><span class="line"> #smtp.starttls = False</span><br><span class="line"> #smtp.user = username@example.com</span><br><span class="line"> #smtp.password = your_password</span><br></pre></td></tr></table></figure>
 <p>↑の変更点を説明する。</p>
-<p>まず、今回はVM上のDockerで起動したので、SSHトンネル経由でのアクセスで困らないように開発環境ホスト名を <code>localhost</code> から変更した。</p>
+<p>まず、今回はVM上のDockerで起動したので、SSHトンネル経由でのアクセスで困らないように開発環境ホスト名を
+<code>localhost</code> から変更した。</p>
 <p>また、Datastore機能、Datapusher機能を利用するためにプラグインを追加。</p>
 <p>Datapusherのフォーマットを有効化（コメントアウトを解除）</p>
 <p>コンテナを再起動。</p>
@@ -353,77 +400,112 @@ ga('send', 'pageview');
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl <span class="string">'http://localhost:5000/api/3/action/datastore_search?resource_id=_table_metadata'</span></span></span><br></pre></td></tr></table></figure>
 <p>アドミンユーザ作成。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it ckan /usr/<span class="built_in">local</span>/bin/ckan -c /etc/ckan/production.ini sysadmin add johndoe</span></span><br></pre></td></tr></table></figure>
-<p>http://<サイトのurl>/ckan にアクセスすれば、ウェブUIが確認できる。 先に設定した、アドミンユーザでとりあえずログインする。</サイトのurl></p>
+<p>http://<サイトのurl>/ckan にアクセスすれば、ウェブUIが確認できる。
+先に設定した、アドミンユーザでとりあえずログインする。</サイトのurl></p>
 <h3><span id="データストアとしてminio環境を整える">データストアとしてMinIO環境を整える</span></h3>
-<p><a href="https://min.io/download#/docker" target="_blank" rel="noopener">MinIOのDocker</a> を参考に、Dockerでサーバを立ち上げる。</p>
+<p><a href="https://min.io/download#/docker" target="_blank" rel="noopener">MinIOのDocker</a>
+を参考に、Dockerでサーバを立ち上げる。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run -p 9000:9000 -p 9001:9001 minio/minio server /data --console-address <span class="string">":9001"</span></span></span><br></pre></td></tr></table></figure>
-<p>http://<立ち上げたインスタンス>:9000 でMinIOのウェブコンソールにアクセスできる。 特に設定していなければ、ID：minioadmin、パスワード：minioadminである。</立ち上げたインスタンス></p>
+<p>http://<立ち上げたインスタンス>:9000
+でMinIOのウェブコンソールにアクセスできる。
+特に設定していなければ、ID：minioadmin、パスワード：minioadminである。</立ち上げたインスタンス></p>
 <figure>
-<img src="images/20220121_ckan_minio1.JPG" alt=""><figcaption>MinIのUI</figcaption>
+<img src="images/20220121_ckan_minio1.JPG" alt="MinIのUI">
+<figcaption aria-hidden="true">MinIのUI</figcaption>
 </figure>
 <figure>
-<img src="images/20220123_ckan_minio2.JPG" alt=""><figcaption>MinIのUI</figcaption>
+<img src="images/20220123_ckan_minio2.JPG" alt="MinIのUI">
+<figcaption aria-hidden="true">MinIのUI</figcaption>
 </figure>
 <figure>
-<img src="images/20220123_ckan_minio3.JPG" alt=""><figcaption>MinIのUI</figcaption>
+<img src="images/20220123_ckan_minio3.JPG" alt="MinIのUI">
+<figcaption aria-hidden="true">MinIのUI</figcaption>
 </figure>
 <p>別のコンソールで <code>mc</code>クライアントを立ち上げる。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run --name my-mc --hostname my-mc -it --entrypoint /bin/bash --rm minio/mc</span></span><br></pre></td></tr></table></figure>
-<p>エイリアスを設定し、バケットを作成する。 （URLは、MinIO起動時にコンソールに表示されるAPI用のURLを利用すること）</p>
+<p>エイリアスを設定し、バケットを作成する。
+（URLは、MinIO起動時にコンソールに表示されるAPI用のURLを利用すること）</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> mc <span class="built_in">alias</span> <span class="built_in">set</span> myminio http://172.17.0.2:9000 minioadmin minioadmin</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mc mb myminio/mybucket</span></span><br></pre></td></tr></table></figure>
 <p>ファイルを作成し、MinIOにアップロード（コピー）する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"hoge"</span> &gt; /tmp/hoge.txt</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mc cp /tmp/hoge.txt myminio/mybucket/hoge.txt</span></span><br></pre></td></tr></table></figure>
 <h3><span id="aws-cliでアクセスする">AWS CLIでアクセスする</span></h3>
-<p><a href="https://aws.amazon.com/jp/blogs/developer/aws-cli-v2-docker-image/" target="_blank" rel="noopener">AWS CLI v2 Docker image</a> を利用してAWS CLIを起動し、MinIOにアクセスする。 なお、コンテナで起動するのでそのままではホスト側の <code>~/.aws</code> にアクセスできない。そこで <code>-v</code> オプションを利用しマウントしてから configure するようにしている。 また、S3プロトコルでアクセスする際には、今回は手元のMinIO環境を利用するため、エンドポイントを指定していることに注意。</p>
+<p><a href="https://aws.amazon.com/jp/blogs/developer/aws-cli-v2-docker-image/" target="_blank" rel="noopener">AWS
+CLI v2 Docker image</a> を利用してAWS CLIを起動し、MinIOにアクセスする。
+なお、コンテナで起動するのでそのままではホスト側の <code>~/.aws</code>
+にアクセスできない。そこで <code>-v</code>
+オプションを利用しマウントしてから configure するようにしている。
+また、S3プロトコルでアクセスする際には、今回は手元のMinIO環境を利用するため、エンドポイントを指定していることに注意。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run --rm -it -v ~/.aws:/root/.aws amazon/aws-cli configure --profile myminio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run --rm -it -v ~/.aws:/root/.aws amazon/aws-cli --profile myminio s3 --endpoint-url http://172.17.0.2:9000 ls s3://mybucket/hoge.txt</span></span><br><span class="line">2022-01-21 16:38:19          5 hoge.txt</span><br></pre></td></tr></table></figure>
 <p>無事にS3プロトコルでアクセスできたことが確かめられた。</p>
 <h3><span id="ckanのuiで操作">CKANのUIで操作</span></h3>
 <p>組織の作成</p>
 <figure>
-<img src="images/20220121_ckan_create_org1.JPG" alt=""><figcaption>組織作成</figcaption>
+<img src="images/20220121_ckan_create_org1.JPG" alt="組織作成">
+<figcaption aria-hidden="true">組織作成</figcaption>
 </figure>
 <figure>
-<img src="images/20220123_ckan_create_org2.JPG" alt=""><figcaption>組織作成</figcaption>
+<img src="images/20220123_ckan_create_org2.JPG" alt="組織作成">
+<figcaption aria-hidden="true">組織作成</figcaption>
 </figure>
 <figure>
-<img src="images/20220123_ckan_create_org3.JPG" alt=""><figcaption>組織作成</figcaption>
+<img src="images/20220123_ckan_create_org3.JPG" alt="組織作成">
+<figcaption aria-hidden="true">組織作成</figcaption>
 </figure>
 <p>データセット作成</p>
 <figure>
-<img src="images/20220121_ckan_create_dataset1.JPG" alt=""><figcaption>データセット作成</figcaption>
+<img src="images/20220121_ckan_create_dataset1.JPG" alt="データセット作成">
+<figcaption aria-hidden="true">データセット作成</figcaption>
 </figure>
 <figure>
-<img src="images/20220123_ckan_create_dataset2.JPG" alt=""><figcaption>データセット作成</figcaption>
+<img src="images/20220123_ckan_create_dataset2.JPG" alt="データセット作成">
+<figcaption aria-hidden="true">データセット作成</figcaption>
 </figure>
 <figure>
-<img src="images/20220123_ckan_create_dataset3.JPG" alt=""><figcaption>データセット作成</figcaption>
+<img src="images/20220123_ckan_create_dataset3.JPG" alt="データセット作成">
+<figcaption aria-hidden="true">データセット作成</figcaption>
 </figure>
-<p>先ほどのS3プロトコルURL（ <code>s3://mybucket/hoge.txt</code> ）を登録する。</p>
+<p>先ほどのS3プロトコルURL（ <code>s3://mybucket/hoge.txt</code>
+）を登録する。</p>
 <h3><span id="補足初期化">（補足）初期化</span></h3>
-<p>何らかの理由でDockerの環境をまっさらに戻したいことがあるかもしれない。 その場合は以下の通り。</p>
+<p>何らかの理由でDockerの環境をまっさらに戻したいことがあるかもしれない。
+その場合は以下の通り。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker-compose down</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi -f docker_ckan docker_db</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi $(docker images -f dangling=<span class="literal">true</span> -q)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker volume rm docker_ckan_config docker_ckan_home docker_ckan_storage docker_pg_data docker_solr_data</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker-compose build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker-compose up -d</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker-compose restart ckan <span class="comment"># give the db service time to initialize the db cluster on first run</span></span></span><br></pre></td></tr></table></figure>
 <h2><span id="補足fiwareのckanは拡張済">（補足）FIWAREのCKANは拡張済？</span></h2>
-<p><a href="https://fiwaretourguide.letsfiware.jp/publishing-open-data-in-fiware/how-to-publish-open-datasets-in-ckan-2/" target="_blank" rel="noopener">FIWAREのCKAN</a> の説明を見ると、Dataset登録時に <code>Searchable</code> のような項目がある。公式2.9.5で試したときにはなかった。 他にも <code>Additional Info</code> という項目があり、そこには <code>OAuth-Token</code> という項目もあった。 このように、特にアクセス管理や認証認可の機能が拡張されているのか、と思った。</p>
+<p><a href="https://fiwaretourguide.letsfiware.jp/publishing-open-data-in-fiware/how-to-publish-open-datasets-in-ckan-2/" target="_blank" rel="noopener">FIWAREのCKAN</a>
+の説明を見ると、Dataset登録時に <code>Searchable</code>
+のような項目がある。公式2.9.5で試したときにはなかった。 他にも
+<code>Additional Info</code> という項目があり、そこには
+<code>OAuth-Token</code> という項目もあった。
+このように、特にアクセス管理や認証認可の機能が拡張されているのか、と思った。</p>
 <h2><span id="インストールパッケージ">インストール（パッケージ）</span></h2>
-<p>Ubuntu18環境にCKANをインストールする。 基本的には、 <a href="http://docs.ckan.org/en/2.9/maintaining/installing/install-from-package.html" target="_blank" rel="noopener">Installing CKAN from package</a> に従う。</p>
+<p>Ubuntu18環境にCKANをインストールする。 基本的には、 <a href="http://docs.ckan.org/en/2.9/maintaining/installing/install-from-package.html" target="_blank" rel="noopener">Installing
+CKAN from package</a> に従う。</p>
 <h1><span id="参考">参考</span></h1>
 <h2><span id="ckan">CKAN</span></h2>
 <ul>
 <li><a href="https://ckan.org/" target="_blank" rel="noopener">CKAN公式サイト</a></li>
 <li><a href="https://ckan.org/features" target="_blank" rel="noopener">CKANの特徴</a></li>
 <li><a href="http://docs.ckan.org/en/2.9/" target="_blank" rel="noopener">公式ドキュメント</a></li>
-<li><a href="http://docs.ckan.org/en/2.9/maintaining/installing/install-from-docker-compose.html" target="_blank" rel="noopener">Installing CKAN with Docker Compose</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/installing/install-from-docker-compose.html" target="_blank" rel="noopener">Installing
+CKAN with Docker Compose</a></li>
 <li><a href="https://dev.classmethod.jp/articles/try-oss-data-management-system-ckan/" target="_blank" rel="noopener">オープンソースのデータ管理システム「CKAN」を試してみた</a></li>
 <li><a href="https://fiwaretourguide.letsfiware.jp/publishing-open-data-in-fiware/how-to-publish-open-datasets-in-ckan-2/" target="_blank" rel="noopener">FIWAREのCKAN</a></li>
-<li><a href="http://docs.ckan.org/en/2.9/user-guide.html#users-organizations-and-authorization" target="_blank" rel="noopener">Users, organizations and authorization</a></li>
-<li><a href="http://docs.ckan.org/en/2.9/user-guide.html#adding-a-new-dataset" target="_blank" rel="noopener">Adding a new dataset</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/user-guide.html#users-organizations-and-authorization" target="_blank" rel="noopener">Users,
+organizations and authorization</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/user-guide.html#adding-a-new-dataset" target="_blank" rel="noopener">Adding
+a new dataset</a></li>
 <li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#datapusher-automatically-add-data-to-the-datastore" target="_blank" rel="noopener">DataPusher</a></li>
-<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#data-dictionary" target="_blank" rel="noopener">Data Dictionary</a></li>
-<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#downloading-resources" target="_blank" rel="noopener">Downloading Resources</a></li>
-<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#api-reference" target="_blank" rel="noopener">API reference</a></li>
-<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#extending-datastore" target="_blank" rel="noopener">Extending DataStore</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#data-dictionary" target="_blank" rel="noopener">Data
+Dictionary</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#downloading-resources" target="_blank" rel="noopener">Downloading
+Resources</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#api-reference" target="_blank" rel="noopener">API
+reference</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#extending-datastore" target="_blank" rel="noopener">Extending
+DataStore</a></li>
 <li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#ckanext.datastore.backend.DatastoreBackend" target="_blank" rel="noopener">DatastoreBackend</a></li>
-<li><a href="http://docs.ckan.org/en/2.9/maintaining/background-tasks.html" target="_blank" rel="noopener">Background jobs</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/background-tasks.html" target="_blank" rel="noopener">Background
+jobs</a></li>
 <li><a href="http://docs.ckan.org/en/2.9/maintaining/background-tasks.html#background-job-queues" target="_blank" rel="noopener">background-job-queues</a></li>
 </ul>
 <h2><span id="minio">MinIO</span></h2>
@@ -432,7 +514,8 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="aws-cli">AWS CLI</span></h2>
 <ul>
-<li><a href="https://aws.amazon.com/jp/blogs/developer/aws-cli-v2-docker-image/" target="_blank" rel="noopener">AWS CLI v2 Docker image</a></li>
+<li><a href="https://aws.amazon.com/jp/blogs/developer/aws-cli-v2-docker-image/" target="_blank" rel="noopener">AWS
+CLI v2 Docker image</a></li>
 </ul>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -445,7 +528,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="cl2nztnlr005x5xqirv6s5so3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="cl2o9pbgr014n18rz2d9l5rm8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -696,5 +779,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

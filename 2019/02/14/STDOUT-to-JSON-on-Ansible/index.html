@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  Ansible で task の実行結果の json を dict オブジェクトとして後続の処理で利用する  メモ Ansible で task の実行結果の json を dict オブジェクトとして後続の処理で利用する に記載の内容で問題ない。 自分の場合は、AnsibleでWindows PowerShellの実行結果を受け取るときに、オブジェクトをJSONに変">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ansibleでコマンド実行結果のJSONを辞書型に変換して用いる">
 <meta name="twitter:description" content="参考 メモ   参考  Ansible で task の実行結果の json を dict オブジェクトとして後続の処理で利用する  メモ Ansible で task の実行結果の json を dict オブジェクトとして後続の処理で利用する に記載の内容で問題ない。 自分の場合は、AnsibleでWindows PowerShellの実行結果を受け取るときに、オブジェクトをJSONに変">
@@ -251,16 +251,23 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://ceblog.mediba.jp/post/154705974072/ansible-%E3%81%A7-task-%E3%81%AE%E5%AE%9F%E8%A1%8C%E7%B5%90%E6%9E%9C%E3%81%AE-json-%E3%82%92-dict" target="_blank" rel="noopener">Ansible で task の実行結果の json を dict オブジェクトとして後続の処理で利用する</a></li>
+<li><a href="https://ceblog.mediba.jp/post/154705974072/ansible-%E3%81%A7-task-%E3%81%AE%E5%AE%9F%E8%A1%8C%E7%B5%90%E6%9E%9C%E3%81%AE-json-%E3%82%92-dict" target="_blank" rel="noopener">Ansible
+で task の実行結果の json を dict
+オブジェクトとして後続の処理で利用する</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://ceblog.mediba.jp/post/154705974072/ansible-%E3%81%A7-task-%E3%81%AE%E5%AE%9F%E8%A1%8C%E7%B5%90%E6%9E%9C%E3%81%AE-json-%E3%82%92-dict" target="_blank" rel="noopener">Ansible で task の実行結果の json を dict オブジェクトとして後続の処理で利用する</a> に記載の内容で問題ない。 自分の場合は、AnsibleでWindows PowerShellの実行結果を受け取るときに、オブジェクトをJSONに変換し、 それを辞書型に変換した上で後々when構文で使いたかった。</p>
+<p><a href="https://ceblog.mediba.jp/post/154705974072/ansible-%E3%81%A7-task-%E3%81%AE%E5%AE%9F%E8%A1%8C%E7%B5%90%E6%9E%9C%E3%81%AE-json-%E3%82%92-dict" target="_blank" rel="noopener">Ansible
+で task の実行結果の json を dict
+オブジェクトとして後続の処理で利用する</a> に記載の内容で問題ない。
+自分の場合は、AnsibleでWindows
+PowerShellの実行結果を受け取るときに、オブジェクトをJSONに変換し、
+それを辞書型に変換した上で後々when構文で使いたかった。</p>
 <p>例）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- name: check_state_of_wsl</span><br><span class="line">  win_shell: Get-WindowsOptionalFeature -Online | ? FeatureName -Match &quot;Microsoft-Windows-Subsystem-Linux&quot; |  ConvertTo-Json</span><br><span class="line">  register: wsl_check_json</span><br><span class="line"></span><br><span class="line">- set_fact:</span><br><span class="line">    wsl_check: &quot;&#123;&#123; wsl_check_json.stdout &#125;&#125;&quot;</span><br><span class="line">  </span><br><span class="line">- name: enable_wsl</span><br><span class="line">  win_shell: Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart</span><br><span class="line">  when: wsl_check.State != 2</span><br></pre></td></tr></table></figure>
 
@@ -273,7 +280,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/14/STDOUT-to-JSON-on-Ansible/" data-id="cl2nztnns00cb5xqiquwgem81" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/14/STDOUT-to-JSON-on-Ansible/" data-id="cl2o9pb7n008u18rzuic2h8us" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -524,5 +531,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

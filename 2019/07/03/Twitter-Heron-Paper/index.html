@@ -5,18 +5,18 @@
     
     <title>Twitter Heronの論文 | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 論文の要点メモ 1. Introduction 2. Related Work 3. Motivation for Heron 3.1 Storm Background 3.2 Storm Worker Architecture: Limitations 3.3 Issues with the Storm Nimbus 3.4 Lack of Backpressure 3.5 Effi">
+    <meta name="description" content="参考 論文の要点メモ  1. Introduction 2. Related Work 3. Motivation for Heron  3.1 Storm Background 3.2 Storm Worker Architecture: Limitations 3.3 Issues with the Storm Nimbus 3.4 Lack of Backpressure 3.5 Ef">
 <meta name="keywords" content="Stream Processing,Paper,Twitter Heron,Twitter">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Twitter Heronの論文">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/07/03/Twitter-Heron-Paper/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 論文の要点メモ 1. Introduction 2. Related Work 3. Motivation for Heron 3.1 Storm Background 3.2 Storm Worker Architecture: Limitations 3.3 Issues with the Storm Nimbus 3.4 Lack of Backpressure 3.5 Effi">
+<meta property="og:description" content="参考 論文の要点メモ  1. Introduction 2. Related Work 3. Motivation for Heron  3.1 Storm Background 3.2 Storm Worker Architecture: Limitations 3.3 Issues with the Storm Nimbus 3.4 Lack of Backpressure 3.5 Ef">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Twitter Heronの論文">
-<meta name="twitter:description" content="参考 論文の要点メモ 1. Introduction 2. Related Work 3. Motivation for Heron 3.1 Storm Background 3.2 Storm Worker Architecture: Limitations 3.3 Issues with the Storm Nimbus 3.4 Lack of Backpressure 3.5 Effi">
+<meta name="twitter:description" content="参考 論文の要点メモ  1. Introduction 2. Related Work 3. Motivation for Heron  3.1 Storm Background 3.2 Storm Worker Architecture: Limitations 3.3 Issues with the Storm Nimbus 3.4 Lack of Backpressure 3.5 Ef">
     
 
     
@@ -251,70 +251,110 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#論文の要点メモ">論文の要点メモ</a><ul>
-<li><a href="#introduction">1. Introduction</a></li>
-<li><a href="#related-work">2. Related Work</a></li>
-<li><a href="#motivation-for-heron">3. Motivation for Heron</a><ul>
-<li><a href="#storm-background">3.1 Storm Background</a></li>
-<li><a href="#storm-worker-architecture-limitations">3.2 Storm Worker Architecture: Limitations</a></li>
-<li><a href="#issues-with-the-storm-nimbus">3.3 Issues with the Storm Nimbus</a></li>
-<li><a href="#lack-of-backpressure">3.4 Lack of Backpressure</a></li>
-<li><a href="#efficiency">3.5 Efficiency</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#論文の要点メモ" id="toc-論文の要点メモ">論文の要点メモ</a>
+<ul>
+<li><a href="#introduction" id="toc-introduction">1.
+Introduction</a></li>
+<li><a href="#related-work" id="toc-related-work">2. Related
+Work</a></li>
+<li><a href="#motivation-for-heron" id="toc-motivation-for-heron">3.
+Motivation for Heron</a>
+<ul>
+<li><a href="#storm-background" id="toc-storm-background">3.1 Storm
+Background</a></li>
+<li><a href="#storm-worker-architecture-limitations" id="toc-storm-worker-architecture-limitations">3.2 Storm Worker
+Architecture: Limitations</a></li>
+<li><a href="#issues-with-the-storm-nimbus" id="toc-issues-with-the-storm-nimbus">3.3 Issues with the Storm
+Nimbus</a></li>
+<li><a href="#lack-of-backpressure" id="toc-lack-of-backpressure">3.4
+Lack of Backpressure</a></li>
+<li><a href="#efficiency" id="toc-efficiency">3.5 Efficiency</a></li>
 </ul></li>
-<li><a href="#design-alternatives">4. Design Alternatives</a></li>
-<li><a href="#heron">5. Heron</a><ul>
-<li><a href="#data-model-and-api">5.1 Data Model and API</a></li>
-<li><a href="#architecture-overview">5.2 Architecture overview</a></li>
-<li><a href="#topology-master">5.3 Topology Master</a></li>
-<li><a href="#stream-manager">5.4 Stream Manager</a></li>
-<li><a href="#heron-instance">5.5 Heron Instance</a></li>
-<li><a href="#metrics-manager">5.6 Metrics Manager</a></li>
-<li><a href="#startup-sequence-and-failure-scenarios">5.7 Startup Sequence and Failure Scenarios</a></li>
-<li><a href="#architecture-features-summary">5.8 Architecture Features: Summary</a></li>
+<li><a href="#design-alternatives" id="toc-design-alternatives">4.
+Design Alternatives</a></li>
+<li><a href="#heron" id="toc-heron">5. Heron</a>
+<ul>
+<li><a href="#data-model-and-api" id="toc-data-model-and-api">5.1 Data
+Model and API</a></li>
+<li><a href="#architecture-overview" id="toc-architecture-overview">5.2
+Architecture overview</a></li>
+<li><a href="#topology-master" id="toc-topology-master">5.3 Topology
+Master</a></li>
+<li><a href="#stream-manager" id="toc-stream-manager">5.4 Stream
+Manager</a></li>
+<li><a href="#heron-instance" id="toc-heron-instance">5.5 Heron
+Instance</a></li>
+<li><a href="#metrics-manager" id="toc-metrics-manager">5.6 Metrics
+Manager</a></li>
+<li><a href="#startup-sequence-and-failure-scenarios" id="toc-startup-sequence-and-failure-scenarios">5.7 Startup Sequence and
+Failure Scenarios</a></li>
+<li><a href="#architecture-features-summary" id="toc-architecture-features-summary">5.8 Architecture Features:
+Summary</a></li>
 </ul></li>
-<li><a href="#heron-in-production">6. Heron in Production</a><ul>
-<li><a href="#heron-tracker">6.1 Heron Tracker</a></li>
-<li><a href="#heron-ui">6.2 Heron UI</a></li>
-<li><a href="#heron-viz">6.3 Heron Viz</a></li>
-<li><a href="#herontwitter">6.4 Heron@Twitter</a></li>
+<li><a href="#heron-in-production" id="toc-heron-in-production">6. Heron
+in Production</a>
+<ul>
+<li><a href="#heron-tracker" id="toc-heron-tracker">6.1 Heron
+Tracker</a></li>
+<li><a href="#heron-ui" id="toc-heron-ui">6.2 Heron UI</a></li>
+<li><a href="#heron-viz" id="toc-heron-viz">6.3 Heron Viz</a></li>
+<li><a href="#herontwitter" id="toc-herontwitter">6.4
+Heron@Twitter</a></li>
 </ul></li>
-<li><a href="#empirical-evaluation">7. Empirical Evaluation</a><ul>
-<li><a href="#word-count-topology">7.3 Word Count Topology</a></li>
-<li><a href="#rtac-topology">7.4 RTAC Topology</a></li>
+<li><a href="#empirical-evaluation" id="toc-empirical-evaluation">7.
+Empirical Evaluation</a>
+<ul>
+<li><a href="#word-count-topology" id="toc-word-count-topology">7.3 Word
+Count Topology</a></li>
+<li><a href="#rtac-topology" id="toc-rtac-topology">7.4 RTAC
+Topology</a></li>
 </ul></li>
-<li><a href="#conclusions-and-future-work">8. Conclusions and Future work</a></li>
+<li><a href="#conclusions-and-future-work" id="toc-conclusions-and-future-work">8. Conclusions and Future
+work</a></li>
 </ul></li>
-<li><a href="#最近のheronはどうかのメモ">最近のHeronはどうか？のメモ</a><ul>
-<li><a href="#readmeによるupdate">READMEによる「Update」</a></li>
-<li><a href="#公式ドキュメントを覗いてみる">公式ドキュメントを覗いてみる</a><ul>
-<li><a href="#herons-design-goals">Heron's Design Goals</a></li>
+<li><a href="#最近のheronはどうかのメモ" id="toc-最近のheronはどうかのメモ">最近のHeronはどうか？のメモ</a>
+<ul>
+<li><a href="#readmeによるupdate" id="toc-readmeによるupdate">READMEによる「Update」</a></li>
+<li><a href="#公式ドキュメントを覗いてみる" id="toc-公式ドキュメントを覗いてみる">公式ドキュメントを覗いてみる</a>
+<ul>
+<li><a href="#herons-design-goals" id="toc-herons-design-goals">Heron's
+Design Goals</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#商用サポートはあるのか">商用サポートはあるのか？</a></li>
+<li><a href="#商用サポートはあるのか" id="toc-商用サポートはあるのか">商用サポートはあるのか？</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://dl.acm.org/citation.cfm?id=2742788" target="_blank" rel="noopener">Twitter Heronの論文要旨</a></li>
+<li><a href="https://dl.acm.org/citation.cfm?id=2742788" target="_blank" rel="noopener">Twitter
+Heronの論文要旨</a></li>
 <li><a href="https://github.com/nathanmarz/storm/wiki" target="_blank" rel="noopener">Trident</a></li>
-<li><a href="https://github.com/apache/incubator-heron" target="_blank" rel="noopener">Apache incubation Heron</a></li>
-<li><a href="https://github.com/apache/incubator-heron/graphs/commit-activity" target="_blank" rel="noopener">Apache Heronのコミット状況</a></li>
-<li><a href="https://github.com/apache/incubator-heron/graphs/contributors" target="_blank" rel="noopener">Apache Heronのコントリビュータ</a></li>
+<li><a href="https://github.com/apache/incubator-heron" target="_blank" rel="noopener">Apache
+incubation Heron</a></li>
+<li><a href="https://github.com/apache/incubator-heron/graphs/commit-activity" target="_blank" rel="noopener">Apache
+Heronのコミット状況</a></li>
+<li><a href="https://github.com/apache/incubator-heron/graphs/contributors" target="_blank" rel="noopener">Apache
+Heronのコントリビュータ</a></li>
 <li><a href="https://twitter.com/sanjeevrk" target="_blank" rel="noopener">Sanjeev Kulkarni</a></li>
 <li><a href="https://github.com/objmagic" target="_blank" rel="noopener">objmagic</a></li>
 <li><a href="https://www.linkedin.com/in/ningwang/" target="_blank" rel="noopener">Ning Wang</a></li>
 <li><a href="https://slurm.schedmd.com/" target="_blank" rel="noopener">slurm</a></li>
 <li><a href="https://apache.github.io/incubator-heron/" target="_blank" rel="noopener">公式ドキュメント</a></li>
-<li><a href="https://qiita.com/takeuchikzm/items/5f21e9ec7ddf885c8e5e" target="_blank" rel="noopener">Storm vs. Heron</a></li>
-<li><a href="https://www.slideshare.net/streamlio/introduction-to-heron" target="_blank" rel="noopener">Introduction to Apache Heron by Streamlio</a></li>
+<li><a href="https://qiita.com/takeuchikzm/items/5f21e9ec7ddf885c8e5e" target="_blank" rel="noopener">Storm
+vs. Heron</a></li>
+<li><a href="https://www.slideshare.net/streamlio/introduction-to-heron" target="_blank" rel="noopener">Introduction
+to Apache Heron by Streamlio</a></li>
 <li><a href="https://streaml.io/support" target="_blank" rel="noopener">Streamlioのサポートサービス</a></li>
 <li><a href="https://streaml.io/product/technology/processing" target="_blank" rel="noopener">Streamlioのプロセッシングエンジンに関する説明</a></li>
-<li><a href="https://streaml.io/blog/pulsar-functions" target="_blank" rel="noopener">Pulsar functions</a></li>
+<li><a href="https://streaml.io/blog/pulsar-functions" target="_blank" rel="noopener">Pulsar
+functions</a></li>
 </ul>
 <h1><span id="論文の要点メモ">論文の要点メモ</span></h1>
 <p>昔のメモをコピペ。</p>
-<p>なお、 <a href="https://qiita.com/takeuchikzm/items/5f21e9ec7ddf885c8e5e" target="_blank" rel="noopener">Storm vs. Heron</a> のブログに記載の通り、 本論文当時のStormは古く、現在のStormでは解消されている（可能性のある）課題が取り扱われていることに注意が必要。</p>
+<p>なお、 <a href="https://qiita.com/takeuchikzm/items/5f21e9ec7ddf885c8e5e" target="_blank" rel="noopener">Storm
+vs. Heron</a> のブログに記載の通り、
+本論文当時のStormは古く、現在のStormでは解消されている（可能性のある）課題が取り扱われていることに注意が必要。</p>
 <h2><span id="1-introduction">1. Introduction</span></h2>
 <p>Twitterでのリアルタイム・ストリーミングのユースケースの例。</p>
 <ul>
@@ -324,10 +364,12 @@ ga('send', 'pageview');
 </ul></li>
 <li>リアルタイム・エンゲージメント（ツイートや広告）</li>
 </ul>
-<p>大きな課題のひとつは、デバッガビリティ。性能劣化の原因を素早く探りたい。 論理単位と物理的なプロセスを結びつけてシンプルにしたかった。</p>
+<p>大きな課題のひとつは、デバッガビリティ。性能劣化の原因を素早く探りたい。
+論理単位と物理的なプロセスを結びつけてシンプルにしたかった。</p>
 <p>クラスタ管理の仕組み（TwitterではAuroraを使用）と組み合わせたかった。</p>
 <p>計算リソースの効率も上げたかった。</p>
-<p>一方で既存のアプリを書き換えたくないので、Storm API、Summingbird APIに対応させたい。</p>
+<p>一方で既存のアプリを書き換えたくないので、Storm API、Summingbird
+APIに対応させたい。</p>
 <h2><span id="2-related-work">2. Related Work</span></h2>
 <p>挙げられていたのは以下のような技術。</p>
 <ul>
@@ -355,27 +397,43 @@ ga('send', 'pageview');
 <h2><span id="3-motivation-for-heron">3. Motivation for Heron</span></h2>
 <h3><span id="31-storm-background">3.1 Storm Background</span></h3>
 <p>特筆なし。Stormの論理構造の説明があるだけ。</p>
-<h3><span id="32-storm-worker-architecture-limitations">3.2 Storm Worker Architecture: Limitations</span></h3>
-<p>Stormはプロセス内で複数のタスクを実行するし、それらのタスクは複数のトポロジーに属している。 これにより性能劣化などが発生しても、その原因を見極めるのが難しく、結果としてトポロジー「再起動」という 手段を取らざるを得なくなる。</p>
+<h3><span id="32-storm-workerarchitecture-limitations">3.2 Storm Worker
+Architecture: Limitations</span></h3>
+<p>Stormはプロセス内で複数のタスクを実行するし、それらのタスクは複数のトポロジーに属している。
+これにより性能劣化などが発生しても、その原因を見極めるのが難しく、結果としてトポロジー「再起動」という
+手段を取らざるを得なくなる。</p>
 <p>ログが混ざって調査しづらい。</p>
-<p>マシンリソースのリザーブが一律である点が辛い。 余分なリソースを確保してしまう。特に複雑なトポロジーを用いることになるハイレベルAPIで利用する場合。</p>
+<p>マシンリソースのリザーブが一律である点が辛い。
+余分なリソースを確保してしまう。特に複雑なトポロジーを用いることになるハイレベルAPIで利用する場合。</p>
 <p>大きなヒープを用いることもデバッグしづらさを助長する。</p>
-<p>ワーカ内では、グローバルな送信スレッド、受信スレッド、コンピューティングスレッドがある。 その間で内外の通信を行う。これは無駄が多い。</p>
-<h3><span id="33-issues-with-the-storm-nimbus">3.3 Issues with the Storm Nimbus</span></h3>
-<p>Stormのスケジューラは、ワーカにおいてリソース使用分割をきちんと実施しない。 Storm on YARNを導入しても十分ではなかった。</p>
+<p>ワーカ内では、グローバルな送信スレッド、受信スレッド、コンピューティングスレッドがある。
+その間で内外の通信を行う。これは無駄が多い。</p>
+<h3><span id="33-issues-with-the-stormnimbus">3.3 Issues with the Storm
+Nimbus</span></h3>
+<p>Stormのスケジューラは、ワーカにおいてリソース使用分割をきちんと実施しない。
+Storm on YARNを導入しても十分ではなかった。</p>
 <p>ZooKeeperがワーカ数の制約になる。</p>
-<p>NimbusはSPOF。 Nimbusがとまると新しいトポロジーを投入できないし、走っているトポロジーを止められない。 エラーが起きても気づけないし、自動的にリカバーできない。</p>
+<p>NimbusはSPOF。
+Nimbusがとまると新しいトポロジーを投入できないし、走っているトポロジーを止められない。
+エラーが起きても気づけないし、自動的にリカバーできない。</p>
 <h3><span id="34-lack-of-backpressure">3.4 Lack of Backpressure</span></h3>
 <p>Stormにはバックプレッシャ機能がなかった。</p>
 <h3><span id="35-efficiency">3.5 Efficiency</span></h3>
-<p>効率の悪さ（マシンリソースを使い切らない）が課題。 イメージで言えば…100コアのクラスタがあるとき、Utilization 90%以上のコアが30個で動いていほしいところ、Utilizaiton 30%のコアが90個になる、という具合。</p>
+<p>効率の悪さ（マシンリソースを使い切らない）が課題。
+イメージで言えば…100コアのクラスタがあるとき、Utilization
+90%以上のコアが30個で動いていほしいところ、Utilizaiton
+30%のコアが90個になる、という具合。</p>
 <h2><span id="4-design-alternatives">4. Design Alternatives</span></h2>
-<p>Heronの他に選択肢がなかったのか、というと、なかった、ということが書かれている。 ポイントはStorm互換APIを持ち、Stormの欠点を克服するプロダクトがなかった、ということ。</p>
+<p>Heronの他に選択肢がなかったのか、というと、なかった、ということが書かれている。
+ポイントはStorm互換APIを持ち、Stormの欠点を克服するプロダクトがなかった、ということ。</p>
 <h2><span id="5-heron">5. Heron</span></h2>
 <h3><span id="51-data-model-and-api">5.1 Data Model and API</span></h3>
-<p>データモデルとAPIはStormと同様。 トポロジーは論理プラン、実際に実行されるパーティション化されたスパウトやボルトが 物理プランに相当すると考えて良い。</p>
+<p>データモデルとAPIはStormと同様。
+トポロジーは論理プラン、実際に実行されるパーティション化されたスパウトやボルトが
+物理プランに相当すると考えて良い。</p>
 <h3><span id="52-architecture-overview">5.2 Architecture overview</span></h3>
-<p>ジェネラルなスケジューラであるAuroraを使用し、トポロジーをデプロイする。 Nimbusからの離脱。</p>
+<p>ジェネラルなスケジューラであるAuroraを使用し、トポロジーをデプロイする。
+Nimbusからの離脱。</p>
 <p>以下のようなコンポーネントで成り立つ。</p>
 <ul>
 <li>トポロジマスタ（TM）（スタンバイTMを起動することも可能）</li>
@@ -383,43 +441,83 @@ ga('send', 'pageview');
 <li>メトリクスマネージャ（MM）</li>
 <li>ヘロンインスタンス（HI）（要はスパウトとボルト）</li>
 </ul>
-<p>コンテナは単独の物理ノードとして起動する。 なお、Twitterではcgroupsでコンテナを起動する。</p>
+<p>コンテナは単独の物理ノードとして起動する。
+なお、Twitterではcgroupsでコンテナを起動する。</p>
 <p>メタデータはZooKeeperに保存する。</p>
 <p>なお、HIはJavaで実装されている。</p>
 <p>通信はProtocol Buffersで。</p>
 <h3><span id="53-topology-master">5.3 Topology Master</span></h3>
-<p>YARNでいうAMに近い。 ZooKeeperのエファメラルノードの機能を使い、複数のTMがマスタになるのを防ぎ、TMを探すのを助ける。</p>
+<p>YARNでいうAMに近い。
+ZooKeeperのエファメラルノードの機能を使い、複数のTMがマスタになるのを防ぎ、TMを探すのを助ける。</p>
 <h3><span id="54-stream-manager">5.4 Stream Manager</span></h3>
-<p>HIは、そのローカルのSMを通じて通信する。 通信経路は <code>O(k^2)</code> である。このとき、HIの数 <code>n</code> は、 kよりもずっと大きいことが多いので、効率的に通信できるはずである。</p>
+<p>HIは、そのローカルのSMを通じて通信する。 通信経路は
+<code>O(k^2)</code> である。このとき、HIの数 <code>n</code> は、
+kよりもずっと大きいことが多いので、効率的に通信できるはずである。</p>
 <p>補足：ひとつのマシンにひとつのSM、複数のコンテナ（つまりHI等）があるモデルを仮定。</p>
 <p>バックプレッシャの方式には種類がある。</p>
-<p>バックプレッシャについて。 複数のステージで構成されるケースにおいて、後段のステージの処理時間が長引いていると、 タプルを送るのが <em>つまって</em> バッファがあふれる可能性が生じる。 そこでそれを調整する機能が必要。</p>
-<p>TCPバックプレッシャ。 HIの処理時間が長くなると、HIの受信バッファが埋まり始め、合わせて SMの送信バッファも埋まり始める。 これによりSMは <em>つまり</em> 始めているのを検知し、それを上流に伝搬する。 この仕組みは実装は簡単だが、実際にはワークしない。 HI間の論理通信経路は、SM間の物理通信経路上で、 オーバーレイ構成されるためである。</p>
-<p>スパウトバックプレッシャについて。 TCPバックプレッシャと組み合わせて用いられる。 SMがHIの処理遅延を検知すると、 スパウトのデータ読み込みを止める。 続いてスタートバックプレッシャのメッセージを他のSMに送る。これにより読み込みが抑制される。 処理遅延が解消されると、ストップバックプレッシャのメッセージを送る。 欠点は、過剰に読み込みを抑止すること、メッセージングのオーバヘッドがあること。利点は、トポロジによらず素早く対処可能なこと。</p>
-<p>その他、ステージ・バイ・ステージバックプレッシャについて。 これはトポロジはステージの連続からなる。 バックプレッシャを伝搬させることで必要分だけ読み込み抑制する。</p>
+<p>バックプレッシャについて。
+複数のステージで構成されるケースにおいて、後段のステージの処理時間が長引いていると、
+タプルを送るのが <em>つまって</em> バッファがあふれる可能性が生じる。
+そこでそれを調整する機能が必要。</p>
+<p>TCPバックプレッシャ。
+HIの処理時間が長くなると、HIの受信バッファが埋まり始め、合わせて
+SMの送信バッファも埋まり始める。 これによりSMは <em>つまり</em>
+始めているのを検知し、それを上流に伝搬する。
+この仕組みは実装は簡単だが、実際にはワークしない。
+HI間の論理通信経路は、SM間の物理通信経路上で、
+オーバーレイ構成されるためである。</p>
+<p>スパウトバックプレッシャについて。
+TCPバックプレッシャと組み合わせて用いられる。
+SMがHIの処理遅延を検知すると、 スパウトのデータ読み込みを止める。
+続いてスタートバックプレッシャのメッセージを他のSMに送る。これにより読み込みが抑制される。
+処理遅延が解消されると、ストップバックプレッシャのメッセージを送る。
+欠点は、過剰に読み込みを抑止すること、メッセージングのオーバヘッドがあること。利点は、トポロジによらず素早く対処可能なこと。</p>
+<p>その他、ステージ・バイ・ステージバックプレッシャについて。
+これはトポロジはステージの連続からなる。
+バックプレッシャを伝搬させることで必要分だけ読み込み抑制する。</p>
 <p>Heronでは、スパウトバックプレッシャ方式を用いた。</p>
-<p>ソケットをアプリケーションレベルのバッファに対応させ、 ハイ・ウォータマークとロー・ウォータマークを定義。 ハイ・ウォータマークを超えるとバックプレッシャが発動し、 ロー・ウォータマークを下回るまでバックプレッシャが続く。</p>
+<p>ソケットをアプリケーションレベルのバッファに対応させ、
+ハイ・ウォータマークとロー・ウォータマークを定義。
+ハイ・ウォータマークを超えるとバックプレッシャが発動し、
+ロー・ウォータマークを下回るまでバックプレッシャが続く。</p>
 <h3><span id="55-heron-instance">5.5 Heron Instance</span></h3>
 <p>デザインにはいくつかの選択肢がある。</p>
 <h4><span id="551-single-threaded-approach">5.5.1 Single-threaded approach</span></h4>
-<p>HIはJVMであり、単独のタスクを実行する。 これによりデバッグしやすくなる。</p>
-<p>しかし、シングルスレッドアプローチは「ユーザコードが様々な理由によりブロックする可能性がある」という欠点がある。 ブロックする理由は様々だが、例えば…</p>
+<p>HIはJVMであり、単独のタスクを実行する。
+これによりデバッグしやすくなる。</p>
+<p>しかし、シングルスレッドアプローチは「ユーザコードが様々な理由によりブロックする可能性がある」という欠点がある。
+ブロックする理由は様々だが、例えば…</p>
 <ul>
 <li>スリープのシステムコールを実行</li>
 <li>ファイルやソケットI/Oのため読み書きのシステムコールを実行</li>
 <li>スレッド同期を実行</li>
 </ul>
-<p>これらのブロックは特にメトリクスの取り扱いにおいて問題になった。 つまり、仮にブロックされてしまうともし問題が起きていたとしてもメトリクスの伝搬が遅くなることがあり、 ユーザは信用を置けなくなってしまうからだ。</p>
+<p>これらのブロックは特にメトリクスの取り扱いにおいて問題になった。
+つまり、仮にブロックされてしまうともし問題が起きていたとしてもメトリクスの伝搬が遅くなることがあり、
+ユーザは信用を置けなくなってしまうからだ。</p>
 <h4><span id="552-two-threaded-approach">5.5.2 Two-threaded approach</span></h4>
-<p>ゲートウェイスレオッドとタスク実行スレッドの2種類で構成する。 ゲートウェイスレッドは、HIの通信管理を担う。 TCP接続の管理など。</p>
-<p>タスク実行スレッドはユーザコードを実行する。 スパウトか、ボルトかによって実行されるメソッドが異なる。 スパウトであれば <code>nextTuple</code> を実行してデータをフェッチするし、 ボルトであれば <code>execute</code> メソッドを実行してデータを処理する。 処理されたデータはゲートウェイスレッドに渡され、ローカルのSMに渡される。 なお、その他にも送られたタプルの数などのメトリクスが取得される。</p>
+<p>ゲートウェイスレオッドとタスク実行スレッドの2種類で構成する。
+ゲートウェイスレッドは、HIの通信管理を担う。 TCP接続の管理など。</p>
+<p>タスク実行スレッドはユーザコードを実行する。
+スパウトか、ボルトかによって実行されるメソッドが異なる。
+スパウトであれば <code>nextTuple</code>
+を実行してデータをフェッチするし、 ボルトであれば <code>execute</code>
+メソッドを実行してデータを処理する。
+処理されたデータはゲートウェイスレッドに渡され、ローカルのSMに渡される。
+なお、その他にも送られたタプルの数などのメトリクスが取得される。</p>
 <p>★補足：このデザインは汎用的なので、他のプロダクトにも利用できそう。</p>
-<p>スレッド間はいくつかのキューで結ばれる。 data-in、data-out、metrics-outである。 重要なのは、data-inとdata-outは長さが決まっており、このキューがいっぱいになるとバックプレッシャ機能が有効になる仕組みになっていること。</p>
-<p>問題は、NWがいっぱいなときにdata-outキューが溜まった状態になることだった。 これにより、生存オブジェクトがメモリ内に大量に残り、GCによる回収ができない。 このとき、もしdata-outキューからの送信よりも、先に受信が発動すると、新しいオブジェクトが生成されることになり、 GCを発動するが回収可能なオブジェクトが少ないため、さらなる性能劣化を引き起こす。</p>
+<p>スレッド間はいくつかのキューで結ばれる。
+data-in、data-out、metrics-outである。
+重要なのは、data-inとdata-outは長さが決まっており、このキューがいっぱいになるとバックプレッシャ機能が有効になる仕組みになっていること。</p>
+<p>問題は、NWがいっぱいなときにdata-outキューが溜まった状態になることだった。
+これにより、生存オブジェクトがメモリ内に大量に残り、GCによる回収ができない。
+このとき、もしdata-outキューからの送信よりも、先に受信が発動すると、新しいオブジェクトが生成されることになり、
+GCを発動するが回収可能なオブジェクトが少ないため、さらなる性能劣化を引き起こす。</p>
 <p>これを軽減するため、data-out、data-inキューの長さを状況に応じて増減することにした。</p>
 <h3><span id="56-metrics-manager">5.6 Metrics Manager</span></h3>
 <p>メトリクスマネージャは、コンテナごとに1個。</p>
-<h3><span id="57-startup-sequence-and-failure-scenarios">5.7 Startup Sequence and Failure Scenarios</span></h3>
+<h3><span id="57-startup-sequence-andfailure-scenarios">5.7 Startup Sequence and
+Failure Scenarios</span></h3>
 <p>トポロジがサブミットされてから実際に処理が開始されるまでの流れの説明。</p>
 <ul>
 <li>スケジューラがリソースをアロケート</li>
@@ -436,28 +534,39 @@ ga('send', 'pageview');
 <li>SMが故障した場合、復旧したSMは物理プランを取得する。他のSMも新しいSMの物理プランを取得する。</li>
 <li>HIが故障した場合、再起動してローカルSMにつなぎにいく。その後物理プランを取得し処理を再開する。</li>
 </ul>
-<h3><span id="58-architecture-features-summary">5.8 Architecture Features: Summary</span></h3>
+<h3><span id="58-architecture-featuressummary">5.8 Architecture Features:
+Summary</span></h3>
 <p>まとめが記載されているのみ。</p>
 <h2><span id="6-heron-in-production">6. Heron in Production</span></h2>
 <p>プロダクションで利用するため、いくつかの周辺機能を有している。</p>
 <h3><span id="61-heron-tracker">6.1 Heron Tracker</span></h3>
-<p>ヘロントラッカーはZooKeeperを利用し、トポロジのローンチ、既存トポロジの停止、 物理プランの変更を追従する。 また同様にトポロジマスタを把握し、メトリクス等を取得する。</p>
+<p>ヘロントラッカーはZooKeeperを利用し、トポロジのローンチ、既存トポロジの停止、
+物理プランの変更を追従する。
+また同様にトポロジマスタを把握し、メトリクス等を取得する。</p>
 <h3><span id="62-heron-ui">6.2 Heron UI</span></h3>
-<p>ヘロントラッカーAPIを利用し、UIを提供する。 論文上にはUIの例が載っている。 トポロジのDAG、コンテナ、コンポーネント、メトリクスを把握できる。</p>
+<p>ヘロントラッカーAPIを利用し、UIを提供する。
+論文上にはUIの例が載っている。
+トポロジのDAG、コンテナ、コンポーネント、メトリクスを把握できる。</p>
 <h3><span id="63-heron-viz">6.3 Heron Viz</span></h3>
 <p>メトリクスの可視化。トラッカーAPIを利用し、新しいトポロジがローンチされたことを検知し、可視化する。</p>
 <p>ヘルスメトリクス、リソースメトリクス、コンポーネントメトリクス、ストリームマネージャメトリクス。</p>
 <p>ヘルスメトリクスではラグや失敗などを表示する。</p>
 <p>リソースメトリクスでは予約されたCPU、実際に使用されたCPU、同様にメモリに関する情報を扱う。またGCなども。</p>
-<p>コンポーネントメトリクスはスパウトではエミットされたタプル数などのコンポーネントごとに固有のメトリクスを扱う。 エンドツーエンドのレイテンシも扱う。</p>
+<p>コンポーネントメトリクスはスパウトではエミットされたタプル数などのコンポーネントごとに固有のメトリクスを扱う。
+エンドツーエンドのレイテンシも扱う。</p>
 <p>ストリームマネージャメトリクスは、インスタンスに送受信されたタプル数やバックプレッシャ機能に関するメトリクスを扱う。</p>
 <h3><span id="64-herontwitter">6.4 Heron@Twitter</span></h3>
 <p>TwitterではStormではなくHeronがデファクトスタンダードである。</p>
-<p>ユースケースは多岐にわたるが、データ加工、フィルタリング、結合、コンテンツのアグリゲーションなどなど。 機械学習も含む。例えば、回帰、アソシエーション、クラスタリングなど。</p>
+<p>ユースケースは多岐にわたるが、データ加工、フィルタリング、結合、コンテンツのアグリゲーションなどなど。
+機械学習も含む。例えば、回帰、アソシエーション、クラスタリングなど。</p>
 <p>3倍ほどのリソース使用効率を得られた。</p>
 <h2><span id="7-empirical-evaluation">7. Empirical Evaluation</span></h2>
-<p>本論文用に組まれた動作確認。 StormとHeronの比較。 Ackあり・なしの両方。</p>
-<p>なお、計測はデータ処理が安定してから開始するようにした。 そのため、Stormでは0mq層 <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> でほとんどドロップが起きていないときに計測することを意味し、 Heronではバックプレッシャが発動しておらず転送キューが溜まっていない状態での計測を意味する。</p>
+<p>本論文用に組まれた動作確認。 StormとHeronの比較。
+Ackあり・なしの両方。</p>
+<p>なお、計測はデータ処理が安定してから開始するようにした。
+そのため、Stormでは0mq層 <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+でほとんどドロップが起きていないときに計測することを意味し、
+Heronではバックプレッシャが発動しておらず転送キューが溜まっていない状態での計測を意味する。</p>
 <p>Ackありのケースについて、タプルのドロップは、</p>
 <ul>
 <li>Storm：0mqでのドロップもしくはタイムアウト</li>
@@ -465,29 +574,45 @@ ga('send', 'pageview');
 </ul>
 <p>を要因とするものを想定する。</p>
 <h3><span id="73-word-count-topology">7.3 Word Count Topology</span></h3>
-<p>スパウトで高々175k単語のランダムな単語群を生成する。 それをボルトに渡し、メモリマップに保持する。</p>
+<p>スパウトで高々175k単語のランダムな単語群を生成する。
+それをボルトに渡し、メモリマップに保持する。</p>
 <p>これは単純な処理なので、オーバーヘッドを計測するのに適している。</p>
 <p>結果は、スループットで10倍〜14倍、レイテンシで5〜15倍の改善が見られた。</p>
-<p>Heronのエンドツーエンドでのレイテンシにおけるボトルネックは、 SMのバッファでバッチ化されることであり、これは概ね数十ms程度の影響がある。</p>
-<p>CPUコアの使用量は、2〜3倍小さくなった。 （補足：無駄にリソース確保せずに、きちんと各コアを使い切っている、というのも影響しているようだ）</p>
+<p>Heronのエンドツーエンドでのレイテンシにおけるボトルネックは、
+SMのバッファでバッチ化されることであり、これは概ね数十ms程度の影響がある。</p>
+<p>CPUコアの使用量は、2〜3倍小さくなった。
+（補足：無駄にリソース確保せずに、きちんと各コアを使い切っている、というのも影響しているようだ）</p>
 <p>Ackが有効、無効で同様の傾向。</p>
 <h3><span id="74-rtac-topology">7.4 RTAC Topology</span></h3>
-<p>Ack有効の場合、Stormで6Mタプル/min出すのに360コア必要だった。レイテンシは70ms。 対してHeronでは、36コアでよく、レイテンシも24msだった。</p>
+<p>Ack有効の場合、Stormで6Mタプル/min出すのに360コア必要だった。レイテンシは70ms。
+対してHeronでは、36コアでよく、レイテンシも24msだった。</p>
 <p>Ack無効の場合も同様の傾向。必要なCPUコア数に関し、10倍（つまり1/10のコアで良い）の改善が得られた。</p>
 <h2><span id="8-conclusions-and-future-work">8. Conclusions and Future work</span></h2>
-<p>Exactly oneceセマンティクスは論文執筆時点では対応されていない。 論文中では、 <a href="https://github.com/nathanmarz/storm/wiki" target="_blank" rel="noopener">Trident</a> が引用されていた。</p>
+<p>Exactly oneceセマンティクスは論文執筆時点では対応されていない。
+論文中では、 <a href="https://github.com/nathanmarz/storm/wiki" target="_blank" rel="noopener">Trident</a>
+が引用されていた。</p>
 <h1><span id="最近のheronはどうかのメモ">最近のHeronはどうか？のメモ</span></h1>
 <p>2019/7/8現在になりどうなったかを軽く確認。</p>
-<p><a href="https://github.com/apache/incubator-heron" target="_blank" rel="noopener">Apache incubation Heron</a> が公式レポジトリである。 <a href="https://github.com/apache/incubator-heron/graphs/commit-activity" target="_blank" rel="noopener">Apache Heronのコミット状況</a> を見る限り、2019/7/8現在も活発に活動されている。</p>
-<p><a href="https://github.com/apache/incubator-heron/graphs/contributors" target="_blank" rel="noopener">Apache Heronのコントリビュータ</a> を見る限り以下の様子。</p>
+<p><a href="https://github.com/apache/incubator-heron" target="_blank" rel="noopener">Apache incubation
+Heron</a> が公式レポジトリである。 <a href="https://github.com/apache/incubator-heron/graphs/commit-activity" target="_blank" rel="noopener">Apache
+Heronのコミット状況</a>
+を見る限り、2019/7/8現在も活発に活動されている。</p>
+<p><a href="https://github.com/apache/incubator-heron/graphs/contributors" target="_blank" rel="noopener">Apache
+Heronのコントリビュータ</a> を見る限り以下の様子。</p>
 <ul>
 <li>コアの開発者はApache Pulsarの人でもある <a href="https://twitter.com/sanjeevrk" target="_blank" rel="noopener">Sanjeev Kulkarni</a> や <a href="https://github.com/objmagic" target="_blank" rel="noopener">objmagic</a></li>
-<li>ただし最近は <a href="https://www.linkedin.com/in/ningwang/" target="_blank" rel="noopener">Ning Wang</a> のように見える。彼はもともと2013年あたりまでGoogleでYouTubeに携わっていたようだ。</li>
+<li>ただし最近は <a href="https://www.linkedin.com/in/ningwang/" target="_blank" rel="noopener">Ning
+Wang</a>
+のように見える。彼はもともと2013年あたりまでGoogleでYouTubeに携わっていたようだ。</li>
 </ul>
 <h2><span id="readmeによるupdate">READMEによる「Update」</span></h2>
-<p>2019/7/8時点のREADMEによると、Mesos in AWS、Mesos/Aurora in AWS、ローカル（ラップトップ）の上でネイティブ動作するようになった。 またApache REEFを用いてApache YARN上で動作するように試みている。 <a href="https://slurm.schedmd.com/" target="_blank" rel="noopener">slurm</a> にも対応しようとしているとのこと。</p>
+<p>2019/7/8時点のREADMEによると、Mesos in AWS、Mesos/Aurora in
+AWS、ローカル（ラップトップ）の上でネイティブ動作するようになった。
+またApache REEFを用いてApache YARN上で動作するように試みている。 <a href="https://slurm.schedmd.com/" target="_blank" rel="noopener">slurm</a>
+にも対応しようとしているとのこと。</p>
 <h2><span id="公式ドキュメントを覗いてみる">公式ドキュメントを覗いてみる</span></h2>
-<p><a href="https://apache.github.io/incubator-heron/" target="_blank" rel="noopener">公式ドキュメント</a> を確認し、最近の様子を探る。</p>
+<p><a href="https://apache.github.io/incubator-heron/" target="_blank" rel="noopener">公式ドキュメント</a>
+を確認し、最近の様子を探る。</p>
 <ul>
 <li>Python APIがある</li>
 <li>UIがかなり進化している</li>
@@ -511,7 +636,10 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="商用サポートはあるのか">商用サポートはあるのか？</span></h1>
 <p>2019/7/8現在、Heronの商用サポートがあるのか？ →なさそうに見える。</p>
-<p><a href="https://www.slideshare.net/streamlio/introduction-to-heron" target="_blank" rel="noopener">Introduction to Apache Heron by Streamlio</a> の通り、StreamlioがよくHeronの説明をしているように見える。 またこのスライドではユースケースとして、</p>
+<p><a href="https://www.slideshare.net/streamlio/introduction-to-heron" target="_blank" rel="noopener">Introduction
+to Apache Heron by Streamlio</a>
+の通り、StreamlioがよくHeronの説明をしているように見える。
+またこのスライドではユースケースとして、</p>
 <ul>
 <li>Ads</li>
 <li>Monitoring</li>
@@ -531,8 +659,15 @@ ga('send', 'pageview');
 <li>Industrial.io</li>
 </ul>
 <p>を挙げている。</p>
-<p>ただし、 <a href="https://streaml.io/support" target="_blank" rel="noopener">Streamlioのサポートサービス</a> を見る限り、Apache Pulsarを対象としているがApache Heronが対象に入っているようには見えない。 また <a href="https://streaml.io/product/technology/processing" target="_blank" rel="noopener">Streamlioのプロセッシングエンジンに関する説明</a> を見ると、Apache Heronに言及しているが、あくまでStreamlioがApache Heronの 開発に携わっていた経験がStreamlioのストリーム処理エンジンの開発に生かされている件について触れられているだけである。 現在は、 <a href="https://streaml.io/blog/pulsar-functions" target="_blank" rel="noopener">Pulsar functions</a> が彼らのコアか。</p>
-<section class="footnotes" role="doc-endnotes">
+<p>ただし、 <a href="https://streaml.io/support" target="_blank" rel="noopener">Streamlioのサポートサービス</a>
+を見る限り、Apache Pulsarを対象としているがApache
+Heronが対象に入っているようには見えない。 また <a href="https://streaml.io/product/technology/processing" target="_blank" rel="noopener">Streamlioのプロセッシングエンジンに関する説明</a>
+を見ると、Apache Heronに言及しているが、あくまでStreamlioがApache
+Heronの
+開発に携わっていた経験がStreamlioのストリーム処理エンジンの開発に生かされている件について触れられているだけである。
+現在は、 <a href="https://streaml.io/blog/pulsar-functions" target="_blank" rel="noopener">Pulsar
+functions</a> が彼らのコアか。</p>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn1" role="doc-endnote"><p>0mqの記述が読み取れることから、0.8系Stormを比較対象としたように見える。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -548,7 +683,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/07/03/Twitter-Heron-Paper/" data-id="cl2nztnp200fw5xqigtfiyi5i" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/07/03/Twitter-Heron-Paper/" data-id="cl2o9pbiz019k18rzz18efxoq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -799,5 +934,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

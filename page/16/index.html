@@ -250,9 +250,10 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#補足">補足</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#補足" id="toc-補足">補足</a></li>
 </ul></li>
 </ul>
 </div>
@@ -261,7 +262,8 @@ ga('send', 'pageview');
 <li><a href="https://qiita.com/tukiyo3/items/c72685b2a9c34442811e" target="_blank" rel="noopener">マウントの仕方を示しているブログ</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://qiita.com/tukiyo3/items/c72685b2a9c34442811e" target="_blank" rel="noopener">マウントの仕方を示しているブログ</a> の通りで問題ない。</p>
+<p><a href="https://qiita.com/tukiyo3/items/c72685b2a9c34442811e" target="_blank" rel="noopener">マウントの仕方を示しているブログ</a>
+の通りで問題ない。</p>
 <h2><span id="補足">補足</span></h2>
 <p>「ハードウェアの追加」から「ファイルシステム」を追加する。</p>
 <p>ゲストOSでマウントするときに、ディレクトリを作成し忘れないこと。</p>
@@ -279,7 +281,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/03/Mount-host-s-filesystem-on-KVM/" data-id="cl2nztnn700ae5xqinrqxtbv6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/03/Mount-host-s-filesystem-on-KVM/" data-id="cl2o9pb74007g18rzapqjadka" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -389,7 +391,6 @@ ga('send', 'pageview');
         
             
             
-
         
         </div>
         <footer class="article-footer">
@@ -399,7 +400,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/03/Buy-Windows10-licenses/" data-id="cl2nztnkn002r5xqikaazb6hc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/03/Buy-Windows10-licenses/" data-id="cl2o9pb4s001w18rz0o07bjj6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -520,9 +521,9 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
-<li><a href="#コマンド">コマンド</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
+<li><a href="#コマンド" id="toc-コマンド">コマンド</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -530,11 +531,16 @@ ga('send', 'pageview');
 <li><a href="https://qiita.com/tettekete/items/086ea3bc8a798cae33f5" target="_blank" rel="noopener">動かし方を紹介するブログ</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>上記ブログ <a href="https://qiita.com/tettekete/items/086ea3bc8a798cae33f5" target="_blank" rel="noopener">動かし方を紹介するブログ</a> の内容で基本的に問題ない。 ただし、一般ユーザの<code>.bashrc</code>に環境変数DOCKER_HOSTを指定したので、 一般ユーザでDockerを起動できるようにしておいた。 （当該一般ユーザをdockerグループに加えた）</p>
+<p>上記ブログ <a href="https://qiita.com/tettekete/items/086ea3bc8a798cae33f5" target="_blank" rel="noopener">動かし方を紹介するブログ</a>
+の内容で基本的に問題ない。
+ただし、一般ユーザの<code>.bashrc</code>に環境変数DOCKER_HOSTを指定したので、
+一般ユーザでDockerを起動できるようにしておいた。
+（当該一般ユーザをdockerグループに加えた）</p>
 <h1><span id="コマンド">コマンド</span></h1>
 <p>コンテナ確認</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">$ docker ps -a</span><br></pre></td></tr></table></figure>
-<p><code>-v</code>を用いてボリュームをマウント。 ついでに<code>--rm</code>を用いて停止後に削除することにする。</p>
+<p><code>-v</code>を用いてボリュームをマウント。
+ついでに<code>--rm</code>を用いて停止後に削除することにする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it --rm -v c:/Users/&lt;user name&gt;:/mnt/&lt;user name&gt; &lt;image id&gt; /bin/bash</span><br></pre></td></tr></table></figure>
 
         
@@ -546,7 +552,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/02/Docker-for-Windows-with-WSL/" data-id="cl2nztnl8004a5xqibe3yzgi3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/02/Docker-for-Windows-with-WSL/" data-id="cl2o9pb54002n18rzgdh02v4d" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -667,8 +673,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -676,7 +682,8 @@ ga('send', 'pageview');
 <li><a href="https://www.haruru29.net/blog/set-vm-launch-type/" target="_blank" rel="noopener">切り替えようPowerShellスクリプトを掲載してくれているサイト</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>基本的には、 <a href="https://www.haruru29.net/blog/set-vm-launch-type/" target="_blank" rel="noopener">切り替えようPowerShellスクリプトを掲載してくれているサイト</a> のとおりで問題ない。 パス等は環境に合わせること。</p>
+<p>基本的には、 <a href="https://www.haruru29.net/blog/set-vm-launch-type/" target="_blank" rel="noopener">切り替えようPowerShellスクリプトを掲載してくれているサイト</a>
+のとおりで問題ない。 パス等は環境に合わせること。</p>
 
         
         </div>
@@ -687,7 +694,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/02/Switch-Hyper-V-on-and-off/" data-id="cl2nztnof00e25xqivb62nbuq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/02/Switch-Hyper-V-on-and-off/" data-id="cl2o9pb82009q18rzlh9im6gh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -808,10 +815,11 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#動作確認">動作確認</a><ul>
-<li><a href="#必要パッケージのインストール">必要パッケージのインストール</a></li>
-<li><a href="#セットアップ">セットアップ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a>
+<ul>
+<li><a href="#必要パッケージのインストール" id="toc-必要パッケージのインストール">必要パッケージのインストール</a></li>
+<li><a href="#セットアップ" id="toc-セットアップ">セットアップ</a></li>
 </ul></li>
 </ul>
 </div>
@@ -819,20 +827,28 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://superset.incubator.apache.org/installation.html" target="_blank" rel="noopener">公式ウェブサイト</a></li>
 <li><a href="https://superset.incubator.apache.org/installation.html" target="_blank" rel="noopener">公式ウェブサイトのインストール手順</a></li>
-<li><a href="https://github.com/apache/incubator-superset/issues/2205" target="_blank" rel="noopener">Issue 2205</a></li>
-<li><a href="https://github.com/apache/incubator-superset/issues/6770" target="_blank" rel="noopener">Issue 6770</a></li>
+<li><a href="https://github.com/apache/incubator-superset/issues/2205" target="_blank" rel="noopener">Issue
+2205</a></li>
+<li><a href="https://github.com/apache/incubator-superset/issues/6770" target="_blank" rel="noopener">Issue
+6770</a></li>
 </ul>
 <h1><span id="動作確認">動作確認</span></h1>
-<p><a href="https://superset.incubator.apache.org/installation.html" target="_blank" rel="noopener">公式ウェブサイトのインストール手順</a> の「Start with Docker」のとおり、進めてみたところ、 トップ画面がうまく表示されない事象が生じたので、ここでは改めてCentOS7環境に構築してみることにする。</p>
+<p><a href="https://superset.incubator.apache.org/installation.html" target="_blank" rel="noopener">公式ウェブサイトのインストール手順</a>
+の「Start with Docker」のとおり、進めてみたところ、
+トップ画面がうまく表示されない事象が生じたので、ここでは改めてCentOS7環境に構築してみることにする。</p>
 <h2><span id="必要パッケージのインストール">必要パッケージのインストール</span></h2>
 <p>以下が指定されていたが、<code>libsasl2-devel</code>だけ無いというエラーが出た。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc gcc-c++ libffi-devel python-devel python-pip python-wheel openssl-devel libsasl2-devel openldap-devel</span><br></pre></td></tr></table></figure>
-<p><a href="https://github.com/apache/incubator-superset/issues/2205" target="_blank" rel="noopener">Issue 2205</a> を見ると、cyrus-sasl-develであれば存在するようだ。</p>
+<p><a href="https://github.com/apache/incubator-superset/issues/2205" target="_blank" rel="noopener">Issue
+2205</a> を見ると、cyrus-sasl-develであれば存在するようだ。</p>
 <h2><span id="セットアップ">セットアップ</span></h2>
-<p><code>/opt/virtualenv/superset</code> 以下にvirtualenv環境を作り、supersetをインストールしたものとする。 その上で、公式ドキュメントを参考に以下のようなコマンドを実行する。（極力対話設定を減らしている）</p>
+<p><code>/opt/virtualenv/superset</code>
+以下にvirtualenv環境を作り、supersetをインストールしたものとする。
+その上で、公式ドキュメントを参考に以下のようなコマンドを実行する。（極力対話設定を減らしている）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ source /opt/virtualenv/superset/bin/activate</span><br><span class="line">$ fabmanager create-admin --app superset --username admin --firstname admin --lastname admin --password admin --email admin@fab.org</span><br><span class="line">$ superset db upgrade</span><br></pre></td></tr></table></figure>
 <p>以下のようなエラーが出た。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Was unable to import superset Error: cannot import name &apos;_maybe_box_datetimelike&apos;(superset) [vagrant@superset-01 ~]$ superset db upgrade</span><br></pre></td></tr></table></figure></p>
-<p>[Issue 6670] を見ると、Pandasの新しいバージョンに起因する問題らしく、バージョンを下げることで対応可能だそうだ。</p>
+<p>[Issue 6670]
+を見ると、Pandasの新しいバージョンに起因する問題らしく、バージョンを下げることで対応可能だそうだ。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pip uninstall pandas</span><br><span class="line">$ pip install pandas==0.23.4</span><br></pre></td></tr></table></figure>
 <p>してから、以下の通り改めて実行。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ fabmanager create-admin --app superset --username admin --firstname admin --lastname admin --password admin --email admin@fab.org</span><br><span class="line">$ superset db upgrade</span><br><span class="line">$ superset load_examples</span><br><span class="line">$ superset init</span><br></pre></td></tr></table></figure>
@@ -847,7 +863,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/31/Try-Apache-Superset/" data-id="cl2nztnot00f35xqiiba451a1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/31/Try-Apache-Superset/" data-id="cl2o9pb8d00aq18rzq4qkhwy3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -968,7 +984,7 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -987,7 +1003,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/20/Hyper-plugin/" data-id="cl2nztnm5006s5xqiwdv4mzgk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/20/Hyper-plugin/" data-id="cl2o9pb5w004p18rzm5y9l4oa" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1108,37 +1124,47 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#ブログもとに試す">ブログもとに試す</a><ul>
-<li><a href="#センサーの値を取り出してみる">センサーの値を取り出してみる</a></li>
-<li><a href="#python化">Python化</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#ブログもとに試す" id="toc-ブログもとに試す">ブログもとに試す</a>
+<ul>
+<li><a href="#センサーの値を取り出してみる" id="toc-センサーの値を取り出してみる">センサーの値を取り出してみる</a></li>
+<li><a href="#python化" id="toc-python化">Python化</a></li>
 </ul></li>
-<li><a href="#ローカルapiを試してみる">ローカルAPIを試してみる</a></li>
+<li><a href="#ローカルapiを試してみる" id="toc-ローカルapiを試してみる">ローカルAPIを試してみる</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://developer.nature.global/" target="_blank" rel="noopener">Nature Remo APIガイド</a></li>
+<li><a href="https://developer.nature.global/" target="_blank" rel="noopener">Nature Remo
+APIガイド</a></li>
 <li><a href="http://local.swagger.nature.global/" target="_blank" rel="noopener">ローカルAPI</a></li>
 <li><a href="http://swagger.nature.global/" target="_blank" rel="noopener">グローバルAPI</a></li>
 <li><a href="https://qiita.com/sohsatoh/items/b710ab3fa05e77ab2b0a" target="_blank" rel="noopener">API解説のブログ</a></li>
-<li><a href="https://qiita.com/magaming/items/47739e13aec22fea60f4" target="_blank" rel="noopener">Nature Remo で温度超過時にアラート通知をする</a></li>
+<li><a href="https://qiita.com/magaming/items/47739e13aec22fea60f4" target="_blank" rel="noopener">Nature Remo
+で温度超過時にアラート通知をする</a></li>
 <li><a href="https://qiita.com/onm/items/8462b5b792132f42336d" target="_blank" rel="noopener">NatureRemoのAPIを活用する準備</a></li>
 <li><a href="https://curl.trillworks.com/" target="_blank" rel="noopener">curl to python</a></li>
 </ul>
 <h1><span id="ブログもとに試す">ブログもとに試す</span></h1>
 <p><a href="https://qiita.com/sohsatoh/items/b710ab3fa05e77ab2b0a" target="_blank" rel="noopener">API解説のブログ</a>を参考に試してみる。</p>
-<p><a href="https://home.nature.global/" target="_blank" rel="noopener">home.nature.global</a> につなぎ、アクセストークンを発行する。 なお、アクセストークンは決して漏らしてはならない。 ここではローカルファイルシステムに<code>na.txt</code>として保存して利用することにする。</p>
+<p><a href="https://home.nature.global/" target="_blank" rel="noopener">home.nature.global</a>
+につなぎ、アクセストークンを発行する。
+なお、アクセストークンは決して漏らしてはならない。
+ここではローカルファイルシステムに<code>na.txt</code>として保存して利用することにする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X GET &quot;https://api.nature.global/1/devices&quot; -H &quot;accept: application/json&quot; -k --header &quot;Authorization: Bearer `cat na.txt`&quot; | jq</span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;name&quot;: &quot;リビング&quot;,</span><br><span class="line">    &quot;id&quot;: &quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">    &quot;created_at&quot;: &quot;xxxxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">    &quot;updated_at&quot;: &quot;xxxxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">    &quot;mac_address&quot;: &quot;xxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">    &quot;serial_number&quot;: &quot;xxxxxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">    &quot;firmware_version&quot;: &quot;Remo/1.0.62-gabbf5bd&quot;,</span><br><span class="line">    &quot;temperature_offset&quot;: 0,</span><br><span class="line">    &quot;humidity_offset&quot;: 0,</span><br><span class="line">    &quot;users&quot;: [</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;id&quot;: &quot;xxxxxxxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">        &quot;nickname&quot;: &quot;xxxxxxxxxxxxxxxxxxx&quot;,</span><br><span class="line">        &quot;superuser&quot;: xxxxxx</span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;newest_events&quot;: &#123;</span><br><span class="line">      &quot;hu&quot;: &#123;</span><br><span class="line">        &quot;val&quot;: 20,</span><br><span class="line">        &quot;created_at&quot;: &quot;xxxxxxxxxxxxxxx&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;il&quot;: &#123;</span><br><span class="line">        &quot;val&quot;: 104.4,</span><br><span class="line">        &quot;created_at&quot;: &quot;xxxxxxxxxxxxxxxxxx&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;te&quot;: &#123;</span><br><span class="line">        &quot;val&quot;: 22.2,</span><br><span class="line">        &quot;created_at&quot;: &quot;xxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X GET &quot;https://api.nature.global/1/appliances&quot; -H &quot;accept: application/json&quot; -k --header &quot;Authorization: Bearer `cat na.txt`&quot; | jq</span><br></pre></td></tr></table></figure>
 <h2><span id="センサーの値を取り出してみる">センサーの値を取り出してみる</span></h2>
-<p><a href="https://qiita.com/magaming/items/47739e13aec22fea60f4" target="_blank" rel="noopener">Nature Remo で温度超過時にアラート通知をする</a> を参考に試す。 先の例と同様に、/1/devicesを叩くと、その戻りの中にセンサーの値が含まれているようだ。 そこでjqコマンドを使って取り出す。</p>
+<p><a href="https://qiita.com/magaming/items/47739e13aec22fea60f4" target="_blank" rel="noopener">Nature Remo
+で温度超過時にアラート通知をする</a> を参考に試す。
+先の例と同様に、/1/devicesを叩くと、その戻りの中にセンサーの値が含まれているようだ。
+そこでjqコマンドを使って取り出す。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X GET &quot;https://api.nature.global/1/devices&quot; -H &quot;accept: application/json&quot; -k --header &quot;Authorization: Bearer `cat na.txt`&quot; | jq &apos;.[].newest_events&apos;</span><br></pre></td></tr></table></figure>
 <p>結果の例</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;hu&quot;: &#123;</span><br><span class="line">    &quot;val&quot;: 20,</span><br><span class="line">    &quot;created_at&quot;: &quot;2019-01-18T15:01:43Z&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;il&quot;: &#123;</span><br><span class="line">    &quot;val&quot;: 104.4,</span><br><span class="line">    &quot;created_at&quot;: &quot;2019-01-18T13:26:58Z&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;te&quot;: &#123;</span><br><span class="line">    &quot;val&quot;: 21,</span><br><span class="line">    &quot;created_at&quot;: &quot;2019-01-18T14:24:23Z&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>これを保存しておけばよさそう。</p>
 <h2><span id="python化">Python化</span></h2>
-<p><a href="https://curl.trillworks.com/" target="_blank" rel="noopener">curl to python</a> のサイトを利用し、上記curlをPythonスクリプトに変換した。</p>
+<p><a href="https://curl.trillworks.com/" target="_blank" rel="noopener">curl to python</a>
+のサイトを利用し、上記curlをPythonスクリプトに変換した。</p>
 <h1><span id="ローカルapiを試してみる">ローカルAPIを試してみる</span></h1>
 <p>Remoを探すため、公式サイトでは以下のように示されていた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">% dns-sd -B _remo._tcp</span><br></pre></td></tr></table></figure>
@@ -1154,7 +1180,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/18/Nature-Remo-API/" data-id="cl2nztnna00ao5xqiu4kvsm09" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/18/Nature-Remo-API/" data-id="cl2o9pb76007l18rz431o6aix" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1275,44 +1301,53 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#所感">所感</a></li>
-<li><a href="#パラメータ">パラメータ</a></li>
-<li><a href="#その他">その他</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#所感" id="toc-所感">所感</a></li>
+<li><a href="#パラメータ" id="toc-パラメータ">パラメータ</a></li>
+<li><a href="#その他" id="toc-その他">その他</a></li>
 </ul></li>
-<li><a href="#githubを見てみる">GitHubを見てみる</a><ul>
-<li><a href="#kafkaのドライバ">Kafkaのドライバ</a></li>
-<li><a href="#bin">bin</a></li>
-<li><a href="#benchmarkクラス">Benchmarkクラス</a></li>
-<li><a href="#コントリビュータ">コントリビュータ</a></li>
-<li><a href="#イシュー">イシュー</a></li>
+<li><a href="#githubを見てみる" id="toc-githubを見てみる">GitHubを見てみる</a>
+<ul>
+<li><a href="#kafkaのドライバ" id="toc-kafkaのドライバ">Kafkaのドライバ</a></li>
+<li><a href="#bin" id="toc-bin">bin</a></li>
+<li><a href="#benchmarkクラス" id="toc-benchmarkクラス">Benchmarkクラス</a></li>
+<li><a href="#コントリビュータ" id="toc-コントリビュータ">コントリビュータ</a></li>
+<li><a href="#イシュー" id="toc-イシュー">イシュー</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="http://openmessaging.cloud/docs/benchmarks/" target="_blank" rel="noopener">Open Messaging Benchmarkのウェブサイト</a></li>
+<li><a href="http://openmessaging.cloud/docs/benchmarks/" target="_blank" rel="noopener">Open Messaging
+Benchmarkのウェブサイト</a></li>
 <li><a href="https://github.com/openmessaging/openmessaging-benchmark" target="_blank" rel="noopener">openmessaging-benchmarkのGitHub</a></li>
 <li><a href="https://github.com/openmessaging/openmessaging-benchmark/tree/master/driver-kafka" target="_blank" rel="noopener">Kafkaのドライバ</a></li>
-<li><a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/deploy.yaml" target="_blank" rel="noopener">Kafka構築のAnsible Playbook</a></li>
+<li><a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/deploy.yaml" target="_blank" rel="noopener">Kafka構築のAnsible
+Playbook</a></li>
 <li><a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/provision-kafka-aws.tf" target="_blank" rel="noopener">Kafka構築のTerraformコンフィグ</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>ウェブサイトを確認してみる。</p>
 <h2><span id="所感">所感</span></h2>
-<p>あくまでメッセージングシステムに負荷をかけ、その特性を見るためのベンチマークに見える。 したがって負荷をかけるクライアントはシンプルであり、ただしワークロードを調整するための パラメータは一通り揃っている、という様子。</p>
+<p>あくまでメッセージングシステムに負荷をかけ、その特性を見るためのベンチマークに見える。
+したがって負荷をかけるクライアントはシンプルであり、ただしワークロードを調整するための
+パラメータは一通り揃っている、という様子。</p>
 <h2><span id="パラメータ">パラメータ</span></h2>
 <ul>
 <li>The number of topics</li>
 <li>The size of the messages being produced and consumed</li>
 <li>The number of subscriptions per topic</li>
 <li>The number of producers per topic</li>
-<li>The rate at which producers produce messages (per second). Note: a value of 0 means that messages are produced as quickly as possible, with no rate limiting.</li>
+<li>The rate at which producers produce messages (per second). Note: a
+value of 0 means that messages are produced as quickly as possible, with
+no rate limiting.</li>
 <li>The size of the consumer’s backlog (in gigabytes)</li>
 <li>The total duration of the test (in minutes)</li>
 </ul>
-<p>「BENCHMARKING WORKLOADS」の章に代表的な組み合わせパターンの記載がある。</p>
+<p>「BENCHMARKING
+WORKLOADS」の章に代表的な組み合わせパターンの記載がある。</p>
 <h2><span id="その他">その他</span></h2>
 <ul>
 <li>「warm-up」とあったが、何をしているのだろう。</li>
@@ -1320,20 +1355,30 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="githubを見てみる">GitHubを見てみる</span></h1>
 <h2><span id="kafkaのドライバ">Kafkaのドライバ</span></h2>
-<p><a href="https://github.com/openmessaging/openmessaging-benchmark" target="_blank" rel="noopener">openmessaging-benchmarkのGitHub</a> を眺めてみる。 <a href="https://github.com/openmessaging/openmessaging-benchmark/tree/master/driver-kafka" target="_blank" rel="noopener">Kafkaのドライバ</a> を除くとデプロイ用のTerraformコンフィグとAnsibleプレイブックがあった。</p>
-<p><a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/provision-kafka-aws.tf" target="_blank" rel="noopener">Kafka構築のTerraformコンフィグ</a> の通り、一通りAWSインスタンスをデプロイ。 <a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/deploy.yaml" target="_blank" rel="noopener">Kafka構築のAnsible Playbook</a> の通り、ひととおりKafkaクラスタから負荷がけクライアントまで構成。</p>
-<p>なお、ソースコードとしてベンチマークのドライバが含まれているが、 その親クラスが <a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-api/src/main/java/io/openmessaging/benchmark/driver/BenchmarkDriver.java" target="_blank" rel="noopener">BenchmarkDriver</a> だった。</p>
+<p><a href="https://github.com/openmessaging/openmessaging-benchmark" target="_blank" rel="noopener">openmessaging-benchmarkのGitHub</a>
+を眺めてみる。 <a href="https://github.com/openmessaging/openmessaging-benchmark/tree/master/driver-kafka" target="_blank" rel="noopener">Kafkaのドライバ</a>
+を除くとデプロイ用のTerraformコンフィグとAnsibleプレイブックがあった。</p>
+<p><a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/provision-kafka-aws.tf" target="_blank" rel="noopener">Kafka構築のTerraformコンフィグ</a>
+の通り、一通りAWSインスタンスをデプロイ。 <a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-kafka/deploy/deploy.yaml" target="_blank" rel="noopener">Kafka構築のAnsible
+Playbook</a>
+の通り、ひととおりKafkaクラスタから負荷がけクライアントまで構成。</p>
+<p>なお、ソースコードとしてベンチマークのドライバが含まれているが、
+その親クラスが <a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/driver-api/src/main/java/io/openmessaging/benchmark/driver/BenchmarkDriver.java" target="_blank" rel="noopener">BenchmarkDriver</a>
+だった。</p>
 <h2><span id="bin">bin</span></h2>
 <p>bin以下には、ベンチマークを実行すると思われる、 <a href="https://github.com/openmessaging/openmessaging-benchmark/blob/master/bin/benchmark" target="_blank" rel="noopener">benchmark</a>が含まれていた。</p>
 <h2><span id="benchmarkクラス">Benchmarkクラス</span></h2>
-<p>以下の通り、ワークロードごとに、指定されたドライバのコンフィグレーションに基づき、 負荷をかけるようになっているようだ。</p>
+<p>以下の通り、ワークロードごとに、指定されたドライバのコンフィグレーションに基づき、
+負荷をかけるようになっているようだ。</p>
 <p>io/openmessaging/benchmark/Benchmark.java:126</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">workloads.forEach((workloadName, workload) -&gt; &#123;</span><br><span class="line">    arguments.drivers.forEach(driverConfig -&gt; &#123;</span><br></pre></td></tr></table></figure>
 <p>また以下の通り、WorkloadGeneratorを通じて、ワークロードがかけられるようだ。</p>
 <p>io/openmessaging/benchmark/Benchmark.java:140</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WorkloadGenerator generator = new WorkloadGenerator(driverConfiguration.name, workload, worker);</span><br><span class="line"></span><br><span class="line">TestResult result = generator.run();</span><br></pre></td></tr></table></figure>
 <h2><span id="コントリビュータ">コントリビュータ</span></h2>
-<p>yahoo、alibaba、streamlioあたりからコントリビュータが出ている。 ただし主要な開発者は数名。 最初にYahooの若干名が活発に開発し、それに加わった人がいるようだ。</p>
+<p>yahoo、alibaba、streamlioあたりからコントリビュータが出ている。
+ただし主要な開発者は数名。
+最初にYahooの若干名が活発に開発し、それに加わった人がいるようだ。</p>
 <h2><span id="イシュー">イシュー</span></h2>
 <p>エンハンスを中心に、いくつか挙げられていた（2019/1/18時点）</p>
 
@@ -1346,7 +1391,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/16/Open-Messaging-Benchmark/" data-id="cl2nztnnc00au5xqiebtn9sqc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/16/Open-Messaging-Benchmark/" data-id="cl2o9pb79007r18rzzzprf6py" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1467,10 +1512,11 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#docker">Docker</a></li>
-<li><a href="#docker-compose">docker-compose</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#docker" id="toc-docker">Docker</a></li>
+<li><a href="#docker-compose" id="toc-docker-compose">docker-compose</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1483,21 +1529,30 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="docker">Docker</span></h2>
-<p><a href="https://qiita.com/yanoshi/items/dcecbf117d9cbd14af87" target="_blank" rel="noopener">WSLでDockerをインストールする手順を示したブログ</a>を参考に、<a href="https://galaxy.ansible.com/geerlingguy/docker" target="_blank" rel="noopener">geerlingguy/docker</a> を用いてAnsibleでDockerをインストールしてみたが、</p>
+<p><a href="https://qiita.com/yanoshi/items/dcecbf117d9cbd14af87" target="_blank" rel="noopener">WSLでDockerをインストールする手順を示したブログ</a>を参考に、<a href="https://galaxy.ansible.com/geerlingguy/docker" target="_blank" rel="noopener">geerlingguy/docker</a>
+を用いてAnsibleでDockerをインストールしてみたが、</p>
 <ul>
-<li>2019/01現在のWSLでは17.09.0以前のDockerを用いる必要がある（<a href="https://qiita.com/guchio/items/3eb0818df44fdbab3d14" target="_blank" rel="noopener">Dockerのバージョンについての言及</a> 参照）</li>
-<li>自身のUbuntu18系の環境に置ける <a href="https://galaxy.ansible.com/geerlingguy/docker" target="_blank" rel="noopener">geerlingguy/docker</a> では18系のDockerしかインストールできない</li>
+<li>2019/01現在のWSLでは17.09.0以前のDockerを用いる必要がある（<a href="https://qiita.com/guchio/items/3eb0818df44fdbab3d14" target="_blank" rel="noopener">Dockerのバージョンについての言及</a>
+参照）</li>
+<li>自身のUbuntu18系の環境に置ける <a href="https://galaxy.ansible.com/geerlingguy/docker" target="_blank" rel="noopener">geerlingguy/docker</a>
+では18系のDockerしかインストールできない</li>
 </ul>
-<p>ということから、 <a href="https://qiita.com/guchio/items/3eb0818df44fdbab3d14" target="_blank" rel="noopener">Dockerのバージョンについての言及</a> を参考に17系のDockerを無理やりインストールしたところ一応動いた。</p>
-<p>まず <em>管理者権限で</em> WSLを立ち上げる。 つづいて、以下のとおりインストールする。</p>
+<p>ということから、 <a href="https://qiita.com/guchio/items/3eb0818df44fdbab3d14" target="_blank" rel="noopener">Dockerのバージョンについての言及</a>
+を参考に17系のDockerを無理やりインストールしたところ一応動いた。</p>
+<p>まず <em>管理者権限で</em> WSLを立ち上げる。
+つづいて、以下のとおりインストールする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl -O https://download.docker.com/linux/debian/dists/stretch/pool/stable/amd64/docker-ce_17.09.0~ce-0~debian_amd64.deb</span><br><span class="line">$ sudo dpkg -i docker-ce_17.09.0\~ce-0\~debian_amd64.deb</span><br></pre></td></tr></table></figure>
 <p>サービスを起動して動作確認。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service docker start</span><br><span class="line">$ sudo docker run hello-world</span><br></pre></td></tr></table></figure>
-<p>なお、<a href="https://qiita.com/yanoshi/items/dcecbf117d9cbd14af87" target="_blank" rel="noopener">WSLでDockerをインストールする手順を示したブログ</a> では「管理者権限でWSLを起動する」ことがポイントとあげられていたので、それは守ることにした。 が、インストール後は管理者権限でなくても動いたので、このあたり真偽の確認が必要そうだ。</p>
+<p>なお、<a href="https://qiita.com/yanoshi/items/dcecbf117d9cbd14af87" target="_blank" rel="noopener">WSLでDockerをインストールする手順を示したブログ</a>
+では「管理者権限でWSLを起動する」ことがポイントとあげられていたので、それは守ることにした。
+が、インストール後は管理者権限でなくても動いたので、このあたり真偽の確認が必要そうだ。</p>
 <h2><span id="docker-compose">docker-compose</span></h2>
-<p>おおむね <a href="http://docs.docker.jp/compose/install.html" target="_blank" rel="noopener">docker-composeのインストール手順</a> のとおりにインストールする。</p>
+<p>おおむね <a href="http://docs.docker.jp/compose/install.html" target="_blank" rel="noopener">docker-composeのインストール手順</a>
+のとおりにインストールする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo su - -c &quot;curl -L https://github.com/docker/compose/releases/download/1.6.2/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose&quot;</span><br><span class="line">$ sudo chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
-<p><a href="http://docs.docker.jp/compose/gettingstarted.html" target="_blank" rel="noopener">docker-composeの公式ドキュメント</a> の通りためしてみるが、以下のようなエラーが生じた。</p>
+<p><a href="http://docs.docker.jp/compose/gettingstarted.html" target="_blank" rel="noopener">docker-composeの公式ドキュメント</a>
+の通りためしてみるが、以下のようなエラーが生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker-compose up</span><br><span class="line">Creating network &quot;composetest_default&quot; with the default driver</span><br><span class="line">ERROR: Failed to Setup IP tables: Unable to enable NAT rule:  (iptables failed: iptables --wait -t nat -I POSTROUTING -s 172.18.0.0/16 ! -o br-3a6517e292d4 -j MASQUERADE: iptables: Invalid argument. Run `dmesg&apos; for more information.</span><br><span class="line"> (exit status 1))</span><br></pre></td></tr></table></figure>
 <p>WSLがLinuxカーネルではないことに起因しているのだろう可。（iptablesまわりは期待したとおりに動かない？）</p>
 
@@ -1510,7 +1565,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/14/Docker-on-WSL/" data-id="cl2nztnl700475xqi0voxp1u4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/14/Docker-on-WSL/" data-id="cl2o9pb57002t18rz1wm5qstz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1631,19 +1686,23 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://code.i-harness.com/en/q/1ebd4cf" target="_blank" rel="noopener">CODE Q&amp;Aの質疑応答</a></li>
+<li><a href="https://code.i-harness.com/en/q/1ebd4cf" target="_blank" rel="noopener">CODE
+Q&amp;Aの質疑応答</a></li>
 <li><a href="https://github.com/Shougo/deol.nvim" target="_blank" rel="noopener">deol.vim</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>gvimで <a href="https://github.com/Shougo/deol.nvim" target="_blank" rel="noopener">deol.vim</a> を使ってターミナルを開き、<code>git push origin master</code> をしたら、 以下のようなエラーが生じた。</p>
+<p>gvimで <a href="https://github.com/Shougo/deol.nvim" target="_blank" rel="noopener">deol.vim</a>
+を使ってターミナルを開き、<code>git push origin master</code> をしたら、
+以下のようなエラーが生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fatal: could not read Password for &apos;https://xxxxxxxxx@github.com&apos;: terminal prompts disabled</span><br></pre></td></tr></table></figure>
-<p><a href="https://code.i-harness.com/en/q/1ebd4cf" target="_blank" rel="noopener">CODE Q&amp;Aの質疑応答</a> にも記載があるが</p>
+<p><a href="https://code.i-harness.com/en/q/1ebd4cf" target="_blank" rel="noopener">CODE
+Q&amp;Aの質疑応答</a> にも記載があるが</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ GIT_TERMINAL_PROMPT=1 git push origin master</span><br></pre></td></tr></table></figure>
 <p>のように、<code>GIT_TERMINAL_PROMPT=1</code>でOK。</p>
 
@@ -1656,7 +1715,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/13/terminal-prompt-disabled-on-vim/" data-id="cl2nztnqb00jk5xqioes6scpu" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/13/terminal-prompt-disabled-on-vim/" data-id="cl2o9pba400ex18rzo6lbpzo7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1886,5 +1945,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

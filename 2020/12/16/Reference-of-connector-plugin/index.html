@@ -5,18 +5,18 @@
     
     <title>Reference of connector plugin | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ kafka-connect-syslog 動作確認  kafka-connect-datagen 概要 実装状況 動作確認     参考  kafka-connect-syslog kafka-connect-datagen kafka-connect-datagenのGitHub ConfluentのGitHub Kafkaのクイックスタート Confluent Platfor">
+    <meta name="description" content="参考 メモ  kafka-connect-syslog  動作確認  kafka-connect-datagen  概要 実装状況 動作確認     参考  kafka-connect-syslog kafka-connect-datagen kafka-connect-datagenのGitHub ConfluentのGitHub Kafkaのクイックスタート Confluent Plat">
 <meta name="keywords" content="Kafka,Kafak Connect">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Reference of connector plugin">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/12/16/Reference-of-connector-plugin/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ kafka-connect-syslog 動作確認  kafka-connect-datagen 概要 実装状況 動作確認     参考  kafka-connect-syslog kafka-connect-datagen kafka-connect-datagenのGitHub ConfluentのGitHub Kafkaのクイックスタート Confluent Platfor">
+<meta property="og:description" content="参考 メモ  kafka-connect-syslog  動作確認  kafka-connect-datagen  概要 実装状況 動作確認     参考  kafka-connect-syslog kafka-connect-datagen kafka-connect-datagenのGitHub ConfluentのGitHub Kafkaのクイックスタート Confluent Plat">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Reference of connector plugin">
-<meta name="twitter:description" content="参考 メモ kafka-connect-syslog 動作確認  kafka-connect-datagen 概要 実装状況 動作確認     参考  kafka-connect-syslog kafka-connect-datagen kafka-connect-datagenのGitHub ConfluentのGitHub Kafkaのクイックスタート Confluent Platfor">
+<meta name="twitter:description" content="参考 メモ  kafka-connect-syslog  動作確認  kafka-connect-datagen  概要 実装状況 動作確認     参考  kafka-connect-syslog kafka-connect-datagen kafka-connect-datagenのGitHub ConfluentのGitHub Kafkaのクイックスタート Confluent Plat">
     
 
     
@@ -251,15 +251,18 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#kafka-connect-syslog">kafka-connect-syslog</a><ul>
-<li><a href="#動作確認">動作確認</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#kafka-connect-syslog" id="toc-kafka-connect-syslog">kafka-connect-syslog</a>
+<ul>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a></li>
 </ul></li>
-<li><a href="#kafka-connect-datagen">kafka-connect-datagen</a><ul>
-<li><a href="#概要">概要</a></li>
-<li><a href="#実装状況">実装状況</a></li>
-<li><a href="#動作確認-1">動作確認</a></li>
+<li><a href="#kafka-connect-datagen" id="toc-kafka-connect-datagen">kafka-connect-datagen</a>
+<ul>
+<li><a href="#概要" id="toc-概要">概要</a></li>
+<li><a href="#実装状況" id="toc-実装状況">実装状況</a></li>
+<li><a href="#動作確認-1" id="toc-動作確認-1">動作確認</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -271,17 +274,24 @@ ga('send', 'pageview');
 <li><a href="https://github.com/confluentinc/kafka-connect-datagen" target="_blank" rel="noopener">kafka-connect-datagenのGitHub</a></li>
 <li><a href="https://github.com/confluentinc" target="_blank" rel="noopener">ConfluentのGitHub</a></li>
 <li><a href="https://kafka.apache.org/documentation/#quickstart" target="_blank" rel="noopener">Kafkaのクイックスタート</a></li>
-<li><a href="https://docs.confluent.io/platform/current/installation/versions-interoperability.html#cp-and-apache-ak-compatibility" target="_blank" rel="noopener">Confluent Platform and Apache Kafka Compatibility</a></li>
+<li><a href="https://docs.confluent.io/platform/current/installation/versions-interoperability.html#cp-and-apache-ak-compatibility" target="_blank" rel="noopener">Confluent
+Platform and Apache Kafka Compatibility</a></li>
 <li><a href="https://github.com/confluentinc/avro-random-generator" target="_blank" rel="noopener">avro-random-generator</a></li>
 <li><a href="https://github.com/confluentinc/kafka-connect-datagen/tree/master/src/main/resources" target="_blank" rel="noopener">kafka-connect-datagenのサンプルスキーマ</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>2020/12時点で、Kafka Connectのプラグインの参考になるもの探す。</p>
 <h2><span id="kafka-connect-syslog">kafka-connect-syslog</span></h2>
-<p><a href="https://www.confluent.io/hub/confluentinc/kafka-connect-syslog" target="_blank" rel="noopener">kafka-connect-syslog</a> が最も簡易に動作確認できそうだった。 ただ、 <a href="https://github.com/confluentinc" target="_blank" rel="noopener">ConfluentのGitHub</a> を見る限り、GitHub上には実装が公開されていないようだった。</p>
+<p><a href="https://www.confluent.io/hub/confluentinc/kafka-connect-syslog" target="_blank" rel="noopener">kafka-connect-syslog</a>
+が最も簡易に動作確認できそうだった。 ただ、 <a href="https://github.com/confluentinc" target="_blank" rel="noopener">ConfluentのGitHub</a>
+を見る限り、GitHub上には実装が公開されていないようだった。</p>
 <h3><span id="動作確認">動作確認</span></h3>
-<p>ここでは、ローカルに簡易実験用の1プロセスのKafkaを起動した前提とする。 起動方法は <a href="https://kafka.apache.org/documentation/#quickstart" target="_blank" rel="noopener">Kafkaのクイックスタート</a> を参照。</p>
-<p><a href="https://www.confluent.io/hub/confluentinc/kafka-connect-syslog" target="_blank" rel="noopener">kafka-connect-syslog</a> のパッケージをダウンロードして <code>/opt/connectors</code> 以下に展開。</p>
+<p>ここでは、ローカルに簡易実験用の1プロセスのKafkaを起動した前提とする。
+起動方法は <a href="https://kafka.apache.org/documentation/#quickstart" target="_blank" rel="noopener">Kafkaのクイックスタート</a>
+を参照。</p>
+<p><a href="https://www.confluent.io/hub/confluentinc/kafka-connect-syslog" target="_blank" rel="noopener">kafka-connect-syslog</a>
+のパッケージをダウンロードして <code>/opt/connectors</code>
+以下に展開。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd /opt/connectors</span><br><span class="line">$ sudo unzip confluentinc-kafka-connect-syslog-1.3.2.zip</span><br><span class="line">$ sudo chown -R kafka:kafka confluentinc-kafka-connect-syslog-1.3.2</span><br></pre></td></tr></table></figure>
 <p>というパッケージが展開される。</p>
 <p>動作確認に使用するプロパティは以下。</p>
@@ -289,8 +299,10 @@ ga('send', 'pageview');
 <p>また、Connectの設定には以下を追加する。</p>
 <p>/opt/kafka_pseudo/default/config/connect-standalone.properties</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">plugin.path=/usr/local/share/java,/usr/local/share/kafka/plugins,/opt/connectors,</span><br></pre></td></tr></table></figure>
-<p>プラグインを置く場所として、 <code>/opt/connectors</code> を指定した。</p>
-<p><code>/opt/kafka_pseudo/default/bin/connect-standalone.sh</code> を利用して、 スタンドアローンモードでKafka Connectを起動。</p>
+<p>プラグインを置く場所として、 <code>/opt/connectors</code>
+を指定した。</p>
+<p><code>/opt/kafka_pseudo/default/bin/connect-standalone.sh</code>
+を利用して、 スタンドアローンモードでKafka Connectを起動。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo -u kafka /opt/kafka_pseudo/default/bin/connect-standalone.sh /opt/kafka_pseudo/default/config/connect-standalone.properties \</span></span><br><span class="line">  /opt/connectors/confluentinc-kafka-connect-syslog-1.3.2/etc/minimal-tcp.properties</span><br></pre></td></tr></table></figure>
 <p>起動したのを確認し、別の端末から適当なデータを送信。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"&lt;34&gt;1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - Your refrigerator is running"</span> | nc -v -w 1 localhost 5515</span></span><br></pre></td></tr></table></figure>
@@ -298,78 +310,117 @@ ga('send', 'pageview');
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> <span class="variable">$&#123;KAFKA_HOME&#125;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic syslog --from-beginning</span></span><br></pre></td></tr></table></figure>
 <p>先程書き込んだものが表示されるはずである。</p>
 <h2><span id="kafka-connect-datagen">kafka-connect-datagen</span></h2>
-<p><a href="https://www.confluent.io/hub/confluentinc/kafka-connect-datagen" target="_blank" rel="noopener">kafka-connect-datagen</a> もあった。 <a href="https://github.com/confluentinc/kafka-connect-datagen" target="_blank" rel="noopener">kafka-connect-datagenのGitHub</a> に実装も公開されているように見える。 ドキュメントのリンクから、当該レポジトリのREADMEにジャンプしたため、そのように判断。</p>
+<p><a href="https://www.confluent.io/hub/confluentinc/kafka-connect-datagen" target="_blank" rel="noopener">kafka-connect-datagen</a>
+もあった。 <a href="https://github.com/confluentinc/kafka-connect-datagen" target="_blank" rel="noopener">kafka-connect-datagenのGitHub</a>
+に実装も公開されているように見える。
+ドキュメントのリンクから、当該レポジトリのREADMEにジャンプしたため、そのように判断。</p>
 <p>以降、v0.4.0を対象として確認したものである。</p>
 <h3><span id="概要">概要</span></h3>
-<p>指定されたスキーマで、ダミーデータを生成するコネクタ。 <a href="https://github.com/confluentinc/avro-random-generator" target="_blank" rel="noopener">avro-random-generator</a> を内部的に利用している。</p>
-<p>スキーマ指定はAvroのスキーマファイルを渡す方法もあるし、 組み込みのスキーマを指定する方法もある。 <a href="https://github.com/confluentinc/kafka-connect-datagen/tree/master/src/main/resources" target="_blank" rel="noopener">kafka-connect-datagenのサンプルスキーマ</a> を参照。</p>
-<p>また、Kafkaに出力する際のフォーマットは指定可能。 Kafka Connect自体の一般的なパラメータである、 <code>value.converter</code> を指定すれば良い。 例えば以下の通り。</p>
+<p>指定されたスキーマで、ダミーデータを生成するコネクタ。 <a href="https://github.com/confluentinc/avro-random-generator" target="_blank" rel="noopener">avro-random-generator</a>
+を内部的に利用している。</p>
+<p>スキーマ指定はAvroのスキーマファイルを渡す方法もあるし、
+組み込みのスキーマを指定する方法もある。 <a href="https://github.com/confluentinc/kafka-connect-datagen/tree/master/src/main/resources" target="_blank" rel="noopener">kafka-connect-datagenのサンプルスキーマ</a>
+を参照。</p>
+<p>また、Kafkaに出力する際のフォーマットは指定可能。 Kafka
+Connect自体の一般的なパラメータである、 <code>value.converter</code>
+を指定すれば良い。 例えば以下の通り。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;value.converter&quot;: &quot;org.apache.kafka.connect.json.JsonConverter&quot;,</span><br></pre></td></tr></table></figure>
 <h3><span id="実装状況">実装状況</span></h3>
 <p>2020/12/21時点では本プロジェクトのバージョンは0.4.0であり、</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.confluent<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>common-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>の通り、Confluent Platformのバージョンとしては、6系である。</p>
-<p><a href="https://docs.confluent.io/platform/current/installation/versions-interoperability.html#cp-and-apache-ak-compatibility" target="_blank" rel="noopener">Confluent Platform and Apache Kafka Compatibility</a> によると、 Confluent Platform 6系のKafkaバージョンは2.6.Xである。</p>
+<p><a href="https://docs.confluent.io/platform/current/installation/versions-interoperability.html#cp-and-apache-ak-compatibility" target="_blank" rel="noopener">Confluent
+Platform and Apache Kafka Compatibility</a> によると、 Confluent
+Platform 6系のKafkaバージョンは2.6.Xである。</p>
 <h4><span id="ioconfluentkafkaconnectdatagendatagenconnector">io.confluent.kafka.connect.datagen.DatagenConnector</span></h4>
-<p><code>io.confluent.kafka.connect.datagen.DatagenConnector</code> クラスは、 <code>org.apache.kafka.connect.source.SourceConnector</code> を継承している。 割と素直な実装。</p>
-<p><code>io.confluent.kafka.connect.datagen.DatagenConnector#start</code> メソッドは特別なことはしておらず、 コンフィグをロードするだけ。</p>
-<p><code>io.confluent.kafka.connect.datagen.DatagenConnector#taskConfigs</code> メソッドも 特別なことはしていない。start時に受け取ったプロパティから taskConfigを生成して返す。</p>
-<p><code>io.confluent.kafka.connect.datagen.DatagenConnector#stop</code> メソッド および、 <code>io.confluent.kafka.connect.datagen.DatagenConnector#config</code> もほぼ何もしない。</p>
-<p>タスクには <code>io.confluent.kafka.connect.datagen.DatagenTask</code> クラスを利用する。</p>
-<h4><span id="ioconfluentkafkaconnectdatagendatagentask-クラス">io.confluent.kafka.connect.datagen.DatagenTask クラス</span></h4>
-<p><code>io.confluent.kafka.connect.datagen.DatagenTask#start</code> メソッドが overrideされている。 以下、ポイントを確認する。</p>
+<p><code>io.confluent.kafka.connect.datagen.DatagenConnector</code>
+クラスは、 <code>org.apache.kafka.connect.source.SourceConnector</code>
+を継承している。 割と素直な実装。</p>
+<p><code>io.confluent.kafka.connect.datagen.DatagenConnector#start</code>
+メソッドは特別なことはしておらず、 コンフィグをロードするだけ。</p>
+<p><code>io.confluent.kafka.connect.datagen.DatagenConnector#taskConfigs</code>
+メソッドも 特別なことはしていない。start時に受け取ったプロパティから
+taskConfigを生成して返す。</p>
+<p><code>io.confluent.kafka.connect.datagen.DatagenConnector#stop</code>
+メソッド および、
+<code>io.confluent.kafka.connect.datagen.DatagenConnector#config</code>
+もほぼ何もしない。</p>
+<p>タスクには
+<code>io.confluent.kafka.connect.datagen.DatagenTask</code>
+クラスを利用する。</p>
+<h4><span id="ioconfluentkafkaconnectdatagendatagentaskクラス">io.confluent.kafka.connect.datagen.DatagenTask
+クラス</span></h4>
+<p><code>io.confluent.kafka.connect.datagen.DatagenTask#start</code>
+メソッドが overrideされている。 以下、ポイントを確認する。</p>
 <p>オフセット管理の仕組みあり。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:133</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; offset = context.offsetStorageReader().offset(sourcePartition);</span><br><span class="line"><span class="keyword">if</span> (offset != <span class="keyword">null</span>) &#123;</span><br><span class="line">  <span class="comment">//  The offset as it is stored contains our next state, so restore it as-is.</span></span><br><span class="line">  taskGeneration = ((Long) offset.get(TASK_GENERATION)).intValue();</span><br><span class="line">  count = ((Long) offset.get(CURRENT_ITERATION));</span><br><span class="line">  random.setSeed((Long) offset.get(RANDOM_SEED));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>io.confluent.avro.random.generator.Generator</code> のジェネレータ（のビルダ）を利用する。</p>
+<p><code>io.confluent.avro.random.generator.Generator</code>
+のジェネレータ（のビルダ）を利用する。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:141</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Generator.Builder generatorBuilder = <span class="keyword">new</span> Generator.Builder()</span><br><span class="line">    .random(random)</span><br><span class="line">    .generation(count);</span><br></pre></td></tr></table></figure>
 <p>クイックスタートの設定があれば、それに従ってスキーマを読み込む。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:144</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">String quickstartName = config.getQuickstart();</span><br><span class="line"><span class="keyword">if</span> (quickstartName != <span class="string">""</span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    quickstart = Quickstart.valueOf(quickstartName.toUpperCase());</span><br><span class="line">    <span class="keyword">if</span> (quickstart != <span class="keyword">null</span>) &#123;</span><br><span class="line">      schemaFilename = quickstart.getSchemaFilename();</span><br><span class="line">      schemaKeyField = schemaKeyField.equals(<span class="string">""</span>)</span><br><span class="line">          ? quickstart.getSchemaKeyField() : schemaKeyField;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        generator = generatorBuilder</span><br><span class="line">            .schemaStream(getClass().getClassLoader().getResourceAsStream(schemaFilename))</span><br><span class="line">            .build();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ConnectException(<span class="string">"Unable to read the '"</span></span><br><span class="line">            + schemaFilename + <span class="string">"' schema file"</span>, e);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</span><br><span class="line">    log.warn(<span class="string">"Quickstart '&#123;&#125;' not found: "</span>, quickstartName, e);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>指定されたクイックスタート名に従い、パッケージに含まれるスキーマファイルを読み込み、 それを適用しながらジェネレータを生成する。</p>
+<p>指定されたクイックスタート名に従い、パッケージに含まれるスキーマファイルを読み込み、
+それを適用しながらジェネレータを生成する。</p>
 <p>なお、クイックスタートのたぐいはenumで定義されている。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:75</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">enum</span> Quickstart &#123;</span><br><span class="line">  CLICKSTREAM_CODES(<span class="string">"clickstream_codes_schema.avro"</span>, <span class="string">"code"</span>),</span><br><span class="line">  CLICKSTREAM(<span class="string">"clickstream_schema.avro"</span>, <span class="string">"ip"</span>),</span><br><span class="line">  CLICKSTREAM_USERS(<span class="string">"clickstream_users_schema.avro"</span>, <span class="string">"user_id"</span>),</span><br><span class="line">  ORDERS(<span class="string">"orders_schema.avro"</span>, <span class="string">"orderid"</span>),</span><br><span class="line">  RATINGS(<span class="string">"ratings_schema.avro"</span>, <span class="string">"rating_id"</span>),</span><br><span class="line">  USERS(<span class="string">"users_schema.avro"</span>, <span class="string">"userid"</span>),</span><br><span class="line">  USERS_(<span class="string">"users_array_map_schema.avro"</span>, <span class="string">"userid"</span>),</span><br><span class="line">  PAGEVIEWS(<span class="string">"pageviews_schema.avro"</span>, <span class="string">"viewtime"</span>),</span><br><span class="line">  STOCK_TRADES(<span class="string">"stock_trades_schema.avro"</span>, <span class="string">"symbol"</span>),</span><br><span class="line">  INVENTORY(<span class="string">"inventory.avro"</span>, <span class="string">"id"</span>),</span><br><span class="line">  PRODUCT(<span class="string">"product.avro"</span>, <span class="string">"id"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> String schemaFilename;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> String keyName;</span><br><span class="line"></span><br><span class="line">  Quickstart(String schemaFilename, String keyName) &#123;</span><br><span class="line">    <span class="keyword">this</span>.schemaFilename = schemaFilename;</span><br><span class="line">    <span class="keyword">this</span>.keyName = keyName;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getSchemaFilename</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> schemaFilename;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getSchemaKeyField</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> keyName;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>クイックスタートが設定されておらず、スキーマの文字列が与えられた場合は、 それを用いてジェネレータが生成される。</p>
+<p>クイックスタートが設定されておらず、スキーマの文字列が与えられた場合は、
+それを用いてジェネレータが生成される。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:164</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (schemaString != <span class="string">""</span>) &#123;</span><br><span class="line">  generator = generatorBuilder.schemaString(schemaString).build();</span><br></pre></td></tr></table></figure>
-<p>それ以外の場合、つまりスキーマ定義の書かれたファイルを指定する場合は、 以下の通り。</p>
+<p>それ以外の場合、つまりスキーマ定義の書かれたファイルを指定する場合は、
+以下の通り。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:166</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      String err = <span class="string">"Unable to read the '"</span> + schemaFilename + <span class="string">"' schema file"</span>;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        generator = generatorBuilder.schemaStream(<span class="keyword">new</span> FileInputStream(schemaFilename)).build();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">        <span class="comment">// also look in jars on the classpath</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          generator = generatorBuilder</span><br><span class="line">              .schemaStream(DatagenTask.class.getClassLoader().getResourceAsStream(schemaFilename))</span><br><span class="line">              .build();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException inner) &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> ConnectException(err, e);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ConnectException(err, e);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>最後のAvroに関連する情報を生成して終了。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:184</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">avroSchema = generator.schema();</span><br><span class="line">avroData = <span class="keyword">new</span> AvroData(<span class="number">1</span>);</span><br><span class="line">ksqlSchema = avroData.toConnectSchema(avroSchema);</span><br></pre></td></tr></table></figure>
-<p><code>io.confluent.kafka.connect.datagen.DatagenTask#poll</code> メソッドもoverrideされている。 以下、ポイントを記載する。</p>
+<p><code>io.confluent.kafka.connect.datagen.DatagenTask#poll</code>
+メソッドもoverrideされている。 以下、ポイントを記載する。</p>
 <p>インターバル機能あり。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:192</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (maxInterval &gt; <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    Thread.sleep((<span class="keyword">long</span>) (maxInterval * Math.random()));</span><br><span class="line">  &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">    Thread.interrupted();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>ジェネレータを利用し、オブジェクトを生成する。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:201</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> Object generatedObject = generator.generate();</span><br><span class="line"><span class="keyword">if</span> (!(generatedObject <span class="keyword">instanceof</span> GenericRecord)) &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(</span><br><span class="line">      <span class="string">"Expected Avro Random Generator to return instance of GenericRecord, found %s instead"</span>,</span><br><span class="line">      generatedObject.getClass().getName()</span><br><span class="line">  ));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">final</span> GenericRecord randomAvroMessage = (GenericRecord) generatedObject;</span><br></pre></td></tr></table></figure>
-<p>生成されたオブジェクトから、スキーマ定義に基づいてフィールドの値を取り出し、 バリューのArrayListを生成する。</p>
+<p>生成されたオブジェクトから、スキーマ定義に基づいてフィールドの値を取り出し、
+バリューのArrayListを生成する。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:210</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> List&lt;Object&gt; genericRowValues = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (org.apache.avro.Schema.Field field : avroSchema.getFields()) &#123;</span><br><span class="line">  <span class="keyword">final</span> Object value = randomAvroMessage.get(field.name());</span><br><span class="line">  <span class="keyword">if</span> (value <span class="keyword">instanceof</span> Record) &#123;</span><br><span class="line">    <span class="keyword">final</span> Record record = (Record) value;</span><br><span class="line">    <span class="keyword">final</span> Object ksqlValue = avroData.toConnectData(record.getSchema(), record).value();</span><br><span class="line">    Object optionValue = getOptionalValue(ksqlSchema.field(field.name()).schema(), ksqlValue);</span><br><span class="line">    genericRowValues.add(optionValue);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    genericRowValues.add(value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>キーも同様に取り出し、Kafka Connectの形式に変換する。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:224</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SchemaAndValue key = <span class="keyword">new</span> SchemaAndValue(DEFAULT_KEY_SCHEMA, <span class="keyword">null</span>);</span><br><span class="line"><span class="keyword">if</span> (!schemaKeyField.isEmpty()) &#123;</span><br><span class="line">  key = avroData.toConnectData(</span><br><span class="line">      randomAvroMessage.getSchema().getField(schemaKeyField).schema(),</span><br><span class="line">      randomAvroMessage.get(schemaKeyField)</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>先程ArrayListとして取り出したバリューもKafka Connect形式に変換する。</p>
+<p>先程ArrayListとして取り出したバリューもKafka
+Connect形式に変換する。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:233</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> org.apache.kafka.connect.data.Schema messageSchema = avroData.toConnectSchema(avroSchema);</span><br><span class="line"><span class="keyword">final</span> Object messageValue = avroData.toConnectData(avroSchema, randomAvroMessage).value();</span><br></pre></td></tr></table></figure>
 <p>イテレートのたびに、メタデータを更新する。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:246</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The source offsets will be the values that the next task lifetime will restore from</span></span><br><span class="line"><span class="comment">// Essentially, the "next" state of the connector after this loop completes</span></span><br><span class="line">Map&lt;String, Object&gt; sourceOffset = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="comment">// The next lifetime will be a member of the next generation.</span></span><br><span class="line">sourceOffset.put(TASK_GENERATION, taskGeneration + <span class="number">1</span>);</span><br><span class="line"><span class="comment">// We will have produced this record</span></span><br><span class="line">sourceOffset.put(CURRENT_ITERATION, count + <span class="number">1</span>);</span><br><span class="line"><span class="comment">// This is the seed that we just re-seeded for our own next iteration.</span></span><br><span class="line">sourceOffset.put(RANDOM_SEED, seed);</span><br></pre></td></tr></table></figure>
-<p>最後に、SourceRecordのリスト形式に変換し、 レコードとして生成して戻り値として返す。</p>
+<p>最後に、SourceRecordのリスト形式に変換し、
+レコードとして生成して戻り値として返す。</p>
 <p>io/confluent/kafka/connect/datagen/DatagenTask.java:261</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> List&lt;SourceRecord&gt; records = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">SourceRecord record = <span class="keyword">new</span> SourceRecord(</span><br><span class="line">    sourcePartition,</span><br><span class="line">    sourceOffset,</span><br><span class="line">    topic,</span><br><span class="line">    <span class="keyword">null</span>,</span><br><span class="line">    key.schema(),</span><br><span class="line">    key.value(),</span><br><span class="line">    messageSchema,</span><br><span class="line">    messageValue,</span><br><span class="line">    <span class="keyword">null</span>,</span><br><span class="line">    headers</span><br><span class="line">);</span><br><span class="line">records.add(record);</span><br><span class="line">count += records.size();</span><br><span class="line"><span class="keyword">return</span> records;</span><br></pre></td></tr></table></figure>
-<p>つづいて、 <code>io.confluent.kafka.connect.datagen.DatagenTask#stop</code> メソッドだが、 これは特に何もしない。</p>
-<p><code>io.confluent.kafka.connect.datagen.DatagenTask#getOptionalSchema</code> という オプショナルなフィールドに関するスキーマを取得するためのヘルパーメソッドもある。 <code>io.confluent.kafka.connect.datagen.DatagenTask#getOptionalValue</code> メソッドもある。</p>
+<p>つづいて、
+<code>io.confluent.kafka.connect.datagen.DatagenTask#stop</code>
+メソッドだが、 これは特に何もしない。</p>
+<p><code>io.confluent.kafka.connect.datagen.DatagenTask#getOptionalSchema</code>
+という
+オプショナルなフィールドに関するスキーマを取得するためのヘルパーメソッドもある。
+<code>io.confluent.kafka.connect.datagen.DatagenTask#getOptionalValue</code>
+メソッドもある。</p>
 <h3><span id="動作確認">動作確認</span></h3>
-<p>confluentinc-kafka-connect-datagen-0.4.0.zip をダウンロードし、 <code>/opt/connectors</code>以下に展開したものとする。</p>
-<p>今回は以下の設定ファイルを参考に、データ生成してみる。 なお、イテレーション回数は適度に修正して用いることを推奨する。</p>
+<p>confluentinc-kafka-connect-datagen-0.4.0.zip をダウンロードし、
+<code>/opt/connectors</code>以下に展開したものとする。</p>
+<p>今回は以下の設定ファイルを参考に、データ生成してみる。
+なお、イテレーション回数は適度に修正して用いることを推奨する。</p>
 <p>confluentinc-kafka-connect-datagen-0.4.0/etc/connector_users.config</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"datagen-users"</span>,</span><br><span class="line">  <span class="attr">"config"</span>: &#123;</span><br><span class="line">    <span class="attr">"connector.class"</span>: <span class="string">"io.confluent.kafka.connect.datagen.DatagenConnector"</span>,</span><br><span class="line">    <span class="attr">"kafka.topic"</span>: <span class="string">"users"</span>,</span><br><span class="line">    <span class="attr">"quickstart"</span>: <span class="string">"users"</span>,</span><br><span class="line">    <span class="attr">"key.converter"</span>: <span class="string">"org.apache.kafka.connect.storage.StringConverter"</span>,</span><br><span class="line">    <span class="attr">"value.converter"</span>: <span class="string">"org.apache.kafka.connect.json.JsonConverter"</span>,</span><br><span class="line">    <span class="attr">"value.converter.schemas.enable"</span>: <span class="string">"false"</span>,</span><br><span class="line">    <span class="attr">"max.interval"</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">"iterations"</span>: <span class="number">10000000</span>,</span><br><span class="line">    <span class="attr">"tasks.max"</span>: <span class="string">"1"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上記はconfluentコマンド用で利用する際のコンフィグファイルである。 そこで以下のようなKafka Connect用の設定ファイルを生成する。</p>
+<p>上記はconfluentコマンド用で利用する際のコンフィグファイルである。
+そこで以下のようなKafka Connect用の設定ファイルを生成する。</p>
 <p>/opt/connectors/confluentinc-kafka-connect-datagen-0.4.0/etc/connector_users.properties</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">name=users</span><br><span class="line">connector.class=io.confluent.kafka.connect.datagen.DatagenConnector</span><br><span class="line">kafka.topic=users</span><br><span class="line">quickstart=users</span><br><span class="line">key.converter=org.apache.kafka.connect.storage.StringConverter</span><br><span class="line">value.converter=org.apache.kafka.connect.json.JsonConverter</span><br><span class="line">value.converter.schemas.enable=false</span><br><span class="line">max.interval=1000</span><br><span class="line">iterations=10</span><br><span class="line">tasks.max=1</span><br></pre></td></tr></table></figure>
 <p>スタンドアローンモードでKafka Connectを起動する。</p>
@@ -391,7 +442,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/16/Reference-of-connector-plugin/" data-id="cl2nztnnu00ci5xqifdw6vzzj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/16/Reference-of-connector-plugin/" data-id="cl2o9pbir019918rzlmrbeuaw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -642,5 +693,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

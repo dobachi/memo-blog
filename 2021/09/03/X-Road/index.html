@@ -5,18 +5,18 @@
     
     <title>X-Road | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ X-Roadとは？ 最初の動作確認 Ansibleプレイブックの確認 起動した環境の動作確認  コンポーネントの確認 Security Server     参考  X-RoadのGitHub X-Roadについての簡易メモ Using LXD-hosts X Road Academy Session 1 Setting up a local X-Road development">
+    <meta name="description" content="参考 メモ  X-Roadとは？ 最初の動作確認  Ansibleプレイブックの確認 起動した環境の動作確認  コンポーネントの確認  Security Server     参考  X-RoadのGitHub X-Roadについての簡易メモ Using LXD-hosts X Road Academy Session 1 Setting up a local X-Road developm">
 <meta name="keywords" content="X-Road">
 <meta property="og:type" content="article">
 <meta property="og:title" content="X-Road">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2021/09/03/X-Road/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ X-Roadとは？ 最初の動作確認 Ansibleプレイブックの確認 起動した環境の動作確認  コンポーネントの確認 Security Server     参考  X-RoadのGitHub X-Roadについての簡易メモ Using LXD-hosts X Road Academy Session 1 Setting up a local X-Road development">
+<meta property="og:description" content="参考 メモ  X-Roadとは？ 最初の動作確認  Ansibleプレイブックの確認 起動した環境の動作確認  コンポーネントの確認  Security Server     参考  X-RoadのGitHub X-Roadについての簡易メモ Using LXD-hosts X Road Academy Session 1 Setting up a local X-Road developm">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="X-Road">
-<meta name="twitter:description" content="参考 メモ X-Roadとは？ 最初の動作確認 Ansibleプレイブックの確認 起動した環境の動作確認  コンポーネントの確認 Security Server     参考  X-RoadのGitHub X-Roadについての簡易メモ Using LXD-hosts X Road Academy Session 1 Setting up a local X-Road development">
+<meta name="twitter:description" content="参考 メモ  X-Roadとは？ 最初の動作確認  Ansibleプレイブックの確認 起動した環境の動作確認  コンポーネントの確認  Security Server     参考  X-RoadのGitHub X-Roadについての簡易メモ Using LXD-hosts X Road Academy Session 1 Setting up a local X-Road developm">
     
 
     
@@ -251,15 +251,19 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#x-roadとは">X-Roadとは？</a></li>
-<li><a href="#最初の動作確認">最初の動作確認</a><ul>
-<li><a href="#ansibleプレイブックの確認">Ansibleプレイブックの確認</a></li>
-<li><a href="#起動した環境の動作確認">起動した環境の動作確認</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#x-roadとは" id="toc-x-roadとは">X-Roadとは？</a></li>
+<li><a href="#最初の動作確認" id="toc-最初の動作確認">最初の動作確認</a>
+<ul>
+<li><a href="#ansibleプレイブックの確認" id="toc-ansibleプレイブックの確認">Ansibleプレイブックの確認</a></li>
+<li><a href="#起動した環境の動作確認" id="toc-起動した環境の動作確認">起動した環境の動作確認</a></li>
 </ul></li>
-<li><a href="#コンポーネントの確認">コンポーネントの確認</a><ul>
-<li><a href="#security-server">Security Server</a></li>
+<li><a href="#コンポーネントの確認" id="toc-コンポーネントの確認">コンポーネントの確認</a>
+<ul>
+<li><a href="#security-server" id="toc-security-server">Security
+Server</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -268,55 +272,92 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://github.com/nordic-institute/X-Road" target="_blank" rel="noopener">X-RoadのGitHub</a></li>
 <li><a href="https://dobachi.github.io/memo-blog/#x-road">X-Roadについての簡易メモ</a></li>
-<li><a href="https://github.com/nordic-institute/X-Road/blob/develop/ansible/README.md#using-lxd-hosts" target="_blank" rel="noopener">Using LXD-hosts</a></li>
-<li><a href="https://www.youtube.com/watch?v=RV-Dq69yFVE" target="_blank" rel="noopener">X Road Academy Session 1 Setting up a local X-Road development environment</a></li>
+<li><a href="https://github.com/nordic-institute/X-Road/blob/develop/ansible/README.md#using-lxd-hosts" target="_blank" rel="noopener">Using
+LXD-hosts</a></li>
+<li><a href="https://www.youtube.com/watch?v=RV-Dq69yFVE" target="_blank" rel="noopener">X Road Academy
+Session 1 Setting up a local X-Road development environment</a></li>
 <li>[X-Road: Security Server Architecture]</li>
-<li><a href="https://github.com/nordic-institute/X-Road/blob/develop/doc/Architecture/arc-ss_x-road_security_server_architecture.md#2-component-view" target="_blank" rel="noopener">X-Road Security Server Architecture Overview</a></li>
-<li><a href="https://github.com/nordic-institute/X-Road/blob/develop/doc/Architecture/arc-ss_x-road_security_server_architecture.md#3-process-view" target="_blank" rel="noopener">X-Road Security Server Architecture Process View</a></li>
+<li><a href="https://github.com/nordic-institute/X-Road/blob/develop/doc/Architecture/arc-ss_x-road_security_server_architecture.md#2-component-view" target="_blank" rel="noopener">X-Road
+Security Server Architecture Overview</a></li>
+<li><a href="https://github.com/nordic-institute/X-Road/blob/develop/doc/Architecture/arc-ss_x-road_security_server_architecture.md#3-process-view" target="_blank" rel="noopener">X-Road
+Security Server Architecture Process View</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="x-roadとは">X-Roadとは？</span></h2>
-<p>一言で言えば、エストニアの電子政府や公共と民間の間のデータ連携に用いられている データ流通のためのオープンソースソフトウェアである。 他の簡単な紹介は <a href="https://dobachi.github.io/memo-blog/#x-road">X-Roadについての簡易メモ</a> あたりを参照。</p>
+<p>一言で言えば、エストニアの電子政府や公共と民間の間のデータ連携に用いられている
+データ流通のためのオープンソースソフトウェアである。 他の簡単な紹介は <a href="https://dobachi.github.io/memo-blog/#x-road">X-Roadについての簡易メモ</a>
+あたりを参照。</p>
 <h2><span id="最初の動作確認">最初の動作確認</span></h2>
-<p><a href="https://github.com/nordic-institute/X-Road" target="_blank" rel="noopener">X-RoadのGitHub</a> のREADMEによると、AnsibleのPlaybookがある。 READMEから簡単に読み解いてみる。</p>
+<p><a href="https://github.com/nordic-institute/X-Road" target="_blank" rel="noopener">X-RoadのGitHub</a>
+のREADMEによると、AnsibleのPlaybookがある。
+READMEから簡単に読み解いてみる。</p>
 <h3><span id="ansibleプレイブックの確認">Ansibleプレイブックの確認</span></h3>
 <h4><span id="インベントリ">インベントリ</span></h4>
-<p><code>ansible/hosts/example_xroad_hosts.txt</code> によると、 central server（cs）、security server（ss）、configuration proxy、certification authorityの グループが定義されており、csやssは複数台のノードが記載されている。冗長化されている？</p>
+<p><code>ansible/hosts/example_xroad_hosts.txt</code> によると、 central
+server（cs）、security server（ss）、configuration proxy、certification
+authorityの
+グループが定義されており、csやssは複数台のノードが記載されている。冗長化されている？</p>
 <p><code>ansible/hosts/lxd_hosts.txt</code> はコンテナ向けに見える。</p>
-<p>なお、エストニア等の国？エリア？に特化するかどうか、という変数がある。 該当しない場合は、 <code>vanilla</code> でよさそう。</p>
+<p>なお、エストニア等の国？エリア？に特化するかどうか、という変数がある。
+該当しない場合は、 <code>vanilla</code> でよさそう。</p>
 <h4><span id="プレイブックエントリポイント">プレイブック（エントリポイント）</span></h4>
 <p>デプロイするときは <code>xroad_init.yml</code> を利用する。</p>
 <h4><span id="ロール">ロール</span></h4>
-<p>プレイブックの通り、 <code>xroad-cs</code> や <code>xroad-cp</code> といったロールが各種類のサーバに対応したロールである。 また、このロールは依存関係に</p>
+<p>プレイブックの通り、 <code>xroad-cs</code> や <code>xroad-cp</code>
+といったロールが各種類のサーバに対応したロールである。
+また、このロールは依存関係に</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dependencies:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">&#123;</span> <span class="attr">role:</span> <span class="string">xroad-base</span> <span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>のようなものを持っており、 <code>xroad-base</code> がレポジトリ等の設定をする役割を担っている。</p>
+<p>のようなものを持っており、 <code>xroad-base</code>
+がレポジトリ等の設定をする役割を担っている。</p>
 <h4><span id="lxdコンテナを利用した動作確認用のデプロイ">LXDコンテナを利用した動作確認用のデプロイ</span></h4>
-<p><a href="https://github.com/nordic-institute/X-Road/blob/develop/ansible/README.md#using-lxd-hosts" target="_blank" rel="noopener">Using LXD-hosts</a> によると、LXDコンテナを使用し動作確認用のX-Road環境を構築できる。 <code>ansible/hosts/lxd_hosts.txt</code> がインベントリファイル（の例）である。 中で定義されているコンテナは、 <code>ansible/roles/init-lxd</code> ロールで起動される。</p>
+<p><a href="https://github.com/nordic-institute/X-Road/blob/develop/ansible/README.md#using-lxd-hosts" target="_blank" rel="noopener">Using
+LXD-hosts</a>
+によると、LXDコンテナを使用し動作確認用のX-Road環境を構築できる。
+<code>ansible/hosts/lxd_hosts.txt</code>
+がインベントリファイル（の例）である。 中で定義されているコンテナは、
+<code>ansible/roles/init-lxd</code> ロールで起動される。</p>
 <p>Ubuntu18で試す。</p>
 <p>あらかじめLXD環境をセットアップしておく。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install lxd</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> newgrp lxd</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo lxd init</span></span><br></pre></td></tr></table></figure>
-<p>特に問題なければLXDコンテナが起動できるはず。詳しくは、 https://linuxcontainers.org/ja/lxd/getting-started-cli あたりを参照。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo apt-get install lxd</span><br><span class="line"><span class="meta">$</span> newgrp lxd</span><br><span class="line"><span class="meta">$</span> sudo lxd init</span><br></pre></td></tr></table></figure>
+<p>特に問題なければLXDコンテナが起動できるはず。詳しくは、
+https://linuxcontainers.org/ja/lxd/getting-started-cli
+あたりを参照。</p>
 <p>Ansibleもインストールしておく。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt update</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt install software-properties-common</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-add-repository --yes --update ppa:ansible/ansible</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt install ansible</span></span><br></pre></td></tr></table></figure>
-<p>詳しくは、 https://docs.ansible.com/ansible/2.9_ja/installation_guide/intro_installation.html#ubuntu-ansible あたりを参照。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo apt update</span><br><span class="line"><span class="meta">$</span> sudo apt install software-properties-common</span><br><span class="line"><span class="meta">$</span> sudo apt-add-repository --yes --update ppa:ansible/ansible</span><br><span class="line"><span class="meta">$</span> sudo apt install ansible</span><br></pre></td></tr></table></figure>
+<p>詳しくは、
+https://docs.ansible.com/ansible/2.9_ja/installation_guide/intro_installation.html#ubuntu-ansible
+あたりを参照。</p>
 <p>X-Roadのコンテナを準備する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-playbook  -i hosts/lxd_hosts.txt xroad_init.yml</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-playbook  -i hosts/lxd_hosts.txt xroad_init.yml</span><br></pre></td></tr></table></figure>
 <p>実際に以下のようなコンテナが立ち上がる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ lxc list</span><br><span class="line">+---------------+---------+-----------------------+-----------------------------------------------+------------+-----------+</span><br><span class="line">|     NAME      |  STATE  |         IPV4          |                     IPV6                      |    TYPE    | SNAPSHOTS |</span><br><span class="line">+---------------+---------+-----------------------+-----------------------------------------------+------------+-----------+</span><br><span class="line">| xroad-lxd-cs  | RUNNING | xx.xx.xx.xx (eth0)    | xxxx:xxxx:xxxx:xxxx:xxx:xxxx:xxxx:xxxx (eth0) | PERSISTENT | 0         |</span><br><span class="line">+---------------+---------+-----------------------+-----------------------------------------------+------------+-----------+</span><br><span class="line">| xroad-lxd-ss1 | RUNNING | xx.xx.xx.xx (eth0)    | xxxx:xxxx:xxxx:xxxx:xxx:xxxx:xxxx:xxxx (eth0) | PERSISTENT | 0         |</span><br><span class="line">+---------------+---------+-----------------------+-----------------------------------------------+------------+-----------+</span><br></pre></td></tr></table></figure>
 <p>なお、パッケージインストール（内部的にはaptを利用してインストール）している箇所の進みが遅く、一度インタラプトして手動でaptコマンドでインストールした。</p>
 <h4><span id="開発用のプレイブック">開発用のプレイブック</span></h4>
-<p>開発用のAnsibleプレイブックもある。 <code>ansible/xroad_dev.yml</code> や <code>ansible/xroad_dev_partial.yml</code> である。</p>
+<p>開発用のAnsibleプレイブックもある。
+<code>ansible/xroad_dev.yml</code> や
+<code>ansible/xroad_dev_partial.yml</code> である。</p>
 <h3><span id="起動した環境の動作確認">起動した環境の動作確認</span></h3>
-<p><a href="https://www.youtube.com/watch?v=RV-Dq69yFVE" target="_blank" rel="noopener">X Road Academy Session 1 Setting up a local X-Road development environment</a>が参考になりそう。</p>
+<p><a href="https://www.youtube.com/watch?v=RV-Dq69yFVE" target="_blank" rel="noopener">X Road Academy
+Session 1 Setting up a local X-Road development
+environment</a>が参考になりそう。</p>
 <h2><span id="コンポーネントの確認">コンポーネントの確認</span></h2>
 <h3><span id="security-server">Security Server</span></h3>
-<p><a href="https://github.com/nordic-institute/X-Road/blob/develop/doc/Architecture/arc-ss_x-road_security_server_architecture.md" target="_blank" rel="noopener">X-Road Security Server Architecture</a> にSecurity Serverのアーキテクチャが記載されている。 特に <a href="https://github.com/nordic-institute/X-Road/blob/develop/doc/Architecture/arc-ss_x-road_security_server_architecture.md#2-component-view" target="_blank" rel="noopener">X-Road Security Server Architecture Overview</a> に記載されている図が分かりやすい。</p>
-<p>Security Serverはサービスクライアントとプロバイダの仲介を担う。 電子署名と暗号を用いてメッセージのやり取りは保護される。</p>
+<p><a href="https://github.com/nordic-institute/X-Road/blob/develop/doc/Architecture/arc-ss_x-road_security_server_architecture.md" target="_blank" rel="noopener">X-Road
+Security Server Architecture</a> にSecurity
+Serverのアーキテクチャが記載されている。 特に <a href="https://github.com/nordic-institute/X-Road/blob/develop/doc/Architecture/arc-ss_x-road_security_server_architecture.md#2-component-view" target="_blank" rel="noopener">X-Road
+Security Server Architecture Overview</a>
+に記載されている図が分かりやすい。</p>
+<p>Security Serverはサービスクライアントとプロバイダの仲介を担う。
+電子署名と暗号を用いてメッセージのやり取りは保護される。</p>
 <p>Proxyがメッセージを受けとるのだが、メッセージは署名と一緒に保存される。</p>
-<p>設定情報はPostgreSQL内に保持される。 設定はユーザインターフェースを通じて行われるようになっている。</p>
-<p>グローバルコンフィグレーションをダウンロードするConfiguration Client というのもあるようだ。</p>
+<p>設定情報はPostgreSQL内に保持される。
+設定はユーザインターフェースを通じて行われるようになっている。</p>
+<p>グローバルコンフィグレーションをダウンロードするConfiguration Client
+というのもあるようだ。</p>
 <p>そのほかのコンポーネントは名称の通りの機能である。</p>
-<p><a href="https://github.com/nordic-institute/X-Road/blob/develop/doc/Architecture/arc-ss_x-road_security_server_architecture.md#3-process-view" target="_blank" rel="noopener">X-Road Security Server Architecture Process View</a> に処理の流れが記載されている。</p>
+<p><a href="https://github.com/nordic-institute/X-Road/blob/develop/doc/Architecture/arc-ss_x-road_security_server_architecture.md#3-process-view" target="_blank" rel="noopener">X-Road
+Security Server Architecture Process View</a>
+に処理の流れが記載されている。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -328,7 +369,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/09/03/X-Road/" data-id="cl2nztnpc00gr5xqifqcfvw8c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/09/03/X-Road/" data-id="cl2o9pb8y00c918rz7nx2c469" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -579,5 +620,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

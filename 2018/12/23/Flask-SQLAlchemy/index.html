@@ -5,18 +5,18 @@
     
     <title>Flask SQLAlchemy | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 シェルで動作確認 Dockerコンテナのビルド アプリ作成と実行  アプリから動作確認 アプリ作成 実行    参考  flask-sqlalchemyのクイックスタート Flask on Dockerのブログ  シェルで動作確認 Dockerコンテナのビルド Flask on Dockerのブログ と同様にDockerfileを作り、ビルドする。 ファイルを作成 1234567891">
-<meta name="keywords" content="SQLAlchemy,Flask">
+    <meta name="description" content="参考 シェルで動作確認  Dockerコンテナのビルド アプリ作成と実行  アプリから動作確認  アプリ作成 実行    参考  flask-sqlalchemyのクイックスタート Flask on Dockerのブログ  シェルで動作確認 Dockerコンテナのビルド Flask on Dockerのブログ と同様にDockerfileを作り、ビルドする。 ファイルを作成 12345678">
+<meta name="keywords" content="Flask,SQLAlchemy">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flask SQLAlchemy">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/12/23/Flask-SQLAlchemy/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 シェルで動作確認 Dockerコンテナのビルド アプリ作成と実行  アプリから動作確認 アプリ作成 実行    参考  flask-sqlalchemyのクイックスタート Flask on Dockerのブログ  シェルで動作確認 Dockerコンテナのビルド Flask on Dockerのブログ と同様にDockerfileを作り、ビルドする。 ファイルを作成 1234567891">
+<meta property="og:description" content="参考 シェルで動作確認  Dockerコンテナのビルド アプリ作成と実行  アプリから動作確認  アプリ作成 実行    参考  flask-sqlalchemyのクイックスタート Flask on Dockerのブログ  シェルで動作確認 Dockerコンテナのビルド Flask on Dockerのブログ と同様にDockerfileを作り、ビルドする。 ファイルを作成 12345678">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flask SQLAlchemy">
-<meta name="twitter:description" content="参考 シェルで動作確認 Dockerコンテナのビルド アプリ作成と実行  アプリから動作確認 アプリ作成 実行    参考  flask-sqlalchemyのクイックスタート Flask on Dockerのブログ  シェルで動作確認 Dockerコンテナのビルド Flask on Dockerのブログ と同様にDockerfileを作り、ビルドする。 ファイルを作成 1234567891">
+<meta name="twitter:description" content="参考 シェルで動作確認  Dockerコンテナのビルド アプリ作成と実行  アプリから動作確認  アプリ作成 実行    参考  flask-sqlalchemyのクイックスタート Flask on Dockerのブログ  シェルで動作確認 Dockerコンテナのビルド Flask on Dockerのブログ と同様にDockerfileを作り、ビルドする。 ファイルを作成 12345678">
     
 
     
@@ -251,25 +251,29 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#シェルで動作確認">シェルで動作確認</a><ul>
-<li><a href="#dockerコンテナのビルド">Dockerコンテナのビルド</a></li>
-<li><a href="#アプリ作成と実行">アプリ作成と実行</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#シェルで動作確認" id="toc-シェルで動作確認">シェルで動作確認</a>
+<ul>
+<li><a href="#dockerコンテナのビルド" id="toc-dockerコンテナのビルド">Dockerコンテナのビルド</a></li>
+<li><a href="#アプリ作成と実行" id="toc-アプリ作成と実行">アプリ作成と実行</a></li>
 </ul></li>
-<li><a href="#アプリから動作確認">アプリから動作確認</a><ul>
-<li><a href="#アプリ作成">アプリ作成</a></li>
-<li><a href="#実行">実行</a></li>
+<li><a href="#アプリから動作確認" id="toc-アプリから動作確認">アプリから動作確認</a>
+<ul>
+<li><a href="#アプリ作成" id="toc-アプリ作成">アプリ作成</a></li>
+<li><a href="#実行" id="toc-実行">実行</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
 <li><a href="http://flask-sqlalchemy.pocoo.org/2.3/quickstart/" target="_blank" rel="noopener">flask-sqlalchemyのクイックスタート</a></li>
-<li><a href="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/">Flask on Dockerのブログ</a></li>
+<li><a href="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/">Flask
+on Dockerのブログ</a></li>
 </ul>
 <h1><span id="シェルで動作確認">シェルで動作確認</span></h1>
 <h2><span id="dockerコンテナのビルド">Dockerコンテナのビルド</span></h2>
-<p><a href="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/">Flask on Dockerのブログ</a> と同様にDockerfileを作り、ビルドする。</p>
+<p><a href="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/">Flask
+on Dockerのブログ</a> と同様にDockerfileを作り、ビルドする。</p>
 <p>ファイルを作成</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/sqlalchemy</span><br><span class="line">$ cd ~/Sources/docker_flask/sqlalchemy</span><br><span class="line">$ cat &lt;&lt; EOF &gt; Dockerfile</span><br><span class="line">  FROM ubuntu:latest</span><br><span class="line">  </span><br><span class="line">  RUN apt-get update</span><br><span class="line">  RUN apt-get install python3 python3-pip -y</span><br><span class="line">  </span><br><span class="line">  RUN pip3 install flask flask_sqlalchemy</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
 <p>ビルド</p>
@@ -283,13 +287,16 @@ ga('send', 'pageview');
 <p>sqlite3コマンドで接続して内容を確認。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@a5d5ee81df78:/usr/local/apps# apt install sqlite3</span><br><span class="line">root@a5d5ee81df78:/usr/local/apps# sqlite3 /tmp/test.db</span><br><span class="line">sqlite&gt; .databases</span><br><span class="line">main: /tmp/test.db</span><br><span class="line">sqlite&gt; .tables</span><br><span class="line">user</span><br><span class="line">sqlite&gt; select * from user;</span><br><span class="line">1|admin|admin@example.com</span><br><span class="line">2|guest|guest@example.com</span><br></pre></td></tr></table></figure>
 <h1><span id="アプリから動作確認">アプリから動作確認</span></h1>
-<p>上記と同様の流れをアプリから動作確認する。 Dockerイメージは上記で作ったものをベースとする。</p>
+<p>上記と同様の流れをアプリから動作確認する。
+Dockerイメージは上記で作ったものをベースとする。</p>
 <h2><span id="アプリ作成">アプリ作成</span></h2>
-<p>ここでは/registにアクセスすると、登録画面が出て、 登録するとリスト（/list）が表示されるアプリを作成する。</p>
+<p>ここでは/registにアクセスすると、登録画面が出て、
+登録するとリスト（/list）が表示されるアプリを作成する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/sqlalchemy_app</span><br><span class="line">$ cd ~/Sources/docker_flask/sqlalchemy_app</span><br><span class="line">$ mkdir apps</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/app.py</span><br><span class="line">  from flask import Flask, url_for, request, render_template, redirect</span><br><span class="line">  from flask_sqlalchemy import SQLAlchemy</span><br><span class="line">  </span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  app.config[&apos;SQLALCHEMY_DATABASE_URI&apos;] = &apos;sqlite:////tmp/test.db&apos;</span><br><span class="line">  db = SQLAlchemy(app)</span><br><span class="line">  </span><br><span class="line">  class User(db.Model):</span><br><span class="line">      id = db.Column(db.Integer, primary_key=True)</span><br><span class="line">      username = db.Column(db.String(80), unique=True, nullable=False)</span><br><span class="line">      email = db.Column(db.String(120), unique=True, nullable=False)</span><br><span class="line">  </span><br><span class="line">      def __repr__(self):</span><br><span class="line">          return &apos;&lt;User %r&gt;&apos; % self.username</span><br><span class="line">  </span><br><span class="line">  db.create_all()</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/regist&apos;, methods=[&apos;POST&apos;, &apos;GET&apos;])</span><br><span class="line">  def regist():</span><br><span class="line">      if request.method == &apos;POST&apos;:</span><br><span class="line">          user = User(username=request.form[&apos;username&apos;], email=request.form[&apos;email&apos;])</span><br><span class="line">          db.session.add(user)</span><br><span class="line">          db.session.commit()</span><br><span class="line">          return redirect(url_for(&apos;list&apos;))</span><br><span class="line">      # the code below is executed if the request method</span><br><span class="line">      # was GET or the credentials were invalid</span><br><span class="line">      return render_template(&apos;regist.html&apos;)</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/list&apos;)</span><br><span class="line">  def list():</span><br><span class="line">      users = User.query.order_by(User.username).all()</span><br><span class="line">      return render_template(&apos;list.html&apos;, users=users)</span><br><span class="line">  EOF</span><br><span class="line">$ mkdir -p apps/templates</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/regist.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Registration&lt;/title&gt;</span><br><span class="line">  &lt;form action=&quot;/regist&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    &lt;div&gt;username: &lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;email: &lt;input type=&quot;text&quot; name=&quot;email&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;send&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;reset&quot; value=&quot;reset&quot;&gt;</span><br><span class="line">  &lt;/form&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;a href=&quot;/list&quot;&gt;list&lt;/a&gt;</span><br><span class="line">  EOF</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/list.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;List ordered by username&lt;/title&gt;</span><br><span class="line">  &lt;table&gt;</span><br><span class="line">      &lt;thead&gt;</span><br><span class="line">          &lt;tr&gt;</span><br><span class="line">              &lt;th&gt;id&lt;/th&gt;</span><br><span class="line">              &lt;th&gt;username&lt;/th&gt;</span><br><span class="line">              &lt;th&gt;email&lt;/th&gt;</span><br><span class="line">          &lt;/tr&gt;</span><br><span class="line">        &lt;/thead&gt;</span><br><span class="line">      &lt;tbody&gt;</span><br><span class="line">          &#123;% for item in users %&#125;</span><br><span class="line">          &lt;tr&gt;</span><br><span class="line">              &lt;td&gt;</span><br><span class="line">                  &#123;&#123; item.id &#125;&#125;</span><br><span class="line">              &lt;/td&gt;</span><br><span class="line">              &lt;td&gt;</span><br><span class="line">                  &#123;&#123; item.username &#125;&#125;</span><br><span class="line">              &lt;/td&gt;</span><br><span class="line">              &lt;td&gt;</span><br><span class="line">                  &#123;&#123; item.email &#125;&#125;</span><br><span class="line">              &lt;/td&gt;</span><br><span class="line">          &lt;/tr&gt;</span><br><span class="line">          &#123;% endfor %&#125;</span><br><span class="line">      &lt;/tbody&gt;</span><br><span class="line">  &lt;/table&gt;</span><br><span class="line">  &lt;a href=&quot;/regist&quot;&gt;registration&lt;/a&gt;</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
 <h2><span id="実行">実行</span></h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -it --rm -p 5000:5000 -v $(pwd)/apps:/usr/local/apps -e &quot;FLASK_APP=app.py&quot; -w /usr/local/apps -e &quot;LC_ALL=C.UTF-8&quot; -e &quot;LANG=UTF-8&quot; dobachi/flask_sqlalchemy:1.0 flask run --host 0.0.0.0</span><br></pre></td></tr></table></figure>
-<p>なお、上記の実装はエラーハンドリング等を一切実施していないので 例えば同じユーザ名、メールアドレスで登録しようとすると例外が生じる。</p>
+<p>なお、上記の実装はエラーハンドリング等を一切実施していないので
+例えば同じユーザ名、メールアドレスで登録しようとすると例外が生じる。</p>
 
         
         </div>
@@ -300,7 +307,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/Flask-SQLAlchemy/" data-id="cl2nztnlj00565xqivyinwyt9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/Flask-SQLAlchemy/" data-id="cl2o9pb5d003a18rz8nrgkgd0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -551,5 +558,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -5,18 +5,18 @@
     
     <title>Docker on WSL | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ Docker docker-compose    参考  geerlingguy/docker WSLでDockerをインストールする手順を示したブログ docker-composeの公式ドキュメント docker-composeのインストール手順  メモ Docker WSLでDockerをインストールする手順を示したブログを参考に、geerlingguy/docker を用い">
+    <meta name="description" content="参考 メモ  Docker docker-compose    参考  geerlingguy/docker WSLでDockerをインストールする手順を示したブログ docker-composeの公式ドキュメント docker-composeのインストール手順  メモ Docker WSLでDockerをインストールする手順を示したブログを参考に、geerlingguy/docker を用">
 <meta name="keywords" content="Ubuntu,WSL,Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker on WSL">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/01/14/Docker-on-WSL/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ Docker docker-compose    参考  geerlingguy/docker WSLでDockerをインストールする手順を示したブログ docker-composeの公式ドキュメント docker-composeのインストール手順  メモ Docker WSLでDockerをインストールする手順を示したブログを参考に、geerlingguy/docker を用い">
+<meta property="og:description" content="参考 メモ  Docker docker-compose    参考  geerlingguy/docker WSLでDockerをインストールする手順を示したブログ docker-composeの公式ドキュメント docker-composeのインストール手順  メモ Docker WSLでDockerをインストールする手順を示したブログを参考に、geerlingguy/docker を用">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker on WSL">
-<meta name="twitter:description" content="参考 メモ Docker docker-compose    参考  geerlingguy/docker WSLでDockerをインストールする手順を示したブログ docker-composeの公式ドキュメント docker-composeのインストール手順  メモ Docker WSLでDockerをインストールする手順を示したブログを参考に、geerlingguy/docker を用い">
+<meta name="twitter:description" content="参考 メモ  Docker docker-compose    参考  geerlingguy/docker WSLでDockerをインストールする手順を示したブログ docker-composeの公式ドキュメント docker-composeのインストール手順  メモ Docker WSLでDockerをインストールする手順を示したブログを参考に、geerlingguy/docker を用">
     
 
     
@@ -251,10 +251,11 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#docker">Docker</a></li>
-<li><a href="#docker-compose">docker-compose</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#docker" id="toc-docker">Docker</a></li>
+<li><a href="#docker-compose" id="toc-docker-compose">docker-compose</a></li>
 </ul></li>
 </ul>
 </div>
@@ -267,21 +268,30 @@ ga('send', 'pageview');
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="docker">Docker</span></h2>
-<p><a href="https://qiita.com/yanoshi/items/dcecbf117d9cbd14af87" target="_blank" rel="noopener">WSLでDockerをインストールする手順を示したブログ</a>を参考に、<a href="https://galaxy.ansible.com/geerlingguy/docker" target="_blank" rel="noopener">geerlingguy/docker</a> を用いてAnsibleでDockerをインストールしてみたが、</p>
+<p><a href="https://qiita.com/yanoshi/items/dcecbf117d9cbd14af87" target="_blank" rel="noopener">WSLでDockerをインストールする手順を示したブログ</a>を参考に、<a href="https://galaxy.ansible.com/geerlingguy/docker" target="_blank" rel="noopener">geerlingguy/docker</a>
+を用いてAnsibleでDockerをインストールしてみたが、</p>
 <ul>
-<li>2019/01現在のWSLでは17.09.0以前のDockerを用いる必要がある（<a href="https://qiita.com/guchio/items/3eb0818df44fdbab3d14" target="_blank" rel="noopener">Dockerのバージョンについての言及</a> 参照）</li>
-<li>自身のUbuntu18系の環境に置ける <a href="https://galaxy.ansible.com/geerlingguy/docker" target="_blank" rel="noopener">geerlingguy/docker</a> では18系のDockerしかインストールできない</li>
+<li>2019/01現在のWSLでは17.09.0以前のDockerを用いる必要がある（<a href="https://qiita.com/guchio/items/3eb0818df44fdbab3d14" target="_blank" rel="noopener">Dockerのバージョンについての言及</a>
+参照）</li>
+<li>自身のUbuntu18系の環境に置ける <a href="https://galaxy.ansible.com/geerlingguy/docker" target="_blank" rel="noopener">geerlingguy/docker</a>
+では18系のDockerしかインストールできない</li>
 </ul>
-<p>ということから、 <a href="https://qiita.com/guchio/items/3eb0818df44fdbab3d14" target="_blank" rel="noopener">Dockerのバージョンについての言及</a> を参考に17系のDockerを無理やりインストールしたところ一応動いた。</p>
-<p>まず <em>管理者権限で</em> WSLを立ち上げる。 つづいて、以下のとおりインストールする。</p>
+<p>ということから、 <a href="https://qiita.com/guchio/items/3eb0818df44fdbab3d14" target="_blank" rel="noopener">Dockerのバージョンについての言及</a>
+を参考に17系のDockerを無理やりインストールしたところ一応動いた。</p>
+<p>まず <em>管理者権限で</em> WSLを立ち上げる。
+つづいて、以下のとおりインストールする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl -O https://download.docker.com/linux/debian/dists/stretch/pool/stable/amd64/docker-ce_17.09.0~ce-0~debian_amd64.deb</span><br><span class="line">$ sudo dpkg -i docker-ce_17.09.0\~ce-0\~debian_amd64.deb</span><br></pre></td></tr></table></figure>
 <p>サービスを起動して動作確認。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service docker start</span><br><span class="line">$ sudo docker run hello-world</span><br></pre></td></tr></table></figure>
-<p>なお、<a href="https://qiita.com/yanoshi/items/dcecbf117d9cbd14af87" target="_blank" rel="noopener">WSLでDockerをインストールする手順を示したブログ</a> では「管理者権限でWSLを起動する」ことがポイントとあげられていたので、それは守ることにした。 が、インストール後は管理者権限でなくても動いたので、このあたり真偽の確認が必要そうだ。</p>
+<p>なお、<a href="https://qiita.com/yanoshi/items/dcecbf117d9cbd14af87" target="_blank" rel="noopener">WSLでDockerをインストールする手順を示したブログ</a>
+では「管理者権限でWSLを起動する」ことがポイントとあげられていたので、それは守ることにした。
+が、インストール後は管理者権限でなくても動いたので、このあたり真偽の確認が必要そうだ。</p>
 <h2><span id="docker-compose">docker-compose</span></h2>
-<p>おおむね <a href="http://docs.docker.jp/compose/install.html" target="_blank" rel="noopener">docker-composeのインストール手順</a> のとおりにインストールする。</p>
+<p>おおむね <a href="http://docs.docker.jp/compose/install.html" target="_blank" rel="noopener">docker-composeのインストール手順</a>
+のとおりにインストールする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo su - -c &quot;curl -L https://github.com/docker/compose/releases/download/1.6.2/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose&quot;</span><br><span class="line">$ sudo chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
-<p><a href="http://docs.docker.jp/compose/gettingstarted.html" target="_blank" rel="noopener">docker-composeの公式ドキュメント</a> の通りためしてみるが、以下のようなエラーが生じた。</p>
+<p><a href="http://docs.docker.jp/compose/gettingstarted.html" target="_blank" rel="noopener">docker-composeの公式ドキュメント</a>
+の通りためしてみるが、以下のようなエラーが生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker-compose up</span><br><span class="line">Creating network &quot;composetest_default&quot; with the default driver</span><br><span class="line">ERROR: Failed to Setup IP tables: Unable to enable NAT rule:  (iptables failed: iptables --wait -t nat -I POSTROUTING -s 172.18.0.0/16 ! -o br-3a6517e292d4 -j MASQUERADE: iptables: Invalid argument. Run `dmesg&apos; for more information.</span><br><span class="line"> (exit status 1))</span><br></pre></td></tr></table></figure>
 <p>WSLがLinuxカーネルではないことに起因しているのだろう可。（iptablesまわりは期待したとおりに動かない？）</p>
 
@@ -294,7 +304,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/14/Docker-on-WSL/" data-id="cl2nztnl700475xqi0voxp1u4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/14/Docker-on-WSL/" data-id="cl2o9pb57002t18rz1wm5qstz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -545,5 +555,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

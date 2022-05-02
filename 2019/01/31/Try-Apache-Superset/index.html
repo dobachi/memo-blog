@@ -5,18 +5,18 @@
     
     <title>Try Apache Superset | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 動作確認 必要パッケージのインストール セットアップ    参考  公式ウェブサイト 公式ウェブサイトのインストール手順 Issue 2205 Issue 6770  動作確認 公式ウェブサイトのインストール手順 の「Start with Docker」のとおり、進めてみたところ、 トップ画面がうまく表示されない事象が生じたので、ここでは改めてCentOS7環境に構築してみることにする">
+    <meta name="description" content="参考 動作確認  必要パッケージのインストール セットアップ    参考  公式ウェブサイト 公式ウェブサイトのインストール手順 Issue 2205 Issue 6770  動作確認 公式ウェブサイトのインストール手順 の「Start with Docker」のとおり、進めてみたところ、 トップ画面がうまく表示されない事象が生じたので、ここでは改めてCentOS7環境に構築してみることにす">
 <meta name="keywords" content="Superset,Visualization">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Try Apache Superset">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/01/31/Try-Apache-Superset/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 動作確認 必要パッケージのインストール セットアップ    参考  公式ウェブサイト 公式ウェブサイトのインストール手順 Issue 2205 Issue 6770  動作確認 公式ウェブサイトのインストール手順 の「Start with Docker」のとおり、進めてみたところ、 トップ画面がうまく表示されない事象が生じたので、ここでは改めてCentOS7環境に構築してみることにする">
+<meta property="og:description" content="参考 動作確認  必要パッケージのインストール セットアップ    参考  公式ウェブサイト 公式ウェブサイトのインストール手順 Issue 2205 Issue 6770  動作確認 公式ウェブサイトのインストール手順 の「Start with Docker」のとおり、進めてみたところ、 トップ画面がうまく表示されない事象が生じたので、ここでは改めてCentOS7環境に構築してみることにす">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Try Apache Superset">
-<meta name="twitter:description" content="参考 動作確認 必要パッケージのインストール セットアップ    参考  公式ウェブサイト 公式ウェブサイトのインストール手順 Issue 2205 Issue 6770  動作確認 公式ウェブサイトのインストール手順 の「Start with Docker」のとおり、進めてみたところ、 トップ画面がうまく表示されない事象が生じたので、ここでは改めてCentOS7環境に構築してみることにする">
+<meta name="twitter:description" content="参考 動作確認  必要パッケージのインストール セットアップ    参考  公式ウェブサイト 公式ウェブサイトのインストール手順 Issue 2205 Issue 6770  動作確認 公式ウェブサイトのインストール手順 の「Start with Docker」のとおり、進めてみたところ、 トップ画面がうまく表示されない事象が生じたので、ここでは改めてCentOS7環境に構築してみることにす">
     
 
     
@@ -251,10 +251,11 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#動作確認">動作確認</a><ul>
-<li><a href="#必要パッケージのインストール">必要パッケージのインストール</a></li>
-<li><a href="#セットアップ">セットアップ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a>
+<ul>
+<li><a href="#必要パッケージのインストール" id="toc-必要パッケージのインストール">必要パッケージのインストール</a></li>
+<li><a href="#セットアップ" id="toc-セットアップ">セットアップ</a></li>
 </ul></li>
 </ul>
 </div>
@@ -262,20 +263,28 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://superset.incubator.apache.org/installation.html" target="_blank" rel="noopener">公式ウェブサイト</a></li>
 <li><a href="https://superset.incubator.apache.org/installation.html" target="_blank" rel="noopener">公式ウェブサイトのインストール手順</a></li>
-<li><a href="https://github.com/apache/incubator-superset/issues/2205" target="_blank" rel="noopener">Issue 2205</a></li>
-<li><a href="https://github.com/apache/incubator-superset/issues/6770" target="_blank" rel="noopener">Issue 6770</a></li>
+<li><a href="https://github.com/apache/incubator-superset/issues/2205" target="_blank" rel="noopener">Issue
+2205</a></li>
+<li><a href="https://github.com/apache/incubator-superset/issues/6770" target="_blank" rel="noopener">Issue
+6770</a></li>
 </ul>
 <h1><span id="動作確認">動作確認</span></h1>
-<p><a href="https://superset.incubator.apache.org/installation.html" target="_blank" rel="noopener">公式ウェブサイトのインストール手順</a> の「Start with Docker」のとおり、進めてみたところ、 トップ画面がうまく表示されない事象が生じたので、ここでは改めてCentOS7環境に構築してみることにする。</p>
+<p><a href="https://superset.incubator.apache.org/installation.html" target="_blank" rel="noopener">公式ウェブサイトのインストール手順</a>
+の「Start with Docker」のとおり、進めてみたところ、
+トップ画面がうまく表示されない事象が生じたので、ここでは改めてCentOS7環境に構築してみることにする。</p>
 <h2><span id="必要パッケージのインストール">必要パッケージのインストール</span></h2>
 <p>以下が指定されていたが、<code>libsasl2-devel</code>だけ無いというエラーが出た。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc gcc-c++ libffi-devel python-devel python-pip python-wheel openssl-devel libsasl2-devel openldap-devel</span><br></pre></td></tr></table></figure>
-<p><a href="https://github.com/apache/incubator-superset/issues/2205" target="_blank" rel="noopener">Issue 2205</a> を見ると、cyrus-sasl-develであれば存在するようだ。</p>
+<p><a href="https://github.com/apache/incubator-superset/issues/2205" target="_blank" rel="noopener">Issue
+2205</a> を見ると、cyrus-sasl-develであれば存在するようだ。</p>
 <h2><span id="セットアップ">セットアップ</span></h2>
-<p><code>/opt/virtualenv/superset</code> 以下にvirtualenv環境を作り、supersetをインストールしたものとする。 その上で、公式ドキュメントを参考に以下のようなコマンドを実行する。（極力対話設定を減らしている）</p>
+<p><code>/opt/virtualenv/superset</code>
+以下にvirtualenv環境を作り、supersetをインストールしたものとする。
+その上で、公式ドキュメントを参考に以下のようなコマンドを実行する。（極力対話設定を減らしている）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ source /opt/virtualenv/superset/bin/activate</span><br><span class="line">$ fabmanager create-admin --app superset --username admin --firstname admin --lastname admin --password admin --email admin@fab.org</span><br><span class="line">$ superset db upgrade</span><br></pre></td></tr></table></figure>
 <p>以下のようなエラーが出た。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Was unable to import superset Error: cannot import name &apos;_maybe_box_datetimelike&apos;(superset) [vagrant@superset-01 ~]$ superset db upgrade</span><br></pre></td></tr></table></figure></p>
-<p>[Issue 6670] を見ると、Pandasの新しいバージョンに起因する問題らしく、バージョンを下げることで対応可能だそうだ。</p>
+<p>[Issue 6670]
+を見ると、Pandasの新しいバージョンに起因する問題らしく、バージョンを下げることで対応可能だそうだ。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pip uninstall pandas</span><br><span class="line">$ pip install pandas==0.23.4</span><br></pre></td></tr></table></figure>
 <p>してから、以下の通り改めて実行。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ fabmanager create-admin --app superset --username admin --firstname admin --lastname admin --password admin --email admin@fab.org</span><br><span class="line">$ superset db upgrade</span><br><span class="line">$ superset load_examples</span><br><span class="line">$ superset init</span><br></pre></td></tr></table></figure>
@@ -290,7 +299,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/31/Try-Apache-Superset/" data-id="cl2nztnot00f35xqiiba451a1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/31/Try-Apache-Superset/" data-id="cl2o9pb8d00aq18rzq4qkhwy3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -541,5 +550,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

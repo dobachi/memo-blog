@@ -5,22 +5,22 @@
     
     <title>Delta Lake with Alluxio | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 論文 Hadoop環境 Alluxioドキュメント  メモ 疑似分散で動作確認 実行環境の準備 フォーマット、起動 Sparkの起動確認 Delta Lakeを通じて書き込む動作確認 （補足）HDFS上のディレクトリ権限に関するエラー     参考 論文  Delta Lake High-Performance ACID Table Storage over Cloud Object">
+    <meta name="description" content="参考  論文 Hadoop環境 Alluxioドキュメント  メモ  疑似分散で動作確認  実行環境の準備 フォーマット、起動 Sparkの起動確認 Delta Lakeを通じて書き込む動作確認 （補足）HDFS上のディレクトリ権限に関するエラー     参考 論文  Delta Lake High-Performance ACID Table Storage over Cloud Obje">
 <meta name="keywords" content="Delta Lake,Alluxio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Delta Lake with Alluxio">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/12/31/Delta-Lake-with-Alluxio/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 論文 Hadoop環境 Alluxioドキュメント  メモ 疑似分散で動作確認 実行環境の準備 フォーマット、起動 Sparkの起動確認 Delta Lakeを通じて書き込む動作確認 （補足）HDFS上のディレクトリ権限に関するエラー     参考 論文  Delta Lake High-Performance ACID Table Storage over Cloud Object">
+<meta property="og:description" content="参考  論文 Hadoop環境 Alluxioドキュメント  メモ  疑似分散で動作確認  実行環境の準備 フォーマット、起動 Sparkの起動確認 Delta Lakeを通じて書き込む動作確認 （補足）HDFS上のディレクトリ権限に関するエラー     参考 論文  Delta Lake High-Performance ACID Table Storage over Cloud Obje">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20210101_alluxio_started.PNG">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20210104_alluxio_testfiles.PNG">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20210430_alluxio_deltalake.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20210430_alluxio_deltalake2.png">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Delta Lake with Alluxio">
-<meta name="twitter:description" content="参考 論文 Hadoop環境 Alluxioドキュメント  メモ 疑似分散で動作確認 実行環境の準備 フォーマット、起動 Sparkの起動確認 Delta Lakeを通じて書き込む動作確認 （補足）HDFS上のディレクトリ権限に関するエラー     参考 論文  Delta Lake High-Performance ACID Table Storage over Cloud Object">
+<meta name="twitter:description" content="参考  論文 Hadoop環境 Alluxioドキュメント  メモ  疑似分散で動作確認  実行環境の準備 フォーマット、起動 Sparkの起動確認 Delta Lakeを通じて書き込む動作確認 （補足）HDFS上のディレクトリ権限に関するエラー     参考 論文  Delta Lake High-Performance ACID Table Storage over Cloud Obje">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/20210101_alluxio_started.PNG">
     
 
@@ -256,18 +256,22 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#論文">論文</a></li>
-<li><a href="#hadoop環境">Hadoop環境</a></li>
-<li><a href="#alluxioドキュメント">Alluxioドキュメント</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#論文" id="toc-論文">論文</a></li>
+<li><a href="#hadoop環境" id="toc-hadoop環境">Hadoop環境</a></li>
+<li><a href="#alluxioドキュメント" id="toc-alluxioドキュメント">Alluxioドキュメント</a></li>
 </ul></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#疑似分散で動作確認">疑似分散で動作確認</a><ul>
-<li><a href="#実行環境の準備">実行環境の準備</a></li>
-<li><a href="#フォーマット起動">フォーマット、起動</a></li>
-<li><a href="#sparkの起動確認">Sparkの起動確認</a></li>
-<li><a href="#delta-lakeを通じて書き込む動作確認">Delta Lakeを通じて書き込む動作確認</a></li>
-<li><a href="#補足hdfs上のディレクトリ権限に関するエラー">（補足）HDFS上のディレクトリ権限に関するエラー</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#疑似分散で動作確認" id="toc-疑似分散で動作確認">疑似分散で動作確認</a>
+<ul>
+<li><a href="#実行環境の準備" id="toc-実行環境の準備">実行環境の準備</a></li>
+<li><a href="#フォーマット起動" id="toc-フォーマット起動">フォーマット、起動</a></li>
+<li><a href="#sparkの起動確認" id="toc-sparkの起動確認">Sparkの起動確認</a></li>
+<li><a href="#delta-lakeを通じて書き込む動作確認" id="toc-delta-lakeを通じて書き込む動作確認">Delta
+Lakeを通じて書き込む動作確認</a></li>
+<li><a href="#補足hdfs上のディレクトリ権限に関するエラー" id="toc-補足hdfs上のディレクトリ権限に関するエラー">（補足）HDFS上のディレクトリ権限に関するエラー</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -275,8 +279,12 @@ ga('send', 'pageview');
 <h1><span id="参考">参考</span></h1>
 <h2><span id="論文">論文</span></h2>
 <ul>
-<li><a href="https://databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf" target="_blank" rel="noopener">Delta Lake High-Performance ACID Table Storage over Cloud Object Stores</a></li>
-<li><a href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf" target="_blank" rel="noopener">Lakehouse A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics</a></li>
+<li><a href="https://databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf" target="_blank" rel="noopener">Delta
+Lake High-Performance ACID Table Storage over Cloud Object
+Stores</a></li>
+<li><a href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf" target="_blank" rel="noopener">Lakehouse
+A New Generation of Open Platforms that Unify Data Warehousing and
+Advanced Analytics</a></li>
 </ul>
 <h2><span id="hadoop環境">Hadoop環境</span></h2>
 <ul>
@@ -284,15 +292,24 @@ ga('send', 'pageview');
 </ul>
 <h2><span id="alluxioドキュメント">Alluxioドキュメント</span></h2>
 <ul>
-<li><a href="https://docs.alluxio.io/os/user/stable/en/compute/Spark.html#examples-use-alluxio-as-input-and-output" target="_blank" rel="noopener">Examples: Use Alluxio as Input and Output</a></li>
-<li><a href="https://docs.alluxio.io/os/user/stable/en/operation/Security.html" target="_blank" rel="noopener">Alluxio Security</a></li>
+<li><a href="https://docs.alluxio.io/os/user/stable/en/compute/Spark.html#examples-use-alluxio-as-input-and-output" target="_blank" rel="noopener">Examples:
+Use Alluxio as Input and Output</a></li>
+<li><a href="https://docs.alluxio.io/os/user/stable/en/operation/Security.html" target="_blank" rel="noopener">Alluxio
+Security</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf" target="_blank" rel="noopener">Delta Lake High-Performance ACID Table Storage over Cloud Object Stores</a> や <a href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf" target="_blank" rel="noopener">Lakehouse A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics</a> の論文の通り、 Delta Lakeはキャッシュとの組み合わせが可能である。</p>
+<p><a href="https://databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf" target="_blank" rel="noopener">Delta
+Lake High-Performance ACID Table Storage over Cloud Object Stores</a> や
+<a href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf" target="_blank" rel="noopener">Lakehouse
+A New Generation of Open Platforms that Unify Data Warehousing and
+Advanced Analytics</a> の論文の通り、 Delta
+Lakeはキャッシュとの組み合わせが可能である。</p>
 <p>今回は、ストレージにHDFS、キャッシュにAlluxioを使って動作確認する。</p>
 <h2><span id="疑似分散で動作確認">疑似分散で動作確認</span></h2>
 <h3><span id="実行環境の準備">実行環境の準備</span></h3>
-<p><a href="https://github.com/dobachi/ansible-bigdata.git" target="_blank" rel="noopener">ansible-bigdata</a> あたりを参考に、Hadoopの疑似分散環境を構築する。 Bigtopベースの2.8.5とした。</p>
+<p><a href="https://github.com/dobachi/ansible-bigdata.git" target="_blank" rel="noopener">ansible-bigdata</a>
+あたりを参考に、Hadoopの疑似分散環境を構築する。
+Bigtopベースの2.8.5とした。</p>
 <p>併せて、同Ansibleプレイブック集などを用いて、Spark3.1.1のコミュニティ版を配備した。</p>
 <p>併せて、Alluxioは2.5.0-2を利用。</p>
 <p>Alluxioに関しては、以下のようにコンパイルしてパッケージ化して用いることできる。</p>
@@ -309,59 +326,85 @@ ga('send', 'pageview');
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo -u alluxio ./bin/alluxio format</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo -u alluxio ./bin/alluxio-start.sh <span class="built_in">local</span> SudoMount</span></span><br></pre></td></tr></table></figure>
 <p>テストを実行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo -u alluxio ./bin/alluxio runTests</span></span><br></pre></td></tr></table></figure>
-<p>もしエラーが生じた場合は、例えばHDFSの/alluxioディレクトリに、 適切な権限設定、所有者設定がされているかどうかを確認すること。</p>
+<p>もしエラーが生じた場合は、例えばHDFSの/alluxioディレクトリに、
+適切な権限設定、所有者設定がされているかどうかを確認すること。</p>
 <p>Alluxioが起動すると以下のようなUIを確認できる（ポート19999）</p>
 <figure>
-<img src="/memo-blog/images/20210101_alluxio_started.PNG" alt=""><figcaption>AlluxioのUI</figcaption>
+<img src="/memo-blog/images/20210101_alluxio_started.PNG" alt="AlluxioのUI">
+<figcaption aria-hidden="true">AlluxioのUI</figcaption>
 </figure>
 <p>先程テストで書き込まれたファイル群が見られるはず。</p>
 <figure>
-<img src="/memo-blog/images/20210104_alluxio_testfiles.PNG" alt=""><figcaption>Alluxioに書き込まれたテストファイル群I</figcaption>
+<img src="/memo-blog/images/20210104_alluxio_testfiles.PNG" alt="Alluxioに書き込まれたテストファイル群I">
+<figcaption aria-hidden="true">Alluxioに書き込まれたテストファイル群I</figcaption>
 </figure>
 <p>ここでは、上記の通り、環境を整えた前提で以下説明する。</p>
 <h3><span id="sparkの起動確認">Sparkの起動確認</span></h3>
-<p><a href="https://docs.alluxio.io/os/user/stable/en/compute/Spark.html#examples-use-alluxio-as-input-and-output" target="_blank" rel="noopener">Examples: Use Alluxio as Input and Output</a> を参考に、Alluxio経由での読み書きを試す。</p>
+<p><a href="https://docs.alluxio.io/os/user/stable/en/compute/Spark.html#examples-use-alluxio-as-input-and-output" target="_blank" rel="noopener">Examples:
+Use Alluxio as Input and Output</a>
+を参考に、Alluxio経由での読み書きを試す。</p>
 <p>予め、今回の動作確認で使用するテキストデータ（AlluxioのREADME）をアップロードしておく。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u alluxio /opt/alluxio/default//bin/alluxio fs copyFromLocal /opt/alluxio/default/LICENSE /LICENSE</span><br></pre></td></tr></table></figure>
-<p>予め、以下のような設定をspark-defaults.confに入れておく。 Alluxioのクライアントライブラリを用いられるように。</p>
+<p>予め、以下のような設定をspark-defaults.confに入れておく。
+Alluxioのクライアントライブラリを用いられるように。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark.driver.extraClassPath   /opt/alluxio/default/client/alluxio-2.5.0-2-client.jar</span><br><span class="line">spark.executor.extraClassPath /opt/alluxio/default/client/alluxio-2.5.0-2-client.jar</span><br></pre></td></tr></table></figure>
-<p>Sparkが起動することを確認する。ここではDelta Lakeも含めて起動する。</p>
+<p>Sparkが起動することを確認する。ここではDelta
+Lakeも含めて起動する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /usr/<span class="built_in">local</span>/spark/default/bin/spark-shell \</span></span><br><span class="line">  --packages io.delta:delta-core_2.12:0.8.0 \</span><br><span class="line">  --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \</span><br><span class="line">  --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"</span><br></pre></td></tr></table></figure>
 <p>起動したシェルでAlluxio上のREADMEファイルを読み取り、行数を確認する。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> pathOnAlluxio = <span class="string">"alluxio://localhost:19998/LICENSE"</span></span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> testDF = spark.read.text(pathOnAlluxio)</span><br><span class="line"></span><br><span class="line">scala&gt; testDF.count</span><br><span class="line">res0: <span class="type">Long</span> = <span class="number">482</span></span><br></pre></td></tr></table></figure>
-<h3><span id="delta-lakeを通じて書き込む動作確認">Delta Lakeを通じて書き込む動作確認</span></h3>
+<h3><span id="deltalakeを通じて書き込む動作確認">Delta
+Lakeを通じて書き込む動作確認</span></h3>
 <p>準備として、Alluxio上に、<code>dobachi</code>ユーザ用のディレクトリを作成してみる。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo -u alluxio /opt/alluxio/default/bin/alluxio fs mkdir /users</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo -u alluxio /opt/alluxio/default/bin/alluxio fs mkdir /users/dobachi</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo -u alluxio /opt/alluxio/default/bin/alluxio fs chown dobachi:dobachi /users/dobachi</span></span><br></pre></td></tr></table></figure>
-<p>先程起動しておいたシェルで、Delta Lake形式のデータを書き込んで見る。</p>
+<p>先程起動しておいたシェルで、Delta
+Lake形式のデータを書き込んで見る。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> data = spark.range(<span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">data: org.apache.spark.sql.<span class="type">Dataset</span>[<span class="type">Long</span>] = [id: bigint]</span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> outputUrl = <span class="string">"alluxio://localhost:19998/users/dobachi/numbers"</span></span><br><span class="line"></span><br><span class="line">scala&gt; data.write.format(<span class="string">"delta"</span>).save(outputUrl)</span><br></pre></td></tr></table></figure>
 <p>すると以下のようなエラーが生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; data.write.format(&quot;delta&quot;).save(outputUrl)</span><br><span class="line">21/01/05 22:47:50 ERROR HDFSLogStore: The error typically occurs when the default LogStore implementation, that</span><br><span class="line"> is, HDFSLogStore, is used to write into a Delta table on a non-HDFS storage system.</span><br><span class="line"> In order to get the transactional ACID guarantees on table updates, you have to use the</span><br><span class="line"> correct implementation of LogStore that is appropriate for your storage system.</span><br><span class="line"> See https://docs.delta.io/latest/delta-storage.html &quot; for details.</span><br><span class="line"></span><br><span class="line">org.apache.hadoop.fs.UnsupportedFileSystemException: fs.AbstractFileSystem.alluxio.impl=null: No AbstractFileSystem configured for scheme: alluxio</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
-<p>当たり前だが、Delta Lakeの下回りのストレージとして標準では、 Alluxioが対応しておらず、LogStoreからエラーが生じた、ということのようだ。</p>
-<p>一瞬、LogStoreを新たに開発しないといけないか？と思ったものの、よく考えたら、HDFSHadoopFileSystemLogStoreから Alluxioのスキーマを認識させてアクセスできるようにすればよいだけでは？と思った。 そこで、Hadoopの設定でAlluxioFileSystemをalluxioスキーマ（ファイルシステムのスキーマ）に明示的に登録してみる。</p>
+<p>当たり前だが、Delta Lakeの下回りのストレージとして標準では、
+Alluxioが対応しておらず、LogStoreからエラーが生じた、ということのようだ。</p>
+<p>一瞬、LogStoreを新たに開発しないといけないか？と思ったものの、よく考えたら、HDFSHadoopFileSystemLogStoreから
+Alluxioのスキーマを認識させてアクセスできるようにすればよいだけでは？と思った。
+そこで、Hadoopの設定でAlluxioFileSystemをalluxioスキーマ（ファイルシステムのスキーマ）に明示的に登録してみる。</p>
 <p>/etc/hadoop/conf/core-site.xmlに以下を追記。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.AbstractFileSystem.alluxio.impl<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>alluxio.hadoop.AlluxioFileSystem<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>The FileSystem for alluxio uris.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>再びSparkを立ち上げ、適当なデータを書き込み。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> data = spark.range(<span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> outputUrl = <span class="string">"alluxio://localhost:19998/users/dobachi/numbers"</span></span><br><span class="line"></span><br><span class="line">scala&gt; data.write.format(<span class="string">"delta"</span>).save(outputUrl)</span><br></pre></td></tr></table></figure>
 <figure>
-<img src="/memo-blog/images/20210430_alluxio_deltalake.png" alt=""><figcaption>Alluxio上にDelta Lakeで保存された様子</figcaption>
+<img src="/memo-blog/images/20210430_alluxio_deltalake.png" alt="Alluxio上にDelta Lakeで保存された様子">
+<figcaption aria-hidden="true">Alluxio上にDelta
+Lakeで保存された様子</figcaption>
 </figure>
 <p>以上のように書き込みに成功した。</p>
 <p>つづいて、テーブルとして読み出す。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> df = spark.read.format(<span class="string">"delta"</span>).load(outputUrl)</span><br><span class="line">scala&gt; df.show</span><br><span class="line">+---+</span><br><span class="line">| id|</span><br><span class="line">+---+</span><br><span class="line">|  <span class="number">1</span>|</span><br><span class="line">|  <span class="number">2</span>|</span><br><span class="line">|  <span class="number">3</span>|</span><br><span class="line">|  <span class="number">4</span>|</span><br><span class="line">|  <span class="number">0</span>|</span><br><span class="line">+---+</span><br></pre></td></tr></table></figure>
 <p>テーブルへの追記。</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> addData = spark.range(<span class="number">5</span>, <span class="number">10</span>)</span><br><span class="line">scala&gt; addData.write.format(<span class="string">"delta"</span>).mode(<span class="string">"append"</span>).save(outputUrl)</span><br><span class="line">scala&gt; df.show</span><br><span class="line">+---+</span><br><span class="line">| id|</span><br><span class="line">+---+</span><br><span class="line">|  <span class="number">3</span>|</span><br><span class="line">|  <span class="number">9</span>|</span><br><span class="line">|  <span class="number">6</span>|</span><br><span class="line">|  <span class="number">5</span>|</span><br><span class="line">|  <span class="number">1</span>|</span><br><span class="line">|  <span class="number">8</span>|</span><br><span class="line">|  <span class="number">4</span>|</span><br><span class="line">|  <span class="number">2</span>|</span><br><span class="line">|  <span class="number">7</span>|</span><br><span class="line">|  <span class="number">0</span>|</span><br><span class="line">+---+</span><br></pre></td></tr></table></figure>
-<p>また、追記書き込みをしたのでDeltaログが増えていることが分かる。 （3回ぶんのログがあるのは、↑には記載していないがミスったため）</p>
+<p>また、追記書き込みをしたのでDeltaログが増えていることが分かる。
+（3回ぶんのログがあるのは、↑には記載していないがミスったため）</p>
 <figure>
-<img src="/memo-blog/images/20210430_alluxio_deltalake2.png" alt=""><figcaption>Alluxio上にDelta LakeのDeltaログ</figcaption>
+<img src="/memo-blog/images/20210430_alluxio_deltalake2.png" alt="Alluxio上にDelta LakeのDeltaログ">
+<figcaption aria-hidden="true">Alluxio上にDelta
+LakeのDeltaログ</figcaption>
 </figure>
 <h3><span id="補足hdfs上のディレクトリ権限に関するエラー">（補足）HDFS上のディレクトリ権限に関するエラー</span></h3>
-<p>Sparkでの処理実行時にYARNで実行していたところ、Executorにおける処理からAlluxioを呼び出すときにエラー。 yarnユーザでのアクセスとなり、HDFS上の <code>/alluxio</code> へのアクセス権がなかったと考えられる。</p>
+<p>Sparkでの処理実行時にYARNで実行していたところ、Executorにおける処理からAlluxioを呼び出すときにエラー。
+yarnユーザでのアクセスとなり、HDFS上の <code>/alluxio</code>
+へのアクセス権がなかったと考えられる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">21/01/05 02:54:35 WARN TaskSetManager: Lost task 0.0 in stage 0.0 (TID 0, hadoop-pseudo, executor 2): alluxio.exception.status.UnauthenticatedException: Channel authentication failed with code:UNAUTHENTICATED. Channel: GrpcChannelKey&#123;ClientType=FileSystemMasterClient, ClientHostname=hadoop-pseudo.mshome.net, ServerAddress=GrpcServerAddress&#123;HostName=localhost, SocketAddress=localhost:19998&#125;, ChannelId=81f7d97f-8e32-4289-bcab-ea6008d5ffac&#125;, AuthType: SIMPLE, Error: alluxio.exception.status.UnauthenticatedException: Plain authentication failed: Failed to authenticate client user=&quot;yarn&quot; connecting to Alluxio server and impersonating as impersonationUser=&quot;vagrant&quot; to access Alluxio file system. User &quot;yarn&quot; is not configured to allow any impersonation. Please read the guide to configure impersonation at https://docs.alluxio.io/os/user/2.4/en/operation/Security.html</span><br><span class="line">        at alluxio.exception.status.AlluxioStatusException.from(AlluxioStatusException.java:141)</span><br></pre></td></tr></table></figure>
-<p><a href="https://docs.alluxio.io/os/user/stable/en/operation/Security.html" target="_blank" rel="noopener">Alluxio Security</a> のドキュメント中に「Client-Side Hadoop Impersonation」を読むと、 「なりすまし」を許可する設定があるようだ。</p>
-<p>そこで、<code>yarn</code>ユーザが様々なユーザになりすませるような簡易設定を以下のように加えることにした。 実際の運用する際は、なりすましのスコープに注意したほうが良さそうだ。</p>
+<p><a href="https://docs.alluxio.io/os/user/stable/en/operation/Security.html" target="_blank" rel="noopener">Alluxio
+Security</a> のドキュメント中に「Client-Side Hadoop
+Impersonation」を読むと、 「なりすまし」を許可する設定があるようだ。</p>
+<p>そこで、<code>yarn</code>ユーザが様々なユーザになりすませるような簡易設定を以下のように加えることにした。
+実際の運用する際は、なりすましのスコープに注意したほうが良さそうだ。</p>
 <p>conf/alluxio-site.properties</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alluxio.master.security.impersonation.yarn.users=*</span><br><span class="line">alluxio.master.security.impersonation.yarn.groups=*</span><br></pre></td></tr></table></figure>
-<p>ドキュメントではクライアントで <code>alluxio.security.login.impersonation.username</code> も指定するよう書かれていたが、 起動時にしてしなくてもアクセスできるようになった。 あとで実装を調べたほうが良さそうだ。</p>
+<p>ドキュメントではクライアントで
+<code>alluxio.security.login.impersonation.username</code>
+も指定するよう書かれていたが、
+起動時にしてしなくてもアクセスできるようになった。
+あとで実装を調べたほうが良さそうだ。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -373,7 +416,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Delta-Lake-with-Alluxio/" data-id="cl2nztnl500405xqi5aenitzk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Delta-Lake-with-Alluxio/" data-id="cl2o9pbgg014718rzc1vymzti" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -624,5 +667,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -5,18 +5,18 @@
     
     <title>Spark Summit 2019 | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="セッションメモ Accelerate Your Apache Spark with Intel Optane DC Persistent Memory Building Robust Production Data Pipelines with Databricks Delta Deploying Enterprise Scale Deep Learning in Actuarial Mod">
-<meta name="keywords" content="Spark,Apache Spark">
+    <meta name="description" content="セッションメモ  Accelerate Your Apache Spark with Intel Optane DC Persistent Memory Building Robust Production Data Pipelines with Databricks Delta Deploying Enterprise Scale Deep Learning in Actuarial Mo">
+<meta name="keywords" content="Apache Spark,Spark">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spark Summit 2019">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/05/17/Spark-Summit-2019/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="セッションメモ Accelerate Your Apache Spark with Intel Optane DC Persistent Memory Building Robust Production Data Pipelines with Databricks Delta Deploying Enterprise Scale Deep Learning in Actuarial Mod">
+<meta property="og:description" content="セッションメモ  Accelerate Your Apache Spark with Intel Optane DC Persistent Memory Building Robust Production Data Pipelines with Databricks Delta Deploying Enterprise Scale Deep Learning in Actuarial Mo">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark Summit 2019">
-<meta name="twitter:description" content="セッションメモ Accelerate Your Apache Spark with Intel Optane DC Persistent Memory Building Robust Production Data Pipelines with Databricks Delta Deploying Enterprise Scale Deep Learning in Actuarial Mod">
+<meta name="twitter:description" content="セッションメモ  Accelerate Your Apache Spark with Intel Optane DC Persistent Memory Building Robust Production Data Pipelines with Databricks Delta Deploying Enterprise Scale Deep Learning in Actuarial Mo">
     
 
     
@@ -251,53 +251,115 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#セッションメモ">セッションメモ</a><ul>
-<li><a href="#accelerate-your-apache-spark-with-intel-optane-dc-persistent-memory">Accelerate Your Apache Spark with Intel Optane DC Persistent Memory</a></li>
-<li><a href="#building-robust-production-data-pipelines-with-databricks-delta">Building Robust Production Data Pipelines with Databricks Delta</a></li>
-<li><a href="#deploying-enterprise-scale-deep-learning-in-actuarial-modeling-at-nationwide">Deploying Enterprise Scale Deep Learning in Actuarial Modeling at Nationwide</a></li>
-<li><a href="#improving-apache-sparks-reliability-with-datasourcev2">Improving Apache Spark's Reliability with DataSourceV2</a></li>
-<li><a href="#lessons-learned-using-apache-spark-for-self-service-data-prep-in-saas-world">Lessons Learned Using Apache Spark for Self-Service Data Prep in SaaS World</a></li>
-<li><a href="#using-spark-mllib-models-in-a-production-training-and-serving-platform-experiences-and-extensions">Using Spark Mllib Models in a Production Training and Serving Platform: Experiences and Extensions ★</a></li>
-<li><a href="#a-journey-to-building-an-autonomous-streaming-data-platformscaling-to-trillion-events-monthly-at-nvidia">A Journey to Building an Autonomous Streaming Data PlatformScaling to Trillion Events Monthly at Nvidia</a></li>
-<li><a href="#apache-spark-on-k8s-best-practice-and-performance-in-the-cloud">Apache Spark on K8S Best Practice and Performance in the Cloud</a></li>
-<li><a href="#deep-learning-on-apache-spark-at-cerns-large-hadron-collider-with-intel-technologies">Deep Learning on Apache Spark at CERN’s Large Hadron Collider with Intel Technologies ★</a></li>
-<li><a href="#elastify-cloud-native-spark-application-with-persistent-memory">Elastify Cloud-Native Spark Application with Persistent Memory</a></li>
-<li><a href="#geospatial-analytics-at-scale-with-deep-learning-and-apache-spark">Geospatial Analytics at Scale with Deep Learning and Apache Spark</a></li>
-<li><a href="#improving-call-center-operations-and-marketing-roi-with-real-time-aiml-streams">Improving Call Center Operations and Marketing ROI with Real-Time AI/ML Streams</a></li>
-<li><a href="#large-scale-malicious-domain-detection-with-spark-ai">Large-Scale Malicious Domain Detection with Spark AI</a></li>
-<li><a href="#migrating-to-apache-spark-at-netflix">Migrating to Apache Spark at Netflix</a></li>
-<li><a href="#apache-arrow-based-unified-data-sharing-and-transferring-format-among-cpu-and-accelerators">Apache Arrow-Based Unified Data Sharing and Transferring Format Among CPU and Accelerators</a></li>
-<li><a href="#apache-spark-and-sights-at-speed-streaming-feature-management-and-execution">Apache Spark and Sights at Speed: Streaming, Feature Management, and Execution</a></li>
-<li><a href="#data-driven-transformation-leveraging-big-data-at-showtime-with-apache-spark">Data-Driven Transformation: Leveraging Big Data at Showtime with Apache Spark</a></li>
-<li><a href="#in-memory-storage-evolution-in-apache-spark">In-Memory Storage Evolution in Apache Spark</a></li>
-<li><a href="#sparkml-easy-ml-productization-for-real-time-bidding">SparkML: Easy ML Productization for Real-Time Bidding</a></li>
-<li><a href="#best-practices-for-hyperparameter-tuning-with-mlflow">Best Practices for Hyperparameter Tuning with MLflow</a></li>
-<li><a href="#scaling-apache-spark-on-kubernetes-at-lyft">Scaling Apache Spark on Kubernetes at Lyft</a></li>
-<li><a href="#a-real-time-architecture-for-machine-learning-execution-with-mleap">A "Real-Time" Architecture for Machine Learning Execution with MLeap ★</a></li>
-<li><a href="#managing-apache-spark-workload-and-automatic-optimizing">Managing Apache Spark Workload and Automatic Optimizing</a></li>
-<li><a href="#optimizing-deltaparquet-data-lakes-for-apache-spark">Optimizing Delta/Parquet Data Lakes for Apache Spark</a></li>
-<li><a href="#creating-an-omni-channel-customer-experience-with-ml-apache-spark-and-azure-databricks">Creating an Omni-Channel Customer Experience with ML, Apache Spark, and Azure Databricks</a></li>
-<li><a href="#optimizing-performance-and-computing-resource-efficiency-of-in-memory-big-data-analytics-with-disaggregated-persistent-memory">Optimizing Performance and Computing Resource Efficiency of In-Memory Big Data Analytics with Disaggregated Persistent Memory</a></li>
-<li><a href="#self-service-apache-spark-structured-streaming-applications-and-analytics">Self-Service Apache Spark Structured Streaming Applications and Analytics</a></li>
-<li><a href="#building-resilient-and-scalable-data-pipelines-by-decoupling-compute-and-storage">Building Resilient and Scalable Data Pipelines by Decoupling Compute and Storage</a></li>
-<li><a href="#automating-real-time-data-pipelines-into-databricks-delta">Automating Real-Time Data Pipelines into Databricks Delta</a></li>
-<li><a href="#reimagining-devon-energys-data-estate-with-a-unified-approach-to-integrations-analytics-and-machine-learning">Reimagining Devon Energy’s Data Estate with a Unified Approach to Integrations, Analytics, and Machine Learning</a></li>
-<li><a href="#data-prep-for-data-science-in-minutesa-real-world-use-case-study-of-telematics">Data Prep for Data Science in MinutesA Real World Use Case Study of Telematics</a></li>
-<li><a href="#a-deep-dive-into-query-execution-engine-of-spark-sql">A Deep Dive into Query Execution Engine of Spark SQL</a></li>
-<li><a href="#balancing-automation-and-explanation-in-machine-learning">Balancing Automation and Explanation in Machine Learning</a></li>
-<li><a href="#enabling-data-scientists-to-bring-their-models-to-market">Enabling Data Scientists to bring their Models to Market</a></li>
-<li><a href="#tensorflow-extended-an-end-to-end-machine-learning-platform-for-tensorflow">TensorFlow Extended: An End-to-End Machine Learning Platform for TensorFlow</a></li>
-<li><a href="#continuous-applications-at-scale-of-100-teams-with-databricks-delta-and-structured-streaming">Continuous Applications at Scale of 100 Teams with Databricks Delta and Structured Streaming</a></li>
-<li><a href="#how-australias-national-health-services-directory-improved-data-quality-reliability-and-integrity-with-databricks-delta-and-structured-streaming">How Australia’s National Health Services Directory Improved Data Quality, Reliability, and Integrity with Databricks Delta and Structured Streaming</a></li>
+<li><a href="#セッションメモ" id="toc-セッションメモ">セッションメモ</a>
+<ul>
+<li><a href="#accelerate-your-apache-spark-with-intel-optane-dc-persistent-memory" id="toc-accelerate-your-apache-spark-with-intel-optane-dc-persistent-memory">Accelerate
+Your Apache Spark with Intel Optane DC Persistent Memory</a></li>
+<li><a href="#building-robust-production-data-pipelines-with-databricks-delta" id="toc-building-robust-production-data-pipelines-with-databricks-delta">Building
+Robust Production Data Pipelines with Databricks Delta</a></li>
+<li><a href="#deploying-enterprise-scale-deep-learning-in-actuarial-modeling-at-nationwide" id="toc-deploying-enterprise-scale-deep-learning-in-actuarial-modeling-at-nationwide">Deploying
+Enterprise Scale Deep Learning in Actuarial Modeling at
+Nationwide</a></li>
+<li><a href="#improving-apache-sparks-reliability-with-datasourcev2" id="toc-improving-apache-sparks-reliability-with-datasourcev2">Improving
+Apache Spark's Reliability with DataSourceV2</a></li>
+<li><a href="#lessons-learned-using-apache-spark-for-self-service-data-prep-in-saas-world" id="toc-lessons-learned-using-apache-spark-for-self-service-data-prep-in-saas-world">Lessons
+Learned Using Apache Spark for Self-Service Data Prep in SaaS
+World</a></li>
+<li><a href="#using-spark-mllib-models-in-a-production-training-and-serving-platform-experiences-and-extensions" id="toc-using-spark-mllib-models-in-a-production-training-and-serving-platform-experiences-and-extensions">Using
+Spark Mllib Models in a Production Training and Serving Platform:
+Experiences and Extensions ★</a></li>
+<li><a href="#a-journey-to-building-an-autonomous-streaming-data-platformscaling-to-trillion-events-monthly-at-nvidia" id="toc-a-journey-to-building-an-autonomous-streaming-data-platformscaling-to-trillion-events-monthly-at-nvidia">A
+Journey to Building an Autonomous Streaming Data PlatformScaling to
+Trillion Events Monthly at Nvidia</a></li>
+<li><a href="#apache-spark-on-k8s-best-practice-and-performance-in-the-cloud" id="toc-apache-spark-on-k8s-best-practice-and-performance-in-the-cloud">Apache
+Spark on K8S Best Practice and Performance in the Cloud</a></li>
+<li><a href="#deep-learning-on-apache-spark-at-cerns-large-hadron-collider-with-intel-technologies" id="toc-deep-learning-on-apache-spark-at-cerns-large-hadron-collider-with-intel-technologies">Deep
+Learning on Apache Spark at CERN’s Large Hadron Collider with Intel
+Technologies ★</a></li>
+<li><a href="#elastify-cloud-native-spark-application-with-persistent-memory" id="toc-elastify-cloud-native-spark-application-with-persistent-memory">Elastify
+Cloud-Native Spark Application with Persistent Memory</a></li>
+<li><a href="#geospatial-analytics-at-scale-with-deep-learning-and-apache-spark" id="toc-geospatial-analytics-at-scale-with-deep-learning-and-apache-spark">Geospatial
+Analytics at Scale with Deep Learning and Apache Spark</a></li>
+<li><a href="#improving-call-center-operations-and-marketing-roi-with-real-time-aiml-streams" id="toc-improving-call-center-operations-and-marketing-roi-with-real-time-aiml-streams">Improving
+Call Center Operations and Marketing ROI with Real-Time AI/ML
+Streams</a></li>
+<li><a href="#large-scale-malicious-domain-detection-with-spark-ai" id="toc-large-scale-malicious-domain-detection-with-spark-ai">Large-Scale
+Malicious Domain Detection with Spark AI</a></li>
+<li><a href="#migrating-to-apache-spark-at-netflix" id="toc-migrating-to-apache-spark-at-netflix">Migrating to Apache Spark
+at Netflix</a></li>
+<li><a href="#apache-arrow-based-unified-data-sharing-and-transferring-format-among-cpu-and-accelerators" id="toc-apache-arrow-based-unified-data-sharing-and-transferring-format-among-cpu-and-accelerators">Apache
+Arrow-Based Unified Data Sharing and Transferring Format Among CPU and
+Accelerators</a></li>
+<li><a href="#apache-spark-and-sights-at-speed-streaming-feature-management-and-execution" id="toc-apache-spark-and-sights-at-speed-streaming-feature-management-and-execution">Apache
+Spark and Sights at Speed: Streaming, Feature Management, and
+Execution</a></li>
+<li><a href="#data-driven-transformation-leveraging-big-data-at-showtime-with-apache-spark" id="toc-data-driven-transformation-leveraging-big-data-at-showtime-with-apache-spark">Data-Driven
+Transformation: Leveraging Big Data at Showtime with Apache
+Spark</a></li>
+<li><a href="#in-memory-storage-evolution-in-apache-spark" id="toc-in-memory-storage-evolution-in-apache-spark">In-Memory Storage
+Evolution in Apache Spark</a></li>
+<li><a href="#sparkml-easy-ml-productization-for-real-time-bidding" id="toc-sparkml-easy-ml-productization-for-real-time-bidding">SparkML:
+Easy ML Productization for Real-Time Bidding</a></li>
+<li><a href="#best-practices-for-hyperparameter-tuning-with-mlflow" id="toc-best-practices-for-hyperparameter-tuning-with-mlflow">Best
+Practices for Hyperparameter Tuning with MLflow</a></li>
+<li><a href="#scaling-apache-spark-on-kubernetes-at-lyft" id="toc-scaling-apache-spark-on-kubernetes-at-lyft">Scaling Apache Spark
+on Kubernetes at Lyft</a></li>
+<li><a href="#a-real-time-architecture-for-machine-learning-execution-with-mleap" id="toc-a-real-time-architecture-for-machine-learning-execution-with-mleap">A
+"Real-Time" Architecture for Machine Learning Execution with MLeap
+★</a></li>
+<li><a href="#managing-apache-spark-workload-and-automatic-optimizing" id="toc-managing-apache-spark-workload-and-automatic-optimizing">Managing
+Apache Spark Workload and Automatic Optimizing</a></li>
+<li><a href="#optimizing-deltaparquet-data-lakes-for-apache-spark" id="toc-optimizing-deltaparquet-data-lakes-for-apache-spark">Optimizing
+Delta/Parquet Data Lakes for Apache Spark</a></li>
+<li><a href="#creating-an-omni-channel-customer-experience-with-ml-apache-spark-and-azure-databricks" id="toc-creating-an-omni-channel-customer-experience-with-ml-apache-spark-and-azure-databricks">Creating
+an Omni-Channel Customer Experience with ML, Apache Spark, and Azure
+Databricks</a></li>
+<li><a href="#optimizing-performance-and-computing-resource-efficiency-of-in-memory-big-data-analytics-with-disaggregated-persistent-memory" id="toc-optimizing-performance-and-computing-resource-efficiency-of-in-memory-big-data-analytics-with-disaggregated-persistent-memory">Optimizing
+Performance and Computing Resource Efficiency of In-Memory Big Data
+Analytics with Disaggregated Persistent Memory</a></li>
+<li><a href="#self-service-apache-spark-structured-streaming-applications-and-analytics" id="toc-self-service-apache-spark-structured-streaming-applications-and-analytics">Self-Service
+Apache Spark Structured Streaming Applications and Analytics</a></li>
+<li><a href="#building-resilient-and-scalable-data-pipelines-by-decoupling-compute-and-storage" id="toc-building-resilient-and-scalable-data-pipelines-by-decoupling-compute-and-storage">Building
+Resilient and Scalable Data Pipelines by Decoupling Compute and
+Storage</a></li>
+<li><a href="#automating-real-time-data-pipelines-into-databricks-delta" id="toc-automating-real-time-data-pipelines-into-databricks-delta">Automating
+Real-Time Data Pipelines into Databricks Delta</a></li>
+<li><a href="#reimagining-devon-energys-data-estate-with-a-unified-approach-to-integrations-analytics-and-machine-learning" id="toc-reimagining-devon-energys-data-estate-with-a-unified-approach-to-integrations-analytics-and-machine-learning">Reimagining
+Devon Energy’s Data Estate with a Unified Approach to Integrations,
+Analytics, and Machine Learning</a></li>
+<li><a href="#data-prep-for-data-science-in-minutesa-real-world-use-case-study-of-telematics" id="toc-data-prep-for-data-science-in-minutesa-real-world-use-case-study-of-telematics">Data
+Prep for Data Science in MinutesA Real World Use Case Study of
+Telematics</a></li>
+<li><a href="#a-deep-dive-into-query-execution-engine-of-spark-sql" id="toc-a-deep-dive-into-query-execution-engine-of-spark-sql">A Deep
+Dive into Query Execution Engine of Spark SQL</a></li>
+<li><a href="#balancing-automation-and-explanation-in-machine-learning" id="toc-balancing-automation-and-explanation-in-machine-learning">Balancing
+Automation and Explanation in Machine Learning</a></li>
+<li><a href="#enabling-data-scientists-to-bring-their-models-to-market" id="toc-enabling-data-scientists-to-bring-their-models-to-market">Enabling
+Data Scientists to bring their Models to Market</a></li>
+<li><a href="#tensorflow-extended-an-end-to-end-machine-learning-platform-for-tensorflow" id="toc-tensorflow-extended-an-end-to-end-machine-learning-platform-for-tensorflow">TensorFlow
+Extended: An End-to-End Machine Learning Platform for
+TensorFlow</a></li>
+<li><a href="#continuous-applications-at-scale-of-100-teams-with-databricks-delta-and-structured-streaming" id="toc-continuous-applications-at-scale-of-100-teams-with-databricks-delta-and-structured-streaming">Continuous
+Applications at Scale of 100 Teams with Databricks Delta and Structured
+Streaming</a></li>
+<li><a href="#how-australias-national-health-services-directory-improved-data-quality-reliability-and-integrity-with-databricks-delta-and-structured-streaming" id="toc-how-australias-national-health-services-directory-improved-data-quality-reliability-and-integrity-with-databricks-delta-and-structured-streaming">How
+Australia’s National Health Services Directory Improved Data Quality,
+Reliability, and Integrity with Databricks Delta and Structured
+Streaming</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="セッションメモ">セッションメモ</span></h1>
-<h2><span id="accelerate-your-apache-spark-with-intel-optane-dc-persistent-memory">Accelerate Your Apache Spark with Intel Optane DC Persistent Memory</span></h2>
-<p><a href="https://www.slideshare.net/databricks/accelerate-your-apache-spark-with-intel-optane-dc-persistent-memory" target="_blank" rel="noopener">Accelerate Your Apache Spark with Intel Optane DC Persistent Memory</a></p>
-<p>p.12あたりにアーキイメージがある。 キャッシュを中心としたイメージ。 DCPMMを用いる。</p>
-<p>p.14 Optimized Analytics Package（OAP）はDCMPPを用いてSpark SQLを加速する。</p>
-<p>p.16あたりからキャシュデザインに関する課題感や考え方が記載されている。 例えば…</p>
+<h2><span id="accelerateyour-apache-spark-with-intel-optane-dc-persistent-memory">Accelerate
+Your Apache Spark with Intel Optane DC Persistent Memory</span></h2>
+<p><a href="https://www.slideshare.net/databricks/accelerate-your-apache-spark-with-intel-optane-dc-persistent-memory" target="_blank" rel="noopener">Accelerate
+Your Apache Spark with Intel Optane DC Persistent Memory</a></p>
+<p>p.12あたりにアーキイメージがある。 キャッシュを中心としたイメージ。
+DCPMMを用いる。</p>
+<p>p.14 Optimized Analytics Package（OAP）はDCMPPを用いてSpark
+SQLを加速する。</p>
+<p>p.16あたりからキャシュデザインに関する課題感や考え方が記載されている。
+例えば…</p>
 <ul>
 <li>手動によるメモリ管理はフラグメンテーションを生じさせる</li>
 <li>libvmemcacheのリンクドリストによりロック待ちを起因としたボトルネックが生じる
@@ -305,67 +367,112 @@ ga('send', 'pageview');
 <li>そこでリングバッファを利用し、できるだけロック機会を減らすことにした</li>
 </ul></li>
 </ul>
-<p>p.26あたりからSpark SQLを題材とした検証結果が載っている。 DRAMに乗り切るサイズであえてやってみた例、乗り切らさないサイズでやってみた例。</p>
-<p>p.30あたりからSpark MLlibのK-meansを題材とした検証結果が載っている。 ★ DCPMMのデータに関する階層の定義がある。 DRAM+Diskの場合と比べ、間にOptain DC Persistent Memoryが入ることで性能向上を狙う。 K-meansのワークロードでは最初にHDFSからデータをロードしたあと、 エグゼキュータのローカルディスクを含むストレージを使用してイテレーティブに計算する。 このときDCPMMを用いることで大きなサイズのデータを扱うときでも、ディスクにスピルさせることなく動作可能になり、処理時間の縮小になった。（つまり、性能向上効果はデータサイズによる） ★</p>
-<h2><span id="building-robust-production-data-pipelines-with-databricks-delta">Building Robust Production Data Pipelines with Databricks Delta</span></h2>
-<p><a href="https://www.slideshare.net/databricks/building-robust-production-data-pipelines-with-databricks-delta" target="_blank" rel="noopener">Building Robust Production Data Pipelines with Databricks Delta</a></p>
-<p>p.5 データレイクがあっても、信頼するデータがない（データを信頼できない）ことで 多くのデータサイエンスや機械学習が失敗している。</p>
+<p>p.26あたりからSpark SQLを題材とした検証結果が載っている。
+DRAMに乗り切るサイズであえてやってみた例、乗り切らさないサイズでやってみた例。</p>
+<p>p.30あたりからSpark MLlibのK-meansを題材とした検証結果が載っている。
+★ DCPMMのデータに関する階層の定義がある。
+DRAM+Diskの場合と比べ、間にOptain DC Persistent
+Memoryが入ることで性能向上を狙う。
+K-meansのワークロードでは最初にHDFSからデータをロードしたあと、
+エグゼキュータのローカルディスクを含むストレージを使用してイテレーティブに計算する。
+このときDCPMMを用いることで大きなサイズのデータを扱うときでも、ディスクにスピルさせることなく動作可能になり、処理時間の縮小になった。（つまり、性能向上効果はデータサイズによる）
+★</p>
+<h2><span id="buildingrobust-production-data-pipelines-with-databricks-delta">Building
+Robust Production Data Pipelines with Databricks Delta</span></h2>
+<p><a href="https://www.slideshare.net/databricks/building-robust-production-data-pipelines-with-databricks-delta" target="_blank" rel="noopener">Building
+Robust Production Data Pipelines with Databricks Delta</a></p>
+<p>p.5
+データレイクがあっても、信頼するデータがない（データを信頼できない）ことで
+多くのデータサイエンスや機械学習が失敗している。</p>
 <p>p.7 なぜデータが信頼できなくなるのかというと、</p>
 <ul>
 <li>失敗したジョブが破損したデータを生成する</li>
-<li>スキーマを強制するすべがなく、一貫性が崩れたり、 データの品質が悪くなる。</li>
-<li>追記・読み込み、バッチとストリーム処理の混在が許されない （補足：これだけデータの信頼性の話とは異なるような気がした）</li>
+<li>スキーマを強制するすべがなく、一貫性が崩れたり、
+データの品質が悪くなる。</li>
+<li>追記・読み込み、バッチとストリーム処理の混在が許されない
+（補足：これだけデータの信頼性の話とは異なるような気がした）</li>
 </ul>
-<p>p.10 鍵となる特徴が載っている。 ACID（トランザクション）、スキーマ強制、バッチとストリーム処理の混在、タイムトラベル（スナップショット）</p>
-<h2><span id="deploying-enterprise-scale-deep-learning-in-actuarial-modeling-at-nationwide">Deploying Enterprise Scale Deep Learning in Actuarial Modeling at Nationwide</span></h2>
-<p><a href="https://www.slideshare.net/databricks/deploying-enterprise-scale-deep-learning-in-actuarial-modeling-at-nationwide" target="_blank" rel="noopener">Deploying Enterprise Scale Deep Learning in Actuarial Modeling at Nationwide</a></p>
+<p>p.10 鍵となる特徴が載っている。
+ACID（トランザクション）、スキーマ強制、バッチとストリーム処理の混在、タイムトラベル（スナップショット）</p>
+<h2><span id="deployingenterprise-scale-deep-learning-in-actuarial-modeling-at-nationwide">Deploying
+Enterprise Scale Deep Learning in Actuarial Modeling at Nationwide</span></h2>
+<p><a href="https://www.slideshare.net/databricks/deploying-enterprise-scale-deep-learning-in-actuarial-modeling-at-nationwide" target="_blank" rel="noopener">Deploying
+Enterprise Scale Deep Learning in Actuarial Modeling at
+Nationwide</a></p>
 <p>ユースケース。</p>
 <p>自動車保険を中心としたサービスを提供するNationwide社の事例。</p>
-<p>p.7 ★ CDOを筆頭とし、Enterprise Data Officeを構成。 EDOは完全なデータと分析サービスをもとにソリューションを提供し、ビジネスを強化する。</p>
-<p>p.8 Analytical Lab。 Databricksのサービスを用いて分析パイプラインを構成？</p>
-<p>p.11 Enterprise Analytics Officeというコンセプトの下、データから叡智を取り出す方法論を提供。</p>
-<p>p.17 Sparkを用いている理由は、並列化可能な内容がたくさんあるから。例えば以下の通り。 * データ変換がたくさん * スコアリングも並列化可能 * ハイパーパラメータチューニングなども並列化可能</p>
-<h2><span id="improving-apache-sparks-reliability-with-datasourcev2">Improving Apache Spark's Reliability with DataSourceV2</span></h2>
-<p><a href="https://www.slideshare.net/databricks/improving-apache-sparks-reliability-with-datasourcev2" target="_blank" rel="noopener">Improving Apache Spark's Reliability with DataSourceV2</a></p>
+<p>p.7 ★ CDOを筆頭とし、Enterprise Data Officeを構成。
+EDOは完全なデータと分析サービスをもとにソリューションを提供し、ビジネスを強化する。</p>
+<p>p.8 Analytical Lab。
+Databricksのサービスを用いて分析パイプラインを構成？</p>
+<p>p.11 Enterprise Analytics
+Officeというコンセプトの下、データから叡智を取り出す方法論を提供。</p>
+<p>p.17
+Sparkを用いている理由は、並列化可能な内容がたくさんあるから。例えば以下の通り。
+* データ変換がたくさん * スコアリングも並列化可能 *
+ハイパーパラメータチューニングなども並列化可能</p>
+<h2><span id="improvingapache-sparks-reliability-with-datasourcev2">Improving
+Apache Spark's Reliability with DataSourceV2</span></h2>
+<p><a href="https://www.slideshare.net/databricks/improving-apache-sparks-reliability-with-datasourcev2" target="_blank" rel="noopener">Improving
+Apache Spark's Reliability with DataSourceV2</a></p>
 <p>Neflixの事例。</p>
-<p>S3が結果整合性。 Hiveがファイルのリスティングに依存。たまに失敗する。 Netflixの規模だと、「たまに」というのが毎日になる。</p>
+<p>S3が結果整合性。 Hiveがファイルのリスティングに依存。たまに失敗する。
+Netflixの規模だと、「たまに」というのが毎日になる。</p>
 <p>p.7 2016年当時の工夫。</p>
 <p>p.10〜 DataFrameのDataSourceに関連するつらみ。</p>
 <p>DataFrameWriterでは振る舞いが規定されていない。</p>
-<p>p.17 Icebergの採用（2019） Hive等で課題となっていたテーブルの物理構造を見直した。 くわしくは、 <a href="https://cdn.oreillystatic.com/en/assets/1/event/278/Introducing%20Iceberg_%20Tables%20designed%20for%20object%20stores%20Presentation.pdf" target="_blank" rel="noopener">Strata NY 2018でのIcebergの説明</a> 参照。</p>
+<p>p.17 Icebergの採用（2019）
+Hive等で課題となっていたテーブルの物理構造を見直した。 くわしくは、 <a href="https://cdn.oreillystatic.com/en/assets/1/event/278/Introducing%20Iceberg_%20Tables%20designed%20for%20object%20stores%20Presentation.pdf" target="_blank" rel="noopener">Strata
+NY 2018でのIcebergの説明</a> 参照。</p>
 <p>p.20 DataSourcedV2が登場したが、一部の課題は引き継がれた。</p>
 <ul>
 <li>書き込みのバリデーションがない</li>
 <li>SaveModeの挙動がデータソースまかせ</li>
 </ul>
 <p>p.21' DSv2での活動紹介</p>
-<h2><span id="lessons-learned-using-apache-spark-for-self-service-data-prep-in-saas-world">Lessons Learned Using Apache Spark for Self-Service Data Prep in SaaS World</span></h2>
-<p><a href="https://www.slideshare.net/databricks/lessons-learned-using-apache-spark-for-selfservice-data-prep-in-saas-world-144261396" target="_blank" rel="noopener">Lessons Learned Using Apache Spark for Self-Service Data Prep in SaaS World</a></p>
+<h2><span id="lessonslearned-using-apache-spark-for-self-service-data-prep-in-saas-world">Lessons
+Learned Using Apache Spark for Self-Service Data Prep in SaaS World</span></h2>
+<p><a href="https://www.slideshare.net/databricks/lessons-learned-using-apache-spark-for-selfservice-data-prep-in-saas-world-144261396" target="_blank" rel="noopener">Lessons
+Learned Using Apache Spark for Self-Service Data Prep in SaaS
+World</a></p>
 <p>ユースケース。</p>
-<p><a href="https://www.workday.com/ja-jp/homepage.html&#39;" target="_blank" rel="noopener">workday</a> における事例。</p>
+<p><a href="https://www.workday.com/ja-jp/homepage.html&#39;" target="_blank" rel="noopener">workday</a>
+における事例。</p>
 <p>p.13 「Prism」分析のワークフロー。</p>
-<p>p.14 分析前の前処理はSparkで実装される。 ウェブフロントエンドを通じて処理を定義する。</p>
+<p>p.14 分析前の前処理はSparkで実装される。
+ウェブフロントエンドを通じて処理を定義する。</p>
 <p>インタラクティブな処理とバッチ処理の両方に対応。</p>
-<p>p.25 Sparkのデータ型にさらにデータ型を追加。 StructType、StructFieldを利用して実装。</p>
+<p>p.25 Sparkのデータ型にさらにデータ型を追加。
+StructType、StructFieldを利用して実装。</p>
 <p>p.28〜 lessons learnedをいくつか。</p>
-<p>ネストされたSQL、self joinやself unionなどの二重オペレータ、ブロードキャストJoinの効率の悪さ、 Caseセンシブなグループ化</p>
-<h2><span id="using-spark-mllib-models-in-a-production-training-and-serving-platform-experiences-and-extensions">Using Spark Mllib Models in a Production Training and Serving Platform: Experiences and Extensions ★</span></h2>
-<p><a href="https://www.slideshare.net/databricks/using-spark-mllib-models-in-a-production-training-and-serving-platform-experiences-and-extensions" target="_blank" rel="noopener">Using Spark Mllib Models in a Production Training and Serving Platform: Experiences and Extensions</a></p>
+<p>ネストされたSQL、self joinやself
+unionなどの二重オペレータ、ブロードキャストJoinの効率の悪さ、
+Caseセンシブなグループ化</p>
+<h2><span id="usingspark-mllib-models-in-a-production-training-and-serving-platformexperiences-and-extensions">Using
+Spark Mllib Models in a Production Training and Serving Platform:
+Experiences and Extensions ★</span></h2>
+<p><a href="https://www.slideshare.net/databricks/using-spark-mllib-models-in-a-production-training-and-serving-platform-experiences-and-extensions" target="_blank" rel="noopener">Using
+Spark Mllib Models in a Production Training and Serving Platform:
+Experiences and Extensions</a></p>
 <p>ユースケース。</p>
-<p>Uberの機械学習基盤 Michelangelo についてのセッション。 UberではSpark MLlibをベースとしつつも、独自の改造を施して用いている。</p>
-<p>p.2〜 Spark MLlibのパイプラインに関する説明。 パイプラインを用いることで、一貫性をもたせることができる。</p>
+<p>Uberの機械学習基盤 Michelangelo についてのセッション。 UberではSpark
+MLlibをベースとしつつも、独自の改造を施して用いている。</p>
+<p>p.2〜 Spark MLlibのパイプラインに関する説明。
+パイプラインを用いることで、一貫性をもたせることができる。</p>
 <ul>
 <li>データ変換</li>
 <li>特徴抽出と前処理</li>
 <li>機械学習モデルによる推論</li>
 <li>推論後の処理</li>
 </ul>
-<p>p.8〜 パイプラインにより複雑さを隠蔽できる。 ★ 例：異なるワークフローを含むことによる複雑さ、異なるユーザニーズを含むことによる複雑さ。</p>
+<p>p.8〜 パイプラインにより複雑さを隠蔽できる。 ★
+例：異なるワークフローを含むことによる複雑さ、異なるユーザニーズを含むことによる複雑さ。</p>
 <p>p.10〜 達成したいこと。</p>
 <p>まずは性能と一貫性の観点。</p>
 <ul>
 <li>Spark SQLをベースとした高い性能</li>
-<li>リアルタイムサービング（P99レイテンシ &lt; 10ms、高いスループット）</li>
+<li>リアルタイムサービング（P99レイテンシ &lt;
+10ms、高いスループット）</li>
 <li>バッチとリアルタイム両対応</li>
 </ul>
 <p>柔軟性とVelocityの観点。</p>
@@ -374,49 +481,96 @@ ga('send', 'pageview');
 <li>Michelangeloの構造</li>
 <li>Sparkアップグレード</li>
 </ul>
-<p>プロトコルバッファによるモデル表現の改善の観点。 MLeap、PMML、PFA、Spark PipelineModel。 Spark PiplelineModelを採用したかったのだが以下の観点が難点だった。</p>
+<p>プロトコルバッファによるモデル表現の改善の観点。
+MLeap、PMML、PFA、Spark PipelineModel。 Spark
+PiplelineModelを採用したかったのだが以下の観点が難点だった。</p>
 <ul>
 <li>モデルロードが遅い</li>
 <li>サービングAPIがオンラインサービング向けには遅い</li>
 </ul>
-<p>p.15〜 改善活動。例えば、SparkのAPIを使ってメタデータをロードしていたところを シンプルなJava APIでロードするようにする、など細かな改善を実施。 Parquet関連では、ParquetのAPIを直接利用するように変えた。</p>
-<h2><span id="a-journey-to-building-an-autonomous-streaming-data-platformscaling-to-trillion-events-monthly-at-nvidia">A Journey to Building an Autonomous Streaming Data PlatformScaling to Trillion Events Monthly at Nvidia</span></h2>
-<p><a href="https://www.slideshare.net/databricks/a-journey-to-building-an-autonomous-streaming-data-platformscaling-to-trillion-events-monthly-at-nvidia" target="_blank" rel="noopener">A Journey to Building an Autonomous Streaming Data PlatformScaling to Trillion Events Monthly at Nvidia</a></p>
-<p>NVIDIAの考えるアーキテクチャの変遷。 V1からV2へ、という形式で解説。</p>
-<p>p.10〜 V1アーキテクチャ。 KafkaやS3を中心としたデータフロー。 p.12にワークフローイメージ。</p>
-<p>p.13 V1で学んだこと。データ量が増えた、セルフサービス化が必要、など。 ★ 状況が変わったこともある。</p>
-<p>p.14〜 V2アーキテクチャ。 セルフサービス化のために、NV Data Bots、NV Data Appsを導入。</p>
-<p>p.23 NV Data Appsによる機械化で課題になったのは、 スキーマ管理。 Elastic Beatsではネストされたスキーマも用いれるが、そうするとスキーマの推論が難しい。</p>
+<p>p.15〜
+改善活動。例えば、SparkのAPIを使ってメタデータをロードしていたところを
+シンプルなJava APIでロードするようにする、など細かな改善を実施。
+Parquet関連では、ParquetのAPIを直接利用するように変えた。</p>
+<h2><span id="ajourney-to-building-an-autonomous-streaming-data-platformscaling-totrillion-events-monthly-at-nvidia">A
+Journey to Building an Autonomous Streaming Data PlatformScaling to
+Trillion Events Monthly at Nvidia</span></h2>
+<p><a href="https://www.slideshare.net/databricks/a-journey-to-building-an-autonomous-streaming-data-platformscaling-to-trillion-events-monthly-at-nvidia" target="_blank" rel="noopener">A
+Journey to Building an Autonomous Streaming Data PlatformScaling to
+Trillion Events Monthly at Nvidia</a></p>
+<p>NVIDIAの考えるアーキテクチャの変遷。
+V1からV2へ、という形式で解説。</p>
+<p>p.10〜 V1アーキテクチャ。 KafkaやS3を中心としたデータフロー。
+p.12にワークフローイメージ。</p>
+<p>p.13 V1で学んだこと。データ量が増えた、セルフサービス化が必要、など。
+★ 状況が変わったこともある。</p>
+<p>p.14〜 V2アーキテクチャ。 セルフサービス化のために、NV Data Bots、NV
+Data Appsを導入。</p>
+<p>p.23 NV Data Appsによる機械化で課題になったのは、 スキーマ管理。
+Elastic
+Beatsではネストされたスキーマも用いれるが、そうするとスキーマの推論が難しい。</p>
 <p>p.29 V2でのワークフロー。 ワークフローの大部分が機械化された。 ★</p>
-<p>p.32 スケーラビリティの課題を解くため、Databricks Deltaを導入。 PrestoからSpark + Deltaに移行。</p>
-<h2><span id="apache-spark-on-k8s-best-practice-and-performance-in-the-cloud">Apache Spark on K8S Best Practice and Performance in the Cloud</span></h2>
-<p><a href="https://www.slideshare.net/databricks/apache-spark-on-k8s-best-practice-and-performance-in-the-cloud" target="_blank" rel="noopener">Apache Spark on K8S Best Practice and Performance in the Cloud</a></p>
+<p>p.32 スケーラビリティの課題を解くため、Databricks Deltaを導入。
+PrestoからSpark + Deltaに移行。</p>
+<h2><span id="apachespark-on-k8s-best-practice-and-performance-in-the-cloud">Apache
+Spark on K8S Best Practice and Performance in the Cloud</span></h2>
+<p><a href="https://www.slideshare.net/databricks/apache-spark-on-k8s-best-practice-and-performance-in-the-cloud" target="_blank" rel="noopener">Apache
+Spark on K8S Best Practice and Performance in the Cloud</a></p>
 <p>TencentにおけるSpark on k8sに関するナレッジの紹介。</p>
 <p>p.6 「Sparkling」について。アーキテクチャなど。</p>
-<p>p.18〜 YARNとk8sでの性能比較結果など。 TeraSortでの動作確認では、YARNおほうがスループットが高い結果となり、 データサイズを大きくしたところk8sは処理が途中で失敗した。 ディスクへの負荷により、Evictされたため、tmpfsを使用するようにして試す例も記載されている。</p>
-<p>p.23〜 spark-sql-perfによるベンチマーク結果。 そのままでは圧倒的に性能が悪い。これはYARNではデフォルトでyarn.local.dirにしていされた 複数のディスクを使用するのに対し、on k8sでは一つのディレクトリがマウントされるから。 これを複数ディスクを使うようにした結果も記載されている。YARNには届かないが随分改善された。</p>
-<h2><span id="deep-learning-on-apache-spark-at-cerns-large-hadron-collider-with-intel-technologies">Deep Learning on Apache Spark at CERN’s Large Hadron Collider with Intel Technologies ★</span></h2>
-<p><a href="https://www.slideshare.net/databricks/deep-learning-on-apache-spark-at-cerns-large-hadron-collider-with-intel-technologies" target="_blank" rel="noopener">Deep Learning on Apache Spark at CERN’s Large Hadron Collider with Intel Technologies</a></p>
+<p>p.18〜 YARNとk8sでの性能比較結果など。
+TeraSortでの動作確認では、YARNおほうがスループットが高い結果となり、
+データサイズを大きくしたところk8sは処理が途中で失敗した。
+ディスクへの負荷により、Evictされたため、tmpfsを使用するようにして試す例も記載されている。</p>
+<p>p.23〜 spark-sql-perfによるベンチマーク結果。
+そのままでは圧倒的に性能が悪い。これはYARNではデフォルトでyarn.local.dirにしていされた
+複数のディスクを使用するのに対し、on
+k8sでは一つのディレクトリがマウントされるから。
+これを複数ディスクを使うようにした結果も記載されている。YARNには届かないが随分改善された。</p>
+<h2><span id="deeplearning-on-apache-spark-at-cerns-large-hadron-collider-with-inteltechnologies">Deep
+Learning on Apache Spark at CERN’s Large Hadron Collider with Intel
+Technologies ★</span></h2>
+<p><a href="https://www.slideshare.net/databricks/deep-learning-on-apache-spark-at-cerns-large-hadron-collider-with-intel-technologies" target="_blank" rel="noopener">Deep
+Learning on Apache Spark at CERN’s Large Hadron Collider with Intel
+Technologies</a></p>
 <p>p.6 CERNで扱うデータ規模。 PB/secのデータを生成することになる。</p>
-<p>p.9〜 Sparkを実行するのにYARNとk8sの両方を使っている。 JupyterからSparkにつなぎ、その裏で様々なデータソース（データストア）にアクセスする。</p>
-<p>p.13 物理データにアクセスする際には、Hadoop APIからxrootdプロトコルでアクセス。</p>
-<p>p.18 Apache Spark、Analytics Zoo、BigDLを活用。 Analytics Zooを利用することでTensorFlow、BigDL、Sparkを結びつける。</p>
+<p>p.9〜 Sparkを実行するのにYARNとk8sの両方を使っている。
+JupyterからSparkにつなぎ、その裏で様々なデータソース（データストア）にアクセスする。</p>
+<p>p.13 物理データにアクセスする際には、Hadoop
+APIからxrootdプロトコルでアクセス。</p>
+<p>p.18 Apache Spark、Analytics Zoo、BigDLを活用。 Analytics
+Zooを利用することでTensorFlow、BigDL、Sparkを結びつける。</p>
 <p>また、このあとワークフロー（データフロー）に沿って個別に解説。</p>
-<p>Kerasなどを用いてモデル開発し、その後BigDLでスケールアウトしながら分散学習。 BigDLは、よくスケールする。</p>
-<p>p.31 推論はストリーム処理ベースで行う。 Kafka経由でデータをフィードし、サーブされたモデルをSparkで読み込んで推論。 また、FPGAも活用する。</p>
-<h2><span id="elastify-cloud-native-spark-application-with-persistent-memory">Elastify Cloud-Native Spark Application with Persistent Memory</span></h2>
-<p><a href="https://www.slideshare.net/databricks/elastify-cloudnative-spark-application-with-persistent-memory" target="_blank" rel="noopener">Elastify Cloud-Native Spark Application with Persistent Memory</a></p>
+<p>Kerasなどを用いてモデル開発し、その後BigDLでスケールアウトしながら分散学習。
+BigDLは、よくスケールする。</p>
+<p>p.31 推論はストリーム処理ベースで行う。
+Kafka経由でデータをフィードし、サーブされたモデルをSparkで読み込んで推論。
+また、FPGAも活用する。</p>
+<h2><span id="elastifycloud-native-spark-application-with-persistent-memory">Elastify
+Cloud-Native Spark Application with Persistent Memory</span></h2>
+<p><a href="https://www.slideshare.net/databricks/elastify-cloudnative-spark-application-with-persistent-memory" target="_blank" rel="noopener">Elastify
+Cloud-Native Spark Application with Persistent Memory</a></p>
 <p>Tencentにおけるアーキテクチャの説明。</p>
 <p>p.4 データ規模など。 100PB+</p>
 <p>p.5 TencentにおけるBig Data / AI基盤</p>
 <p>p.6 MemVerge：メモリ・コンバージド基盤（MCI）</p>
-<p>p.7〜 MapReduceの時代は、データを移動するのではなくプログラムを移動する。 その後ネットワークは高速化（高速なネットワークをDC内に導入する企業の増加） SSD導入の割合は増加。</p>
-<p>p.10 ただし未だにDRAM、SSD、HDD/TAPEの階層は残る。 そこでIntel Optain DC Persistent Memoryが登場。（DCPMM）</p>
-<p>p.14 MemVergeによるPMEMセントリックなデータプラットフォーム。 クラスタワイドにPMEMを共有。</p>
-<p>p.17〜 Sparkのシャッフルとブロックマネージャについて。 現状の課題をうけ、シャッフルを再検討。</p>
-<p>p.20 エグゼキュータでのシャッフル処理に関し、データの取扱を改善。 ストレージと計算を分離し、さらにプラガブルにした。 さらにストレージ層に、Persistent Memoryを置けるようにした。</p>
-<h2><span id="geospatial-analytics-at-scale-with-deep-learning-and-apache-spark">Geospatial Analytics at Scale with Deep Learning and Apache Spark</span></h2>
-<p><a href="https://www.slideshare.net/databricks/geospatial-analytics-at-scale-with-deep-learning-and-apache-spark" target="_blank" rel="noopener">Geospatial Analytics at Scale with Deep Learning and Apache Spark</a></p>
+<p>p.7〜
+MapReduceの時代は、データを移動するのではなくプログラムを移動する。
+その後ネットワークは高速化（高速なネットワークをDC内に導入する企業の増加）
+SSD導入の割合は増加。</p>
+<p>p.10 ただし未だにDRAM、SSD、HDD/TAPEの階層は残る。 そこでIntel Optain
+DC Persistent Memoryが登場。（DCPMM）</p>
+<p>p.14 MemVergeによるPMEMセントリックなデータプラットフォーム。
+クラスタワイドにPMEMを共有。</p>
+<p>p.17〜 Sparkのシャッフルとブロックマネージャについて。
+現状の課題をうけ、シャッフルを再検討。</p>
+<p>p.20 エグゼキュータでのシャッフル処理に関し、データの取扱を改善。
+ストレージと計算を分離し、さらにプラガブルにした。
+さらにストレージ層に、Persistent Memoryを置けるようにした。</p>
+<h2><span id="geospatialanalytics-at-scale-with-deep-learning-and-apache-spark">Geospatial
+Analytics at Scale with Deep Learning and Apache Spark</span></h2>
+<p><a href="https://www.slideshare.net/databricks/geospatial-analytics-at-scale-with-deep-learning-and-apache-spark" target="_blank" rel="noopener">Geospatial
+Analytics at Scale with Deep Learning and Apache Spark</a></p>
 <p>p.7 新たなチャレンジ</p>
 <ul>
 <li>立地なデータの増加（ドローンの導入など）</li>
@@ -428,61 +582,102 @@ ga('send', 'pageview');
 <p>Spark Join 画像をXMLと結合する。 イメージのチップ作成。</p>
 <p>p.18 Deep Learningフレームワーク。 Spark Deep Learning Pipelines</p>
 <p>p.22 Magellan</p>
-<h2><span id="improving-call-center-operations-and-marketing-roi-with-real-time-aiml-streams">Improving Call Center Operations and Marketing ROI with Real-Time AI/ML Streams</span></h2>
-<p><a href="https://databricks.com/session/improving-call-center-operations-and-marketing-roi-with-real-time-ai-ml-streams" target="_blank" rel="noopener">Improving Call Center Operations and Marketing ROI with Real-Time AI/ML Streams</a></p>
+<h2><span id="improvingcall-center-operations-and-marketing-roi-with-real-time-aimlstreams">Improving
+Call Center Operations and Marketing ROI with Real-Time AI/ML
+Streams</span></h2>
+<p><a href="https://databricks.com/session/improving-call-center-operations-and-marketing-roi-with-real-time-ai-ml-streams" target="_blank" rel="noopener">Improving
+Call Center Operations and Marketing ROI with Real-Time AI/ML
+Streams</a></p>
 <p>スライドが公開されていなかった（2019/05/18時点）</p>
-<h2><span id="large-scale-malicious-domain-detection-with-spark-ai">Large-Scale Malicious Domain Detection with Spark AI</span></h2>
-<p><a href="https://www.slideshare.net/databricks/largescale-malicious-domain-detection-with-spark-ai" target="_blank" rel="noopener">Large-Scale Malicious Domain Detection with Spark AI</a></p>
+<h2><span id="large-scalemalicious-domain-detection-with-spark-ai">Large-Scale
+Malicious Domain Detection with Spark AI</span></h2>
+<p><a href="https://www.slideshare.net/databricks/largescale-malicious-domain-detection-with-spark-ai" target="_blank" rel="noopener">Large-Scale
+Malicious Domain Detection with Spark AI</a></p>
 <p>DDoS、暗号マイニングマルウェア。 Tencentの事例。</p>
 <p>p.17 シーケンスを使って検知する。</p>
 <p>p.19〜 Domain2Vec、Domainクラスタリング</p>
-<p>p.24 Word2Vecを使って、ドメインからベクトルを生成する。 （ドメインのつながりを文字列結合してから実施？）</p>
+<p>p.24 Word2Vecを使って、ドメインからベクトルを生成する。
+（ドメインのつながりを文字列結合してから実施？）</p>
 <p>p.28あたり LSHをつかった例も載っている。</p>
-<h2><span id="migrating-to-apache-spark-at-netflix">Migrating to Apache Spark at Netflix</span></h2>
-<p><a href="https://www.slideshare.net/databricks/migrating-to-apache-spark-at-netflix" target="_blank" rel="noopener">Migrating to Apache Spark at Netflix</a></p>
+<h2><span id="migrating-to-apache-sparkat-netflix">Migrating to Apache Spark
+at Netflix</span></h2>
+<p><a href="https://www.slideshare.net/databricks/migrating-to-apache-spark-at-netflix" target="_blank" rel="noopener">Migrating
+to Apache Spark at Netflix</a></p>
 <p>現在Netflixでは90%以上のジョブがSparkで構成されている。</p>
-<p>p.11〜 アップストリームへの追従 複数バージョンを並行利用するようにしている</p>
+<p>p.11〜 アップストリームへの追従
+複数バージョンを並行利用するようにしている</p>
 <p>p.17〜 各バージョンで安定性の課題があり、徐々に解消されていった</p>
-<p>p.22 メモリ管理はNetflixにおいても課題だった。 教育よって是正していた面もある。</p>
-<p>p.23〜 Sparkを使うに当たってのベストプラクティスを列挙 設定方針、心構え、ルールなど。</p>
-<h2><span id="apache-arrow-based-unified-data-sharing-and-transferring-format-among-cpu-and-accelerators">Apache Arrow-Based Unified Data Sharing and Transferring Format Among CPU and Accelerators</span></h2>
-<p><a href="https://www.slideshare.net/databricks/apache-arrowbased-unified-data-sharing-and-transferring-format-among-cpu-and-accelerators" target="_blank" rel="noopener">Apache Arrow-Based Unified Data Sharing and Transferring Format Among CPU and Accelerators</a></p>
+<p>p.22 メモリ管理はNetflixにおいても課題だった。
+教育よって是正していた面もある。</p>
+<p>p.23〜 Sparkを使うに当たってのベストプラクティスを列挙
+設定方針、心構え、ルールなど。</p>
+<h2><span id="apachearrow-based-unified-data-sharing-and-transferring-format-among-cpu-andaccelerators">Apache
+Arrow-Based Unified Data Sharing and Transferring Format Among CPU and
+Accelerators</span></h2>
+<p><a href="https://www.slideshare.net/databricks/apache-arrowbased-unified-data-sharing-and-transferring-format-among-cpu-and-accelerators" target="_blank" rel="noopener">Apache
+Arrow-Based Unified Data Sharing and Transferring Format Among CPU and
+Accelerators</a></p>
 <p>p.6 FPGAでオフロード。</p>
 <p>p.8〜 オフロードによるオーバーヘッドは無視できない。</p>
-<h2><span id="apache-spark-and-sights-at-speed-streaming-feature-management-and-execution">Apache Spark and Sights at Speed: Streaming, Feature Management, and Execution</span></h2>
-<p><a href="https://databricks.com/session/apache-spark-and-sights-at-speed-streaming-feature-management-and-execution" target="_blank" rel="noopener">Apache Spark and Sights at Speed: Streaming, Feature Management, and Execution</a></p>
+<h2><span id="apachespark-and-sights-at-speed-streaming-feature-management-andexecution">Apache
+Spark and Sights at Speed: Streaming, Feature Management, and
+Execution</span></h2>
+<p><a href="https://databricks.com/session/apache-spark-and-sights-at-speed-streaming-feature-management-and-execution" target="_blank" rel="noopener">Apache
+Spark and Sights at Speed: Streaming, Feature Management, and
+Execution</a></p>
 <p>スライドが公開されていなかった（2019/05/18時点）</p>
-<h2><span id="data-driven-transformation-leveraging-big-data-at-showtime-with-apache-spark">Data-Driven Transformation: Leveraging Big Data at Showtime with Apache Spark</span></h2>
-<p><a href="https://www.slideshare.net/databricks/datadriven-transformation-leveraging-big-data-at-showtime-with-apache-spark" target="_blank" rel="noopener">Data-Driven Transformation: Leveraging Big Data at Showtime with Apache Spark</a></p>
+<h2><span id="data-driventransformation-leveraging-big-data-at-showtime-with-apache-spark">Data-Driven
+Transformation: Leveraging Big Data at Showtime with Apache Spark</span></h2>
+<p><a href="https://www.slideshare.net/databricks/datadriven-transformation-leveraging-big-data-at-showtime-with-apache-spark" target="_blank" rel="noopener">Data-Driven
+Transformation: Leveraging Big Data at Showtime with Apache
+Spark</a></p>
 <p>ユースケース。</p>
 <p><a href="https://www.sho.com/" target="_blank" rel="noopener">SHOWTIME</a> の事例。</p>
-<p>SHOWTIMEはスタンドアローンのストリーミングサービス。 そのため、顧客のインタラクションデータが集まる。</p>
+<p>SHOWTIMEはスタンドアローンのストリーミングサービス。
+そのため、顧客のインタラクションデータが集まる。</p>
 <p>p.6 ビジネス上生じる疑問の例。</p>
 <p>疑問は、答えられる量を上回って増加。</p>
-<p>簡単な質問だったら通常のレポートで答えられるが、 複雑な質問に答えるには時間と専門的なスキルが必要。</p>
-<p>p.10 データストラテジーチーム。 ★ データと分析を民主化する、購買者の振る舞いを理解し予測する、データ駆動のプログラミングやスケジューリングに対応する。</p>
-<p>p.12 ★ 数千のメトリクスや振る舞いを観測する。 ユーザとシリーズの関係性をトラックする。</p>
+<p>簡単な質問だったら通常のレポートで答えられるが、
+複雑な質問に答えるには時間と専門的なスキルが必要。</p>
+<p>p.10 データストラテジーチーム。 ★
+データと分析を民主化する、購買者の振る舞いを理解し予測する、データ駆動のプログラミングやスケジューリングに対応する。</p>
+<p>p.12 ★ 数千のメトリクスや振る舞いを観測する。
+ユーザとシリーズの関係性をトラックする。</p>
 <p>p.14 機械学習を用いてユーザの振る舞いをモデル化する。</p>
-<p>p.20〜 Airflowでパイプラインを最適化。 AirflowとDatabricksを組み合わせる。 ★</p>
+<p>p.20〜 Airflowでパイプラインを最適化。
+AirflowとDatabricksを組み合わせる。 ★</p>
 <p>p.29 Databricks Deltaも利用している。 ★</p>
-<h2><span id="in-memory-storage-evolution-in-apache-spark">In-Memory Storage Evolution in Apache Spark</span></h2>
-<p><a href="https://databricks.com/session/in-memory-storage-evolution-in-apache-spark" target="_blank" rel="noopener">In-Memory Storage Evolution in Apache Spark</a></p>
+<h2><span id="in-memory-storageevolution-in-apache-spark">In-Memory Storage
+Evolution in Apache Spark</span></h2>
+<p><a href="https://databricks.com/session/in-memory-storage-evolution-in-apache-spark" target="_blank" rel="noopener">In-Memory
+Storage Evolution in Apache Spark</a></p>
 <p>スライドが公開されていなかった（2019/05/18時点）</p>
-<h2><span id="sparkml-easy-ml-productization-for-real-time-bidding">SparkML: Easy ML Productization for Real-Time Bidding</span></h2>
-<p><a href="https://www.slideshare.net/databricks/sparkml-easy-ml-productization-for-realtime-bidding" target="_blank" rel="noopener">SparkML: Easy ML Productization for Real-Time Bidding</a></p>
-<p>リアルタイムでの広告へのBid。 動機：機械学習を用いることで、マーケットをスマートにしたい。</p>
+<h2><span id="sparkmleasy-ml-productization-for-real-time-bidding">SparkML:
+Easy ML Productization for Real-Time Bidding</span></h2>
+<p><a href="https://www.slideshare.net/databricks/sparkml-easy-ml-productization-for-realtime-bidding" target="_blank" rel="noopener">SparkML:
+Easy ML Productization for Real-Time Bidding</a></p>
+<p>リアルタイムでの広告へのBid。
+動機：機械学習を用いることで、マーケットをスマートにしたい。</p>
 <p>p.6 スケールに関する数値。例：300億件/secのBid意思決定。</p>
 <p>p.7 ゴール。</p>
 <p>p.8〜 9年前からHadoopを使い、4年ほど前にSparkにTry。</p>
-<p>p.12 SparkのMLlibにおけるパイプラインに対し拡張を加えた。 「RowModel」を扱う機能を追加。</p>
-<p>p.13 StringIndexerを用いたカテゴリ値の変換が遅いので、独自に開発。</p>
-<p>p.14 リソースボトルネックが、キャンペーンによって変わる。そしてうまくリソースを使い切れない。 そこでジョブを並列で立ち上げることにした。</p>
-<p>p.15〜 モデルデプロイ（最新モデルへの切り替え）が難しい。 モデルを生成したあと、部分的にデプロイしたあと全体に反映させる。（A/Bテスト後の切り替え）</p>
+<p>p.12 SparkのMLlibにおけるパイプラインに対し拡張を加えた。
+「RowModel」を扱う機能を追加。</p>
+<p>p.13
+StringIndexerを用いたカテゴリ値の変換が遅いので、独自に開発。</p>
+<p>p.14
+リソースボトルネックが、キャンペーンによって変わる。そしてうまくリソースを使い切れない。
+そこでジョブを並列で立ち上げることにした。</p>
+<p>p.15〜 モデルデプロイ（最新モデルへの切り替え）が難しい。
+モデルを生成したあと、部分的にデプロイしたあと全体に反映させる。（A/Bテスト後の切り替え）</p>
 <p>レイテンシの制約が厳しかった。 ★</p>
-<p>補足：モデルを頻繁にデプロイするケースにおいてのレイテンシ保証は難しそうだ ★</p>
+<p>補足：モデルを頻繁にデプロイするケースにおいてのレイテンシ保証は難しそうだ
+★</p>
 <p>p.18 「セルフチューニング」のためのパイプラン ★</p>
-<h2><span id="best-practices-for-hyperparameter-tuning-with-mlflow">Best Practices for Hyperparameter Tuning with MLflow</span></h2>
-<p><a href="https://www.slideshare.net/databricks/best-practices-for-hyperparameter-tuning-with-mlflow" target="_blank" rel="noopener">Best Practices for Hyperparameter Tuning with MLflow</a></p>
+<h2><span id="bestpractices-for-hyperparameter-tuning-with-mlflow">Best
+Practices for Hyperparameter Tuning with MLflow</span></h2>
+<p><a href="https://www.slideshare.net/databricks/best-practices-for-hyperparameter-tuning-with-mlflow" target="_blank" rel="noopener">Best
+Practices for Hyperparameter Tuning with MLflow</a></p>
 <p>p.4〜 ハイパーパラメータチューニングについて。</p>
 <p>p.6 チューニングにおける挑戦★</p>
 <p>p.9 データサイエンスにおけるチューニングのフロー ★</p>
@@ -500,14 +695,19 @@ ga('send', 'pageview');
 </ul>
 <p>p.37 様々なツールのハイパーパラメータチューニング手段のまとめ ★</p>
 <p>p.40〜 MLflowの機能概要</p>
-<p>p.42 単一のモデルではなく、パイプライン全体をチューニングすること。 ★</p>
-<p>p.49 ハイパーパラメータチューニングの並列化。 Hyperopt、Apache Spark、MLflowインテグレーション ★</p>
-<h2><span id="scaling-apache-spark-on-kubernetes-at-lyft">Scaling Apache Spark on Kubernetes at Lyft</span></h2>
-<p><a href="https://www.slideshare.net/databricks/scaling-apache-spark-on-kubernetes-at-lyft" target="_blank" rel="noopener">Scaling Apache Spark on Kubernetes at Lyft</a></p>
+<p>p.42 単一のモデルではなく、パイプライン全体をチューニングすること。
+★</p>
+<p>p.49 ハイパーパラメータチューニングの並列化。 Hyperopt、Apache
+Spark、MLflowインテグレーション ★</p>
+<h2><span id="scaling-apache-sparkon-kubernetes-at-lyft">Scaling Apache Spark
+on Kubernetes at Lyft</span></h2>
+<p><a href="https://www.slideshare.net/databricks/scaling-apache-spark-on-kubernetes-at-lyft" target="_blank" rel="noopener">Scaling
+Apache Spark on Kubernetes at Lyft</a></p>
 <p>p.6 Liftにおけるバッチ処理アーキテクチャの進化。 ★</p>
 <p>p.7 アーキテクチャ図。 Druidも含まれている。</p>
 <p>p.8 初期のバッチ処理アーキテクチャ図。</p>
-<p>p.9〜 SQLでは複雑になりすぎる処理が存在する。またPythonも用いたい。 例：PythonからGeoに関するライブラリを呼び出して用いたい。</p>
+<p>p.9〜 SQLでは複雑になりすぎる処理が存在する。またPythonも用いたい。
+例：PythonからGeoに関するライブラリを呼び出して用いたい。</p>
 <p>Sparkを中心としたアーキテクチャ。</p>
 <p>p.19 残ったチャレンジ</p>
 <ul>
@@ -517,8 +717,11 @@ ga('send', 'pageview');
 <li>ポッドChurnやIPアロケーションのスロットリング</li>
 </ul>
 <p>p.22 最新アーキテクチャ★</p>
-<p>Spark本体、ヒストリサーバ、Sparkのオペレータ、ジョブ管を含め、すべてk8s上に構成。 他にもゲートウェイ機能をk8s上に実現。</p>
-<p>p.23〜 複数クラスタによるアーキテクチャ。 クラスタごとにラベルをつけて、ゲートウェイ経由で使い分ける。 バックエンドのストレージ（ここではS3？）、スキーマ等は共通化。</p>
+<p>Spark本体、ヒストリサーバ、Sparkのオペレータ、ジョブ管を含め、すべてk8s上に構成。
+他にもゲートウェイ機能をk8s上に実現。</p>
+<p>p.23〜 複数クラスタによるアーキテクチャ。
+クラスタごとにラベルをつけて、ゲートウェイ経由で使い分ける。
+バックエンドのストレージ（ここではS3？）、スキーマ等は共通化。</p>
 <p>クラスタ間でローテーション。</p>
 <p>複数のネームスペース。</p>
 <p>ジョブ管から見たとき、ポッドを共有するアーキテクチャもありえる。</p>
@@ -526,56 +729,139 @@ ga('send', 'pageview');
 <p>p.29 プライオリティとプリエンプションはWIP。</p>
 <p>p.32 Sparkジョブのコンフィグをオーバレイ構成にする。 ★</p>
 <p>p.36 モニタリングのツールキット。★</p>
-<p>p.38 Terraformを使った構成。Jinjaテンプレートでパラメータを扱うようだ。</p>
-<p>p.39 今後の課題 ★ サーバレス、セルフサービス可能にする、など。 Spark3系への対応もある。</p>
+<p>p.38
+Terraformを使った構成。Jinjaテンプレートでパラメータを扱うようだ。</p>
+<p>p.39 今後の課題 ★ サーバレス、セルフサービス可能にする、など。
+Spark3系への対応もある。</p>
 <p>p.40</p>
 <ul>
 <li>Sparkは様々なワークロードに適用可能</li>
 <li>k8sを使うことで複数バージョンへの対応や依存関係への対応がやりやすくなる</li>
-<li>マルチクラスタ構成のメッシュアーキテクチャにすることでSpark on k8sはスケールさせられる</li>
+<li>マルチクラスタ構成のメッシュアーキテクチャにすることでSpark on
+k8sはスケールさせられる</li>
 </ul>
-<h2><span id="a-real-time-architecture-for-machine-learning-execution-with-mleap">A "Real-Time" Architecture for Machine Learning Execution with MLeap ★</span></h2>
-<p><a href="https://www.slideshare.net/databricks/a-realtime-architecture-for-machine-learning-execution-with-mleap" target="_blank" rel="noopener">A "Real-Time" Architecture for Machine Learning Execution with MLeap</a></p>
+<h2><span id="areal-time-architecture-for-machine-learning-execution-with-mleap">A
+"Real-Time" Architecture for Machine Learning Execution with MLeap
+★</span></h2>
+<p><a href="https://www.slideshare.net/databricks/a-realtime-architecture-for-machine-learning-execution-with-mleap" target="_blank" rel="noopener">A
+"Real-Time" Architecture for Machine Learning Execution with
+MLeap</a></p>
 <p>p.2 機械学習におけるリアルタイムのユースケースはごく一部。</p>
 <p>p.5 1999年から異常検知に取り組んできた企業。</p>
 <p>p.7 データフローのイメージ図。 MLeap。</p>
-<p>p.10 リアルタイムのアーキテクチャのオーバービュー。 ヒストリカルデータストアからHDFSにデータを取り込み、教師あり機械学習モデルを作成する。 モデルはモデル管理用のデータストアに格納され、推論のシステムに渡される。</p>
+<p>p.10 リアルタイムのアーキテクチャのオーバービュー。
+ヒストリカルデータストアからHDFSにデータを取り込み、教師あり機械学習モデルを作成する。
+モデルはモデル管理用のデータストアに格納され、推論のシステムに渡される。</p>
 <p>モデルを作るところはMLeapのパイプラインで構成される。</p>
-<p>p.12 並列処理は、メッセージバス（Kafkaなど）によって実現される。 推論結果の生データをログに書き出すこと。</p>
-<p>p.13 モデル管理のフロー。 学習したモデルをデプロイするときには、ブルー・グリーンデプロイメントのように実施する。</p>
-<p>p.16〜 メトリクスについて。 平均と分散。 MLeapにより、レイテンシの99パーセンタイルが改善。</p>
-<h2><span id="managing-apache-spark-workload-and-automatic-optimizing">Managing Apache Spark Workload and Automatic Optimizing</span></h2>
-<p><a href="https://www.slideshare.net/databricks/managing-apache-spark-workload-and-automatic-optimizing" target="_blank" rel="noopener">Managing Apache Spark Workload and Automatic Optimizing</a></p>
-<h2><span id="optimizing-deltaparquet-data-lakes-for-apache-spark">Optimizing Delta/Parquet Data Lakes for Apache Spark</span></h2>
+<p>p.12 並列処理は、メッセージバス（Kafkaなど）によって実現される。
+推論結果の生データをログに書き出すこと。</p>
+<p>p.13 モデル管理のフロー。
+学習したモデルをデプロイするときには、ブルー・グリーンデプロイメントのように実施する。</p>
+<p>p.16〜 メトリクスについて。 平均と分散。
+MLeapにより、レイテンシの99パーセンタイルが改善。</p>
+<h2><span id="managingapache-spark-workload-and-automatic-optimizing">Managing
+Apache Spark Workload and Automatic Optimizing</span></h2>
+<p><a href="https://www.slideshare.net/databricks/managing-apache-spark-workload-and-automatic-optimizing" target="_blank" rel="noopener">Managing
+Apache Spark Workload and Automatic Optimizing</a></p>
+<h2><span id="optimizingdeltaparquet-data-lakes-for-apache-spark">Optimizing
+Delta/Parquet Data Lakes for Apache Spark</span></h2>
 <p>スライドが公開されていなかった。</p>
-<h2><span id="creating-an-omni-channel-customer-experience-with-ml-apache-spark-and-azure-databricks">Creating an Omni-Channel Customer Experience with ML, Apache Spark, and Azure Databricks</span></h2>
-<p><a href="https://www.slideshare.net/databricks/creating-an-omnichannel-customer-experience-with-ml-apache-spark-and-azure-databricks" target="_blank" rel="noopener">Creating an Omni-Channel Customer Experience with ML, Apache Spark, and Azure Databricks</a></p>
-<h2><span id="optimizing-performance-and-computing-resource-efficiency-of-in-memory-big-data-analytics-with-disaggregated-persistent-memory">Optimizing Performance and Computing Resource Efficiency of In-Memory Big Data Analytics with Disaggregated Persistent Memory</span></h2>
-<p><a href="https://www.slideshare.net/databricks/optimizing-performance-and-computing-resource-efficiency-of-inmemory-big-data-analytics-with-disaggregated-persistent-memory" target="_blank" rel="noopener">Optimizing Performance and Computing Resource Efficiency of In-Memory Big Data Analytics with Disaggregated Persistent Memory</a></p>
-<h2><span id="self-service-apache-spark-structured-streaming-applications-and-analytics">Self-Service Apache Spark Structured Streaming Applications and Analytics</span></h2>
-<p><a href="https://www.slideshare.net/databricks/selfservice-apache-spark-structured-streaming-applications-and-analytics" target="_blank" rel="noopener">Self-Service Apache Spark Structured Streaming Applications and Analytics</a></p>
-<h2><span id="building-resilient-and-scalable-data-pipelines-by-decoupling-compute-and-storage">Building Resilient and Scalable Data Pipelines by Decoupling Compute and Storage</span></h2>
-<p><a href="#building-resilient-and-scalable-data-pipelines-by-decoupling-compute-and-storage">Building Resilient and Scalable Data Pipelines by Decoupling Compute and Storage</a> <a href="#building-resilient-and-scalable-data-pipelines-by-decoupling-compute-and-storage">Building Resilient and Scalable Data Pipelines by Decoupling Compute and Storage</a>: https://www.slideshare.net/databricks/building-resilient-and-scalable-data-pipelines-by-decoupling-compute-and-storage</p>
-<h2><span id="automating-real-time-data-pipelines-into-databricks-delta">Automating Real-Time Data Pipelines into Databricks Delta</span></h2>
-<p><a href="#automating-real-time-data-pipelines-into-databricks-delta">Automating Real-Time Data Pipelines into Databricks Delta</a> <a href="#automating-real-time-data-pipelines-into-databricks-delta">Automating Real-Time Data Pipelines into Databricks Delta</a>: https://databricks.com/session/automating-real-time-data-pipelines-into-databricks-delta</p>
+<h2><span id="creatingan-omni-channel-customer-experience-with-ml-apache-spark-and-azuredatabricks">Creating
+an Omni-Channel Customer Experience with ML, Apache Spark, and Azure
+Databricks</span></h2>
+<p><a href="https://www.slideshare.net/databricks/creating-an-omnichannel-customer-experience-with-ml-apache-spark-and-azure-databricks" target="_blank" rel="noopener">Creating
+an Omni-Channel Customer Experience with ML, Apache Spark, and Azure
+Databricks</a></p>
+<h2><span id="optimizingperformance-and-computing-resource-efficiency-of-in-memory-big-dataanalytics-with-disaggregated-persistent-memory">Optimizing
+Performance and Computing Resource Efficiency of In-Memory Big Data
+Analytics with Disaggregated Persistent Memory</span></h2>
+<p><a href="https://www.slideshare.net/databricks/optimizing-performance-and-computing-resource-efficiency-of-inmemory-big-data-analytics-with-disaggregated-persistent-memory" target="_blank" rel="noopener">Optimizing
+Performance and Computing Resource Efficiency of In-Memory Big Data
+Analytics with Disaggregated Persistent Memory</a></p>
+<h2><span id="self-serviceapache-spark-structured-streaming-applications-and-analytics">Self-Service
+Apache Spark Structured Streaming Applications and Analytics</span></h2>
+<p><a href="https://www.slideshare.net/databricks/selfservice-apache-spark-structured-streaming-applications-and-analytics" target="_blank" rel="noopener">Self-Service
+Apache Spark Structured Streaming Applications and Analytics</a></p>
+<h2><span id="buildingresilient-and-scalable-data-pipelines-by-decoupling-compute-andstorage">Building
+Resilient and Scalable Data Pipelines by Decoupling Compute and
+Storage</span></h2>
+<p><a href="#building-resilient-and-scalable-data-pipelines-by-decoupling-compute-and-storage">Building
+Resilient and Scalable Data Pipelines by Decoupling Compute and
+Storage</a> <a href="#building-resilient-and-scalable-data-pipelines-by-decoupling-compute-and-storage">Building
+Resilient and Scalable Data Pipelines by Decoupling Compute and
+Storage</a>:
+https://www.slideshare.net/databricks/building-resilient-and-scalable-data-pipelines-by-decoupling-compute-and-storage</p>
+<h2><span id="automatingreal-time-data-pipelines-into-databricks-delta">Automating
+Real-Time Data Pipelines into Databricks Delta</span></h2>
+<p><a href="#automating-real-time-data-pipelines-into-databricks-delta">Automating
+Real-Time Data Pipelines into Databricks Delta</a> <a href="#automating-real-time-data-pipelines-into-databricks-delta">Automating
+Real-Time Data Pipelines into Databricks Delta</a>:
+https://databricks.com/session/automating-real-time-data-pipelines-into-databricks-delta</p>
 <p>資料が公開されていなかった。</p>
-<h2><span id="reimagining-devon-energys-data-estate-with-a-unified-approach-to-integrations-analytics-and-machine-learning">Reimagining Devon Energy’s Data Estate with a Unified Approach to Integrations, Analytics, and Machine Learning</span></h2>
-<p><a href="#reimagining-devon-energys-data-estate-with-a-unified-approach-to-integrations-analytics-and-machine-learning">Reimagining Devon Energy’s Data Estate with a Unified Approach to Integrations, Analytics, and Machine Learning</a> <a href="#reimagining-devon-energys-data-estate-with-a-unified-approach-to-integrations-analytics-and-machine-learning">Reimagining Devon Energy’s Data Estate with a Unified Approach to Integrations, Analytics, and Machine Learning</a>: https://www.slideshare.net/databricks/reimagining-devon-energys-data-estate-with-a-unified-approach-to-integrations-analytics-and-machine-learning</p>
-<h2><span id="data-prep-for-data-science-in-minutesa-real-world-use-case-study-of-telematics">Data Prep for Data Science in MinutesA Real World Use Case Study of Telematics</span></h2>
-<p><a href="#data-prep-for-data-science-in-minutesa-real-world-use-case-study-of-telematics">Data Prep for Data Science in MinutesA Real World Use Case Study of Telematics</a> <a href="#data-prep-for-data-science-in-minutesa-real-world-use-case-study-of-telematics">Data Prep for Data Science in MinutesA Real World Use Case Study of Telematics</a>: https://www.slideshare.net/databricks/data-prep-for-data-science-in-minutesa-real-world-use-case-study-of-telematics</p>
-<h2><span id="a-deep-dive-into-query-execution-engine-of-spark-sql">A Deep Dive into Query Execution Engine of Spark SQL</span></h2>
-<p><a href="#a-deep-dive-into-query-execution-engine-of-spark-sql">A Deep Dive into Query Execution Engine of Spark SQL</a> <a href="#a-deep-dive-into-query-execution-engine-of-spark-sql">A Deep Dive into Query Execution Engine of Spark SQL</a>: https://www.slideshare.net/databricks/a-deep-dive-into-query-execution-engine-of-spark-sql</p>
-<h2><span id="balancing-automation-and-explanation-in-machine-learning">Balancing Automation and Explanation in Machine Learning</span></h2>
-<p><a href="#balancing-automation-and-explanation-in-machine-learning">Balancing Automation and Explanation in Machine Learning</a> <a href="#balancing-automation-and-explanation-in-machine-learning">Balancing Automation and Explanation in Machine Learning</a>: https://www.slideshare.net/databricks/balancing-automation-and-explanation-in-machine-learning</p>
-<h2><span id="enabling-data-scientists-to-bring-their-models-to-market">Enabling Data Scientists to bring their Models to Market</span></h2>
-<p><a href="#enabling-data-scientists-to-bring-their-models-to-market">Enabling Data Scientists to bring their Models to Market</a> <a href="#enabling-data-scientists-to-bring-their-models-to-market">Enabling Data Scientists to bring their Models to Market</a>: https://databricks.com/session/enabling-data-scientists-to-bring-their-models-to-market</p>
+<h2><span id="reimaginingdevon-energys-data-estate-with-a-unified-approach-to-integrationsanalytics-and-machine-learning">Reimagining
+Devon Energy’s Data Estate with a Unified Approach to Integrations,
+Analytics, and Machine Learning</span></h2>
+<p><a href="#reimagining-devon-energys-data-estate-with-a-unified-approach-to-integrations-analytics-and-machine-learning">Reimagining
+Devon Energy’s Data Estate with a Unified Approach to Integrations,
+Analytics, and Machine Learning</a> <a href="#reimagining-devon-energys-data-estate-with-a-unified-approach-to-integrations-analytics-and-machine-learning">Reimagining
+Devon Energy’s Data Estate with a Unified Approach to Integrations,
+Analytics, and Machine Learning</a>:
+https://www.slideshare.net/databricks/reimagining-devon-energys-data-estate-with-a-unified-approach-to-integrations-analytics-and-machine-learning</p>
+<h2><span id="dataprep-for-data-science-in-minutesa-real-world-use-case-study-oftelematics">Data
+Prep for Data Science in MinutesA Real World Use Case Study of
+Telematics</span></h2>
+<p><a href="#data-prep-for-data-science-in-minutesa-real-world-use-case-study-of-telematics">Data
+Prep for Data Science in MinutesA Real World Use Case Study of
+Telematics</a> <a href="#data-prep-for-data-science-in-minutesa-real-world-use-case-study-of-telematics">Data
+Prep for Data Science in MinutesA Real World Use Case Study of
+Telematics</a>:
+https://www.slideshare.net/databricks/data-prep-for-data-science-in-minutesa-real-world-use-case-study-of-telematics</p>
+<h2><span id="a-deepdive-into-query-execution-engine-of-spark-sql">A Deep
+Dive into Query Execution Engine of Spark SQL</span></h2>
+<p><a href="#a-deep-dive-into-query-execution-engine-of-spark-sql">A
+Deep Dive into Query Execution Engine of Spark SQL</a> <a href="#a-deep-dive-into-query-execution-engine-of-spark-sql">A Deep Dive
+into Query Execution Engine of Spark SQL</a>:
+https://www.slideshare.net/databricks/a-deep-dive-into-query-execution-engine-of-spark-sql</p>
+<h2><span id="balancingautomation-and-explanation-in-machine-learning">Balancing
+Automation and Explanation in Machine Learning</span></h2>
+<p><a href="#balancing-automation-and-explanation-in-machine-learning">Balancing
+Automation and Explanation in Machine Learning</a> <a href="#balancing-automation-and-explanation-in-machine-learning">Balancing
+Automation and Explanation in Machine Learning</a>:
+https://www.slideshare.net/databricks/balancing-automation-and-explanation-in-machine-learning</p>
+<h2><span id="enablingdata-scientists-to-bring-their-models-to-market">Enabling
+Data Scientists to bring their Models to Market</span></h2>
+<p><a href="#enabling-data-scientists-to-bring-their-models-to-market">Enabling
+Data Scientists to bring their Models to Market</a> <a href="#enabling-data-scientists-to-bring-their-models-to-market">Enabling
+Data Scientists to bring their Models to Market</a>:
+https://databricks.com/session/enabling-data-scientists-to-bring-their-models-to-market</p>
 <p>Nikeの事例？ 資料が公開されていなかった。</p>
-<h2><span id="tensorflow-extended-an-end-to-end-machine-learning-platform-for-tensorflow">TensorFlow Extended: An End-to-End Machine Learning Platform for TensorFlow</span></h2>
-<p><a href="#tensorflow-extended-an-end-to-end-machine-learning-platform-for-tensorflow">TensorFlow Extended: An End-to-End Machine Learning Platform for TensorFlow</a> <a href="#tensorflow-extended-an-end-to-end-machine-learning-platform-for-tensorflow">TensorFlow Extended: An End-to-End Machine Learning Platform for TensorFlow</a>: https://www.slideshare.net/databricks/tensorflow-extended-an-endtoend-machine-learning-platform-for-tensorflow</p>
-<h2><span id="continuous-applications-at-scale-of-100-teams-with-databricks-delta-and-structured-streaming">Continuous Applications at Scale of 100 Teams with Databricks Delta and Structured Streaming</span></h2>
-<p><a href="#continuous-applications-at-scale-of-100-teams-with-databricks-delta-and-structured-streaming">Continuous Applications at Scale of 100 Teams with Databricks Delta and Structured Streaming</a> <a href="#continuous-applications-at-scale-of-100-teams-with-databricks-delta-and-structured-streaming">Continuous Applications at Scale of 100 Teams with Databricks Delta and Structured Streaming</a>: https://www.slideshare.net/databricks/continuous-applications-at-scale-of-100-teams-with-databricks-delta-and-structured-streaming</p>
-<h2><span id="how-australias-national-health-services-directory-improved-data-quality-reliability-and-integrity-with-databricks-delta-and-structured-streaming">How Australia’s National Health Services Directory Improved Data Quality, Reliability, and Integrity with Databricks Delta and Structured Streaming</span></h2>
-<p><a href="#how-australias-national-health-services-directory-improved-data-quality-reliability-and-integrity-with-databricks-delta-and-structured-streaming">How Australia’s National Health Services Directory Improved Data Quality, Reliability, and Integrity with Databricks Delta and Structured Streaming</a> <a href="#how-australias-national-health-services-directory-improved-data-quality-reliability-and-integrity-with-databricks-delta-and-structured-streaming">How Australia’s National Health Services Directory Improved Data Quality, Reliability, and Integrity with Databricks Delta and Structured Streaming</a>: https://www.slideshare.net/databricks/how-australias-national-health-services-directory-improved-data-quality-reliability-and-integrity-with-databricks-delta-and-structured-streaming</p>
+<h2><span id="tensorflowextended-an-end-to-end-machine-learning-platform-for-tensorflow">TensorFlow
+Extended: An End-to-End Machine Learning Platform for TensorFlow</span></h2>
+<p><a href="#tensorflow-extended-an-end-to-end-machine-learning-platform-for-tensorflow">TensorFlow
+Extended: An End-to-End Machine Learning Platform for TensorFlow</a> <a href="#tensorflow-extended-an-end-to-end-machine-learning-platform-for-tensorflow">TensorFlow
+Extended: An End-to-End Machine Learning Platform for TensorFlow</a>:
+https://www.slideshare.net/databricks/tensorflow-extended-an-endtoend-machine-learning-platform-for-tensorflow</p>
+<h2><span id="continuousapplications-at-scale-of-100-teams-with-databricks-delta-and-structuredstreaming">Continuous
+Applications at Scale of 100 Teams with Databricks Delta and Structured
+Streaming</span></h2>
+<p><a href="#continuous-applications-at-scale-of-100-teams-with-databricks-delta-and-structured-streaming">Continuous
+Applications at Scale of 100 Teams with Databricks Delta and Structured
+Streaming</a> <a href="#continuous-applications-at-scale-of-100-teams-with-databricks-delta-and-structured-streaming">Continuous
+Applications at Scale of 100 Teams with Databricks Delta and Structured
+Streaming</a>:
+https://www.slideshare.net/databricks/continuous-applications-at-scale-of-100-teams-with-databricks-delta-and-structured-streaming</p>
+<h2><span id="howaustralias-national-health-services-directory-improved-data-qualityreliability-and-integrity-with-databricks-delta-and-structuredstreaming">How
+Australia’s National Health Services Directory Improved Data Quality,
+Reliability, and Integrity with Databricks Delta and Structured
+Streaming</span></h2>
+<p><a href="#how-australias-national-health-services-directory-improved-data-quality-reliability-and-integrity-with-databricks-delta-and-structured-streaming">How
+Australia’s National Health Services Directory Improved Data Quality,
+Reliability, and Integrity with Databricks Delta and Structured
+Streaming</a> <a href="#how-australias-national-health-services-directory-improved-data-quality-reliability-and-integrity-with-databricks-delta-and-structured-streaming">How
+Australia’s National Health Services Directory Improved Data Quality,
+Reliability, and Integrity with Databricks Delta and Structured
+Streaming</a>:
+https://www.slideshare.net/databricks/how-australias-national-health-services-directory-improved-data-quality-reliability-and-integrity-with-databricks-delta-and-structured-streaming</p>
 
         
         </div>
@@ -586,7 +872,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/05/17/Spark-Summit-2019/" data-id="cl2nztnoc00dr5xqi6hwgdiwh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/05/17/Spark-Summit-2019/" data-id="cl2o9pbjq01bl18rz4itqxab5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -837,5 +1123,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

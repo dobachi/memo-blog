@@ -5,18 +5,18 @@
     
     <title>The evolution of metadata: LinkedIn’s story | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ GMA Metadata Serving Metadata Ingestion Architecture    参考  The evolution of metadata LinkedIn’s story スライド LinkedInのdatahubの20200104時点での実装 アーキテクチャ Generalized Metadata Architecture (GMA) Met">
+    <meta name="description" content="参考 メモ  GMA Metadata Serving Metadata Ingestion Architecture    参考  The evolution of metadata LinkedIn’s story スライド LinkedInのdatahubの20200104時点での実装 アーキテクチャ Generalized Metadata Architecture (GMA) Me">
 <meta name="keywords" content="LinkedIn,Metadata Management">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The evolution of metadata: LinkedIn’s story">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/01/04/The-evolution-of-metadata-LinkedIns-story/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ GMA Metadata Serving Metadata Ingestion Architecture    参考  The evolution of metadata LinkedIn’s story スライド LinkedInのdatahubの20200104時点での実装 アーキテクチャ Generalized Metadata Architecture (GMA) Met">
+<meta property="og:description" content="参考 メモ  GMA Metadata Serving Metadata Ingestion Architecture    参考  The evolution of metadata LinkedIn’s story スライド LinkedInのdatahubの20200104時点での実装 アーキテクチャ Generalized Metadata Architecture (GMA) Me">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The evolution of metadata: LinkedIn’s story">
-<meta name="twitter:description" content="参考 メモ GMA Metadata Serving Metadata Ingestion Architecture    参考  The evolution of metadata LinkedIn’s story スライド LinkedInのdatahubの20200104時点での実装 アーキテクチャ Generalized Metadata Architecture (GMA) Met">
+<meta name="twitter:description" content="参考 メモ  GMA Metadata Serving Metadata Ingestion Architecture    参考  The evolution of metadata LinkedIn’s story スライド LinkedInのdatahubの20200104時点での実装 アーキテクチャ Generalized Metadata Architecture (GMA) Me">
     
 
     
@@ -251,39 +251,54 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#gma">GMA</a></li>
-<li><a href="#metadata-serving">Metadata Serving</a></li>
-<li><a href="#metadata-ingestion-architecture">Metadata Ingestion Architecture</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#gma" id="toc-gma">GMA</a></li>
+<li><a href="#metadata-serving" id="toc-metadata-serving">Metadata
+Serving</a></li>
+<li><a href="#metadata-ingestion-architecture" id="toc-metadata-ingestion-architecture">Metadata Ingestion
+Architecture</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://conferences.oreilly.com/strata/strata-ny-2019/public/schedule/detail/77575" target="_blank" rel="noopener">The evolution of metadata LinkedIn’s story</a></li>
+<li><a href="https://conferences.oreilly.com/strata/strata-ny-2019/public/schedule/detail/77575" target="_blank" rel="noopener">The
+evolution of metadata LinkedIn’s story</a></li>
 <li><a href="https://cdn.oreillystatic.com/en/assets/1/event/300/The%20evolution%20of%20metadata_%20LinkedIn%E2%80%99s%20story%20Presentation.pdf" target="_blank" rel="noopener">スライド</a></li>
 <li><a href="https://github.com/linkedin/WhereHows/tree/datahub" target="_blank" rel="noopener">LinkedInのdatahubの20200104時点での実装</a></li>
 <li><a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/architecture/architecture.md" target="_blank" rel="noopener">アーキテクチャ</a></li>
-<li><a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/what/gma.md" target="_blank" rel="noopener">Generalized Metadata Architecture (GMA)</a></li>
-<li><a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/architecture/metadata-serving.md" target="_blank" rel="noopener">Metadata Serving</a></li>
-<li><a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/what/mxe.md#metadata-audit-event-mae" target="_blank" rel="noopener">MAE(Metadata Audit Event)</a></li>
+<li><a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/what/gma.md" target="_blank" rel="noopener">Generalized
+Metadata Architecture (GMA)</a></li>
+<li><a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/architecture/metadata-serving.md" target="_blank" rel="noopener">Metadata
+Serving</a></li>
+<li><a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/what/mxe.md#metadata-audit-event-mae" target="_blank" rel="noopener">MAE(Metadata
+Audit Event)</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>LinkedInが提唱する <a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/what/gma.md" target="_blank" rel="noopener">Generalized Metadata Architecture (GMA)</a> を基盤としたメタデータ管理システム。</p>
-<p>コンセプトは、 <a href="https://cdn.oreillystatic.com/en/assets/1/event/300/The%20evolution%20of%20metadata_%20LinkedIn%E2%80%99s%20story%20Presentation.pdf" target="_blank" rel="noopener">スライド</a> に記載されているが、ざっとアーキテクチャのイメージをつかむには、 <a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/architecture/architecture.md" target="_blank" rel="noopener">アーキテクチャ</a> がよい。</p>
+<p>LinkedInが提唱する <a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/what/gma.md" target="_blank" rel="noopener">Generalized
+Metadata Architecture (GMA)</a> を基盤としたメタデータ管理システム。</p>
+<p>コンセプトは、 <a href="https://cdn.oreillystatic.com/en/assets/1/event/300/The%20evolution%20of%20metadata_%20LinkedIn%E2%80%99s%20story%20Presentation.pdf" target="_blank" rel="noopener">スライド</a>
+に記載されているが、ざっとアーキテクチャのイメージをつかむには、 <a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/architecture/architecture.md" target="_blank" rel="noopener">アーキテクチャ</a>
+がよい。</p>
 <h2><span id="gma">GMA</span></h2>
 <p>メタデータは自動収集。</p>
 <p>これは標準化されたメタデータモデルとアクセスレイヤによるものである。</p>
 <p>また標準モデルが、モデルファーストのアプローチを促進する。</p>
 <h2><span id="metadata-serving">Metadata Serving</span></h2>
-<p><a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/architecture/metadata-serving.md" target="_blank" rel="noopener">Metadata Serving</a> に記載あり。</p>
-<p>RESTサービスは、LinkedInが開発していると思われるREST.liが用いられており、 DAOもその中の「Pegasus」という仕組みを利用している。</p>
+<p><a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/architecture/metadata-serving.md" target="_blank" rel="noopener">Metadata
+Serving</a> に記載あり。</p>
+<p>RESTサービスは、LinkedInが開発していると思われるREST.liが用いられており、
+DAOもその中の「Pegasus」という仕組みを利用している。</p>
 <p>Key-Value DAO、Search DAO、Query DAOが定義されている。</p>
 <p>上記GMAの通り、この辺りのDAOによるアクセスレイヤの標準化が見て取れる。</p>
-<h2><span id="metadata-ingestion-architecture">Metadata Ingestion Architecture</span></h2>
-<p>そもそも、メタデータに対する変更は <a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/what/mxe.md#metadata-audit-event-mae" target="_blank" rel="noopener">MAE(Metadata Audit Event)</a> としてキャプチャされる。</p>
-<p>それがKafka Streamsのジョブで刈り取られ処理される。なお、シーケンシャルに処理されるための工夫もあるようだ。</p>
+<h2><span id="metadata-ingestionarchitecture">Metadata Ingestion
+Architecture</span></h2>
+<p>そもそも、メタデータに対する変更は <a href="https://github.com/linkedin/WhereHows/blob/datahub/docs/what/mxe.md#metadata-audit-event-mae" target="_blank" rel="noopener">MAE(Metadata
+Audit Event)</a> としてキャプチャされる。</p>
+<p>それがKafka
+Streamsのジョブで刈り取られ処理される。なお、シーケンシャルに処理されるための工夫もあるようだ。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -295,7 +310,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/01/04/The-evolution-of-metadata-LinkedIns-story/" data-id="cl2nztnoq00ew5xqis1k842l6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/01/04/The-evolution-of-metadata-LinkedIns-story/" data-id="cl2o9pb8a00ag18rzrlfneqky" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -546,5 +561,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

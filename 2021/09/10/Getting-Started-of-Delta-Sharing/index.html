@@ -5,18 +5,18 @@
     
     <title>Getting Started of Delta Sharing | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 特徴 リファレンスサーバを動かす 前提 サンプルスクリプト 基本的な動作 プロファイルの場所にURLを指定できるか？ 認可 REST APIでアクセス     参考  公式GitHub Autorization REST API Shareの取得 Tableバージョンの取得 テーブルメタデータの取得 テーブルデータの読み出し   Delta Sharing Example Cre">
+    <meta name="description" content="参考 メモ  特徴 リファレンスサーバを動かす  前提 サンプルスクリプト 基本的な動作 プロファイルの場所にURLを指定できるか？ 認可 REST APIでアクセス     参考  公式GitHub Autorization REST API Shareの取得 Tableバージョンの取得 テーブルメタデータの取得 テーブルデータの読み出し   Delta Sharing Example C">
 <meta name="keywords" content="Delta Sharing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Getting Started of Delta Sharing">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2021/09/10/Getting-Started-of-Delta-Sharing/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 特徴 リファレンスサーバを動かす 前提 サンプルスクリプト 基本的な動作 プロファイルの場所にURLを指定できるか？ 認可 REST APIでアクセス     参考  公式GitHub Autorization REST API Shareの取得 Tableバージョンの取得 テーブルメタデータの取得 テーブルデータの読み出し   Delta Sharing Example Cre">
+<meta property="og:description" content="参考 メモ  特徴 リファレンスサーバを動かす  前提 サンプルスクリプト 基本的な動作 プロファイルの場所にURLを指定できるか？ 認可 REST APIでアクセス     参考  公式GitHub Autorization REST API Shareの取得 Tableバージョンの取得 テーブルメタデータの取得 テーブルデータの読み出し   Delta Sharing Example C">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.445Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Getting Started of Delta Sharing">
-<meta name="twitter:description" content="参考 メモ 特徴 リファレンスサーバを動かす 前提 サンプルスクリプト 基本的な動作 プロファイルの場所にURLを指定できるか？ 認可 REST APIでアクセス     参考  公式GitHub Autorization REST API Shareの取得 Tableバージョンの取得 テーブルメタデータの取得 テーブルデータの読み出し   Delta Sharing Example Cre">
+<meta name="twitter:description" content="参考 メモ  特徴 リファレンスサーバを動かす  前提 サンプルスクリプト 基本的な動作 プロファイルの場所にURLを指定できるか？ 認可 REST APIでアクセス     参考  公式GitHub Autorization REST API Shareの取得 Tableバージョンの取得 テーブルメタデータの取得 テーブルデータの読み出し   Delta Sharing Example C">
     
 
     
@@ -251,16 +251,19 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#特徴">特徴</a></li>
-<li><a href="#リファレンスサーバを動かす">リファレンスサーバを動かす</a><ul>
-<li><a href="#前提">前提</a></li>
-<li><a href="#サンプルスクリプト">サンプルスクリプト</a></li>
-<li><a href="#基本的な動作">基本的な動作</a></li>
-<li><a href="#プロファイルの場所にurlを指定できるか">プロファイルの場所にURLを指定できるか？</a></li>
-<li><a href="#認可">認可</a></li>
-<li><a href="#rest-apiでアクセス">REST APIでアクセス</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#特徴" id="toc-特徴">特徴</a></li>
+<li><a href="#リファレンスサーバを動かす" id="toc-リファレンスサーバを動かす">リファレンスサーバを動かす</a>
+<ul>
+<li><a href="#前提" id="toc-前提">前提</a></li>
+<li><a href="#サンプルスクリプト" id="toc-サンプルスクリプト">サンプルスクリプト</a></li>
+<li><a href="#基本的な動作" id="toc-基本的な動作">基本的な動作</a></li>
+<li><a href="#プロファイルの場所にurlを指定できるか" id="toc-プロファイルの場所にurlを指定できるか">プロファイルの場所にURLを指定できるか？</a></li>
+<li><a href="#認可" id="toc-認可">認可</a></li>
+<li><a href="#rest-apiでアクセス" id="toc-rest-apiでアクセス">REST
+APIでアクセス</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -269,14 +272,16 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://github.com/delta-io/delta-sharing" target="_blank" rel="noopener">公式GitHub</a></li>
 <li><a href="https://github.com/delta-io/delta-sharing#authorization" target="_blank" rel="noopener">Autorization</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#rest-apis" target="_blank" rel="noopener">REST API</a></li>
+<li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#rest-apis" target="_blank" rel="noopener">REST
+API</a></li>
 <li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#list-shares" target="_blank" rel="noopener">Shareの取得</a></li>
 <li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#query-table-version" target="_blank" rel="noopener">Tableバージョンの取得</a></li>
 <li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#query-table-metadata" target="_blank" rel="noopener">テーブルメタデータの取得</a></li>
 <li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#read-data-from-a-table" target="_blank" rel="noopener">テーブルデータの読み出し</a></li>
 </ul>
 <ul>
-<li><a href="https://github.com/dobachi/delta_sharing_example" target="_blank" rel="noopener">Delta Sharing Example</a></li>
+<li><a href="https://github.com/dobachi/delta_sharing_example" target="_blank" rel="noopener">Delta
+Sharing Example</a></li>
 <li><a href="https://github.com/dobachi/delta_sharing_example/blob/main/CreateDeltaTableS3.ipynb" target="_blank" rel="noopener">CreateDeltaTableS3</a></li>
 <li><a href="https://github.com/dobachi/delta_sharing_example/blob/main/bin/pyspark_jupyter.sh" target="_blank" rel="noopener">pyspark_jupyter</a></li>
 <li><a href="https://github.com/dobachi/delta_sharing_example/blob/main/PythonConnectorExample.ipynb" target="_blank" rel="noopener">PythonConnectorExample</a></li>
@@ -288,10 +293,12 @@ ga('send', 'pageview');
 <iframe src="https://onedrive.live.com/embed?cid=C6E669622F542498&amp;resid=C6E669622F542498%21102556&amp;authkey=AHO18y2xg6wyASo&amp;em=2" width="402" height="327" frameborder="0" scrolling="no">
 </iframe>
 <h2><span id="リファレンスサーバを動かす">リファレンスサーバを動かす</span></h2>
-<p><a href="https://github.com/delta-io/delta-sharing" target="_blank" rel="noopener">公式GitHub</a> のREADMEを参考に、リファレンスサーバを動かす。</p>
+<p><a href="https://github.com/delta-io/delta-sharing" target="_blank" rel="noopener">公式GitHub</a>
+のREADMEを参考に、リファレンスサーバを動かす。</p>
 <h3><span id="前提">前提</span></h3>
 <ul>
-<li>OS: CentOS Linux release 7.8.2003 (Core)、CentOS Linux release 7.9.2009 (Core)</li>
+<li>OS: CentOS Linux release 7.8.2003 (Core)、CentOS Linux release
+7.9.2009 (Core)</li>
 <li>必要なライブラリ
 <ul>
 <li>bzip2-devel、readline-devel、openssl-devel、sqlite-devel、libffi-devel</li>
@@ -307,15 +314,27 @@ ga('send', 'pageview');
 </ul></li>
 </ul>
 <h3><span id="サンプルスクリプト">サンプルスクリプト</span></h3>
-<p><a href="https://github.com/dobachi/delta_sharing_example" target="_blank" rel="noopener">Delta Sharing Example</a> にこの記事で取り扱うサンプルスクリプト（Jupyterのノートブック）を置いてある。 なお、このプロジェクトには、Jupyter LabをPySparkと一緒に起動するサンプル補助スクリプト <code>./bin/pyspark_jupyter.sh</code> が入っている。 適宜編集して利用されたし。</p>
-<p>以降の手順では、このノートブック群を利用した例を示す。 利用する場合はサブモジュールごと以下のようにクローンすると便利。</p>
+<p><a href="https://github.com/dobachi/delta_sharing_example" target="_blank" rel="noopener">Delta
+Sharing Example</a>
+にこの記事で取り扱うサンプルスクリプト（Jupyterのノートブック）を置いてある。
+なお、このプロジェクトには、Jupyter
+LabをPySparkと一緒に起動するサンプル補助スクリプト
+<code>./bin/pyspark_jupyter.sh</code> が入っている。
+適宜編集して利用されたし。</p>
+<p>以降の手順では、このノートブック群を利用した例を示す。
+利用する場合はサブモジュールごと以下のようにクローンすると便利。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p -/Sources</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> -/Sources</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> --recursive https://github.com/dobachi/delta_sharing_example.git</span></span><br></pre></td></tr></table></figure>
 <h4><span id="profileについて">.profileについて</span></h4>
-<p>なお、この補助スクリプトは同一ディレクトリに <code>.profile</code> があれば、それを読み込むようになっている。 特に、環境変数 <code>OPTIONS</code> や <code>S3_TEST_URL</code> に個人的な値を設定するために利用するとよい。</p>
+<p>なお、この補助スクリプトは同一ディレクトリに <code>.profile</code>
+があれば、それを読み込むようになっている。 特に、環境変数
+<code>OPTIONS</code> や <code>S3_TEST_URL</code>
+に個人的な値を設定するために利用するとよい。</p>
 <h4><span id="profileで設定する環境変数について">.profileで設定する環境変数について</span></h4>
 <ul>
-<li><code>OPTIONS</code> : Jupyter Lab起動時に、Sparkに渡すオプションを設定するために用意した。</li>
-<li><code>S3_TEST_URL</code> : ノートブック内で読み書き動作確認用に用いるS3のURLを設定するために用意した。</li>
+<li><code>OPTIONS</code> : Jupyter
+Lab起動時に、Sparkに渡すオプションを設定するために用意した。</li>
+<li><code>S3_TEST_URL</code> :
+ノートブック内で読み書き動作確認用に用いるS3のURLを設定するために用意した。</li>
 </ul>
 <h3><span id="基本的な動作">基本的な動作</span></h3>
 <p>以下の流れで試す。</p>
@@ -326,14 +345,26 @@ ga('send', 'pageview');
 <li>S3に置いたサンプルデータをDelta Sharingのサーバ経由で取得する</li>
 </ul>
 <h4><span id="s3上にサンプルデータを作成する">S3上にサンプルデータを作成する</span></h4>
-<p>まずはS3上にデータを置く。なんの手段でも良いが、S3へのアクセスロールを持つEC2インスタンス上で <a href="https://github.com/dobachi/delta_sharing_example/blob/main/CreateDeltaTableS3.ipynb" target="_blank" rel="noopener">CreateDeltaTableS3</a> を実行する。</p>
-<p>なお、PySparkをJupyter Labで起動する補助するスクリプトの例が<a href="https://github.com/dobachi/delta_sharing_example/blob/main/bin/pyspark_jupyter.sh" target="_blank" rel="noopener">pyspark_jupyter</a>に載っている。 <a href="https://github.com/dobachi/delta_sharing_example/blob/main/CreateDeltaTableS3.ipynb" target="_blank" rel="noopener">CreateDeltaTableS3</a> のレポジトリにおいても当該スクリプトがサブモジュールとして読み込まれる。</p>
-<h4><span id="手元のマシンでdelta-sharingのサーバを立ち上げる">手元のマシンでDelta Sharingのサーバを立ち上げる</span></h4>
-<p>つづいて、Delta Sharingのソースコードをクローンする。 なお、公式でリリースされたパッケージを用いてもよいのだが、 Delta Sharingはまだプロダクトが若く、変更も多いためmainブランチを パッケージ化して用いることにする。</p>
+<p>まずはS3上にデータを置く。なんの手段でも良いが、S3へのアクセスロールを持つEC2インスタンス上で
+<a href="https://github.com/dobachi/delta_sharing_example/blob/main/CreateDeltaTableS3.ipynb" target="_blank" rel="noopener">CreateDeltaTableS3</a>
+を実行する。</p>
+<p>なお、PySparkをJupyter Labで起動する補助するスクリプトの例が<a href="https://github.com/dobachi/delta_sharing_example/blob/main/bin/pyspark_jupyter.sh" target="_blank" rel="noopener">pyspark_jupyter</a>に載っている。
+<a href="https://github.com/dobachi/delta_sharing_example/blob/main/CreateDeltaTableS3.ipynb" target="_blank" rel="noopener">CreateDeltaTableS3</a>
+のレポジトリにおいても当該スクリプトがサブモジュールとして読み込まれる。</p>
+<h4><span id="手元のマシンでdeltasharingのサーバを立ち上げる">手元のマシンでDelta
+Sharingのサーバを立ち上げる</span></h4>
+<p>つづいて、Delta Sharingのソースコードをクローンする。
+なお、公式でリリースされたパッケージを用いてもよいのだが、 Delta
+Sharingはまだプロダクトが若く、変更も多いためmainブランチを
+パッケージ化して用いることにする。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p -/Sources</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> -/Sources</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/delta-io/delta-sharing.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> delta-sharing</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./build/sbt server/universal:packageBin</span></span><br></pre></td></tr></table></figure>
-<p>これで <code>server/target/universal/delta-sharing-server-0.3.0-SNAPSHOT.zip</code> ができたはず。（2021/9現在。これ以降だと、バージョンが上がっている可能性がある） これを適当なディレクトリに展開して用いるようにする。</p>
+<p>これで
+<code>server/target/universal/delta-sharing-server-0.3.0-SNAPSHOT.zip</code>
+ができたはず。（2021/9現在。これ以降だと、バージョンが上がっている可能性がある）
+これを適当なディレクトリに展開して用いるようにする。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p ~/DeltaSharing</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cp server/target/universal/delta-sharing-server-0.3.0-SNAPSHOT.zip ~/DeltaSharing</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/DeltaSharing/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="keyword">if</span> [ -d delta-sharing-server-0.3.0-SNAPSHOT ]; <span class="keyword">then</span> rm -r delta-sharing-server-0.3.0-SNAPSHOT; <span class="keyword">fi</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> unzip delta-sharing-server-0.3.0-SNAPSHOT.zip</span></span><br></pre></td></tr></table></figure>
-<p>展開したパッケージの中に、設定のテンプレートが入っているのでコピーして 自分の環境に合わせて編集する。</p>
+<p>展開したパッケージの中に、設定のテンプレートが入っているのでコピーして
+自分の環境に合わせて編集する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/DeltaSharing/delta-sharing-server-0.2.0-SNAPSHOT</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cp conf/delta-sharing-server.yaml&#123;.template,&#125;</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> vim conf/delta-sharing-server.yaml</span></span><br></pre></td></tr></table></figure>
 <p>設定ファイルの例</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># The format version of this config file</span></span><br><span class="line"><span class="attr">version:</span> <span class="number">1</span></span><br><span class="line"><span class="comment"># Config shares/schemas/tables to share</span></span><br><span class="line"><span class="attr">shares:</span></span><br><span class="line"><span class="attr">- name:</span> <span class="string">"share1"</span></span><br><span class="line"><span class="attr">  schemas:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">"schema1"</span></span><br><span class="line"><span class="attr">    tables:</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">"table1"</span></span><br><span class="line"><span class="attr">      location:</span> <span class="string">"s3a://&lt;your configuration&gt;"</span></span><br><span class="line"><span class="comment"># Set the host name that the server will use</span></span><br><span class="line"><span class="attr">host:</span> <span class="string">"localhost"</span></span><br><span class="line"><span class="comment"># Set the port that the server will listen on</span></span><br><span class="line"><span class="attr">port:</span> <span class="number">80</span></span><br><span class="line"><span class="comment"># Set the url prefix for the REST APIs</span></span><br><span class="line"><span class="attr">endpoint:</span> <span class="string">"/delta-sharing"</span></span><br><span class="line"><span class="comment"># Set the timeout of S3 presigned url in seconds</span></span><br><span class="line"><span class="attr">preSignedUrlTimeoutSeconds:</span> <span class="number">900</span></span><br><span class="line"><span class="comment"># How many tables to cache in the server</span></span><br><span class="line"><span class="attr">deltaTableCacheSize:</span> <span class="number">10</span></span><br><span class="line"><span class="comment"># Whether we can accept working with a stale version of the table. This is useful when sharing</span></span><br><span class="line"><span class="comment"># static tables that will never be changed.</span></span><br><span class="line"><span class="attr">stalenessAcceptable:</span> <span class="literal">false</span></span><br><span class="line"><span class="comment"># Whether to evaluate user provided `predicateHints`</span></span><br><span class="line"><span class="attr">evaluatePredicateHints:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
@@ -341,58 +372,88 @@ ga('send', 'pageview');
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./bin/delta-sharing-server -- --config conf/delta-sharing-server.yaml</span></span><br></pre></td></tr></table></figure>
 <h4><span id="githubからクローンしたライブラリをローカル環境にインストール">githubからクローンしたライブラリをローカル環境にインストール</span></h4>
 <p>起動したサーバとは別のターミナルを開き、Pythonクライアントを試す。</p>
-<p>先ほどクローンしたDelta Sharingのレポジトリを利用し、 venvなどで構築した環境下にpipでdelta sharingのPythonクライアントライブラリをインストールする。</p>
+<p>先ほどクローンしたDelta Sharingのレポジトリを利用し、
+venvなどで構築した環境下にpipでdelta
+sharingのPythonクライアントライブラリをインストールする。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> pip install ~/Sources/delta-sharing/python/</span></span><br></pre></td></tr></table></figure>
 <p>なお、もしすでに一度インストールしたことがあるようであれば、アップデートするようにするなど工夫すること。</p>
 <p>つづいて、Spark用のパッケージを作る。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/Sources/delta-sharing</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./build/sbt spark/package</span></span><br></pre></td></tr></table></figure>
-<p><code>spark/target/scala-2.12/delta-sharing-spark_2.12-0.3.0-SNAPSHOT.jar</code> にJarファイルができる。</p>
-<p>これをコネクタの起動時にロードするようにする。 例えば、PySparkのJupyter Lab起動時に以下のようなオプションを渡す。</p>
+<p><code>spark/target/scala-2.12/delta-sharing-spark_2.12-0.3.0-SNAPSHOT.jar</code>
+にJarファイルができる。</p>
+<p>これをコネクタの起動時にロードするようにする。
+例えば、PySparkのJupyter Lab起動時に以下のようなオプションを渡す。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--jars /home/centos/Sources/delta-sharing/spark/target/scala-2.12/delta-sharing-spark_2.12-0.3.0-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
 <p>のような</p>
-<h4><span id="s3に置いたサンプルデータをdelta-sharingのサーバ経由で取得する">S3に置いたサンプルデータをDelta Sharingのサーバ経由で取得する</span></h4>
-<p><a href="https://github.com/dobachi/delta_sharing_example/blob/main/PythonConnectorExample.ipynb" target="_blank" rel="noopener">PythonConnectorExample</a> にPythonのクライアントライブラリを用いた例を示す。 Pandas DataFrameで取得する例を掲載している。</p>
-<p>上記スクリプト内でも利用している通り、クライアントがアクセスするためには、 以下のようなプロファイルを渡す必要がある。</p>
+<h4><span id="s3に置いたサンプルデータをdeltasharingのサーバ経由で取得する">S3に置いたサンプルデータをDelta
+Sharingのサーバ経由で取得する</span></h4>
+<p><a href="https://github.com/dobachi/delta_sharing_example/blob/main/PythonConnectorExample.ipynb" target="_blank" rel="noopener">PythonConnectorExample</a>
+にPythonのクライアントライブラリを用いた例を示す。 Pandas
+DataFrameで取得する例を掲載している。</p>
+<p>上記スクリプト内でも利用している通り、クライアントがアクセスするためには、
+以下のようなプロファイルを渡す必要がある。</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"shareCredentialsVersion"</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">"endpoint"</span>: <span class="string">"http://localhost:80/delta-sharing/"</span>,</span><br><span class="line">  <span class="attr">"bearerToken"</span>: <span class="string">""</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>このプロファイルは以下の通り、ファイルのPATH等を渡すか、<code>delta_sharing.protocol.DeltaSharingProfile</code>インスタンスを渡すかすれば良さそう。 後者の場合、JSONテキストから生成できる。</p>
+<p>このプロファイルは以下の通り、ファイルのPATH等を渡すか、<code>delta_sharing.protocol.DeltaSharingProfile</code>インスタンスを渡すかすれば良さそう。
+後者の場合、JSONテキストから生成できる。</p>
 <p>delta_sharing/delta_sharing.py:92</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, profile: Union[str, BinaryIO, TextIO, Path, DeltaSharingProfile])</span>:</span></span><br></pre></td></tr></table></figure>
-<p>一方、 <code>delta_sharing.delta_sharing.load_as_pandas</code> メソッドを用いて、 Pandas DataFrameで取得する場合は、その引数に渡すプロファイルはURLのテキストが期待されている。</p>
+<p>一方、 <code>delta_sharing.delta_sharing.load_as_pandas</code>
+メソッドを用いて、 Pandas
+DataFrameで取得する場合は、その引数に渡すプロファイルはURLのテキストが期待されている。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_as_pandas</span><span class="params">(url: str)</span> -&gt; pd.DataFrame:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Load the shared table using the give url as a pandas DataFrame.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param url: a url under the format "&lt;profile&gt;#&lt;share&gt;.&lt;schema&gt;.&lt;table&gt;"</span></span><br><span class="line"><span class="string">    :return: A pandas DataFrame representing the shared table.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    profile_json, share, schema, table = _parse_url(url)</span><br><span class="line">    profile = DeltaSharingProfile.read_from_file(profile_json)</span><br><span class="line">    <span class="keyword">return</span> DeltaSharingReader(</span><br><span class="line">        table=Table(name=table, share=share, schema=schema),</span><br><span class="line">        rest_client=DataSharingRestClient(profile),</span><br><span class="line">    ).to_pandas()</span><br></pre></td></tr></table></figure>
-<p>クライアントと同様に、JSONのテキストでも受け付けられるようにしたら便利か。 そもそもプロファイルとスキーマ等の指定が必ずしもひとつのURLになっていなくてもよいのでは…？と思う節もある。 が、共有は基本的にすべてURLで…という統一性を大事にするのも分かる。</p>
+<p>クライアントと同様に、JSONのテキストでも受け付けられるようにしたら便利か。
+そもそもプロファイルとスキーマ等の指定が必ずしもひとつのURLになっていなくてもよいのでは…？と思う節もある。
+が、共有は基本的にすべてURLで…という統一性を大事にするのも分かる。</p>
 <h3><span id="プロファイルの場所にurlを指定できるか">プロファイルの場所にURLを指定できるか？</span></h3>
-<p>Spark Connector利用時は、例えばS3に置いたプロファイルを使用できるか？の確認をする。</p>
-<p>◇補足： というのも、Spark Connectorを利用している際、Sparkのコンフィグにて、 <code>HADOOP_HOME</code> を設定し、Hadoopを利用するようにしてみたらどうやらHDFS を探しに行っているようだったため、SparkのAPIを通じてプロファイルを読みに行っているのだとしたら、S3等に置かれたプロファイルを読めるはずだ、と考えたため。</p>
-<p>ここでは、 <code>s3://hoge/fuga/deltasharing.json</code> のようなURLを渡すことにする。</p>
-<p>結論から言えば、delta sharingはプロファイルの読み出しにfsspecを利用しているため、仕様上はリモートのファイルを読み出せるようになっている。</p>
-<p>ここで実行したノートブックは <a href="https://github.com/dobachi/delta_sharing_example/blob/main/TestProfileOnS3.ipynb" target="_blank" rel="noopener">TestProfileOnS3</a> に置いてある。</p>
+<p>Spark
+Connector利用時は、例えばS3に置いたプロファイルを使用できるか？の確認をする。</p>
+<p>◇補足： というのも、Spark
+Connectorを利用している際、Sparkのコンフィグにて、
+<code>HADOOP_HOME</code>
+を設定し、Hadoopを利用するようにしてみたらどうやらHDFS
+を探しに行っているようだったため、SparkのAPIを通じてプロファイルを読みに行っているのだとしたら、S3等に置かれたプロファイルを読めるはずだ、と考えたため。</p>
+<p>ここでは、 <code>s3://hoge/fuga/deltasharing.json</code>
+のようなURLを渡すことにする。</p>
+<p>結論から言えば、delta
+sharingはプロファイルの読み出しにfsspecを利用しているため、仕様上はリモートのファイルを読み出せるようになっている。</p>
+<p>ここで実行したノートブックは <a href="https://github.com/dobachi/delta_sharing_example/blob/main/TestProfileOnS3.ipynb" target="_blank" rel="noopener">TestProfileOnS3</a>
+に置いてある。</p>
 <h4><span id="delta-sharing-clientの生成">delta sharing clientの生成</span></h4>
 <p>まず、共有データ一覧を取得するために用いるクライアントだが、</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client = delta_sharing.SharingClient(profile_file)</span><br></pre></td></tr></table></figure>
 <p>の引数にS3のURLを渡したら、以下のエラーになった。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImportError: Install s3fs to access S3</span><br></pre></td></tr></table></figure>
-<p>これは、delta sharing内で用いられるfsspecにより出された例外である。</p>
+<p>これは、delta
+sharing内で用いられるfsspecにより出された例外である。</p>
 <p>python/delta_sharing/protocol.py:41</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@staticmethod</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_from_file</span><span class="params">(profile: Union[str, IO, Path])</span> -&gt; "DeltaSharingProfile":</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(profile, str):</span><br><span class="line">        infile = fsspec.open(profile).open()</span><br><span class="line">    <span class="keyword">elif</span> isinstance(profile, Path):</span><br><span class="line">        infile = fsspec.open(profile.as_uri()).open()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        infile = profile</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> DeltaSharingProfile.from_json(infile.read())</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        infile.close()</span><br></pre></td></tr></table></figure>
 <p>ということで、Python環境にpipでs3fsをインストールしてからもう一度試したところ、ひとまず動作した。</p>
 <p>fsspecを利用しているということは、仕様上はリモートに置いてあるファイルシステムにも対応可能である、ということだった。</p>
-<p>Pandas DataFrame、Spark DataFrameそれぞれへの読み出しについて、動作した。</p>
+<p>Pandas DataFrame、Spark
+DataFrameそれぞれへの読み出しについて、動作した。</p>
 <h3><span id="認可">認可</span></h3>
-<p><a href="https://github.com/delta-io/delta-sharing#authorization" target="_blank" rel="noopener">Autorization</a> の通り、Bearer認証を利用できるようだ。</p>
+<p><a href="https://github.com/delta-io/delta-sharing#authorization" target="_blank" rel="noopener">Autorization</a>
+の通り、Bearer認証を利用できるようだ。</p>
 <h3><span id="rest-apiでアクセス">REST APIでアクセス</span></h3>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#rest-apis" target="_blank" rel="noopener">REST API</a> を参考に確認する。</p>
+<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#rest-apis" target="_blank" rel="noopener">REST
+API</a> を参考に確認する。</p>
 <h4><span id="shareのリスト">Shareのリスト</span></h4>
 <p>ひとまず一番簡単な、Share一覧を取得する。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl http://127.0.0.1:80/delta-sharing/shares | jq</span></span><br><span class="line">&#123;</span><br><span class="line">  "items": [</span><br><span class="line">    &#123;</span><br><span class="line">      "name": "share1"</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4><span id="テーブルバージョンの取得">テーブルバージョンの取得</span></h4>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#query-table-version" target="_blank" rel="noopener">Tableバージョンの取得</a> の通り。 なお、なぜか2行出力される。</p>
+<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#query-table-version" target="_blank" rel="noopener">Tableバージョンの取得</a>
+の通り。 なお、なぜか2行出力される。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -I -D - http://127.0.0.1:80/delta-sharing/shares/share1/schemas/schema1/tables/table1</span></span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">delta-table-version: 4</span><br><span class="line">delta-table-version: 4</span><br><span class="line">content-length: 0</span><br><span class="line">content-length: 0</span><br></pre></td></tr></table></figure>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#list-shares" target="_blank" rel="noopener">Shareの取得</a>にあるようにクエリパラメタとして <code>maxResult</code> やページングの情報を渡せる。</p>
+<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#list-shares" target="_blank" rel="noopener">Shareの取得</a>にあるようにクエリパラメタとして
+<code>maxResult</code> やページングの情報を渡せる。</p>
 <h4><span id="メタデータの取得">メタデータの取得</span></h4>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#query-table-metadata" target="_blank" rel="noopener">テーブルメタデータの取得</a> の通り。</p>
+<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#query-table-metadata" target="_blank" rel="noopener">テーブルメタデータの取得</a>
+の通り。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl http://127.0.0.1:80/delta-sharing/shares/share1/schemas/schema1/tables/table1/metadata | jq</span></span><br><span class="line"><span class="meta">  %</span><span class="bash"> Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span></span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100   271    0   271    0     0    919      0 --:--:-- --:--:-- --:--:--   921</span><br><span class="line">&#123;</span><br><span class="line">  "protocol": &#123;</span><br><span class="line">    "minReaderVersion": 1</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">  "metaData": &#123;</span><br><span class="line">    "id": "cea27a35-d139-4a74-a5f7-5596985784b8",</span><br><span class="line">    "format": &#123;</span><br><span class="line">      "provider": "parquet"</span><br><span class="line">    &#125;,</span><br><span class="line">    "schemaString": "&#123;\"type\":\"struct\",\"fields\":[&#123;\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;]&#125;",</span><br><span class="line">    "partitionColumns": []</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4><span id="データの取得">データの取得</span></h4>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#read-data-from-a-table" target="_blank" rel="noopener">テーブルデータの読み出し</a> に従うと、「ヒント句」を渡しながら、データ（のアクセスURL）を取得できるようだ。 ドキュメントを読む限り、このヒントが働くかどうかはベストエフォートとのこと。</p>
+<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#read-data-from-a-table" target="_blank" rel="noopener">テーブルデータの読み出し</a>
+に従うと、「ヒント句」を渡しながら、データ（のアクセスURL）を取得できるようだ。
+ドキュメントを読む限り、このヒントが働くかどうかはベストエフォートとのこと。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -H &quot;Content-Type: application/json; charset=utf-8&quot; http://127.0.0.1:80/delta-sharing/shares/share1/schemas/schema1/tables/table1/query -d @- &lt;&lt; EOL</span><br><span class="line">&#123;</span><br><span class="line">  &quot;predicateHints&quot;: [ &quot;id &lt; 1&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;limitHint&quot;: 1</span><br><span class="line">&#125;</span><br><span class="line">EOL</span><br></pre></td></tr></table></figure>
 <p>このヒントの働きについては、別途調査する。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
@@ -406,7 +467,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/09/10/Getting-Started-of-Delta-Sharing/" data-id="cl2nztnlr005u5xqidu5tstyx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/09/10/Getting-Started-of-Delta-Sharing/" data-id="cl2o9pbgo014j18rzin4jsivq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -657,5 +718,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

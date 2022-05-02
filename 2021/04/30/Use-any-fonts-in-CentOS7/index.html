@@ -5,17 +5,17 @@
     
     <title>Use any fonts in CentOS7 | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 元ネタ    参考  Microsoft Windows用TrueTypeフォントを使用する  メモ /usr/share/fonts以下に適当なディレクトリを作成。 1$ sudo mkdir /usr/share/fonts/original フォントを格納 1$ sudo cp ＜何かしらのフォント＞ /usr/share/fonts/original 更新。 123$ c">
+    <meta name="description" content="参考 メモ  元ネタ    参考  Microsoft Windows用TrueTypeフォントを使用する  メモ /usr/share/fonts以下に適当なディレクトリを作成。 1$ sudo mkdir /usr/share/fonts/original フォントを格納 1$ sudo cp ＜何かしらのフォント＞ /usr/share/fonts/original 更新。 123$">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Use any fonts in CentOS7">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2021/04/30/Use-any-fonts-in-CentOS7/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 元ネタ    参考  Microsoft Windows用TrueTypeフォントを使用する  メモ /usr/share/fonts以下に適当なディレクトリを作成。 1$ sudo mkdir /usr/share/fonts/original フォントを格納 1$ sudo cp ＜何かしらのフォント＞ /usr/share/fonts/original 更新。 123$ c">
+<meta property="og:description" content="参考 メモ  元ネタ    参考  Microsoft Windows用TrueTypeフォントを使用する  メモ /usr/share/fonts以下に適当なディレクトリを作成。 1$ sudo mkdir /usr/share/fonts/original フォントを格納 1$ sudo cp ＜何かしらのフォント＞ /usr/share/fonts/original 更新。 123$">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Use any fonts in CentOS7">
-<meta name="twitter:description" content="参考 メモ 元ネタ    参考  Microsoft Windows用TrueTypeフォントを使用する  メモ /usr/share/fonts以下に適当なディレクトリを作成。 1$ sudo mkdir /usr/share/fonts/original フォントを格納 1$ sudo cp ＜何かしらのフォント＞ /usr/share/fonts/original 更新。 123$ c">
+<meta name="twitter:description" content="参考 メモ  元ネタ    参考  Microsoft Windows用TrueTypeフォントを使用する  メモ /usr/share/fonts以下に適当なディレクトリを作成。 1$ sudo mkdir /usr/share/fonts/original フォントを格納 1$ sudo cp ＜何かしらのフォント＞ /usr/share/fonts/original 更新。 123$">
     
 
     
@@ -240,25 +240,29 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#元ネタ">元ネタ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#元ネタ" id="toc-元ネタ">元ネタ</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="http://park1.wakwak.com/~ima/centos4_truetypefont0001.html" target="_blank" rel="noopener">Microsoft Windows用TrueTypeフォントを使用する</a></li>
+<li><a href="http://park1.wakwak.com/~ima/centos4_truetypefont0001.html" target="_blank" rel="noopener">Microsoft
+Windows用TrueTypeフォントを使用する</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <p>/usr/share/fonts以下に適当なディレクトリを作成。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mkdir /usr/share/fonts/original</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo mkdir /usr/share/fonts/original</span><br></pre></td></tr></table></figure>
 <p>フォントを格納</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo cp ＜何かしらのフォント＞ /usr/share/fonts/original</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo cp ＜何かしらのフォント＞ /usr/share/fonts/original</span><br></pre></td></tr></table></figure>
 <p>更新。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /usr/share/fonts/original</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo mkfontdir</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo mkfontscale</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd /usr/share/fonts/original</span><br><span class="line"><span class="meta">$</span> sudo mkfontdir</span><br><span class="line"><span class="meta">$</span> sudo mkfontscale</span><br></pre></td></tr></table></figure>
 <h2><span id="元ネタ">元ネタ</span></h2>
-<p><a href="http://park1.wakwak.com/~ima/centos4_truetypefont0001.html" target="_blank" rel="noopener">Microsoft Windows用TrueTypeフォントを使用する</a> が参考になった。 （が、MS社フォントは今回は用いていない）</p>
+<p><a href="http://park1.wakwak.com/~ima/centos4_truetypefont0001.html" target="_blank" rel="noopener">Microsoft
+Windows用TrueTypeフォントを使用する</a> が参考になった。
+（が、MS社フォントは今回は用いていない）</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -270,7 +274,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/30/Use-any-fonts-in-CentOS7/" data-id="cl2nztnp000fp5xqit9r71mhw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/30/Use-any-fonts-in-CentOS7/" data-id="cl2o9pb8j00b818rz4kcyu6ma" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -521,5 +525,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

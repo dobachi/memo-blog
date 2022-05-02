@@ -5,18 +5,18 @@
     
     <title>Use GitHub actions to deploy documents | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ レポジトリのDeploy Key設定 GitHub Actionsのワークフローの記述    参考  GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する マーケットプレイスのsphinx-build  メモ GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する がSphinx JPのユーザ会による記事だったので参考">
+    <meta name="description" content="参考 メモ  レポジトリのDeploy Key設定 GitHub Actionsのワークフローの記述    参考  GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する マーケットプレイスのsphinx-build  メモ GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する がSphinx JPのユーザ会による記事だったので参">
 <meta name="keywords" content="GitHub Actions,Sphinx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Use GitHub actions to deploy documents">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2020/08/09/Use-GitHub-actions-to-deploy-documents/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ レポジトリのDeploy Key設定 GitHub Actionsのワークフローの記述    参考  GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する マーケットプレイスのsphinx-build  メモ GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する がSphinx JPのユーザ会による記事だったので参考">
+<meta property="og:description" content="参考 メモ  レポジトリのDeploy Key設定 GitHub Actionsのワークフローの記述    参考  GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する マーケットプレイスのsphinx-build  メモ GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する がSphinx JPのユーザ会による記事だったので参">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Use GitHub actions to deploy documents">
-<meta name="twitter:description" content="参考 メモ レポジトリのDeploy Key設定 GitHub Actionsのワークフローの記述    参考  GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する マーケットプレイスのsphinx-build  メモ GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する がSphinx JPのユーザ会による記事だったので参考">
+<meta name="twitter:description" content="参考 メモ  レポジトリのDeploy Key設定 GitHub Actionsのワークフローの記述    参考  GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する マーケットプレイスのsphinx-build  メモ GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する がSphinx JPのユーザ会による記事だったので参">
     
 
     
@@ -251,29 +251,51 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#レポジトリのdeploy-key設定">レポジトリのDeploy Key設定</a></li>
-<li><a href="#github-actionsのワークフローの記述">GitHub Actionsのワークフローの記述</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#レポジトリのdeploy-key設定" id="toc-レポジトリのdeploy-key設定">レポジトリのDeploy Key設定</a></li>
+<li><a href="#github-actionsのワークフローの記述" id="toc-github-actionsのワークフローの記述">GitHub
+Actionsのワークフローの記述</a></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する</a></li>
+<li><a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub
+Actionsを用いてGitHub Pagesへのデプロイを自動化する</a></li>
 <li><a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> がSphinx JPのユーザ会による記事だったので参考になるが、 依存関係を都度pipインストールしているのが気になった。</p>
-<p><a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a> を利用すると良さそうだが、 この手順ではGITHUB TOKENを利用してデプロイしているのが気になった。 レポジトリごとに設定できる、Deploy Keyを利用したい。</p>
-<p>そこでビルドには <a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a> を利用し、デプロイには <a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> の手順を利用することにした。</p>
+<p><a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub
+Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> がSphinx
+JPのユーザ会による記事だったので参考になるが、
+依存関係を都度pipインストールしているのが気になった。</p>
+<p><a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a>
+を利用すると良さそうだが、 この手順ではGITHUB
+TOKENを利用してデプロイしているのが気になった。
+レポジトリごとに設定できる、Deploy Keyを利用したい。</p>
+<p>そこでビルドには <a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a>
+を利用し、デプロイには <a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub
+Actionsを用いてGitHub Pagesへのデプロイを自動化する</a>
+の手順を利用することにした。</p>
 <h2><span id="レポジトリのdeploy-key設定">レポジトリのDeploy Key設定</span></h2>
-<p><a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> の「Deploy keys の設定」章を参考に、 当該レポジトリのDeploy Keyを登録する。</p>
-<p>任意の環境（ここではWSLのUbuntu18を利用した）で、 以下のコマンドを実行。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh-keygen -t rsa -b 4096 -C <span class="string">"＜レポジトリで使用しているメールアドレス＞"</span> -f ＜任意の名前＞ -N <span class="string">""</span></span></span><br></pre></td></tr></table></figure>
-<p>上記記事の通り、秘密鍵と公開鍵をGitHubのウェブUIで登録する。 なお、「Secrets」タブで登録した名称は、後ほどGitHub Actionsのワークフロー内で使用する。</p>
-<h2><span id="github-actionsのワークフローの記述">GitHub Actionsのワークフローの記述</span></h2>
-<p><a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a> の例を参考に、 ワークフローを記述する。 なお、最後のデプロイする部分は、 <a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> を参考に、 Deploy Keyを利用するよう修正した。</p>
+<p><a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub
+Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> の「Deploy keys
+の設定」章を参考に、 当該レポジトリのDeploy Keyを登録する。</p>
+<p>任意の環境（ここではWSLのUbuntu18を利用した）で、
+以下のコマンドを実行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh-keygen -t rsa -b 4096 -C "＜レポジトリで使用しているメールアドレス＞" -f ＜任意の名前＞ -N ""</span><br></pre></td></tr></table></figure>
+<p>上記記事の通り、秘密鍵と公開鍵をGitHubのウェブUIで登録する。
+なお、「Secrets」タブで登録した名称は、後ほどGitHub
+Actionsのワークフロー内で使用する。</p>
+<h2><span id="githubactionsのワークフローの記述">GitHub
+Actionsのワークフローの記述</span></h2>
+<p><a href="https://github.com/marketplace/actions/sphinx-build" target="_blank" rel="noopener">マーケットプレイスのsphinx-build</a>
+の例を参考に、 ワークフローを記述する。 なお、最後のデプロイする部分は、
+<a href="https://sphinx-users.jp/cookbook/githubaction/index.html" target="_blank" rel="noopener">GitHub
+Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> を参考に、
+Deploy Keyを利用するよう修正した。</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">CI</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 今回はマスタブランチへのPushをトリガとする。</span></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line"><span class="attr">  push:</span></span><br><span class="line"><span class="attr">    branches:</span>    </span><br><span class="line"><span class="bullet">      -</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line"><span class="attr">  build:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="comment"># 今回はmasterブランチへのpushをトリガとしているので不要だが、gh-pagesへのpushをトリガとする場合など</span></span><br><span class="line">    <span class="comment"># 無限ループを回避する際には以下のように記述する。</span></span><br><span class="line"><span class="attr">    if:</span> <span class="string">"!contains(github.event.head_commit.message, 'Update documentation via GitHub Actions')"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    steps:</span></span><br><span class="line"><span class="attr">    - uses:</span> <span class="string">actions/checkout@v1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 今回はMakefileを利用するので、makeコマンドを使用するよう元ネタから修正した。</span></span><br><span class="line">    <span class="comment"># またドキュメントのソースが含まれているディレクトリは各自の定義に依存する。</span></span><br><span class="line"><span class="attr">    - uses:</span> <span class="string">ammaraskar/sphinx-action@master</span></span><br><span class="line"><span class="attr">      with:</span></span><br><span class="line"><span class="attr">        build-command:</span> <span class="string">"make html"</span></span><br><span class="line"><span class="attr">        docs-folder:</span> <span class="string">"documents/"</span></span><br><span class="line">    <span class="comment"># 先ほどGitHubのウェブUIで定義した秘密鍵名を使用する。</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">Commit</span> <span class="string">documentation</span> <span class="string">changes</span> <span class="string">and</span> <span class="string">push</span> <span class="string">it</span></span><br><span class="line"><span class="attr">      run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        mkdir ~/.ssh</span></span><br><span class="line"><span class="string">        ssh-keyscan -t rsa github.com &gt;&gt; ~/.ssh/known_hosts</span></span><br><span class="line"><span class="string">        echo "$<span class="template-variable">&#123;&#123; secrets.＜先ほどGitHubウェブUIで定義した秘密鍵名＞ &#125;&#125;</span>" &gt; ~/.ssh/id_rsa</span></span><br><span class="line"><span class="string">        chmod 400 ~/.ssh/id_rsa</span></span><br><span class="line"><span class="string">        git clone git@github.com:$&#123;GITHUB_REPOSITORY&#125;.git --branch gh-pages --single-branch gh-pages</span></span><br><span class="line"><span class="string">        cp -r documents/_build/html/* gh-pages/</span></span><br><span class="line"><span class="string">        cd gh-pages</span></span><br><span class="line"><span class="string">        git config --local user.email "action@github.com"</span></span><br><span class="line"><span class="string">        git config --local user.name "GitHub Action"</span></span><br><span class="line"><span class="string">        git add .</span></span><br><span class="line"><span class="string">        git commit -m "Update documentation via GitHub Actions" -a || true</span></span><br><span class="line"><span class="string">        git push origin HEAD:gh-pages</span></span><br><span class="line"><span class="string">        # The above command will fail if no changes were present, so we ignore</span></span><br><span class="line"><span class="string">        # that.</span></span><br><span class="line"><span class="string">    # ===============================</span></span><br></pre></td></tr></table></figure>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -286,7 +308,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/08/09/Use-GitHub-actions-to-deploy-documents/" data-id="cl2nztnox00fi5xqi85zt798b" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/08/09/Use-GitHub-actions-to-deploy-documents/" data-id="cl2o9pb8h00b118rzncrfk5f8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -537,5 +559,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

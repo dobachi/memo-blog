@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 SX-Auroraの物理構成の解説 記事に記載された感想の抜粋 NECとホートンワークスの協業 記事でのポイント   参考  まとめ情報のブログ SX-Auroraの簡単な紹介 SX-Auroraの物理構成の解説  SX-Auroraの物理構成の解説 記事に記載された感想の抜粋 SX-Auroraの物理構成の解説 に記載されていた考察を転記する。  一方、DGEMMではSX-Auror">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.441Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SX-AuroraやFrovedis">
 <meta name="twitter:description" content="参考 SX-Auroraの物理構成の解説 記事に記載された感想の抜粋 NECとホートンワークスの協業 記事でのポイント   参考  まとめ情報のブログ SX-Auroraの簡単な紹介 SX-Auroraの物理構成の解説  SX-Auroraの物理構成の解説 記事に記載された感想の抜粋 SX-Auroraの物理構成の解説 に記載されていた考察を転記する。  一方、DGEMMではSX-Auror">
@@ -251,9 +251,11 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#sx-auroraの物理構成の解説-記事に記載された感想の抜粋">SX-Auroraの物理構成の解説 記事に記載された感想の抜粋</a></li>
-<li><a href="#necとホートンワークスの協業-記事でのポイント">NECとホートンワークスの協業 記事でのポイント</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#sx-auroraの物理構成の解説-記事に記載された感想の抜粋" id="toc-sx-auroraの物理構成の解説-記事に記載された感想の抜粋">SX-Auroraの物理構成の解説
+記事に記載された感想の抜粋</a></li>
+<li><a href="#necとホートンワークスの協業-記事でのポイント" id="toc-necとホートンワークスの協業-記事でのポイント">NECとホートンワークスの協業
+記事でのポイント</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -262,20 +264,32 @@ ga('send', 'pageview');
 <li><a href="https://jpn.nec.com/rd/technologies/vectorprocessor/index.html" target="_blank" rel="noopener">SX-Auroraの簡単な紹介</a></li>
 <li><a href="https://news.mynavi.jp/article/nec_aurora_tsubasa-3/" target="_blank" rel="noopener">SX-Auroraの物理構成の解説</a></li>
 </ul>
-<h1><span id="sx-auroraの物理構成の解説-記事に記載された感想の抜粋">SX-Auroraの物理構成の解説 記事に記載された感想の抜粋</span></h1>
-<p><a href="https://news.mynavi.jp/article/nec_aurora_tsubasa-3/" target="_blank" rel="noopener">SX-Auroraの物理構成の解説</a> に記載されていた考察を転記する。</p>
+<h1><span id="sx-auroraの物理構成の解説記事に記載された感想の抜粋">SX-Auroraの物理構成の解説
+記事に記載された感想の抜粋</span></h1>
+<p><a href="https://news.mynavi.jp/article/nec_aurora_tsubasa-3/" target="_blank" rel="noopener">SX-Auroraの物理構成の解説</a>
+に記載されていた考察を転記する。</p>
 <blockquote>
-<p>一方、DGEMMではSX-Aurora TSUBASAはXeonの1.2倍程度の性能であり、V100が3.5程度であるのに比べて性能が低い。これはV100の方がピークFlopsが高いことが効いているのではないかと思われる。一方、Perf/WではSX-Aurora TSUBASAやV100は高い効率を示している。これは演算性能の割に消費電力が低いためと思われる。</p>
+<p>一方、DGEMMではSX-Aurora
+TSUBASAはXeonの1.2倍程度の性能であり、V100が3.5程度であるのに比べて性能が低い。これはV100の方がピークFlopsが高いことが効いているのではないかと思われる。一方、Perf/WではSX-Aurora
+TSUBASAやV100は高い効率を示している。これは演算性能の割に消費電力が低いためと思われる。</p>
 </blockquote>
 <blockquote>
-<p>まとめであるが、SX-Aurora TSUBASAはAuroraアーキテクチャに基づく新しいスパコンの製品ラインである。従来のように独自のプロセサを作るのではなく、x86/Linuxの環境にベクタ処理を付加した形になっている。</p>
+<p>まとめであるが、SX-Aurora
+TSUBASAはAuroraアーキテクチャに基づく新しいスパコンの製品ラインである。従来のように独自のプロセサを作るのではなく、x86/Linuxの環境にベクタ処理を付加した形になっている。</p>
 </blockquote>
 <blockquote>
-<p>チップサイズの比較はともかく、NVIDIAのV100を16個搭載するDGX-2は約40万ドルで、V100 1個当たり250万円程度である。これに対して、SX-Aurora TSUBASAは、NECの発表では1VEのA100が170万円～、64VEのA500が1億2000万円～となっており、VE 1個あたり200万円弱である。これだけを見ると、NECの方が2割程度安いことになる。</p>
-<p>しかし、これはいわゆる定価であり、実際のビジネスでは、これからどれだけ値引きされるのかは分からない。 Post-K(ポスト「京」)のような国家プロジェクトの無いNECがスパコンを開発するのは大変であるが、SX-Aurora TSUBASAはx86サーバにベクタエンジンを付けるという面白い切り口で挑んでいる。成功を祈る。</p>
+<p>チップサイズの比較はともかく、NVIDIAのV100を16個搭載するDGX-2は約40万ドルで、V100
+1個当たり250万円程度である。これに対して、SX-Aurora
+TSUBASAは、NECの発表では1VEのA100が170万円～、64VEのA500が1億2000万円～となっており、VE
+1個あたり200万円弱である。これだけを見ると、NECの方が2割程度安いことになる。</p>
+<p>しかし、これはいわゆる定価であり、実際のビジネスでは、これからどれだけ値引きされるのかは分からない。
+Post-K(ポスト「京」)のような国家プロジェクトの無いNECがスパコンを開発するのは大変であるが、SX-Aurora
+TSUBASAはx86サーバにベクタエンジンを付けるという面白い切り口で挑んでいる。成功を祈る。</p>
 </blockquote>
-<h1><span id="necとホートンワークスの協業-記事でのポイント">NECとホートンワークスの協業 記事でのポイント</span></h1>
-<p>現在はYARN対応がポイントのようだ。 共同研究成果は、OSSとして公開するつもりのようだ。</p>
+<h1><span id="necとホートンワークスの協業記事でのポイント">NECとホートンワークスの協業
+記事でのポイント</span></h1>
+<p>現在はYARN対応がポイントのようだ。
+共同研究成果は、OSSとして公開するつもりのようだ。</p>
 
         
         </div>
@@ -286,7 +300,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/23/Aurora-Frovedis/" data-id="cl2nztnk8001t5xqi8a2i5hnx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/23/Aurora-Frovedis/" data-id="cl2o9pb4j001b18rzd6odehn0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -537,5 +551,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

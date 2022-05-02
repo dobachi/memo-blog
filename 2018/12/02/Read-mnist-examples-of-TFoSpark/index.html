@@ -5,18 +5,18 @@
     
     <title>TensorFlowOnSparkの例を確認する | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="estimator mnist_estimator.pyのポイント  spark mnist_spark.pyのポイント mnist_dist.pyのポイント  tf examples/mnist/tf/mnist_spark.py map_funのポイント  examples/mnist/tf/mnist_inference.py Executor内で実行される処理     estimat">
+    <meta name="description" content="estimator  mnist_estimator.pyのポイント  spark  mnist_spark.pyのポイント mnist_dist.pyのポイント  tf  examples/mnist/tf/mnist_spark.py  map_funのポイント  examples/mnist/tf/mnist_inference.py  Executor内で実行される処理     es">
 <meta name="keywords" content="Spark,TensorFlow,PySpark,TensorFlowOnSpark">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TensorFlowOnSparkの例を確認する">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/12/02/Read-mnist-examples-of-TFoSpark/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="estimator mnist_estimator.pyのポイント  spark mnist_spark.pyのポイント mnist_dist.pyのポイント  tf examples/mnist/tf/mnist_spark.py map_funのポイント  examples/mnist/tf/mnist_inference.py Executor内で実行される処理     estimat">
+<meta property="og:description" content="estimator  mnist_estimator.pyのポイント  spark  mnist_spark.pyのポイント mnist_dist.pyのポイント  tf  examples/mnist/tf/mnist_spark.py  map_funのポイント  examples/mnist/tf/mnist_inference.py  Executor内で実行される処理     es">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlowOnSparkの例を確認する">
-<meta name="twitter:description" content="estimator mnist_estimator.pyのポイント  spark mnist_spark.pyのポイント mnist_dist.pyのポイント  tf examples/mnist/tf/mnist_spark.py map_funのポイント  examples/mnist/tf/mnist_inference.py Executor内で実行される処理     estimat">
+<meta name="twitter:description" content="estimator  mnist_estimator.pyのポイント  spark  mnist_spark.pyのポイント mnist_dist.pyのポイント  tf  examples/mnist/tf/mnist_spark.py  map_funのポイント  examples/mnist/tf/mnist_inference.py  Executor内で実行される処理     es">
     
 
     
@@ -251,19 +251,24 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#estimator">estimator</a><ul>
-<li><a href="#mnist_estimator.pyのポイント">mnist_estimator.pyのポイント</a></li>
+<li><a href="#estimator" id="toc-estimator">estimator</a>
+<ul>
+<li><a href="#mnist_estimator.pyのポイント" id="toc-mnist_estimator.pyのポイント">mnist_estimator.pyのポイント</a></li>
 </ul></li>
-<li><a href="#spark">spark</a><ul>
-<li><a href="#mnist_spark.pyのポイント">mnist_spark.pyのポイント</a></li>
-<li><a href="#mnist_dist.pyのポイント">mnist_dist.pyのポイント</a></li>
+<li><a href="#spark" id="toc-spark">spark</a>
+<ul>
+<li><a href="#mnist_spark.pyのポイント" id="toc-mnist_spark.pyのポイント">mnist_spark.pyのポイント</a></li>
+<li><a href="#mnist_dist.pyのポイント" id="toc-mnist_dist.pyのポイント">mnist_dist.pyのポイント</a></li>
 </ul></li>
-<li><a href="#tf">tf</a><ul>
-<li><a href="#examplesmnisttfmnist_spark.py">examples/mnist/tf/mnist_spark.py</a><ul>
-<li><a href="#map_funのポイント">map_funのポイント</a></li>
+<li><a href="#tf" id="toc-tf">tf</a>
+<ul>
+<li><a href="#examplesmnisttfmnist_spark.py" id="toc-examplesmnisttfmnist_spark.py">examples/mnist/tf/mnist_spark.py</a>
+<ul>
+<li><a href="#map_funのポイント" id="toc-map_funのポイント">map_funのポイント</a></li>
 </ul></li>
-<li><a href="#examplesmnisttfmnist_inference.py">examples/mnist/tf/mnist_inference.py</a><ul>
-<li><a href="#executor内で実行される処理">Executor内で実行される処理</a></li>
+<li><a href="#examplesmnisttfmnist_inference.py" id="toc-examplesmnisttfmnist_inference.py">examples/mnist/tf/mnist_inference.py</a>
+<ul>
+<li><a href="#executor内で実行される処理" id="toc-executor内で実行される処理">Executor内で実行される処理</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -273,30 +278,44 @@ ga('send', 'pageview');
 <p>サンプルは、mnist_estimator.pyのみ。 学習・評価を実行する。</p>
 <p>保存されたMNISTのデータを各ワーカが読んで学習する。</p>
 <h2><span id="mnist_estimatorpyのポイント">mnist_estimator.pyのポイント</span></h2>
-<p>データロードの箇所は以下の通り。 学習データをすべて読み込むようになっていることが分かる。</p>
+<p>データロードの箇所は以下の通り。
+学習データをすべて読み込むようになっていることが分かる。</p>
 <p>examples/mnist/estimator/mnist_estimator.py:120 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Load training and eval data</span><br><span class="line">mnist = tf.contrib.learn.datasets.mnist.read_data_sets(args.data_dir)</span><br><span class="line">train_data = mnist.train.images  # Returns np.array</span><br><span class="line">train_labels = np.asarray(mnist.train.labels, dtype=np.int32)</span><br><span class="line">eval_data = mnist.test.images  # Returns np.array</span><br><span class="line">eval_labels = np.asarray(mnist.test.labels, dtype=np.int32)</span><br></pre></td></tr></table></figure></p>
-<p>モデルの定義の箇所は以下の通り。 モデル定義は実態的にはcnn_model_fn関数が担っている。 当該関数の中でCNNの層定義が行われている。</p>
+<p>モデルの定義の箇所は以下の通り。
+モデル定義は実態的にはcnn_model_fn関数が担っている。
+当該関数の中でCNNの層定義が行われている。</p>
 <p>examples/mnist/estimator/mnist_estimator.py:127 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mnist_classifier = tf.estimator.Estimator(</span><br><span class="line">    model_fn=cnn_model_fn, model_dir=args.model)</span><br></pre></td></tr></table></figure></p>
-<p>学習と評価の箇所は以下の通り。 入力データ用の関数を引数に渡しつつ実行する。 （これは各ワーカで動くところか）</p>
+<p>学習と評価の箇所は以下の通り。
+入力データ用の関数を引数に渡しつつ実行する。
+（これは各ワーカで動くところか）</p>
 <p>examples/mnist/estimator/mnist_estimator.py:158 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">train_spec = tf.estimator.TrainSpec(input_fn=train_input_fn, max_steps=args.steps, hooks=[logging_hook])</span><br><span class="line">eval_spec = tf.estimator.EvalSpec(input_fn=eval_input_fn)</span><br><span class="line">tf.estimator.train_and_evaluate(mnist_classifier, train_spec, eval_spec)</span><br></pre></td></tr></table></figure></p>
 <h1><span id="spark">spark</span></h1>
 <h2><span id="mnist_sparkpyのポイント">mnist_spark.pyのポイント</span></h2>
 <p>PySparkのアプリケーションとして、TensorFlowOnSparkを実行するアプリケーションである。</p>
-<p>入力データの形式は、<code>org.tensorflow.hadoop.io.TFRecordFileInputFormat</code>（以降、TFRと呼ぶ）とCSVの両方に対応している。 TFRの場合は、入力されたデータをレコード単位でNumpy Array形式に変換して用いる。 CSVの場合、配列に変換する。</p>
-<p>Executorで実行するメイン関数は、 <code>mnist_dist.map_fun</code> である。</p>
+<p>入力データの形式は、<code>org.tensorflow.hadoop.io.TFRecordFileInputFormat</code>（以降、TFRと呼ぶ）とCSVの両方に対応している。
+TFRの場合は、入力されたデータをレコード単位でNumpy
+Array形式に変換して用いる。 CSVの場合、配列に変換する。</p>
+<p>Executorで実行するメイン関数は、 <code>mnist_dist.map_fun</code>
+である。</p>
 <h2><span id="mnist_distpyのポイント">mnist_dist.pyのポイント</span></h2>
-<p>map_fun関数の定義がある。 パラメータサーバ、ワーカそれぞれのときに実行する処理が定義されている。</p>
+<p>map_fun関数の定義がある。
+パラメータサーバ、ワーカそれぞれのときに実行する処理が定義されている。</p>
 <p>パラメータサーバのときは、TensorFlow Serverのjoinメソッドを呼ぶ。</p>
-<p>ワーカのときはデバイスの指定、TensorFlow用の入力データの定義、層の定義、損失計算等が行われる。 なお学習と予測のそれぞれの動作が定義されている。</p>
+<p>ワーカのときはデバイスの指定、TensorFlow用の入力データの定義、層の定義、損失計算等が行われる。
+なお学習と予測のそれぞれの動作が定義されている。</p>
 <p>予測の時は、<code>DataFeed#batch_results</code>メソッドを使って、予測結果が戻り値のRDD向けにフィードされるようになっている。</p>
 <h1><span id="tf">tf</span></h1>
 <p>他のサンプルとは独立したものかどうか要確認。</p>
 <h2><span id="examplesmnisttfmnist_sparkpy">examples/mnist/tf/mnist_spark.py</span></h2>
-<p>READMEに書かれた最初のサンプル。 SparkContextを定義し、<code>TFCluster#run</code>メソッドを呼び出す。 runに渡されるTensorFlowのメイン関数は<code>mnist_dist.map_fun</code>である。</p>
+<p>READMEに書かれた最初のサンプル。
+SparkContextを定義し、<code>TFCluster#run</code>メソッドを呼び出す。
+runに渡されるTensorFlowのメイン関数は<code>mnist_dist.map_fun</code>である。</p>
 <h3><span id="map_funのポイント">map_funのポイント</span></h3>
-<p><code>_parse_csv</code>メソッドと<code>_parse_tfr</code>メソッドはそれぞれCSV形式、TFR形式のデータを読み、 ノーマライズし、画像データとラベルのペアを返す。</p>
+<p><code>_parse_csv</code>メソッドと<code>_parse_tfr</code>メソッドはそれぞれCSV形式、TFR形式のデータを読み、
+ノーマライズし、画像データとラベルのペアを返す。</p>
 <p><code>build_model</code>メソッドでモデルを定義する。</p>
-<p>パラメータサーバとして機能するExecutorではTensorFlow Serverのjoinメソッドを呼び出す。</p>
+<p>パラメータサーバとして機能するExecutorではTensorFlow
+Serverのjoinメソッドを呼び出す。</p>
 <p>ワーカとして機能するExecutorは以下の流れ。</p>
 <ul>
 <li>入力データのロードと加工</li>
@@ -339,7 +358,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/02/Read-mnist-examples-of-TFoSpark/" data-id="cl2nztnnm00br5xqiddlnni93" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/02/Read-mnist-examples-of-TFoSpark/" data-id="cl2o9pb7i008i18rza6161nj1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -590,5 +609,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

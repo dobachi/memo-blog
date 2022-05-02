@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  Kaggleのデータからbag of wordsを作ってみた nltkでstopwordsの設定  メモ 今回はConda環境だったので、 conda コマンドでインストールした。 1$ conda install nltk ストップワードをダウンロードする。 12import nltknltk.download(&amp;quot;stopwords&amp;quot;) ここでは">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.453Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Stopword with Python">
 <meta name="twitter:description" content="参考 メモ   参考  Kaggleのデータからbag of wordsを作ってみた nltkでstopwordsの設定  メモ 今回はConda環境だったので、 conda コマンドでインストールした。 1$ conda install nltk ストップワードをダウンロードする。 12import nltknltk.download(&amp;quot;stopwords&amp;quot;) ここでは">
@@ -251,23 +251,27 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://qiita.com/nana1212/items/1eaadca32349a1314cb4" target="_blank" rel="noopener">Kaggleのデータからbag of wordsを作ってみた</a></li>
+<li><a href="https://qiita.com/nana1212/items/1eaadca32349a1314cb4" target="_blank" rel="noopener">Kaggleのデータからbag
+of wordsを作ってみた</a></li>
 <li><a href="http://blog.livedoor.jp/oyajieng_memo/archives/2577889.html" target="_blank" rel="noopener">nltkでstopwordsの設定</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>今回はConda環境だったので、 <code>conda</code> コマンドでインストールした。</p>
+<p>今回はConda環境だったので、 <code>conda</code>
+コマンドでインストールした。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ conda install nltk</span><br></pre></td></tr></table></figure>
 <p>ストップワードをダウンロードする。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import nltk</span><br><span class="line">nltk.download(&quot;stopwords&quot;)</span><br></pre></td></tr></table></figure>
-<p>ここでは、仮に対象となる単語のリスト<code>all_words</code>があったとする。 そのとき、以下のようにリストからストップワードを取り除くと良い。</p>
+<p>ここでは、仮に対象となる単語のリスト<code>all_words</code>があったとする。
+そのとき、以下のようにリストからストップワードを取り除くと良い。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">symbol = [&quot;&apos;&quot;, &apos;&quot;&apos;, &apos;:&apos;, &apos;;&apos;, &apos;.&apos;, &apos;,&apos;, &apos;-&apos;, &apos;!&apos;, &apos;?&apos;, &quot;&apos;s&quot;]</span><br><span class="line">words_wo_stopwords = [w.lower() for w in all_words if not w in stop_words + symbol]</span><br></pre></td></tr></table></figure>
-<p>ストップワードの中には記号が含まれていないので、ここでは、<code>symbol</code>を定義して一緒に取り除いた。 次に頻度の高い単語を30件抽出してみる。</p>
+<p>ストップワードの中には記号が含まれていないので、ここでは、<code>symbol</code>を定義して一緒に取り除いた。
+次に頻度の高い単語を30件抽出してみる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clean_frequency = nltk.FreqDist(words_wo_stopwords)</span><br></pre></td></tr></table></figure>
 <p>これを可視化する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(10, 7))</span><br><span class="line">clean_frequency.plot(30,cumulative=True)</span><br></pre></td></tr></table></figure>
@@ -281,7 +285,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/06/Stopword-with-Python/" data-id="cl2nztno800dm5xqiqcsxxvfc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/06/Stopword-with-Python/" data-id="cl2o9pb81009n18rz8012oe3g" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -532,5 +536,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -5,18 +5,18 @@
     
     <title>Basic of SQLAlchemy | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 簡単な動作確認 挿入のクエリ 接続の取得と実行 複数ステートメントの実行 SELECT オペレータの結合 テキストで実行 グループ 結合 変数バインド その他の機能 Update    参考  SQLAlchemy公式のチュートリアル  簡単な動作確認 エンジンの定義。（今回はSQLiteのインメモリモードを使用） 12from sqlalchemy import create_eng">
+    <meta name="description" content="参考 簡単な動作確認  挿入のクエリ 接続の取得と実行 複数ステートメントの実行 SELECT オペレータの結合 テキストで実行 グループ 結合 変数バインド その他の機能 Update    参考  SQLAlchemy公式のチュートリアル  簡単な動作確認 エンジンの定義。（今回はSQLiteのインメモリモードを使用） 12from sqlalchemy import create_en">
 <meta name="keywords" content="Python,SQLAlchemy,SQLite">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Basic of SQLAlchemy">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/12/24/Basic-of-SQLAlchemy/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 簡単な動作確認 挿入のクエリ 接続の取得と実行 複数ステートメントの実行 SELECT オペレータの結合 テキストで実行 グループ 結合 変数バインド その他の機能 Update    参考  SQLAlchemy公式のチュートリアル  簡単な動作確認 エンジンの定義。（今回はSQLiteのインメモリモードを使用） 12from sqlalchemy import create_eng">
+<meta property="og:description" content="参考 簡単な動作確認  挿入のクエリ 接続の取得と実行 複数ステートメントの実行 SELECT オペレータの結合 テキストで実行 グループ 結合 変数バインド その他の機能 Update    参考  SQLAlchemy公式のチュートリアル  簡単な動作確認 エンジンの定義。（今回はSQLiteのインメモリモードを使用） 12from sqlalchemy import create_en">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.441Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Basic of SQLAlchemy">
-<meta name="twitter:description" content="参考 簡単な動作確認 挿入のクエリ 接続の取得と実行 複数ステートメントの実行 SELECT オペレータの結合 テキストで実行 グループ 結合 変数バインド その他の機能 Update    参考  SQLAlchemy公式のチュートリアル  簡単な動作確認 エンジンの定義。（今回はSQLiteのインメモリモードを使用） 12from sqlalchemy import create_eng">
+<meta name="twitter:description" content="参考 簡単な動作確認  挿入のクエリ 接続の取得と実行 複数ステートメントの実行 SELECT オペレータの結合 テキストで実行 グループ 結合 変数バインド その他の機能 Update    参考  SQLAlchemy公式のチュートリアル  簡単な動作確認 エンジンの定義。（今回はSQLiteのインメモリモードを使用） 12from sqlalchemy import create_en">
     
 
     
@@ -251,19 +251,20 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#簡単な動作確認">簡単な動作確認</a><ul>
-<li><a href="#挿入のクエリ">挿入のクエリ</a></li>
-<li><a href="#接続の取得と実行">接続の取得と実行</a></li>
-<li><a href="#複数ステートメントの実行">複数ステートメントの実行</a></li>
-<li><a href="#select">SELECT</a></li>
-<li><a href="#オペレータの結合">オペレータの結合</a></li>
-<li><a href="#テキストで実行">テキストで実行</a></li>
-<li><a href="#グループ">グループ</a></li>
-<li><a href="#結合">結合</a></li>
-<li><a href="#変数バインド">変数バインド</a></li>
-<li><a href="#その他の機能">その他の機能</a></li>
-<li><a href="#update">Update</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#簡単な動作確認" id="toc-簡単な動作確認">簡単な動作確認</a>
+<ul>
+<li><a href="#挿入のクエリ" id="toc-挿入のクエリ">挿入のクエリ</a></li>
+<li><a href="#接続の取得と実行" id="toc-接続の取得と実行">接続の取得と実行</a></li>
+<li><a href="#複数ステートメントの実行" id="toc-複数ステートメントの実行">複数ステートメントの実行</a></li>
+<li><a href="#select" id="toc-select">SELECT</a></li>
+<li><a href="#オペレータの結合" id="toc-オペレータの結合">オペレータの結合</a></li>
+<li><a href="#テキストで実行" id="toc-テキストで実行">テキストで実行</a></li>
+<li><a href="#グループ" id="toc-グループ">グループ</a></li>
+<li><a href="#結合" id="toc-結合">結合</a></li>
+<li><a href="#変数バインド" id="toc-変数バインド">変数バインド</a></li>
+<li><a href="#その他の機能" id="toc-その他の機能">その他の機能</a></li>
+<li><a href="#update" id="toc-update">Update</a></li>
 </ul></li>
 </ul>
 </div>
@@ -272,9 +273,12 @@ ga('send', 'pageview');
 <li><a href="https://docs.sqlalchemy.org/en/latest/core/tutorial.html" target="_blank" rel="noopener">SQLAlchemy公式のチュートリアル</a></li>
 </ul>
 <h1><span id="簡単な動作確認">簡単な動作確認</span></h1>
-<p>エンジンの定義。（今回はSQLiteのインメモリモードを使用） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy import create_engine</span><br><span class="line">engine = create_engine(&apos;sqlite:///:memory:&apos;, echo=True)</span><br></pre></td></tr></table></figure></p>
-<p>テーブルの作成。今回は2種類のテーブルを作成。 ユーザのIDをプライマリキーとして使用。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey</span><br><span class="line">metadata = MetaData()</span><br><span class="line">users = Table(&apos;users&apos;, metadata,</span><br><span class="line">    Column(&apos;id&apos;, Integer, primary_key=True),</span><br><span class="line">    Column(&apos;name&apos;, String),</span><br><span class="line">    Column(&apos;fullname&apos;, String),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">addresses = Table(&apos;addresses&apos;, metadata,</span><br><span class="line">  Column(&apos;id&apos;, Integer, primary_key=True),</span><br><span class="line">  Column(&apos;user_id&apos;, None, ForeignKey(&apos;users.id&apos;)),</span><br><span class="line">  Column(&apos;email_address&apos;, String, nullable=False)</span><br><span class="line"> )</span><br></pre></td></tr></table></figure></p>
-<p>実際にSQLite内でテーブルを定義する。このとき、テーブルの存在を確認するので複数回実行してもよい。（べき等である） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">metadata.create_all(engine)</span><br></pre></td></tr></table></figure></p>
+<p>エンジンの定義。（今回はSQLiteのインメモリモードを使用）
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy import create_engine</span><br><span class="line">engine = create_engine(&apos;sqlite:///:memory:&apos;, echo=True)</span><br></pre></td></tr></table></figure></p>
+<p>テーブルの作成。今回は2種類のテーブルを作成。
+ユーザのIDをプライマリキーとして使用。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey</span><br><span class="line">metadata = MetaData()</span><br><span class="line">users = Table(&apos;users&apos;, metadata,</span><br><span class="line">    Column(&apos;id&apos;, Integer, primary_key=True),</span><br><span class="line">    Column(&apos;name&apos;, String),</span><br><span class="line">    Column(&apos;fullname&apos;, String),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">addresses = Table(&apos;addresses&apos;, metadata,</span><br><span class="line">  Column(&apos;id&apos;, Integer, primary_key=True),</span><br><span class="line">  Column(&apos;user_id&apos;, None, ForeignKey(&apos;users.id&apos;)),</span><br><span class="line">  Column(&apos;email_address&apos;, String, nullable=False)</span><br><span class="line"> )</span><br></pre></td></tr></table></figure></p>
+<p>実際にSQLite内でテーブルを定義する。このとき、テーブルの存在を確認するので複数回実行してもよい。（べき等である）
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">metadata.create_all(engine)</span><br></pre></td></tr></table></figure></p>
 <h2><span id="挿入のクエリ">挿入のクエリ</span></h2>
 <p>まずは空のクエリを定義。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ins = users.insert()</span><br></pre></td></tr></table></figure></p>
 <p>strを使うと、SQLを確認できる。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str(ins)</span><br><span class="line">--</span><br><span class="line">&apos;INSERT INTO users (id, name, fullname) VALUES (:id, :name, :fullname)&apos;</span><br></pre></td></tr></table></figure></p>
@@ -290,7 +294,8 @@ ga('send', 'pageview');
 <p>まずはクエリを実行。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy.sql import select</span><br><span class="line">s = select([users])</span><br><span class="line">result = conn.execute(s)</span><br><span class="line">--</span><br><span class="line">2018-12-24 14:16:11,363 INFO sqlalchemy.engine.base.Engine SELECT users.id, users.name, users.fullname </span><br><span class="line">FROM users</span><br><span class="line">2018-12-24 14:16:11,363 INFO sqlalchemy.engine.base.Engine ()</span><br></pre></td></tr></table></figure></p>
 <p>結果のパース。タプルライクに取得。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for row in result:</span><br><span class="line">    print(row)</span><br><span class="line">--</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;)</span><br></pre></td></tr></table></figure></p>
 <p>辞書ライクに取得。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">result = conn.execute(s)</span><br><span class="line">row = result.fetchone()</span><br><span class="line">print(&quot;name:&quot;, row[&apos;name&apos;], &quot;; fullname:&quot;, row[&apos;fullname&apos;])</span><br><span class="line">--</span><br><span class="line">name: jack ; fullname: Jack Jones</span><br></pre></td></tr></table></figure></p>
-<p>conn.execute()の結果はイテレータっぽく扱えるので以下のような書き方ができる。 今回は2個のテーブルのカルテシアン積を求める例。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for row in conn.execute(select([users, addresses])):</span><br><span class="line">    print(row)</span><br><span class="line">--</span><br><span class="line">2018-12-24 14:20:14,164 INFO sqlalchemy.engine.base.Engine SELECT users.id, users.name, users.fullname, addresses.id, addresses.user_id, addresses.email_address </span><br><span class="line">FROM users, addresses</span><br><span class="line">2018-12-24 14:20:14,164 INFO sqlalchemy.engine.base.Engine ()</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 1, 1, &apos;jack@yahoo.com&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 2, 1, &apos;jack@msn.com&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 3, 2, &apos;www@www.org&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 4, 2, &apos;wendy@aol.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 1, 1, &apos;jack@yahoo.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 2, 1, &apos;jack@msn.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 3, 2, &apos;www@www.org&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 4, 2, &apos;wendy@aol.com&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>conn.execute()の結果はイテレータっぽく扱えるので以下のような書き方ができる。
+今回は2個のテーブルのカルテシアン積を求める例。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for row in conn.execute(select([users, addresses])):</span><br><span class="line">    print(row)</span><br><span class="line">--</span><br><span class="line">2018-12-24 14:20:14,164 INFO sqlalchemy.engine.base.Engine SELECT users.id, users.name, users.fullname, addresses.id, addresses.user_id, addresses.email_address </span><br><span class="line">FROM users, addresses</span><br><span class="line">2018-12-24 14:20:14,164 INFO sqlalchemy.engine.base.Engine ()</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 1, 1, &apos;jack@yahoo.com&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 2, 1, &apos;jack@msn.com&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 3, 2, &apos;www@www.org&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 4, 2, &apos;wendy@aol.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 1, 1, &apos;jack@yahoo.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 2, 1, &apos;jack@msn.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 3, 2, &apos;www@www.org&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 4, 2, &apos;wendy@aol.com&apos;)</span><br></pre></td></tr></table></figure></p>
 <p>どちらかというと、こちらの方がイメージに近いか。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">for row in conn.execute(select([users, addresses]).where(users.c.id == addresses.c.user_id)):</span><br><span class="line">    print(row)</span><br><span class="line">--</span><br><span class="line">2018-12-24 14:22:46,769 INFO sqlalchemy.engine.base.Engine SELECT users.id, users.name, users.fullname, addresses.id, addresses.user_id, addresses.email_address </span><br><span class="line">FROM users, addresses </span><br><span class="line">WHERE users.id = addresses.user_id</span><br><span class="line">2018-12-24 14:22:46,769 INFO sqlalchemy.engine.base.Engine ()</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 1, 1, &apos;jack@yahoo.com&apos;)</span><br><span class="line">(1, &apos;jack&apos;, &apos;Jack Jones&apos;, 2, 1, &apos;jack@msn.com&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 3, 2, &apos;www@www.org&apos;)</span><br><span class="line">(2, &apos;wendy&apos;, &apos;Wendy Williams&apos;, 4, 2, &apos;wendy@aol.com&apos;)</span><br></pre></td></tr></table></figure></p>
 <h2><span id="オペレータの結合">オペレータの結合</span></h2>
 <p><code>and_</code>などを用いる例。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy.sql import and_, or_, not_</span><br><span class="line">s = select([(users.c.fullname +</span><br><span class="line">              &quot;, &quot; + addresses.c.email_address).</span><br><span class="line">               label(&apos;title&apos;)]).\</span><br><span class="line">       where(</span><br><span class="line">          and_(</span><br><span class="line">              users.c.id == addresses.c.user_id,</span><br><span class="line">              users.c.name.between(&apos;m&apos;, &apos;z&apos;),</span><br><span class="line">              or_(</span><br><span class="line">                 addresses.c.email_address.like(&apos;%@aol.com&apos;),</span><br><span class="line">                 addresses.c.email_address.like(&apos;%@msn.com&apos;)</span><br><span class="line">              )</span><br><span class="line">          )</span><br><span class="line">       )</span><br><span class="line">conn.execute(s).fetchall()</span><br></pre></td></tr></table></figure></p>
@@ -331,7 +336,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/24/Basic-of-SQLAlchemy/" data-id="cl2nztnkj002h5xqix97cu5yq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/24/Basic-of-SQLAlchemy/" data-id="cl2o9pbg1013g18rzhwsd25gf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -582,5 +587,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

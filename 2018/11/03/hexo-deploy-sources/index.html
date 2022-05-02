@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 方法   参考  関連する記事  方法 関連する記事 に記載された通り、extend_dirsを指定すればよい。 以下のようにした。 12345deploy:  - type: git    repo: &amp;lt;git repository url&amp;gt;    branch: gh-pages    extend_dirs: source">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexoでソースファイルもデプロイする">
 <meta name="twitter:description" content="参考 方法   参考  関連する記事  方法 関連する記事 に記載された通り、extend_dirsを指定すればよい。 以下のようにした。 12345deploy:  - type: git    repo: &amp;lt;git repository url&amp;gt;    branch: gh-pages    extend_dirs: source">
@@ -251,8 +251,8 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#方法">方法</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#方法" id="toc-方法">方法</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
@@ -260,7 +260,8 @@ ga('send', 'pageview');
 <li><a href="https://stackoverflow.com/questions/46120213/import-current-hexo-blog-to-new-pc" target="_blank" rel="noopener">関連する記事</a></li>
 </ul>
 <h1><span id="方法">方法</span></h1>
-<p><a href="https://stackoverflow.com/questions/46120213/import-current-hexo-blog-to-new-pc" target="_blank" rel="noopener">関連する記事</a> に記載された通り、extend_dirsを指定すればよい。 以下のようにした。</p>
+<p><a href="https://stackoverflow.com/questions/46120213/import-current-hexo-blog-to-new-pc" target="_blank" rel="noopener">関連する記事</a>
+に記載された通り、extend_dirsを指定すればよい。 以下のようにした。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  - type: git</span><br><span class="line">    repo: &lt;git repository url&gt;</span><br><span class="line">    branch: gh-pages</span><br><span class="line">    extend_dirs: source</span><br></pre></td></tr></table></figure>
 
         
@@ -272,7 +273,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/03/hexo-deploy-sources/" data-id="cl2nztnpt00i95xqinib7ausq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/03/hexo-deploy-sources/" data-id="cl2o9pb9i00dl18rz19elg581" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -523,5 +524,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

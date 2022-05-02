@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  CODE Q&amp;amp;Aの質疑応答 deol.vim  メモ gvimで deol.vim を使ってターミナルを開き、git push origin master をしたら、 以下のようなエラーが生じた。 1fatal: could not read Password for &amp;apos;https://xxxxxxxxx@github.com&amp;apos;: term">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="terminal prompt disabled on vim">
 <meta name="twitter:description" content="参考 メモ   参考  CODE Q&amp;amp;Aの質疑応答 deol.vim  メモ gvimで deol.vim を使ってターミナルを開き、git push origin master をしたら、 以下のようなエラーが生じた。 1fatal: could not read Password for &amp;apos;https://xxxxxxxxx@github.com&amp;apos;: term">
@@ -251,19 +251,23 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://code.i-harness.com/en/q/1ebd4cf" target="_blank" rel="noopener">CODE Q&amp;Aの質疑応答</a></li>
+<li><a href="https://code.i-harness.com/en/q/1ebd4cf" target="_blank" rel="noopener">CODE
+Q&amp;Aの質疑応答</a></li>
 <li><a href="https://github.com/Shougo/deol.nvim" target="_blank" rel="noopener">deol.vim</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p>gvimで <a href="https://github.com/Shougo/deol.nvim" target="_blank" rel="noopener">deol.vim</a> を使ってターミナルを開き、<code>git push origin master</code> をしたら、 以下のようなエラーが生じた。</p>
+<p>gvimで <a href="https://github.com/Shougo/deol.nvim" target="_blank" rel="noopener">deol.vim</a>
+を使ってターミナルを開き、<code>git push origin master</code> をしたら、
+以下のようなエラーが生じた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fatal: could not read Password for &apos;https://xxxxxxxxx@github.com&apos;: terminal prompts disabled</span><br></pre></td></tr></table></figure>
-<p><a href="https://code.i-harness.com/en/q/1ebd4cf" target="_blank" rel="noopener">CODE Q&amp;Aの質疑応答</a> にも記載があるが</p>
+<p><a href="https://code.i-harness.com/en/q/1ebd4cf" target="_blank" rel="noopener">CODE
+Q&amp;Aの質疑応答</a> にも記載があるが</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ GIT_TERMINAL_PROMPT=1 git push origin master</span><br></pre></td></tr></table></figure>
 <p>のように、<code>GIT_TERMINAL_PROMPT=1</code>でOK。</p>
 
@@ -276,7 +280,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/01/13/terminal-prompt-disabled-on-vim/" data-id="cl2nztnqb00jk5xqioes6scpu" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/01/13/terminal-prompt-disabled-on-vim/" data-id="cl2o9pba400ex18rzo6lbpzo7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -527,5 +531,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

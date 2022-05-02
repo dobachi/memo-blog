@@ -5,18 +5,18 @@
     
     <title>Apache KafkaにおけるZooKeeper | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 前提 ZooKeeperには何が置かれるのか？ log_dir_event_notification isr_change_notification brokers controller updateLeaderAndIsrメソッド getLogConfigsメソッド setOrCreateEntityConfigsメソッド BrokerのEpochについて getAllLogD">
+    <meta name="description" content="参考 メモ  前提 ZooKeeperには何が置かれるのか？  log_dir_event_notification isr_change_notification brokers controller updateLeaderAndIsrメソッド getLogConfigsメソッド setOrCreateEntityConfigsメソッド BrokerのEpochについて getAllLo">
 <meta name="keywords" content="Kafka,ZooKeeper">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Apache KafkaにおけるZooKeeper">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/03/05/ZooKeeper-of-Kafka/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 前提 ZooKeeperには何が置かれるのか？ log_dir_event_notification isr_change_notification brokers controller updateLeaderAndIsrメソッド getLogConfigsメソッド setOrCreateEntityConfigsメソッド BrokerのEpochについて getAllLogD">
+<meta property="og:description" content="参考 メモ  前提 ZooKeeperには何が置かれるのか？  log_dir_event_notification isr_change_notification brokers controller updateLeaderAndIsrメソッド getLogConfigsメソッド setOrCreateEntityConfigsメソッド BrokerのEpochについて getAllLo">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apache KafkaにおけるZooKeeper">
-<meta name="twitter:description" content="参考 メモ 前提 ZooKeeperには何が置かれるのか？ log_dir_event_notification isr_change_notification brokers controller updateLeaderAndIsrメソッド getLogConfigsメソッド setOrCreateEntityConfigsメソッド BrokerのEpochについて getAllLogD">
+<meta name="twitter:description" content="参考 メモ  前提 ZooKeeperには何が置かれるのか？  log_dir_event_notification isr_change_notification brokers controller updateLeaderAndIsrメソッド getLogConfigsメソッド setOrCreateEntityConfigsメソッド BrokerのEpochについて getAllLo">
     
 
     
@@ -251,20 +251,22 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#前提">前提</a></li>
-<li><a href="#zookeeperには何が置かれるのか">ZooKeeperには何が置かれるのか？</a><ul>
-<li><a href="#log_dir_event_notification">log_dir_event_notification</a></li>
-<li><a href="#isr_change_notification">isr_change_notification</a></li>
-<li><a href="#brokers">brokers</a></li>
-<li><a href="#controller">controller</a></li>
-<li><a href="#updateleaderandisrメソッド">updateLeaderAndIsrメソッド</a></li>
-<li><a href="#getlogconfigsメソッド">getLogConfigsメソッド</a></li>
-<li><a href="#setorcreateentityconfigsメソッド">setOrCreateEntityConfigsメソッド</a></li>
-<li><a href="#brokerのepochについて">BrokerのEpochについて</a></li>
-<li><a href="#getalllogdireventnotificationsメソッド">getAllLogDirEventNotificationsメソッド</a></li>
-<li><a href="#setorcreatepartitionreassignmentメソッド">setOrCreatePartitionReassignmentメソッド</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#前提" id="toc-前提">前提</a></li>
+<li><a href="#zookeeperには何が置かれるのか" id="toc-zookeeperには何が置かれるのか">ZooKeeperには何が置かれるのか？</a>
+<ul>
+<li><a href="#log_dir_event_notification" id="toc-log_dir_event_notification">log_dir_event_notification</a></li>
+<li><a href="#isr_change_notification" id="toc-isr_change_notification">isr_change_notification</a></li>
+<li><a href="#brokers" id="toc-brokers">brokers</a></li>
+<li><a href="#controller" id="toc-controller">controller</a></li>
+<li><a href="#updateleaderandisrメソッド" id="toc-updateleaderandisrメソッド">updateLeaderAndIsrメソッド</a></li>
+<li><a href="#getlogconfigsメソッド" id="toc-getlogconfigsメソッド">getLogConfigsメソッド</a></li>
+<li><a href="#setorcreateentityconfigsメソッド" id="toc-setorcreateentityconfigsメソッド">setOrCreateEntityConfigsメソッド</a></li>
+<li><a href="#brokerのepochについて" id="toc-brokerのepochについて">BrokerのEpochについて</a></li>
+<li><a href="#getalllogdireventnotificationsメソッド" id="toc-getalllogdireventnotificationsメソッド">getAllLogDirEventNotificationsメソッド</a></li>
+<li><a href="#setorcreatepartitionreassignmentメソッド" id="toc-setorcreatepartitionreassignmentメソッド">setOrCreatePartitionReassignmentメソッド</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -276,8 +278,10 @@ ga('send', 'pageview');
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="前提">前提</span></h2>
 <ul>
-<li><a href="http://wurstmeister.github.io/kafka-docker/" target="_blank" rel="noopener">kafka-docker</a> を使って環境を立てた</li>
-<li>docker-compose.yml内で環境変数で指定し、ZooKeeperじょうでは、 /kafka以下のパスを用いるようにした。</li>
+<li><a href="http://wurstmeister.github.io/kafka-docker/" target="_blank" rel="noopener">kafka-docker</a>
+を使って環境を立てた</li>
+<li>docker-compose.yml内で環境変数で指定し、ZooKeeperじょうでは、
+/kafka以下のパスを用いるようにした。</li>
 <li>いったんtrunkで確認</li>
 </ul>
 <h2><span id="zookeeperには何が置かれるのか">ZooKeeperには何が置かれるのか？</span></h2>
@@ -293,7 +297,8 @@ ga('send', 'pageview');
 <p>ISRに変化があったことを確認する。</p>
 <p>kafka/server/ReplicaManager.scala:269 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def maybePropagateIsrChanges() &#123;</span><br><span class="line">  val now = System.currentTimeMillis()</span><br><span class="line">  isrChangeSet synchronized &#123;</span><br><span class="line">    if (isrChangeSet.nonEmpty &amp;&amp;</span><br><span class="line">      (lastIsrChangeMs.get() + ReplicaManager.IsrChangePropagationBlackOut &lt; now ||</span><br><span class="line">        lastIsrPropagationMs.get() + ReplicaManager.IsrChangePropagationInterval &lt; now)) &#123;</span><br><span class="line">      zkClient.propagateIsrChanges(isrChangeSet)</span><br><span class="line">      isrChangeSet.clear()</span><br><span class="line">      lastIsrPropagationMs.set(now)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3><span id="brokers">brokers</span></h3>
-<p>以下のように、ブローカに関するいくつかの情報を保持する。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls /kafka/brokers</span><br><span class="line">[seqid, topics, ids]</span><br></pre></td></tr></table></figure></p>
+<p>以下のように、ブローカに関するいくつかの情報を保持する。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls /kafka/brokers</span><br><span class="line">[seqid, topics, ids]</span><br></pre></td></tr></table></figure></p>
 <p>例えば、ブローカ情報を記録するのは以下の通り。</p>
 <p>kafka/zk/KafkaZkClient.scala:95 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def registerBroker(brokerInfo: BrokerInfo): Long = &#123;</span><br><span class="line">  val path = brokerInfo.path</span><br><span class="line">  val stat = checkedEphemeralCreate(path, brokerInfo.toJsonBytes)</span><br><span class="line">  info(s&quot;Registered broker $&#123;brokerInfo.broker.id&#125; at path $path with addresses: $&#123;brokerInfo.broker.endPoints&#125;, czxid (broker epoch): $&#123;stat.getCzxid&#125;&quot;)</span><br><span class="line">  stat.getCzxid</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>例えば、トピック・パーティション情報は以下の通り。</p>
@@ -307,7 +312,9 @@ ga('send', 'pageview');
 <h3><span id="getlogconfigsメソッド">getLogConfigsメソッド</span></h3>
 <p>ローカルのデフォルトの設定値と、ZooKeeper上のトピックレベルの設定値をマージする。</p>
 <h3><span id="setorcreateentityconfigsメソッド">setOrCreateEntityConfigsメソッド</span></h3>
-<p>トピックを作成する際に呼ばれるメソッドだが、これ自体は何かロックを取りながら、 トピックの情報を編集するわけではないようだ。★要確認 したがって、同じトピックを作成する処理が同時に呼ばれた場合、後勝ちになる。</p>
+<p>トピックを作成する際に呼ばれるメソッドだが、これ自体は何かロックを取りながら、
+トピックの情報を編集するわけではないようだ。★要確認
+したがって、同じトピックを作成する処理が同時に呼ばれた場合、後勝ちになる。</p>
 <p>ただしトピックが作成された後は、トピック作成時に当該トピックが存在するかどうかの確認が行われるので問題ない。</p>
 <p>kafka/zk/AdminZkClient.scala:101 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def validateTopicCreate(topic: String,</span><br><span class="line">                        partitionReplicaAssignment: Map[Int, Seq[Int]],</span><br><span class="line">                        config: Properties): Unit = &#123;</span><br></pre></td></tr></table></figure></p>
 <p>kafka/server/AdminManager.scala:109 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">createTopicPolicy match &#123;</span><br><span class="line">  case Some(policy) =&gt;</span><br><span class="line">    adminZkClient.validateTopicCreate(topic.name(), assignments, configs)</span><br></pre></td></tr></table></figure></p>
@@ -316,9 +323,13 @@ ga('send', 'pageview');
 <p>※znodeの作成に関するZooKeeper Transaction ID</p>
 <p>kafka/zk/KafkaZkClient.scala:417 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def getAllBrokerAndEpochsInCluster: Map[Broker, Long] = &#123;</span><br><span class="line">  val brokerIds = getSortedBrokerList</span><br><span class="line">  val getDataRequests = brokerIds.map(brokerId =&gt; GetDataRequest(BrokerIdZNode.path(brokerId), ctx = Some(brokerId)))</span><br><span class="line">  val getDataResponses = retryRequestsUntilConnected(getDataRequests)</span><br><span class="line">  getDataResponses.flatMap &#123; getDataResponse =&gt;</span><br><span class="line">    val brokerId = getDataResponse.ctx.get.asInstanceOf[Int]</span><br><span class="line">    getDataResponse.resultCode match &#123;</span><br><span class="line">      case Code.OK =&gt;</span><br><span class="line">        Some((BrokerIdZNode.decode(brokerId, getDataResponse.data).broker, getDataResponse.stat.getCzxid))</span><br><span class="line">      case Code.NONODE =&gt; None</span><br><span class="line">      case _ =&gt; throw getDataResponse.resultException.get</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;.toMap</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3><span id="getalllogdireventnotificationsメソッド">getAllLogDirEventNotificationsメソッド</span></h3>
-<p>ログディレクトリの変化に関する情報を取得する。 コントローラのイベントハンドラ内で、呼び出されるLogDirEventNotification#processメソッドで用いられる。 何か変化のあったログ（ディレクトリ）を確認し、当該ログを保持するブローカのレプリカの情報を最新化する。★要確認</p>
+<p>ログディレクトリの変化に関する情報を取得する。
+コントローラのイベントハンドラ内で、呼び出されるLogDirEventNotification#processメソッドで用いられる。
+何か変化のあったログ（ディレクトリ）を確認し、当該ログを保持するブローカのレプリカの情報を最新化する。★要確認</p>
 <h3><span id="setorcreatepartitionreassignmentメソッド">setOrCreatePartitionReassignmentメソッド</span></h3>
-<p>パーティションリアサインメントの情報をZooKeeperに書き込む。 このメソッドは、パーティションリアサインメントの必要があるときに呼び出される。 例えばコントローラフェールオーバ時などにも呼び出される。</p>
+<p>パーティションリアサインメントの情報をZooKeeperに書き込む。
+このメソッドは、パーティションリアサインメントの必要があるときに呼び出される。
+例えばコントローラフェールオーバ時などにも呼び出される。</p>
 
         
         </div>
@@ -329,7 +340,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/03/05/ZooKeeper-of-Kafka/" data-id="cl2nztnpi00h85xqi6d0y4nrf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/03/05/ZooKeeper-of-Kafka/" data-id="cl2o9pb9200cg18rzwbazznnx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -580,5 +591,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

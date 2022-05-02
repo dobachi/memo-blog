@@ -5,18 +5,18 @@
     
     <title>dansbecker/handling-missing-values | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 メモ 欠落のあるカラムの排除 欠落を埋める 欠落を埋めつつ、欠落していたことを真理値として保持    参考  Kaggleのhandling-missing-values scikit-learnのimputeの説明  メモ Kaggleのhandling-missing-values の内容から気になった箇所をメモ。 欠落のあるカラムの排除 最もシンプルな方法として、欠落のあるカラム">
+    <meta name="description" content="参考 メモ  欠落のあるカラムの排除 欠落を埋める 欠落を埋めつつ、欠落していたことを真理値として保持    参考  Kaggleのhandling-missing-values scikit-learnのimputeの説明  メモ Kaggleのhandling-missing-values の内容から気になった箇所をメモ。 欠落のあるカラムの排除 最もシンプルな方法として、欠落のあるカラ">
 <meta name="keywords" content="Machine Learning,Kaggle,Preparation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dansbecker&#x2F;handling-missing-values">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/04/12/dansbecker-handling-missing-values/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 メモ 欠落のあるカラムの排除 欠落を埋める 欠落を埋めつつ、欠落していたことを真理値として保持    参考  Kaggleのhandling-missing-values scikit-learnのimputeの説明  メモ Kaggleのhandling-missing-values の内容から気になった箇所をメモ。 欠落のあるカラムの排除 最もシンプルな方法として、欠落のあるカラム">
+<meta property="og:description" content="参考 メモ  欠落のあるカラムの排除 欠落を埋める 欠落を埋めつつ、欠落していたことを真理値として保持    参考  Kaggleのhandling-missing-values scikit-learnのimputeの説明  メモ Kaggleのhandling-missing-values の内容から気になった箇所をメモ。 欠落のあるカラムの排除 最もシンプルな方法として、欠落のあるカラ">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.457Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dansbecker&#x2F;handling-missing-values">
-<meta name="twitter:description" content="参考 メモ 欠落のあるカラムの排除 欠落を埋める 欠落を埋めつつ、欠落していたことを真理値として保持    参考  Kaggleのhandling-missing-values scikit-learnのimputeの説明  メモ Kaggleのhandling-missing-values の内容から気になった箇所をメモ。 欠落のあるカラムの排除 最もシンプルな方法として、欠落のあるカラム">
+<meta name="twitter:description" content="参考 メモ  欠落のあるカラムの排除 欠落を埋める 欠落を埋めつつ、欠落していたことを真理値として保持    参考  Kaggleのhandling-missing-values scikit-learnのimputeの説明  メモ Kaggleのhandling-missing-values の内容から気になった箇所をメモ。 欠落のあるカラムの排除 最もシンプルな方法として、欠落のあるカラ">
     
 
     
@@ -251,11 +251,12 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#欠落のあるカラムの排除">欠落のあるカラムの排除</a></li>
-<li><a href="#欠落を埋める">欠落を埋める</a></li>
-<li><a href="#欠落を埋めつつ欠落していたことを真理値として保持">欠落を埋めつつ、欠落していたことを真理値として保持</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#欠落のあるカラムの排除" id="toc-欠落のあるカラムの排除">欠落のあるカラムの排除</a></li>
+<li><a href="#欠落を埋める" id="toc-欠落を埋める">欠落を埋める</a></li>
+<li><a href="#欠落を埋めつつ欠落していたことを真理値として保持" id="toc-欠落を埋めつつ欠落していたことを真理値として保持">欠落を埋めつつ、欠落していたことを真理値として保持</a></li>
 </ul></li>
 </ul>
 </div>
@@ -265,9 +266,11 @@ ga('send', 'pageview');
 <li><a href="https://scikit-learn.org/stable/modules/impute.html" target="_blank" rel="noopener">scikit-learnのimputeの説明</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
-<p><a href="https://www.kaggle.com/dansbecker/handling-missing-values" target="_blank" rel="noopener">Kaggleのhandling-missing-values</a> の内容から気になった箇所をメモ。</p>
+<p><a href="https://www.kaggle.com/dansbecker/handling-missing-values" target="_blank" rel="noopener">Kaggleのhandling-missing-values</a>
+の内容から気になった箇所をメモ。</p>
 <h2><span id="欠落のあるカラムの排除">欠落のあるカラムの排除</span></h2>
-<p>最もシンプルな方法として、欠落のあるカラムを排除する方法が挙げられていた。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cols_with_missing = [col for col in X_train.columns </span><br><span class="line">                                 if X_train[col].isnull().any()]</span><br><span class="line">reduced_X_train = X_train.drop(cols_with_missing, axis=1)</span><br><span class="line">reduced_X_test  = X_test.drop(cols_with_missing, axis=1)</span><br></pre></td></tr></table></figure></p>
+<p>最もシンプルな方法として、欠落のあるカラムを排除する方法が挙げられていた。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cols_with_missing = [col for col in X_train.columns </span><br><span class="line">                                 if X_train[col].isnull().any()]</span><br><span class="line">reduced_X_train = X_train.drop(cols_with_missing, axis=1)</span><br><span class="line">reduced_X_test  = X_test.drop(cols_with_missing, axis=1)</span><br></pre></td></tr></table></figure></p>
 <p><code>X_train[col].isnull().any()</code>のところで、カラム内の値のいずれかがNULL値かどうかを確認している。</p>
 <h2><span id="欠落を埋める">欠落を埋める</span></h2>
 <p>欠落を埋める。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.impute import SimpleImputer</span><br><span class="line"></span><br><span class="line">my_imputer = SimpleImputer()</span><br><span class="line">imputed_X_train = my_imputer.fit_transform(X_train)</span><br><span class="line">imputed_X_test = my_imputer.transform(X_test)</span><br></pre></td></tr></table></figure></p>
@@ -285,7 +288,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/04/12/dansbecker-handling-missing-values/" data-id="cl2nztnpm00hm5xqibz9rescd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/04/12/dansbecker-handling-missing-values/" data-id="cl2o9pb9b00d518rzozpo7n4t" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -536,5 +539,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

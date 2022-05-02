@@ -5,18 +5,18 @@
     
     <title>Kafka Streams with ML | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="参考 kaiwaehner kafka-streams-machine-learning-examples  メモ kaiwaehner/kafka-streams-machine-learning-examples Convolutional Neural Network (CNN) with TensorFlow for Image Recognition Iris Prediction">
-<meta name="keywords" content="Stream Processing,Machine Learning,TensorFlow,Kafka Streams">
+    <meta name="description" content="参考  kaiwaehner kafka-streams-machine-learning-examples  メモ  kaiwaehner/kafka-streams-machine-learning-examples  Convolutional Neural Network (CNN) with TensorFlow for Image Recognition Iris Predict">
+<meta name="keywords" content="TensorFlow,Machine Learning,Stream Processing,Kafka Streams">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kafka Streams with ML">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2019/11/25/Kafka-Streams-with-ML/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="参考 kaiwaehner kafka-streams-machine-learning-examples  メモ kaiwaehner/kafka-streams-machine-learning-examples Convolutional Neural Network (CNN) with TensorFlow for Image Recognition Iris Prediction">
+<meta property="og:description" content="参考  kaiwaehner kafka-streams-machine-learning-examples  メモ  kaiwaehner/kafka-streams-machine-learning-examples  Convolutional Neural Network (CNN) with TensorFlow for Image Recognition Iris Predict">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T00:38:10.449Z">
+<meta property="og:updated_time" content="2022-05-02T05:14:34.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka Streams with ML">
-<meta name="twitter:description" content="参考 kaiwaehner kafka-streams-machine-learning-examples  メモ kaiwaehner/kafka-streams-machine-learning-examples Convolutional Neural Network (CNN) with TensorFlow for Image Recognition Iris Prediction">
+<meta name="twitter:description" content="参考  kaiwaehner kafka-streams-machine-learning-examples  メモ  kaiwaehner/kafka-streams-machine-learning-examples  Convolutional Neural Network (CNN) with TensorFlow for Image Recognition Iris Predict">
     
 
     
@@ -251,58 +251,95 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#参考">参考</a><ul>
-<li><a href="#kaiwaehner-kafka-streams-machine-learning-examples">kaiwaehner kafka-streams-machine-learning-examples</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#kaiwaehner-kafka-streams-machine-learning-examples" id="toc-kaiwaehner-kafka-streams-machine-learning-examples">kaiwaehner
+kafka-streams-machine-learning-examples</a></li>
 </ul></li>
-<li><a href="#メモ">メモ</a><ul>
-<li><a href="#kaiwaehnerkafka-streams-machine-learning-examples">kaiwaehner/kafka-streams-machine-learning-examples</a><ul>
-<li><a href="#convolutional-neural-network-cnn-with-tensorflow-for-image-recognition">Convolutional Neural Network (CNN) with TensorFlow for Image Recognition</a></li>
-<li><a href="#iris-prediction-using-a-neural-network-with-deeplearning4j-dl4j">Iris Prediction using a Neural Network with DeepLearning4J (DL4J)</a></li>
-<li><a href="#python-keras-tensorflow-deeplearning4j">Python + Keras + TensorFlow + DeepLearning4j</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#kaiwaehnerkafka-streams-machine-learning-examples" id="toc-kaiwaehnerkafka-streams-machine-learning-examples">kaiwaehner/kafka-streams-machine-learning-examples</a>
+<ul>
+<li><a href="#convolutional-neural-network-cnn-with-tensorflow-for-image-recognition" id="toc-convolutional-neural-network-cnn-with-tensorflow-for-image-recognition">Convolutional
+Neural Network (CNN) with TensorFlow for Image Recognition</a></li>
+<li><a href="#iris-prediction-using-a-neural-network-with-deeplearning4j-dl4j" id="toc-iris-prediction-using-a-neural-network-with-deeplearning4j-dl4j">Iris
+Prediction using a Neural Network with DeepLearning4J (DL4J)</a></li>
+<li><a href="#python-keras-tensorflow-deeplearning4j" id="toc-python-keras-tensorflow-deeplearning4j">Python + Keras +
+TensorFlow + DeepLearning4j</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </div>
 <h1><span id="参考">参考</span></h1>
-<h2><span id="kaiwaehner-kafka-streams-machine-learning-examples">kaiwaehner kafka-streams-machine-learning-examples</span></h2>
+<h2><span id="kaiwaehnerkafka-streams-machine-learning-examples">kaiwaehner
+kafka-streams-machine-learning-examples</span></h2>
 <ul>
-<li><a href="https://github.com/kaiwaehner/kafka-streams-machine-learning-examples" target="_blank" rel="noopener">kaiwaehner kafka-streams-machine-learning-examples</a></li>
-<li><a href="https://www.confluent.io/blog/build-deploy-scalable-machine-learning-production-apache-kafka/" target="_blank" rel="noopener">How to Build and Deploy Scalable Machine Learning in Production with Apache Kafka</a></li>
-<li><a href="https://www.confluent.io/blog/using-apache-kafka-drive-cutting-edge-machine-learning/" target="_blank" rel="noopener">Using Apache Kafka to Drive Cutting-Edge Machine Learning</a></li>
-<li><a href="https://www.confluent.io/blog/machine-learning-with-python-jupyter-ksql-tensorflow/" target="_blank" rel="noopener">Machine Learning with Python, Jupyter, KSQL and TensorFlow</a></li>
-<li><a href="https://github.com/kaiwaehner/ksql-udf-deep-learning-mqtt-iot" target="_blank" rel="noopener">kaiwaehner ksql-udf-deep-learning-mqtt-iot</a></li>
-<li><a href="https://github.com/kaiwaehner/kafka-streams-machine-learning-examples/blob/master/dl4j-deeplearning-iris" target="_blank" rel="noopener">Iris Prediction using a Neural Network with DeepLearning4J (DL4J)</a></li>
-<li><a href="https://github.com/kaiwaehner/kafka-streams-machine-learning-examples/tree/master/tensorflow-keras" target="_blank" rel="noopener">Python + Keras + TensorFlow + DeepLearning4j</a></li>
+<li><a href="https://github.com/kaiwaehner/kafka-streams-machine-learning-examples" target="_blank" rel="noopener">kaiwaehner
+kafka-streams-machine-learning-examples</a></li>
+<li><a href="https://www.confluent.io/blog/build-deploy-scalable-machine-learning-production-apache-kafka/" target="_blank" rel="noopener">How
+to Build and Deploy Scalable Machine Learning in Production with Apache
+Kafka</a></li>
+<li><a href="https://www.confluent.io/blog/using-apache-kafka-drive-cutting-edge-machine-learning/" target="_blank" rel="noopener">Using
+Apache Kafka to Drive Cutting-Edge Machine Learning</a></li>
+<li><a href="https://www.confluent.io/blog/machine-learning-with-python-jupyter-ksql-tensorflow/" target="_blank" rel="noopener">Machine
+Learning with Python, Jupyter, KSQL and TensorFlow</a></li>
+<li><a href="https://github.com/kaiwaehner/ksql-udf-deep-learning-mqtt-iot" target="_blank" rel="noopener">kaiwaehner
+ksql-udf-deep-learning-mqtt-iot</a></li>
+<li><a href="https://github.com/kaiwaehner/kafka-streams-machine-learning-examples/blob/master/dl4j-deeplearning-iris" target="_blank" rel="noopener">Iris
+Prediction using a Neural Network with DeepLearning4J (DL4J)</a></li>
+<li><a href="https://github.com/kaiwaehner/kafka-streams-machine-learning-examples/tree/master/tensorflow-keras" target="_blank" rel="noopener">Python
++ Keras + TensorFlow + DeepLearning4j</a></li>
 </ul>
 <h1><span id="メモ">メモ</span></h1>
 <h2><span id="kaiwaehnerkafka-streams-machine-learning-examples">kaiwaehner/kafka-streams-machine-learning-examples</span></h2>
-<p><a href="https://github.com/kaiwaehner/kafka-streams-machine-learning-examples" target="_blank" rel="noopener">kaiwaehner kafka-streams-machine-learning-examples</a> には、TensorFlow、Keras、H2O、Python、DL4JをKafka Streamsと併用するサンプルが含まれている。</p>
+<p><a href="https://github.com/kaiwaehner/kafka-streams-machine-learning-examples" target="_blank" rel="noopener">kaiwaehner
+kafka-streams-machine-learning-examples</a>
+には、TensorFlow、Keras、H2O、Python、DL4JをKafka
+Streamsと併用するサンプルが含まれている。</p>
 <p>上記レポジトリのREADMEには、いくつか参考文献が記載されている。</p>
-<p><a href="https://www.confluent.io/blog/build-deploy-scalable-machine-learning-production-apache-kafka/" target="_blank" rel="noopener">How to Build and Deploy Scalable Machine Learning in Production with Apache Kafka</a> には、</p>
+<p><a href="https://www.confluent.io/blog/build-deploy-scalable-machine-learning-production-apache-kafka/" target="_blank" rel="noopener">How
+to Build and Deploy Scalable Machine Learning in Production with Apache
+Kafka</a> には、</p>
 <ul>
 <li>デザインの概略みたいなものが載っていた</li>
 <li>学習と推論のモデルやりとりをどうつなぐのか？の考察</li>
 </ul>
 <p>が記載されていた。</p>
-<p><a href="https://www.confluent.io/blog/using-apache-kafka-drive-cutting-edge-machine-learning/" target="_blank" rel="noopener">Using Apache Kafka to Drive Cutting-Edge Machine Learning</a> にはモデルの組み込み方の種類、 AutoMLとの組み合わせについて考察（Not 具体例）が掲載されている。</p>
-<p><a href="https://www.confluent.io/blog/machine-learning-with-python-jupyter-ksql-tensorflow/" target="_blank" rel="noopener">Machine Learning with Python, Jupyter, KSQL and TensorFlow</a> には、以下のような記述がある。 いつもの論文とセット。</p>
+<p><a href="https://www.confluent.io/blog/using-apache-kafka-drive-cutting-edge-machine-learning/" target="_blank" rel="noopener">Using
+Apache Kafka to Drive Cutting-Edge Machine Learning</a>
+にはモデルの組み込み方の種類、 AutoMLとの組み合わせについて考察（Not
+具体例）が掲載されている。</p>
+<p><a href="https://www.confluent.io/blog/machine-learning-with-python-jupyter-ksql-tensorflow/" target="_blank" rel="noopener">Machine
+Learning with Python, Jupyter, KSQL and TensorFlow</a>
+には、以下のような記述がある。 いつもの論文とセット。</p>
 <blockquote>
-<p>Impedance mismatch between data scientists, data engineers and production engineers</p>
+<p>Impedance mismatch between data scientists, data engineers and
+production engineers</p>
 </blockquote>
 <p>これを解決する手段としていくつか例示。</p>
 <ul>
 <li>ONNX、PMMLなどを利用</li>
 <li>DL4Jなど開発者視点の含まれるプロダクトの利用</li>
 <li>AutoML</li>
-<li>モデルを出力してアプリに埋め込んで利用（TensorFlowだったらJava APIでモデルを利用する、など）</li>
+<li>モデルを出力してアプリに埋め込んで利用（TensorFlowだったらJava
+APIでモデルを利用する、など）</li>
 <li>パブリッククラウドのマネージドサービス利用</li>
 </ul>
-<p>ConfluentのKafka Python KSQL APIを使い、Jupyter上でKafkaからデータロードし分析する例も記載されていた。</p>
-<p><a href="https://github.com/kaiwaehner/ksql-udf-deep-learning-mqtt-iot" target="_blank" rel="noopener">kaiwaehner ksql-udf-deep-learning-mqtt-iot</a> には、UDF内でTensorFlowを使う例が記載されている。</p>
-<p><a href="https://github.com/kaiwaehner/ksql-fork-with-deep-learning-function" target="_blank" rel="noopener">kaiwaehner ksql-fork-with-deep-learning-function</a> には、エンドツーエンドで動作を確認してみるためのサンプル実装が載っている。</p>
-<p><a href="https://github.com/kaiwaehner/tensorflow-serving-java-grpc-kafka-streams" target="_blank" rel="noopener">kaiwaehner tensorflow-serving-java-grpc-kafka-streams</a> には、gRPC経由でKafka StreamsとTensorFlow Servingを連係する例が記載されている。</p>
-<h3><span id="convolutional-neural-network-cnn-with-tensorflow-for-image-recognition">Convolutional Neural Network (CNN) with TensorFlow for Image Recognition</span></h3>
-<p><code>com.github.megachucky.kafka.streams.machinelearning.Kafka_Streams_TensorFlow_Image_Recognition_Example</code> クラスを確認する。</p>
+<p>ConfluentのKafka Python KSQL
+APIを使い、Jupyter上でKafkaからデータロードし分析する例も記載されていた。</p>
+<p><a href="https://github.com/kaiwaehner/ksql-udf-deep-learning-mqtt-iot" target="_blank" rel="noopener">kaiwaehner
+ksql-udf-deep-learning-mqtt-iot</a>
+には、UDF内でTensorFlowを使う例が記載されている。</p>
+<p><a href="https://github.com/kaiwaehner/ksql-fork-with-deep-learning-function" target="_blank" rel="noopener">kaiwaehner
+ksql-fork-with-deep-learning-function</a>
+には、エンドツーエンドで動作を確認してみるためのサンプル実装が載っている。</p>
+<p><a href="https://github.com/kaiwaehner/tensorflow-serving-java-grpc-kafka-streams" target="_blank" rel="noopener">kaiwaehner
+tensorflow-serving-java-grpc-kafka-streams</a> には、gRPC経由でKafka
+StreamsとTensorFlow Servingを連係する例が記載されている。</p>
+<h3><span id="convolutionalneural-network-cnn-with-tensorflow-for-image-recognition">Convolutional
+Neural Network (CNN) with TensorFlow for Image Recognition</span></h3>
+<p><code>com.github.megachucky.kafka.streams.machinelearning.Kafka_Streams_TensorFlow_Image_Recognition_Example</code>
+クラスを確認する。</p>
 <h4><span id="概要">概要</span></h4>
 <ul>
 <li>本クラスは、予め学習されたTensorFlowのモデルを読み出して利用する</li>
@@ -311,79 +348,113 @@ ga('send', 'pageview');
 <li>画像に対するラベルのProbabilityを計算し、最大のProbabilityを持つラベルを戻り値として返す</li>
 </ul>
 <h4><span id="詳細メモ">詳細メモ</span></h4>
-<p><code>main</code>内では特別なことはしていない。トポロジを組み立てるための <code>getStreamTopology</code> が呼ばれる。</p>
+<p><code>main</code>内では特別なことはしていない。トポロジを組み立てるための
+<code>getStreamTopology</code> が呼ばれる。</p>
 <p><code>getStreamTopology</code> メソッドを確認する。</p>
 <p>当該メソッドでは、最初にモデル本体やモデルの定義が読み込まれる。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/Kafka_Streams_TensorFlow_Image_Recognition_Example.java:83</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">String modelDir = &quot;src/main/resources/generatedModels/CNN_inception5h&quot;;</span><br><span class="line"></span><br><span class="line">Path pathGraph = Paths.get(modelDir, &quot;tensorflow_inception_graph.pb&quot;);</span><br><span class="line">byte[] graphDef = Files.readAllBytes(pathGraph);</span><br><span class="line"></span><br><span class="line">Path pathModel = Paths.get(modelDir, &quot;imagenet_comp_graph_label_strings.txt&quot;);</span><br><span class="line">List&lt;String&gt; labels = Files.readAllLines(pathModel, Charset.forName(&quot;UTF-8&quot;));</span><br></pre></td></tr></table></figure>
-<p>続いてストリームのインスタンスが生成される。 その後、ストリーム処理の内容が定義される。</p>
+<p>続いてストリームのインスタンスが生成される。
+その後、ストリーム処理の内容が定義される。</p>
 <p>最初はメッセージ内に含まれる画像のPATHを用いて、実際の画像をバイト列で読み出す。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/Kafka_Streams_TensorFlow_Image_Recognition_Example.java:104</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">KStream&lt;String, Object&gt; transformedMessage =</span><br><span class="line">imageInputLines.mapValues(value -&gt;  &#123;</span><br><span class="line"></span><br><span class="line">	String imageClassification = &quot;unknown&quot;;</span><br><span class="line">	String imageProbability = &quot;unknown&quot;;</span><br><span class="line"></span><br><span class="line">	String imageFile = value;</span><br><span class="line"></span><br><span class="line">	Path pathImage = Paths.get(imageFile);</span><br><span class="line">	byte[] imageBytes;</span><br><span class="line">	try &#123;</span><br><span class="line">		imageBytes = Files.readAllBytes(pathImage);</span><br></pre></td></tr></table></figure>
 <p>つづいていくつかのヘルパメソッドを使って、画像に対するラベル（推論結果）を算出する。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/Kafka_Streams_TensorFlow_Image_Recognition_Example.java:117</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">try (Tensor image = constructAndExecuteGraphToNormalizeImage(imageBytes)) &#123;</span><br><span class="line">	float[] labelProbabilities = executeInceptionGraph(graphDef, image);</span><br><span class="line">	int bestLabelIdx = maxIndex(labelProbabilities);</span><br><span class="line"></span><br><span class="line">	imageClassification = labels.get(bestLabelIdx);</span><br><span class="line"></span><br><span class="line">	imageProbability = Float.toString(labelProbabilities[bestLabelIdx] * 100f);</span><br><span class="line"></span><br><span class="line">	System.out.println(String.format(&quot;BEST MATCH: %s (%.2f%% likely)&quot;, imageClassification,</span><br><span class="line">			labelProbabilities[bestLabelIdx] * 100f));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>constructAndExecuteGraphToNormalizeImage</code> メソッドは、グラフを構成し、前処理を実行する。</p>
+<p><code>constructAndExecuteGraphToNormalizeImage</code>
+メソッドは、グラフを構成し、前処理を実行する。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/Kafka_Streams_TensorFlow_Image_Recognition_Example.java:171</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">final Output input = b.constant(&quot;input&quot;, imageBytes);</span><br><span class="line">final Output output = b</span><br><span class="line">		.div(b.sub(</span><br><span class="line">				b.resizeBilinear(b.expandDims(b.cast(b.decodeJpeg(input, 3), DataType.FLOAT),</span><br><span class="line">						b.constant(&quot;make_batch&quot;, 0)), b.constant(&quot;size&quot;, new int[] &#123; H, W &#125;)),</span><br><span class="line">				b.constant(&quot;mean&quot;, mean)), b.constant(&quot;scale&quot;, scale));</span><br><span class="line">try (Session s = new Session(g)) &#123;</span><br><span class="line">	return s.runner().fetch(output.op().name()).run().get(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>executeInceptionGraph</code> メソッドは、予め学習済みのモデルと画像を引数にとり、 ラベルごとのProbabilityを算出する。</p>
+<p><code>executeInceptionGraph</code>
+メソッドは、予め学習済みのモデルと画像を引数にとり、
+ラベルごとのProbabilityを算出する。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/Kafka_Streams_TensorFlow_Image_Recognition_Example.java:184</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">try (Graph g = new Graph()) &#123;</span><br><span class="line"></span><br><span class="line">	// Model loading: Using Graph.importGraphDef() to load a pre-trained Inception</span><br><span class="line">	// model.</span><br><span class="line">	g.importGraphDef(graphDef);</span><br><span class="line"></span><br><span class="line">	// Graph execution: Using a Session to execute the graphs and find the best</span><br><span class="line">	// label for an image.</span><br><span class="line">	try (Session s = new Session(g);</span><br><span class="line">			Tensor result = s.runner().feed(&quot;input&quot;, image).fetch(&quot;output&quot;).run().get(0)) &#123;</span><br><span class="line">		final long[] rshape = result.shape();</span><br><span class="line">		if (result.numDimensions() != 2 || rshape[0] != 1) &#123;</span><br><span class="line">			throw new RuntimeException(String.format(</span><br><span class="line">					&quot;Expected model to produce a [1 N] shaped tensor where N is the number of labels, instead it produced one with shape %s&quot;,</span><br><span class="line">					Arrays.toString(rshape)));</span><br><span class="line">		&#125;</span><br><span class="line">		int nlabels = (int) rshape[1];</span><br><span class="line">		return result.copyTo(new float[1][nlabels])[0];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>executeInceptionGraph</code> メソッドにより、ある画像に対するラベルごとのProbabilityが得られた後、 最大のProbabilityを持つラベルを算出。 それを戻り値とする。</p>
-<h3><span id="iris-prediction-using-a-neural-network-with-deeplearning4j-dl4j">Iris Prediction using a Neural Network with DeepLearning4J (DL4J)</span></h3>
-<p><a href="https://github.com/kaiwaehner/kafka-streams-machine-learning-examples/blob/master/dl4j-deeplearning-iris" target="_blank" rel="noopener">Iris Prediction using a Neural Network with DeepLearning4J (DL4J)</a> を確認する。</p>
-<p><code>com.github.megachucky.kafka.streams.machinelearning.models.DeepLearning4J_CSV_Model_Inference</code> クラスを確認したが、これはKafka Streamsアプリには見えなかった。 中途半端な状態で止まっている？ これをベースに Kafka Streams のアプリを作ってみろ、ということか。</p>
+<p><code>executeInceptionGraph</code>
+メソッドにより、ある画像に対するラベルごとのProbabilityが得られた後、
+最大のProbabilityを持つラベルを算出。 それを戻り値とする。</p>
+<h3><span id="irisprediction-using-a-neural-network-with-deeplearning4j-dl4j">Iris
+Prediction using a Neural Network with DeepLearning4J (DL4J)</span></h3>
+<p><a href="https://github.com/kaiwaehner/kafka-streams-machine-learning-examples/blob/master/dl4j-deeplearning-iris" target="_blank" rel="noopener">Iris
+Prediction using a Neural Network with DeepLearning4J (DL4J)</a>
+を確認する。</p>
+<p><code>com.github.megachucky.kafka.streams.machinelearning.models.DeepLearning4J_CSV_Model_Inference</code>
+クラスを確認したが、これはKafka Streamsアプリには見えなかった。
+中途半端な状態で止まっている？ これをベースに Kafka Streams
+のアプリを作ってみろ、ということか。</p>
 <p>もしくはunitテスト側を見ろ、ということか？ -&gt; そのようだ。 <a href="https://github.com/kaiwaehner/kafka-streams-machine-learning-examples/blob/master/dl4j-deeplearning-iris/src/test/java/com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java" target="_blank" rel="noopener">Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java</a></p>
 <p>クラスの内容を確認する。</p>
 <p>まずテストのセットアップ。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java:46</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@ClassRule</span><br><span class="line">public static final EmbeddedKafkaCluster CLUSTER = new TestEmbeddedKafkaCluster(1);</span><br><span class="line"></span><br><span class="line">private static final String inputTopic = &quot;IrisInputTopic&quot;;</span><br><span class="line">private static final String outputTopic = &quot;IrisOutputTopic&quot;;</span><br><span class="line"></span><br><span class="line">// Generated DL4J model</span><br><span class="line">private File locationDL4JModel = new File(&quot;src/main/resources/generatedModels/DL4J/DL4J_Iris_Model.zip&quot;);</span><br><span class="line"></span><br><span class="line">// Prediction Value</span><br><span class="line">private static String irisPrediction = &quot;unknown&quot;;</span><br></pre></td></tr></table></figure>
-<p>TestEmbeddedKafkaClusterはテスト用のKafkaクラスタを起動するヘルパークラス。 内部的には、Kafka Streamsのテストに用いられている補助機能である <code>org.apache.kafka.streams.integration.utils.EmbeddedKafkaCluster</code> クラスを継承して作られている。</p>
+<p>TestEmbeddedKafkaClusterはテスト用のKafkaクラスタを起動するヘルパークラス。
+内部的には、Kafka Streamsのテストに用いられている補助機能である
+<code>org.apache.kafka.streams.integration.utils.EmbeddedKafkaCluster</code>
+クラスを継承して作られている。</p>
 <p>機械学習モデルは、予め学習済みのものが含まれているのでそれを読み込んで用いる</p>
-<p>テストコードの実態は、 <code>com.github.megachucky.kafka.streams.machinelearning.test.Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest#shouldPredictIrisFlowerType</code> である。 以降、当該メソッド内を確認する。</p>
+<p>テストコードの実態は、
+<code>com.github.megachucky.kafka.streams.machinelearning.test.Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest#shouldPredictIrisFlowerType</code>
+である。 以降、当該メソッド内を確認する。</p>
 <p>メソッドの冒頭で、Kafka Streamsの設定を定義している。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java:67</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">		// Iris input data (the model returns probabilities for input being each of Iris</span><br><span class="line">		// Type 1, 2 and 3)</span><br><span class="line">		List&lt;String&gt; inputValues = Arrays.asList(&quot;5.4,3.9,1.7,0.4&quot;, &quot;7.0,3.2,4.7,1.4&quot;, &quot;4.6,3.4,1.4,0.3&quot;);</span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">		streamsConfiguration.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());</span><br><span class="line">		streamsConfiguration.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());</span><br></pre></td></tr></table></figure>
-<p>このサンプルは動作確認用のため簡易な設定になっている。 実際のアプリケーション開発時にはきちんと設定必要。</p>
+<p>このサンプルは動作確認用のため簡易な設定になっている。
+実際のアプリケーション開発時にはきちんと設定必要。</p>
 <p>なお、途中でDL4Jのモデルを読み込んでいる。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java:86</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// Create DL4J object (see DeepLearning4J_CSV_Model.java)</span><br><span class="line">MultiLayerNetwork model = ModelSerializer.restoreMultiLayerNetwork(locationDL4JModel);</span><br></pre></td></tr></table></figure>
 <p>その後、ビルダのインスタンスを生成し、Irisデータを入力とするストリームを定義する。</p>
-<p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java:97, 104 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">final StreamsBuilder builder = new StreamsBuilder();</span><br><span class="line">final KStream&lt;String, String&gt; irisInputLines = builder.stream(inputTopic);</span><br></pre></td></tr></table></figure></p>
+<p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java:97,
+104 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">final StreamsBuilder builder = new StreamsBuilder();</span><br><span class="line">final KStream&lt;String, String&gt; irisInputLines = builder.stream(inputTopic);</span><br></pre></td></tr></table></figure></p>
 <p>その後はストリームのメッセージに対し、DL4Jのモデルによる推論を実行する。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java:108</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">irisInputLines.foreach((key, value) -&gt; &#123;</span><br><span class="line"></span><br><span class="line">	if (value != null &amp;&amp; !value.equals(&quot;&quot;)) &#123;</span><br><span class="line">		System.out.println(&quot;#####################&quot;);</span><br><span class="line">		System.out.println(&quot;Iris Input:&quot; + value);</span><br><span class="line"></span><br><span class="line">		// TODO Easier way to map from String[] to double[] !!!</span><br><span class="line">		String[] stringArray = value.split(&quot;,&quot;);</span><br><span class="line">		Double[] doubleArray = Arrays.stream(stringArray).map(Double::valueOf).toArray(Double[]::new);</span><br><span class="line">		double[] irisInput = Stream.of(doubleArray).mapToDouble(Double::doubleValue).toArray();</span><br><span class="line"></span><br><span class="line">		// Inference</span><br><span class="line">		INDArray input = Nd4j.create(irisInput);</span><br><span class="line">		INDArray result = model.output(input);</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;Probabilities: &quot; + result.toString());</span><br><span class="line"></span><br><span class="line">		irisPrediction = result.toString();</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>ここでは入力されたテキストデータをDouble型の配列に変換し、さらにND4JのINDArrayに変換する。 それをモデルに入力し、推論を得る。</p>
+<p>ここでは入力されたテキストデータをDouble型の配列に変換し、さらにND4JのINDArrayに変換する。
+それをモデルに入力し、推論を得る。</p>
 <p>その後、テキストを整形し、出力用トピックに書き出し。</p>
-<p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java:132 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// Transform message: Add prediction information</span><br><span class="line">KStream&lt;String, Object&gt; transformedMessage = irisInputLines</span><br><span class="line">		.mapValues(value -&gt; &quot;Prediction: Iris Probability =&gt; &quot; + irisPrediction);</span><br><span class="line"></span><br><span class="line">// Send prediction information to Output Topic</span><br><span class="line">transformedMessage.to(outputTopic);</span><br></pre></td></tr></table></figure></p>
+<p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java:132
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// Transform message: Add prediction information</span><br><span class="line">KStream&lt;String, Object&gt; transformedMessage = irisInputLines</span><br><span class="line">		.mapValues(value -&gt; &quot;Prediction: Iris Probability =&gt; &quot; + irisPrediction);</span><br><span class="line"></span><br><span class="line">// Send prediction information to Output Topic</span><br><span class="line">transformedMessage.to(outputTopic);</span><br></pre></td></tr></table></figure></p>
 <p>ビルダを渡し、ストリーム処理をスタート。</p>
-<p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java:140 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">final KafkaStreams streams = new KafkaStreams(builder.build(), streamsConfiguration);</span><br><span class="line">streams.cleanUp();</span><br><span class="line">streams.start();</span><br><span class="line">System.out.println(&quot;Iris Prediction Microservice is running...&quot;);</span><br><span class="line">System.out.println(&quot;Input to Kafka Topic &apos;IrisInputTopic&apos;; Output to Kafka Topic &apos;IrisOutputTopic&apos;&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java:140
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">final KafkaStreams streams = new KafkaStreams(builder.build(), streamsConfiguration);</span><br><span class="line">streams.cleanUp();</span><br><span class="line">streams.start();</span><br><span class="line">System.out.println(&quot;Iris Prediction Microservice is running...&quot;);</span><br><span class="line">System.out.println(&quot;Input to Kafka Topic &apos;IrisInputTopic&apos;; Output to Kafka Topic &apos;IrisOutputTopic&apos;&quot;);</span><br></pre></td></tr></table></figure></p>
 <p>その後、これはテストコードなので、入力となるデータをアプリケーション内で生成し、入力トピックに書き込む。</p>
-<p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java:149 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Properties producerConfig = new Properties();</span><br><span class="line">producerConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, CLUSTER.bootstrapServers());</span><br><span class="line">producerConfig.put(ProducerConfig.ACKS_CONFIG, &quot;all&quot;);</span><br><span class="line">producerConfig.put(ProducerConfig.RETRIES_CONFIG, 0);</span><br><span class="line">producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);</span><br><span class="line">producerConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);</span><br><span class="line">IntegrationTestUtils.produceValuesSynchronously(inputTopic, inputValues, producerConfig, new MockTime());</span><br></pre></td></tr></table></figure></p>
+<p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_MachineLearning_DL4J_DeepLearning_Iris_IntegrationTest.java:149
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Properties producerConfig = new Properties();</span><br><span class="line">producerConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, CLUSTER.bootstrapServers());</span><br><span class="line">producerConfig.put(ProducerConfig.ACKS_CONFIG, &quot;all&quot;);</span><br><span class="line">producerConfig.put(ProducerConfig.RETRIES_CONFIG, 0);</span><br><span class="line">producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);</span><br><span class="line">producerConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);</span><br><span class="line">IntegrationTestUtils.produceValuesSynchronously(inputTopic, inputValues, producerConfig, new MockTime());</span><br></pre></td></tr></table></figure></p>
 <p>ここでは結合テスト用のヘルパーメソッドを利用。</p>
 <p>その後、出力トピックから結果を取り出し、確認する。（実装解説は省略）</p>
-<h3><span id="python-keras-tensorflow-deeplearning4j">Python + Keras + TensorFlow + DeepLearning4j</span></h3>
-<p>例のごとく、テスト側が実装本体。 <code>Kafka_Streams_TensorFlow_Keras_Example_IntegrationTest</code> クラスを確認する。</p>
+<h3><span id="python-keras-tensorflow-deeplearning4j">Python + Keras +
+TensorFlow + DeepLearning4j</span></h3>
+<p>例のごとく、テスト側が実装本体。
+<code>Kafka_Streams_TensorFlow_Keras_Example_IntegrationTest</code>
+クラスを確認する。</p>
 <p>実態は <code>shouldPredictValues</code> メソッド。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_TensorFlow_Keras_Example_IntegrationTest.java:64</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public void shouldPredictValues() throws Exception &#123;</span><br></pre></td></tr></table></figure>
 <p>上記メソッド内では、最初にモデルを読み込む。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_TensorFlow_Keras_Example_IntegrationTest.java:69</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String simpleMlp = new ClassPathResource(&quot;generatedModels/Keras/simple_mlp.h5&quot;).getFile().getPath();</span><br><span class="line">System.out.println(simpleMlp.toString());</span><br><span class="line"></span><br><span class="line">MultiLayerNetwork model = KerasModelImport.importKerasSequentialModelAndWeights(simpleMlp);</span><br></pre></td></tr></table></figure>
-<p>上記では、HDF形式で予め保存されたモデルを読み込む。 読み込みの際にはDeeplearning4Jの <code>KerasModelImport#importKerasSequentialModelAndWeights</code> メソッドが用いられる。</p>
+<p>上記では、HDF形式で予め保存されたモデルを読み込む。
+読み込みの際にはDeeplearning4Jの
+<code>KerasModelImport#importKerasSequentialModelAndWeights</code>
+メソッドが用いられる。</p>
 <p>続いて、Kafka Streamsのコンフィグを定める。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_TensorFlow_Keras_Example_IntegrationTest.java:81</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Properties streamsConfiguration = new Properties();</span><br><span class="line">streamsConfiguration.put(StreamsConfig.APPLICATION_ID_CONFIG,</span><br><span class="line">		&quot;kafka-streams-tensorflow-keras-integration-test&quot;);</span><br><span class="line">streamsConfiguration.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, CLUSTER.bootstrapServers());</span><br><span class="line"></span><br><span class="line">streamsConfiguration.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());</span><br><span class="line">streamsConfiguration.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());</span><br></pre></td></tr></table></figure>
-<p>次にKafka Streamsのビルダを定義し、入力トピックを渡して入力ストリームを定義する。</p>
+<p>次にKafka
+Streamsのビルダを定義し、入力トピックを渡して入力ストリームを定義する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">final StreamsBuilder builder = new StreamsBuilder();</span><br><span class="line"></span><br><span class="line">final KStream&lt;String, String&gt; inputEvents = builder.stream(inputTopic);</span><br></pre></td></tr></table></figure>
 <p>以降、メッセージを入力とし、推論を行う処理の定義が続く。</p>
-<p>先程定義したストリームの中は、カンマ区切りのテキストになっている。 これをカンマで区切り、配列に変換する。</p>
+<p>先程定義したストリームの中は、カンマ区切りのテキストになっている。
+これをカンマで区切り、配列に変換する。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_TensorFlow_Keras_Example_IntegrationTest.java:104</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">inputEvents.foreach((key, value) -&gt; &#123;</span><br><span class="line"></span><br><span class="line">	// Transform input values (list of Strings) to expected DL4J parameters (two</span><br><span class="line">	// Integer values):</span><br><span class="line">	String[] valuesAsArray = value.split(&quot;,&quot;);</span><br><span class="line">	INDArray input = Nd4j.create(Integer.parseInt(valuesAsArray[0]), Integer.parseInt(valuesAsArray[1]));</span><br></pre></td></tr></table></figure>
 <p>配列への変換には、Nd4Jを用いる。</p>
 <p>配列の定義が完了したら、それを入力としてモデルを用いた推論を行う処理を定義する。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">	output = model.output(input);</span><br><span class="line">	prediction = output.toString();</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>最後は出力メッセージに変換し、出力トピックへの書き出しを定義する。 その後、独自のユーティリティクラスを使って、ビルダーに基づいてストリームをビルド。 ストリーム処理を開始する。</p>
+<p>最後は出力メッセージに変換し、出力トピックへの書き出しを定義する。
+その後、独自のユーティリティクラスを使って、ビルダーに基づいてストリームをビルド。
+ストリーム処理を開始する。</p>
 <p>com/github/megachucky/kafka/streams/machinelearning/test/Kafka_Streams_TensorFlow_Keras_Example_IntegrationTest.java:118</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// Transform message: Add prediction result</span><br><span class="line">KStream&lt;String, Object&gt; transformedMessage = inputEvents.mapValues(value -&gt; &quot;Prediction =&gt; &quot; + prediction);</span><br><span class="line"></span><br><span class="line">// Send prediction result to Output Topic</span><br><span class="line">transformedMessage.to(outputTopic);</span><br><span class="line"></span><br><span class="line">// Start Kafka Streams Application to process new incoming messages from</span><br><span class="line">// Input Topic</span><br><span class="line">final KafkaStreams streams = new TestKafkaStreams(builder.build(), streamsConfiguration);</span><br><span class="line">streams.cleanUp();</span><br><span class="line">streams.start();</span><br><span class="line">System.out.println(&quot;Prediction Microservice is running...&quot;);</span><br><span class="line">System.out.println(&quot;Input to Kafka Topic &quot; + inputTopic + &quot;; Output to Kafka Topic &quot; + outputTopic);</span><br></pre></td></tr></table></figure>
 <!-- vim: set tw=0 ts=4 sw=4: -->
@@ -397,7 +468,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/11/25/Kafka-Streams-with-ML/" data-id="cl2nztnms00915xqixyhfzj8q" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/11/25/Kafka-Streams-with-ML/" data-id="cl2o9pbii018v18rz7tbw30km" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -648,5 +719,20 @@ ga('send', 'pageview');
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
