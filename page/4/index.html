@@ -276,9 +276,9 @@ ga('send', 'pageview');
 を使って最速でScalaの開発環境を整える</a>
 のブログに記載されているとおり、 Scala開発環境を簡単に整えられる。</p>
 <p>ひとまずDocker内で試す。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo docker pull ubuntu:18.04</span><br><span class="line"><span class="meta">$</span> sudo docker run -rm -it -d --name ubu ubuntu:18.04</span><br><span class="line"><span class="meta">$</span> sudo docker exec -it ubu /bin/bash</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo docker pull ubuntu:18.04</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo docker run -rm -it -d --name ubu ubuntu:18.04</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo docker <span class="built_in">exec</span> -it ubu /bin/bash</span></span><br></pre></td></tr></table></figure>
 <p>Dockerコンテナ内でインストール。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> apt update</span><br><span class="line"><span class="meta">#</span> apt install -y curl</span><br><span class="line"><span class="meta">#</span> curl -fLo cs https://git.io/coursier-cli-linux &amp;&amp;</span><br><span class="line">     chmod +x cs &amp;&amp;</span><br><span class="line">     ./cs</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> apt update</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> apt install -y curl</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> curl -fLo cs https://git.io/coursier-cli-linux &amp;&amp;</span></span><br><span class="line">     chmod +x cs &amp;&amp;</span><br><span class="line">     ./cs</span><br></pre></td></tr></table></figure>
 <p>結果として以下がインストールされた様子。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Checking if the standard Scala applications are installed</span><br><span class="line">  Installed ammonite</span><br><span class="line">  Installed cs</span><br><span class="line">  Installed coursier</span><br><span class="line">  Installed scala</span><br><span class="line">  Installed scalac</span><br><span class="line">  Installed sbt</span><br><span class="line">  Installed sbtn</span><br><span class="line">  Installed scalafmt</span><br></pre></td></tr></table></figure>
 <p><code>~/.profile</code>に環境変数等がまとまっているので有効化する。</p>
@@ -303,7 +303,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/07/Create-project-includes-sbt-launcher/" data-id="cl2obbcci002d16o9a1y82yjd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/07/Create-project-includes-sbt-launcher/" data-id="cl2obt5f3007s18pomcg6pdhp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -738,7 +738,7 @@ ignoreChanges オプション</span></h3>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/11/19/Read-and-write-data-on-Delta-Lake-streaming-manner/" data-id="cl2obbcqk019716o99cq63e9y" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/11/19/Read-and-write-data-on-Delta-Lake-streaming-manner/" data-id="cl2obt5us018818pom2gdpsa9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1002,7 +1002,7 @@ Spark RDDの <code>cache</code>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/11/13/BigDL-memory-usage/" data-id="cl2obbcnu013l16o9tvwpneil" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/11/13/BigDL-memory-usage/" data-id="cl2obt5ei006x18pokg2bdtb2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1154,7 +1154,7 @@ Liveのインストール手順</a> の通り、最新版をインストール�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/10/29/Generate-PDF-using-pandoc/" data-id="cl2obbcda003t16o95gswsoqb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/10/29/Generate-PDF-using-pandoc/" data-id="cl2obt5g0009c18poi3xeploc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1339,7 +1339,7 @@ provider.</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/09/14/Access-AWS-S3-from-Hadoop3/" data-id="cl2obbcbu000y16o97hnpct6t" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/09/14/Access-AWS-S3-from-Hadoop3/" data-id="cl2obt5ar000x18poxtxhvcak" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1477,9 +1477,9 @@ Firmwareでファームウェアをビルドしようとしたらavr-gccでコ�
 に従って環境を構築した。
 なお、インストールするよう指定されていたパッケージだけでは足りなかったので、
 以下のようにインストールした。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> pacman --needed --noconfirm --disable-download-timeout -S git mingw-w64-x86_64-toolchain mingw-w64-x86_64-python3-pip python3 python3-pip make diffutils</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> pacman --needed --noconfirm --<span class="built_in">disable</span>-download-timeout -S git mingw-w64-x86_64-toolchain mingw-w64-x86_64-python3-pip python3 python3-pip make diffutils</span></span><br></pre></td></tr></table></figure>
 <p>最初、以下を忘れたため、失敗したので注意・・・。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> qmk setup</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> qmk setup</span></span><br></pre></td></tr></table></figure>
 <p><a href="https://docs.qmk.fm/#/newbs_flashing" target="_blank" rel="noopener">公式のコンパイル手順</a>
 に従うと、qmkコマンドを利用してコンパイル、フラッシュするようだ。</p>
 <p>ただ、 <a href="https://qiita.com/huequica/items/6067d3a022c7cd719ab2" target="_blank" rel="noopener">QMK
@@ -1497,7 +1497,7 @@ Firmwareでファームウェアをビルドしようとしたらavr-gccでコ�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/09/06/qmk-firmware-202009/" data-id="cl2obbchn00eg16o9nptoi2wo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/09/06/qmk-firmware-202009/" data-id="cl2obt5mo00ks18pome8ibzk1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1652,7 +1652,7 @@ Actionsを用いてGitHub Pagesへのデプロイを自動化する</a> の「De
 の設定」章を参考に、 当該レポジトリのDeploy Keyを登録する。</p>
 <p>任意の環境（ここではWSLのUbuntu18を利用した）で、
 以下のコマンドを実行。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh-keygen -t rsa -b 4096 -C "＜レポジトリで使用しているメールアドレス＞" -f ＜任意の名前＞ -N ""</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh-keygen -t rsa -b 4096 -C <span class="string">"＜レポジトリで使用しているメールアドレス＞"</span> -f ＜任意の名前＞ -N <span class="string">""</span></span></span><br></pre></td></tr></table></figure>
 <p>上記記事の通り、秘密鍵と公開鍵をGitHubのウェブUIで登録する。
 なお、「Secrets」タブで登録した名称は、後ほどGitHub
 Actionsのワークフロー内で使用する。</p>
@@ -1675,7 +1675,7 @@ Deploy Keyを利用するよう修正した。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/08/09/Use-GitHub-actions-to-deploy-documents/" data-id="cl2obbcgh00bh16o9245hay9c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/08/09/Use-GitHub-actions-to-deploy-documents/" data-id="cl2obt5kf00h018popdzjpntb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1804,17 +1804,17 @@ Hadoopをインストールできるかどうかを試してみることとす�
 <p>Yumのrepoファイルは <a href="https://downloads.apache.org/bigtop/" target="_blank" rel="noopener">レポジトリ関連の資材置き場</a>
 以下にある。 例えば、今回はCentOS7を利用することにするので、 <a href="https://downloads.apache.org/bigtop/bigtop-1.4.0/repos/centos7/bigtop.repo" target="_blank" rel="noopener">CentOS7のbigtop.repo</a>
 あたりを利用する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd /etc/yum.repos.d</span><br><span class="line"><span class="meta">$</span> sudo wget https://downloads.apache.org/bigtop/bigtop-1.4.0/repos/centos7/bigtop.repo</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /etc/yum.repos.d</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo wget https://downloads.apache.org/bigtop/bigtop-1.4.0/repos/centos7/bigtop.repo</span></span><br></pre></td></tr></table></figure>
 <p>ひとまずパッケージが見つかるかどうか、確認。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo yum search hadoop-conf-pseudo</span><br><span class="line">読み込んだプラグイン:fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: d36uatko69830t.cloudfront.net</span><br><span class="line"> * epel: d2lzkl7pfhq30w.cloudfront.net</span><br><span class="line"> * extras: d36uatko69830t.cloudfront.net</span><br><span class="line"> * updates: d36uatko69830t.cloudfront.net</span><br><span class="line">=========================================== N/S matched: hadoop-conf-pseudo ============================================</span><br><span class="line">hadoop-conf-pseudo.x86_64 : Pseudo-distributed Hadoop configuration</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum search hadoop-conf-pseudo</span></span><br><span class="line">読み込んだプラグイン:fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: d36uatko69830t.cloudfront.net</span><br><span class="line"> * epel: d2lzkl7pfhq30w.cloudfront.net</span><br><span class="line"> * extras: d36uatko69830t.cloudfront.net</span><br><span class="line"> * updates: d36uatko69830t.cloudfront.net</span><br><span class="line">=========================================== N/S matched: hadoop-conf-pseudo ============================================</span><br><span class="line">hadoop-conf-pseudo.x86_64 : Pseudo-distributed Hadoop configuration</span><br></pre></td></tr></table></figure>
 <p>確認できたので、試しにインストール。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo yum install hadoop-conf-pseudo</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install hadoop-conf-pseudo</span></span><br></pre></td></tr></table></figure>
 <p>自分の手元の環境では、依存関係で以下のパッケージがインストールされた。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">========================================================================================================================</span><br><span class="line"> Package                                    アーキテクチャー   バージョン                      リポジトリー        容量</span><br><span class="line">========================================================================================================================</span><br><span class="line">インストール中:</span><br><span class="line"> hadoop-conf-pseudo                         x86_64             2.8.5-1.el7                     bigtop              20 k</span><br><span class="line">依存性関連でのインストールをします:</span><br><span class="line"> at                                         x86_64             3.1.13-24.el7                   base                51 k</span><br><span class="line"> bc                                         x86_64             1.06.95-13.el7                  base               115 k</span><br><span class="line"> bigtop-groovy                              noarch             2.4.10-1.el7                    bigtop             9.8 M</span><br><span class="line"> bigtop-jsvc                                x86_64             1.0.15-1.el7                    bigtop              29 k</span><br><span class="line"> bigtop-utils                               noarch             1.4.0-1.el7                     bigtop              11 k</span><br><span class="line"> cups-client                                x86_64             1:1.6.3-43.el7                  base               152 k</span><br><span class="line"> ed                                         x86_64             1.9-4.el7                       base                72 k</span><br><span class="line"> hadoop                                     x86_64             2.8.5-1.el7                     bigtop              24 M</span><br><span class="line"> hadoop-hdfs                                x86_64             2.8.5-1.el7                     bigtop              24 M</span><br><span class="line"> hadoop-hdfs-datanode                       x86_64             2.8.5-1.el7                     bigtop             5.7 k</span><br><span class="line"> hadoop-hdfs-namenode                       x86_64             2.8.5-1.el7                     bigtop             5.8 k</span><br><span class="line"> hadoop-hdfs-secondarynamenode              x86_64             2.8.5-1.el7                     bigtop             5.8 k</span><br><span class="line"> hadoop-mapreduce                           x86_64             2.8.5-1.el7                     bigtop              34 M</span><br><span class="line"> hadoop-mapreduce-historyserver             x86_64             2.8.5-1.el7                     bigtop             5.8 k</span><br><span class="line"> hadoop-yarn                                x86_64             2.8.5-1.el7                     bigtop              20 M</span><br><span class="line"> hadoop-yarn-nodemanager                    x86_64             2.8.5-1.el7                     bigtop             5.7 k</span><br><span class="line"> hadoop-yarn-resourcemanager                x86_64             2.8.5-1.el7                     bigtop             5.6 k</span><br><span class="line"> libpcap                                    x86_64             14:1.5.3-12.el7                 base               139 k</span><br><span class="line"> m4                                         x86_64             1.4.16-10.el7                   base               256 k</span><br><span class="line"> mailx                                      x86_64             12.5-19.el7                     base               245 k</span><br><span class="line"> nmap-ncat                                  x86_64             2:6.40-19.el7                   base               206 k</span><br><span class="line"> patch                                      x86_64             2.7.1-12.el7_7                  base               111 k</span><br><span class="line"> psmisc                                     x86_64             22.20-16.el7                    base               141 k</span><br><span class="line"> redhat-lsb-core                            x86_64             4.1-27.el7.centos.1             base                38 k</span><br><span class="line"> redhat-lsb-submod-security                 x86_64             4.1-27.el7.centos.1             base                15 k</span><br><span class="line"> spax                                       x86_64             1.5.2-13.el7                    base               260 k</span><br><span class="line"> time                                       x86_64             1.7-45.el7                      base                30 k</span><br><span class="line"> zookeeper                                  x86_64             3.4.6-1.el7                     bigtop             7.0 M</span><br></pre></td></tr></table></figure>
 <p>initスクリプトがインストールされていることがわかる。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ls -1 /etc/init.d/</span><br><span class="line">README</span><br><span class="line">functions</span><br><span class="line">hadoop-hdfs-datanode</span><br><span class="line">hadoop-hdfs-namenode</span><br><span class="line">hadoop-hdfs-secondarynamenode</span><br><span class="line">hadoop-mapreduce-historyserver</span><br><span class="line">hadoop-yarn-nodemanager</span><br><span class="line">hadoop-yarn-resourcemanager</span><br><span class="line">netconsole</span><br><span class="line">network</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -1 /etc/init.d/</span></span><br><span class="line">README</span><br><span class="line">functions</span><br><span class="line">hadoop-hdfs-datanode</span><br><span class="line">hadoop-hdfs-namenode</span><br><span class="line">hadoop-hdfs-secondarynamenode</span><br><span class="line">hadoop-mapreduce-historyserver</span><br><span class="line">hadoop-yarn-nodemanager</span><br><span class="line">hadoop-yarn-resourcemanager</span><br><span class="line">netconsole</span><br><span class="line">network</span><br></pre></td></tr></table></figure>
 <p>ひとまずHDFSをフォーマット。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo -u hdfs hdfs namenode -format</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo -u hdfs hdfs namenode -format</span></span><br></pre></td></tr></table></figure>
 <p>あとは、上記の各種Hadoopサービスを立ち上げれば良い。</p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -1827,7 +1827,7 @@ Hadoopをインストールできるかどうかを試してみることとす�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/07/21/Install-Bigtop-RPMs-using-Yum/" data-id="cl2obbcdy005c16o90q72nrt7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/07/21/Install-Bigtop-RPMs-using-Yum/" data-id="cl2obt5gy00as18pog0d1qp84" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2104,7 +2104,7 @@ triggerでは一度に溜まったすべてのデータを読み込むように�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/06/19/Delta-Lake-0-7-0/" data-id="cl2obbco4014516o9tivbdxbs" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/06/19/Delta-Lake-0-7-0/" data-id="cl2obt5s5013u18poyf1n3qai" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2328,7 +2328,7 @@ timeが長いほど、ウィンドウ結果が確定したと言えるタイミ�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/05/20/About-tream-table-theory/" data-id="cl2obbcbr000r16o9nd371ht1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/05/20/About-tream-table-theory/" data-id="cl2obt5ao000q18poot9acdvq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考  公式サイト ブログ  メモ  暗号化されたファイルの作成 （参考）復号して平文化 （参考）暗号化されたファイルの編集 （参考）Vaultパスワードをファイルとして渡す プレイブック内で変数として利用    参考 公式サイト  Encrypting content with Ansible Vault  ブログ  Ansible-Vaultを用いた機密情報の暗号化のTips  メモ A">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T05:59:40.414Z">
+<meta property="og:updated_time" content="2022-05-02T06:13:26.783Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Getting started of Ansible Vault">
 <meta name="twitter:description" content="参考  公式サイト ブログ  メモ  暗号化されたファイルの作成 （参考）復号して平文化 （参考）暗号化されたファイルの編集 （参考）Vaultパスワードをファイルとして渡す プレイブック内で変数として利用    参考 公式サイト  Encrypting content with Ansible Vault  ブログ  Ansible-Vaultを用いた機密情報の暗号化のTips  メモ A">
@@ -294,19 +294,19 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
 <p>secret.yml</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hoge:</span></span><br><span class="line"><span class="attr">  fuga:</span> <span class="string">foo</span></span><br></pre></td></tr></table></figure>
 <p>ファイルを暗号化する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault create secret.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault create secret.yml</span></span><br></pre></td></tr></table></figure>
 <p>上記ファイルを作成する際、Vault用パスワードを聞かれるので適切なパスワードを入力すること。
 あとでパスワードは利用する。</p>
 <h2><span id="参考復号して平文化">（参考）復号して平文化</span></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault decrypt secret.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault decrypt secret.yml</span></span><br></pre></td></tr></table></figure>
 <h2><span id="参考暗号化されたファイルの編集">（参考）暗号化されたファイルの編集</span></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault edit secret.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault edit secret.yml</span></span><br></pre></td></tr></table></figure>
 <h2><span id="参考vaultパスワードをファイルとして渡す">（参考）Vaultパスワードをファイルとして渡す</span></h2>
 <p>プロンプトで入力する代わりに、どこかプレイブック集の外などにVaultパスワードを保存し利用することもできる。
 ここでは、 <code>~/.vault_password</code>
 にパスワードを記載したファイルを準備したものとする。
 編集する例を示す。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault edit secret.yml --vault-password-file ~/.vault_password</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault edit secret.yml --vault-password-file ~/.vault_password</span></span><br></pre></td></tr></table></figure>
 <h2><span id="プレイブック内で変数として利用">プレイブック内で変数として利用</span></h2>
 <p>変数定義ファイルとして渡し、プレイブック内で変数として利用する。
 以下のようなプレイブックを作る。</p>
@@ -324,7 +324,7 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
 という内容がSTDOUTに表示されるはず。</li>
 </ul>
 <p>プレイブックを実行する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-playbook test.yml --ask-vault-pass</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-playbook test.yml --ask-vault-pass</span></span><br></pre></td></tr></table></figure>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -336,7 +336,7 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/07/Getting-started-of-Ansible-Vault/" data-id="cl2obbcdb003w16o9iojni8bx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/07/Getting-started-of-Ansible-Vault/" data-id="cl2obt5g3009i18po6wow6rm3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  Pandocを使ってMarkdownを整形されたHTMLに変換する  メモ Pandocのバージョンは、 2.9.2を使用。 Pandocを使ってMarkdownを整形されたHTMLに変換する を参考に、テンプレートを作成してCSSを用いた。 12$ mkdir -p ~/.pandoc/templates$ pandoc -D html5 &amp;gt; ~/.pando">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2022-05-02T05:59:40.422Z">
+<meta property="og:updated_time" content="2022-05-02T06:13:26.795Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pandoc template and css">
 <meta name="twitter:description" content="参考 メモ   参考  Pandocを使ってMarkdownを整形されたHTMLに変換する  メモ Pandocのバージョンは、 2.9.2を使用。 Pandocを使ってMarkdownを整形されたHTMLに変換する を参考に、テンプレートを作成してCSSを用いた。 12$ mkdir -p ~/.pandoc/templates$ pandoc -D html5 &amp;gt; ~/.pando">
@@ -263,10 +263,10 @@ ga('send', 'pageview');
 <p>Pandocのバージョンは、 2.9.2を使用。</p>
 <p><a href="https://qiita.com/cawpea/items/cea1243e106ababd15e7" target="_blank" rel="noopener">Pandocを使ってMarkdownを整形されたHTMLに変換する</a>
 を参考に、テンプレートを作成してCSSを用いた。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> mkdir -p ~/.pandoc/templates</span><br><span class="line"><span class="meta">$</span> pandoc -D html5 &gt; ~/.pandoc/templates/mytemplate.html</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p ~/.pandoc/templates</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pandoc -D html5 &gt; ~/.pandoc/templates/mytemplate.html</span></span><br></pre></td></tr></table></figure>
 <p>テンプレートを適当にいじる。</p>
 <p>その後、HTMLを以下のように生成。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> pandoc --css ./pandoc-github.css --template=mytemplate -i ./README.md -o ./README.html</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> pandoc --css ./pandoc-github.css --template=mytemplate -i ./README.md -o ./README.html</span></span><br></pre></td></tr></table></figure>
 <p>なお、GitHub風になるCSSは、 <a href="https://gist.github.com/dashed/6714393" target="_blank" rel="noopener">dashed/github-pandoc.css</a>
 に公開されていたものを利用。 <code>--css</code>
 はcssのURLを表すだけなので、上記の例ではREADME.htmlと同じディレクトリに
@@ -282,7 +282,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/03/06/pandoc-template-and-css/" data-id="cl2obbchk00e416o9zn8qgyrh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/03/06/pandoc-template-and-css/" data-id="cl2obt5mj00ki18pos5ny2xv0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
