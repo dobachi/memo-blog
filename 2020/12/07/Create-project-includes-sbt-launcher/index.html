@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ  Coursierプロジェクト （補足）sbt-launcher-packageプロジェクト （補足）launcherプロジェクト    参考  launcher sbt-launcher-package Coursier を使って最速でScalaの開発環境を整える csのインストール  メモ プロジェクト内に、sbt自体を含めてクローンしただけでビルドできるようにしたい、という">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2023-07-22T12:29:12.767Z">
+<meta property="og:updated_time" content="2023-07-22T14:33:41.352Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Create projects includes sbt launcher">
 <meta name="twitter:description" content="参考 メモ  Coursierプロジェクト （補足）sbt-launcher-packageプロジェクト （補足）launcherプロジェクト    参考  launcher sbt-launcher-package Coursier を使って最速でScalaの開発環境を整える csのインストール  メモ プロジェクト内に、sbt自体を含めてクローンしただけでビルドできるようにしたい、という">
@@ -277,9 +277,9 @@ ga('send', 'pageview');
 を使って最速でScalaの開発環境を整える</a>
 のブログに記載されているとおり、 Scala開発環境を簡単に整えられる。</p>
 <p>ひとまずDocker内で試す。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo docker pull ubuntu:18.04</span><br><span class="line"><span class="meta">$</span> sudo docker run -rm -it -d --name ubu ubuntu:18.04</span><br><span class="line"><span class="meta">$</span> sudo docker exec -it ubu /bin/bash</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo docker pull ubuntu:18.04</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo docker run -rm -it -d --name ubu ubuntu:18.04</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo docker <span class="built_in">exec</span> -it ubu /bin/bash</span></span><br></pre></td></tr></table></figure>
 <p>Dockerコンテナ内でインストール。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> apt update</span><br><span class="line"><span class="meta">#</span> apt install -y curl</span><br><span class="line"><span class="meta">#</span> curl -fLo cs https://git.io/coursier-cli-linux &amp;&amp;</span><br><span class="line">     chmod +x cs &amp;&amp;</span><br><span class="line">     ./cs</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> apt update</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> apt install -y curl</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> curl -fLo cs https://git.io/coursier-cli-linux &amp;&amp;</span></span><br><span class="line">     chmod +x cs &amp;&amp;</span><br><span class="line">     ./cs</span><br></pre></td></tr></table></figure>
 <p>結果として以下がインストールされた様子。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Checking if the standard Scala applications are installed</span><br><span class="line">  Installed ammonite</span><br><span class="line">  Installed cs</span><br><span class="line">  Installed coursier</span><br><span class="line">  Installed scala</span><br><span class="line">  Installed scalac</span><br><span class="line">  Installed sbt</span><br><span class="line">  Installed sbtn</span><br><span class="line">  Installed scalafmt</span><br></pre></td></tr></table></figure>
 <p><code>~/.profile</code>に環境変数等がまとまっているので有効化する。</p>
@@ -304,7 +304,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/07/Create-project-includes-sbt-launcher/" data-id="clkdzmbpe002m17qhefjmi2wa" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/07/Create-project-includes-sbt-launcher/" data-id="clke429dl002l17ll531dwqlp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

@@ -286,7 +286,7 @@ Issueから見られた。</p>
 <p>環境情報の確認。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[centos@ip-10-0-0-217 ~]$ uname -a</span><br><span class="line">Linux ip-10-0-0-217.ap-northeast-1.compute.internal 3.10.0-1127.13.1.el7.x86_64 #1 SMP Tue Jun 23 15:46:38 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</span><br><span class="line"></span><br><span class="line">[centos@ip-10-0-0-217 ~]$ dstat --version</span><br><span class="line">Dstat 0.7.2</span><br><span class="line">Written by Dag Wieers &lt;dag@wieers.com&gt;</span><br><span class="line">Homepage at http://dag.wieers.com/home-made/dstat/</span><br><span class="line"></span><br><span class="line">Platform posix/linux2</span><br><span class="line">Kernel 3.10.0-1127.13.1.el7.x86_64</span><br><span class="line">Python 2.7.5 (default, Apr  2 2020, 13:16:51)</span><br><span class="line">[GCC 4.8.5 20150623 (Red Hat 4.8.5-39)]</span><br><span class="line"></span><br><span class="line">Terminal type: xterm-256color (color support)</span><br><span class="line">Terminal size: 86 lines, 310 columns</span><br><span class="line"></span><br><span class="line">Processors: 4</span><br><span class="line">Pagesize: 4096</span><br><span class="line">Clock ticks per secs: 100</span><br><span class="line"></span><br><span class="line">internal:</span><br><span class="line">        aio, cpu, cpu24, disk, disk24, disk24old, epoch, fs, int, int24, io, ipc, load, lock, mem, net, page, page24, proc, raw, socket, swap, swapold, sys, tcp, time, udp, unix, vm</span><br><span class="line">/usr/share/dstat:</span><br><span class="line">        battery, battery-remain, cpufreq, dbus, disk-tps, disk-util, dstat, dstat-cpu, dstat-ctxt, dstat-mem, fan, freespace, gpfs, gpfs-ops, helloworld, innodb-buffer, innodb-io, innodb-ops, lustre, memcache-hits, mysql-io, mysql-keys, mysql5-cmds, mysql5-conn, mysql5-io, mysql5-keys, net-packets, nfs3,</span><br><span class="line">        nfs3-ops, nfsd3, nfsd3-ops, ntp, postfix, power, proc-count, qmail, rpc, rpcd, sendmail, snooze, squid, test, thermal, top-bio, top-bio-adv, top-childwait, top-cpu, top-cpu-adv, top-cputime, top-cputime-avg, top-int, top-io, top-io-adv, top-latency, top-latency-avg, top-mem, top-oom, utmp,</span><br><span class="line">        vm-memctl, vmk-hba, vmk-int, vmk-nic, vz-cpu, vz-io, vz-ubc, wifi</span><br><span class="line"></span><br><span class="line">[centos@ip-10-0-0-217 ~]$ lsblk</span><br><span class="line">NAME    MAJ:MIN RM SIZE RO TYPE MOUNTPOINT</span><br><span class="line">xvda    202:0    0  60G  0 disk</span><br><span class="line">└─xvda1 202:1    0  60G  0 part /</span><br></pre></td></tr></table></figure>
 <p>dstat 0.7.2は2010年にリリースされたようだ。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git log -1 --format=%ai 0.7.2</span><br><span class="line">2010-06-14 22:25:44 +0000</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">log</span> -1 --format=%ai 0.7.2</span></span><br><span class="line">2010-06-14 22:25:44 +0000</span><br></pre></td></tr></table></figure>
 <p>参考までにpcpのバージョン</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@ip-10-0-0-217 ~]$ pcp --version</span><br><span class="line">pcp version 4.3.2</span><br></pre></td></tr></table></figure>
 <p>ここから動作確認。</p>
@@ -346,7 +346,7 @@ values)</a> にも似たような議論があるようだ。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/09/Double-count-of-dstat/" data-id="clkdzmbpu003517qhr0qf090h" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/09/Double-count-of-dstat/" data-id="clke429dr003417llr9ljdpx0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -528,7 +528,7 @@ LogのIDがいつ確定するのか、というのが気になり確認した。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/04/When-DeltaLog-ID-is-created/" data-id="clkdzmbuf00br17qhj1dwp4j5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/04/When-DeltaLog-ID-is-created/" data-id="clke429h000bt17llrwsxpqxm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -670,7 +670,7 @@ LogのIDがいつ確定するのか、というのが気になり確認した。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/02/12/Power-Grid-Data/" data-id="clkdzmbsc008917qh320pb971" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/02/12/Power-Grid-Data/" data-id="clke429fr008817lllgms9rif" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -899,7 +899,7 @@ DMZ機能を利用して、ルータ機能をHGWと自前ルータの療法で�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/31/Mesh-wifi/" data-id="clkdzmbry007d17qh8kvlqecl" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/31/Mesh-wifi/" data-id="clke429fh007f17llu6zowoyn" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1044,7 +1044,7 @@ Data Mesh</a> を読んで簡単にまとめた。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/" data-id="clkdzmbrv007617qhftdm2n9g" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/" data-id="clke429fe007517lly53h8r5a" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1195,7 +1195,7 @@ Engineを使用した際のTPC−DSの実行結果、クエリ実行コストの
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/16/Memo-of-Lakehouse-A-New-Generation-of-Open-Platforms-that-Unify-Data-Warehousing-and-Advanced-Analytics/" data-id="clkdzmbrw007a17qhbl3y8mk5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/16/Memo-of-Lakehouse-A-New-Generation-of-Open-Platforms-that-Unify-Data-Warehousing-and-Advanced-Analytics/" data-id="clke429fg007c17llr5src8ya" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1359,19 +1359,19 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
 <p>secret.yml</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hoge:</span></span><br><span class="line"><span class="attr">  fuga:</span> <span class="string">foo</span></span><br></pre></td></tr></table></figure>
 <p>ファイルを暗号化する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault create secret.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault create secret.yml</span></span><br></pre></td></tr></table></figure>
 <p>上記ファイルを作成する際、Vault用パスワードを聞かれるので適切なパスワードを入力すること。
 あとでパスワードは利用する。</p>
 <h2><span id="参考復号して平文化">（参考）復号して平文化</span></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault decrypt secret.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault decrypt secret.yml</span></span><br></pre></td></tr></table></figure>
 <h2><span id="参考暗号化されたファイルの編集">（参考）暗号化されたファイルの編集</span></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault edit secret.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault edit secret.yml</span></span><br></pre></td></tr></table></figure>
 <h2><span id="参考vaultパスワードをファイルとして渡す">（参考）Vaultパスワードをファイルとして渡す</span></h2>
 <p>プロンプトで入力する代わりに、どこかプレイブック集の外などにVaultパスワードを保存し利用することもできる。
 ここでは、 <code>~/.vault_password</code>
 にパスワードを記載したファイルを準備したものとする。
 編集する例を示す。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault edit secret.yml --vault-password-file ~/.vault_password</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault edit secret.yml --vault-password-file ~/.vault_password</span></span><br></pre></td></tr></table></figure>
 <h2><span id="プレイブック内で変数として利用">プレイブック内で変数として利用</span></h2>
 <p>変数定義ファイルとして渡し、プレイブック内で変数として利用する。
 以下のようなプレイブックを作る。</p>
@@ -1389,7 +1389,7 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
 という内容がSTDOUTに表示されるはず。</li>
 </ul>
 <p>プレイブックを実行する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-playbook test.yml --ask-vault-pass</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-playbook test.yml --ask-vault-pass</span></span><br></pre></td></tr></table></figure>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -1401,7 +1401,7 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/07/Getting-started-of-Ansible-Vault/" data-id="clkdzmbqd004517qhnrxba1il" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/07/Getting-started-of-Ansible-Vault/" data-id="clke429e5004417lloejqtj87" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1561,7 +1561,7 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Use-static-image-on-Hexo-blog/" data-id="clkdzmbu900bi17qhuth3pwh5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Use-static-image-on-Hexo-blog/" data-id="clke429gx00bk17llwxjadmvm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1842,7 +1842,7 @@ Impersonation」を読むと、 「なりすまし」を許可する設定があ
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Delta-Lake-with-Alluxio/" data-id="clkdzmc58014v17qh50amjfcs" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Delta-Lake-with-Alluxio/" data-id="clke429o0014s17llr2man78q" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2180,7 +2180,7 @@ Fabric</a>、 <a href="https://www.splunk.com/ja_jp/resources/enterprise-machine
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/26/Information-about-trends-in-2020/" data-id="clkdzmc5l015f17qh79ove6oo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/26/Information-about-trends-in-2020/" data-id="clke429oc015c17ll2fffpxtu" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

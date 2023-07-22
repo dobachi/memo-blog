@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ   参考  QMK Firmwareでファームウェアをビルドしようとしたらavr-gccでコケた話 公式の環境構築手順 公式のコンパイル手順  メモ 2020/9に久しぶりにコンパイルしようとしたら、だいぶ勝手が変わっていた。 公式の環境構築手順 に従って環境を構築した。 なお、インストールするよう指定されていたパッケージだけでは足りなかったので、 以下のようにインストールした。">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2023-07-22T12:29:12.779Z">
+<meta property="og:updated_time" content="2023-07-22T14:33:41.364Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="qmk_firmware_202009">
 <meta name="twitter:description" content="参考 メモ   参考  QMK Firmwareでファームウェアをビルドしようとしたらavr-gccでコケた話 公式の環境構築手順 公式のコンパイル手順  メモ 2020/9に久しぶりにコンパイルしようとしたら、だいぶ勝手が変わっていた。 公式の環境構築手順 に従って環境を構築した。 なお、インストールするよう指定されていたパッケージだけでは足りなかったので、 以下のようにインストールした。">
@@ -268,9 +268,9 @@ Firmwareでファームウェアをビルドしようとしたらavr-gccでコ�
 に従って環境を構築した。
 なお、インストールするよう指定されていたパッケージだけでは足りなかったので、
 以下のようにインストールした。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> pacman --needed --noconfirm --disable-download-timeout -S git mingw-w64-x86_64-toolchain mingw-w64-x86_64-python3-pip python3 python3-pip make diffutils</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> pacman --needed --noconfirm --<span class="built_in">disable</span>-download-timeout -S git mingw-w64-x86_64-toolchain mingw-w64-x86_64-python3-pip python3 python3-pip make diffutils</span></span><br></pre></td></tr></table></figure>
 <p>最初、以下を忘れたため、失敗したので注意・・・。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> qmk setup</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> qmk setup</span></span><br></pre></td></tr></table></figure>
 <p><a href="https://docs.qmk.fm/#/newbs_flashing" target="_blank" rel="noopener">公式のコンパイル手順</a>
 に従うと、qmkコマンドを利用してコンパイル、フラッシュするようだ。</p>
 <p>ただ、 <a href="https://qiita.com/huequica/items/6067d3a022c7cd719ab2" target="_blank" rel="noopener">QMK
@@ -288,7 +288,7 @@ Firmwareでファームウェアをビルドしようとしたらavr-gccでコ�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/09/06/qmk-firmware-202009/" data-id="clkdzmbvv00en17qh4xopi9lk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/09/06/qmk-firmware-202009/" data-id="clke429i700ep17llfs299q60" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
