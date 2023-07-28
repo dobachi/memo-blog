@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ  X-Roadとは？ 最初の動作確認  Ansibleプレイブックの確認 起動した環境の動作確認  コンポーネントの確認  Security Server     参考  X-RoadのGitHub X-Roadについての簡易メモ Using LXD-hosts X Road Academy Session 1 Setting up a local X-Road developm">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2023-07-22T14:33:41.364Z">
+<meta property="og:updated_time" content="2023-07-28T08:25:48.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="X-Road">
 <meta name="twitter:description" content="参考 メモ  X-Roadとは？ 最初の動作確認  Ansibleプレイブックの確認 起動した環境の動作確認  コンポーネントの確認  Security Server     参考  X-RoadのGitHub X-Roadについての簡易メモ Using LXD-hosts X Road Academy Session 1 Setting up a local X-Road developm">
@@ -318,17 +318,17 @@ LXD-hosts</a>
 <code>ansible/roles/init-lxd</code> ロールで起動される。</p>
 <p>Ubuntu18で試す。</p>
 <p>あらかじめLXD環境をセットアップしておく。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install lxd</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> newgrp lxd</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo lxd init</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo apt-get install lxd</span><br><span class="line"><span class="meta">$</span> newgrp lxd</span><br><span class="line"><span class="meta">$</span> sudo lxd init</span><br></pre></td></tr></table></figure>
 <p>特に問題なければLXDコンテナが起動できるはず。詳しくは、
 https://linuxcontainers.org/ja/lxd/getting-started-cli
 あたりを参照。</p>
 <p>Ansibleもインストールしておく。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt update</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt install software-properties-common</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-add-repository --yes --update ppa:ansible/ansible</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt install ansible</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo apt update</span><br><span class="line"><span class="meta">$</span> sudo apt install software-properties-common</span><br><span class="line"><span class="meta">$</span> sudo apt-add-repository --yes --update ppa:ansible/ansible</span><br><span class="line"><span class="meta">$</span> sudo apt install ansible</span><br></pre></td></tr></table></figure>
 <p>詳しくは、
 https://docs.ansible.com/ansible/2.9_ja/installation_guide/intro_installation.html#ubuntu-ansible
 あたりを参照。</p>
 <p>X-Roadのコンテナを準備する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-playbook  -i hosts/lxd_hosts.txt xroad_init.yml</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-playbook  -i hosts/lxd_hosts.txt xroad_init.yml</span><br></pre></td></tr></table></figure>
 <p>実際に以下のようなコンテナが立ち上がる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ lxc list</span><br><span class="line">+---------------+---------+-----------------------+-----------------------------------------------+------------+-----------+</span><br><span class="line">|     NAME      |  STATE  |         IPV4          |                     IPV6                      |    TYPE    | SNAPSHOTS |</span><br><span class="line">+---------------+---------+-----------------------+-----------------------------------------------+------------+-----------+</span><br><span class="line">| xroad-lxd-cs  | RUNNING | xx.xx.xx.xx (eth0)    | xxxx:xxxx:xxxx:xxxx:xxx:xxxx:xxxx:xxxx (eth0) | PERSISTENT | 0         |</span><br><span class="line">+---------------+---------+-----------------------+-----------------------------------------------+------------+-----------+</span><br><span class="line">| xroad-lxd-ss1 | RUNNING | xx.xx.xx.xx (eth0)    | xxxx:xxxx:xxxx:xxxx:xxx:xxxx:xxxx:xxxx (eth0) | PERSISTENT | 0         |</span><br><span class="line">+---------------+---------+-----------------------+-----------------------------------------------+------------+-----------+</span><br></pre></td></tr></table></figure>
 <p>なお、パッケージインストール（内部的にはaptを利用してインストール）している箇所の進みが遅く、一度インタラプトして手動でaptコマンドでインストールした。</p>
@@ -369,7 +369,7 @@ Security Server Architecture Process View</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/09/03/X-Road/" data-id="clke429ha00cb17llm30tcnhq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/09/03/X-Road/" data-id="clkmbk9fc00cc17mtdkaoqb2l" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

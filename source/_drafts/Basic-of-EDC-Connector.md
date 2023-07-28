@@ -69,6 +69,62 @@ $ cd /edc_sample
 $ ./gradlew clean basic:basic-01-basic-connector:build
 ```
 
+エラーが生じた。
+
+```gradle
+A problem occurred configuring root project 'samples'.                                                                                       [55/1696]> Could not resolve all files for configuration ':classpath'.
+   > Could not resolve org.eclipse.edc:edc-build:0.1.0.
+     Required by:
+         project : > org.eclipse.edc.edc-build:org.eclipse.edc.edc-build.gradle.plugin:0.1.0
+      > No matching variant of org.eclipse.edc:edc-build:0.1.0 was found. The consumer was configured to find a library for use during runtime, compatible with Java 8, packaged as a jar, and its dependencies declared externally, as well as attribute 'org.gradle.plugin.api-version' with value '8.0' but:
+          - Variant 'apiElements' capability org.eclipse.edc:edc-build:0.1.0 declares a library, packaged as a jar, and its dependencies declared externally:
+              - Incompatible because this component declares a component for use during compile-time, compatible with Java 17 and the consumer needed a component for use during runtime, compatible with Java 8
+              - Other compatible attribute:
+                  - Doesn't say anything about org.gradle.plugin.api-version (required '8.0')
+          - Variant 'javadocElements' capability org.eclipse.edc:edc-build:0.1.0 declares a component for use during runtime, and its dependencies declared externally:
+              - Incompatible because this component declares documentation and the consumer needed a library
+              - Other compatible attributes:
+                  - Doesn't say anything about its target Java version (required compatibility with Java 8)
+                  - Doesn't say anything about its elements (required them packaged as a jar)
+                  - Doesn't say anything about org.gradle.plugin.api-version (required '8.0')
+          - Variant 'runtimeElements' capability org.eclipse.edc:edc-build:0.1.0 declares a library for use during runtime, packaged as a jar, and its dependencies declared externally:
+              - Incompatible because this component declares a component, compatible with Java 17 and the consumer needed a component, compatible with Java 8
+              - Other compatible attribute:
+                  - Doesn't say anything about org.gradle.plugin.api-version (required '8.0')
+          - Variant 'sourcesElements' capability org.eclipse.edc:edc-build:0.1.0 declares a component for use during runtime, and its dependencies declared externally:
+              - Incompatible because this component declares documentation and the consumer needed a library
+              - Other compatible attributes:
+                  - Doesn't say anything about its target Java version (required compatibility with Java 8)
+                  - Doesn't say anything about its elements (required them packaged as a jar)
+                  - Doesn't say anything about org.gradle.plugin.api-version (required '8.0')
+```
+
+さて、エラー文面中の以下の記載の通り、Java 8と互換を保ちつつ、Java 17環境を使わないといけないようだ？
+
+```
+              - Incompatible because this component declares a component for use during compile-time, compatible with Java 17 and the consumer needed a component for use during runtime, compatible with Java 8
+```
+
+ということで、Dockerの環境をJDK17を用いるように変更して実行してみる。
+
+```bash
+$ docker run --rm -it -v `pwd`:/edc_sample --name edc-basic-01 openjdk:17 bash
+$ cd /edc_sample
+$ ./gradlew clean basic:basic-01-basic-connector:build
+./gradlew: line 234: xargs: command not found
+Downloading https://services.gradle.org/distributions/gradle-8.0-bin.zip
+...........10%............20%............30%............40%............50%............60%...........70%............80%............90%............100%
+
+Welcome to Gradle 8.0!
+
+For more details see https://docs.gradle.org/8.0/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+```
+
+xargsコマンドが失敗したメッセージが出ているが一応成功メッセージは得られている。
+
+
 #### basic/basic-01-basic-connector
 
 まずは、 [EDC Connector Sample/basic/basic-01-basic-connector] を試そう。

@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ  パッケージインポート profileを使ったクレデンシャル設定  （補足）パラメータと指定するクラスについて     参考  Hadoopの公式ドキュメント Sparkの公式ドキュメント  メモ パッケージインポート Sparkの公式ドキュメント には、org.apache.spark:hadoop-cloud_2.12を利用するよう記載されているが、 このMavenパッケージ">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2023-07-22T14:33:41.348Z">
+<meta property="og:updated_time" content="2023-07-28T08:25:48.767Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Access AWS S3 from Hadoop3 and Spark3">
 <meta name="twitter:description" content="参考 メモ  パッケージインポート profileを使ったクレデンシャル設定  （補足）パラメータと指定するクラスについて     参考  Hadoopの公式ドキュメント Sparkの公式ドキュメント  メモ パッケージインポート Sparkの公式ドキュメント には、org.apache.spark:hadoop-cloud_2.12を利用するよう記載されているが、 このMavenパッケージ">
@@ -275,12 +275,12 @@ ga('send', 'pageview');
 <p>そこで、 <a href="https://hadoop.apache.org/docs/current/hadoop-aws/tools/hadoop-aws/index.html" target="_blank" rel="noopener">Hadoopの公式ドキュメント</a>
 の通り、hadoop-awsをインポートすると、それに関連した依存関係をインポートすることにした。
 spark-shellで試すとしたら以下の通り。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-shell --packages org.apache.hadoop:hadoop-aws:3.2.0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> /opt/spark/default/bin/spark-shell --packages org.apache.hadoop:hadoop-aws:3.2.0</span><br></pre></td></tr></table></figure>
 <h2><span id="profileを使ったクレデンシャル設定">profileを使ったクレデンシャル設定</span></h2>
 <p>awscliを利用しているとしたら、profileを設定しながらクレデンシャルを使い分けていることもあると思う。
 その場合、起動時の環境変数でプロフィールを指定しながら、以下のようにproviderを指定することで、
 profileを利用したクレデンシャル管理の仕組みを利用してアクセスできる。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> AWS_PROFILE=s3test /opt/spark/default/bin/spark-shell --packages org.apache.hadoop:hadoop-aws:3.2.0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> AWS_PROFILE=s3test /opt/spark/default/bin/spark-shell --packages org.apache.hadoop:hadoop-aws:3.2.0</span><br></pre></td></tr></table></figure>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; spark.sparkContext.hadoopConfiguration.set(<span class="string">"fs.s3a.aws.credentials.provider"</span>, <span class="string">"com.amazonaws.auth.DefaultAWSCredentialsProviderChain"</span>)</span><br></pre></td></tr></table></figure>
 <h3><span id="補足パラメータと指定するクラスについて">（補足）パラメータと指定するクラスについて</span></h3>
 <p>ちなみに、上記パラメータの説明には、</p>
@@ -315,7 +315,7 @@ provider.</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/09/14/Access-AWS-S3-from-Hadoop3/" data-id="clke429cz001217llrvdixnc3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/09/14/Access-AWS-S3-from-Hadoop3/" data-id="clkmbk9ab000y17mtf6w5awa3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
