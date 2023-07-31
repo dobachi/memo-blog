@@ -12,6 +12,19 @@ tags:
 
 ---
 
+- [メモ](#メモ)
+  - [ひとこと概要](#ひとこと概要)
+  - [何はともあれ動かすには](#何はともあれ動かすには)
+    - [EDC Connector Sampleを動かす](#edc-connector-sampleを動かす)
+      - [basic/basic-01-basic-connector](#basicbasic-01-basic-connector)
+      - [basic-02-health-endpoint](#basic-02-health-endpoint)
+- [参考](#参考)
+  - [概要](#概要)
+  - [Connector動作](#connector動作)
+    - [ソースコード](#ソースコード)
+    - [ドキュメント](#ドキュメント)
+
+
 # メモ
 
 ## ひとこと概要
@@ -53,7 +66,9 @@ $ cd Samples
 
 [EDC Connector Sample/basic] がサンプルのbasicスコープである。
 
-#### build
+#### basic/basic-01-basic-connector
+
+まずは、 [EDC Connector Sample/basic/basic-01-basic-connector] を試そう。
 
 GradleやJDKがある環境で動かすのがよいので、Dockerで対応しよう。
 
@@ -123,40 +138,135 @@ Starting a Gradle Daemon (subsequent builds will be faster)
 ```
 
 xargsコマンドが失敗したメッセージが出ているが一応成功メッセージは得られている。
+使用したDockerイメージには、xargsコマンドがなかったようなので、
+コンテナ内で簡単にxargsをインストールしておく。
 
+```bash
+# microdnf install findutils
+```
 
-#### basic/basic-01-basic-connector
+あらためてビルドする。
 
-まずは、 [EDC Connector Sample/basic/basic-01-basic-connector] を試そう。
+```bash
+$ ./gradlew clean basic:basic-01-basic-connector:build
+
+BUILD SUCCESSFUL in 5s
+45 actionable tasks: 11 executed, 34 up-to-date
+```
+
+問題なくなったので、続いてサービスを起動する。
+
+```bash
+bash-4.4# java -jar basic/basic-01-basic-connector/build/libs/basic-connector.jar
+WARNING 2023-07-30T08:50:25.444977601 The runtime is configured as an anonymous participant. DO NOT DO THIS IN PRODUCTION.
+INFO 2023-07-30T08:50:25.903477626 Initialized Boot Services
+INFO 2023-07-30T08:50:26.868246055 Initialized Core Default Services
+INFO 2023-07-30T08:50:27.121881706 HTTPS enforcement it not enabled, please enable it in a production environment
+INFO 2023-07-30T08:50:27.973503814 HTTPS enforcement it not enabled, please enable it in a production environment
+INFO 2023-07-30T08:50:28.008418188 Initialized Core Services
+WARNING 2023-07-30T08:50:28.038222702 Settings: No setting found for key 'edc.hostname'. Using default value 'localhost'
+INFO 2023-07-30T08:50:28.047466815 Prepared Boot Services
+INFO 2023-07-30T08:50:28.048738274 Prepared Core Default Services
+INFO 2023-07-30T08:50:28.068155529 Prepared Core Services
+INFO 2023-07-30T08:50:28.073227583 Started Boot Services
+INFO 2023-07-30T08:50:28.074407755 Started Core Default Services
+INFO 2023-07-30T08:50:28.092933351 Started Core Services
+INFO 2023-07-30T08:50:28.11172217 edc-6914dc0e-f7e6-4cc4-890d-1d05cf7ff0c3 ready
+```
+
+READMEの説明にもあるようなメッセージが表示された。特にエラーはない。
+このサンプルは本当に起動するだけのサンプルである。
+
+#### basic-02-health-endpoint
+
+[EDC Connector Sample/basic/basic-02-health-endpoint] を参考に進める。
+このサンプルでは、HTTP GETのエンドポイントを作成する拡張機能の例を示す。
+
+まず考え方を示す。
+この拡張機能の例では、 `ServiceExtension ` を拡張してみる。
+そのためには、 `basic/basic-02-health-endpoint/src/main/resources/META-INF/services` にpluginファイルを置く必要がある。その際、拡張するインタフェース名のディレクトリの下に、対象とする拡張のfully-qualifiedな名称で作成する必要がある。
+今回の例では、 `ServiceExtension` を拡張するので `
+basic/basic-02-health-endpoint/src/main/resources/META-INF/services/org.eclipse.edc.spi.system.ServiceExtension` というファイルを作成する。
+
+ファイルの中身は以下。ServiceExtentionを拡張して作成するクラス名が記載されている。
+
+```
+org.eclipse.edc.extension.health.HealthEndpointExtension
+```
+
+では、 `basic/basic-02-health-endpoint/src/main/java/org/eclipse/edc/extension/health/HealthEndpointExtension.java` の中身を見てみよう。
+
+```java
+package org.eclipse.edc.extension.health;
+
+import org.eclipse.edc.runtime.metamodel.annotation.Inject;
+import org.eclipse.edc.spi.system.ServiceExtension;
+import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.eclipse.edc.web.spi.WebService;
+
+public class HealthEndpointExtension implements ServiceExtension {
+
+    @Inject
+    WebService webService;
+
+    @Override
+    public void initialize(ServiceExtensionContext context) {
+        webService.registerResource(new HealthApiController(context.getMonitor()));
+    }
+}
+```
+
+`@Inject` が示すのは、この拡張がほかの拡張により定義されたサービスを必要とすることである。
+今回の例だと、 `WebService.class` である。
 
 
 # 参考
 
 ## 概要
 
-* [EDC公式ウェブサイト]: https://projects.eclipse.org/projects/technology.edc
-* [IDS]: https://internationaldataspaces.
-* [NTTデータのコネクタ調査報告書]: https://www.nttdata.com/global/ja/news/information/2022/072700/
-* [EDC Conference 2022]: https://www.youtube.com/playlist?list=PLw-f_YoTxWJU_quLpk9fGpq37gzvVZGc4
-* [EDC Document]: https://eclipse-edc.github.io/docs/#/
-* [EDCのYoutube動画]: https://www.youtube.com/@eclipsedataspaceconnector9622/featured
+* [EDC公式ウェブサイト]
+* [IDS]
+* [NTTデータのコネクタ調査報告書]
+* [EDC Conference 2022]
+* [EDC Document]
+* [EDCのYoutube動画]
+
+[EDC公式ウェブサイト]: https://projects.eclipse.org/projects/technology.edc
+[IDS]: https://internationaldataspaces.
+[NTTデータのコネクタ調査報告書]: https://www.nttdata.com/global/ja/news/information/2022/072700/
+[EDC Conference 2022]: https://www.youtube.com/playlist?list=PLw-f_YoTxWJU_quLpk9fGpq37gzvVZGc4
+[EDC Document]: https://eclipse-edc.github.io/docs/#/
+[EDCのYoutube動画]: https://www.youtube.com/@eclipsedataspaceconnector9622/featured
 
 ## Connector動作
 
 ### ソースコード
 
-* [EDC Connector GitHub]: https://github.com/eclipse-edc/Connector`
-* [EDC Connector Getting Started]: https://github.com/eclipse-edc/Connector#getting-started
-* [EDC Connector Sample]: https://github.com/eclipse-edc/Samples
-* [EDC Connector Sample/basic]: https://github.com/eclipse-edc/Samples/tree/main/basic
-* [EDC Connector Sample/basic/basic-01-basic-connector]: https://github.com/eclipse-edc/Samples/blob/main/basic/basic-01-basic-connector/README.md
+* [EDC Connector GitHub]
+* [EDC Connector Getting Started]
+* [EDC Connector Sample]
+* [EDC Connector Sample/basic]
+* [EDC Connector Sample/basic/basic-01-basic-connector]
+* [EDC Connector Sample/basic/basic-02-health-endpoint]
+
+[EDC Connector GitHub]: https://github.com/eclipse-edc/Connector`
+[EDC Connector Getting Started]: https://github.com/eclipse-edc/Connector#getting-started
+[EDC Connector Sample]: https://github.com/eclipse-edc/Samples
+[EDC Connector Sample/basic]: https://github.com/eclipse-edc/Samples/tree/main/basic
+[EDC Connector Sample/basic/basic-01-basic-connector]: https://github.com/eclipse-edc/Samples/blob/main/basic/basic-01-basic-connector/README.md
+[EDC Connector Sample/basic/basic-02-health-endpoint]: https://github.com/eclipse-edc/Samples/tree/main/basic/basic-02-health-endpoint
 
 ### ドキュメント
 
-* [EDC Connector SampleのPrerequirments]: https://github.com/eclipse-edc/Samples#prerequisites
-* [EDC Connector SampleのScopes]: https://github.com/eclipse-edc/Samples#scopes
-* [EDC Connector SampleのBasic]: https://github.com/eclipse-edc/Samples#basic
-* [EDC Connector SampleのTransfer]: https://github.com/eclipse-edc/Samples#transfer
+* [EDC Connector SampleのPrerequirments]
+* [EDC Connector SampleのScopes]
+* [EDC Connector SampleのBasic]
+* [EDC Connector SampleのTransfer]
+
+[EDC Connector SampleのPrerequirments]: https://github.com/eclipse-edc/Samples#prerequisites
+[EDC Connector SampleのScopes]: https://github.com/eclipse-edc/Samples#scopes
+[EDC Connector SampleのBasic]: https://github.com/eclipse-edc/Samples#basic
+[EDC Connector SampleのTransfer]: https://github.com/eclipse-edc/Samples#transfer
 
 
 <!-- vim: set et tw=0 ts=2 sw=2: -->
