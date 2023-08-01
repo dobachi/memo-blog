@@ -41,7 +41,7 @@ $ git clone git@github.com:eclipse-edc/Samples.git
 $ cd Samples
 ```
 
-### 1.2.1. EDC Connector Sampleを動かす
+## 1.3. EDC Connector Sampleを動かす
 
 [EDC Connector SampleのPrerequirments] を見ると、環境としては `JDK 11+ for your OS` が必要であるとされている。
 [EDC Connector SampleのScopes] の通り、サンプルはScopeに分けられている。
@@ -53,7 +53,7 @@ $ cd Samples
 
 [EDC Connector Sample/basic] がサンプルのbasicスコープである。
 
-#### 1.2.1.1. basic/basic-01-basic-connector
+## 1.4. basic/basic-01-basic-connector
 
 まずは、 [EDC Connector Sample/basic/basic-01-basic-connector] を試そう。
 
@@ -164,7 +164,7 @@ INFO 2023-07-30T08:50:28.11172217 edc-6914dc0e-f7e6-4cc4-890d-1d05cf7ff0c3 ready
 READMEの説明にもあるようなメッセージが表示された。特にエラーはない。
 このサンプルは本当に起動するだけのサンプルである。
 
-#### 1.2.1.2. basic-02-health-endpoint
+## 1.5. basic-02-health-endpoint
 
 [EDC Connector Sample/basic/basic-02-health-endpoint] を参考に進める。
 このサンプルでは、HTTP GETのエンドポイントを作成する拡張機能の例を示す。
@@ -268,7 +268,7 @@ $ docker exec -it edc-basic-02 curl http://localhost:8181/api/health
 {"response":"I'm alive!"}
 ```
 
-#### 1.2.1.3. basic-03-configuration
+## 1.6. basic-03-configuration
 
 つづいて、  [EDC Connector Sample/basic/basic-03-configuration] を試す。
 このサンプルでは、 `ConfigurationExtension` インターフェースを用いて設定する例を示す。
@@ -337,6 +337,101 @@ DEBUG 2023-08-01T07:23:43.138659082 Port mappings: {alias='default', port=9191, 
 ```
 
 上記の通り、渡した設定ファイルの通り、待ち受けポートが9191に変更になっていることがわかる。
+
+さて、ここで独自の設定値を渡すようにしよう。
+ここではログのプリフィックスをつける設定をする。
+
+先ほどの `/etc/eclipse/dataspaceconnector/config.properties` に以下の内容を追記する。
+
+```property
+edc.samples.basic.03.logprefix=MyLogPrefix
+```
+
+そして、02の例で実装したサンプル `org.eclipse.edc.extension.health.HealthEndpointExtension` を改造する。
+全体を以下に示す。
+
+org/eclipse/edc/extension/health/HealthEndpointExtension.java:22
+
+```java
+public class HealthEndpointExtension implements ServiceExtension {
+
+    private static final String LOG_PREFIX_SETTING = "edc.samples.basic.03.logprefix";
+    @Inject
+    WebService webService;
+
+    @Override
+    public void initialize(ServiceExtensionContext context) {
+        var logPrefix = context.getSetting(LOG_PREFIX_SETTING, "health");
+        webService.registerResource(new HealthApiController(context.getMonitor(), logPrefix));
+    }
+}
+```
+
+まずは先ほど定義したプロパティ名を定義する。
+
+org/eclipse/edc/extension/health/HealthEndpointExtension.java:24
+
+```java
+    private static final String LOG_PREFIX_SETTING = "edc.samples.basic.03.logprefix";
+```
+
+つづいて、 `org.eclipse.edc.spi.system.ServiceExtensionContext` を用いて、プロパティの値を取得する。
+先ほど定義したプロパティ名を用いて、 `org.eclipse.edc.spi.system.SettingResolver#getSetting(java.lang.String, java.lang.String)` を用いて値を取得する。
+`org.eclipse.edc.extension.health.HealthApiController#HealthApiController` メソッドの第2引数はログプリフィックスを渡せるようにする（口述）ので先ほど取得した値を渡す。
+
+org/eclipse/edc/extension/health/HealthEndpointExtension.java:29
+
+```java
+    public void initialize(ServiceExtensionContext context) {
+        var logPrefix = context.getSetting(LOG_PREFIX_SETTING, "health");
+        webService.registerResource(new HealthApiController(context.getMonitor(), logPrefix));
+    }
+```
+
+org/eclipse/edc/extension/health/HealthApiController.java:35
+
+```java
+    public HealthApiController(Monitor monitor, String logPrefix) {
+        this.monitor = monitor;
+        this.logPrefix = logPrefix;
+    }
+```
+
+上記のログプリフィックスの変数を扱うため、 `org.eclipse.edc.extension.health.HealthApiController` も改造する。
+
+org/eclipse/edc/extension/health/HealthApiController.java:30
+
+```java
+public class HealthApiController {
+
+    private final Monitor monitor;
+    private final String logPrefix;
+
+    public HealthApiController(Monitor monitor, String logPrefix) {
+        this.monitor = monitor;
+        this.logPrefix = logPrefix;
+    }
+
+    @GET
+    @Path("health")
+    public String checkHealth() {
+        monitor.info(format("%s :: Received a health request", logPrefix));
+        return "{\"response\":\"I'm alive!\"}";
+    }
+}
+```
+
+上記の通り、 `logPrefix` を取り扱うための実装が追加されている。
+
+READMEにはいくつか考慮点が言及されていた。
+
+* 設定値は定数として定義されるべき。また階層型構造を持てるようにすべき。
+* デフォルト値を設けるか、もしくは例外（EdcException）を発するべき
+* Extension自体はビジネスロジックを含まないようにすべき
+* ビジネスロジックに設置値を直接渡せるようにすべき
+
+つづいて、Management APIを実装する。
+
 
 # 2. 参考
 
