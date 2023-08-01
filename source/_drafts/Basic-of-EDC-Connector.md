@@ -224,7 +224,62 @@ public class HealthEndpointExtension implements ServiceExtension {
  * Manages the runtime web (HTTP) service.
 ```
 
+拡張機能の例の中を見ると、リソースを登録している箇所がある。
 
+org/eclipse/edc/extension/health/HealthEndpointExtension.java:29
+
+```java
+        webService.registerResource(new HealthApiController(context.getMonitor()));
+```
+
+登録されているのは、 `org.eclipse.edc.extension.health.HealthApiController#HealthApiController` である。
+これは拡張機能用の例として実装されたものである。
+正常性診断のための簡単なREST APIを提供する。
+
+中では、SPIのMonitorインタフェースが利用されている。
+このインターフェースはシステムモニタリングとロギングのために用いられる。
+
+org/eclipse/edc/extension/health/HealthApiController.java:30
+
+```java
+    private final Monitor monitor;
+
+    public HealthApiController(Monitor monitor) {
+        this.monitor = monitor;
+    }
+```
+
+`org.eclipse.edc.extension.health.HealthApiController#checkHealth` というメソッドが定義されている。
+`GET` アノテーションがされており、以下のように、Monitorのログ機能を使ってメッセージを出力している。
+その後、レスポンスを返している。
+
+org/eclipse/edc/extension/health/HealthApiController.java:36
+
+```java
+    @GET
+    @Path("health")
+    public String checkHealth() {
+        monitor.info("Received a health request");
+        return "{\"response\":\"I'm alive!\"}";
+    }
+```
+
+さて、これをビルドして実行してみる。
+1個目のプロジェクトと同様に、プロジェクトトップに移動し、以下のようにビルド、実行する。
+
+```bash
+$ docker run --rm -it -v `pwd`:/edc_sample --name edc-basic-02 gradle:jdk17 bash
+# cd /edc_sample/
+# ./gradlew clean basic:basic-02-health-endpoint:build
+# java -jar basic/basic-02-health-endpoint/build/libs/connector-health.jar
+```
+
+正常に起動したら、別の端末から以下を実行し、コンテナ内のサービスに接続して戻り値を得る。　
+
+```bash
+$ docker exec -it edc-basic-02 curl http://localhost:8181/api/health
+{"response":"I'm alive!"}
+```
 
 # 2. 参考
 
