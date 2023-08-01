@@ -271,8 +271,72 @@ $ docker exec -it edc-basic-02 curl http://localhost:8181/api/health
 #### 1.2.1.3. basic-03-configuration
 
 つづいて、  [EDC Connector Sample/basic/basic-03-configuration] を試す。
+このサンプルでは、 `ConfigurationExtension` インターフェースを用いて設定する例を示す。
+まず初めに、Jarファイルに追加するようGradleの依存関係を設定し、その後そのまま起動するような手順になっている。
+このままではJavaプロファイル形式のデータストアが存在しないのでエラーになる。
+その後、改めて設定する。という流れである。
 
+まずは、 `FsConfigurationExtension.java` を用いる例である。
+この実装では、Javaプロファイルを設定のストアに用いる。
 
+02のサンプルでは、このライブラリをJarに含めていなかったので、ここでは以下のように依存関係に設定することでJarに含めるようにする。
+
+basic/basic-03-configuration/build.gradle.kts:29
+
+```kotolin
+dependencies {
+    // ...
+    implementation(libs.edc.configuration.filesystem)
+    // ...
+```
+
+さて、この状態でビルドして実行してみる。
+
+```bash
+$ docker run --rm -it -v `pwd`:/edc_sample --name edc-basic-02 gradle:jdk17 bash #必要であればDockerを起動する。
+# cd /edc_sample/ #必要であればDockerを起動する。
+# ./gradlew clean basic:basic-03-configuration:build
+```
+
+いったんそのまま実行する。
+
+```bash
+# java -jar basic/basic-03-configuration/build/libs/filesystem-config-connector.jar
+WARNING 2023-08-01T06:59:36.181266486 Configuration file does not exist: dataspaceconnector-configuration.properties. Ignoring.
+```
+
+上記のように、Configurationファイルが存在しない旨の警告が出ている。
+
+さてそれでは設定ファイルを用意してみる。
+特に指定しない場合は、 `FsConfigurationExtension` は `dataspaceconnector-configuration.properties` というファイルがカレントディレクトリにあることを期待する。
+
+しかしまずはREADME記載の通りに行ってみる。（ `/etc/eclipse/dataspaceconnector` 以下に設定ファイルを置くスタイル）
+
+```bash
+# mkdir -p /etc/eclipse/dataspaceconnector
+# touch /etc/eclipse/dataspaceconnector/config.properties
+```
+
+プロパティファイルの中身は以下。
+ここでは待ち受けるポートを変更してみる。
+
+```property
+web.http.port=9191
+```
+
+さて、この状態で、 `edc.fs.config` に先ほど作ったプロパティファイルのパスを渡して実行する
+
+```bash
+# java -Dedc.fs.config=/etc/eclipse/dataspaceconnector/config.properties -jar basic/basic-03-configuration/build/libs/filesystem-config-connector.jar
+INFO 2023-08-01T07:14:59.316210496 Initialized FS Configuration
+
+(snip)
+
+INFO 2023-08-01T07:23:43.075731711 HTTP context 'default' listening on port 9191
+DEBUG 2023-08-01T07:23:43.138659082 Port mappings: {alias='default', port=9191, path='/api'}
+```
+
+上記の通り、渡した設定ファイルの通り、待ち受けポートが9191に変更になっていることがわかる。
 
 # 2. 参考
 
