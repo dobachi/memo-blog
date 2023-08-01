@@ -12,22 +12,22 @@ tags:
 
 ---
 
-- [メモ](#メモ)
-  - [ひとこと概要](#ひとこと概要)
-  - [何はともあれ動かすには](#何はともあれ動かすには)
-    - [EDC Connector Sampleを動かす](#edc-connector-sampleを動かす)
-      - [basic/basic-01-basic-connector](#basicbasic-01-basic-connector)
-      - [basic-02-health-endpoint](#basic-02-health-endpoint)
-- [参考](#参考)
-  - [概要](#概要)
-  - [Connector動作](#connector動作)
-    - [ソースコード](#ソースコード)
-    - [ドキュメント](#ドキュメント)
+- [1. メモ](#1-メモ)
+  - [1.1. ひとこと概要](#11-ひとこと概要)
+  - [1.2. 何はともあれ動かすには](#12-何はともあれ動かすには)
+    - [1.2.1. EDC Connector Sampleを動かす](#121-edc-connector-sampleを動かす)
+      - [1.2.1.1. basic/basic-01-basic-connector](#1211-basicbasic-01-basic-connector)
+      - [1.2.1.2. basic-02-health-endpoint](#1212-basic-02-health-endpoint)
+- [2. 参考](#2-参考)
+  - [2.1. 概要](#21-概要)
+  - [2.2. Connector動作](#22-connector動作)
+    - [2.2.1. ソースコード](#221-ソースコード)
+    - [2.2.2. ドキュメント](#222-ドキュメント)
 
 
-# メモ
+# 1. メモ
 
-## ひとこと概要
+## 1.1. ひとこと概要
 
 Eclipse Dataspace Componentsは、 [IDS] などが提唱している Data Space を実現し、参加者同士が互いにつながるためのConnector関連のソフトウェアを提供する。
 
@@ -40,7 +40,7 @@ Eclipse Dataspace Componentsは、 [IDS] などが提唱している Data Space 
 
 [EDC Conference 2022] も参考になる。
 
-## 何はともあれ動かすには
+## 1.2. 何はともあれ動かすには
 
 [EDC Connector GitHub] がエントリポイントになるコネクタ実装のレポジトリである。
 
@@ -54,7 +54,7 @@ $ git clone git@github.com:eclipse-edc/Samples.git
 $ cd Samples
 ```
 
-### EDC Connector Sampleを動かす
+### 1.2.1. EDC Connector Sampleを動かす
 
 [EDC Connector SampleのPrerequirments] を見ると、環境としては `JDK 11+ for your OS` が必要であるとされている。
 [EDC Connector SampleのScopes] の通り、サンプルはScopeに分けられている。
@@ -66,7 +66,7 @@ $ cd Samples
 
 [EDC Connector Sample/basic] がサンプルのbasicスコープである。
 
-#### basic/basic-01-basic-connector
+#### 1.2.1.1. basic/basic-01-basic-connector
 
 まずは、 [EDC Connector Sample/basic/basic-01-basic-connector] を試そう。
 
@@ -177,7 +177,7 @@ INFO 2023-07-30T08:50:28.11172217 edc-6914dc0e-f7e6-4cc4-890d-1d05cf7ff0c3 ready
 READMEの説明にもあるようなメッセージが表示された。特にエラーはない。
 このサンプルは本当に起動するだけのサンプルである。
 
-#### basic-02-health-endpoint
+#### 1.2.1.2. basic-02-health-endpoint
 
 [EDC Connector Sample/basic/basic-02-health-endpoint] を参考に進める。
 このサンプルでは、HTTP GETのエンドポイントを作成する拡張機能の例を示す。
@@ -220,9 +220,9 @@ public class HealthEndpointExtension implements ServiceExtension {
 今回の例だと、 `WebService.class` である。
 
 
-# 参考
+# 2. 参考
 
-## 概要
+## 2.1. 概要
 
 * [EDC公式ウェブサイト]
 * [IDS]
@@ -238,9 +238,9 @@ public class HealthEndpointExtension implements ServiceExtension {
 [EDC Document]: https://eclipse-edc.github.io/docs/#/
 [EDCのYoutube動画]: https://www.youtube.com/@eclipsedataspaceconnector9622/featured
 
-## Connector動作
+## 2.2. Connector動作
 
-### ソースコード
+### 2.2.1. ソースコード
 
 * [EDC Connector GitHub]
 * [EDC Connector Getting Started]
@@ -256,7 +256,7 @@ public class HealthEndpointExtension implements ServiceExtension {
 [EDC Connector Sample/basic/basic-01-basic-connector]: https://github.com/eclipse-edc/Samples/blob/main/basic/basic-01-basic-connector/README.md
 [EDC Connector Sample/basic/basic-02-health-endpoint]: https://github.com/eclipse-edc/Samples/tree/main/basic/basic-02-health-endpoint
 
-### ドキュメント
+### 2.2.2. ドキュメント
 
 * [EDC Connector SampleのPrerequirments]
 * [EDC Connector SampleのScopes]

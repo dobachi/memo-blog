@@ -250,25 +250,45 @@ ga('send', 'pageview');
             
             <div id="TOC">
 	<ul>
-<li><a href="#メモ" id="toc-メモ">メモ</a>
+<li><a href="#メモ" id="toc-メモ">1. メモ</a>
 <ul>
-<li><a href="#準備" id="toc-準備">準備</a></li>
-<li><a href="#intellijで開く" id="toc-intellijで開く">Intellijで開く</a></li>
-<li><a href="#トラブルシュート" id="toc-トラブルシュート">トラブルシュート</a>
+<li><a href="#準備" id="toc-準備">1.1. 準備</a></li>
+<li><a href="#intellijで開く" id="toc-intellijで開く">1.2.
+Intellijで開く</a></li>
+<li><a href="#トラブルシュート" id="toc-トラブルシュート">1.3.
+トラブルシュート</a>
 <ul>
-<li><a href="#intellijのメモリ不足" id="toc-intellijのメモリ不足">Intellijのメモリ不足</a></li>
-<li><a href="#gradleのメモリ不足" id="toc-gradleのメモリ不足">Gradleのメモリ不足</a></li>
-<li><a href="#jdkバージョンの不一致" id="toc-jdkバージョンの不一致">JDKバージョンの不一致</a></li>
+<li><a href="#intellijのメモリ不足" id="toc-intellijのメモリ不足">1.3.1.
+Intellijのメモリ不足</a></li>
+<li><a href="#gradleのメモリ不足" id="toc-gradleのメモリ不足">1.3.2.
+Gradleのメモリ不足</a></li>
+<li><a href="#jdkバージョンの不一致" id="toc-jdkバージョンの不一致">1.3.3. JDKバージョンの不一致</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#参考" id="toc-参考">2. 参考</a></li>
 </ul>
 </div>
-<h1><span id="メモ">メモ</span></h1>
+<ul>
+<li><a href="#1-メモ">1. メモ</a>
+<ul>
+<li><a href="#11-準備">1.1. 準備</a></li>
+<li><a href="#12-intellijで開く">1.2. Intellijで開く</a></li>
+<li><a href="#13-トラブルシュート">1.3. トラブルシュート</a>
+<ul>
+<li><a href="#131-intellijのメモリ不足">1.3.1.
+Intellijのメモリ不足</a></li>
+<li><a href="#132-gradleのメモリ不足">1.3.2. Gradleのメモリ不足</a></li>
+<li><a href="#133-jdkバージョンの不一致">1.3.3.
+JDKバージョンの不一致</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#2-参考">2. 参考</a></li>
+</ul>
+<h1><span id="1-メモ">1. メモ</span></h1>
 <p><a href="https://github.com/eclipse-edc/Connector" target="_blank" rel="noopener">EDC Connector
 公式GitHub</a> のプロジェクトをIntellijで開くための手順メモ。
 いろいろなやり方があるが一例として。</p>
-<h2><span id="準備">準備</span></h2>
+<h2><span id="11-準備">1.1. 準備</span></h2>
 <p>gitクローンしておく。
 ここでは、gitプロトコルを用いているが環境に合わせて適宜変更してクローンする。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:eclipse-edc/Connector.git</span><br><span class="line">$ <span class="built_in">cd</span> Connector</span><br></pre></td></tr></table></figure>
@@ -291,7 +311,7 @@ Compatibility</a>
 ここでは念のために、コマンドでビルドできることを確かめるため、あらかじめ以下を実行しておいた。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./gradlew clean build</span><br></pre></td></tr></table></figure>
 <p>特に問題なければ、success表示が出て終わるはず。</p>
-<h2><span id="intellijで開く">Intellijで開く</span></h2>
+<h2><span id="12-intellijで開く">1.2. Intellijで開く</span></h2>
 <p>ひとまず、プロジェクトトップでInteliljを開く。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ &lt;Intellijのホームディレクトリ&gt;/bin/idea.sh . &amp;</span><br></pre></td></tr></table></figure>
 <p>なお、IntellijにGradle拡張機能がインストールされていなければ、インストールしておく。「Files」→「Settings」→「Plugins」→「Gradleで検索」。</p>
@@ -308,20 +328,20 @@ wrapperの情報を用いるようになっていること、「Gradle JVM」で
 JDKを用いるようになっていることを確認する。</p>
 <p>特に問題なければ、 <code>BUILD SUCCESSFUL</code>
 となるはずである。</p>
-<h2><span id="トラブルシュート">トラブルシュート</span></h2>
-<h3><span id="intellijのメモリ不足">Intellijのメモリ不足</span></h3>
+<h2><span id="13-トラブルシュート">1.3. トラブルシュート</span></h2>
+<h3><span id="131-intellijのメモリ不足">1.3.1. Intellijのメモリ不足</span></h3>
 <p>ビルド中にヒープが不足することがある。 その場合は、 <a href="https://www.jetbrains.com/help/idea/increasing-memory-heap.html" target="_blank" rel="noopener">Intellijのメモリを増やす設定</a>
 を参考に、ヒープサイズを増やす。</p>
 <p>「Help」→「Memory
 Setting」を開き、「2024」（MB）あたりにしておく。</p>
-<h3><span id="gradleのメモリ不足">Gradleのメモリ不足</span></h3>
+<h3><span id="132-gradleのメモリ不足">1.3.2. Gradleのメモリ不足</span></h3>
 <p>ビルド中にヒープが不足することがある。 プロジェクト内にある、
 <code>gradle.properties</code>
 内に以下を追記する。ここでは最大4GBとした。</p>
 <p>◇diff <figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">diff --git a/gradle.properties b/gradle.properties</span><br><span class="line">index 376da414a..d8da811a9 100644</span><br><span class="line"><span class="comment">--- a/gradle.properties</span></span><br><span class="line"><span class="comment">+++ b/gradle.properties</span></span><br><span class="line">@@ -7,3 +7,6 @@ edcGradlePluginsVersion=0.1.4-SNAPSHOT</span><br><span class="line"> metaModelVersion=0.1.4-SNAPSHOT</span><br><span class="line"> edcScmUrl=https://github.com/eclipse-edc/Connector.git</span><br><span class="line"> edcScmConnection=scm:git:git@github.com:eclipse-edc/Connector.git</span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+# Increase Gradle JVM Heap size</span></span><br><span class="line"><span class="addition">+org.gradle.jvmargs=-Xmx4096M</span></span><br></pre></td></tr></table></figure></p>
-<h3><span id="jdkバージョンの不一致">JDKバージョンの不一致</span></h3>
+<h3><span id="133-jdkバージョンの不一致">1.3.3. JDKバージョンの不一致</span></h3>
 <p>当初、環境にあったJDK8系を用いていたが、ビルド時に構文エラー（互換性のエラー）が生じたため、JDK17を用いるようにした。</p>
-<h1><span id="参考">参考</span></h1>
+<h1><span id="2-参考">2. 参考</span></h1>
 <ul>
 <li><a href="https://github.com/eclipse-edc/Connector" target="_blank" rel="noopener">EDC Connector
 公式GitHub</a></li>
@@ -340,7 +360,7 @@ Compatibility</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="clkroffa200f518l78843z0fc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="clkrpl9c1007q1uqnlukbmqn3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -546,7 +566,7 @@ Actionsでmarkdownをpdfで出力する</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/05/02/GitHub-Actions-for-Hexo-with-Pandoc/" data-id="clkroff8f00b718l7eemb0lxi" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/05/02/GitHub-Actions-for-Hexo-with-Pandoc/" data-id="clkrpl9a500451uqn8ftlk1iy" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -695,7 +715,7 @@ Hyper-V の実行</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="clkroff9z00ex18l7t17jwnz4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="clkrpl9bz007k1uqnq9r4u3hp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1084,7 +1104,7 @@ CLI v2 Docker image</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="clkroffhf014y18l7sce6b2i2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="clkrpl9n401531uqn43lmij2c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1393,7 +1413,7 @@ Processing in Real-time</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/" data-id="clkroff9a00dd18l736s31wdx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/" data-id="clkrpl9b500651uqna1fzfbyt" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1571,7 +1591,7 @@ unable to limit memory (-m flag) on Ubuntu/Debian distros #6365</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/10/Error-about-the-memory-configuration-of-Minikube/" data-id="clkroff7u009v18l7g8cj2m72" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/10/Error-about-the-memory-configuration-of-Minikube/" data-id="clkrpl99j002u1uqn3ob4t4gk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1839,7 +1859,7 @@ Meetup Tokyoのコアメンバーが議論</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Blogs-about-the-portability-of-kubernetes/" data-id="clkroff7i009018l78hr2dcua" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Blogs-about-the-portability-of-kubernetes/" data-id="clkrpl9mg01441uqnsi4853st" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1989,26 +2009,26 @@ Spark on Kubernetes</a> の通りでよい。</p>
 今回はMinikube環境で動かしているので <code>-m</code>
 オプションを利用した。</p>
 <p>簡易的な例</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/docker-image-tool.sh -m -t testing build</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> /opt/spark/default/bin/docker-image-tool.sh -m -t testing build</span><br></pre></td></tr></table></figure>
 <p>Minikube内のDockerでイメージ一覧を確認すると以下の通り。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">eval</span> $(minikube -p minikube docker-env)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker images</span></span><br><span class="line">REPOSITORY                                TAG           IMAGE ID       CREATED          SIZE</span><br><span class="line">spark                                     testing       e19cebbf23e7   44 minutes ago   602MB</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> eval $(minikube -p minikube docker-env)</span><br><span class="line"><span class="meta">$</span> docker images</span><br><span class="line">REPOSITORY                                TAG           IMAGE ID       CREATED          SIZE</span><br><span class="line">spark                                     testing       e19cebbf23e7   44 minutes ago   602MB</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <h3><span id="実行">実行</span></h3>
 <p>サービスアカウントを作る。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> minikube kubectl -- create serviceaccount spark</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> minikube kubectl -- create clusterrolebinding spark-role --clusterrole=edit --serviceaccount=default:spark --namespace=default</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> minikube kubectl -- get serviceaccount</span></span><br><span class="line">NAME      SECRETS   AGE</span><br><span class="line">default   1         179m</span><br><span class="line">spark     1         2m39s</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> minikube kubectl -- create serviceaccount spark</span><br><span class="line"><span class="meta">$</span> minikube kubectl -- create clusterrolebinding spark-role --clusterrole=edit --serviceaccount=default:spark --namespace=default</span><br><span class="line"><span class="meta">$</span> minikube kubectl -- get serviceaccount</span><br><span class="line">NAME      SECRETS   AGE</span><br><span class="line">default   1         179m</span><br><span class="line">spark     1         2m39s</span><br></pre></td></tr></table></figure>
 <p>実行は以下の通り。先ほど作ったサービスアカウントを使用するようにする。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-submit --master k8s://https://192.168.49.2:8443 --deploy-mode cluster --name pi --class org.apache.spark.examples.SparkPi --conf spark.executor.instances=2 --conf spark.kubernetes.container.image=spark:testing --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark <span class="built_in">local</span>:///opt/spark/examples/jars/spark-examples_2.12-3.2.0.jar</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> /opt/spark/default/bin/spark-submit --master k8s://https://192.168.49.2:8443 --deploy-mode cluster --name pi --class org.apache.spark.examples.SparkPi --conf spark.executor.instances=2 --conf spark.kubernetes.container.image=spark:testing --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark local:///opt/spark/examples/jars/spark-examples_2.12-3.2.0.jar</span><br></pre></td></tr></table></figure>
 <p>なお、今回はMinikube上で実行しており、Jarファイルとして指定するのはMinikube内で起動したドライバのコンテナ内のローカルファイルシステムパスである。試しに、当該近店をアタッチして起動するとわかる。</p>
 <p>ドライバのログを確認する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> minikube kubectl -- logs pi-43bff77e450bdba3-driver</span></span><br><span class="line">(snip)</span><br><span class="line">22/01/10 17:32:02 INFO TaskSchedulerImpl: Killing all running tasks in stage 0: Stage finished</span><br><span class="line">22/01/10 17:32:02 INFO DAGScheduler: Job 0 finished: reduce at SparkPi.scala:38, took 0.824388 s</span><br><span class="line">Pi is roughly 3.142475712378562</span><br><span class="line">22/01/10 17:32:02 INFO SparkUI: Stopped Spark web UI at http://pi-43bff77e450bdba3-driver-svc.default.svc:4040</span><br><span class="line">22/01/10 17:32:02 INFO KubernetesClusterSchedulerBackend: Shutting down all executors</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> minikube kubectl -- logs pi-43bff77e450bdba3-driver</span><br><span class="line">(snip)</span><br><span class="line">22/01/10 17:32:02 INFO TaskSchedulerImpl: Killing all running tasks in stage 0: Stage finished</span><br><span class="line">22/01/10 17:32:02 INFO DAGScheduler: Job 0 finished: reduce at SparkPi.scala:38, took 0.824388 s</span><br><span class="line">Pi is roughly 3.142475712378562</span><br><span class="line">22/01/10 17:32:02 INFO SparkUI: Stopped Spark web UI at http://pi-43bff77e450bdba3-driver-svc.default.svc:4040</span><br><span class="line">22/01/10 17:32:02 INFO KubernetesClusterSchedulerBackend: Shutting down all executors</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <p>pi計算の結果がログに出力されているのがわかる。</p>
 <h3><span id="補足ビルドされたイメージを起動して内容確認">（補足）ビルドされたイメージを起動して内容確認</span></h3>
 <p>以下は、MinikubeのDockerを利用しビルドしたイメージのコンテナを起動して、シェルをアタッチした例。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">eval</span> $(minikube -p minikube docker-env)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -it --rm spark:testing /bin/bash</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> eval $(minikube -p minikube docker-env)</span><br><span class="line"><span class="meta">$</span> docker run -it --rm spark:testing /bin/bash</span><br></pre></td></tr></table></figure>
 <h3><span id="補足minikube使う場合のリソース設定についての注意事項">（補足）Minikube使う場合のリソース設定についての注意事項</span></h3>
 <p><a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html#prerequisites" target="_blank" rel="noopener">Prerequisites</a>
 の通り、Minikube等を使うようであれば、リソースに対して注意がある。
 以下、Minikube立ち上げ例。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> minikube start --memory=<span class="string">'4g'</span> --cpus=3</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> minikube start --memory='4g' --cpus=3</span><br></pre></td></tr></table></figure>
 <h2><span id="補足kubernetes環境">（補足）Kubernetes環境</span></h2>
 <p>動作確認のためには、Kubernetes環境が必要である。</p>
 <p><a href="https://minikube.sigs.k8s.io/docs/start/" target="_blank" rel="noopener">minikube start</a>
@@ -2051,7 +2071,7 @@ Spark on Kubernetes?</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Getting-started-Spark-on-k8s/" data-id="clkroff8800as18l7xuoiyg9e" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Getting-started-Spark-on-k8s/" data-id="clkrpl99y003r1uqnsz8i1vob" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2311,7 +2331,7 @@ DeltaSharingMinioExample</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/" data-id="clkroffh8014n18l7yw31asq0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/" data-id="clkrpl9mw014r1uqn08gncin3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2648,7 +2668,7 @@ API</a> を参考に確認する。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/09/10/Getting-Started-of-Delta-Sharing/" data-id="clkroffhd014u18l7qu2xalsk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/09/10/Getting-Started-of-Delta-Sharing/" data-id="clkrpl9n1014z1uqnw63u8hji" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
