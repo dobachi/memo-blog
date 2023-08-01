@@ -218,6 +218,12 @@ public class HealthEndpointExtension implements ServiceExtension {
 
 `@Inject` が示すのは、この拡張がほかの拡張により定義されたサービスを必要とすることである。
 今回の例だと、 `WebService.class` である。
+このインタフェースは以下の説明の通り、ランタイムのウェブサービスを管理するためのものである。
+
+```java
+ * Manages the runtime web (HTTP) service.
+```
+
 
 
 # 2. 参考
