@@ -12,19 +12,6 @@ tags:
 
 ---
 
-- [1. メモ](#1-メモ)
-  - [1.1. ひとこと概要](#11-ひとこと概要)
-  - [1.2. 何はともあれ動かすには](#12-何はともあれ動かすには)
-    - [1.2.1. EDC Connector Sampleを動かす](#121-edc-connector-sampleを動かす)
-      - [1.2.1.1. basic/basic-01-basic-connector](#1211-basicbasic-01-basic-connector)
-      - [1.2.1.2. basic-02-health-endpoint](#1212-basic-02-health-endpoint)
-- [2. 参考](#2-参考)
-  - [2.1. 概要](#21-概要)
-  - [2.2. Connector動作](#22-connector動作)
-    - [2.2.1. ソースコード](#221-ソースコード)
-    - [2.2.2. ドキュメント](#222-ドキュメント)
-
-
 # 1. メモ
 
 ## 1.1. ひとこと概要
@@ -281,6 +268,12 @@ $ docker exec -it edc-basic-02 curl http://localhost:8181/api/health
 {"response":"I'm alive!"}
 ```
 
+#### 1.2.1.3. basic-03-configuration
+
+つづいて、  [EDC Connector Sample/basic/basic-03-configuration] を試す。
+
+
+
 # 2. 参考
 
 ## 2.1. 概要
@@ -309,6 +302,7 @@ $ docker exec -it edc-basic-02 curl http://localhost:8181/api/health
 * [EDC Connector Sample/basic]
 * [EDC Connector Sample/basic/basic-01-basic-connector]
 * [EDC Connector Sample/basic/basic-02-health-endpoint]
+* [EDC Connector Sample/basic/basic-03-configuration]
 
 [EDC Connector GitHub]: https://github.com/eclipse-edc/Connector`
 [EDC Connector Getting Started]: https://github.com/eclipse-edc/Connector#getting-started
@@ -316,6 +310,7 @@ $ docker exec -it edc-basic-02 curl http://localhost:8181/api/health
 [EDC Connector Sample/basic]: https://github.com/eclipse-edc/Samples/tree/main/basic
 [EDC Connector Sample/basic/basic-01-basic-connector]: https://github.com/eclipse-edc/Samples/blob/main/basic/basic-01-basic-connector/README.md
 [EDC Connector Sample/basic/basic-02-health-endpoint]: https://github.com/eclipse-edc/Samples/tree/main/basic/basic-02-health-endpoint
+[EDC Connector Sample/basic/basic-03-configuration]: https://github.com/eclipse-edc/Samples/tree/main/basic/basic-03-configuration
 
 ### 2.2.2. ドキュメント
 
