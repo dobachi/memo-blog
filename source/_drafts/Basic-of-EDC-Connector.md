@@ -398,6 +398,7 @@ org/eclipse/edc/extension/health/HealthApiController.java:35
 ```
 
 上記のログプリフィックスの変数を扱うため、 `org.eclipse.edc.extension.health.HealthApiController` も改造する。
+Constructorシグナチャを編集する。
 
 org/eclipse/edc/extension/health/HealthApiController.java:30
 
@@ -431,6 +432,83 @@ READMEにはいくつか考慮点が言及されていた。
 * ビジネスロジックに設置値を直接渡せるようにすべき
 
 つづいて、Management APIを実装する。
+が、READMEには記載がある（ [basic-03-configuration#management-api] ）のだが、`basic/basic-03-configuration/build.gradle.kts` の実装には存在しない。
+ここでは試しに足してみる。
+
+```diff
+index ea2e833..3bc1acd 100644
+--- a/basic/basic-03-configuration/build.gradle.kts
++++ b/basic/basic-03-configuration/build.gradle.kts
+@@ -29,6 +29,8 @@ dependencies {
+     implementation(libs.edc.configuration.filesystem)
+
+     implementation(libs.jakarta.rsApi)
++
++    implementation(libs.edc.management.api)
+ }
+
+ application {
+ ```
+
+ `basic/basic-03-configuration/src/main/java/org/eclipse/edc/extension/health/HealthEndpointExtension.java` には、
+ management APIに関する設定値が存在している。
+
+ ということは、依存関係の方の実装が忘れられていたか。
+ もしくは `/etc/eclipse/dataspaceconnector/config.properties` にて設定する前提だからだろうか。★後で確認する
+
+ ```bash
+# cat << EOF > /etc/eclipse/dataspaceconnector/config.properties
+web.http.port=9191
+web.http.path=/api
+web.http.management.port=9192
+web.http.management.path=/management
+EOF
+ ```
+
+ つづいてビルドして実行する。　
+
+ ```bash
+ # ./gradlew clean basic:basic-03-configuration:build
+ # java -Dedc.fs.config=/etc/eclipse/dataspaceconnector/config.properties -jar basic/basic-03-configuration/build/libs/filesystem-config-connector.jar
+ ```
+
+実行した結果、エラーが生じた。拡張機能の依存関係エラーのようだ。
+
+```
+(snip)
+
+        at org.eclipse.edc.boot.system.DependencyGraph.of(DependencyGraph.java:102)
+        at org.eclipse.edc.boot.system.ExtensionLoader.loadServiceExtensions(ExtensionLoader.java:119)
+        at org.eclipse.edc.boot.system.runtime.BaseRuntime.createExtensions(BaseRuntime.java:151)
+        at org.eclipse.edc.boot.system.runtime.BaseRuntime.boot(BaseRuntime.java:201)
+        at org.eclipse.edc.boot.system.runtime.BaseRuntime.boot(BaseRuntime.java:84)
+        at org.eclipse.edc.boot.system.runtime.BaseRuntime.main(BaseRuntime.java:72)
+```
+
+このエラーは、 `org.eclipse.edc.boot.system.DependencyGraph#of` メソッド内の依存関係チェックで生じたものである。
+依存関係上必要だ、とされたものを並べてみる。以下、エラーメッセージをコピペして加工したものである。
+
+```
+org.eclipse.edc.spi.system.injection.EdcInjectionException: The following injected fields were not provided:
+
+Field "service" of type [interface org.eclipse.edc.connector.spi.policydefinition.PolicyDefinitionService] required by org.eclipse.edc.connector.api.management.policy.PolicyDefinitionApiExtension
+
+Field "dataAddressResolver" of type [interface org.eclipse.edc.spi.asset.DataAddressResolver] required by org.eclipse.edc.connector.api.management.asset.AssetApiExtension
+
+Field "assetService" of type [interface org.eclipse.edc.connector.spi.asset.AssetService] required by org.eclipse.edc.connector.api.management.asset.AssetApiExtension
+
+Field "service" of type [interface org.eclipse.edc.connector.spi.catalog.CatalogService] required by org.eclipse.edc.connector.api.management.catalog.CatalogApiExtension
+
+Field "service" of type [interface org.eclipse.edc.connector.spi.contractagreement.ContractAgreementService] required by org.eclipse.edc.connector.api.management.contractagreement.ContractAgreementApiExtension
+
+Field "service" of type [interface org.eclipse.edc.connector.spi.contractdefinition.ContractDefinitionService] required by org.eclipse.edc.connector.api.management.contractdefinition.ContractDefinitionApiExtension
+
+Field "service" of type [interface org.eclipse.edc.connector.spi.contractnegotiation.ContractNegotiationService] required by org.eclipse.edc.connector.api.management.contractnegotiation.ContractNegotiationApiExtension
+
+Field "service" of type [interface org.eclipse.edc.connector.spi.transferprocess.TransferProcessService] required by org.eclipse.edc.connector.api.management.transferprocess.TransferProcessApiExtension
+
+Field "jsonLd" of type [interface org.eclipse.edc.jsonld.spi.JsonLd] required by org.eclipse.edc.connector.api.management.configuration.ManagementApiConfigurationExtension
+```
 
 
 # 2. 参考
@@ -476,11 +554,13 @@ READMEにはいくつか考慮点が言及されていた。
 * [EDC Connector SampleのPrerequirments]
 * [EDC Connector SampleのScopes]
 * [EDC Connector SampleのBasic]
+* [basic-03-configuration#management-api]
 * [EDC Connector SampleのTransfer]
 
 [EDC Connector SampleのPrerequirments]: https://github.com/eclipse-edc/Samples#prerequisites
 [EDC Connector SampleのScopes]: https://github.com/eclipse-edc/Samples#scopes
 [EDC Connector SampleのBasic]: https://github.com/eclipse-edc/Samples#basic
+[basic-03-configuration#management-api]: https://github.com/eclipse-edc/Samples/tree/main/basic/basic-03-configuration#management-api
 [EDC Connector SampleのTransfer]: https://github.com/eclipse-edc/Samples#transfer
 
 
