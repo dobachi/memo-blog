@@ -510,6 +510,80 @@ Field "service" of type [interface org.eclipse.edc.connector.spi.transferprocess
 Field "jsonLd" of type [interface org.eclipse.edc.jsonld.spi.JsonLd] required by org.eclipse.edc.connector.api.management.configuration.ManagementApiConfigurationExtension
 ```
 
+いったん、上記は今のところ保留。
+
+## 1.7. Transfer example
+
+つづいて、Transferの例を試す。
+[EDC Connector Sample/transfer] にある通り、
+この例はConnector間でローカルファイルを転送する例である。
+
+## 1.8. transfer-01-file-transfer
+
+[EDC Connector Sample/transfer/transfer-01-file-transfer] にある通り、まずは1台のマシンの中で2個のConnectorを立ち上げる。
+その間で、あるディレクトリにあるファイルを別のディレクトリに転送する例である。
+
+その際のポイントは以下の通り。
+
+* Connector間の通信にマルチパートメッセージの機能を使う
+* Management APIを使ってConnectorシステム二アクセスする
+* Contract Negotiation
+* Consumer側からファイル転送を開始し、Provider側がリクエストに応じる形でファイルを転送先ディレクトリに置く
+ 
+3個の要素で構成する。
+
+* file-transfer-[consumer|provider] : ConsumerとProviderの設定やビルドファイルを含む
+* transfer-file-local : ファイル転送。Provider側に組み込まれる。
+* status-checker : ファイル転送の状態を確認する。Consumer側に組み込まれる。
+
+Provider側Connectorはアセットを管理するカタログを管理する。今回の例では、インメモリのカタログを用いる。
+またContract Negotiationも今回はインメモリで簡易的なものを実装する。
+
+カタログとContractの実装の実態は、 `org.eclipse.edc.sample.extension.api.FileTransferExtension#initialize` クラスにある。
+
+ポリシーの部分。
+
+org/eclipse/edc/sample/extension/api/FileTransferExtension.java:61
+
+```java
+        var policy = createPolicy();
+        policyStore.create(policy);
+```
+
+```org.eclipse.edc.connector.policy.spi.store.PolicyDefinitionStore``` インターフェースは、
+SPIの一種。 ```org.eclipse.edc.connector.policy.spi.store.PolicyDefinitionStore#create``` メソッドなど、ポリシーのCRUDがある。
+
+また ```org.eclipse.edc.sample.extension.api.FileTransferExtension#createPolicy``` メソッドは、
+```org.eclipse.edc.connector.policy.spi.PolicyDefinition.Builder``` というビルダーを使い、
+ポリシーのインスタンスを作成する。
+
+org/eclipse/edc/sample/extension/api/FileTransferExtension.java:70
+
+```java
+    private PolicyDefinition createPolicy() {
+        return PolicyDefinition.Builder.newInstance()
+                .id(USE_POLICY)
+                .policy(Policy.Builder.newInstance()
+                        .type(PolicyType.SET)
+                        .build())
+                .build();
+    }
+```
+
+カタログの部分。データのアドレスなどの登録、ポリシー（Contract）の登録。
+
+org/eclipse/edc/sample/extension/api/FileTransferExtension.java:64
+
+```java
+        registerDataEntries(context);
+        registerContractDefinition(policy.getUid());
+```
+
+```org.eclipse.edc.sample.extension.api.FileTransferExtension#registerDataEntries``` メソッドは、この拡張機能用に定義されたものである。
+```org.eclipse.edc.spi.system.ServiceExtensionContext``` を受け取り、アセットのパス情報をアセットのインデックスに登録したりする。
+
+
+
 
 # 2. 参考
 
@@ -540,6 +614,8 @@ Field "jsonLd" of type [interface org.eclipse.edc.jsonld.spi.JsonLd] required by
 * [EDC Connector Sample/basic/basic-01-basic-connector]
 * [EDC Connector Sample/basic/basic-02-health-endpoint]
 * [EDC Connector Sample/basic/basic-03-configuration]
+* [EDC Connector Sample/transfer]
+* [EDC Connector Sample/transfer/transfer-01-file-transfer]:
 
 [EDC Connector GitHub]: https://github.com/eclipse-edc/Connector`
 [EDC Connector Getting Started]: https://github.com/eclipse-edc/Connector#getting-started
@@ -548,6 +624,8 @@ Field "jsonLd" of type [interface org.eclipse.edc.jsonld.spi.JsonLd] required by
 [EDC Connector Sample/basic/basic-01-basic-connector]: https://github.com/eclipse-edc/Samples/blob/main/basic/basic-01-basic-connector/README.md
 [EDC Connector Sample/basic/basic-02-health-endpoint]: https://github.com/eclipse-edc/Samples/tree/main/basic/basic-02-health-endpoint
 [EDC Connector Sample/basic/basic-03-configuration]: https://github.com/eclipse-edc/Samples/tree/main/basic/basic-03-configuration
+[EDC Connector Sample/transfer]: https://github.com/eclipse-edc/Samples/blob/main/transfer/README.md
+[EDC Connector Sample/transfer/transfer-01-file-transfer]: https://github.com/eclipse-edc/Samples/blob/main/transfer/transfer-01-file-transfer/README.md
 
 ### 2.2.2. ドキュメント
 
