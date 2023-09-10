@@ -137,6 +137,55 @@ APIのパスを確認する。
 例えば、`org.eclipse.edc.protocol.dsp.dispatcher.PostDspHttpRequestFactory`、`org.eclipse.edc.protocol.dsp.dispatcher.GetDspHttpRequestFactory`などのファクトリが定義されている。
 これは、前述のPOST、GETオペレーションに対応するリクエストを生成するためのファクトリである。
 
+以下は、カタログのリクエストを送るための実装である。
+
+org/eclipse/edc/protocol/dsp/catalog/dispatcher/DspCatalogHttpDispatcherExtension.java:54
+
+```java
+    public void initialize(ServiceExtensionContext context) {
+        messageDispatcher.registerMessage(
+                CatalogRequestMessage.class,
+                new PostDspHttpRequestFactory<>(remoteMessageSerializer, m -> BASE_PATH + CATALOG_REQUEST),
+                new CatalogRequestHttpRawDelegate()
+        );
+        messageDispatcher.registerMessage(
+                DatasetRequestMessage.class,
+                new GetDspHttpRequestFactory<>(m -> BASE_PATH + DATASET_REQUEST + "/" + m.getDatasetId()),
+                new DatasetRequestHttpRawDelegate()
+        );
+    }
+```
+
+他にも、`org.eclipse.edc.protocol.dsp.transferprocess.dispatcher.DspTransferProcessDispatcherExtension`などが挙げられる。
+これは以下のように、`org.eclipse.edc.connector.transfer.spi.types.protocol.TransferRequestMessage`が含まれており、ConsumerがProviderにデータ転送プロセスをリクエストする際のメッセージのディスパッチャが登録されていることがわかる。
+
+org/eclipse/edc/protocol/dsp/transferprocess/dispatcher/DspTransferProcessDispatcherExtension.java:60
+
+```java
+    public void initialize(ServiceExtensionContext context) {
+        messageDispatcher.registerMessage(
+                TransferRequestMessage.class,
+                new PostDspHttpRequestFactory<>(remoteMessageSerializer, m -> BASE_PATH + TRANSFER_INITIAL_REQUEST),
+                new TransferRequestDelegate(remoteMessageSerializer)
+        );
+        messageDispatcher.registerMessage(
+                TransferCompletionMessage.class,
+                new PostDspHttpRequestFactory<>(remoteMessageSerializer, m -> BASE_PATH + m.getProcessId() + TRANSFER_COMPLETION),
+                new TransferCompletionDelegate(remoteMessageSerializer)
+        );
+        messageDispatcher.registerMessage(
+                TransferStartMessage.class,
+                new PostDspHttpRequestFactory<>(remoteMessageSerializer, m -> BASE_PATH + m.getProcessId() + TRANSFER_START),
+                new TransferStartDelegate(remoteMessageSerializer)
+        );
+        messageDispatcher.registerMessage(
+                TransferTerminationMessage.class,
+                new PostDspHttpRequestFactory<>(remoteMessageSerializer, m -> BASE_PATH + m.getProcessId() + TRANSFER_TERMINATION),
+                new TransferTerminationDelegate(remoteMessageSerializer)
+        );
+    }
+```
+
 
 ◆参考情報はじめ
 
