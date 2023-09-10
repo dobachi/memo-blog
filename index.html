@@ -254,13 +254,21 @@ ga('send', 'pageview');
 <ul>
 <li><a href="#準備" id="toc-準備">準備</a></li>
 <li><a href="#生成" id="toc-生成">生成</a></li>
-<li><a href="#軽く中身確認" id="toc-軽く中身確認">軽く中身確認</a>
+<li><a href="#data-planeの中身を軽く確認" id="toc-data-planeの中身を軽く確認">Data Planeの中身を軽く確認</a>
 <ul>
 <li><a href="#概要" id="toc-概要">概要</a></li>
-<li><a href="#transfer" id="toc-transfer">transfer</a></li>
+<li><a href="#paths" id="toc-paths">paths</a></li>
 </ul></li>
+<li><a href="#dsp-data-planeの実装を確認する" id="toc-dsp-data-planeの実装を確認する">DSP Data
+Planeの実装を確認する</a></li>
+<li><a href="#おまけ古いdata-planeの実装を確認するhttpの例" id="toc-おまけ古いdata-planeの実装を確認するhttpの例">おまけ）古い（？）Data
+Planeの実装を確認する（HTTPの例）</a></li>
 </ul></li>
-<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#ドキュメント" id="toc-ドキュメント">ドキュメント</a></li>
+<li><a href="#ソースコード" id="toc-ソースコード">ソースコード</a></li>
+</ul></li>
 </ul>
 </div>
 <h1><span id="メモ">メモ</span></h1>
@@ -271,24 +279,112 @@ the OpenApi Spec (*.yaml)</a>に記載されている。
 <p>もしまだソースコードを取得していなければ取得しておく。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git pull git@github.com:eclipse-edc/Connector.git</span><br><span class="line"><span class="built_in">cd</span> Connector</span><br></pre></td></tr></table></figure>
 <h2><span id="生成">生成</span></h2>
-<p>ビルド環境にはJDK17を利用したいので、今回はDOckerで簡単に用意する。</p>
+<p>ビルド環境にはJDK17を利用したいので、今回はDockerで簡単に用意する。</p>
 <p>そのまま実行する場合：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --rm -v <span class="variable">$&#123;PWD&#125;</span>:/<span class="built_in">local</span> --workdir /<span class="built_in">local</span> openjdk:17-alpine  ./gradlew clean resolve</span><br></pre></td></tr></table></figure>
 <p>いったんシェル立ち上げる場合：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --rm -v <span class="variable">$&#123;PWD&#125;</span>:/<span class="built_in">local</span> --workdir /<span class="built_in">local</span> openjdk:17-alpine sh</span><br><span class="line">./gradlew clean resolve</span><br></pre></td></tr></table></figure>
 <p><code>BUILD SUCCESSFUL</code>となったらOK。</p>
-<h2><span id="軽く中身確認">軽く中身確認</span></h2>
-<p>試しにData Planeを見てみる。</p>
+<h2><span id="data-planeの中身を軽く確認">Data Planeの中身を軽く確認</span></h2>
+<p><code>resources/openapi/yaml/control-api/data-plane-api.yaml</code>
+にある、Data Planeを試しに見てみる。</p>
 <h3><span id="概要">概要</span></h3>
 <p>description部分を機械翻訳したのが以下である。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Data PlaneのパブリックAPIはデータプロキシであり、データコンシューマがData Planeインスタンスを通じて、プロバイダのデータソース（バックエンドのRest APIや内部データベースなど）から能動的にデータを問い合わせることを可能にします。</span><br><span class="line">Data PlaneのパブリックAPIはプロキシであるため、すべての動詞（GET、POST、PUT、PATCH、DELETEなど）をサポートしており、データソースが必要になるまでデータを転送することができます。これは、実際のデータソースがRest APIそのものである場合に特に便利です。同じように、任意のクエリパラメータ、パスパラメータ、リクエストボディのセットも（HTTPサーバによって固定された範囲内で）サポートされ、実際のデータソースに伝えることができます。</span><br></pre></td></tr></table></figure>
 <p>企業が持つデータストアをデータソースとしてデータ連携する際、そのプロキシとして働く。</p>
-<h3><span id="transfer">transfer</span></h3>
+<h3><span id="paths">paths</span></h3>
+<p>APIのパスを確認する。</p>
+<h4><span id="transfer">transfer</span></h4>
+<p>データ転送をリクエストする。
+リクエストボディには、データ転送のリクエスト情報が含まれる。</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">/transfer:</span></span><br><span class="line"><span class="attr">  post:</span></span><br><span class="line"><span class="attr">    description:</span> <span class="string">Initiates</span> <span class="string">a</span> <span class="string">data</span> <span class="string">transfer</span> <span class="string">for</span> <span class="string">the</span> <span class="string">given</span> <span class="string">request.</span> <span class="string">The</span> <span class="string">transfer</span> <span class="string">will</span></span><br><span class="line">      <span class="string">be</span> <span class="string">performed</span> <span class="string">asynchronously.</span></span><br><span class="line"><span class="attr">    operationId:</span> <span class="string">initiateTransfer</span></span><br><span class="line"><span class="attr">    requestBody:</span></span><br><span class="line"><span class="attr">      content:</span></span><br><span class="line">        <span class="string">application/json:</span></span><br><span class="line"><span class="attr">          schema:</span></span><br><span class="line">            <span class="string">$ref:</span> <span class="string">'#/components/schemas/DataFlowRequest'</span></span><br><span class="line"><span class="attr">    responses:</span></span><br><span class="line">      <span class="string">"200"</span><span class="string">:</span></span><br><span class="line"><span class="attr">        description:</span> <span class="string">Data</span> <span class="string">transfer</span> <span class="string">initiated</span></span><br><span class="line">      <span class="string">"400"</span><span class="string">:</span></span><br><span class="line"><span class="attr">        description:</span> <span class="string">Failed</span> <span class="string">to</span> <span class="string">validate</span> <span class="string">request</span></span><br><span class="line"><span class="attr">    tags:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">Data</span> <span class="string">Plane</span> <span class="string">control</span> <span class="string">API</span></span><br></pre></td></tr></table></figure>
+<h4><span id="transferprocessid">transfer/{processId}</span></h4>
+<p>パラメータ<code>processId</code>で与えられたIDのデータ転送処理の状態を確認する。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">/transfer/&#123;processId&#125;:</span></span><br><span class="line"><span class="attr">  get:</span></span><br><span class="line"><span class="attr">    description:</span> <span class="string">Get</span> <span class="string">the</span> <span class="string">current</span> <span class="string">state</span> <span class="string">of</span> <span class="string">a</span> <span class="string">data</span> <span class="string">transfer.</span></span><br><span class="line"><span class="attr">    operationId:</span> <span class="string">getTransferState</span></span><br><span class="line"><span class="attr">    parameters:</span></span><br><span class="line"><span class="attr">    - in:</span> <span class="string">path</span></span><br><span class="line"><span class="attr">      name:</span> <span class="string">processId</span></span><br><span class="line"><span class="attr">      required:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">      schema:</span></span><br><span class="line"><span class="attr">        type:</span> <span class="string">string</span></span><br><span class="line"><span class="attr">    responses:</span></span><br><span class="line">      <span class="string">"200"</span><span class="string">:</span></span><br><span class="line"><span class="attr">        description:</span> <span class="string">Missing</span> <span class="string">access</span> <span class="string">token</span></span><br><span class="line"><span class="attr">    tags:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">Data</span> <span class="string">Plane</span> <span class="string">control</span> <span class="string">API</span></span><br></pre></td></tr></table></figure>
+<h4><span id="any">/{any}</span></h4>
+<p><code>/{any}</code>以下にはDELETE、GET、PATCH、POST、PUTのOperationが定義されている。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">/&#123;any&#125;:</span></span><br><span class="line"><span class="attr">  delete:</span></span><br><span class="line">  <span class="string">(snip)</span></span><br><span class="line"><span class="attr">  get:</span></span><br><span class="line">  <span class="string">(snip)</span></span><br><span class="line"><span class="attr">  patch:</span></span><br><span class="line">  <span class="string">(snip)</span></span><br><span class="line"><span class="attr">  post:</span></span><br><span class="line">  <span class="string">(snip)</span></span><br><span class="line"><span class="attr">  put:</span></span><br></pre></td></tr></table></figure>
+<p>単純にデータを取得するだけではない。</p>
+<h2><span id="dsp-dataplaneの実装を確認する">DSP Data
+Planeの実装を確認する</span></h2>
+<p><code>data-protocols/dsp</code> （<a href="https://github.com/eclipse-edc/Connector/tree/main/data-protocols/dsp" target="_blank" rel="noopener">dsp</a>）以下に、Dataspace
+Protocolに対応したモジュールが含まれている。</p>
+<p>例えば、<code>org.eclipse.edc.protocol.dsp.dispatcher.PostDspHttpRequestFactory</code>、<code>org.eclipse.edc.protocol.dsp.dispatcher.GetDspHttpRequestFactory</code>などのファクトリが定義されている。
+これは、前述のPOST、GETオペレーションに対応するリクエストを生成するためのファクトリである。</p>
+<p>◆参考情報はじめ</p>
+<p>このファクトリは、ディスパッチャの
+<code>org.eclipse.edc.protocol.dsp.dispatcher.DspHttpRemoteMessageDispatcherImpl#dispatch</code>
+メソッドから、間接的に呼び出されて利用される。
+このメソッドは<code>org.eclipse.edc.spi.message.RemoteMessageDispatcher#dispatch</code>メソッドを実装したものである。ディスパッチャとして、リモートへ送信するメッセージ生成をディスパッチするための。メソッドである。
+さらに、これは
+<code>org.eclipse.edc.connector.core.base.RemoteMessageDispatcherRegistryImpl</code>
+内で使われている。ディスパッチャのレジストリ内で、ディスパッチ処理が起動、管理されるようだ。
+なお、これは<code>org.eclipse.edc.spi.message.RemoteMessageDispatcherRegistry#dispatch</code>
+を実装したものである。このメソッドは、色々なところから呼び出される。</p>
+<p>例えば、TransferCoreExtensionクラスではサービス起動時に、転送プロセスを管理する<code>org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl</code>を起動する。</p>
+<p>org/eclipse/edc/connector/transfer/TransferCoreExtension.java:205</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    processManager.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>これにより、以下のようにステートマシンがビルド、起動され、各プロセッサが登録される。</p>
+<p>org/eclipse/edc/connector/transfer/process/TransferProcessManagerImpl.java:143</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">stateMachineManager = StateMachineManager.Builder.newInstance(<span class="string">"transfer-process"</span>, monitor, executorInstrumentation, waitStrategy)</span><br><span class="line">        .processor(processTransfersInState(INITIAL, <span class="keyword">this</span>::processInitial))</span><br><span class="line">        .processor(processTransfersInState(PROVISIONING, <span class="keyword">this</span>::processProvisioning))</span><br><span class="line">        .processor(processTransfersInState(PROVISIONED, <span class="keyword">this</span>::processProvisioned))</span><br><span class="line">        .processor(processTransfersInState(REQUESTING, <span class="keyword">this</span>::processRequesting))</span><br><span class="line">        .processor(processTransfersInState(STARTING, <span class="keyword">this</span>::processStarting))</span><br><span class="line">        .processor(processTransfersInState(STARTED, <span class="keyword">this</span>::processStarted))</span><br><span class="line">        .processor(processTransfersInState(COMPLETING, <span class="keyword">this</span>::processCompleting))</span><br><span class="line">        .processor(processTransfersInState(TERMINATING, <span class="keyword">this</span>::processTerminating))</span><br><span class="line">        .processor(processTransfersInState(DEPROVISIONING, <span class="keyword">this</span>::processDeprovisioning))</span><br><span class="line">        .build();</span><br><span class="line">stateMachineManager.start();</span><br></pre></td></tr></table></figure>
+<p>上記のプロセッサとして登録されている<code>org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl#processStarting</code>の中では
+<code>org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl#sendTransferStartMessage</code>
+が呼び出されている。</p>
+<p>org/eclipse/edc/connector/transfer/process/TransferProcessManagerImpl.java:376</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> entityRetryProcessFactory.doSyncProcess(process, () -&gt; dataFlowManager.initiate(process.getDataRequest(), contentAddress, policy))</span><br><span class="line">        .onSuccess((p, dataFlowResponse) -&gt; sendTransferStartMessage(p, dataFlowResponse, policy))</span><br><span class="line">        .onFatalError((p, failure) -&gt; transitionToTerminating(p, failure.getFailureDetail()))</span><br><span class="line">        .onFailure((t, failure) -&gt; transitionToStarting(t))</span><br><span class="line">        .onRetryExhausted((p, failure) -&gt; transitionToTerminating(p, failure.getFailureDetail()))</span><br><span class="line">        .execute(description);</span><br></pre></td></tr></table></figure>
+<p><code>org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl#sendTransferStartMessage</code>
+メソッド内では、
+<code>org.eclipse.edc.connector.transfer.spi.types.protocol.TransferStartMessage</code>のメッセージがビルドされ、
+ディスパッチャにメッセージとして渡される。</p>
+<p>org/eclipse/edc/connector/transfer/process/TransferProcessManagerImpl.java:386</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var message = TransferStartMessage.Builder.newInstance()</span><br><span class="line">        .processId(process.getCorrelationId())</span><br><span class="line">        .protocol(process.getProtocol())</span><br><span class="line">        .dataAddress(dataFlowResponse.getDataAddress())</span><br><span class="line">        .counterPartyAddress(process.getConnectorAddress())</span><br><span class="line">        .policy(policy)</span><br><span class="line">        .build();</span><br><span class="line"></span><br><span class="line">var description = format(<span class="string">"Send %s to %s"</span>, message.getClass().getSimpleName(), process.getConnectorAddress());</span><br><span class="line"></span><br><span class="line">entityRetryProcessFactory.doAsyncStatusResultProcess(process, () -&gt; dispatcherRegistry.dispatch(Object.class, message))</span><br><span class="line">        .entityRetrieve(id -&gt; transferProcessStore.findById(id))</span><br><span class="line">        .onSuccess((t, content) -&gt; transitionToStarted(t))</span><br><span class="line">        .onFailure((t, throwable) -&gt; transitionToStarting(t))</span><br><span class="line">        .onFatalError((n, failure) -&gt; transitionToTerminated(n, failure.getFailureDetail()))</span><br><span class="line">        .onRetryExhausted((t, throwable) -&gt; transitionToTerminating(t, throwable.getMessage(), throwable))</span><br><span class="line">        .execute(description);</span><br></pre></td></tr></table></figure>
+<p>◆参考情報おわり</p>
+<p>ということで、<code>org.eclipse.edc.protocol.dsp.spi.dispatcher.DspHttpRemoteMessageDispatcher</code>というディスパッチャは、Dataspace
+Protocolに基づくリモートメッセージを生成する際に用いられるディスパッチャである。</p>
+<h2><span id="おまけ古いdataplaneの実装を確認するhttpの例">おまけ）古い（？）Data
+Planeの実装を確認する（HTTPの例）</span></h2>
+<p>Dataspace Protocol以前の実装か？</p>
+<p><code>extensions/data-plane</code> 以下にData
+Planeの実装が拡張として含まれている。</p>
+<p>例えば、 <code>extensions/data-plane/data-plane-http</code>
+には、HTTPを用いてデータ共有するための拡張の実装が含まれている。
+当該拡張のREADMEの通り、 （transfer APIの）<code>DataFlowRequest</code>
+が<code>HttpData</code>だった場合に、</p>
+<ul>
+<li>HttpDataSourceFactory</li>
+<li>HttpDataSinkFactory</li>
+<li>HttpDataSource</li>
+<li>HttpDataSink</li>
+</ul>
+<p>の実装が用いられる。パラメータもREADMEに（<a href="https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/README.md#design-principles" target="_blank" rel="noopener">data-plane-httpのデザイン指針</a>）記載されている。
+基本的には、バックエンドがHTTPなのでそれにアクセスするためのパラメータが定義されている。</p>
+<p>当該ファクトリは、
+<code>org.eclipse.edc.connector.dataplane.http.DataPlaneHttpExtension#initialize</code>
+内で用いられている。</p>
+<p>org/eclipse/edc/connector/dataplane/http/DataPlaneHttpExtension.java:75</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var httpRequestFactory = <span class="keyword">new</span> HttpRequestFactory();</span><br><span class="line"></span><br><span class="line">var sourceFactory = <span class="keyword">new</span> HttpDataSourceFactory(httpClient, paramsProvider, monitor, httpRequestFactory);</span><br><span class="line">pipelineService.registerFactory(sourceFactory);</span><br><span class="line"></span><br><span class="line">var sinkFactory = <span class="keyword">new</span> HttpDataSinkFactory(httpClient, executorContainer.getExecutorService(), sinkPartitionSize, monitor, paramsProvider, httpRequestFactory);</span><br><span class="line">pipelineService.registerFactory(sinkFactory);</span><br></pre></td></tr></table></figure>
+<p>ここでは、試しにData Source側を確認してみる。</p>
+<p>org/eclipse/edc/connector/dataplane/http/pipeline/HttpDataSourceFactory.java:63</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> DataSource <span class="title">createSource</span><span class="params">(DataFlowRequest request)</span> </span>&#123;</span><br><span class="line">    var dataAddress = HttpDataAddress.Builder.newInstance()</span><br><span class="line">            .copyFrom(request.getSourceDataAddress())</span><br><span class="line">            .build();</span><br><span class="line">    <span class="keyword">return</span> HttpDataSource.Builder.newInstance()</span><br><span class="line">            .httpClient(httpClient)</span><br><span class="line">            .monitor(monitor)</span><br><span class="line">            .requestId(request.getId())</span><br><span class="line">            .name(dataAddress.getName())</span><br><span class="line">            .params(requestParamsProvider.provideSourceParams(request))</span><br><span class="line">            .requestFactory(requestFactory)</span><br><span class="line">            .build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上記の通り、まずデータのアドレスを格納するインスタンスが生成され、
+つづいて、HTTPのデータソースがビルドされる。</p>
+<p>HTTPのData Sourceの実体は
+<code>org.eclipse.edc.connector.dataplane.http.pipeline.HttpDataSource</code>
+である。 このクラスはSPIの
+<code>org.eclipse.edc.connector.dataplane.spi.pipeline.DataSource</code>インタフェースを実装したものである。</p>
+<p><code>org.eclipse.edc.connector.dataplane.http.pipeline.HttpDataSource#openPartStream</code>
+がオーバライドされて実装されている。 詳しくは、<a href="https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/src/main/java/org/eclipse/edc/connector/dataplane/http/pipeline/HttpDataSource.java#L48" target="_blank" rel="noopener">openPartStream</a>参照。</p>
 <h1><span id="参考">参考</span></h1>
+<h2><span id="ドキュメント">ドキュメント</span></h2>
 <ul>
 <li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/openapi.md" target="_blank" rel="noopener">Generating
 the OpenApi Spec (*.yaml)</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/README.md#design-principles" target="_blank" rel="noopener">data-plane-httpのデザイン指針</a></li>
+</ul>
+<h2><span id="ソースコード">ソースコード</span></h2>
+<ul>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/src/main/java/org/eclipse/edc/connector/dataplane/http/pipeline/HttpDataSource.java#L48" target="_blank" rel="noopener">openPartStream</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/tree/main/data-protocols/dsp" target="_blank" rel="noopener">dsp</a></li>
 </ul>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -301,7 +397,7 @@ the OpenApi Spec (*.yaml)</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/09/09/Generate-OpenAPI-Spec-of-EDC-Connector/" data-id="clmdecio400451vp881fxnafm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/09/Generate-OpenAPI-Spec-of-EDC-Connector/" data-id="clmdqact4016k1vs3sinibeds" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -492,7 +588,7 @@ APIサーバのAPI定義と実装を関連付ける</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/09/07/OpenAPI-Generator-for-Flask/" data-id="clmdecipv008f1vp83ivajn2p" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/07/OpenAPI-Generator-for-Flask/" data-id="clmdqachl008e1vs373rs3j7t" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -940,7 +1036,7 @@ ProcessのMessage Type</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/31/IDS-Dataspace-Protocol/" data-id="clmdeciyl01741vp8zycybm6u" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/31/IDS-Dataspace-Protocol/" data-id="clmdqacte016w1vs3zxl8w7vq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1223,7 +1319,7 @@ SDKとは？</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/27/How-to-create-SDK/" data-id="clmdecioh00551vp81oig68u0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/27/How-to-create-SDK/" data-id="clmdqacfz00531vs3j3h8n3cf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1386,7 +1482,7 @@ SDKとは？</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/15/check-windows-cpu-resources/" data-id="clmdeciro00d91vp80m9kkjjj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/15/check-windows-cpu-resources/" data-id="clmdqacjz00d71vs3j66qlain" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1601,7 +1697,7 @@ Compatibility</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="clmdecipu008c1vp88dcsg4qj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="clmdqachk008b1vs3oycxy7m0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1807,7 +1903,7 @@ Actionsでmarkdownをpdfで出力する</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/05/02/GitHub-Actions-for-Hexo-with-Pandoc/" data-id="clmdecioc004q1vp87v6ngiu2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/05/02/GitHub-Actions-for-Hexo-with-Pandoc/" data-id="clmdqacfb004j1vs325n03lhj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1956,7 +2052,7 @@ Hyper-V の実行</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="clmdecips00851vp8932v48ki" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="clmdqachh00831vs3762i4k3g" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2345,7 +2441,7 @@ CLI v2 Docker image</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="clmdeciyi01701vp8d8eoezks" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="clmdqactb016s1vs3nypu0kii" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2654,7 +2750,7 @@ Processing in Real-time</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/" data-id="clmdecipb006u1vp8ojyb2xn7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/" data-id="clmdqacgw006m1vs3e7y997jl" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

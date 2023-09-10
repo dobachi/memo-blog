@@ -28,7 +28,7 @@ cd Connector
 ```
 ## 生成
 
-ビルド環境にはJDK17を利用したいので、今回はDOckerで簡単に用意する。
+ビルド環境にはJDK17を利用したいので、今回はDockerで簡単に用意する。
 
 そのまま実行する場合：
 
@@ -45,9 +45,9 @@ docker run -it --rm -v ${PWD}:/local --workdir /local openjdk:17-alpine sh
 
 `BUILD SUCCESSFUL`となったらOK。
 
-## 軽く中身確認
+## Data Planeの中身を軽く確認
 
-試しにData Planeを見てみる。
+`resources/openapi/yaml/control-api/data-plane-api.yaml` にある、Data Planeを試しに見てみる。
 
 ### 概要
 
@@ -60,7 +60,14 @@ Data PlaneのパブリックAPIはプロキシであるため、すべての動�
 
 企業が持つデータストアをデータソースとしてデータ連携する際、そのプロキシとして働く。
 
-### transfer
+### paths
+
+APIのパスを確認する。
+
+#### transfer
+
+データ転送をリクエストする。
+リクエストボディには、データ転送のリクエスト情報が含まれる。
 
 ```yaml
   /transfer:
@@ -82,12 +89,214 @@ Data PlaneのパブリックAPIはプロキシであるため、すべての動�
       - Data Plane control API
 ```
 
+#### transfer/{processId}
+
+パラメータ`processId`で与えられたIDのデータ転送処理の状態を確認する。
+
+```yaml
+  /transfer/{processId}:
+    get:
+      description: Get the current state of a data transfer.
+      operationId: getTransferState
+      parameters:
+      - in: path
+        name: processId
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Missing access token
+      tags:
+      - Data Plane control API
+```
+
+#### /{any}
+
+`/{any}`以下にはDELETE、GET、PATCH、POST、PUTのOperationが定義されている。
+
+```yaml
+  /{any}:
+    delete:
+    (snip)
+    get:
+    (snip)
+    patch:
+    (snip)
+    post:
+    (snip)
+    put:
+```
+
+単純にデータを取得するだけではない。
+
+## DSP Data Planeの実装を確認する
+
+`data-protocols/dsp` （[dsp]）以下に、Dataspace Protocolに対応したモジュールが含まれている。
+
+例えば、`org.eclipse.edc.protocol.dsp.dispatcher.PostDspHttpRequestFactory`、`org.eclipse.edc.protocol.dsp.dispatcher.GetDspHttpRequestFactory`などのファクトリが定義されている。
+これは、前述のPOST、GETオペレーションに対応するリクエストを生成するためのファクトリである。
+
+
+◆参考情報はじめ
+
+このファクトリは、ディスパッチャの `org.eclipse.edc.protocol.dsp.dispatcher.DspHttpRemoteMessageDispatcherImpl#dispatch` メソッドから、間接的に呼び出されて利用される。
+このメソッドは`org.eclipse.edc.spi.message.RemoteMessageDispatcher#dispatch`メソッドを実装したものである。ディスパッチャとして、リモートへ送信するメッセージ生成をディスパッチするための。メソッドである。
+さらに、これは `org.eclipse.edc.connector.core.base.RemoteMessageDispatcherRegistryImpl` 内で使われている。ディスパッチャのレジストリ内で、ディスパッチ処理が起動、管理されるようだ。
+なお、これは`org.eclipse.edc.spi.message.RemoteMessageDispatcherRegistry#dispatch` を実装したものである。このメソッドは、色々なところから呼び出される。
+
+例えば、TransferCoreExtensionクラスではサービス起動時に、転送プロセスを管理する`org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl`を起動する。
+
+org/eclipse/edc/connector/transfer/TransferCoreExtension.java:205
+
+```java
+    @Override
+    public void start() {
+        processManager.start();
+    }
+```
+
+これにより、以下のようにステートマシンがビルド、起動され、各プロセッサが登録される。
+
+org/eclipse/edc/connector/transfer/process/TransferProcessManagerImpl.java:143
+
+```java
+        stateMachineManager = StateMachineManager.Builder.newInstance("transfer-process", monitor, executorInstrumentation, waitStrategy)
+                .processor(processTransfersInState(INITIAL, this::processInitial))
+                .processor(processTransfersInState(PROVISIONING, this::processProvisioning))
+                .processor(processTransfersInState(PROVISIONED, this::processProvisioned))
+                .processor(processTransfersInState(REQUESTING, this::processRequesting))
+                .processor(processTransfersInState(STARTING, this::processStarting))
+                .processor(processTransfersInState(STARTED, this::processStarted))
+                .processor(processTransfersInState(COMPLETING, this::processCompleting))
+                .processor(processTransfersInState(TERMINATING, this::processTerminating))
+                .processor(processTransfersInState(DEPROVISIONING, this::processDeprovisioning))
+                .build();
+        stateMachineManager.start();
+```
+
+上記のプロセッサとして登録されている`org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl#processStarting`の中では `org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl#sendTransferStartMessage` が呼び出されている。
+
+org/eclipse/edc/connector/transfer/process/TransferProcessManagerImpl.java:376
+
+```java
+        return entityRetryProcessFactory.doSyncProcess(process, () -> dataFlowManager.initiate(process.getDataRequest(), contentAddress, policy))
+                .onSuccess((p, dataFlowResponse) -> sendTransferStartMessage(p, dataFlowResponse, policy))
+                .onFatalError((p, failure) -> transitionToTerminating(p, failure.getFailureDetail()))
+                .onFailure((t, failure) -> transitionToStarting(t))
+                .onRetryExhausted((p, failure) -> transitionToTerminating(p, failure.getFailureDetail()))
+                .execute(description);
+```
+
+`org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl#sendTransferStartMessage` メソッド内では、 `org.eclipse.edc.connector.transfer.spi.types.protocol.TransferStartMessage`のメッセージがビルドされ、
+ディスパッチャにメッセージとして渡される。
+
+org/eclipse/edc/connector/transfer/process/TransferProcessManagerImpl.java:386
+
+```java
+        var message = TransferStartMessage.Builder.newInstance()
+                .processId(process.getCorrelationId())
+                .protocol(process.getProtocol())
+                .dataAddress(dataFlowResponse.getDataAddress())
+                .counterPartyAddress(process.getConnectorAddress())
+                .policy(policy)
+                .build();
+
+        var description = format("Send %s to %s", message.getClass().getSimpleName(), process.getConnectorAddress());
+
+        entityRetryProcessFactory.doAsyncStatusResultProcess(process, () -> dispatcherRegistry.dispatch(Object.class, message))
+                .entityRetrieve(id -> transferProcessStore.findById(id))
+                .onSuccess((t, content) -> transitionToStarted(t))
+                .onFailure((t, throwable) -> transitionToStarting(t))
+                .onFatalError((n, failure) -> transitionToTerminated(n, failure.getFailureDetail()))
+                .onRetryExhausted((t, throwable) -> transitionToTerminating(t, throwable.getMessage(), throwable))
+                .execute(description);
+```
+
+◆参考情報おわり
+
+ということで、`org.eclipse.edc.protocol.dsp.spi.dispatcher.DspHttpRemoteMessageDispatcher`というディスパッチャは、Dataspace Protocolに基づくリモートメッセージを生成する際に用いられるディスパッチャである。
+
+## おまけ）古い（？）Data Planeの実装を確認する（HTTPの例）
+
+Dataspace Protocol以前の実装か？
+
+`extensions/data-plane` 以下にData Planeの実装が拡張として含まれている。
+
+例えば、 `extensions/data-plane/data-plane-http` には、HTTPを用いてデータ共有するための拡張の実装が含まれている。
+当該拡張のREADMEの通り、 （transfer APIの）`DataFlowRequest` が`HttpData`だった場合に、
+
+* HttpDataSourceFactory
+* HttpDataSinkFactory
+* HttpDataSource
+* HttpDataSink
+
+の実装が用いられる。パラメータもREADMEに（[data-plane-httpのデザイン指針]）記載されている。
+基本的には、バックエンドがHTTPなのでそれにアクセスするためのパラメータが定義されている。
+
+当該ファクトリは、 `org.eclipse.edc.connector.dataplane.http.DataPlaneHttpExtension#initialize` 内で用いられている。
+
+org/eclipse/edc/connector/dataplane/http/DataPlaneHttpExtension.java:75
+
+```java
+        var httpRequestFactory = new HttpRequestFactory();
+
+        var sourceFactory = new HttpDataSourceFactory(httpClient, paramsProvider, monitor, httpRequestFactory);
+        pipelineService.registerFactory(sourceFactory);
+
+        var sinkFactory = new HttpDataSinkFactory(httpClient, executorContainer.getExecutorService(), sinkPartitionSize, monitor, paramsProvider, httpRequestFactory);
+        pipelineService.registerFactory(sinkFactory);
+```
+
+ここでは、試しにData Source側を確認してみる。
+
+org/eclipse/edc/connector/dataplane/http/pipeline/HttpDataSourceFactory.java:63
+
+```java
+    @Override
+    public DataSource createSource(DataFlowRequest request) {
+        var dataAddress = HttpDataAddress.Builder.newInstance()
+                .copyFrom(request.getSourceDataAddress())
+                .build();
+        return HttpDataSource.Builder.newInstance()
+                .httpClient(httpClient)
+                .monitor(monitor)
+                .requestId(request.getId())
+                .name(dataAddress.getName())
+                .params(requestParamsProvider.provideSourceParams(request))
+                .requestFactory(requestFactory)
+                .build();
+    }
+```
+
+上記の通り、まずデータのアドレスを格納するインスタンスが生成され、
+つづいて、HTTPのデータソースがビルドされる。
+
+HTTPのData Sourceの実体は `org.eclipse.edc.connector.dataplane.http.pipeline.HttpDataSource` である。
+このクラスはSPIの `org.eclipse.edc.connector.dataplane.spi.pipeline.DataSource`インタフェースを実装したものである。
+
+`org.eclipse.edc.connector.dataplane.http.pipeline.HttpDataSource#openPartStream` がオーバライドされて実装されている。
+詳しくは、[openPartStream]参照。
+
+
+
 # 参考
 
+## ドキュメント
+
 * [Generating the OpenApi Spec (*.yaml)]
+* [data-plane-httpのデザイン指針]
 
 [Generating the OpenApi Spec (*.yaml)]: https://github.com/eclipse-edc/Connector/blob/main/docs/developer/openapi.md
+[data-plane-httpのデザイン指針]: https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/README.md#design-principles
 
+## ソースコード
+
+* [openPartStream]
+* [dsp]
+
+[openPartStream]: https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/src/main/java/org/eclipse/edc/connector/dataplane/http/pipeline/HttpDataSource.java#L48
+[dsp]: https://github.com/eclipse-edc/Connector/tree/main/data-protocols/dsp
 
 
 
