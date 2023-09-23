@@ -301,6 +301,11 @@ Dataspace ProtocolはJSON-LD、DCAT、ODRLで実現されている。
 5. この1から4項目が安定すると、古いモジュールとサービスが削除される。
 6. Management APIを更新する。
 
+### JSON-LD Processing Architecture
+
+[JSON-LD Processing Architecture] に
+
+
 # 参考
 
 ## ドキュメント
