@@ -5,18 +5,18 @@
     
     <title>Generate OpenAPI Spec of EDC Connector | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="メモ  準備 生成 Data Planeの中身を軽く確認  概要 paths  Transfer Data Plane control-plane-api  /transferprocess/{processId}/complete /transferprocess/{processId}/fail マネージメントAPIの類   参考  ドキュメント ソースコード    メモ EDCのCon">
+    <meta name="description" content="メモ  準備 生成 Data Planeの中身を軽く確認  概要 paths  Transfer Data Plane control-plane-api  /transferprocess/{processId}/complete /transferprocess/{processId}/fail マネージメントAPIの類  Dataspace Protocol Architecture">
 <meta name="keywords" content="Data Spaces,EDC,OpenAPI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Generate OpenAPI Spec of EDC Connector">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2023/09/09/Generate-OpenAPI-Spec-of-EDC-Connector/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="メモ  準備 生成 Data Planeの中身を軽く確認  概要 paths  Transfer Data Plane control-plane-api  /transferprocess/{processId}/complete /transferprocess/{processId}/fail マネージメントAPIの類   参考  ドキュメント ソースコード    メモ EDCのCon">
+<meta property="og:description" content="メモ  準備 生成 Data Planeの中身を軽く確認  概要 paths  Transfer Data Plane control-plane-api  /transferprocess/{processId}/complete /transferprocess/{processId}/fail マネージメントAPIの類  Dataspace Protocol Architecture">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2023-09-23T15:03:57.803Z">
+<meta property="og:updated_time" content="2023-09-23T18:13:30.403Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Generate OpenAPI Spec of EDC Connector">
-<meta name="twitter:description" content="メモ  準備 生成 Data Planeの中身を軽く確認  概要 paths  Transfer Data Plane control-plane-api  /transferprocess/{processId}/complete /transferprocess/{processId}/fail マネージメントAPIの類   参考  ドキュメント ソースコード    メモ EDCのCon">
+<meta name="twitter:description" content="メモ  準備 生成 Data Planeの中身を軽く確認  概要 paths  Transfer Data Plane control-plane-api  /transferprocess/{processId}/complete /transferprocess/{processId}/fail マネージメントAPIの類  Dataspace Protocol Architecture">
     
 
     
@@ -268,6 +268,13 @@ Data Plane</a></li>
 <li><a href="#transferprocessprocessidfail" id="toc-transferprocessprocessidfail">/transferprocess/{processId}/fail</a></li>
 <li><a href="#マネージメントapiの類" id="toc-マネージメントapiの類">マネージメントAPIの類</a></li>
 </ul></li>
+<li><a href="#dataspace-protocol-architecture" id="toc-dataspace-protocol-architecture">Dataspace Protocol
+Architecture</a>
+<ul>
+<li><a href="#後方互換性" id="toc-後方互換性">後方互換性</a></li>
+<li><a href="#ゴール" id="toc-ゴール">ゴール</a></li>
+<li><a href="#アプローチ" id="toc-アプローチ">アプローチ</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#参考" id="toc-参考">参考</a>
 <ul>
@@ -282,7 +289,9 @@ the OpenApi Spec (*.yaml)</a>に記載されている。
 これに従い、試しに出力してみることにする。</p>
 <p>ただ、このSpecはいわゆる現在EDCが採用している、Dataspace
 Protocol仕様ではないものが含まれている可能性が高い。
-pathが<code>/v2</code>となっているのは、Dataspace Protocol準拠か？</p>
+pathが<code>/v2</code>となっているのは、Dataspace Protocol準拠か？ →
+実際に調べてみると、v2が必ずしも、Dataspace
+Protocol向けというわけではなさそうである。</p>
 <p>ちなみに、参考までに、IDSA Dataspace ConnectorのOpenAPI Specは <a href="https://github.com/International-Data-Spaces-Association/DataspaceConnector/blob/main/openapi.yaml" target="_blank" rel="noopener">Dataspace
 ConnectorのOpenAPI Spec</a> にある。
 このコネクタは昨年からあまり更新されていないので注意。</p>
@@ -372,11 +381,58 @@ Protocolに対応している。DCATカタログのやり取り。
 </ul></li>
 </ul>
 <p>など。ただ、<code>/v2</code>としていながら、DSPではなかったりするものがある（例：<code>/v2/contractnegotiations</code>）など注意が必要。</p>
+<h2><span id="dataspace-protocolarchitecture">Dataspace Protocol
+Architecture</span></h2>
+<p><a href="https://github.com/eclipse-edc/Connector/tree/main/docs/developer/architecture/ids-dataspace-protocol" target="_blank" rel="noopener">IDS
+Dataspace Protocolのドキュメント</a>
+にIDSプロトコル対応の概要が記載されている。</p>
+<h3><span id="後方互換性">後方互換性</span></h3>
+<p>当該ドキュメントに記載の通り、後方互換性を保証するものではない。
+新しいプロトコルに対応次第、古い実装は破棄される。</p>
+<h3><span id="ゴール">ゴール</span></h3>
+<ul>
+<li>（将来リリースされる？）IDS-TCK（IDS Test Compatibility
+Kit)の必須項目をパスすること</li>
+<li>Dataspace
+Protocol仕様を満たす他のコネクタと相互運用可能であること</li>
+<li>Dataspace Protocolよりも前のバージョンのIDSには対応しない。</li>
+<li>Usage Policyは実装しない。他のプロジェクトで実装される。</li>
+</ul>
+<h3><span id="アプローチ">アプローチ</span></h3>
+<p>Dataspace ProtocolはJSON-LD、DCAT、ODRLで実現されている。
+このプロトコルの対応で、Contract NegotiationとTransfer
+Processステートが新たに実装されることになる。
+ただし、新しいプロトコルの対応が完了するまで、テストが通るようにする。</p>
+<ol type="1">
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/json-ld-processing-architecture.md" target="_blank" rel="noopener">JSON-LD
+Processing Architecture</a> に基きJSON-LD対応する。</li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/ids-endpoints-services-architecture.md" target="_blank" rel="noopener">Dataspace
+Protocol Endpoints and Services Architecture</a>
+に基きエンドポイントとサービスの拡張を実装する。</li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/contract-negotiation-architecture.md" target="_blank" rel="noopener">Dataspace
+Protocol Contract Negotiation Architecture</a> に基きContract
+Negotiationマネージャのステートマシンを更新する。</li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/transfer-process-architecture.md" target="_blank" rel="noopener">The
+Dataspace Protocol Transfer Process Architecture</a> に基きTransfer
+Processのステートマシンを更新する。</li>
+<li>この1から4項目が安定すると、古いモジュールとサービスが削除される。</li>
+<li>Management APIを更新する。</li>
+</ol>
 <h1><span id="参考">参考</span></h1>
 <h2><span id="ドキュメント">ドキュメント</span></h2>
 <ul>
 <li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/openapi.md" target="_blank" rel="noopener">Generating
 the OpenApi Spec (*.yaml)</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/tree/main/docs/developer/architecture/ids-dataspace-protocol" target="_blank" rel="noopener">IDS
+Dataspace Protocolのドキュメント</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/json-ld-processing-architecture.md" target="_blank" rel="noopener">JSON-LD
+Processing Architecture</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/ids-endpoints-services-architecture.md" target="_blank" rel="noopener">Dataspace
+Protocol Endpoints and Services Architecture</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/contract-negotiation-architecture.md" target="_blank" rel="noopener">Dataspace
+Protocol Contract Negotiation Architecture</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/transfer-process-architecture.md" target="_blank" rel="noopener">The
+Dataspace Protocol Transfer Process Architecture</a></li>
 </ul>
 <h2><span id="ソースコード">ソースコード</span></h2>
 <ul>
@@ -397,7 +453,7 @@ ConnectorのOpenAPI Spec</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/09/09/Generate-OpenAPI-Spec-of-EDC-Connector/" data-id="clmw5vveu016b1voea05nuetn" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/09/Generate-OpenAPI-Spec-of-EDC-Connector/" data-id="clmwcnmwu016a1vp2v8bx8l1x" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

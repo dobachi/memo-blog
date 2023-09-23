@@ -19,7 +19,7 @@ EDCのConnectorのOpenAPIスペックを出力するための手順が[Generatin
 これに従い、試しに出力してみることにする。
 
 ただ、このSpecはいわゆる現在EDCが採用している、Dataspace Protocol仕様ではないものが含まれている可能性が高い。
-pathが`/v2`となっているのは、Dataspace Protocol準拠か？
+pathが`/v2`となっているのは、Dataspace Protocol準拠か？ → 実際に調べてみると、v2が必ずしも、Dataspace Protocol向けというわけではなさそうである。
 
 ちなみに、参考までに、IDSA Dataspace ConnectorのOpenAPI Specは [Dataspace ConnectorのOpenAPI Spec] にある。
 このコネクタは昨年からあまり更新されていないので注意。
@@ -272,14 +272,52 @@ components:
 
 など。ただ、`/v2`としていながら、DSPではなかったりするものがある（例：`/v2/contractnegotiations`）など注意が必要。
 
+## Dataspace Protocol Architecture
+
+[IDS Dataspace Protocolのドキュメント] にIDSプロトコル対応の概要が記載されている。
+
+### 後方互換性
+
+当該ドキュメントに記載の通り、後方互換性を保証するものではない。
+新しいプロトコルに対応次第、古い実装は破棄される。
+
+### ゴール
+
+* （将来リリースされる？）IDS-TCK（IDS Test Compatibility Kit)の必須項目をパスすること
+* Dataspace Protocol仕様を満たす他のコネクタと相互運用可能であること
+* Dataspace Protocolよりも前のバージョンのIDSには対応しない。
+* Usage Policyは実装しない。他のプロジェクトで実装される。
+
+### アプローチ
+
+Dataspace ProtocolはJSON-LD、DCAT、ODRLで実現されている。
+このプロトコルの対応で、Contract NegotiationとTransfer Processステートが新たに実装されることになる。
+ただし、新しいプロトコルの対応が完了するまで、テストが通るようにする。
+
+1. [JSON-LD Processing Architecture] に基きJSON-LD対応する。
+2. [Dataspace Protocol Endpoints and Services Architecture] に基きエンドポイントとサービスの拡張を実装する。
+3. [Dataspace Protocol Contract Negotiation Architecture] に基きContract Negotiationマネージャのステートマシンを更新する。
+4. [The Dataspace Protocol Transfer Process Architecture] に基きTransfer Processのステートマシンを更新する。
+5. この1から4項目が安定すると、古いモジュールとサービスが削除される。
+6. Management APIを更新する。
 
 # 参考
 
 ## ドキュメント
 
 * [Generating the OpenApi Spec (*.yaml)]
+* [IDS Dataspace Protocolのドキュメント]
+* [JSON-LD Processing Architecture]
+* [Dataspace Protocol Endpoints and Services Architecture]
+* [Dataspace Protocol Contract Negotiation Architecture]
+* [The Dataspace Protocol Transfer Process Architecture]
 
 [Generating the OpenApi Spec (*.yaml)]: https://github.com/eclipse-edc/Connector/blob/main/docs/developer/openapi.md
+[IDS Dataspace Protocolのドキュメント]: https://github.com/eclipse-edc/Connector/tree/main/docs/developer/architecture/ids-dataspace-protocol
+[JSON-LD Processing Architecture]: https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/json-ld-processing-architecture.md
+[Dataspace Protocol Endpoints and Services Architecture]: https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/ids-endpoints-services-architecture.md
+[Dataspace Protocol Contract Negotiation Architecture]: https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/contract-negotiation-architecture.md
+[The Dataspace Protocol Transfer Process Architecture]: https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/transfer-process-architecture.md
 
 ## ソースコード
 

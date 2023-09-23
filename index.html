@@ -364,7 +364,7 @@ Planeの実装が拡張として含まれている。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/09/20/Dataspace-Protocol-of-EDC/" data-id="clmw5vveg015s1voey5wamcrr" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/20/Dataspace-Protocol-of-EDC/" data-id="clmwcnmwk015r1vp2va21du4e" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -502,6 +502,13 @@ Data Plane</a></li>
 <li><a href="#transferprocessprocessidfail" id="toc-transferprocessprocessidfail">/transferprocess/{processId}/fail</a></li>
 <li><a href="#マネージメントapiの類" id="toc-マネージメントapiの類">マネージメントAPIの類</a></li>
 </ul></li>
+<li><a href="#dataspace-protocol-architecture" id="toc-dataspace-protocol-architecture">Dataspace Protocol
+Architecture</a>
+<ul>
+<li><a href="#後方互換性" id="toc-後方互換性">後方互換性</a></li>
+<li><a href="#ゴール" id="toc-ゴール">ゴール</a></li>
+<li><a href="#アプローチ" id="toc-アプローチ">アプローチ</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#参考" id="toc-参考">参考</a>
 <ul>
@@ -516,7 +523,9 @@ the OpenApi Spec (*.yaml)</a>に記載されている。
 これに従い、試しに出力してみることにする。</p>
 <p>ただ、このSpecはいわゆる現在EDCが採用している、Dataspace
 Protocol仕様ではないものが含まれている可能性が高い。
-pathが<code>/v2</code>となっているのは、Dataspace Protocol準拠か？</p>
+pathが<code>/v2</code>となっているのは、Dataspace Protocol準拠か？ →
+実際に調べてみると、v2が必ずしも、Dataspace
+Protocol向けというわけではなさそうである。</p>
 <p>ちなみに、参考までに、IDSA Dataspace ConnectorのOpenAPI Specは <a href="https://github.com/International-Data-Spaces-Association/DataspaceConnector/blob/main/openapi.yaml" target="_blank" rel="noopener">Dataspace
 ConnectorのOpenAPI Spec</a> にある。
 このコネクタは昨年からあまり更新されていないので注意。</p>
@@ -606,11 +615,58 @@ Protocolに対応している。DCATカタログのやり取り。
 </ul></li>
 </ul>
 <p>など。ただ、<code>/v2</code>としていながら、DSPではなかったりするものがある（例：<code>/v2/contractnegotiations</code>）など注意が必要。</p>
+<h2><span id="dataspace-protocolarchitecture">Dataspace Protocol
+Architecture</span></h2>
+<p><a href="https://github.com/eclipse-edc/Connector/tree/main/docs/developer/architecture/ids-dataspace-protocol" target="_blank" rel="noopener">IDS
+Dataspace Protocolのドキュメント</a>
+にIDSプロトコル対応の概要が記載されている。</p>
+<h3><span id="後方互換性">後方互換性</span></h3>
+<p>当該ドキュメントに記載の通り、後方互換性を保証するものではない。
+新しいプロトコルに対応次第、古い実装は破棄される。</p>
+<h3><span id="ゴール">ゴール</span></h3>
+<ul>
+<li>（将来リリースされる？）IDS-TCK（IDS Test Compatibility
+Kit)の必須項目をパスすること</li>
+<li>Dataspace
+Protocol仕様を満たす他のコネクタと相互運用可能であること</li>
+<li>Dataspace Protocolよりも前のバージョンのIDSには対応しない。</li>
+<li>Usage Policyは実装しない。他のプロジェクトで実装される。</li>
+</ul>
+<h3><span id="アプローチ">アプローチ</span></h3>
+<p>Dataspace ProtocolはJSON-LD、DCAT、ODRLで実現されている。
+このプロトコルの対応で、Contract NegotiationとTransfer
+Processステートが新たに実装されることになる。
+ただし、新しいプロトコルの対応が完了するまで、テストが通るようにする。</p>
+<ol type="1">
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/json-ld-processing-architecture.md" target="_blank" rel="noopener">JSON-LD
+Processing Architecture</a> に基きJSON-LD対応する。</li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/ids-endpoints-services-architecture.md" target="_blank" rel="noopener">Dataspace
+Protocol Endpoints and Services Architecture</a>
+に基きエンドポイントとサービスの拡張を実装する。</li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/contract-negotiation-architecture.md" target="_blank" rel="noopener">Dataspace
+Protocol Contract Negotiation Architecture</a> に基きContract
+Negotiationマネージャのステートマシンを更新する。</li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/transfer-process-architecture.md" target="_blank" rel="noopener">The
+Dataspace Protocol Transfer Process Architecture</a> に基きTransfer
+Processのステートマシンを更新する。</li>
+<li>この1から4項目が安定すると、古いモジュールとサービスが削除される。</li>
+<li>Management APIを更新する。</li>
+</ol>
 <h1><span id="参考">参考</span></h1>
 <h2><span id="ドキュメント">ドキュメント</span></h2>
 <ul>
 <li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/openapi.md" target="_blank" rel="noopener">Generating
 the OpenApi Spec (*.yaml)</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/tree/main/docs/developer/architecture/ids-dataspace-protocol" target="_blank" rel="noopener">IDS
+Dataspace Protocolのドキュメント</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/json-ld-processing-architecture.md" target="_blank" rel="noopener">JSON-LD
+Processing Architecture</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/ids-endpoints-services-architecture.md" target="_blank" rel="noopener">Dataspace
+Protocol Endpoints and Services Architecture</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/contract-negotiation-architecture.md" target="_blank" rel="noopener">Dataspace
+Protocol Contract Negotiation Architecture</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/transfer-process-architecture.md" target="_blank" rel="noopener">The
+Dataspace Protocol Transfer Process Architecture</a></li>
 </ul>
 <h2><span id="ソースコード">ソースコード</span></h2>
 <ul>
@@ -631,7 +687,7 @@ ConnectorのOpenAPI Spec</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/09/09/Generate-OpenAPI-Spec-of-EDC-Connector/" data-id="clmw5vveu016b1voea05nuetn" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/09/Generate-OpenAPI-Spec-of-EDC-Connector/" data-id="clmwcnmwu016a1vp2v8bx8l1x" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -822,7 +878,7 @@ APIサーバのAPI定義と実装を関連付ける</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/09/07/OpenAPI-Generator-for-Flask/" data-id="clmw5vv54008e1voepiip2x58" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/07/OpenAPI-Generator-for-Flask/" data-id="clmwcnmmp008g1vp2434dbdwo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1270,7 +1326,7 @@ ProcessのMessage Type</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/31/IDS-Dataspace-Protocol/" data-id="clmw5vvf1016n1voeqod76eg4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/31/IDS-Dataspace-Protocol/" data-id="clmwcnmx2016m1vp2espk0t9c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1553,7 +1609,7 @@ SDKとは？</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/27/How-to-create-SDK/" data-id="clmw5vv3g00531voe1slsa0nt" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/27/How-to-create-SDK/" data-id="clmwcnmld00531vp2svwj0kiw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1716,7 +1772,7 @@ SDKとは？</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/15/check-windows-cpu-resources/" data-id="clmw5vv6q00ct1voehn9z22eb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/15/check-windows-cpu-resources/" data-id="clmwcnmon00cz1vp2wsu8p084" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1931,7 +1987,7 @@ Compatibility</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="clmw5vv53008b1voev8mhym7s" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="clmwcnmml00891vp2v5mn2rla" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2137,7 +2193,7 @@ Actionsでmarkdownをpdfで出力する</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/05/02/GitHub-Actions-for-Hexo-with-Pandoc/" data-id="clmw5vv34004j1voek0zc265z" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/05/02/GitHub-Actions-for-Hexo-with-Pandoc/" data-id="clmwcnml8004o1vp2lejoxnjb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2286,7 +2342,7 @@ Hyper-V の実行</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="clmw5vv5100831voemcbpik1d" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="clmwcnmmi007z1vp28mirb06d" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2675,7 +2731,7 @@ CLI v2 Docker image</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="clmw5vvey016j1voe54g2ymjo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="clmwcnmx0016i1vp2mej5jkha" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
