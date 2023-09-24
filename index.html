@@ -364,7 +364,7 @@ Planeの実装が拡張として含まれている。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/09/20/Dataspace-Protocol-of-EDC/" data-id="clmwdcjx101651wph60owv73e" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/20/Dataspace-Protocol-of-EDC/" data-id="clmxsga9401651voauqsxwxw2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -510,10 +510,15 @@ Architecture</a>
 <li><a href="#アプローチ" id="toc-アプローチ">アプローチ</a></li>
 <li><a href="#json-ld-processing-architecture" id="toc-json-ld-processing-architecture">JSON-LD Processing
 Architecture</a></li>
+<li><a href="#dataspace-protocol-endpoints-and-services-architecture" id="toc-dataspace-protocol-endpoints-and-services-architecture">Dataspace
+Protocol Endpoints and Services Architecture</a></li>
+<li><a href="#dataspace-protocol-contract-negotiation-architecture" id="toc-dataspace-protocol-contract-negotiation-architecture">Dataspace
+Protocol Contract Negotiation Architecture</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#参考" id="toc-参考">参考</a>
 <ul>
+<li><a href="#プロジェクト" id="toc-プロジェクト">プロジェクト</a></li>
 <li><a href="#ドキュメント" id="toc-ドキュメント">ドキュメント</a></li>
 <li><a href="#ソースコード" id="toc-ソースコード">ソースコード</a></li>
 </ul></li>
@@ -657,8 +662,322 @@ Processのステートマシンを更新する。</li>
 <h3><span id="json-ld-processingarchitecture">JSON-LD Processing
 Architecture</span></h3>
 <p><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/json-ld-processing-architecture.md" target="_blank" rel="noopener">JSON-LD
-Processing Architecture</a> に</p>
+Processing Architecture</a>
+にJSON-LDを処理するアーキテクチャに関するコンセプトとアプローチが記載されている。</p>
+<p>冒頭に記載あるとおり、結果として、JDS InfoModel Java
+Libraryを用いるのをやめ、JSON-LDメッセージをやり取りすることになる。</p>
+<p>既存の TypeManagerに機能付加する。 JSONP対応する。</p>
+<p>文書上は、以下のようなコンセプトが例として載っていた。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var mapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line"></span><br><span class="line">mapper.registerModule(<span class="keyword">new</span> JSONPModule());</span><br><span class="line"></span><br><span class="line">var <span class="keyword">module</span> = <span class="keyword">new</span> SimpleModule() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setupModule</span><span class="params">(SetupContext context)</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.setupModule(context);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">mapper.registerModule(<span class="keyword">module</span>);</span><br><span class="line"></span><br><span class="line">typeManager.registerContext(<span class="string">"json-ld"</span>,mapper)</span><br></pre></td></tr></table></figure>
+<p>実際に、2023/9/24時点での実装においても、以下のようにTypeManagerに登録されたJSON_JDのマッパーを利用していることが見られます。</p>
+<p><code>org/eclipse/edc/protocol/dsp/api/configuration/DspApiConfigurationExtension.java:128</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var jsonLdMapper = typeManager.getMapper(JSON_LD);</span><br><span class="line">webService.registerResource(config.getContextAlias(), <span class="keyword">new</span> ObjectMapperProvider(jsonLdMapper));</span><br><span class="line">webService.registerResource(config.getContextAlias(), <span class="keyword">new</span> JerseyJsonLdInterceptor(jsonLd, jsonLdMapper));</span><br></pre></td></tr></table></figure>
+<p><code>org/eclipse/edc/protocol/dsp/api/configuration/DspApiConfigurationExtension.java:135</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">registerTransformers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    var mapper = typeManager.getMapper(JSON_LD);</span><br><span class="line">    mapper.registerSubtypes(AtomicConstraint.class, LiteralExpression.class);</span><br><span class="line"></span><br><span class="line">    var jsonBuilderFactory = Json.createBuilderFactory(Map.of());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// EDC model to JSON-LD transformers</span></span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectFromCatalogTransformer(jsonBuilderFactory, mapper));</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectFromDatasetTransformer(jsonBuilderFactory, mapper));</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectFromPolicyTransformer(jsonBuilderFactory));</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectFromDistributionTransformer(jsonBuilderFactory));</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectFromDataServiceTransformer(jsonBuilderFactory));</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectFromAssetTransformer(jsonBuilderFactory, mapper));</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectFromDataAddressTransformer(jsonBuilderFactory));</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectFromQuerySpecTransformer(jsonBuilderFactory));</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectFromCriterionTransformer(jsonBuilderFactory, mapper));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// JSON-LD to EDC model transformers</span></span><br><span class="line">    <span class="comment">// DCAT transformers</span></span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectToCatalogTransformer());</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectToDataServiceTransformer());</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectToDatasetTransformer());</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectToDistributionTransformer());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ODRL Transformers</span></span><br><span class="line">    OdrlTransformersFactory.jsonObjectToOdrlTransformers().forEach(transformerRegistry::register);</span><br><span class="line"></span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonValueToGenericTypeTransformer(mapper));</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectToAssetTransformer());</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectToQuerySpecTransformer());</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectToCriterionTransformer());</span><br><span class="line">    transformerRegistry.register(<span class="keyword">new</span> JsonObjectToDataAddressTransformer());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>特に後者の実装は、各種情報をJSONのオブジェクトに変換するトランスフォーマー（や、その逆）を登録している。
+JSON-LDにてメッセージをやりとりしている様子の一端をみられる。</p>
+<p>また、ドキュメントの方ではコンセプトとして、以下のような変換の流れが例として挙げられていた。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// message is de-serialized as Map&lt;String, Object&gt; by Jersey </span></span><br><span class="line">var document = JsonDocument.of(mapper.convertValue(message, JsonObject.class));</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">    var compacted = JsonLd.compact(document,EMPTY_CONTEXT).get();</span><br><span class="line">    var convertedDocument = mapper.convertValue(compacted,Map.class);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// process converted document</span></span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span>(JsonLdError e) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>もし実際の実装をみるのであれば、
+<code>org.eclipse.edc.core.transform.transformer.from.JsonObjectFromCatalogTransformer#transform</code>
+メソッドのようなものを確認すると良い。</p>
+<p>なお、ドキュメントローダとしては、<a href="https://github.com/filip26/titanium-json-ld" target="_blank" rel="noopener">titanium-json-ld</a>が使われているようだ。
+参考→ <code>org.eclipse.edc.jsonld.TitaniumJsonLd</code> <a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/ids-endpoints-services-architecture.md" target="_blank" rel="noopener">Dataspace
+Protocol Endpoints and Services Architecture</a>
+にもその旨記載されている。</p>
+<h3><span id="dataspaceprotocol-endpoints-and-services-architecture">Dataspace
+Protocol Endpoints and Services Architecture</span></h3>
+<p><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/ids-endpoints-services-architecture.md" target="_blank" rel="noopener">Dataspace
+Protocol Endpoints and Services Architecture</a> にIDS Controller
+Endpoint実装のアプローチが記載されている。</p>
+<p>また当該ドキュメントには、以下のように拡張との対応関係が示されている。</p>
+<table>
+<thead>
+<tr class="header">
+<th>Description</th>
+<th>Repository</th>
+<th>Extension</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Contract Negotiation</td>
+<td>Connector</td>
+<td>control-plane-ids</td>
+</tr>
+<tr class="even">
+<td>Transfer Process</td>
+<td>Connector</td>
+<td>control-plane-ids</td>
+</tr>
+<tr class="odd">
+<td>Catalog requests</td>
+<td>Connector</td>
+<td>catalog-ids</td>
+</tr>
+</tbody>
+</table>
+<p>また前述の通り、Dataspace
+ProtocolではJSON-LDにてメッセージがやりとりされる。
+それらを「（デ）マーシャル」（シリアライズ、デシリアライズ）する必要がある。</p>
+<p>デシリアライズは以下のように行われると例示されている。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> document = <span class="type">JsonDocument</span>.of(jsonObject);</span><br><span class="line"><span class="keyword">var</span> expanded = <span class="type">JsonLd</span>.expand(document).get();</span><br></pre></td></tr></table></figure>
+<p>シリアライズは以下のように行われると例示されている。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> document = <span class="type">JsonDocument</span>.of(jsonObject);</span><br><span class="line"><span class="keyword">var</span> compacted = <span class="type">JsonLd</span>.compact(document,<span class="type">EMPTY_CONTEXT</span>).get();</span><br><span class="line"><span class="keyword">var</span> compacted = mapper.convertValue(compacted,<span class="type">Map</span>.<span class="keyword">class</span>);</span><br></pre></td></tr></table></figure>
+<h4><span id="マイグレーションのポイント">マイグレーションのポイント</span></h4>
+<p>大きなポイントの例は、</p>
+<ul>
+<li>アセット（DCATにおけるデータセット）にODRLポリシーであるofferを含むようになること</li>
+<li>データセットはカタログに含まれる。</li>
+</ul>
+<p>（もともとEDCが採用していたIDS
+Infomodelでは、offerにアセットが含まれる）</p>
+<p>Contract Definition、Asset、Dataset、ODRL
+Offerの関係は以下のように表現されていた。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CD = Contract Definition</span><br><span class="line">A  = Asset</span><br><span class="line">DS = Dataset</span><br><span class="line">O  = ODRL Offer</span><br><span class="line"></span><br><span class="line">If the Contract Definitions are:</span><br><span class="line"></span><br><span class="line">CD 1  --selects--&gt; [A1, A2]</span><br><span class="line">CD 2  --selects--&gt; [A1, A3]</span><br><span class="line"></span><br><span class="line">the resulting Catalog containing Datasets is:</span><br><span class="line"></span><br><span class="line">DS 1 -&gt; A1 [O:CD1, O:CD2] </span><br><span class="line">DS 2 -&gt; A2 [O:CD1]</span><br><span class="line">DS 3 -&gt; A3 [O:CD2]</span><br></pre></td></tr></table></figure>
+<p>上記は包含関係を表している。</p>
+<p>また、ProviderにContract
+Negotiationyや転送タイプをリクエストするためのエンドポイントは、DCAT
+Distributionである。
+Distributionは、コネクタエンドポイントのメタデータとDataAdress属性で示される転送タイプの組み合わせで示される。</p>
+<p>なお、現状のEDCではまだ未実装の部分があり、フューチャーワークとされていた。</p>
+<p>また、DCAT
+CatalogやDatasetは名前空間プロパティを使用して拡張可能である必要がある。CatalogDecoratorが必要。</p>
+<h4><span id="型変換">型変換</span></h4>
+<p>もともとあったIdsTypeTransfomerを実装し直す必要がある。
+これは先に上げていた<code>JsonObjectFromCatalogTransformer</code>のようなTransformerである。
+本ドキュメントには、その実装コンセプト/アプローチが記載されている。</p>
+<h4><span id="その他">その他</span></h4>
+<p>Identificationの取り扱い方についても変更あり。</p>
+<p>RemoteMessageDispatcherも変更あり。
+以下のようなクラス設計になっている。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RemoteMessageDispatcher (org.eclipse.edc.spi.message)</span><br><span class="line">  GenericHttpRemoteDispatcher (org.eclipse.edc.connector.callback.dispatcher.http)</span><br><span class="line">    GenericHttpRemoteDispatcherImpl (org.eclipse.edc.connector.callback.dispatcher.http)</span><br><span class="line">  DspHttpRemoteMessageDispatcher (org.eclipse.edc.protocol.dsp.spi.dispatcher)</span><br><span class="line">    DspHttpRemoteMessageDispatcherImpl (org.eclipse.edc.protocol.dsp.dispatcher)</span><br></pre></td></tr></table></figure>
+<p>Dataspace
+Protocol対応は、<code>org.eclipse.edc.protocol.dsp.dispatcher.DspHttpRemoteMessageDispatcherImpl</code>と考えておくとよい。</p>
+<h3><span id="dataspaceprotocol-contract-negotiation-architecture">Dataspace
+Protocol Contract Negotiation Architecture</span></h3>
+<p><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/architecture/ids-dataspace-protocol/contract-negotiation-architecture.md" target="_blank" rel="noopener">Dataspace
+Protocol Contract Negotiation Architecture</a> にContract
+Negotiationの変更アプローチが記載されている。</p>
+<p>ステートマシンの変化内容を一覧化した表が載っていた。
+表の通り、Dataspace
+Protocolに対応したのちも、IDSにはもともと無いステートが一部残っている。
+Contract
+Negotiationでは、その状態が重要であるから、より厳密に扱っている印象がある。</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 14%">
+<col style="width: 11%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>EDC Existing</th>
+<th>EDC New</th>
+<th>IDS</th>
+<th>Transition Function</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>UNSAVED</td>
+<td>(remove)</td>
+<td>N/A</td>
+<td></td>
+<td>This state is not needed</td>
+</tr>
+<tr class="even">
+<td>INITIAL</td>
+<td>INITIAL</td>
+<td>N/A</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>REQUESTING</td>
+<td>REQUESTING</td>
+<td>N/A</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>REQUESTED</td>
+<td>REQUESTED</td>
+<td>REQUESTED</td>
+<td>Provider (new &amp; counter)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>PROVIDER_OFFERING</td>
+<td>OFFERING</td>
+<td>N/A</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>PROVIDER_OFFERED</td>
+<td>OFFERED</td>
+<td>OFFERED</td>
+<td>Consumer</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>CONSUMER_OFFERING</td>
+<td>(REQUESTING)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>CONSUMER_OFFERED</td>
+<td>(REQUESTED)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>CONSUMER_APPROVING</td>
+<td>ACCEPTING</td>
+<td>N/A</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>CONSUMER_APPROVED</td>
+<td>ACCEPTED</td>
+<td>ACCEPTED</td>
+<td>Provider</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>DECLINING</td>
+<td>(TERMINATING)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>DECLINED</td>
+<td>(TERMINATED)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>CONFIRMING</td>
+<td>AGREEING</td>
+<td>N/A</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>CONFIRMED</td>
+<td>AGREED</td>
+<td>AGREED</td>
+<td>Consumer</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>VERIFYING</td>
+<td>N/A</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>VERIFIED</td>
+<td>VERIFIED</td>
+<td>Provider</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>FINALIZING</td>
+<td>N/A</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>FINALIZED</td>
+<td>FINALIZED</td>
+<td>Consumer</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>TERMINATING</td>
+<td>N/A</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>TERMINATED</td>
+<td>TERMINATED</td>
+<td>P &amp; C</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>ERROR</td>
+<td>(TERMINATED)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h1><span id="参考">参考</span></h1>
+<h2><span id="プロジェクト">プロジェクト</span></h2>
+<ul>
+<li><a href="https://github.com/filip26/titanium-json-ld" target="_blank" rel="noopener">titanium-json-ld</a></li>
+</ul>
 <h2><span id="ドキュメント">ドキュメント</span></h2>
 <ul>
 <li><a href="https://github.com/eclipse-edc/Connector/blob/main/docs/developer/openapi.md" target="_blank" rel="noopener">Generating
@@ -693,7 +1012,7 @@ ConnectorのOpenAPI Spec</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/09/09/Generate-OpenAPI-Spec-of-EDC-Connector/" data-id="clmwdcjxe016o1wphkb4rewiq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/09/Generate-OpenAPI-Spec-of-EDC-Connector/" data-id="clmxsgade01e81voaoggo1z2c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -884,7 +1203,7 @@ APIサーバのAPI定義と実装を関連付ける</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/09/07/OpenAPI-Generator-for-Flask/" data-id="clmwdcjnh008f1wphi27qo76s" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/07/OpenAPI-Generator-for-Flask/" data-id="clmxsg9yb008d1voatttqbum0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1332,7 +1651,7 @@ ProcessのMessage Type</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/31/IDS-Dataspace-Protocol/" data-id="clmwdcjxn01701wphxn2j8vo3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/31/IDS-Dataspace-Protocol/" data-id="clmxsga9s016w1voagd68b3ar" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1615,7 +1934,7 @@ SDKとは？</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/27/How-to-create-SDK/" data-id="clmwdcjm500541wphqp46i1u4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/27/How-to-create-SDK/" data-id="clmxsg9wr00521voa7h7pjigi" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1778,7 +2097,7 @@ SDKとは？</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/15/check-windows-cpu-resources/" data-id="clmwdcjpi00d81wpho74k6f6w" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/15/check-windows-cpu-resources/" data-id="clmxsga0m00d61voauec345l7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1993,7 +2312,7 @@ Compatibility</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="clmwdcjng008c1wphl5uxgs21" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="clmxsg9ya008a1voaru7waclg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2199,7 +2518,7 @@ Actionsでmarkdownをpdfで出力する</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/05/02/GitHub-Actions-for-Hexo-with-Pandoc/" data-id="clmwdcjly004k1wphum7ri48x" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/05/02/GitHub-Actions-for-Hexo-with-Pandoc/" data-id="clmxsg9wh004i1voay3mrwcm7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2348,7 +2667,7 @@ Hyper-V の実行</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="clmwdcjnd00841wpha65gc1yf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="clmxsg9y700821voaso2p22s2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2737,7 +3056,7 @@ CLI v2 Docker image</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="clmwdcjxk016w1wphu2vezq0x" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="clmxsga9o016s1voae41krz4l" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

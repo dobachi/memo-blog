@@ -303,10 +303,252 @@ Dataspace ProtocolはJSON-LD、DCAT、ODRLで実現されている。
 
 ### JSON-LD Processing Architecture
 
-[JSON-LD Processing Architecture] に
+[JSON-LD Processing Architecture] にJSON-LDを処理するアーキテクチャに関するコンセプトとアプローチが記載されている。
 
+冒頭に記載あるとおり、結果として、JDS InfoModel Java Libraryを用いるのをやめ、JSON-LDメッセージをやり取りすることになる。
+
+
+既存の TypeManagerに機能付加する。
+JSONP対応する。
+
+文書上は、以下のようなコンセプトが例として載っていた。
+
+```java
+var mapper = new ObjectMapper();
+
+mapper.registerModule(new JSONPModule());
+
+var module = new SimpleModule() {
+
+    @Override
+    public void setupModule(SetupContext context){
+        super.setupModule(context);
+    }
+    
+};
+
+mapper.registerModule(module);
+
+typeManager.registerContext("json-ld",mapper)
+```
+
+実際に、2023/9/24時点での実装においても、以下のようにTypeManagerに登録されたJSON_JDのマッパーを利用していることが見られます。
+
+`org/eclipse/edc/protocol/dsp/api/configuration/DspApiConfigurationExtension.java:128`
+
+```java
+        var jsonLdMapper = typeManager.getMapper(JSON_LD);
+        webService.registerResource(config.getContextAlias(), new ObjectMapperProvider(jsonLdMapper));
+        webService.registerResource(config.getContextAlias(), new JerseyJsonLdInterceptor(jsonLd, jsonLdMapper));
+```
+
+`org/eclipse/edc/protocol/dsp/api/configuration/DspApiConfigurationExtension.java:135`
+
+
+```java
+    private void registerTransformers() {
+        var mapper = typeManager.getMapper(JSON_LD);
+        mapper.registerSubtypes(AtomicConstraint.class, LiteralExpression.class);
+
+        var jsonBuilderFactory = Json.createBuilderFactory(Map.of());
+
+        // EDC model to JSON-LD transformers
+        transformerRegistry.register(new JsonObjectFromCatalogTransformer(jsonBuilderFactory, mapper));
+        transformerRegistry.register(new JsonObjectFromDatasetTransformer(jsonBuilderFactory, mapper));
+        transformerRegistry.register(new JsonObjectFromPolicyTransformer(jsonBuilderFactory));
+        transformerRegistry.register(new JsonObjectFromDistributionTransformer(jsonBuilderFactory));
+        transformerRegistry.register(new JsonObjectFromDataServiceTransformer(jsonBuilderFactory));
+        transformerRegistry.register(new JsonObjectFromAssetTransformer(jsonBuilderFactory, mapper));
+        transformerRegistry.register(new JsonObjectFromDataAddressTransformer(jsonBuilderFactory));
+        transformerRegistry.register(new JsonObjectFromQuerySpecTransformer(jsonBuilderFactory));
+        transformerRegistry.register(new JsonObjectFromCriterionTransformer(jsonBuilderFactory, mapper));
+
+        // JSON-LD to EDC model transformers
+        // DCAT transformers
+        transformerRegistry.register(new JsonObjectToCatalogTransformer());
+        transformerRegistry.register(new JsonObjectToDataServiceTransformer());
+        transformerRegistry.register(new JsonObjectToDatasetTransformer());
+        transformerRegistry.register(new JsonObjectToDistributionTransformer());
+
+        // ODRL Transformers
+        OdrlTransformersFactory.jsonObjectToOdrlTransformers().forEach(transformerRegistry::register);
+
+        transformerRegistry.register(new JsonValueToGenericTypeTransformer(mapper));
+        transformerRegistry.register(new JsonObjectToAssetTransformer());
+        transformerRegistry.register(new JsonObjectToQuerySpecTransformer());
+        transformerRegistry.register(new JsonObjectToCriterionTransformer());
+        transformerRegistry.register(new JsonObjectToDataAddressTransformer());
+    }
+```
+
+特に後者の実装は、各種情報をJSONのオブジェクトに変換するトランスフォーマー（や、その逆）を登録している。
+JSON-LDにてメッセージをやりとりしている様子の一端をみられる。
+
+また、ドキュメントの方ではコンセプトとして、以下のような変換の流れが例として挙げられていた。
+
+```java
+// message is de-serialized as Map<String, Object> by Jersey 
+var document = JsonDocument.of(mapper.convertValue(message, JsonObject.class));
+
+try {
+
+    var compacted = JsonLd.compact(document,EMPTY_CONTEXT).get();
+    var convertedDocument = mapper.convertValue(compacted,Map.class);
+    
+    // process converted document
+
+} catch(JsonLdError e) {
+    throw new RuntimeException(e);
+}
+```
+
+もし実際の実装をみるのであれば、 `org.eclipse.edc.core.transform.transformer.from.JsonObjectFromCatalogTransformer#transform` メソッドのようなものを確認すると良い。
+
+なお、ドキュメントローダとしては、[titanium-json-ld]が使われているようだ。
+参考→ `org.eclipse.edc.jsonld.TitaniumJsonLd`
+[Dataspace Protocol Endpoints and Services Architecture] にもその旨記載されている。
+
+### Dataspace Protocol Endpoints and Services Architecture
+
+[Dataspace Protocol Endpoints and Services Architecture] にIDS Controller Endpoint実装のアプローチが記載されている。
+
+また当該ドキュメントには、以下のように拡張との対応関係が示されている。
+
+| Description          | Repository | Extension         | 
+| -------------------- | ---------- | ----------------- | 
+| Contract Negotiation | Connector  | control-plane-ids | 
+| Transfer Process	    | Connector  | control-plane-ids | 
+| Catalog requests	    | Connector  | catalog-ids       | 
+
+また前述の通り、Dataspace ProtocolではJSON-LDにてメッセージがやりとりされる。
+それらを「（デ）マーシャル」（シリアライズ、デシリアライズ）する必要がある。
+
+デシリアライズは以下のように行われると例示されている。
+
+```scala
+var document = JsonDocument.of(jsonObject);
+var expanded = JsonLd.expand(document).get();
+```
+
+シリアライズは以下のように行われると例示されている。
+
+```scala
+var document = JsonDocument.of(jsonObject);
+var compacted = JsonLd.compact(document,EMPTY_CONTEXT).get();
+var compacted = mapper.convertValue(compacted,Map.class);
+```
+
+#### マイグレーションのポイント
+
+大きなポイントの例は、
+
+* アセット（DCATにおけるデータセット）にODRLポリシーであるofferを含むようになること
+* データセットはカタログに含まれる。
+
+（もともとEDCが採用していたIDS Infomodelでは、offerにアセットが含まれる）
+
+
+Contract Definition、Asset、Dataset、ODRL Offerの関係は以下のように表現されていた。
+
+
+```
+CD = Contract Definition
+A  = Asset
+DS = Dataset
+O  = ODRL Offer
+
+If the Contract Definitions are:
+
+CD 1  --selects--> [A1, A2]
+CD 2  --selects--> [A1, A3]
+
+the resulting Catalog containing Datasets is:
+
+DS 1 -> A1 [O:CD1, O:CD2] 
+DS 2 -> A2 [O:CD1]
+DS 3 -> A3 [O:CD2]
+```
+
+上記は包含関係を表している。
+
+また、ProviderにContract Negotiationyや転送タイプをリクエストするためのエンドポイントは、DCAT Distributionである。
+Distributionは、コネクタエンドポイントのメタデータとDataAdress属性で示される転送タイプの組み合わせで示される。
+
+なお、現状のEDCではまだ未実装の部分があり、フューチャーワークとされていた。
+
+
+また、DCAT CatalogやDatasetは名前空間プロパティを使用して拡張可能である必要がある。CatalogDecoratorが必要。
+
+#### 型変換
+
+もともとあったIdsTypeTransfomerを実装し直す必要がある。
+これは先に上げていた`JsonObjectFromCatalogTransformer`のようなTransformerである。
+本ドキュメントには、その実装コンセプト/アプローチが記載されている。
+
+
+#### その他
+
+Identificationの取り扱い方についても変更あり。
+
+RemoteMessageDispatcherも変更あり。
+以下のようなクラス設計になっている。
+
+```
+RemoteMessageDispatcher (org.eclipse.edc.spi.message)
+  GenericHttpRemoteDispatcher (org.eclipse.edc.connector.callback.dispatcher.http)
+    GenericHttpRemoteDispatcherImpl (org.eclipse.edc.connector.callback.dispatcher.http)
+  DspHttpRemoteMessageDispatcher (org.eclipse.edc.protocol.dsp.spi.dispatcher)
+    DspHttpRemoteMessageDispatcherImpl (org.eclipse.edc.protocol.dsp.dispatcher)
+```
+
+Dataspace Protocol対応は、`org.eclipse.edc.protocol.dsp.dispatcher.DspHttpRemoteMessageDispatcherImpl`と考えておくとよい。
+
+### Dataspace Protocol Contract Negotiation Architecture
+
+[Dataspace Protocol Contract Negotiation Architecture] にContract Negotiationの変更アプローチが記載されている。
+
+ステートマシンの変化内容を一覧化した表が載っていた。
+表の通り、Dataspace Protocolに対応したのちも、IDSにはもともと無いステートが一部残っている。
+Contract Negotiationでは、その状態が重要であるから、より厳密に扱っている印象がある。
+ 
+
+| EDC Existing       | EDC New       | IDS        | Transition Function        | Notes                      |
+|--------------------|---------------|------------|----------------------------|----------------------------|
+| UNSAVED            | (remove)      | N/A        |                            | This   state is not needed |
+| INITIAL            | INITIAL       | N/A        |                            |                            |
+|                    |               |            |                            |                            |
+| REQUESTING         | REQUESTING    | N/A        |                            |                            |
+| REQUESTED          | REQUESTED     | REQUESTED  | Provider   (new & counter) |                            |
+|                    |               |            |                            |                            |
+| PROVIDER_OFFERING  | OFFERING      | N/A        |                            |                            |
+| PROVIDER_OFFERED   | OFFERED       | OFFERED    | Consumer                   |                            |
+| CONSUMER_OFFERING  | (REQUESTING)  |            |                            |                            |
+| CONSUMER_OFFERED   | (REQUESTED)   |            |                            |                            |
+|                    |               |            |                            |                            |
+| CONSUMER_APPROVING | ACCEPTING     | N/A        |                            |                            |
+| CONSUMER_APPROVED  | ACCEPTED      | ACCEPTED   | Provider                   |                            |
+|                    |               |            |                            |                            |
+| DECLINING          | (TERMINATING) |            |                            |                            |
+| DECLINED           | (TERMINATED)  |            |                            |                            |
+|                    |               |            |                            |                            |
+| CONFIRMING         | AGREEING      | N/A        |                            |                            |
+| CONFIRMED          | AGREED        | AGREED     | Consumer                   |                            |
+|                    | VERIFYING     | N/A        |                            |                            |
+|                    | VERIFIED      | VERIFIED   | Provider                   |                            |
+|                    | FINALIZING    | N/A        |                            |                            |
+|                    | FINALIZED     | FINALIZED  | Consumer                   |                            |
+|                    | TERMINATING   | N/A        |                            |                            |
+|                    | TERMINATED    | TERMINATED | P   & C                    |                            |
+|                    |               |            |                            |                            |
+| ERROR              | (TERMINATED)  |            |                            |                            |
 
 # 参考
+
+## プロジェクト
+
+* [titanium-json-ld]
+
+[titanium-json-ld]: https://github.com/filip26/titanium-json-ld
 
 ## ドキュメント
 
