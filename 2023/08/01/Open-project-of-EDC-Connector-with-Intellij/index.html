@@ -5,18 +5,18 @@
     
     <title>Open project of EDC Connector with Intellij | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="1. メモ  1.1. 準備 1.2. Intellijで開く 1.3. トラブルシュート  1.3.1. Intellijのメモリ不足 1.3.2. Gradleのメモリ不足 1.3.3. JDKバージョンの不一致   2. 参考   1. メモ EDC Connector 公式GitHub のプロジェクトをIntellijで開くための手順メモ。 いろいろなやり方があるが一例として。 1.">
+    <meta name="description" content="1. メモ  1.1. 準備 1.2. Intellijで開く 1.3. トラブルシュート  1.3.1. Intellijのメモリ不足 1.3.2. Gradleのメモリ不足 1.3.3. JDKバージョンの不一致 1.3.4. Gradleで使うJDKの選択   2. 参考   1. メモ EDC Connector 公式GitHub のプロジェクトをIntellijで開くための手順メモ">
 <meta name="keywords" content="Data Spaces,EDC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Open project of EDC Connector with Intellij">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="1. メモ  1.1. 準備 1.2. Intellijで開く 1.3. トラブルシュート  1.3.1. Intellijのメモリ不足 1.3.2. Gradleのメモリ不足 1.3.3. JDKバージョンの不一致   2. 参考   1. メモ EDC Connector 公式GitHub のプロジェクトをIntellijで開くための手順メモ。 いろいろなやり方があるが一例として。 1.">
+<meta property="og:description" content="1. メモ  1.1. 準備 1.2. Intellijで開く 1.3. トラブルシュート  1.3.1. Intellijのメモリ不足 1.3.2. Gradleのメモリ不足 1.3.3. JDKバージョンの不一致 1.3.4. Gradleで使うJDKの選択   2. 参考   1. メモ EDC Connector 公式GitHub のプロジェクトをIntellijで開くための手順メモ">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2023-09-24T18:23:25.195Z">
+<meta property="og:updated_time" content="2023-10-22T23:31:23.806Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Open project of EDC Connector with Intellij">
-<meta name="twitter:description" content="1. メモ  1.1. 準備 1.2. Intellijで開く 1.3. トラブルシュート  1.3.1. Intellijのメモリ不足 1.3.2. Gradleのメモリ不足 1.3.3. JDKバージョンの不一致   2. 参考   1. メモ EDC Connector 公式GitHub のプロジェクトをIntellijで開くための手順メモ。 いろいろなやり方があるが一例として。 1.">
+<meta name="twitter:description" content="1. メモ  1.1. 準備 1.2. Intellijで開く 1.3. トラブルシュート  1.3.1. Intellijのメモリ不足 1.3.2. Gradleのメモリ不足 1.3.3. JDKバージョンの不一致 1.3.4. Gradleで使うJDKの選択   2. 参考   1. メモ EDC Connector 公式GitHub のプロジェクトをIntellijで開くための手順メモ">
     
 
     
@@ -264,6 +264,7 @@ Intellijのメモリ不足</a></li>
 <li><a href="#gradleのメモリ不足" id="toc-gradleのメモリ不足">1.3.2.
 Gradleのメモリ不足</a></li>
 <li><a href="#jdkバージョンの不一致" id="toc-jdkバージョンの不一致">1.3.3. JDKバージョンの不一致</a></li>
+<li><a href="#gradleで使うjdkの選択" id="toc-gradleで使うjdkの選択">1.3.4. Gradleで使うJDKの選択</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#参考" id="toc-参考">2. 参考</a></li>
@@ -326,6 +327,11 @@ Setting」を開き、「2024」（MB）あたりにしておく。</p>
 <p>◇diff <figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">diff --git a/gradle.properties b/gradle.properties</span><br><span class="line">index 376da414a..d8da811a9 100644</span><br><span class="line"><span class="comment">--- a/gradle.properties</span></span><br><span class="line"><span class="comment">+++ b/gradle.properties</span></span><br><span class="line">@@ -7,3 +7,6 @@ edcGradlePluginsVersion=0.1.4-SNAPSHOT</span><br><span class="line"> metaModelVersion=0.1.4-SNAPSHOT</span><br><span class="line"> edcScmUrl=https://github.com/eclipse-edc/Connector.git</span><br><span class="line"> edcScmConnection=scm:git:git@github.com:eclipse-edc/Connector.git</span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+# Increase Gradle JVM Heap size</span></span><br><span class="line"><span class="addition">+org.gradle.jvmargs=-Xmx4096M</span></span><br></pre></td></tr></table></figure></p>
 <h3><span id="133-jdkバージョンの不一致">1.3.3. JDKバージョンの不一致</span></h3>
 <p>当初、環境にあったJDK8系を用いていたが、ビルド時に構文エラー（互換性のエラー）が生じたため、JDK17を用いるようにした。</p>
+<h3><span id="134-gradleで使うjdkの選択">1.3.4. Gradleで使うJDKの選択</span></h3>
+<p>環境によっては、独自の証明書などをJDKのcacertsに導入して用いているかもしれない。
+その場合は、用いているGradle、JDKに注意が必要。</p>
+<p>例えば、<code>/etc/ssl/certs/java/cacerts</code>に独自の証明書を追加し、それを各JDKで用いるようにすると良い。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/ssl/certs/java</span><br><span class="line">cp cacerts cacerts.org</span><br><span class="line">keytool -import -<span class="built_in">alias</span> CA -keystore cacerts -file ~/any.cer</span><br><span class="line"><span class="comment"># passwordはchnageit</span></span><br><span class="line"><span class="built_in">cd</span> ~/.jdks/jbr-xxxxxx/lib/security</span><br><span class="line">mv cacerts cacerts.org</span><br><span class="line">ln -s /etc/ssl/certs/java/cacerts cacerts</span><br></pre></td></tr></table></figure>
 <h1><span id="2-参考">2. 参考</span></h1>
 <ul>
 <li><a href="https://github.com/eclipse-edc/Connector" target="_blank" rel="noopener">EDC Connector
@@ -345,7 +351,7 @@ Compatibility</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="clmxsg9ya008a1voaru7waclg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="clo23s6in008b1vpk3m2v6tfh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

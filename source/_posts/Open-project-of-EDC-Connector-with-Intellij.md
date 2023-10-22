@@ -125,6 +125,23 @@ index 376da414a..d8da811a9 100644
 
 当初、環境にあったJDK8系を用いていたが、ビルド時に構文エラー（互換性のエラー）が生じたため、JDK17を用いるようにした。
 
+### 1.3.4. Gradleで使うJDKの選択
+
+環境によっては、独自の証明書などをJDKのcacertsに導入して用いているかもしれない。
+その場合は、用いているGradle、JDKに注意が必要。
+
+例えば、`/etc/ssl/certs/java/cacerts`に独自の証明書を追加し、それを各JDKで用いるようにすると良い。
+
+```bash
+cd /etc/ssl/certs/java
+cp cacerts cacerts.org
+keytool -import -alias CA -keystore cacerts -file ~/any.cer
+# passwordはchnageit
+cd ~/.jdks/jbr-xxxxxx/lib/security
+mv cacerts cacerts.org
+ln -s /etc/ssl/certs/java/cacerts cacerts
+```
+
 # 2. 参考
 
 * [EDC Connector 公式GitHub]
