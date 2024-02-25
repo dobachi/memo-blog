@@ -15,7 +15,7 @@ tags:
 
 # メモ
 
-[EDC/Sampple] の内容を紹介する。
+[EDC/Samples] の内容を紹介する。
 
 ## 動作確認環境
 
@@ -33,10 +33,9 @@ DISTRIB_DESCRIPTION="Ubuntu 22.04.3 LTS"
 
 また[dobachi/EDCSampleAnsible]に環境準備などのAnsible Playbookを置く。
 
-
 ## README
 
-[EDC/Sample/README] には目的、必要事項（準備）、スコープの説明がある。
+[EDC/Samples/README] には目的、必要事項（準備）、スコープの説明がある。
 
 本プロジェクトの目的はオンボーディングの支援。
 初心者をナビゲートしやすいような順番でサンプルが構成されており、ステップバイステップで学べる。
@@ -51,17 +50,71 @@ DISTRIB_DESCRIPTION="Ubuntu 22.04.3 LTS"
 
 動作確認する場合は、Java11+がインストールされていることが必要。
 
+### スコープ（Scopes）
 
+サンプル群は、Scopeと呼ばれるグループで区分されている。
+何を学びたいか、で分かれている。
+ひとまず、初心者であれば`basic`が良いとのこと。
+
+ざっと以下に解説する。
+
+| Scope名  | 説明                                                                |
+| -------- | ------------------------------------------------------------------- |
+| Basic    | EDC Frameworkを使い始めるための基礎。セットアップ、起動、拡張の作成 |
+| Transfer | データ転送について                                                  |
+| Advanced | 高度な例                                                            |
+
+## Basicスコープの概要
+
+[EDC/Samples/Basic/README]には以下のサンプルが載っている。
+
+| サンプル名     | 説明                                             |
+| -------------- | ------------------------------------------------ |
+| Basic Sample 1 | コネクタを起動するのに必要なことを学ぶ           |
+| Basic Sample 2 | 拡張機能の作成、拡張機能の使い方を学ぶ           |
+| Basic Sample 3 | プロパティファイルを用いて設定値を扱う方法を学ぶ |
+
+## Basic/Sample1
+
+[EDC/Samples/Basic/Basic1/README]には以下の通り説明されている。
+
+`Runtime`とビルドファイルで構成されている。
+ビルドファイルは、`build.gradle.kts`である。
+
+このサンプルでは、EDCの[BaseRuntime]を用いている。
+
+また、[EDC/Samples/Basic/Basic1/build.gradle.kts]を見ることでプロジェクトが依存するものがわかる。
+
+basic/basic-01-basic-connector/build.gradle.kts:22
+
+```gradle
+dependencies {
+    implementation(libs.edc.boot)
+    implementation(libs.edc.connector.core)
+}
+```
 
 # 参考
 
 ## レポジトリ内
 
-* [EDC/Sampple]
-* [EDC/Sample/README]
+* [EDC/Samples]
+* [EDC/Samples/README]
+* [EDC/Samples/Basic/README]
+* [EDC/Samples/Basic/Basic1/README] 
+* [EDC/Samples/Basic/Basic1/build.gradle.kts]
 
-[EDC/Sampple]: https://github.com/eclipse-edc/Samples
-[EDC/Sample/README]: https://github.com/eclipse-edc/Samples?tab=readme-ov-file#edc-samples
+[EDC/Samples]: https://github.com/eclipse-edc/Samples
+[EDC/Samples/README]: https://github.com/eclipse-edc/Samples?tab=readme-ov-file#edc-samples
+[EDC/Samples/Basic/README]: https://github.com/eclipse-edc/Samples/blob/main/basic/README.md
+[EDC/Samples/Basic/Basic1/README]: https://github.com/eclipse-edc/Samples/blob/main/basic/basic-01-basic-connector/README.md
+[EDC/Samples/Basic/Basic1/build.gradle.kts]: https://github.com/eclipse-edc/Samples/blob/main/basic/basic-01-basic-connector/build.gradle.kts
+
+## EDCレポジトリ
+
+* [BaseRuntime]
+
+[BaseRuntime]: https://github.com/eclipse-edc/Connector/blob/releases/core/common/boot/src/main/java/org/eclipse/edc/boot/system/runtime/BaseRuntime.java
 
 ## 外部
 
