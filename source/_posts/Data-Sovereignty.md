@@ -20,7 +20,7 @@ tags:
 
 この考え方を示している記事が多い。
 
-[簡単なまとめメモ](memo-blog/images/definition_data_sovereignty.pdf)
+[簡単なまとめメモ](images/definition_data_sovereignty.pdf)
 
 ## セーフハーバー法
 
