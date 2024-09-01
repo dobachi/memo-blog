@@ -20,11 +20,13 @@ tags:
 
 この考え方を示している記事が多い。
 
+あまり量が多くなっても混乱するので、主要な話だけさらってみるようにする。
+
 [簡単なまとめメモ](images/definition_data_sovereignty.pdf)
 
 ## セーフハーバー法
 
-これに関連することとして、セーフハーバー法が挙げられる。つまり、特定の条件を満たす限り、違法行為とみなされない範囲を定めた規定である。
+関連することとして、セーフハーバー法が挙げられる。つまり、特定の条件を満たす限り、違法行為とみなされない範囲を定めた規定である。
 総務省の平成29年版白書では、 [第1部　特集　データ主導経済と社会変革] にEUと米国のセーフハーバーにちうて記載あり。
 米国とEUの間では2000年に個人データ移転についての原則を記したセールハーバー協定を締結したのだが、いわゆるSnowden事件により欧州司法裁判所による無効の判断。そして、その後、2016/2にEU-USプライバシーシールが新たに制定。
 
@@ -46,6 +48,19 @@ tags:
 
 日本からは、2019/1のスイス・ジュネーブにおける、いわゆるダボス会議にて、当時の首相だった安倍晋三からDFFTの提言があった。
 
+## GDPRとData Act
+
+データローカライゼーションの議論をする際には、EUにおけるGDPR（一般データ保護規則）は外せない。
+個人データの移転と処理について規定したものである。2018年適用開始。参考： [GDPR（General Data Protection Regulation：一般データ保護規則）]
+
+一方で、個人データだけではなく、非個人データを含むデータの利用促進、データへの公平なアクセスおよびその利用を目的として2020年の欧州データ戦略の一環としてData Actが成立。2024/1発効、2025/9施行。
+IoT機器が生成するデータであり、非個人データも対象となる。自動車、スマート家電、などなど影響大。
+参考： [EUデータ法の解説 - 適用場面ごとのルールと日本企業が講ずべき実務対応を整理] 、 [Data Act]
+
+両者は補完関係と考えることもできる。
+
+また、Data ActはData Governance Actとも補完関係と考えられる。
+
 ## 日本とEU・英国の間のデータ越境移転に関するセーフハーバー
 
 欧州から日本に対しては、2019/1/23に十分性認定がされており、EU域内と同等の個人データ保護水準を持つ国と認定されている。 参考： [日EU間・日英間のデータ越境移転について]
@@ -61,8 +76,8 @@ tags:
 
 ## まとめ
 
-以上から、データ主権を議論する際には、基本的事項としてデータを収集・保存した地域における法律遵守が主旨になり、
-さらにいわゆるデータローカライゼーションの原則が挙げられる。
+データ主権を議論する際には、基本的事項としてデータを収集・保存した地域における法律遵守が主旨になり、
+さらにいわゆるデータローカライゼーションの原則が挙げられる。個人情報保護の観点がひとつは挙げられるが、それに限らない。
 一方で経済や技術発展のためには、バランスをとったデータ越境移転が必要であり、DFFTのような提唱も行われている。
 
 # 参考
@@ -76,6 +91,9 @@ tags:
 * [日EU間・日英間のデータ越境移転について]
 * [補完的ルール]
 * [The Cloud’s Biggest Threat Are Data Sovereignty Laws]
+* [GDPR（General Data Protection Regulation：一般データ保護規則）]
+* [Data Act]
+* [EUデータ法の解説 - 適用場面ごとのルールと日本企業が講ずべき実務対応を整理]
 
 [Wikipediaの記載]: https://en.wikipedia.org/wiki/Data_sovereignty
 [世界を揺るがしたスノーデン事件から5年--変わったこと、変わらなかったこと]: https://japan.zdnet.com/article/35120537/
@@ -86,5 +104,8 @@ tags:
 [日EU間・日英間のデータ越境移転について]: https://www.ppc.go.jp/enforcement/cooperation/cooperation/sougoninshou/
 [補完的ルール]: https://www.ppc.go.jp/files/pdf/Supplementary_Rules.pdf
 [The Cloud’s Biggest Threat Are Data Sovereignty Laws]: https://techcrunch.com/2015/12/26/the-clouds-biggest-threat-are-data-sovereignty-laws/
+[GDPR（General Data Protection Regulation：一般データ保護規則）]: https://www.ppc.go.jp/enforcement/infoprovision/EU/
+[Data Act]: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32023R2854&qid=1704709568425
+[EUデータ法の解説 - 適用場面ごとのルールと日本企業が講ずべき実務対応を整理]: https://www.businesslawyers.jp/articles/1374
 
 <!-- vim: set et tw=0 ts=2 sw=2: -->

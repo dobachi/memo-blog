@@ -5,18 +5,18 @@
     
     <title>Data Sovereignty | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="メモ  世における基本的な考え方 セーフハーバー法 Snowden事件とデータローカライゼーション 日本とEU・英国の間のデータ越境移転に関するセーフハーバー まとめ  参考   メモ 世における基本的な考え方 データ主権（Data Sovereignty）については色々な解釈をされているが、 一つの考え方は特定地域で収集・保存されたデータがその地域の法律にしたがって運用されること、という考">
+    <meta name="description" content="メモ  世における基本的な考え方 セーフハーバー法 Snowden事件とデータローカライゼーション GDPRとData Act 日本とEU・英国の間のデータ越境移転に関するセーフハーバー まとめ  参考   メモ 世における基本的な考え方 データ主権（Data Sovereignty）については色々な解釈をされているが、 一つの考え方は特定地域で収集・保存されたデータがその地域の法律にしたが">
 <meta name="keywords" content="Data Spaces">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Data Sovereignty">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2024/09/01/Data-Sovereignty/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="メモ  世における基本的な考え方 セーフハーバー法 Snowden事件とデータローカライゼーション 日本とEU・英国の間のデータ越境移転に関するセーフハーバー まとめ  参考   メモ 世における基本的な考え方 データ主権（Data Sovereignty）については色々な解釈をされているが、 一つの考え方は特定地域で収集・保存されたデータがその地域の法律にしたがって運用されること、という考">
+<meta property="og:description" content="メモ  世における基本的な考え方 セーフハーバー法 Snowden事件とデータローカライゼーション GDPRとData Act 日本とEU・英国の間のデータ越境移転に関するセーフハーバー まとめ  参考   メモ 世における基本的な考え方 データ主権（Data Sovereignty）については色々な解釈をされているが、 一つの考え方は特定地域で収集・保存されたデータがその地域の法律にしたが">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2024-09-01T16:21:03.942Z">
+<meta property="og:updated_time" content="2024-09-01T16:47:10.532Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Data Sovereignty">
-<meta name="twitter:description" content="メモ  世における基本的な考え方 セーフハーバー法 Snowden事件とデータローカライゼーション 日本とEU・英国の間のデータ越境移転に関するセーフハーバー まとめ  参考   メモ 世における基本的な考え方 データ主権（Data Sovereignty）については色々な解釈をされているが、 一つの考え方は特定地域で収集・保存されたデータがその地域の法律にしたがって運用されること、という考">
+<meta name="twitter:description" content="メモ  世における基本的な考え方 セーフハーバー法 Snowden事件とデータローカライゼーション GDPRとData Act 日本とEU・英国の間のデータ越境移転に関するセーフハーバー まとめ  参考   メモ 世における基本的な考え方 データ主権（Data Sovereignty）については色々な解釈をされているが、 一つの考え方は特定地域で収集・保存されたデータがその地域の法律にしたが">
     
 
     
@@ -256,6 +256,8 @@ ga('send', 'pageview');
 <li><a href="#世における基本的な考え方" id="toc-世における基本的な考え方">世における基本的な考え方</a></li>
 <li><a href="#セーフハーバー法" id="toc-セーフハーバー法">セーフハーバー法</a></li>
 <li><a href="#snowden事件とデータローカライゼーション" id="toc-snowden事件とデータローカライゼーション">Snowden事件とデータローカライゼーション</a></li>
+<li><a href="#gdprとdata-act" id="toc-gdprとdata-act">GDPRとData
+Act</a></li>
 <li><a href="#日本とeu英国の間のデータ越境移転に関するセーフハーバー" id="toc-日本とeu英国の間のデータ越境移転に関するセーフハーバー">日本とEU・英国の間のデータ越境移転に関するセーフハーバー</a></li>
 <li><a href="#まとめ" id="toc-まとめ">まとめ</a></li>
 </ul></li>
@@ -267,9 +269,10 @@ ga('send', 'pageview');
 <p>データ主権（Data Sovereignty）については色々な解釈をされているが、
 一つの考え方は特定地域で収集・保存されたデータがその地域の法律にしたがって運用されること、という考え方が挙げられる。</p>
 <p>この考え方を示している記事が多い。</p>
+<p>あまり量が多くなっても混乱するので、主要な話だけさらってみるようにする。</p>
 <p><a href="images/definition_data_sovereignty.pdf">簡単なまとめメモ</a></p>
 <h2><span id="セーフハーバー法">セーフハーバー法</span></h2>
-<p>これに関連することとして、セーフハーバー法が挙げられる。つまり、特定の条件を満たす限り、違法行為とみなされない範囲を定めた規定である。
+<p>関連することとして、セーフハーバー法が挙げられる。つまり、特定の条件を満たす限り、違法行為とみなされない範囲を定めた規定である。
 総務省の平成29年版白書では、 <a href="https://www.soumu.go.jp/johotsusintokei/whitepaper/ja/h29/html/nc123210.html" target="_blank" rel="noopener">第1部　特集　データ主導経済と社会変革</a>
 にEUと米国のセーフハーバーにちうて記載あり。
 米国とEUの間では2000年に個人データ移転についての原則を記したセールハーバー協定を締結したのだが、いわゆるSnowden事件により欧州司法裁判所による無効の判断。そして、その後、2016/2にEU-USプライバシーシールが新たに制定。</p>
@@ -288,6 +291,19 @@ data localization</a>
 参考： <a href="https://techcrunch.com/2015/12/26/the-clouds-biggest-threat-are-data-sovereignty-laws/" target="_blank" rel="noopener">The
 Cloud’s Biggest Threat Are Data Sovereignty Laws</a></p>
 <p>日本からは、2019/1のスイス・ジュネーブにおける、いわゆるダボス会議にて、当時の首相だった安倍晋三からDFFTの提言があった。</p>
+<h2><span id="gdprとdata-act">GDPRとData Act</span></h2>
+<p>データローカライゼーションの議論をする際には、EUにおけるGDPR（一般データ保護規則）は外せない。
+個人データの移転と処理について規定したものである。2018年適用開始。参考：
+<a href="https://www.ppc.go.jp/enforcement/infoprovision/EU/" target="_blank" rel="noopener">GDPR（General
+Data Protection Regulation：一般データ保護規則）</a></p>
+<p>一方で、個人データだけではなく、非個人データを含むデータの利用促進、データへの公平なアクセスおよびその利用を目的として2020年の欧州データ戦略の一環としてData
+Actが成立。2024/1発効、2025/9施行。
+IoT機器が生成するデータであり、非個人データも対象となる。自動車、スマート家電、などなど影響大。
+参考： <a href="https://www.businesslawyers.jp/articles/1374" target="_blank" rel="noopener">EUデータ法の解説 -
+適用場面ごとのルールと日本企業が講ずべき実務対応を整理</a> 、 <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32023R2854&amp;qid=1704709568425" target="_blank" rel="noopener">Data
+Act</a></p>
+<p>両者は補完関係と考えることもできる。</p>
+<p>また、Data ActはData Governance Actとも補完関係と考えられる。</p>
 <h2><span id="日本とeu英国の間のデータ越境移転に関するセーフハーバー">日本とEU・英国の間のデータ越境移転に関するセーフハーバー</span></h2>
 <p>欧州から日本に対しては、2019/1/23に十分性認定がされており、EU域内と同等の個人データ保護水準を持つ国と認定されている。
 参考： <a href="https://www.ppc.go.jp/enforcement/cooperation/cooperation/sougoninshou/" target="_blank" rel="noopener">日EU間・日英間のデータ越境移転について</a>
@@ -301,8 +317,8 @@ Cloud’s Biggest Threat Are Data Sovereignty Laws</a></p>
 <li>データの安全管理措置</li>
 </ul>
 <h2><span id="まとめ">まとめ</span></h2>
-<p>以上から、データ主権を議論する際には、基本的事項としてデータを収集・保存した地域における法律遵守が主旨になり、
-さらにいわゆるデータローカライゼーションの原則が挙げられる。
+<p>データ主権を議論する際には、基本的事項としてデータを収集・保存した地域における法律遵守が主旨になり、
+さらにいわゆるデータローカライゼーションの原則が挙げられる。個人情報保護の観点がひとつは挙げられるが、それに限らない。
 一方で経済や技術発展のためには、バランスをとったデータ越境移転が必要であり、DFFTのような提唱も行われている。</p>
 <h1><span id="参考">参考</span></h1>
 <ul>
@@ -317,6 +333,12 @@ data localization</a></li>
 <li><a href="https://www.ppc.go.jp/files/pdf/Supplementary_Rules.pdf" target="_blank" rel="noopener">補完的ルール</a></li>
 <li><a href="https://techcrunch.com/2015/12/26/the-clouds-biggest-threat-are-data-sovereignty-laws/" target="_blank" rel="noopener">The
 Cloud’s Biggest Threat Are Data Sovereignty Laws</a></li>
+<li><a href="https://www.ppc.go.jp/enforcement/infoprovision/EU/" target="_blank" rel="noopener">GDPR（General
+Data Protection Regulation：一般データ保護規則）</a></li>
+<li><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32023R2854&amp;qid=1704709568425" target="_blank" rel="noopener">Data
+Act</a></li>
+<li><a href="https://www.businesslawyers.jp/articles/1374" target="_blank" rel="noopener">EUデータ法の解説 -
+適用場面ごとのルールと日本企業が講ずべき実務対応を整理</a></li>
 </ul>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -329,7 +351,7 @@ Cloud’s Biggest Threat Are Data Sovereignty Laws</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2024/09/01/Data-Sovereignty/" data-id="cm0js40rf003219of80yabplr" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2024/09/01/Data-Sovereignty/" data-id="cm0jt1mhl003218s5ko4q5s33" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
