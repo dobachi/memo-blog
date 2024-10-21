@@ -37,6 +37,59 @@ tags:
 [CADDE-sip/connector/README 利用者コネクタの構築手順] の通り、クローンしたレポジトリの `src/consumer/` 内に
 利用者コネクタのソースコードがある。
 
+アーキテクチャの概要は以下に載っている。
+
+[CADDE-sip/connector/README 利用者アーキテクチャ図]
+
+### 利用者目線でのざっくりとした理解
+
+上記図の、コネクタメイン（利用者側）の左側に、カタログ検索I/Fとデータ取得I/Fがあるが、
+これが利用者絡みたときの接点となるI/Fである。
+
+コネクタイメインのSwagger定義で言えば以下。src/consumer/connector-main/swagger_server/swagger/swagger.yaml
+
+カタログ検索
+paths./cadde/api/v4/catalog
+
+```yaml
+  /cadde/api/v4/catalog:
+    get:
+      tags:
+      - Search
+      summary: API. カタログ検索
+      description: |-
+        カタログ情報を取得する。APIユーザが指定した条件に従いカタログ情報を取得する。
+
+        Response:
+        * 処理が成功した場合は200を返す。
+        * 処理に失敗した場合は、2xx以外のコードを返す。 Responsesセクション参照。
+      operationId: search
+
+(snip)
+```
+
+データ取得
+paths./cadde/api/v4/file
+
+```yaml
+  /cadde/api/v4/file:
+    get:
+      tags:
+      - Files
+      summary: API. データ取得（CADDE）
+      description: |-
+        リソースURLに指定されたデータを取得する。
+
+        Response:
+        * 処理が成功した場合は200を返す。
+        * 処理に失敗した場合は、2xx以外のコードを返す。 Responsesセクションを参照。
+      operationId: files
+
+(snip)
+```
+
+Swaggerの定義に基づき、PythonのFlask使って作られている。
+
 ### ロケーション情報　
 
 手順では `src/consumer/connector-main/swagger_server/configs/location.json` を編集することで、
@@ -325,7 +378,7 @@ src/consumer/catalog-search/swagger_server/services/service.py:34
 
 また、TLS相互認証のためフォワードプロキシを利用する手順も載っているし、利用者コネクタへのアクセス制限のためのリバースプロキシの設定手順も載っている。
 
-## 検索について
+### 検索について
 
 検索は、`src/consumer/catalog-search` が担う。以下、このコンポーネントについて。
 
@@ -415,6 +468,331 @@ swagger_server/controllers/search_controller.py:47
 `swagger_server.services.service.search_catalog_detail` 関数が本体。
 認証情報を渡しているところが違う、基本的には同様。
 
+### データ取得について
+
+Swagger YAML定義に基づくと、利用者側コネクタのコネクタメインのエントリポイントは以下。
+
+consumer/connector-main/swagger_server/controllers/files_controller.py:14
+
+```python
+def files(authorization=None, resource_url=None, resource_api_type=None, provider=None):  # noqa: E501
+    """API. データ取得(NGSI以外)
+
+    CADDEインタフェースを用いて、HTTPサーバ、FTPサーバからファイルを取得する
+
+    Response:
+     * 処理が成功した場合は200を返す
+     * 処理に失敗した場合は、2xx以外のコードを返す。 Responsesセクションを参照。 # noqa: E501
+
+    :param Authorization: 利用者トークン
+    :type Authorization: str
+    :param resource_url: リソースURL
+    :type resource_url: str
+    :param resource_api_type: リソース提供手段識別子
+    :type resource_api_type: str
+    :param provider: CADDEユーザID（提供者）
+    :type provider: str
+
+    :rtype: None
+    """
+
+(snip)
+```
+
+基本的には、ユーザ（ないし、ユーザのシステム）から与えられた認証情報（トークン）、リソースURLなどを利用し、
+リソースURLにアクセスしてファイルを受領する、というもの。
+
+実際に、データを取得するのは以下の部分。
+
+consumer/connector-main/swagger_server/controllers/files_controller.py:54
+
+```python
+    data, headers = fetch_data(
+        authorization,
+        resource_url,
+        resource_api_type,
+        provider,
+        None,
+        external_interface)
+
+    response = make_response(data.read(), 200)
+    response.headers = headers
+    response.headers['Content-Disposition'] = 'attachment; filename=' + \
+        get_url_file_name(resource_url)
+(snip)
+```
+
+`fetch_data`関数は、servicesにある。
+
+consumer/connector-main/swagger_server/services/service.py:142
+
+```python
+def fetch_data(authorization: str,
+               resource_url: str,
+               resource_api_type: str,
+               provider: str,
+               options: dict,
+               external_interface: ExternalInterface = ExternalInterface()) -> (BytesIO,
+                                                                                dict):
+    """
+    データ交換I/Fからデータを取得する、もしくはデータ管理から直接データを取得する。
+
+    Args:
+        resource_url str : リソースURL
+        resource_api_type str : リソース提供手段識別子
+        provider str : CADDEユーザID（提供者）
+        authorization str : 利用者トークン
+        options : dict リクエストヘッダ情報 key:ヘッダ名 value:パラメータ
+        external_interface ExternalInterface : GETリクエストを行うインタフェース
+
+    Returns:
+        BytesIO :取得データ
+        dict: レスポンスヘッダ情報 key:ヘッダ名 value:パラメータ レスポンスヘッダがない場合は空のdictを返す
+
+(snip)
+```
+
+リソースのURLとともに、リソースのAPI種類を受け取る。
+下記の通り、いまのところ、NGSI、file/ftp、file/httpに対応。
+
+consumer/connector-main/swagger_server/services/service.py:177
+
+```
+    if resource_api_type != 'api/ngsi' and resource_api_type != 'file/ftp' and resource_api_type != 'file/http':
+        raise CaddeException('020004001E')
+(snip)
+```
+
+認証は以下。
+
+consumer/connector-main/swagger_server/services/service.py:184
+
+```python
+    if authorization:
+        # 認証トークン検証
+        token_introspect_headers = {
+            'Authorization': authorization,
+            'x-cadde-consumer-connector-id': consumer_connector_id,
+            'x-cadde-consumer-connector-secret': consumer_connector_secret
+        }
+        token_introspect_response = external_interface.http_get(
+            __ACCESS_POINT_URL_AUTHENTICATION_AUTHORIZATION_INTROSPECT, token_introspect_headers)
+
+        if token_introspect_response.status_code < 200 or 300 <= token_introspect_response.status_code:
+            raise CaddeException(
+                message_id='020004002E',
+                status_code=token_introspect_response.status_code,
+                replace_str_list=[
+                    token_introspect_response.text])
+
+        consumer_id = token_introspect_response.headers['x-cadde-consumer-id']
+
+(snip)
+```
+
+利用者コネクタのIDとシークレットキーをヘッダーに入れ、Introspect宛先に問う。
+上記の通り、基本的にはCADDE固有の認証サーバ？
+
+これを一般的な外部サービス利用可能にするには、実装の変更の必要がありそう。
+
+データ取得部分。
+CADDEユーザIDのありなしで挙動が異なる。
+
+まずCADDEユーザIDなしの場合。
+
+consumer/connector-main/swagger_server/services/service.py:212
+
+```python
+    # CADDEユーザID（提供者）なし
+    if not provider:
+        if resource_api_type == 'api/ngsi':
+            response_bytes, ngsi_response_headers = provide_data_ngsi(
+                resource_url, options)
+            header_arry = ngsi_response_headers.keys()
+            for key_data in header_arry:
+                response_headers[key_data] = ngsi_response_headers[key_data]
+        elif resource_api_type == 'file/ftp':
+            response_bytes = provide_data_ftp(
+                resource_url, external_interface, internal_interface)
+
+        elif resource_api_type == 'file/http':
+            response_bytes = provide_data_http(
+                resource_url, options, external_interface, internal_interface)
+
+        return response_bytes, response_headers
+(snip)
+```
+
+この中で、`provide_data_http`関数がどこに定義されているかというと、`common.swagger_server.services.provide_data_http.provide_data_http`など。これは `common` の中にあるが、実はセットアップスクリプトでシンボリックリンクが貼られている。
+
+consumer/setup.sh:18
+
+```shell
+ln -f ../common/swagger_server/services/provide_data_http.py  connector-main/swagger_server/services/provide_data_http.py 
+```
+
+関数を見てみる。
+
+common/swagger_server/services/provide_data_http.py:24
+
+```python
+def provide_data_http(
+        resource_url: str,
+        headers_dict: dict = None,
+        file_get_interface: ExternalInterface = ExternalInterface(),
+        config_get_interface: InternalInterface = InternalInterface()) -> BytesIO:
+    """
+    HTTPサーバからファイルを取得して返却する。
+    ※2020年9月版ではダイジェスト認証、TLS証明書認証、OAuth等の認証処理は実施せず、
+    ※ベーシック認証のみ実施する。
+
+    Args:
+        resource_url str : ファイル取得を行うリソースURL
+        headers_dict : 設定するheader {ヘッダー名:パラメータ}
+        file_get_interface object : ファイル取得処理を行うインタフェース
+        config_get_interface object : コンフィグファイルからの情報取得を行うインタフェース
+
+    Returns:
+        BytesIO :取得データ
+
+(snip)
+```
+
+関数の説明にあるとおりだが、データソースに対する認証については、いまの実装ではBASIC認証のみに対応。
+
+```python
+    if 0 < len(http_config_domain):
+        if __CONFIG_KEY_BASIC_ID not in http_config_domain[0]:
+            raise CaddeException(
+                '000201004E',
+                status_code=None,
+                replace_str_list=[__CONFIG_KEY_BASIC_ID])
+
+        if __CONFIG_KEY_BASIC_PASS not in http_config_domain[0]:
+            raise CaddeException(
+                '000201005E',
+                status_code=None,
+                replace_str_list=[__CONFIG_KEY_BASIC_PASS])
+
+        auth = (
+            http_config_domain[0][__CONFIG_KEY_BASIC_ID],
+            http_config_domain[0][__CONFIG_KEY_BASIC_PASS])
+
+(snip)
+```
+
+ レスポンスのコンテンツをBytesIOにして戻り値として返す。
+
+common/swagger_server/services/provide_data_http.py:94
+
+```python
+    if response.status_code == requests.codes.ok:
+        return BytesIO(response.content)
+
+    if response.status_code == requests.codes.not_found:
+        raise CaddeException('000201006E')
+
+    if response.status_code == requests.codes.unauthorized:
+        raise CaddeException('000201007E')
+```
+
+なお、FTPの場合はSFTPではなく、FTPのみ。
+NGSIの場合は、アクセストークンを取得して利用するようになっている。
+
+
+## 提供者コネクタ
+
+提供者コネクタの主なエントリポイントは `paths./cadde/api/v4/catalog` である。
+つまりカタログ詳細検索APIである。
+
+provider/catalog-search/swagger_server/swagger/swagger.yaml:8
+
+```yaml
+  /cadde/api/v4/catalog:
+    get:
+      tags:
+      - Search
+      summary: API. カタログ検索(詳細検索)
+      description: |-
+        詳細検索リクエストを受け付け、メイン制御に処理を依頼する。
+        
+        Response:
+        * 処理が成功した場合は200を返す。
+        * 処理に失敗した場合は、2xx以外を返す。場合によりエラーを示すペイロードがつく場合もある。Responsesセクションを参照すること。
+      operationId: search
+
+(snip)
+```
+
+上記の通り、呼び出されるのは `search` 関数。
+
+provider/catalog-search/swagger_server/controllers/search_controller.py:15
+
+```python
+def search(q=None, Authorization=None):  # noqa: E501
+    """API. カタログ検索(詳細検索)
+
+    提供者カタログサイトからCKANカタログ情報を取得する. Response: * 処理が成功した場合は200を返す * 処理に失敗した場合は、2xx以外を返す。Responsesセクション参照。 # noqa: E501
+
+    :param q: CKAN検索条件クエリ CKAN APIに準拠
+    :type q: str
+    :param Authorization: 認証トークン
+    :type Authorization: str
+
+    :rtype: None
+    """
+(snip)
+```
+
+カタログ詳細検索用のクエリ、認証トークンなどを受領し、それを用いて詳細検索用のCKANに問い合わせる。
+
+provider/catalog-search/swagger_server/controllers/search_controller.py:41
+
+```python
+    data = search_catalog_ckan(query_string, authorization, external_interface)
+```
+
+`search_catalog_ckan`関数は、services内に定義されている。
+
+provider/catalog-search/swagger_server/services/service.py:8
+
+```python
+def search_catalog_ckan(
+        query_string: str,
+        auth_token: str,
+        external_interface: ExternalInterface) -> str:
+    """
+    コネクタメインに詳細検索を送信する
+
+    Args:
+        query_string str : 検索条件のクエリストリング
+        auth_token str : HTTPリクエストヘッダとしての認証トークン
+        external_interface ExternalInterface :  コネクタ外部とのインタフェース
+
+    Returns:
+        str : 取得したデータ文字列
+
+    Raises:
+        Cadde_excption : ステータスコード200 OKでない場合 エラーコード : 010101002E
+
+    """
+
+    response = external_interface.http_get(
+        __ACCESS_POINT_URL + query_string, {'Authorization': auth_token})
+
+    if response.status_code != 200:
+        raise CaddeException(
+            message_id='010101002E',
+            status_code=response.status_code,
+            replace_str_list=[
+                response.text])
+    else:
+        return response.text
+```
+
+ちなみに、`common`側にもあるのだが、そちらはデータ提供者コネクタからは使われていない様子。
+common/swagger_server/services/ckan_access.py
+これは、セットアップスクリプトにより、利用者側コネクタ内にシンボリックリンクが作られるようになっているが、呼び出されている形跡がない？
 
 # 参考
 
@@ -422,11 +800,13 @@ swagger_server/controllers/search_controller.py:47
 * [CADDE-sip/connector/README 前提条件]
 * [CADDE-sip/connector/README 導入ガイドライン]
 * [CADDE-sip/connector/README 利用者コネクタの構築手順]
+* [CADDE-sip/connector/README 利用者アーキテクチャ図]
 
 [CADDE-sip/connector]: https://github.com/CADDE-sip/connector
 [CADDE-sip/connector/README 前提条件]: https://github.com/CADDE-sip/connector?tab=readme-ov-file#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6
 [CADDE-sip/connector/README 導入ガイドライン]: https://github.com/CADDE-sip/connector?tab=readme-ov-file#%E5%B0%8E%E5%85%A5%E3%82%AC%E3%82%A4%E3%83%89%E3%83%A9%E3%82%A4%E3%83%B3
 [CADDE-sip/connector/README 利用者コネクタの構築手順]: https://github.com/CADDE-sip/connector?tab=readme-ov-file#%E5%B0%8E%E5%85%A5%E3%82%AC%E3%82%A4%E3%83%89%E3%83%A9%E3%82%A4%E3%83%B3
+[CADDE-sip/connector/README 利用者アーキテクチャ図]: https://raw.githubusercontent.com/CADDE-sip/connector/refs/heads/master/doc/png/system.png
 
 
 
