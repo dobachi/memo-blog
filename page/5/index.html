@@ -170,7 +170,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                226
+                227
                 <span>投稿</span>
             </div>
             <div class="article-info-block">
@@ -205,6 +205,282 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-PubNub" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2021/05/06/PubNub/">PubNub</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2021/05/06/PubNub/">
+            <time datetime="2021-05-06T04:28:14.000Z" itemprop="datePublished">2021-05-06</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/BaaS/">BaaS</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/BaaS/">BaaS</a>, <a class="tag-link" href="/memo-blog/tags/Messaging-System/">Messaging System</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#公式ドキュメント" id="toc-公式ドキュメント">公式ドキュメント</a></li>
+<li><a href="#blog" id="toc-blog">blog</a></li>
+<li><a href="#サンプル" id="toc-サンプル">サンプル</a></li>
+</ul></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#概要" id="toc-概要">概要</a></li>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a>
+<ul>
+<li><a href="#アカウント作成" id="toc-アカウント作成">アカウント作成</a></li>
+<li><a href="#補足公式チュートリアルのソースコード" id="toc-補足公式チュートリアルのソースコード">（補足）公式チュートリアルのソースコード</a></li>
+<li><a href="#プロジェクトディレクトリ作成" id="toc-プロジェクトディレクトリ作成">プロジェクトディレクトリ作成</a></li>
+<li><a href="#ファイル" id="toc-ファイル">ファイル</a></li>
+<li><a href="#補足error-could-not-find-a-version-that-satisfies-the-requirement-pubnub4.5.1" id="toc-補足error-could-not-find-a-version-that-satisfies-the-requirement-pubnub4.5.1">（補足）ERROR:
+Could not find a version that satisfies the requirement
+pubnub&gt;=4.5.1</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<h1><span id="参考">参考</span></h1>
+<p>aa</p>
+<h2><span id="公式ドキュメント">公式ドキュメント</span></h2>
+<ul>
+<li><a href="https://www.pubnub.com/docs/" target="_blank" rel="noopener">The PubNub Platform
+Overview</a></li>
+<li><a href="https://www.pubnub.com/docs/sdks" target="_blank" rel="noopener">SDK</a></li>
+<li><a href="https://github.com/pubnub" target="_blank" rel="noopener">PubNubのGitHub</a></li>
+<li><a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a></li>
+<li><a href="https://www.pubnub.com/docs/sdks/python" target="_blank" rel="noopener">Python
+API</a></li>
+<li><a href="https://dashboard.pubnub.com/signup" target="_blank" rel="noopener">サインアップ</a></li>
+<li><a href="https://www.pubnub.com/pricing/" target="_blank" rel="noopener">プライシング</a></li>
+<li><a href="https://www.pubnub.com/docs/sdks/python/api-reference/files" target="_blank" rel="noopener">Files
+API for PubNub Python SDK</a></li>
+<li><a href="https://www.pubnub.com/docs/sdks/python/api-reference/files#download-file" target="_blank" rel="noopener">download-file</a></li>
+<li><a href="https://www.pubnub.com/docs/sdks/python/api-reference/files#send-file" target="_blank" rel="noopener">send-file</a></li>
+</ul>
+<h2><span id="blog">blog</span></h2>
+<ul>
+<li><a href="https://qiita.com/n0bisuke/items/36e4b334d17174446df7" target="_blank" rel="noopener">PubNubで5分でリアルタイムWebこと初め</a></li>
+</ul>
+<h2><span id="サンプル">サンプル</span></h2>
+<ul>
+<li><a href="https://github.com/dobachi/PubNubExample" target="_blank" rel="noopener">PubNubExample</a></li>
+</ul>
+<h1><span id="メモ">メモ</span></h1>
+<h2><span id="概要">概要</span></h2>
+<p><a href="https://www.pubnub.com/docs/" target="_blank" rel="noopener">The PubNub Platform
+Overview</a> によると、</p>
+<figure>
+<img src="/memo-blog/images/20210506_PubNub_quickstarts.png" alt="クイックスタートの一覧">
+<figcaption aria-hidden="true">クイックスタートの一覧</figcaption>
+</figure>
+<p>とのこと。
+概要にIoTと記載されている通り、小型のデバイス利用も想定されているようだ。
+主な用途は「メッセージング」と「シグナリング」。</p>
+<p>特徴は以下の通り。</p>
+<figure>
+<img src="/memo-blog/images/20210506_PubNub_features.png" alt="特徴の一覧">
+<figcaption aria-hidden="true">特徴の一覧</figcaption>
+</figure>
+<p>サイズの小さなメッセージに限らず、画像、動画、ファイルを対象に含めているのがポイントか。</p>
+<p>ユースケースは以下の通り。</p>
+<figure>
+<img src="/memo-blog/images/20210506_PubNub_usecases.png" alt="ユースケースの一覧">
+<figcaption aria-hidden="true">ユースケースの一覧</figcaption>
+</figure>
+<p>これ自体に特筆すべきポイントはない。</p>
+<p><a href="https://www.pubnub.com/docs/sdks" target="_blank" rel="noopener">SDK</a>
+に記載のある通り、非常に幅広いSDKを提供している。</p>
+<p><a href="https://github.com/pubnub" target="_blank" rel="noopener">PubNubのGitHub</a>
+を見る限り、多様なクライアントライブラリがOSSとして公開、開発されているようだ。</p>
+<h2><span id="動作確認">動作確認</span></h2>
+<p><a href="https://www.pubnub.com/pricing/" target="_blank" rel="noopener">プライシング</a>
+によるとアカウントを作ってお試しする限りでは無料のようだ。
+ということで、<a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a>
+の通り実行してみる。</p>
+<p>このチュートリアルでは、PubSubモデルのメッセージングを試せる。</p>
+<h3><span id="アカウント作成">アカウント作成</span></h3>
+<p><a href="https://dashboard.pubnub.com/signup" target="_blank" rel="noopener">サインアップ</a>
+からアカウント作成。 もろもろ情報入れて登録したら、Demo
+Keysetが得られた。</p>
+<h3><span id="補足公式チュートリアルのソースコード">（補足）公式チュートリアルのソースコード</span></h3>
+<p>以下のようにクローンできる。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[dobachi@home Sources]$ git clone git@github.com:pubnub/python-quickstart-platform.git</span><br></pre></td></tr></table></figure>
+<p>今回はゼロから作ってみるので、これは参考とする。</p>
+<h3><span id="プロジェクトディレクトリ作成">プロジェクトディレクトリ作成</span></h3>
+<p>適当なところに空ディレクトリを作り、プロジェクトのルートとする。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[dobachi@home Sources]$ mkdir pubnub_example</span><br><span class="line">[dobachi@home Sources]$ cd pubnub_example/</span><br></pre></td></tr></table></figure>
+<p>今回は、pyenvを利用してインストールしたPython3.8.10を利用し、venvで環境構築する。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[dobachi@home pubnub_example]$ pyenv local 3.8.10</span><br><span class="line">[dobachi@home pubnub_example]$ python -m venv venv</span><br><span class="line">[dobachi@home pubnub_example]$ . ./venv/bin/activate</span><br><span class="line">(venv) [dobachi@home pubnub_example]$ pip install 'pubnub&gt;=4.5.1'</span><br></pre></td></tr></table></figure>
+<p>ここで、<a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a>
+に従い、2個の実装pub.py、sub.pyを作成する。
+このとき、ソースコードのキーのところに先ほどアカウント作成した際に得られたキーを記載するようにする。</p>
+<p>ここから端末を2個立ち上げる。</p>
+<p>1個目でサブスクライバーを起動</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(venv) [dobachi@home pubnub_example]$ python sub.py</span><br><span class="line">***************************************************</span><br><span class="line">* Waiting for updates to The Guide about Earth... *</span><br><span class="line">***************************************************</span><br><span class="line">[STATUS: PNConnectedCategory]</span><br><span class="line">connected to channels: ['the_guide', 'the_guide-pnpres']</span><br><span class="line">[PRESENCE: join]</span><br><span class="line">uuid: serverUUID-SUB, channel: the_guide</span><br></pre></td></tr></table></figure>
+<p>2個目でパブリッシャーを起動</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(venv) [dobachi@home pubnub_example]$ python pub.py</span><br><span class="line">*****************************************</span><br><span class="line">* Submit updates to The Guide for Earth *</span><br><span class="line">*     Enter 42 to exit this process     *</span><br><span class="line">*****************************************</span><br><span class="line">Enter an update for Earth: Harmless</span><br><span class="line">[PUBLISH: sent]</span><br><span class="line">timetoken: 16202911568484264</span><br></pre></td></tr></table></figure>
+<p>プロンプトが表示されるので、「Harmless」と入力してエンターキーを押下。</p>
+<p>サブスクライバーに以下のように表示される。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[MESSAGE received]</span><br><span class="line">Earth: Harmless</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a>
+に実装の説明があるが、 基本的には</p>
+<ul>
+<li>サブスクライバーはハンドラの実装のみ</li>
+<li>パブリッシャーは標準入力からメッセージを受け取り、それを送信するのみ</li>
+</ul>
+<p>という単純な仕組み。</p>
+<p>パブリッシャー側のポイントは、</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">envelope = pubnub.publish().channel(CHANNEL).message(the_message).sync()</span><br></pre></td></tr></table></figure>
+<p>まだ詳しくは分からないが、チャンネルやエントリという概念がありそう。
+チャンネルを使うと同報できるのだろうか。</p>
+<p><a href="https://www.pubnub.com/docs/sdks/python" target="_blank" rel="noopener">Python API</a>
+あたりを読むと記載ありそう。</p>
+<h3><span id="ファイル">ファイル</span></h3>
+<p><a href="https://www.pubnub.com/docs/sdks/python/api-reference/files" target="_blank" rel="noopener">Files
+API for PubNub Python SDK</a> を読むと、ファイルを取り扱うAPIがあった。
+5MBまでのファイルをアップロードできるようだ。
+アプリケーションで画像を取り扱う場合などを想定している様子。</p>
+<p>これを簡単に動作確認してみる。 <a href="https://www.pubnub.com/docs/quickstarts/python" target="_blank" rel="noopener">Pythonチュートリアル</a>
+のサンプルコードpub.pyとsub.pyを参考に実装する。 参考実装を <a href="https://github.com/dobachi/PubNubExample" target="_blank" rel="noopener">PubNubExample</a>
+にまとめておいた。 READMEを参照。</p>
+<p>メッセージングのAPIとは異なるが、簡単に小さなファイルを登録できるのは便利ではある。</p>
+<p>またファイルを登録したことを通知するAPIもあるようだ。
+これは使い方としては</p>
+<ul>
+<li>ファイルを送信し、合わせてファイル送信したことをチャンネルにメッセージ送信</li>
+<li>受信者は、メッセージを受領したら、その情報を使ってファイル受信</li>
+</ul>
+<p>ということだと思われる。
+ファイルの送受信自体は、メッセージングのようにSubscribeできず、
+単発実行のAPIであり、かつ受信についてはIDを引数に渡さないといけないから、と考えられる。</p>
+<h3><span id="補足errorcould-not-find-a-version-that-satisfies-the-requirementpubnubgt451">（補足）ERROR:
+Could not find a version that satisfies the requirement
+pubnub&gt;=4.5.1</span></h3>
+<p>以下のようなエラーが出たら、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Could not find a version that satisfies the requirement pubnub&gt;=4.5.1</span><br></pre></td></tr></table></figure>
+<p><code>libffi-devel</code>
+をインストールしたうえで、Pythonをビルドするようにするとよい。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(venv) [dobachi@home pubnub_example]$ pyenv uninstall 3.8.10</span><br><span class="line">(venv) [dobachi@home pubnub_example]$ sudo yum install -y libffi-devel</span><br><span class="line">(venv) [dobachi@home pubnub_example]$ pyenv install 3.8.10</span><br></pre></td></tr></table></figure>
+<!-- vim: set et tw=0 ts=2 sw=2: -->
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2021/05/06/PubNub/" data-id="cm4e9199t009p17pddfafjvpu" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Use-any-fonts-in-CentOS7" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -274,7 +550,7 @@ Windows用TrueTypeフォントを使用する</a> が参考になった。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/30/Use-any-fonts-in-CentOS7/" data-id="cm31s3wq300d318s2fzq25e9z" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/30/Use-any-fonts-in-CentOS7/" data-id="cm4e919ap00d217pdoahfk9sb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -464,7 +740,7 @@ Stream</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/25/CentOS-on-WSL/" data-id="cm31s3wm8002d18s2mmlbny8b" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/25/CentOS-on-WSL/" data-id="cm4e9197c002c17pd3vcc9675" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -654,7 +930,7 @@ DELETEするとき、Updateするとき、Overwriteするとき（条件付き�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/23/readPredicates-in-inserting-records/" data-id="cm31s3wwx017a18s2kiu53er8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/23/readPredicates-in-inserting-records/" data-id="cm4e919i4018t17pd9va43dj1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -871,7 +1147,7 @@ values)</a> にも似たような議論があるようだ。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/09/Double-count-of-dstat/" data-id="cm31s3wmo003r18s2ebki8nf6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/09/Double-count-of-dstat/" data-id="cm4e9197w003u17pdhkei0f27" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1053,7 +1329,7 @@ LogのIDがいつ確定するのか、というのが気になり確認した。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/04/When-DeltaLog-ID-is-created/" data-id="cm31s3wq900dh18s21yhh2yb2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/04/When-DeltaLog-ID-is-created/" data-id="cm4e919av00dg17pdcb11qbke" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1195,7 +1471,7 @@ LogのIDがいつ確定するのか、というのが気になり確認した。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/02/12/Power-Grid-Data/" data-id="cm31s3wor009i18s2lqgmu5pt" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/02/12/Power-Grid-Data/" data-id="cm4e9199q009h17pdi9q8r4x2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1424,7 +1700,7 @@ DMZ機能を利用して、ルータ機能をHGWと自前ルータの療法で�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/31/Mesh-wifi/" data-id="cm31s3woe008f18s2bs4sv4t3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/31/Mesh-wifi/" data-id="cm4e9199c008d17pdq9xwv10t" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1569,7 +1845,7 @@ Data Mesh</a> を読んで簡単にまとめた。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/" data-id="cm31s3wob008918s2wtyzioed" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/" data-id="cm4e9199a008817pdbs2bg2jp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1720,213 +1996,7 @@ Engineを使用した際のTPC−DSの実行結果、クエリ実行コストの
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/16/Memo-of-Lakehouse-A-New-Generation-of-Open-Platforms-that-Unify-Data-Warehousing-and-Advanced-Analytics/" data-id="cm31s3woc008b18s2mya5s93j" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Getting-started-of-Ansible-Vault" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2021/01/07/Getting-started-of-Ansible-Vault/">Getting started of Ansible Vault</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2021/01/07/Getting-started-of-Ansible-Vault/">
-            <time datetime="2021-01-07T00:43:12.000Z" itemprop="datePublished">2021-01-07</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Configuration-Management/">Configuration Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Configuration-Management/Ansible/">Ansible</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/Ansible/">Ansible</a>, <a class="tag-link" href="/memo-blog/tags/Vault/">Vault</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#参考" id="toc-参考">参考</a>
-<ul>
-<li><a href="#公式サイト" id="toc-公式サイト">公式サイト</a></li>
-<li><a href="#ブログ" id="toc-ブログ">ブログ</a></li>
-</ul></li>
-<li><a href="#メモ" id="toc-メモ">メモ</a>
-<ul>
-<li><a href="#暗号化されたファイルの作成" id="toc-暗号化されたファイルの作成">暗号化されたファイルの作成</a></li>
-<li><a href="#参考復号して平文化" id="toc-参考復号して平文化">（参考）復号して平文化</a></li>
-<li><a href="#参考暗号化されたファイルの編集" id="toc-参考暗号化されたファイルの編集">（参考）暗号化されたファイルの編集</a></li>
-<li><a href="#参考vaultパスワードをファイルとして渡す" id="toc-参考vaultパスワードをファイルとして渡す">（参考）Vaultパスワードをファイルとして渡す</a></li>
-<li><a href="#プレイブック内で変数として利用" id="toc-プレイブック内で変数として利用">プレイブック内で変数として利用</a></li>
-</ul></li>
-</ul>
-</div>
-<h1><span id="参考">参考</span></h1>
-<h2><span id="公式サイト">公式サイト</span></h2>
-<ul>
-<li><a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html#managing-vault-passwords" target="_blank" rel="noopener">Encrypting
-content with Ansible Vault</a></li>
-</ul>
-<h2><span id="ブログ">ブログ</span></h2>
-<ul>
-<li><a href="https://qiita.com/takuya599/items/2420fb286318c4279a02" target="_blank" rel="noopener">Ansible-Vaultを用いた機密情報の暗号化のTips</a></li>
-</ul>
-<h1><span id="メモ">メモ</span></h1>
-<p>Ansible内で使用する変数を平文でファイルに記載し、プレイブック集に入れ込むのに不安を感じるときがある。
-そのようなとき、Ansible
-Vaultを利用すると暗号化された状態で変数を管理できる。 Ansible
-Vaultで管理された変数をプレイブック内で通常の変数と同様に扱えるため見通しが良くなる。</p>
-<p>公式サイトの <a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html#managing-vault-passwords" target="_blank" rel="noopener">Encrypting
-content with Ansible Vault</a> が網羅的でわかりやすいのだが、
-具体例が足りない気がしたので以下に一例を示しておく。
-ここに挙げた以外の使い方は、公式サイトを参照されたし。</p>
-<p><a href="https://qiita.com/takuya599/items/2420fb286318c4279a02" target="_blank" rel="noopener">Ansible-Vaultを用いた機密情報の暗号化のTips</a>
-も参考になった。</p>
-<h2><span id="暗号化されたファイルの作成">暗号化されたファイルの作成</span></h2>
-<p><code>secret.yml</code> 内に変数を記述し、暗号化する。
-後ほど暗号化されたファイルを変数定義ファイルとして読み込む。</p>
-<p>ここでは以下のような内容とする。</p>
-<p>secret.yml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hoge:</span></span><br><span class="line"><span class="attr">  fuga:</span> <span class="string">foo</span></span><br></pre></td></tr></table></figure>
-<p>ファイルを暗号化する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault create secret.yml</span></span><br></pre></td></tr></table></figure>
-<p>上記ファイルを作成する際、Vault用パスワードを聞かれるので適切なパスワードを入力すること。
-あとでパスワードは利用する。</p>
-<h2><span id="参考復号して平文化">（参考）復号して平文化</span></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault decrypt secret.yml</span></span><br></pre></td></tr></table></figure>
-<h2><span id="参考暗号化されたファイルの編集">（参考）暗号化されたファイルの編集</span></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault edit secret.yml</span></span><br></pre></td></tr></table></figure>
-<h2><span id="参考vaultパスワードをファイルとして渡す">（参考）Vaultパスワードをファイルとして渡す</span></h2>
-<p>プロンプトで入力する代わりに、どこかプレイブック集の外などにVaultパスワードを保存し利用することもできる。
-ここでは、 <code>~/.vault_password</code>
-にパスワードを記載したファイルを準備したものとする。
-編集する例を示す。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault edit secret.yml --vault-password-file ~/.vault_password</span></span><br></pre></td></tr></table></figure>
-<h2><span id="プレイブック内で変数として利用">プレイブック内で変数として利用</span></h2>
-<p>変数定義ファイルとして渡し、プレイブック内で変数として利用する。
-以下のようなプレイブックを作る。</p>
-<p>test.yml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">- hosts:</span> <span class="string">localhost</span></span><br><span class="line"><span class="attr">  vars_files:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">secret.yml</span></span><br><span class="line"><span class="attr">  tasks:</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">debug</span></span><br><span class="line"><span class="attr">      debug:</span></span><br><span class="line"><span class="attr">        msg:</span> <span class="string">"<span class="template-variable">&#123;&#123; hoge.fuga &#125;&#125;</span>"</span></span><br></pre></td></tr></table></figure>
-<p>以下、簡単な説明。</p>
-<ul>
-<li>変数定義ファイルとして <code>secret.yml</code> を指定（
-<code>vars_files</code> の箇所）</li>
-<li>今回はdebugモジュールを利用し、変数内の値を表示することとする。</li>
-<li>暗号化された変数定義ファイル <code>secret.yml</code>
-に記載されたとおり、構造化された変数 <code>hoge.fuga</code>
-の値を利用する。</li>
-<li>結果として、<code>foo</code>
-という内容がSTDOUTに表示されるはず。</li>
-</ul>
-<p>プレイブックを実行する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-playbook test.yml --ask-vault-pass</span></span><br></pre></td></tr></table></figure>
-<!-- vim: set et tw=0 ts=2 sw=2: -->
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/07/Getting-started-of-Ansible-Vault/" data-id="cm31s3wn0004m18s24hz2ftef" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/16/Memo-of-Lakehouse-A-New-Generation-of-Open-Platforms-that-Unify-Data-Warehousing-and-Advanced-Analytics/" data-id="cm4e9199b008a17pdb100hte2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2019,6 +2089,15 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/memo-blog/2024/12/07/Data-Governance-part-of-Global-Digital-Compact/" class="title">Data Governance part of Global Digital Compact</a></p>
+                            <p class="item-date"><time datetime="2024-12-07T14:03:43.000Z" itemprop="datePublished">2024-12-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Docker/">Docker</a></p>
                             <p class="item-title"><a href="/memo-blog/2024/11/04/Trouble-using-Docker-Desktop-and-docker/" class="title">Trouble using Docker Desktop and docker</a></p>
                             <p class="item-date"><time datetime="2024-11-03T15:56:32.000Z" itemprop="datePublished">2024-11-04</time></p>
@@ -2052,15 +2131,6 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Spaces/">Data Spaces</a></p>
-                            <p class="item-title"><a href="/memo-blog/2024/10/13/EDC-Policy-permission/" class="title">EDCステータス変化の様子の謎メモ</a></p>
-                            <p class="item-date"><time datetime="2024-10-13T13:13:02.000Z" itemprop="datePublished">2024-10-13</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2079,7 +2149,7 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
