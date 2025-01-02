@@ -170,7 +170,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                227
+                228
                 <span>投稿</span>
             </div>
             <div class="article-info-block">
@@ -205,6 +205,251 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-Kafka-Console-Consumer" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2019/06/23/Kafka-Console-Consumer/">Kafkaコンソールコンシューマを起点とした確認</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2019/06/23/Kafka-Console-Consumer/">
+            <time datetime="2019-06-23T14:03:33.000Z" itemprop="datePublished">2019-06-23</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Messaging-System/">Messaging System</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Messaging-System/Kafka/">Kafka</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/Kafka/">Kafka</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#consoleconsumer" id="toc-consoleconsumer">ConsoleConsumer</a></li>
+<li><a href="#kafkaconsumer" id="toc-kafkaconsumer">KafkaConsumer</a>
+<ul>
+<li><a href="#トピックアサイン" id="toc-トピックアサイン">トピックアサイン</a></li>
+<li><a href="#コンシューマ故障の検知" id="toc-コンシューマ故障の検知">コンシューマ故障の検知</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<h1><span id="参考">参考</span></h1>
+<h1><span id="メモ">メモ</span></h1>
+<p>2019/6/23時点でのtrunkで再確認した内容。
+ほぼ昔のメモのままコピペ・・・。</p>
+<h2><span id="consoleconsumer">ConsoleConsumer</span></h2>
+<p>コンシューマの実装を確認するにあたっては、コンソール・コンシューマが良いのではないか。</p>
+<p>bin/kafka-console-consumer.sh:21 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsoleConsumer &quot;$@&quot;</span><br></pre></td></tr></table></figure></p>
+<p>から、 kafka.tools.ConsoleConsumer
+クラスあたりを確認すると良いだろう。</p>
+<p>mainを確認すると、ConsumerConfigのインスタンスを生成し、runメソッドに渡すことがわかる。</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:54
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val conf = new ConsumerConfig(args)</span><br><span class="line">try &#123;</span><br><span class="line">  run(conf)</span><br></pre></td></tr></table></figure></p>
+<p>ここで、ConsumerConfigはコンソールからパラメータを受け取るためのクラス。
+実態はrunメソッドである。</p>
+<p>まず大事な箇所として、 KafkaConsumer
+クラスのインスタンスを生成している箇所がある。 ★</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:67
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val consumer = new KafkaConsumer(consumerProps(conf), new ByteArrayDeserializer, new ByteArrayDeserializer)</span><br></pre></td></tr></table></figure></p>
+<p>この KafkaConsumer クラスがコンシューマの実態である。
+なお、コンソール・コンシューマでは、これをラップした便利クラス
+ConsumerWrapper が定義されており、 そちらを通じて主に使う。</p>
+<p>またシャットダウンフックを定義している。</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:75
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addShutdownHook(consumerWrapper, conf)</span><br></pre></td></tr></table></figure></p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:87
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def addShutdownHook(consumer: ConsumerWrapper, conf: ConsumerConfig) &#123;</span><br><span class="line">  Runtime.getRuntime.addShutdownHook(new Thread() &#123;</span><br><span class="line">    override def run() &#123;</span><br><span class="line">      consumer.wakeup()</span><br><span class="line"></span><br><span class="line">      shutdownLatch.await()</span><br><span class="line"></span><br><span class="line">      if (conf.enableSystestEventsLogging) &#123;</span><br><span class="line">        System.out.println(&quot;shutdown_complete&quot;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>これはグレースフルにシャットダウンするには大切。 ★</p>
+<p>またデータ処理の実態は、以下の process メソッドである。</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:77
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">try process(conf.maxMessages, conf.formatter, consumerWrapper, System.out, conf.skipMessageOnError)</span><br></pre></td></tr></table></figure></p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:101
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def process(maxMessages: Integer, formatter: MessageFormatter, consumer: ConsumerWrapper, output: PrintStream,</span><br><span class="line">            skipMessageOnError: Boolean) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
+<p>処理するメッセージ最大数、出力ストリームに渡す形を整形するメッセージフォーマッタ、コンシューマのラッパ、出力ストリーム、
+エラーのときに呼び飛ばすかどうかのフラグが渡される。</p>
+<p>少し処理の中身を確認する。 まず以下のようにメッセージを取得する。</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:104
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    val msg: ConsumerRecord[Array[Byte], Array[Byte]] = try &#123;</span><br><span class="line">      consumer.receive()</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
+<p>上記の receive は、先程の通り、ラッパーのreceiveメソッドである。</p>
+<p>receiveメソッドは以下のようにコンシューマのポール機能を使い、
+メッセージを取得する。</p>
+<p>core/src/main/scala/kafka/tools/ConsoleConsumer.scala:437
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def receive(): ConsumerRecord[Array[Byte], Array[Byte]] = &#123;</span><br><span class="line">  if (!recordIter.hasNext) &#123;</span><br><span class="line">    recordIter = consumer.poll(Duration.ofMillis(timeoutMs)).iterator</span><br><span class="line">    if (!recordIter.hasNext)</span><br><span class="line">      throw new TimeoutException()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  recordIter.next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>メッセージを取得するためのイテレータが得られるので、nextメソッドで取得する。
+→イテレータのnextを使って１件ずつ取り出していることがわかる。 ★</p>
+<p>続いて、取り出されたメッセージを ConsumerRecord
+化してフォーマッタに渡す。 　
+core/src/main/scala/kafka/tools/ConsoleConsumer.scala:118 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">formatter.writeTo(new ConsumerRecord(msg.topic, msg.partition, msg.offset, msg.timestamp,</span><br><span class="line">                                     msg.timestampType, 0, 0, 0, msg.key, msg.value, msg.headers), output)</span><br></pre></td></tr></table></figure></p>
+<p>これにより出力が確定する。</p>
+<h2><span id="kafkaconsumer">KafkaConsumer</span></h2>
+<p>つづいて、KafkaConsumerクラスを確認する。</p>
+<h3><span id="トピックアサイン">トピックアサイン</span></h3>
+<p>ここではトピックへの登録を確認する。 ★</p>
+<p>コンシューマグループを使って自動で行うアサインメントを使用する場合。リバランスも行われる。</p>
+<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:936
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  public void subscribe(Collection&lt;String&gt; topics, ConsumerRebalanceListener listener) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
+<p>上記はトピックのコレクションを渡すメソッドだが、パターンを指定する方法もある。</p>
+<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:1008
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  public void subscribe(Pattern pattern, ConsumerRebalanceListener listener) &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
+<p>なお、何らかの理由（詳しくはJavadoc参照）により、リバランスが必要になったら、
+第2引数に渡されているリスナがまず呼び出される。</p>
+<p>コンシューマ・グループを利用せず、手動で行うアサインメントの場合は以下の通り。</p>
+<p>clients/src/main/java/org/apache/kafka/clients/consumer/KafkaConsumer.java:1083
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public void assign(Collection&lt;TopicPartition&gt; partitions) &#123;</span><br></pre></td></tr></table></figure></p>
+<p>いずれの場合も内部的には SubscriptionState が管理のために用いられる。
+タイプは以下の通り。
+clients/src/main/java/org/apache/kafka/clients/consumer/internals/SubscriptionState.java:72
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private enum SubscriptionType &#123;</span><br><span class="line">    NONE, AUTO_TOPICS, AUTO_PATTERN, USER_ASSIGNED</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>またコンシューマの管理を行う ConsumerCoordinator には、
+updatePatternSubscription メソッドがある。</p>
+<p>org/apache/kafka/clients/consumer/internals/ConsumerCoordinator.java:192
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public void updatePatternSubscription(Cluster cluster) &#123;</span><br><span class="line">    final Set&lt;String&gt; topicsToSubscribe = cluster.topics().stream()</span><br><span class="line">            .filter(subscriptions::matchesSubscribedPattern)</span><br><span class="line">            .collect(Collectors.toSet());</span><br><span class="line">    if (subscriptions.subscribeFromPattern(topicsToSubscribe))</span><br><span class="line">        metadata.requestUpdateForNewTopics();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>matchesSubscribedPattern
+を用いて、現在クラスタが抱えているトピックの中から、
+サブスクライブ対象のトピックをフィルタして取得し、SubscriptionState#subscribeFromPattern
+メソッドを呼ぶ。
+これにより、当該コンシューマの購読するトピックが更新される。
+この更新はいくつかのタイミングで発動するが、例えば
+KafkaConsumer#poll(java.time.Duration) の 中で呼ばれる
+updateAssignmentMetadataIfNeeded メソッドを通じて呼び出される。</p>
+<h3><span id="コンシューマ故障の検知">コンシューマ故障の検知</span></h3>
+<p>基本的にはハートビート（ heartbeat.interval.ms で設定）が
+session.timeout.ms を 超えて届かなくなると、故障したとみなされる。
+その結果、当該クライアント（この場合はコンシューマ）がグループから外され、
+リバランスが起きる。</p>
+<p>なお、ハートビートはコーディネータに対して送られる。
+コーディネータは以下のように定義されている。
+org/apache/kafka/clients/consumer/internals/AbstractCoordinator.java:128
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private Node coordinator = null;</span><br></pre></td></tr></table></figure></p>
+<p>org/apache/kafka/clients/consumer/internals/AbstractCoordinator.java:692
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AbstractCoordinator.this.coordinator = new Node(</span><br><span class="line">        coordinatorConnectionId,</span><br><span class="line">        findCoordinatorResponse.data().host(),</span><br><span class="line">        findCoordinatorResponse.data().port());</span><br></pre></td></tr></table></figure></p>
+<p>AbstractCoordinator#sendFindCoordinatorRequest
+メソッドが呼ばれる契機は複数あるが、
+例えば、コンシューマがポールするときなどにコーディネータが更新される。</p>
+<p>なお、コーディネータにクライアントを登録する際、
+セッションタイムアウトの値も渡され、対応される。 予め定められた
+group.min.session.timeout.ms や group.max.session.timeout.ms を満たす
+セッションタイムアウトが用いられる。</p>
+<p>セッションタイムアウトの値は、例えば以下のように設定される。</p>
+<p>kafka/coordinator/group/GroupCoordinator.scala:146 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doJoinGroup(group, memberId, groupInstanceId, clientId, clientHost, rebalanceTimeoutMs, sessionTimeoutMs, protocolType, protocols, responseCallback)</span><br></pre></td></tr></table></figure></p>
+<p>この値は、最終的に MemberMetadata に渡されて用いられる。
+例えばハートビートのデッドラインの計算などに用いられることになる。</p>
+<p>kafka/coordinator/group/MemberMetadata.scala:56 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">private[group] class MemberMetadata(var memberId: String,</span><br><span class="line">                                    val groupId: String,</span><br><span class="line">                                    val groupInstanceId: Option[String],</span><br><span class="line">                                    val clientId: String,</span><br><span class="line">                                    val clientHost: String,</span><br><span class="line">                                    val rebalanceTimeoutMs: Int,</span><br><span class="line">                                    val sessionTimeoutMs: Int,</span><br><span class="line">                                    val protocolType: String,</span><br><span class="line">                                    var supportedProtocols: List[(String, Array[Byte])]) &#123;</span><br></pre></td></tr></table></figure></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/23/Kafka-Console-Consumer/" data-id="cm5enfgct016c18lje5u22b8p" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-The-8-Requirements-of-Real-Time-Stream-Processing" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -377,7 +622,7 @@ SPEとルールベースエンジンはそれを実現しやすいが、DBMSのA
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/22/The-8-Requirements-of-Real-Time-Stream-Processing/" data-id="cm4zszjbr00c017nw5c8fmp8k" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/22/The-8-Requirements-of-Real-Time-Stream-Processing/" data-id="cm5enfg6000bx18lj0fd8g2jx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -628,7 +873,7 @@ RDDへの依存性がユーザに制約をもたらす、とも。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/14/MillWheel-Paper/" data-id="cm4zszjaj008o17nwt8fbbc5p" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/14/MillWheel-Paper/" data-id="cm5enfg4u008m18lj0n90aexe" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -774,7 +1019,7 @@ ExtensionsからSystem-monitorをインストールすると、タスクバー�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/12/System-monitor-on-Ubuntu18/" data-id="cm4zszjbk00bh17nwopi7q493" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/12/System-monitor-on-Ubuntu18/" data-id="cm5enfg5v00bj18lj0dwwetey" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -920,7 +1165,7 @@ ExtensionsからSystem-monitorをインストールすると、タスクバー�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/11/Alt-Tab-on-Ubuntu18/" data-id="cm4zszj7q001m17nwtlln8vh7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/11/Alt-Tab-on-Ubuntu18/" data-id="cm5enfg29001m18ljqkxpqxyo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1066,7 +1311,7 @@ for WindowsをWSLから使う時のVolumeの扱い方</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/09/Mount-volums-on-WSL/" data-id="cm4zszjal008w17nwjnhd8y0i" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/09/Mount-volums-on-WSL/" data-id="cm5enfg4z008y18ljpohl80sj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1436,7 +1681,7 @@ https://github.com/facebook/create-react-app を
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/06/MLflow/" data-id="cm4zszjkw01e117nwdn0vekor" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/06/MLflow/" data-id="cm5enfgf201e018lj11e7de3b" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1584,7 +1829,7 @@ https://github.com/facebook/create-react-app を
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/03/HBase-on-Docker-for-test/" data-id="cm4zszj98005a17nwrmji8ubz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/03/HBase-on-Docker-for-test/" data-id="cm5enfg3j005g18ljpzs439mh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2326,7 +2571,7 @@ https://www.slideshare.net/databricks/how-australias-national-health-services-di
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/05/17/Spark-Summit-2019/" data-id="cm4zszjmz01hf17nwuocwnwuj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/05/17/Spark-Summit-2019/" data-id="cm5enfgga01he18lj6f4favas" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2612,428 +2857,7 @@ Alluxioによる抽象化層でAuditログを取る、という方針も悪く�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/05/10/Alluxio-Security/" data-id="cm4zszjhu014z17nw4g7zbxyf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Storage-Layer-Storage-Engine" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2019/05/10/Storage-Layer-Storage-Engine/">Storage Layer ? Storage Engine ?</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2019/05/10/Storage-Layer-Storage-Engine/">
-            <time datetime="2019-05-10T05:36:50.000Z" itemprop="datePublished">2019-05-10</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Storage-Layer/">Storage Layer</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/Storage-Engine/">Storage Engine</a>, <a class="tag-link" href="/memo-blog/tags/Storage-Layer/">Storage Layer</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#参考" id="toc-参考">参考</a>
-<ul>
-<li><a href="#データベースエンジン-あるいは-ストレージエンジン" id="toc-データベースエンジン-あるいは-ストレージエンジン">データベースエンジン
-あるいは ストレージエンジン</a></li>
-<li><a href="#apache-parquet" id="toc-apache-parquet">Apache
-Parquet</a></li>
-<li><a href="#delta-lake" id="toc-delta-lake">Delta Lake</a></li>
-<li><a href="#apache-hudi" id="toc-apache-hudi">Apache Hudi</a></li>
-<li><a href="#alluxio" id="toc-alluxio">Alluxio</a></li>
-<li><a href="#aws-aurora" id="toc-aws-aurora">AWS Aurora</a></li>
-<li><a href="#apache-hbase" id="toc-apache-hbase">Apache HBase</a></li>
-<li><a href="#apache-kudu" id="toc-apache-kudu">Apache Kudu</a></li>
-</ul></li>
-<li><a href="#メモ" id="toc-メモ">メモ</a>
-<ul>
-<li><a href="#動機" id="toc-動機">動機</a></li>
-<li><a href="#どういうユースケースを想定するか" id="toc-どういうユースケースを想定するか">どういうユースケースを想定するか？</a></li>
-<li><a href="#どういう特徴を持つストレージを探るか" id="toc-どういう特徴を持つストレージを探るか">どういう特徴を持つストレージを探るか？</a></li>
-<li><a href="#データベースエンジン-あるいは-ストレージエンジン-1" id="toc-データベースエンジン-あるいは-ストレージエンジン-1">データベースエンジン
-あるいは ストレージエンジン</a></li>
-<li><a href="#apache-parquet-1" id="toc-apache-parquet-1">Apache
-Parquet</a></li>
-<li><a href="#delta-lake-1" id="toc-delta-lake-1">Delta Lake</a></li>
-<li><a href="#apache-hudi-1" id="toc-apache-hudi-1">Apache Hudi</a></li>
-<li><a href="#alluxio-1" id="toc-alluxio-1">Alluxio</a></li>
-<li><a href="#aws-auroraのバックエンドストレージもしくはストレージエンジン" id="toc-aws-auroraのバックエンドストレージもしくはストレージエンジン">AWS
-Auroraのバックエンドストレージ（もしくはストレージエンジン）</a></li>
-<li><a href="#apache-hbase-1" id="toc-apache-hbase-1">Apache
-HBase</a></li>
-<li><a href="#apache-kudu-1" id="toc-apache-kudu-1">Apache Kudu</a></li>
-</ul></li>
-</ul>
-</div>
-<h1><span id="参考">参考</span></h1>
-<h2><span id="データベースエンジンあるいは-ストレージエンジン">データベースエンジン
-あるいは ストレージエンジン</span></h2>
-<ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3" target="_blank" rel="noopener">jp.wikipediaのデータベースエンジン</a></li>
-<li><a href="https://dev.mysql.com/doc/refman/5.6/ja/storage-engines.html" target="_blank" rel="noopener">MySQLの代替ストレージエンジン</a></li>
-<li><a href="https://dev.mysql.com/doc/refman/5.6/ja/innodb-introduction.html" target="_blank" rel="noopener">InnoDBイントロダクション</a></li>
-</ul>
-<h2><span id="apache-parquet">Apache Parquet</span></h2>
-<ul>
-<li><a href="https://parquet.apache.org/" target="_blank" rel="noopener">Parquetの公式ウェブサイト</a></li>
-</ul>
-<h2><span id="delta-lake">Delta Lake</span></h2>
-<ul>
-<li><a href="https://delta.io/" target="_blank" rel="noopener">Delta Lake公式ウェブサイト</a></li>
-</ul>
-<h2><span id="apache-hudi">Apache Hudi</span></h2>
-<ul>
-<li><a href="https://hudi.incubator.apache.org/" target="_blank" rel="noopener">Apache
-Hudiの公式ウェブサイト</a></li>
-<li><a href="https://hudi.incubator.apache.org/images/hudi_intro_1.png" target="_blank" rel="noopener">Hudiのイメージを表す図</a></li>
-</ul>
-<h2><span id="alluxio">Alluxio</span></h2>
-<ul>
-<li><a href="https://www.alluxio.io/" target="_blank" rel="noopener">Alluxio公式ウェブサイト</a></li>
-</ul>
-<h2><span id="aws-aurora">AWS Aurora</span></h2>
-<ul>
-<li><a href="https://qiita.com/kumagi/items/67f9ac0fb4e6f70c056d" target="_blank" rel="noopener">kumagiさんの解説記事</a></li>
-<li><a href="https://dl.acm.org/citation.cfm?id=3056101" target="_blank" rel="noopener">ACMライブラリの論文</a></li>
-</ul>
-<h2><span id="apache-hbase">Apache HBase</span></h2>
-<ul>
-<li><a href="https://hbase.apache.org/" target="_blank" rel="noopener">HBaseの公式ウェブサイト</a></li>
-</ul>
-<h2><span id="apache-kudu">Apache Kudu</span></h2>
-<ul>
-<li><a href="https://kudu.apache.org/" target="_blank" rel="noopener">Apache
-Kuduの公式ウェブサイト</a></li>
-<li><a href="https://www.slideshare.net/Cloudera_jp/apache-kududb-dbts2017" target="_blank" rel="noopener">DBテックショーでのKudu説明</a></li>
-</ul>
-<h1><span id="メモ">メモ</span></h1>
-<h2><span id="動機">動機</span></h2>
-<p>単にPut、Getするだけではなく、例えばデータを内部的に構造化したり、トランザクションに対応したりする機能を持つ
-ストレージ機能のことをなんと呼べば良いのかを考えてみる。</p>
-<h2><span id="どういうユースケースを想定するか">どういうユースケースを想定するか？</span></h2>
-<ul>
-<li>データがストリームとして届く
-<ul>
-<li>できる限り鮮度の高い状態で扱う</li>
-</ul></li>
-<li>主に分析および分析結果を用いたビジネス</li>
-<li>大規模なデータを取り扱う
-<ul>
-<li>大規模なデータを一度の分析で取り扱う</li>
-<li>大規模なデータの中から、一部を一度の分析で取り扱う</li>
-</ul></li>
-</ul>
-<h2><span id="どういう特徴を持つストレージを探るか">どういう特徴を持つストレージを探るか？</span></h2>
-<ul>
-<li>必須
-<ul>
-<li>Put、Getなど（あるいは、それ相当）の基本的なAPIを有する
-<ul>
-<li>補足：POSIXでなくてもよい？</li>
-</ul></li>
-<li>大規模データを扱える。スケーラビリティを有する。
-大規模の種類には、サイズが大きいこと、件数が多いことの両方の特徴がありえる
-<ul>
-<li>データを高効率で圧縮できることは重要そう</li>
-</ul></li>
-<li>クエリエンジンと連係する</li>
-</ul></li>
-<li>あると望ましい
-<ul>
-<li>トランザクションに対応
-<ul>
-<li>ストリーム処理の出力先として用いる場合、Exactly Onceセマンティクスを
-達成するためには出力先ストレージ側でトランザクション対応していることで
-ストリーム処理アプリケーションをシンプルにできる、はず</li>
-</ul></li>
-<li>ストリームデータを効率的に永続化し、オンデマンドの分析向けにバックエンドで変換。
-あるいは分析向けにストア可能
-<ul>
-<li>高頻度での書き込み + 一括での読み出し</li>
-</ul></li>
-<li>サービスレス
-<ul>
-<li>複雑なサービスを運用せずに済むなら越したことはない。</li>
-</ul></li>
-<li>読み出しについて、プッシュダウンフィルタへの対応
-<ul>
-<li>更にデータ構造によっては、基本的な集計関数に対応していたら便利ではある</li>
-</ul></li>
-<li>更新のあるデータについて、過去のデータも取り出せる</li>
-</ul></li>
-</ul>
-<h2><span id="データベースエンジンあるいは-ストレージエンジン">データベースエンジン
-あるいは ストレージエンジン</span></h2>
-<p><a href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3" target="_blank" rel="noopener">jp.wikipediaのデータベースエンジン</a>
-によると、</p>
-<blockquote>
-<p>データベース管理システム (DBMS)がデータベースに対しデータを
-挿入、抽出、更新および削除(CRUD参照)するために使用する基礎となる
-ソフトウェア部品</p>
-</blockquote>
-<p>とある。</p>
-<p>MySQLの場合には、　<a href="https://dev.mysql.com/doc/refman/5.6/ja/storage-engines.html" target="_blank" rel="noopener">MySQLの代替ストレージエンジン</a>
-に載っているようなものが該当する。 なお、デフォルトはInnoDB。 <a href="https://dev.mysql.com/doc/refman/5.6/ja/innodb-introduction.html" target="_blank" rel="noopener">InnoDBイントロダクション</a>
-に「表 14.1 InnoDB ストレージエンジンの機能」という項目がある。
-インデックス、キャッシュ、トランザクション、バックアップ・リカバリ、レプリケーション、
-圧縮、地理空間情報の取扱、暗号化対応などが大まかに挙げられる。</p>
-<h2><span id="apache-parquet">Apache Parquet</span></h2>
-<p><a href="https://parquet.apache.org/" target="_blank" rel="noopener">Parquetの公式ウェブサイト</a>
-によると以下のように定義されている。</p>
-<blockquote>
-<p>Apache Parquet is a columnar storage format available to any project
-in the Hadoop ecosystem, regardless of the choice of data processing
-framework, data model or programming language.</p>
-</blockquote>
-<p>ストレージフォーマット単体でも、バッチ処理向けにはある程度有用であると考えられる。</p>
-<h2><span id="delta-lake">Delta Lake</span></h2>
-<p><a href="https://delta.io/" target="_blank" rel="noopener">Delta Lake公式ウェブサイト</a>
-には、以下のような定義が記載されている。</p>
-<blockquote>
-<p>Delta Lake is an open-source storage layer that brings ACID
-transactions to Apache Spark™ and big data workloads.</p>
-</blockquote>
-<p>またウェブサイトには、「Key
-Features」が挙げられている。2019/05/10時点では以下の通り。</p>
-<ul>
-<li>ACID Transactions</li>
-<li>Scalable Metadata Handling</li>
-<li>Time Travel (data versioning)</li>
-<li>Open Format</li>
-<li>Unified Batch and Streaming Source and Sink</li>
-<li>Schema Enforcement</li>
-<li>Schema Evolution</li>
-<li>100% Compatible with Apache Spark API</li>
-</ul>
-<p>データベースの「データベースエンジン」、「ストレージエンジン」とは異なる特徴を有することから、
-定義上も「Storage Layer」と読んでいるのだろうか。</p>
-<h2><span id="apache-hudi">Apache Hudi</span></h2>
-<p><a href="https://hudi.incubator.apache.org/" target="_blank" rel="noopener">Apache
-Hudiの公式ウェブサイト</a> によると、</p>
-<blockquote>
-<p>Hudi (pronounced “Hoodie”) ingests &amp; manages storage of large
-analytical datasets over DFS (HDFS or cloud stores) and provides three
-logical views for query access.</p>
-</blockquote>
-<p>とのこと。</p>
-<p>また特徴としては、2019/05/10現在</p>
-<ul>
-<li>Read Optimized View</li>
-<li>Incremental View</li>
-<li>Near-Real time Table</li>
-</ul>
-<p>が挙げられていた。 なお、機能をイメージするには、 <a href="https://hudi.incubator.apache.org/images/hudi_intro_1.png" target="_blank" rel="noopener">Hudiのイメージを表す図</a>
-がちょうどよい。</p>
-<p>Apache Hudiでは、「XXなYYである」のような定義は挙げられていない。</p>
-<h2><span id="alluxio">Alluxio</span></h2>
-<p>ストレージそのものというより、ストレージの抽象化や透過的アクセスの仕組みとして考えられる。</p>
-<p><a href="https://www.alluxio.io/" target="_blank" rel="noopener">Alluxio公式ウェブサイト</a>
-には以下のように定義されている。</p>
-<blockquote>
-<p>Data orchestration for analytics and machine learning in the
-cloud</p>
-</blockquote>
-<p><a href="https://www.alluxio.io/" target="_blank" rel="noopener">Alluxio公式ウェブサイト</a>
-には、「KEY TECHNICAL FEATURES」というのが記載されている。
-気になったものを列挙すると以下の通り。</p>
-<ul>
-<li>Compute
-<ul>
-<li>Flexible APIs</li>
-<li>Intelligent data caching and tiering</li>
-</ul></li>
-<li>Storage
-<ul>
-<li>Built-in data policies</li>
-<li>Plug and play under stores</li>
-<li>Transparent unified namespace for file system and object stores</li>
-</ul></li>
-<li>Enterprise
-<ul>
-<li>Security</li>
-<li>Monitoring and management</li>
-</ul></li>
-</ul>
-<h2><span id="awsauroraのバックエンドストレージもしくはストレージエンジン">AWS
-Auroraのバックエンドストレージ（もしくはストレージエンジン）</span></h2>
-<p><a href="https://qiita.com/kumagi/items/67f9ac0fb4e6f70c056d" target="_blank" rel="noopener">kumagiさんの解説記事</a>
-あたりが入り口としてとてもわかり易い。 また、元ネタは、 <a href="https://dl.acm.org/citation.cfm?id=3056101" target="_blank" rel="noopener">ACMライブラリの論文</a>
-あたりか。</p>
-<p>語弊を恐れずにいえば、上記でも触れられていたとおり、「Redo-logリプレイ機能付き分散ストレージ」という
-名前が妥当だろうか。</p>
-<h2><span id="apache-hbase">Apache HBase</span></h2>
-<p><a href="https://hbase.apache.org/" target="_blank" rel="noopener">HBaseの公式ウェブサイト</a>
-によると、</p>
-<blockquote>
-<p>Apache HBase is the Hadoop database, a distributed, scalable, big
-data store.</p>
-</blockquote>
-<p>のように定義されている。
-また、挙げられていた特徴は以下のとおり。（2019/05/12現在）</p>
-<ul>
-<li>Linear and modular scalability.</li>
-<li>Strictly consistent reads and writes.</li>
-<li>Automatic and configurable sharding of tables</li>
-<li>Automatic failover support between RegionServers.</li>
-<li>Convenient base classes for backing Hadoop MapReduce jobs with
-Apache HBase tables.</li>
-<li>Easy to use Java API for client access.</li>
-<li>Block cache and Bloom Filters for real-time queries.</li>
-<li>Query predicate push down via server side Filters</li>
-<li>Thrift gateway and a REST-ful Web service that supports XML,
-Protobuf, and binary data encoding options</li>
-<li>Extensible jruby-based (JIRB) shell</li>
-<li>Support for exporting metrics via the Hadoop metrics subsystem to
-files or Ganglia; or via JMX</li>
-</ul>
-<p>いわゆるスケールアウト可能なKVSだが、これを分析向けのストレージとして用いる選択肢もありえる。
-ただし、いわゆるカラムナフォーマットでデータを扱うわけではない点と、
-サービスを運用する必要がある点は懸念すべき点である。</p>
-<h2><span id="apache-kudu">Apache Kudu</span></h2>
-<p><a href="https://kudu.apache.org/" target="_blank" rel="noopener">Apache Kuduの公式ウェブサイト</a>
-を見ると、以下のように定義されている。</p>
-<blockquote>
-<p>A new addition to the open source Apache Hadoop ecosystem, Apache
-Kudu completes Hadoop's storage layer to enable fast analytics on fast
-data.</p>
-</blockquote>
-<p>またKuduの利点は以下のように記載されている。</p>
-<ul>
-<li>Fast processing of OLAP workloads.</li>
-<li>Integration with MapReduce, Spark and other Hadoop ecosystem
-components.</li>
-<li>Tight integration with Apache Impala, making it a good, mutable
-alternative to using HDFS with Apache Parquet.</li>
-<li>Strong but flexible consistency model, allowing you to choose
-consistency requirements on a per-request basis, including the option
-for strict-serializable consistency.</li>
-<li>Strong performance for running sequential and random workloads
-simultaneously.</li>
-<li>Easy to administer and manage.</li>
-<li>High availability. Tablet Servers and Masters use the Raft Consensus
-Algorithm, which ensures that as long as more than half the total number
-of replicas is available, the tablet is available for reads and writes.
-For instance, if 2 out of 3 replicas or 3 out of 5 replicas are
-available, the tablet is available.</li>
-<li>Reads can be serviced by read-only follower tablets, even in the
-event of a leader tablet failure.</li>
-<li>Structured data model.</li>
-</ul>
-<p>クエリエンジンImpalaと連係することを想定されている。
-また、「ストレージレイヤ」という呼び方が、Delta
-Lake同様に用いられている。</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2019/05/10/Storage-Layer-Storage-Engine/" data-id="cm4zszjiy017g17nwhr8rutdk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/05/10/Alluxio-Security/" data-id="cm5enfgby014m18ljevywreei" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3127,6 +2951,15 @@ Lake同様に用いられている。</p>
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/memo-blog/2025/01/02/Business-model-paper-by-IDSA/" class="title">Business model paper by IDSA</a></p>
+                            <p class="item-date"><time datetime="2025-01-02T01:24:53.000Z" itemprop="datePublished">2025-01-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/memo-blog/2024/12/07/Data-Governance-part-of-Global-Digital-Compact/" class="title">Data Governance part of Global Digital Compact</a></p>
                             <p class="item-date"><time datetime="2024-12-07T14:03:43.000Z" itemprop="datePublished">2024-12-07</time></p>
                         </div>
@@ -3159,15 +2992,6 @@ Lake同様に用いられている。</p>
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Dataspace-Connector/">Dataspace Connector</a></p>
-                            <p class="item-title"><a href="/memo-blog/2024/10/21/memo-of-CADDE/" class="title">memo of CADDE</a></p>
-                            <p class="item-date"><time datetime="2024-10-20T15:03:15.000Z" itemprop="datePublished">2024-10-21</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -3186,7 +3010,7 @@ Lake同様に用いられている。</p>
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -3233,7 +3057,7 @@ Lake同様に用いられている。</p>
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2024 dobachi<br>
+            &copy; 2025 dobachi<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>

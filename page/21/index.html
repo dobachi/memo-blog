@@ -170,7 +170,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                227
+                228
                 <span>投稿</span>
             </div>
             <div class="article-info-block">
@@ -205,6 +205,211 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-PixieDust" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2018/12/13/PixieDust/">PixieDustを試してみる</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2018/12/13/PixieDust/">
+            <time datetime="2018-12-13T13:30:57.000Z" itemprop="datePublished">2018-12-13</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Research/">Research</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Research/Data-Analytics/">Data Analytics</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Research/Data-Analytics/Tools/">Tools</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/Data-Analytics/">Data Analytics</a>, <a class="tag-link" href="/memo-blog/tags/Jupyter/">Jupyter</a>, <a class="tag-link" href="/memo-blog/tags/Python/">Python</a>, <a class="tag-link" href="/memo-blog/tags/Tools/">Tools</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#公式サイトの確認" id="toc-公式サイトの確認">公式サイトの確認</a>
+<ul>
+<li><a href="#scalaでも使える" id="toc-scalaでも使える">Scalaでも使える？</a></li>
+<li><a href="#jupyterに独自のカーネルをインストールして使う" id="toc-jupyterに独自のカーネルをインストールして使う">Jupyterに独自のカーネルをインストールして使う</a></li>
+</ul></li>
+<li><a href="#動作確認" id="toc-動作確認">動作確認</a>
+<ul>
+<li><a href="#pixiedust-1---easy-visualizationsで気になったこと" id="toc-pixiedust-1---easy-visualizationsで気になったこと">PixieDust 1 -
+Easy Visualizationsで気になったこと</a></li>
+</ul></li>
+</ul>
+</div>
+<h1><span id="参考">参考</span></h1>
+<ul>
+<li><a href="https://github.com/pixiedust/pixiedust" target="_blank" rel="noopener">公式GitHub</a></li>
+<li><a href="https://qiita.com/ishida330/items/53f1b0df2247fab5c6dd?fbclid=IwAR0fc_xvmkX2dIo9BYYcwygdCc8s1CtCDXkY_-qsmFQOWK0d5QZH-OZ2mtI" target="_blank" rel="noopener">Qiitaの紹介ブログ</a></li>
+</ul>
+<h1><span id="公式サイトの確認">公式サイトの確認</span></h1>
+<p>ここでは気になったことを記しておく。</p>
+<h2><span id="scalaでも使える">Scalaでも使える？</span></h2>
+<p>公式GitHubのREADMEには、 <a href="https://github.com/pixiedust/pixiedust#use-in-python-or-scala" target="_blank" rel="noopener">Use
+in python or scala</a> という項目があり、
+そこには以下のような記述がある。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PixieDust lets you bring robust Python visualization options to your Scala notebooks.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Scala Bridge. Use Scala directly in your Python notebook. Variables are automatically transfered from Python to Scala and vice-versa. Learn more.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spark progress monitor. Track the status of your Spark job. No more waiting in the dark. Notebook users can now see how a cell&apos;s code is running behind the scenes.</span><br></pre></td></tr></table></figure>
+<h2><span id="jupyterに独自のカーネルをインストールして使う">Jupyterに独自のカーネルをインストールして使う</span></h2>
+<p>カーネルを追加することで、ユーザが自身の環境に依存するライブラリ（Sparkなど）をインストールしなくても
+簡単に使えるようになっているようだ？ ★要確認</p>
+<h1><span id="動作確認">動作確認</span></h1>
+<p>まずは、<a href="https://pixiedust.github.io/pixiedust/install.html" target="_blank" rel="noopener">公式ウェブサイトのインストール手順</a>
+を読みつつ、 <a href="https://qiita.com/ishida330/items/53f1b0df2247fab5c6dd?fbclid=IwAR0fc_xvmkX2dIo9BYYcwygdCc8s1CtCDXkY_-qsmFQOWK0d5QZH-OZ2mtI" target="_blank" rel="noopener">Qiitaの紹介ブログ</a>
+を読みながら、軽く試してみることにした。
+Anacondaを使っているものとし、Condaで環境を作る。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ conda create -n PixieDustExample python=3.5 jupyter</span><br><span class="line">$ conda activate PixieDustExample</span><br></pre></td></tr></table></figure>
+<p>また <a href="https://pixiedust.github.io/pixiedust/install.html" target="_blank" rel="noopener">公式ウェブサイトのインストール手順</a>
+には、以下のような記述があり、 Pythonは2.7もしくは3.5が良いようだ。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Note PixieDust supports both Python 2.7 and Python 3.5.</span><br></pre></td></tr></table></figure>
+<p>pipでpixiedustを探すと、エコシステムが形成されているようだった。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ pip search pixiedust</span><br><span class="line">pixiedust-node (0.2.5)                    - Pixiedust extension for Node.js</span><br><span class="line">pixiedust-flightpredict (0.12)            - Flight delay predictor application with PixieDust</span><br><span class="line">pixiedust-wordcloud (0.2.2)               - Word Cloud Visualization Plugin for PixieDust</span><br><span class="line">pixiedust-twitterdemo1 (0.1)              - Pixiedust demo of the Twitter Sentiment Analysis tutorials</span><br><span class="line">pixiedust-twitterdemo (0.4)               - Pixiedust demo of the Twitter Sentiment Analysis tutorials</span><br><span class="line">pixiedust (1.1.14)                        - Productivity library for Jupyter Notebook</span><br><span class="line">pixiedust-optimus (1.4.0)                 - Productivity library for Spark Python Notebook</span><br><span class="line">pixiegateway (0.8)                        - Server for sharing PixieDust chart and running PixieApps</span><br><span class="line">stem-ladiespixiedust-twitterdemo (0.2.2)  - Pixiedust demo of the Twitter Sentiment Analysis tutorialsfor the STEM activity wall</span><br></pre></td></tr></table></figure>
+<p>そのまま入れることとする。依存関係でいくつかライブラリが入る。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install pixiedust</span><br></pre></td></tr></table></figure>
+<p>エラー。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">twisted 18.7.0 requires PyHamcrest&gt;=1.9.0, which is not installed.</span><br></pre></td></tr></table></figure>
+<p>condaでインストールする。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ conda install PyHamcrest</span><br></pre></td></tr></table></figure>
+<p>PixieDust向けのJupyterカーネルをインストールする。
+なお、本手順の前に、JDKがインストールされ、JAVA_HOMEがインストールされていることを前提とする。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jupyter pixiedust install</span><br></pre></td></tr></table></figure>
+<p>エラー。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ jupyter pixiedust install</span><br><span class="line">Step 1: PIXIEDUST_HOME: /home/dobachi/pixiedust</span><br><span class="line">        Keep y/n [y]? y</span><br><span class="line">Step 2: SPARK_HOME: /home/dobachi/pixiedust/bin/spark</span><br><span class="line">        Keep y/n [y]? y</span><br><span class="line">Directory /home/dobachi/pixiedust/bin/spark does not contain a valid SPARK install</span><br><span class="line">        Download Spark y/n [y]? y</span><br><span class="line">What version would you like to download? 1.6.3, 2.0.2, 2.1.0, 2.2.0, 2.3.0 [2.3.0]: </span><br><span class="line">SPARK_HOME will be set to /home/dobachi/pixiedust/bin/spark/spark-2.3.0-bin-hadoop2.7</span><br><span class="line">Downloading Spark 2.3.0</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">  File &quot;/home/dobachi/.conda/envs/PixieDustExample/lib/python3.7/site-packages/install/createKernel.py&quot;, line 408, in download_spark</span><br><span class="line">    temp_file = self.download_file(spark_download_url)</span><br><span class="line">  File &quot;/home/dobachi/.conda/envs/PixieDustExample/lib/python3.7/site-packages/install/createKernel.py&quot;, line 455, in download_file</span><br><span class="line">    raise Exception(&quot;&#123;&#125;&quot;.format(response.status_code))</span><br><span class="line">Exception: 404</span><br></pre></td></tr></table></figure>
+<p>Sparkのダウンロードで失敗しているようだ。
+軽くデバッグしたところ、URLとして渡されているのは、
+<code>http://apache.claz.org/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz</code>のようだった。
+確かに、リンク切れ？のようだった。いったん、Spark公式サイトのダウンロードページで
+指定されるURLからダウンロードするよう、createKernel.pyを修正して実行することにした。</p>
+<p>なお、上記手順により、指定したディレクトリにSparkとScalaがインストールされる。
+成功すると、以下のようなメッセージが見られる。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">####################################################################################################</span><br><span class="line">#       Congratulations: Kernel Python-with-Pixiedust_Spark-2.3 was successfully created in /home/dobachi/.local/share/jupyter/kernels/pythonwithpixiedustspark23</span><br><span class="line">#       You can start the Notebook server with the following command:</span><br><span class="line">#               jupyter notebook /home/dobachi/pixiedust/notebooks</span><br><span class="line">####################################################################################################</span><br></pre></td></tr></table></figure>
+<p>なお、そのまま実行したら、以下のライブラリが足りないと言われたので予めインストールすることとする。
+（bokeh、seabornはついでにインストール。インストールしないとRendererの選択肢が出てこない）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ conda install matplotlib pandas PyYaml bokeh seaborn</span><br></pre></td></tr></table></figure>
+<p>さて、 <a href="https://qiita.com/ishida330/items/53f1b0df2247fab5c6dd?fbclid=IwAR0fc_xvmkX2dIo9BYYcwygdCc8s1CtCDXkY_-qsmFQOWK0d5QZH-OZ2mtI" target="_blank" rel="noopener">Qiitaの紹介ブログ</a>
+では、PixieDustのカーネルインストール時に一緒にインストールされるノートブックではなく、
+日本語でわかりやすい紹介記事が書かれているが、ここではいったん、上記のインストール時のメッセージに従うこととする。</p>
+<p>Jupyterを起動</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jupyter notebook /home/dobachi/pixiedust/notebooks</span><br></pre></td></tr></table></figure>
+<p>あとは、適当にノートブックを眺めて実行する。</p>
+<h2><span id="pixiedust-1-easy-visualizationsで気になったこと">PixieDust 1 -
+Easy Visualizationsで気になったこと</span></h2>
+<p><code>Loading External Data</code>節でD3
+Rendererを試したところ、以下のようなエラー。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object of type ndarray is not JSON serializable</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/13/PixieDust/" data-id="cm5enfg58009s18ljw3s1d21a" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Adobe-reader-on-Ubuntu18" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -280,7 +485,7 @@ Readerのインストール手順を記したブログ</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/11/Adobe-reader-on-Ubuntu18/" data-id="cm4zszj7p001i17nwm8tcbroi" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/11/Adobe-reader-on-Ubuntu18/" data-id="cm5enfg28001i18ljsu6aouzf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -427,7 +632,7 @@ Readerのインストール手順を記したブログ</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/11/onedrive-for-linux/" data-id="cm4zszjj7018317nw7pay1meo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/11/onedrive-for-linux/" data-id="cm5enfgde017q18ljfzar9lms" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -780,7 +985,7 @@ Queriesについての補足</span></h3>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/06/Paper-of-Blazelt/" data-id="cm4zszjip017017nwvc8w0mx1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/06/Paper-of-Blazelt/" data-id="cm5enfgcy016n18lj3r7iww3c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -934,7 +1139,7 @@ BaseManager#startメソッドを使ってマネージャ機能を開始する。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/06/TFManager-of-TFoSpark/" data-id="cm4zszjbl00bl17nwbjvpnzq1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/06/TFManager-of-TFoSpark/" data-id="cm5enfg5y00bq18lj2ls6ub6n" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1162,7 +1367,7 @@ Serverのjoinメソッドを呼び出す。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/02/Read-mnist-examples-of-TFoSpark/" data-id="cm4zszjb0009y17nwgv83jgun" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/02/Read-mnist-examples-of-TFoSpark/" data-id="cm5enfg5b00a018lj5976pfv9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1332,7 +1537,7 @@ TSUBASAはx86サーバにベクタエンジンを付けるという面白い切�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/23/Aurora-Frovedis/" data-id="cm4zszj7s001v17nwmtf6u7j4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/23/Aurora-Frovedis/" data-id="cm5enfg2b001v18ljb5a1xaow" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1495,7 +1700,7 @@ Support virtualenv in PySpark</a>でHortonworkの人中心に議論されてお�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/18/Error-using-Python3-on-HDP2-6/" data-id="cm4zszj8r004417nwfkr0m5ig" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/18/Error-using-Python3-on-HDP2-6/" data-id="cm5enfg31004618lj55hwnqsa" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1637,7 +1842,7 @@ Support virtualenv in PySpark</a>でHortonworkの人中心に議論されてお�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/17/Ambari-SSL-Error/" data-id="cm4zszj7r001p17nw2413jplw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/17/Ambari-SSL-Error/" data-id="cm5enfg2a001p18ljyfrohhsz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1818,187 +2023,7 @@ BoxのダウンロードURLに関連したエラー</span></h2>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/17/vagrant-libvirt-on-Ubuntu18/" data-id="cm4zszjli01eu17nwhc1jtkyr" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-KVM-on-Ubuntu18" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2018/11/16/KVM-on-Ubuntu18/">KVM on Ubuntu18</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2018/11/16/KVM-on-Ubuntu18/">
-            <time datetime="2018-11-16T14:32:19.000Z" itemprop="datePublished">2018-11-16</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Home-server/">Home server</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Home-server/Ubuntu/">Ubuntu</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Home-server/Ubuntu/KVM/">KVM</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/KVM/">KVM</a>, <a class="tag-link" href="/memo-blog/tags/Ubuntu/">Ubuntu</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#参考" id="toc-参考">参考</a></li>
-<li><a href="#手順" id="toc-手順">手順</a>
-<ul>
-<li><a href="#パッケージインストール" id="toc-パッケージインストール">パッケージインストール</a></li>
-<li><a href="#イメージの準備" id="toc-イメージの準備">イメージの準備</a></li>
-<li><a href="#インストール" id="toc-インストール">インストール</a></li>
-<li><a href="#ゲスト側のconsole設定" id="toc-ゲスト側のconsole設定">ゲスト側のconsole設定</a></li>
-</ul></li>
-</ul>
-</div>
-<h1><span id="参考">参考</span></h1>
-<ul>
-<li><a href="https://help.ubuntu.com/lts/serverguide/libvirt.html.ja" target="_blank" rel="noopener">公式ドキュメント</a></li>
-<li><a href="https://qiita.com/zhh/items/df076c4614f0238f9876" target="_blank" rel="noopener">ネットワークインストールの方法</a></li>
-<li><a href="https://kernhack.hatenablog.com/entry/2015/07/18/154414" target="_blank" rel="noopener">VMのIPアドレス確認</a></li>
-<li><a href="https://www.hiroom2.com/2018/04/30/ubuntu-1804-serial-console-ja/" target="_blank" rel="noopener">ゲストOSにおけるコンソール設定</a></li>
-</ul>
-<h1><span id="手順">手順</span></h1>
-<h2><span id="パッケージインストール">パッケージインストール</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install qemu-kvm libvirt-bin</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo adduser $USER libvirt</span><br></pre></td></tr></table></figure>
-<p>なお、公式ドキュメント上ではlibvertdグループとされていたが、注釈にあった</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">In more recent releases (&gt;= Yakkety) the group was renamed to libvirt. Upgraded systems get a new libvirt group with the same gid as the libvirtd group to match that.</span><br></pre></td></tr></table></figure>
-<p>に従い、libvertグループを使用した。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure>
-<h2><span id="イメージの準備">イメージの準備</span></h2>
-<p>今回は18.04LTSを用いることとする。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/Downloads  # ディレクトリがなかったら作成</span><br><span class="line">$ wget http://ftp.jaist.ac.jp/pub/Linux/ubuntu-releases/18.04/ubuntu-18.04.1-desktop-amd64.iso</span><br><span class="line">$ wget http://ftp.jaist.ac.jp/pub/Linux/ubuntu-releases/18.04/ubuntu-18.04.1-live-server-amd64.iso</span><br></pre></td></tr></table></figure>
-<h2><span id="インストール">インストール</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install virtinst</span><br></pre></td></tr></table></figure>
-<p><a href="https://qiita.com/zhh/items/df076c4614f0238f9876" target="_blank" rel="noopener">ネットワークインストールの方法</a>ネットワーク経由でインストールすることにした。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo virt-install \</span><br><span class="line">  --name ubuntu1804 \</span><br><span class="line">  --ram 1024 \</span><br><span class="line">  --disk path=/var/lib/libvirt/images/test.img,bus=virtio,size=15 \</span><br><span class="line">  --vcpus 2 \</span><br><span class="line">  --os-type linux \</span><br><span class="line">  --network default \</span><br><span class="line">  --graphics none \</span><br><span class="line">  --console pty,target_type=serial \</span><br><span class="line">  --location &apos;http://jp.archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/&apos; \</span><br><span class="line">  --extra-args &apos;console=ttyS0,115200n8 serial&apos;</span><br></pre></td></tr></table></figure>
-<p>参考までにイメージからインストールするのは以下の通り。（未動作確認）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo virt-install -n test -r 512 \</span><br><span class="line">--disk path=/var/lib/libvirt/images/test.img,bus=virtio,size=4 -c \</span><br><span class="line">~/Downloads/ubuntu-18.04.1-live-server-amd64.iso --network network=default,model=virtio \</span><br><span class="line">--graphics none \</span><br><span class="line">  --extra-args &apos;console=ttyS0,115200n8 serial&apos;</span><br></pre></td></tr></table></figure>
-<h2><span id="ゲスト側のconsole設定">ゲスト側のconsole設定</span></h2>
-<p><code>virsh console</code>
-でコンソールに接続できるよう、SSHで接続して設定する。 <a href="https://kernhack.hatenablog.com/entry/2015/07/18/154414" target="_blank" rel="noopener">VMのIPアドレス確認</a>
-を参考に、IPアドレスを確認する。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~$ sudo virsh net-dhcp-leases default</span><br><span class="line"> Expiry Time          MAC address        Protocol  IP address                Hostname        Client ID or DUID</span><br><span class="line">-------------------------------------------------------------------------------------------------------------------</span><br><span class="line"> 2018-11-17 03:08:52  52:54:00:b0:68:26  ipv4      192.168.122.193/24        ubuntu1804      ff:32:39:f9:b5:00:02:00:00:ab:11:97:79:8b:63:02:9c:d8:07</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.hiroom2.com/2018/04/30/ubuntu-1804-serial-console-ja/" target="_blank" rel="noopener">ゲストOSにおけるコンソール設定</a>
-に従って設定する。</p>
-<p>まず <code>/etc/default/grub</code> を修正する。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">$ sudo echo &gt; /etc/default/grub &lt;&lt; EOL</span><br><span class="line">  # If you change this file, run &apos;update-grub&apos; afterwards to update</span><br><span class="line">  # /boot/grub/grub.cfg.</span><br><span class="line">  # For full documentation of the options in this file, see:</span><br><span class="line">  #   info -f grub -n &apos;Simple configuration&apos;</span><br><span class="line">  </span><br><span class="line">  GRUB_DEFAULT=0</span><br><span class="line">  GRUB_TIMEOUT_STYLE=hidden</span><br><span class="line">  GRUB_TIMEOUT=10</span><br><span class="line">  GRUB_DISTRIBUTOR=`lsb_release -i -s 2&gt; /dev/null || echo Debian`</span><br><span class="line">  GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash&quot;</span><br><span class="line">  GRUB_CMDLINE_LINUX=&quot;console=tty1 console=ttyS0,115200&quot;</span><br><span class="line">  </span><br><span class="line">  # Uncomment to enable BadRAM filtering, modify to suit your needs</span><br><span class="line">  # This works with Linux (no patch required) and with any kernel that obtains</span><br><span class="line">  # the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)</span><br><span class="line">  #GRUB_BADRAM=&quot;0x01234567,0xfefefefe,0x89abcdef,0xefefefef&quot;</span><br><span class="line">  </span><br><span class="line">  # Uncomment to disable graphical terminal (grub-pc only)</span><br><span class="line">  #GRUB_TERMINAL=console</span><br><span class="line">  </span><br><span class="line">  # The resolution used on graphical terminal</span><br><span class="line">  # note that you can use only modes which your graphic card supports via VBE</span><br><span class="line">  # you can see them in real GRUB with the command `vbeinfo&apos;</span><br><span class="line">  #GRUB_GFXMODE=640x480</span><br><span class="line">  </span><br><span class="line">  # Uncomment if you don&apos;t want GRUB to pass &quot;root=UUID=xxx&quot; parameter to Linux</span><br><span class="line">  #GRUB_DISABLE_LINUX_UUID=true</span><br><span class="line">  </span><br><span class="line">  # Uncomment to disable generation of recovery mode menu entries</span><br><span class="line">  #GRUB_DISABLE_RECOVERY=&quot;true&quot;</span><br><span class="line">  </span><br><span class="line">  # Uncomment to get a beep at grub start</span><br><span class="line">  #GRUB_INIT_TUNE=&quot;480 440 1&quot;</span><br><span class="line">  #GRUB_TERMINAL=serial</span><br><span class="line">  GRUB_TERMINAL=&quot;console serial&quot;</span><br><span class="line">  GRUB_SERIAL_COMMAND=&quot;serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1&quot;</span><br><span class="line">  EOL</span><br></pre></td></tr></table></figure>
-<p>grubの設定ファイルを再生成する。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
-<p>rebootする。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure>
-<p>reboot後に<code>virsh console &lt;VM名&gt;</code>でアクセスすればコンソールに接続できる。
-抜けるときは、Ctrl + ]もしくはCtrl + 5。</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2018/11/16/KVM-on-Ubuntu18/" data-id="cm4zszj9p006p17nwi9rmckeu" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/11/17/vagrant-libvirt-on-Ubuntu18/" data-id="cm5enfgfi01ey18lj6fhm5wap" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2092,6 +2117,15 @@ BoxのダウンロードURLに関連したエラー</span></h2>
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/memo-blog/2025/01/02/Business-model-paper-by-IDSA/" class="title">Business model paper by IDSA</a></p>
+                            <p class="item-date"><time datetime="2025-01-02T01:24:53.000Z" itemprop="datePublished">2025-01-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/memo-blog/2024/12/07/Data-Governance-part-of-Global-Digital-Compact/" class="title">Data Governance part of Global Digital Compact</a></p>
                             <p class="item-date"><time datetime="2024-12-07T14:03:43.000Z" itemprop="datePublished">2024-12-07</time></p>
                         </div>
@@ -2124,15 +2158,6 @@ BoxのダウンロードURLに関連したエラー</span></h2>
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Dataspace-Connector/">Dataspace Connector</a></p>
-                            <p class="item-title"><a href="/memo-blog/2024/10/21/memo-of-CADDE/" class="title">memo of CADDE</a></p>
-                            <p class="item-date"><time datetime="2024-10-20T15:03:15.000Z" itemprop="datePublished">2024-10-21</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2151,7 +2176,7 @@ BoxのダウンロードURLに関連したエラー</span></h2>
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -2198,7 +2223,7 @@ BoxのダウンロードURLに関連したエラー</span></h2>
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2024 dobachi<br>
+            &copy; 2025 dobachi<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>

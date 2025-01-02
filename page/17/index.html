@@ -170,7 +170,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                227
+                228
                 <span>投稿</span>
             </div>
             <div class="article-info-block">
@@ -205,6 +205,166 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-Graceful-Shutdown-of-Kafka" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2019/03/13/Graceful-Shutdown-of-Kafka/">Kafkaのグレースフルシャットダウン</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2019/03/13/Graceful-Shutdown-of-Kafka/">
+            <time datetime="2019-03-13T13:29:42.000Z" itemprop="datePublished">2019-03-13</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Messaging-System/">Messaging System</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Messaging-System/Kafka/">Kafka</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/Graceful-Shutdown/">Graceful Shutdown</a>, <a class="tag-link" href="/memo-blog/tags/Kafka/">Kafka</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#公式ドキュメント" id="toc-公式ドキュメント">公式ドキュメント</a></li>
+<li><a href="#実装確認" id="toc-実装確認">実装確認</a></li>
+</ul></li>
+</ul>
+</div>
+<h1><span id="参考">参考</span></h1>
+<ul>
+<li><a href="https://kafka.apache.org/documentation/#basic_ops_restarting" target="_blank" rel="noopener">Graceful
+Shutdownに関する公式ドキュメントの記述</a></li>
+</ul>
+<h1><span id="メモ">メモ</span></h1>
+<h2><span id="公式ドキュメント">公式ドキュメント</span></h2>
+<p><a href="https://kafka.apache.org/documentation/#basic_ops_restarting" target="_blank" rel="noopener">Graceful
+Shutdownに関する公式ドキュメントの記述</a>によると、グレースフルシャットダウンの強みは以下の通り。</p>
+<ul>
+<li>ログリカバリ処理をスキップする</li>
+<li>シャットダウンするブローカから予めリーダを移動する</li>
+</ul>
+<h2><span id="実装確認">実装確認</span></h2>
+<p>以下のあたりから、グレースフルシャットダウンの実装。</p>
+<p>kafka/server/KafkaServer.scala:422</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  private def controlledShutdown() &#123;</span><br><span class="line"></span><br><span class="line">    def node(broker: Broker): Node = broker.node(config.interBrokerListenerName)</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
+<p>コントローラを取得して接続し、コントローラに対してグレースフルシャットダウンの依頼を投げる。
+なお、本メソッドはKafkaServer#shutdownメソッド内で呼び出される。</p>
+<p>なお、当該メソッドは（KafkaServerStartableクラスでラップされているが）シャットダウンフックで適用される。</p>
+<p>kafka/Kafka.scala:70 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// attach shutdown handler to catch terminating signals as well as normal termination</span><br><span class="line">Runtime.getRuntime().addShutdownHook(new Thread(&quot;kafka-shutdown-hook&quot;) &#123;</span><br><span class="line">  override def run(): Unit = kafkaServerStartable.shutdown()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2019/03/13/Graceful-Shutdown-of-Kafka/" data-id="cm5enfg3f005818ljpgnfkl42" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-KafkaConnectTwitter" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -281,7 +441,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/03/08/KafkaConnectTwitter/" data-id="cm4zszj9x007517nwbft6n1ro" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/03/08/KafkaConnectTwitter/" data-id="cm5enfg4e007718ljrg84yhw9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -437,7 +597,7 @@ Kafka’s Storage Internals Work</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/03/08/Log-of-Kafka/" data-id="cm4zszja5007s17nw2uv4p78r" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/03/08/Log-of-Kafka/" data-id="cm5enfg4k007u18ljbfrrwpmm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -647,7 +807,7 @@ Kafka’s Storage Internals Work</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/03/05/ZooKeeper-of-Kafka/" data-id="cm4zszjca00ea17nwcfku80mz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/03/05/ZooKeeper-of-Kafka/" data-id="cm5enfg6y00ee18ljopyjl59k" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1178,7 +1338,7 @@ APIでクエリが渡される。データはJSONにラップされて渡され�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/24/Clipper/" data-id="cm4zszjmm01h017nwx3scz1gm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/24/Clipper/" data-id="cm5enfgg201gz18ljj8bi38q7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1319,7 +1479,7 @@ APIでクエリが渡される。データはJSONにラップされて渡され�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/22/Tellus/" data-id="cm4zszjbm00bo17nwaek4c6jd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/22/Tellus/" data-id="cm5enfg5w00bn18ljhr4eyz6r" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1470,7 +1630,7 @@ vs. fsync How is it possible that PostgreSQL used fsync incorrectly for
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/18/BugFix-about-fsync-in-PostgreSQL/" data-id="cm4zszj7w002517nw6z9g8rj3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/18/BugFix-about-fsync-in-PostgreSQL/" data-id="cm5enfg2e002518lj1piyex67" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1643,7 +1803,7 @@ vs. fsync How is it possible that PostgreSQL used fsync incorrectly for
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/15/Sawada-san-DevSumi/" data-id="cm4zszjb500ag17nwimqcwd0q" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/15/Sawada-san-DevSumi/" data-id="cm5enfg5g00ai18ljk5owmtv6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1793,7 +1953,7 @@ PowerShellの実行結果を受け取るときに、オブジェクトをJSONに
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/14/STDOUT-to-JSON-on-Ansible/" data-id="cm4zszjb400ad17nw0o3khmie" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/14/STDOUT-to-JSON-on-Ansible/" data-id="cm5enfg5e00af18ljrrgmalxe" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1982,339 +2142,7 @@ pywinrmを有効にする手間がかかりそうだったので、condaで環�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/11/Ansible-for-Windows/" data-id="cm4zszj7r001t17nwbw82l7ju" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Machine-Learning-Model-Management" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2019/02/09/Machine-Learning-Model-Management/">Machine Learning Model Management Tools</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2019/02/09/Machine-Learning-Model-Management/">
-            <time datetime="2019-02-09T03:54:33.000Z" itemprop="datePublished">2019-02-09</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Machine-Learning/">Machine Learning</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Machine-Learning/Model-Management/">Model Management</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/Machine-Learning/">Machine Learning</a>, <a class="tag-link" href="/memo-blog/tags/Model-Management/">Model Management</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#参考" id="toc-参考">参考</a>
-<ul>
-<li><a href="#strata" id="toc-strata">Strata</a></li>
-<li><a href="#studio.ml" id="toc-studio.ml">studio.ml</a></li>
-<li><a href="#modeldb" id="toc-modeldb">ModelDB</a></li>
-<li><a href="#mlflow" id="toc-mlflow">MLflow</a></li>
-<li><a href="#clipper" id="toc-clipper">Clipper</a></li>
-<li><a href="#azure-machine-learning-studio" id="toc-azure-machine-learning-studio">Azure Machine Learning
-Studio</a></li>
-<li><a href="#hydrosphere-serving" id="toc-hydrosphere-serving">Hydrosphere Serving</a></li>
-</ul></li>
-<li><a href="#studio.ml-1" id="toc-studio.ml-1">studio.ml</a>
-<ul>
-<li><a href="#注意事項" id="toc-注意事項">注意事項</a></li>
-<li><a href="#インストールと動作確認" id="toc-インストールと動作確認">インストールと動作確認</a></li>
-</ul></li>
-<li><a href="#modeldb-1" id="toc-modeldb-1">ModelDB</a>
-<ul>
-<li><a href="#注意点" id="toc-注意点">注意点</a></li>
-<li><a href="#概要" id="toc-概要">概要</a></li>
-<li><a href="#light-apiの例" id="toc-light-apiの例">Light
-APIの例</a></li>
-<li><a href="#native-api利用の例" id="toc-native-api利用の例">Native
-API利用の例</a></li>
-<li><a href="#ウェブuiの例" id="toc-ウェブuiの例">ウェブUIの例</a></li>
-</ul></li>
-<li><a href="#mlflow-1" id="toc-mlflow-1">MLflow</a>
-<ul>
-<li><a href="#概要-1" id="toc-概要-1">概要</a>
-<ul>
-<li><a href="#動機" id="toc-動機">動機</a></li>
-<li><a href="#機能" id="toc-機能">機能</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#clipper-1" id="toc-clipper-1">Clipper</a>
-<ul>
-<li><a href="#clipper-a-low-latency-online-prediction-serving-system" id="toc-clipper-a-low-latency-online-prediction-serving-system">Clipper:
-A Low-Latency Online Prediction Serving System</a>
-<ul>
-<li><a href="#アーキ概要" id="toc-アーキ概要">アーキ概要</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#azure-machine-learning-studio-1" id="toc-azure-machine-learning-studio-1">Azure Machine Learning
-Studio</a></li>
-<li><a href="#hydrosphere-serving-1" id="toc-hydrosphere-serving-1">Hydrosphere Serving</a></li>
-</ul>
-</div>
-<h1><span id="参考">参考</span></h1>
-<h2><span id="strata">Strata</span></h2>
-<ul>
-<li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/stopic/2833?utm_medium=content+synd&amp;utm_source=oreilly.com&amp;utm_campaign=stny18&amp;utm_content=mlflow+a+platform+for+managing+the+machine+learning+lifecycle+top+cta" target="_blank" rel="noopener">Strata
-Model Lifecycle Management</a></li>
-</ul>
-<h2><span id="studioml">studio.ml</span></h2>
-<ul>
-<li><a href="https://www.studio.ml/" target="_blank" rel="noopener">studio.ml</a></li>
-<li><a href="https://github.com/studioml/studio/issues/330" target="_blank" rel="noopener">studio.ml
-Issue-330</a></li>
-<li><a href="https://github.com/studioml/studio" target="_blank" rel="noopener">studio.mlの公式GitHub</a></li>
-</ul>
-<h2><span id="modeldb">ModelDB</span></h2>
-<ul>
-<li><a href="https://github.com/mitdbg/modeldb" target="_blank" rel="noopener">ModelDBの公式GitHub</a></li>
-<li><a href="https://databricks.com/session/modeldb-a-system-to-manage-machine-learning-models" target="_blank" rel="noopener">ModelDB紹介
-at Spark Summit</a></li>
-<li><a href="http://modeldb.csail.mit.edu:8000/user/TqNzCVawBirw/tree" target="_blank" rel="noopener">ModelDB
-Clientの例</a></li>
-</ul>
-<h2><span id="mlflow">MLflow</span></h2>
-<ul>
-<li><a href="https://www.oreilly.com/ideas/mlflow-a-platform-for-managing-the-machine-learning-lifecycle" target="_blank" rel="noopener">MLflowのO'Reilly記事</a></li>
-</ul>
-<h2><span id="clipper">Clipper</span></h2>
-<ul>
-<li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/detail/69861" target="_blank" rel="noopener">Strata
-NY 2018でのClipper</a></li>
-<li><a href="https://rise.cs.berkeley.edu/projects/clipper/" target="_blank" rel="noopener">RISELabのページ</a></li>
-<li><a href="https://rise.cs.berkeley.edu/wp-content/uploads/2017/02/clipper_final.pdf" target="_blank" rel="noopener">Clipperの論文</a></li>
-<li><a href="https://www.slideshare.net/greenmidori83/ss-28443892" target="_blank" rel="noopener">バンディットアルゴリズムについての説明</a></li>
-</ul>
-<h2><span id="azure-machine-learningstudio">Azure Machine Learning
-Studio</span></h2>
-<ul>
-<li><a href="https://azure.microsoft.com/ja-jp/services/machine-learning-studio/" target="_blank" rel="noopener">Azure
-Machine Learning Studio</a></li>
-<li><a href="https://docs.microsoft.com/ja-jp/azure/machine-learning/studio/" target="_blank" rel="noopener">Azure
-Machine Learning Studio公式ドキュメント</a></li>
-</ul>
-<h2><span id="hydrosphere-serving">Hydrosphere Serving</span></h2>
-<p><a href="/memo-blog/2019/03/22/Hydrosphere-io/">Hydrosphere.io</a>
-のページを参照。</p>
-<h1><span id="studioml">studio.ml</span></h1>
-<p>Pythonベースの機械学習モデル管理のフレームワーク。
-対応しているのは、Keras、TensorFlow、scikit-learnあたり。</p>
-<h2><span id="注意事項">注意事項</span></h2>
-<p><a href="https://github.com/studioml/studio" target="_blank" rel="noopener">studio.mlの公式GitHub</a>のREADMEを読むと「Authentication」の項目があり、
-studio.mlに何らかの手段で認証しないといけないようである。
-ゲストモードがあるようだが極力アカウント情報を渡さずに使おうとしたが
-うまく動作しなかった。</p>
-<h2><span id="インストールと動作確認">インストールと動作確認</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ /opt/Anaconda/default/bin/conda create -n studioml python</span><br><span class="line">$ conda activate stduioml</span><br><span class="line">$ pip install studioml</span><br></pre></td></tr></table></figure>
-<p>以下のようなエラーが生じた。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awscli 1.16.101 has requirement rsa&lt;=3.5.0,&gt;=3.1.2, but you&apos;ll have rsa 4.0 which is incompatible.</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/Sources</span><br><span class="line">$ git clone https://github.com/studioml/studio.git</span><br><span class="line">$ cd studio</span><br><span class="line">$ cd examples/keras/</span><br></pre></td></tr></table></figure>
-<p>ここでGitHub上のREADMEに記載のとおり、<code>~/.studioml/config.yaml</code>のdatabaseセクションに
-<code>guest: true</code>を追加した。</p>
-<p>いったんUIを起動してみる。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ studio ui</span><br></pre></td></tr></table></figure>
-<p>以下のようなエラーが出た。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  File &quot;/home/******/.conda/envs/studioml/lib/python3.7/site-packages/flask/app.py&quot;, line 1813, in full_dispatch_request    rv = self.dispatch_request()  File &quot;/home/******/.conda/envs/studioml/lib/python3.7/site-packages/flask/app.py&quot;, line 1799, in dispatch_request    return self.view_functions[rule.endpoint](**req.view_args)  File &quot;/home/******/.conda/envs/studioml/lib/python3.7/site-packages/studio/apiserver.py&quot;, line 37, in dashboard    return _render(&apos;dashboard.html&apos;)  File &quot;/home/******/.conda/envs/studioml/lib/python3.7/site-packages/studio/apiserver.py&quot;, line 518, in _render    auth = get_auth(get_auth_config())  File &quot;/home/******/.conda/envs/studioml/lib/python3.7/site-packages/studio/apiserver.py&quot;, line 511, in get_auth_config    return get_config()[&apos;server&apos;][&apos;authentication&apos;]</span><br><span class="line"></span><br><span class="line">KeyError: &apos;server&apos;</span><br></pre></td></tr></table></figure>
-<p>参考: <a href="https://github.com/studioml/studio/issues/330" target="_blank" rel="noopener">studio.ml
-Issue-330</a></p>
-<p>設定を以下のように変えてみた。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">--- /home/dobachi/.studioml/config.yaml.2019021001      2019-02-10 01:04:10.751282800 +0900</span><br><span class="line">+++ /home/dobachi/.studioml/config.yaml 2019-02-10 01:17:20.178761700 +0900</span><br><span class="line">@@ -2,6 +2,10 @@</span><br><span class="line">     type: http     serverUrl: https://zoo.studio.ml</span><br><span class="line">     authentication: github</span><br><span class="line">+    guest: true</span><br><span class="line">+</span><br><span class="line">+server:</span><br><span class="line">+    authentication: None</span><br><span class="line"></span><br><span class="line"> storage:</span><br><span class="line">     type: gcloud</span><br></pre></td></tr></table></figure>
-<p>ブラウザで<code>http://localhost:5000</code>にアクセスした所、開けたような気がしたが、
-GitHubの404ページが表示された。</p>
-<p>コンソール上のエラーは以下のとおり。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.exceptions.ConnectionError: HTTPSConnectionPool(host=&apos;zoo.studio.ml&apos;, port=443): Max retries exceeded with url: /api/get_user_experiments (Caused by NewConnectionError(&apos;&lt;urllib3.connection.VerifiedHTTPSConnection object at 0x7ff5a64a3da0&gt;: Failed to establisha new connection: [Errno -2] Name or service not known&apos;))</span><br></pre></td></tr></table></figure>
-<h1><span id="modeldb">ModelDB</span></h1>
-<h2><span id="注意点">注意点</span></h2>
-<p><a href="https://github.com/mitdbg/modeldb" target="_blank" rel="noopener">ModelDBの公式GitHub</a>を見ると、20190211時点で最近更新されていないようだ。（最新が6ヶ月前の更新）</p>
-<h2><span id="概要">概要</span></h2>
-<p>モデルの情報を構造的に管理するための仕組み。 「ModelDB's Light
-API」を通じて、モデルのメトリクスとメタデータを管理できるようになる。
-spark.mlとscikit-learnはネイティブクライアントを利用する。 ★要確認</p>
-<p><a href="https://github.com/mitdbg/modeldb" target="_blank" rel="noopener">ModelDBの公式GitHub</a>のREADMEにわかりやすいフロントエンドの紹介がある。</p>
-<h2><span id="light-apiの例">Light APIの例</span></h2>
-<p><a href="https://github.com/mitdbg/modeldb/blob/master/client/python/samples/basic/BasicWorkflow.py" target="_blank" rel="noopener">ModelDB
-BasicWorkflow.py</a>がワークフローの基本が分かる例。 基本は、
-<code>Syncer</code>を使ってモデルの情報を登録する。 この例では、</p>
-<ul>
-<li>データセット</li>
-<li>モデル</li>
-<li>モデルのコンフィグ</li>
-<li>モデルのメトリクス</li>
-</ul>
-<p>をModelDBに登録する。</p>
-<p><a href="https://github.com/mitdbg/modeldb/blob/master/client/python/samples/basic/BasicSyncAll.py" target="_blank" rel="noopener">ModelDB
-BasicSyncAll.py</a>がYAMLで登録する例。</p>
-<h2><span id="native-api利用の例">Native API利用の例</span></h2>
-<p><a href="http://modeldb.csail.mit.edu:8000/user/TqNzCVawBirw/tree" target="_blank" rel="noopener">ModelDB
-Clientの例</a>に<code>modeldb.sklearn_native.SyncableMetrics</code>の利用例が記載されている。</p>
-<h2><span id="ウェブuiの例">ウェブUIの例</span></h2>
-<p><a href="http://modeldb.csail.mit.edu:3000/projects" target="_blank" rel="noopener">ModelDB
-ウェブUIの例</a>に例が載っている。</p>
-<h1><span id="mlflow">MLflow</span></h1>
-<h2><span id="概要">概要</span></h2>
-<p><a href="https://www.oreilly.com/ideas/mlflow-a-platform-for-managing-the-machine-learning-lifecycle" target="_blank" rel="noopener">MLflowのO'Reilly記事</a>に動機と機能概要が書かれている。
-また動画でウェブUIの使い方が示されている。</p>
-<h3><span id="動機">動機</span></h3>
-<ul>
-<li>無数のツールを組み合わせるのが難しい</li>
-<li>実験をトレースするのが難しい</li>
-<li>結果の再現性担保が難しい</li>
-<li>デプロイが面倒</li>
-</ul>
-<h3><span id="機能">機能</span></h3>
-<ul>
-<li>トラッキング
-<ul>
-<li>パラメータ、コードバージョン、メトリクス、アウトプットファイルなどを管理する</li>
-</ul></li>
-<li>プロジェクト
-<ul>
-<li>コードをパッケージングし、結果の再現性を担保する。またユーザ間でプロジェクトを流通できる</li>
-<li>conda形式で依存関係を記述可能であり、実行コマンドも定義可能</li>
-<li>もしMLflowの機能でトラッキングしていれば、バージョンやパラメータをトラックする</li>
-</ul></li>
-<li>モデル
-<ul>
-<li>モデルをパッケージングし、デプロイできるようにする</li>
-</ul></li>
-</ul>
-<h1><span id="clipper">Clipper</span></h1>
-<p><a href="https://conferences.oreilly.com/strata/strata-ny-2018/public/schedule/detail/69861" target="_blank" rel="noopener">Strata
-NY 2018でのClipper</a>
-が講演のようだが、スライドが公開されていない。</p>
-<h2><span id="clippera-low-latency-online-prediction-serving-system">Clipper:
-A Low-Latency Online Prediction Serving System</span></h2>
-<p><a href="https://rise.cs.berkeley.edu/wp-content/uploads/2017/02/clipper_final.pdf" target="_blank" rel="noopener">Clipperの論文</a>によると、「A
-Low-Latency Online Prediction Serving System」と定義されている。
-上記論文の図1を見るかぎり、モデルサービングを担い、複数の機械学習モデルをまとめ上げる「中層化」層の
-役割も担うようだ。
-また、モデル選択の機能、キャッシングなどの機能も含まれているようである。</p>
-<p>これまでの研究では、学習フェーズに焦点が当たることが多かったが、
-この研究では推論フェーズに焦点を当てている。</p>
-<h3><span id="アーキ概要">アーキ概要</span></h3>
-<ul>
-<li>モデル抽象化層</li>
-<li>モデル選択層</li>
-</ul>
-<p>論文Figure 1参照。</p>
-<h1><span id="azure-machine-learningstudio">Azure Machine Learning
-Studio</span></h1>
-<p><a href="https://azure.microsoft.com/ja-jp/services/machine-learning-studio/" target="_blank" rel="noopener">Azure
-Machine Learning Studio</a>には、「完全に管理されたクラウド
-サービスで、ユーザーは簡単に予測分析ソリューションを構築、デプロイ、共有できます。」と
-記載されている。</p>
-<h1><span id="hydrosphere-serving">Hydrosphere Serving</span></h1>
-<p><a href="/memo-blog/2019/03/22/Hydrosphere-io/">Hydrosphere.io</a>
-のページを参照。</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/09/Machine-Learning-Model-Management/" data-id="cm4zszjim016s17nwnuzg2ub6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/11/Ansible-for-Windows/" data-id="cm5enfg2b001t18lj3fuzy260" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2408,6 +2236,15 @@ Machine Learning Studio</a>には、「完全に管理されたクラウド
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/memo-blog/2025/01/02/Business-model-paper-by-IDSA/" class="title">Business model paper by IDSA</a></p>
+                            <p class="item-date"><time datetime="2025-01-02T01:24:53.000Z" itemprop="datePublished">2025-01-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/memo-blog/2024/12/07/Data-Governance-part-of-Global-Digital-Compact/" class="title">Data Governance part of Global Digital Compact</a></p>
                             <p class="item-date"><time datetime="2024-12-07T14:03:43.000Z" itemprop="datePublished">2024-12-07</time></p>
                         </div>
@@ -2440,15 +2277,6 @@ Machine Learning Studio</a>には、「完全に管理されたクラウド
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Dataspace-Connector/">Dataspace Connector</a></p>
-                            <p class="item-title"><a href="/memo-blog/2024/10/21/memo-of-CADDE/" class="title">memo of CADDE</a></p>
-                            <p class="item-date"><time datetime="2024-10-20T15:03:15.000Z" itemprop="datePublished">2024-10-21</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2467,7 +2295,7 @@ Machine Learning Studio</a>には、「完全に管理されたクラウド
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -2514,7 +2342,7 @@ Machine Learning Studio</a>には、「完全に管理されたクラウド
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2024 dobachi<br>
+            &copy; 2025 dobachi<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>

@@ -170,7 +170,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                227
+                228
                 <span>投稿</span>
             </div>
             <div class="article-info-block">
@@ -205,6 +205,197 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-OpenAPI-Generator-for-Flask" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2023/09/07/OpenAPI-Generator-for-Flask/">OpenAPI Generator for Flask</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2023/09/07/OpenAPI-Generator-for-Flask/">
+            <time datetime="2023-09-07T13:10:58.000Z" itemprop="datePublished">2023-09-07</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Open-API/">Open API</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/Flask/">Flask</a>, <a class="tag-link" href="/memo-blog/tags/Open-API/">Open API</a>, <a class="tag-link" href="/memo-blog/tags/Python/">Python</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#簡単な動作確認" id="toc-簡単な動作確認">簡単な動作確認</a></li>
+</ul></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#記事" id="toc-記事">記事</a></li>
+</ul></li>
+</ul>
+</div>
+<h1><span id="メモ">メモ</span></h1>
+<h2><span id="簡単な動作確認">簡単な動作確認</span></h2>
+<p>ひとまず分かりやすかった <a href="https://future-architect.github.io/articles/20221203a/" target="_blank" rel="noopener">OpenAPI
+GeneratorでPython Web API構築</a> をそのまま試す。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/OpenAPIGenFlaskSample/original</span><br><span class="line">$ <span class="built_in">cd</span>  ~/Sources/OpenAPIGenFlaskSample/original</span><br><span class="line">$ cat &lt;&lt; EOF &gt; openapi.yaml</span><br><span class="line"></span><br><span class="line">(snip)</span><br><span class="line"></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<p><code>openapi.yaml</code>の中身は <a href="https://future-architect.github.io/articles/20221203a/" target="_blank" rel="noopener">OpenAPI
+GeneratorでPython Web API構築</a> に記載されている。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p server client</span><br><span class="line">$ docker run --rm -v <span class="variable">$&#123;PWD&#125;</span>:/<span class="built_in">local</span> openapitools/openapi-generator-cli generate -i /<span class="built_in">local</span>/openapi.yaml -g python-flask -o /<span class="built_in">local</span>/server</span><br><span class="line">$ docker run --rm -v <span class="variable">$&#123;PWD&#125;</span>:/<span class="built_in">local</span> openapitools/openapi-generator-cli generate -i /<span class="built_in">local</span>/openapi.yaml -g go -o /<span class="built_in">local</span>/client</span><br></pre></td></tr></table></figure>
+<p>今回用があるのはサーバ側のPython実装（Flask）の方なので、そちらを確認する。
+記事にもあるが以下のようなファイルが生成されているはず。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">$ tree</span><br><span class="line">.</span><br><span class="line">├── Dockerfile</span><br><span class="line">├── README.md</span><br><span class="line">├── git_push.sh</span><br><span class="line">├── openapi_server</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── __main__.py</span><br><span class="line">│   ├── controllers</span><br><span class="line">│   │   ├── __init__.py</span><br><span class="line">│   │   ├── security_controller.py</span><br><span class="line">│   │   └── stock_price_controller.py</span><br><span class="line">│   ├── encoder.py</span><br><span class="line">│   ├── models</span><br><span class="line">│   │   ├── __init__.py</span><br><span class="line">│   │   ├── base_model.py</span><br><span class="line">│   │   ├── error.py</span><br><span class="line">│   │   ├── ok.py</span><br><span class="line">│   │   └── stock_price.py</span><br><span class="line">│   ├── openapi</span><br><span class="line">│   │   └── openapi.yaml</span><br><span class="line">│   ├── <span class="built_in">test</span></span><br><span class="line">│   │   ├── __init__.py</span><br><span class="line">│   │   └── test_stock_price_controller.py</span><br><span class="line">│   ├── typing_utils.py</span><br><span class="line">│   └── util.py</span><br><span class="line">├── requirements.txt</span><br><span class="line">├── setup.py</span><br><span class="line">├── <span class="built_in">test</span>-requirements.txt</span><br><span class="line">└── tox.ini</span><br></pre></td></tr></table></figure>
+<p>まずは、 <code>__main__.py</code> を見てみる。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> connexion</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> openapi_server <span class="keyword">import</span> encoder</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    app = connexion.App(__name__, specification_dir=<span class="string">'./openapi/'</span>)</span><br><span class="line">    app.app.json_encoder = encoder.JSONEncoder</span><br><span class="line">    app.add_api(<span class="string">'openapi.yaml'</span>,</span><br><span class="line">                arguments=&#123;<span class="string">'title'</span>: <span class="string">'Stock API'</span>&#125;,</span><br><span class="line">                pythonic_params=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">    app.run(port=<span class="number">8080</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p>上記の通り、 connexionを用いていることがわかる。
+connexionはFlaskで動作する、APIとpython関数をマッピングするためのパッケージである。
+connexionについては、 <a href="https://qiita.com/amuyikam/items/1454177a7030e3b3ce80" target="_blank" rel="noopener">connexionを使ってPython
+APIサーバのAPI定義と実装を関連付ける</a>
+のような記事を参考にされたし。</p>
+<p><code>openapi_server/controllers/stock_price_controller.py</code>
+を確認する。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> connexion</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Dict</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Tuple</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Union</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> openapi_server.models.error <span class="keyword">import</span> Error  <span class="comment"># noqa: E501</span></span><br><span class="line"><span class="keyword">from</span> openapi_server.models.stock_price <span class="keyword">import</span> StockPrice  <span class="comment"># noqa: E501</span></span><br><span class="line"><span class="keyword">from</span> openapi_server <span class="keyword">import</span> util</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">stock_price</span><span class="params">(security_cd)</span>:</span>  <span class="comment"># noqa: E501</span></span><br><span class="line">    <span class="string">"""株価取得</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    現在の株価を取得する # noqa: E501</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param security_cd: 証券コードを指定する</span></span><br><span class="line"><span class="string">    :type security_cd: str</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :rtype: Union[StockPrice, Tuple[StockPrice, int], Tuple[StockPrice, int, Dict[str, str]]</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'do some magic!'</span></span><br></pre></td></tr></table></figure>
+<p><code>operationId</code>
+にて指定した名称がコントローラのメソッド名に反映されている。</p>
+<p><code>parameters</code>
+にて指定したパラメータがコントローラの引数になっていることが確認できる。</p>
+<p><code>components</code>
+にて指定したスキーマに基づき、<code>openapi_server/models</code>
+以下に反映されていることが分かる。 今回の例だと、戻り値用の
+<code>StockPrice</code> やOK、Errorが定義されている。
+なお、これはOpenAPIにて生成されたものであり、それを編集して使うことはあまり想定されていないようだ。</p>
+<p><code>openapi_server/util.py</code>
+にはデシリアライザなどが含まれている。</p>
+<p>さて、記事通り、Dockerで動かしてみる。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t openapi_server .</span><br><span class="line">$ docker run -p 8080:8080 openapi_server</span><br></pre></td></tr></table></figure>
+<p>試しに、適当な引数を与えて動かすと、実装通り戻り値を得られる。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://localhost:8080/v1/sc/4721/stockPrice</span><br><span class="line"><span class="string">"do some magic!"</span></span><br></pre></td></tr></table></figure>
+<p>なおDockerfileはこんな感じである。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3</span>-alpine</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> mkdir -p /usr/src/app</span></span><br><span class="line"><span class="bash">WORKDIR /usr/src/app</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">COPY requirements.txt /usr/src/app/</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">RUN pip3 install --no-cache-dir -r requirements.txt</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">COPY . /usr/src/app</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">EXPOSE 8080</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">ENTRYPOINT [<span class="string">"python3"</span>]</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">CMD [<span class="string">"-m"</span>, <span class="string">"openapi_server"</span>]</span></span><br></pre></td></tr></table></figure>
+<p>Docker化しなくてもそのままでも動く。
+ここでは一応venvを使って仮想環境を構築しておく。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ python -m venv venv</span><br><span class="line">$ . venv/bin/activate</span><br><span class="line">$ pip install -r requirements.txt</span><br><span class="line">$ python -m openapi_server</span><br></pre></td></tr></table></figure>
+<h1><span id="参考">参考</span></h1>
+<h2><span id="記事">記事</span></h2>
+<ul>
+<li><a href="https://future-architect.github.io/articles/20221203a/" target="_blank" rel="noopener">OpenAPI
+GeneratorでPython Web API構築</a></li>
+<li><a href="https://qiita.com/amuyikam/items/1454177a7030e3b3ce80" target="_blank" rel="noopener">connexionを使ってPython
+APIサーバのAPI定義と実装を関連付ける</a></li>
+</ul>
+<!-- vim: set et tw=0 ts=2 sw=2: -->
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/07/OpenAPI-Generator-for-Flask/" data-id="cm5enfg55009e18ljxq5qbzfd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-IDS-Dataspace-Protocol" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -577,7 +768,7 @@ ProcessのMessage Type</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/31/IDS-Dataspace-Protocol/" data-id="cm4zszjii016h17nwwt1ntimu" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/31/IDS-Dataspace-Protocol/" data-id="cm5enfgcq016418ljkugxvisi" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -860,7 +1051,7 @@ SDKとは？</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/27/How-to-create-SDK/" data-id="cm4zszj9d005l17nwr8o5u0ka" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/27/How-to-create-SDK/" data-id="cm5enfg3n005r18ljhc0gxzts" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1023,7 +1214,7 @@ SDKとは？</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/15/check-windows-cpu-resources/" data-id="cm4zszjcd00el17nwxh9wz5e4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/15/check-windows-cpu-resources/" data-id="cm5enfg7000em18lj1he1uhox" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1244,7 +1435,7 @@ Compatibility</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="cm4zszjar009717nw6tsayynl" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="cm5enfg54009918ljbtfdl80r" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1450,7 +1641,7 @@ Actionsでmarkdownをpdfで出力する</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/05/02/GitHub-Actions-for-Hexo-with-Pandoc/" data-id="cm4zszj97005617nwbds7mbx7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/05/02/GitHub-Actions-for-Hexo-with-Pandoc/" data-id="cm5enfg3g005c18lj26eyb0vv" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1599,7 +1790,7 @@ Hyper-V の実行</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="cm4zszjan008z17nw5kcxmd80" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="cm5enfg51009418lj9kh6qma7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1988,7 +2179,7 @@ CLI v2 Docker image</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="cm4zszjig016d17nwqtv716du" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="cm5enfgco016018ljc1jzptk7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2297,7 +2488,7 @@ Processing in Real-time</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/" data-id="cm4zszja1007c17nwyb9lwxdh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/" data-id="cm5enfg4g007e18lj9exi02ol" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2475,275 +2666,7 @@ unable to limit memory (-m flag) on Ubuntu/Debian distros #6365</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/10/Error-about-the-memory-configuration-of-Minikube/" data-id="cm4zszj8p003y17nwccorwm9n" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Blogs-about-the-portability-of-kubernetes" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2022/01/07/Blogs-about-the-portability-of-kubernetes/">Blogs about the portability of kubernetes </a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2022/01/07/Blogs-about-the-portability-of-kubernetes/">
-            <time datetime="2022-01-07T01:48:03.000Z" itemprop="datePublished">2022-01-07</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Kubernetes/">Kubernetes</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/Kubernetes/">Kubernetes</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#メモ" id="toc-メモ">メモ</a>
-<ul>
-<li><a href="#kubernetes-を本番環境に適用するための-tips" id="toc-kubernetes-を本番環境に適用するための-tips">Kubernetes
-を本番環境に適用するための Tips</a></li>
-<li><a href="#kubernetes-8-factors---kubernetes-クラスタの移行から学んだクラスタのポータビリティの重要性と条件" id="toc-kubernetes-8-factors---kubernetes-クラスタの移行から学んだクラスタのポータビリティの重要性と条件">Kubernetes
-8 Factors - Kubernetes
-クラスタの移行から学んだクラスタのポータビリティの重要性と条件</a></li>
-<li><a href="#twelve-factor-app" id="toc-twelve-factor-app">Twelve-Factor App</a></li>
-<li><a href="#kubernetesを採用するべき１２の理由" id="toc-kubernetesを採用するべき１２の理由">Kubernetesを採用するべき１２の理由</a></li>
-<li><a href="#kubernetesやめました" id="toc-kubernetesやめました">Kubernetes、やめました</a></li>
-<li><a href="#多分あなたにkubernetesは必要ない" id="toc-多分あなたにkubernetesは必要ない">多分あなたにKubernetesは必要ない</a></li>
-<li><a href="#あなたにkubernetesは必要ですかをkubernetes-meetup-tokyoのコアメンバーが議論" id="toc-あなたにkubernetesは必要ですかをkubernetes-meetup-tokyoのコアメンバーが議論">「あなたにKubernetesは必要ですか？」を、Kubernetes
-Meetup Tokyoのコアメンバーが議論</a></li>
-<li><a href="#cndo2021kubernetesがない世界とある世界の違いをインフラエンジニアが解説" id="toc-cndo2021kubernetesがない世界とある世界の違いをインフラエンジニアが解説">CNDO2021、Kubernetesがない世界とある世界の違いをインフラエンジニアが解説</a></li>
-</ul></li>
-<li><a href="#参考" id="toc-参考">参考</a></li>
-</ul>
-</div>
-<h1><span id="メモ">メモ</span></h1>
-<p>このメモは、Kubernetesを利用することで以下のポータビリティを得られるのではないか、という点に関する議論を列挙したものである。</p>
-<ul>
-<li>アプリケーションのポータビリティ
-<ul>
-<li>あるKubernetesクラスタ上にデプロイした or
-可能なアプリケーションを異なるKubernetes環境で実行する</li>
-</ul></li>
-<li>Kubernetesクラスタのポータビリティ
-<ul>
-<li>Kubernetesクラスタを様々な環境で実行する</li>
-</ul></li>
-</ul>
-<h2><span id="kubernetesを本番環境に適用するための-tips">Kubernetes
-を本番環境に適用するための Tips</span></h2>
-<p><a href="https://yoshio3.com/2018/12/06/kubernetes-tips-for-production/" target="_blank" rel="noopener">Kubernetes
-を本番環境に適用するための Tips</a>
-の中に、アプリケーションのポータビリティに関する議論が含まれている。
-具体的には、</p>
-<ul>
-<li>Kubernetes環境の違い</li>
-<li>Kubernetesが同じバージョンでも機能の有効・無効、使える・使えないが異なる</li>
-<li>Kubernetesのバージョンが異なると設定ファイルの書き方が同一である保証がない</li>
-<li>具体例として、LoadBalancerやVolumeが環境によって異なる</li>
-</ul>
-<p>ことが挙げられた。</p>
-<h2><span id="kubernetes8-factors-kubernetesクラスタの移行から学んだクラスタのポータビリティの重要性と条件">Kubernetes
-8 Factors - Kubernetes
-クラスタの移行から学んだクラスタのポータビリティの重要性と条件</span></h2>
-<p><a href="https://www.wantedly.com/companies/wantedly/post_articles/222009#_=_" target="_blank" rel="noopener">Kubernetes
-8 Factors - Kubernetes
-クラスタの移行から学んだクラスタのポータビリティの重要性と条件</a>
-では、 KubernetesのBreaking Changeに関して言及されていた。
-（アプリケーションのポータビリティの話もあるが、Kubernetesクラスタの運用に関する点が言及された記事）</p>
-<p>そこそこの頻度（マイナーバージョンアップにおいても、という意味）でも、Breaking
-Changeが生じるため、アップデートしていくのが大変だ、と。
-小さな規模だったらクラスタ丸ごとデプロイしなおす（※）、という対応も可能だったが、様々な業務が載ってくるとそれも大変、と。</p>
-<p>※小さな規模でクラスタ丸ごと都度デプロイしなおす、ということだと、Kubernetesで抽象化する意味が…？ということも考えうるか？</p>
-<h2><span id="twelve-factor-app">Twelve-Factor App</span></h2>
-<p><a href="https://12factor.net/ja/" target="_blank" rel="noopener">Twelve-Factor App</a>
-にはアプリケーションのポータビリティの考えを含む、以下のような「Software
-as a Service 」を実現するにあたってのポイントが提言されている。</p>
-<ul>
-<li>セットアップ自動化のために 宣言的な
-フォーマットを使い、プロジェクトに新しく加わった開発者が要する時間とコストを最小化する。</li>
-<li>下層のOSへの 依存関係を明確化 し、実行環境間での 移植性を最大化
-する。</li>
-<li>モダンな クラウドプラットフォーム 上への デプロイ
-に適しており、サーバー管理やシステム管理を不要なものにする。</li>
-<li>開発環境と本番環境の 差異を最小限 にし、アジリティを最大化する
-継続的デプロイ を可能にする。</li>
-<li>ツール、アーキテクチャ、開発プラクティスを大幅に変更することなく
-スケールアップ できる。</li>
-</ul>
-<h2><span id="kubernetesを採用するべき12の理由">Kubernetesを採用するべき１２の理由</span></h2>
-<p><a href="https://qiita.com/MahoTakara/items/39ed37449e6f0f8f65a7" target="_blank" rel="noopener">Kubernetesを採用するべき１２の理由</a>
-にはアプリケーションのポータビリティに関連するKubernetesの利点が記載されている。
-一部、Kubernetesクラスタのポータビリティと考えてもよい内容もある。</p>
-<blockquote>
-<p>理由4
-仮想サーバーやベアメタルとハイブリッド構成可能な柔軟な運用基盤</p>
-</blockquote>
-<blockquote>
-<p>理由6 オンプレとクラウドの両方で利用できる運用基盤</p>
-</blockquote>
-<h2><span id="kubernetes-やめました">Kubernetes、やめました</span></h2>
-<p>ポータビリティの直接的な議論ではないが、<a href="http://blog.father.gedow.net/2020/06/03/goodbye-kubernetes/" target="_blank" rel="noopener">Kubernetes、やめました</a>
-にはKubernetesを採用しなかったケースの話が記載されている。
-Kubernetesの学習コストと効果を天秤にかけた結果、他の技術で目的は達成できるはず、ということ。</p>
-<h2><span id="多分あなたにkubernetesは必要ない">多分あなたにKubernetesは必要ない</span></h2>
-<p><a href="https://yakst.com/ja/posts/5455" target="_blank" rel="noopener">多分あなたにKubernetesは必要ない</a>
-では、KubernetesではなくNomadを利用することにした経緯が記載されている。
-Nomadは「オーケストレータ」だがそれで用が足りた、ということのようだ。</p>
-<blockquote>
-<p>もしあなたが大規模インフラ上に同一サービス群をデプロイする計画をしているのであれば、Kubernetesという道を選んで良いでしょう。ただ、複雑性や運用コストが増えることを肝に命じてください。そしてこういったコストの一部は、Google
-Kubernetes EngineやAmazon
-EKSのようなマネージドKubernetes環境を利用することで省くことができます。</p>
-</blockquote>
-<h2><span id="あなたにkubernetesは必要ですかを-kubernetesmeetup-tokyoのコアメンバーが議論">「あなたにKubernetesは必要ですか？」を、Kubernetes
-Meetup Tokyoのコアメンバーが議論</span></h2>
-<p><a href="https://atmarkit.itmedia.co.jp/ait/articles/1907/23/news120.html" target="_blank" rel="noopener">「あなたにKubernetesは必要ですか？」を、Kubernetes
-Meetup Tokyoのコアメンバーが議論</a> では、 <a href="https://yakst.com/ja/posts/5455" target="_blank" rel="noopener">多分あなたにKubernetesは必要ない</a>
-の記事を受けて行われた、
-日本でKubernetesを本格運用している企業の著名エンジニアによるパネルディスカッションの様子が記載されている。</p>
-<p>なお、個人的に気になったのは以下の下り。</p>
-<blockquote>
-<p>青山氏は、Kubernetesでも、CI/CDツールなどとうまく組み合わせることで、カスタマイズできるPaaSに近い環境を作ることができるとした。また、五十嵐氏は、「開発者と運用支援担当が別チームとして役割分担しやすい」というKubernetesの特徴を生かせれば、開発者が最小限の設定で使えるようにできると話した。</p>
-</blockquote>
-<blockquote>
-<p>ルイス氏は、Kubernetes上でPaaSやFaaSが稼働するような動きが今後進むことで、一部の懸念は解消に向かうのではないかとしている。</p>
-</blockquote>
-<p>PaaSやFaaSを実現する基盤技術は、単体でクラスタ構成可能なものもあるため、Kubernetes上に載せることで「抽象化の層」が増えることになる。
-抽象化の恩恵と複雑性増加の辛さを天秤にかけることになるだろう。</p>
-<h2><span id="cndo2021-kubernetesがない世界とある世界の違いをインフラエンジニアが解説">CNDO2021、Kubernetesがない世界とある世界の違いをインフラエンジニアが解説</span></h2>
-<p>ポータビリティはあまり関係ない。</p>
-<p><a href="https://thinkit.co.jp/article/18557" target="_blank" rel="noopener">CNDO2021、Kubernetesがない世界とある世界の違いをインフラエンジニアが解説</a>
-では、
-「CI/CDまではできているがKubernetesがない」場合と、Kubernetesがある場合を比較し、
-「Kubernetesがなくてもクラウドネイティブ化の目的は達成できうるが、結局はKubernetesらが実現していることを自分でやらないといけない」とした。</p>
-<p>なお、クラウドネイティブ化の目的については、CNCFの定義が引用されていた。</p>
-<blockquote>
-<p>素早く継続的にユーザーに価値を届ける</p>
-</blockquote>
-<h1><span id="参考">参考</span></h1>
-<ul>
-<li><a href="https://yoshio3.com/2018/12/06/kubernetes-tips-for-production/" target="_blank" rel="noopener">Kubernetes
-を本番環境に適用するための Tips</a></li>
-<li><a href="https://www.wantedly.com/companies/wantedly/post_articles/222009#_=_" target="_blank" rel="noopener">Kubernetes
-8 Factors - Kubernetes
-クラスタの移行から学んだクラスタのポータビリティの重要性と条件</a></li>
-<li><a href="https://12factor.net/ja/" target="_blank" rel="noopener">Twelve-Factor App</a></li>
-<li><a href="https://qiita.com/MahoTakara/items/39ed37449e6f0f8f65a7" target="_blank" rel="noopener">Kubernetesを採用するべき１２の理由</a></li>
-<li><a href="http://blog.father.gedow.net/2020/06/03/goodbye-kubernetes/" target="_blank" rel="noopener">Kubernetes、やめました</a></li>
-<li><a href="https://yakst.com/ja/posts/5455" target="_blank" rel="noopener">多分あなたにKubernetesは必要ない</a></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/1907/23/news120.html" target="_blank" rel="noopener">「あなたにKubernetesは必要ですか？」を、Kubernetes
-Meetup Tokyoのコアメンバーが議論</a></li>
-<li><a href="https://thinkit.co.jp/article/18557" target="_blank" rel="noopener">CNDO2021、Kubernetesがない世界とある世界の違いをインフラエンジニアが解説</a></li>
-</ul>
-<!-- vim: set et tw=0 ts=2 sw=2: -->
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Blogs-about-the-portability-of-kubernetes/" data-id="cm4zszjhx015717nwdq90fuor" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/10/Error-about-the-memory-configuration-of-Minikube/" data-id="cm5enfg2z004018ljhtapotbr" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2837,6 +2760,15 @@ Meetup Tokyoのコアメンバーが議論</a></li>
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/memo-blog/2025/01/02/Business-model-paper-by-IDSA/" class="title">Business model paper by IDSA</a></p>
+                            <p class="item-date"><time datetime="2025-01-02T01:24:53.000Z" itemprop="datePublished">2025-01-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/memo-blog/2024/12/07/Data-Governance-part-of-Global-Digital-Compact/" class="title">Data Governance part of Global Digital Compact</a></p>
                             <p class="item-date"><time datetime="2024-12-07T14:03:43.000Z" itemprop="datePublished">2024-12-07</time></p>
                         </div>
@@ -2869,15 +2801,6 @@ Meetup Tokyoのコアメンバーが議論</a></li>
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Dataspace-Connector/">Dataspace Connector</a></p>
-                            <p class="item-title"><a href="/memo-blog/2024/10/21/memo-of-CADDE/" class="title">memo of CADDE</a></p>
-                            <p class="item-date"><time datetime="2024-10-20T15:03:15.000Z" itemprop="datePublished">2024-10-21</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2896,7 +2819,7 @@ Meetup Tokyoのコアメンバーが議論</a></li>
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -2943,7 +2866,7 @@ Meetup Tokyoのコアメンバーが議論</a></li>
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2024 dobachi<br>
+            &copy; 2025 dobachi<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>
