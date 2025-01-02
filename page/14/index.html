@@ -170,7 +170,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                228
+                229
                 <span>投稿</span>
             </div>
             <div class="article-info-block">
@@ -205,6 +205,153 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-Import-gradle-projects" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2019/06/24/Import-gradle-projects/">GradleプロジェクトをIntellijでインポート</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2019/06/24/Import-gradle-projects/">
+            <time datetime="2019-06-24T13:55:09.000Z" itemprop="datePublished">2019-06-24</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Tools/">Tools</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Tools/Intellij/">Intellij</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/Apache-Kafka/">Apache Kafka</a>, <a class="tag-link" href="/memo-blog/tags/Gradle/">Gradle</a>, <a class="tag-link" href="/memo-blog/tags/Intellij/">Intellij</a>, <a class="tag-link" href="/memo-blog/tags/Kafka/">Kafka</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
+</ul>
+</div>
+<h1><span id="参考">参考</span></h1>
+<ul>
+<li><a href="https://tyablog.net/2018/09/24/dont-have-to-run-gradlew-idea/" target="_blank" rel="noopener">./grdlew
+idea 叩かなくていいよ。</a></li>
+</ul>
+<h1><span id="メモ">メモ</span></h1>
+<p>昔は <code>gradlew idea</code>
+とやってIdea用のプロジェクトファイルを生成してから
+インポートしていたけれども、最近のIntellijは「ディレクトリを指定」してインポートすると、
+Gradleプロジェクトを検知して、ウィザードを開いてくれる。</p>
+<p>例えばApache KafkaなどのGradleプロジェクトをインポートするときには、
+メニューからインポートを選択し、ディレクトリをインポートすると良い。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/24/Import-gradle-projects/" data-id="cm5f57p5q006518ln8s72dd27" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Kafka-Console-Consumer" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -374,7 +521,7 @@ group.min.session.timeout.ms や group.max.session.timeout.ms を満たす
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/23/Kafka-Console-Consumer/" data-id="cm5enfgct016c18lje5u22b8p" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/23/Kafka-Console-Consumer/" data-id="cm5f57peh014418lnlvhgdzvo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -622,7 +769,7 @@ SPEとルールベースエンジンはそれを実現しやすいが、DBMSのA
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/22/The-8-Requirements-of-Real-Time-Stream-Processing/" data-id="cm5enfg6000bx18lj0fd8g2jx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/22/The-8-Requirements-of-Real-Time-Stream-Processing/" data-id="cm5f57p8100ca18lnlicnmwfu" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -873,7 +1020,7 @@ RDDへの依存性がユーザに制約をもたらす、とも。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/14/MillWheel-Paper/" data-id="cm5enfg4u008m18lj0n90aexe" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/14/MillWheel-Paper/" data-id="cm5f57p6m009018lnkvlrwgky" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1019,7 +1166,7 @@ ExtensionsからSystem-monitorをインストールすると、タスクバー�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/12/System-monitor-on-Ubuntu18/" data-id="cm5enfg5v00bj18lj0dwwetey" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/12/System-monitor-on-Ubuntu18/" data-id="cm5f57p7x00bv18lnywnsmqre" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1165,7 +1312,7 @@ ExtensionsからSystem-monitorをインストールすると、タスクバー�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/11/Alt-Tab-on-Ubuntu18/" data-id="cm5enfg29001m18ljqkxpqxyo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/11/Alt-Tab-on-Ubuntu18/" data-id="cm5f57p3s001m18lni7isj9wf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1311,7 +1458,7 @@ for WindowsをWSLから使う時のVolumeの扱い方</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/09/Mount-volums-on-WSL/" data-id="cm5enfg4z008y18ljpohl80sj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/09/Mount-volums-on-WSL/" data-id="cm5f57p6p009618lnyaqm736c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1681,7 +1828,7 @@ https://github.com/facebook/create-react-app を
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/06/MLflow/" data-id="cm5enfgf201e018lj11e7de3b" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/06/MLflow/" data-id="cm5f57ph301dj18lnqla2kdgl" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1829,7 +1976,7 @@ https://github.com/facebook/create-react-app を
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/06/03/HBase-on-Docker-for-test/" data-id="cm5enfg3j005g18ljpzs439mh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/06/03/HBase-on-Docker-for-test/" data-id="cm5f57p5d005k18lnxqe7ofc2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2571,293 +2718,7 @@ https://www.slideshare.net/databricks/how-australias-national-health-services-di
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/05/17/Spark-Summit-2019/" data-id="cm5enfgga01he18lj6f4favas" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Alluxio-Security" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2019/05/10/Alluxio-Security/">Alluxio Security</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2019/05/10/Alluxio-Security/">
-            <time datetime="2019-05-10T07:07:48.000Z" itemprop="datePublished">2019-05-10</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Alluxio/">Alluxio</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/Alluxio/">Alluxio</a>, <a class="tag-link" href="/memo-blog/tags/Security/">Security</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#参考" id="toc-参考">参考</a></li>
-<li><a href="#メモ" id="toc-メモ">メモ</a>
-<ul>
-<li><a href="#ユーザ認証" id="toc-ユーザ認証">ユーザ認証</a>
-<ul>
-<li><a href="#kerberos認証はサポートされていない" id="toc-kerberos認証はサポートされていない">Kerberos認証はサポートされていない</a></li>
-<li><a href="#simpleモードの認証" id="toc-simpleモードの認証">SIMPLEモードの認証</a></li>
-<li><a href="#customモードの認証" id="toc-customモードの認証">CUSTOMモードの認証</a></li>
-</ul></li>
-<li><a href="#監査ログ" id="toc-監査ログ">監査ログ</a></li>
-</ul></li>
-</ul>
-</div>
-<h1><span id="参考">参考</span></h1>
-<ul>
-<li><a href="https://docs.alluxio.io/os/user/stable/en/advanced/Security.html" target="_blank" rel="noopener">Alluxio公式ドキュメントのセキュリティに関する説明</a></li>
-<li><a href="https://docs.alluxio.io/os/user/1.5/en/Security.html#authentication" target="_blank" rel="noopener">公式ドキュメントのAuthenticationの説明</a></li>
-<li><a href="https://github.com/Alluxio/alluxio/blob/master/core/common/src/main/java/alluxio/security/login/LoginModuleConfiguration.java#L81" target="_blank" rel="noopener">Kerberosがサポートされていない？</a></li>
-<li><a href="https://github.com/Alluxio/alluxio/blob/master/core/common/src/main/java/alluxio/security/login/AlluxioLoginModule.java#L55" target="_blank" rel="noopener">AlluxioのJAAS実装では、login時に必ずTrueを返す？</a></li>
-<li><a href="https://github.com/Alluxio/alluxio/blob/master/core/common/src/main/java/alluxio/security/login/AlluxioLoginModule.java#L84" target="_blank" rel="noopener">commitでも特に認証をしていないように見える？</a></li>
-</ul>
-<h1><span id="メモ">メモ</span></h1>
-<p><a href="https://docs.alluxio.io/os/user/stable/en/advanced/Security.html" target="_blank" rel="noopener">Alluxio公式ドキュメントのセキュリティに関する説明</a>
-を眺めてみる。</p>
-<p>提供機能は以下の通りか。</p>
-<ul>
-<li>認証</li>
-<li>認可
-<ul>
-<li>POSIXパーミッション相当の認可機能を提供する</li>
-</ul></li>
-<li>Impersonation
-<ul>
-<li>システムユーザなどが複数のユーザを演じることが可能</li>
-</ul></li>
-<li>監査ログの出力</li>
-</ul>
-<h2><span id="ユーザ認証">ユーザ認証</span></h2>
-<p>基本的には、2019/05/10現在ではSIMPLEモードが用いられるようである。
-<code>alluxio.security.login.username</code>
-プロパティで指定されたユーザ名か、そうでなければOS上のユーザ名がログインユーザ名として用いられる。</p>
-<p><a href="https://docs.alluxio.io/os/user/1.5/en/Security.html#authentication" target="_blank" rel="noopener">公式ドキュメントのAuthenticationの説明</a>
-によると、</p>
-<blockquote>
-<p>JAAS (Java Authentication and Authorization Service) is used to
-determine who is currently executing the process.</p>
-</blockquote>
-<p>とのこと。設定をどうするのか、という点はあまり記載されていない。</p>
-<h3><span id="kerberos認証はサポートされていない">Kerberos認証はサポートされていない</span></h3>
-<p>なお、 <a href="https://github.com/Alluxio/alluxio/blob/master/core/common/src/main/java/alluxio/security/login/LoginModuleConfiguration.java#L81" target="_blank" rel="noopener">Kerberosがサポートされていない？</a>
-を見る限り、2019/05/10現在でKerberosがサポートされていない。</p>
-<h3><span id="simpleモードの認証">SIMPLEモードの認証</span></h3>
-<p>また、 <a href="https://github.com/Alluxio/alluxio/blob/master/core/common/src/main/java/alluxio/security/login/AlluxioLoginModule.java#L55" target="_blank" rel="noopener">AlluxioのJAAS実装では、login時に必ずTrueを返す？</a>
-を見ると、2019/05/10現在ではユーザ・パスワード認証がloginメソッド内で定義されていないように見える。
-また、念のために <a href="https://github.com/Alluxio/alluxio/blob/master/core/common/src/main/java/alluxio/security/login/AlluxioLoginModule.java#L84" target="_blank" rel="noopener">commitでも特に認証をしていないように見える？</a>
-を見ても、commitメソッド内でも何かしら認証しているように見えない？</p>
-<p>ただ、 <a href="https://github.com/Alluxio/alluxio/blob/master/core/common/src/main/java/alluxio/security/login/AlluxioLoginModule.java#L86" target="_blank" rel="noopener">mSubject.getPrincipalsしている箇所</a>
-があるので、そこを確認したほうが良さそう。</p>
-<p>関連する実装を確認する。</p>
-<p>そこでまずは、 <code>alluxio.security.LoginUser#login</code>
-メソッドを確認する。 当該メソッドではSubjectインスタンスを生成し、
-<code>alluxio.security.LoginUser#createLoginContext</code> メソッド
-内部で <code>javax.security.auth.login.LoginContext</code>
-クラスのインスタンス生成に用いている。</p>
-<p>alluxio/security/LoginUser.java:80 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Subject subject = new Subject();</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">  // Use the class loader of User.class to construct the LoginContext. LoginContext uses this</span><br><span class="line">  // class loader to dynamically instantiate login modules. This enables</span><br><span class="line">  // Subject#getPrincipals to use reflection to search for User.class instances.</span><br><span class="line">  LoginContext loginContext = createLoginContext(authType, subject, User.class.getClassLoader(),</span><br><span class="line">      new LoginModuleConfiguration(), conf);</span><br><span class="line">  loginContext.login();</span><br></pre></td></tr></table></figure></p>
-<p>ちなみに、 <code>alluxio.security.authentication.AuthType</code>
-を確認している中で、
-SIMPLEモードのときはクライアント側、サーバ側ともにVerify処理をしない旨のコメントを見つけた。</p>
-<p>alluxio/security/authentication/AuthType.java:26 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * User is aware in Alluxio. On the client side, the login username is determined by the</span><br><span class="line"> * &quot;alluxio.security.login.username&quot; property, or the OS user upon failure.</span><br><span class="line"> * On the server side, the verification of client user is disabled.</span><br><span class="line"> */</span><br><span class="line">SIMPLE,</span><br></pre></td></tr></table></figure></p>
-<p>現時点でわかったことをまとめると、SIMPLEモード時はプロパティで渡された情報や、そうでなければ
-OSユーザから得られた情報を用いてユーザ名を用いるようになっている。</p>
-<h3><span id="customモードの認証">CUSTOMモードの認証</span></h3>
-<p>一方、CUSTOMモード時はサーバ側で任意のVersify処理を実行する旨のコメントが記載されていた。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * User is aware in Alluxio. On the client side, the login username is determined by the</span><br><span class="line"> * &quot;alluxio.security.login.username&quot; property, or the OS user upon failure.</span><br><span class="line"> * On the server side, the user is verified by a Custom authentication provider</span><br><span class="line"> * (Specified by property &quot;alluxio.security.authentication.custom.provider.class&quot;).</span><br><span class="line"> */</span><br><span class="line">CUSTOM,</span><br></pre></td></tr></table></figure>
-<p>ユーザをVerifyしたいときは、CUSTOMモードを使い、サーバ側で確認せよ、ということか。
-ただ、CUSTOMモードは <a href="https://docs.alluxio.io/os/user/stable/en/advanced/Security.html" target="_blank" rel="noopener">Alluxio公式ドキュメントのセキュリティに関する説明</a>
-において、</p>
-<blockquote>
-<p>CUSTOM Authentication is enabled. Alluxio file system can know the
-user accessing it, and use customized AuthenticationProvider to verify
-the user is the one he/she claims.</p>
-<p>Experimental. This mode is only used in tests currently.</p>
-</blockquote>
-<p>と記載されており、「Experimental」であることから、積極的には使いづらい状況に見える。（2019/05/10現在）</p>
-<p>関連事項として、
-<code>alluxio.security.authentication.AuthenticationProvider</code>
-を見ると、
-<code>alluxio.security.authentication.custom.provider.class</code>
-プロパティで渡された クラス名を用いて CustomAuthenticationProvider
-をインスタンス生成するようにしているように見える。</p>
-<p>alluxio/security/authentication/AuthenticationProvider.java:44
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">switch (authType) &#123;</span><br><span class="line">  case SIMPLE:</span><br><span class="line">    return new SimpleAuthenticationProvider();</span><br><span class="line">  case CUSTOM:</span><br><span class="line">    String customProviderName =</span><br><span class="line">        conf.get(PropertyKey.SECURITY_AUTHENTICATION_CUSTOM_PROVIDER_CLASS);</span><br><span class="line">    return new CustomAuthenticationProvider(customProviderName);</span><br><span class="line">  default:</span><br><span class="line">    throw new AuthenticationException(&quot;Unsupported AuthType: &quot; + authType.getAuthName());</span><br></pre></td></tr></table></figure></p>
-<p>なお、テストには以下のような実装が見られ、CUSTOMモードの使い方を想像できる。</p>
-<ul>
-<li>alluxio.security.authentication.PlainSaslServerCallbackHandlerTest.NameMatchAuthenticationProvider</li>
-<li>alluxio.security.authentication.GrpcSecurityTest.ExactlyMatchAuthenticationProvider</li>
-<li>alluxio.server.auth.MasterClientAuthenticationIntegrationTest.NameMatchAuthenticationProvider</li>
-<li>alluxio.security.authentication.CustomAuthenticationProviderTest.MockAuthenticationProvider</li>
-</ul>
-<p>ExactlyMatchAuthenticationProviderを用いたテストは以下の通り。</p>
-<p>alluxio/security/authentication/GrpcSecurityTest.java:78
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public void testCustomAuthentication() throws Exception &#123;</span><br><span class="line"></span><br><span class="line">  mConfiguration.set(PropertyKey.SECURITY_AUTHENTICATION_TYPE, AuthType.CUSTOM.getAuthName());</span><br><span class="line">  mConfiguration.set(PropertyKey.SECURITY_AUTHENTICATION_CUSTOM_PROVIDER_CLASS,</span><br><span class="line">      ExactlyMatchAuthenticationProvider.class.getName());</span><br><span class="line">  GrpcServer server = createServer(AuthType.CUSTOM);</span><br><span class="line">  server.start();</span><br><span class="line">  GrpcChannelBuilder channelBuilder =</span><br><span class="line">      GrpcChannelBuilder.newBuilder(getServerConnectAddress(server), mConfiguration);</span><br><span class="line">  channelBuilder.setCredentials(ExactlyMatchAuthenticationProvider.USERNAME,</span><br><span class="line">      ExactlyMatchAuthenticationProvider.PASSWORD, null).build();</span><br><span class="line">  server.shutdown();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>alluxio/security/authentication/GrpcSecurityTest.java:93
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public void testCustomAuthenticationFails() throws Exception &#123;</span><br><span class="line"></span><br><span class="line">  mConfiguration.set(PropertyKey.SECURITY_AUTHENTICATION_TYPE, AuthType.CUSTOM.getAuthName());</span><br><span class="line">  mConfiguration.set(PropertyKey.SECURITY_AUTHENTICATION_CUSTOM_PROVIDER_CLASS,</span><br><span class="line">      ExactlyMatchAuthenticationProvider.class.getName());</span><br><span class="line">  GrpcServer server = createServer(AuthType.CUSTOM);</span><br><span class="line">  server.start();</span><br><span class="line">  GrpcChannelBuilder channelBuilder =</span><br><span class="line">      GrpcChannelBuilder.newBuilder(getServerConnectAddress(server), mConfiguration);</span><br><span class="line">  mThrown.expect(UnauthenticatedException.class);</span><br><span class="line">  channelBuilder.setCredentials(&quot;fail&quot;, &quot;fail&quot;, null).build();</span><br><span class="line">  server.shutdown();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>参考までに、SIMPLEモードで用いられる
-<code>alluxio.security.authentication.plain.SimpleAuthenticationProvider</code>
-では、
-実際に以下のように何もしないauthenticateメソッドが定義されている。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void authenticate(String user, String password) throws AuthenticationException &#123;</span><br><span class="line">  // no-op authentication</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2><span id="監査ログ">監査ログ</span></h2>
-<p><a href="https://docs.alluxio.io/os/user/stable/en/advanced/Security.html" target="_blank" rel="noopener">Alluxio公式ドキュメントのセキュリティに関する説明</a>
-の「AUDITING」にログのエントリが記載されている。
-2019/05/10時点では、以下の通り。</p>
-<ul>
-<li>succeeded:
-<ul>
-<li>True if the command has succeeded. To succeed, it must also have
-been allowed.</li>
-</ul></li>
-<li>allowed:
-<ul>
-<li>True if the command has been allowed. Note that a command can still
-fail even if it has been allowed.</li>
-</ul></li>
-<li>ugi:
-<ul>
-<li>User group information, including username, primary group, and
-authentication type.</li>
-</ul></li>
-<li>ip:
-<ul>
-<li>Client IP address.</li>
-</ul></li>
-<li>cmd:
-<ul>
-<li>Command issued by the user.</li>
-</ul></li>
-<li>src:
-<ul>
-<li>Path of the source file or directory.</li>
-</ul></li>
-<li>dst:
-<ul>
-<li>Path of the destination file or directory. If not applicable, the
-value is null.</li>
-</ul></li>
-<li>perm:
-<ul>
-<li>User:group:mask or null if not applicable.</li>
-</ul></li>
-</ul>
-<p>HDFSにおける監査ログ相当の内容が出力されるようだ。
-これが、下層にあるストレージによらずに出力されるとしたら、
-Alluxioによる抽象化層でAuditログを取る、という方針も悪くないか？</p>
-<p>ただ、そのときにはどのパス（URI？）に、どのストレージをマウントしたか、という情報もセットで保存しておく必要があるだろう。</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2019/05/10/Alluxio-Security/" data-id="cm5enfgby014m18ljevywreei" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/05/17/Spark-Summit-2019/" data-id="cm5f57pi901gw18lno8fz7167" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2951,6 +2812,15 @@ Alluxioによる抽象化層でAuditログを取る、という方針も悪く�
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/memo-blog/2025/01/02/Eclipse-Dataspace-Protocol-Unofficial-draft-13-Dec-2024/" class="title">Eclipse Dataspace Protocol Unofficial draft 13 Dec. 2024</a></p>
+                            <p class="item-date"><time datetime="2025-01-02T01:38:56.000Z" itemprop="datePublished">2025-01-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/memo-blog/2025/01/02/Business-model-paper-by-IDSA/" class="title">Business model paper by IDSA</a></p>
                             <p class="item-date"><time datetime="2025-01-02T01:24:53.000Z" itemprop="datePublished">2025-01-02</time></p>
                         </div>
@@ -2983,15 +2853,6 @@ Alluxioによる抽象化層でAuditログを取る、という方針も悪く�
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Spaces/">Data Spaces</a></p>
-                            <p class="item-title"><a href="/memo-blog/2024/10/26/memo-of-Ouranos-Ecosystem-IDI-and-data-transaction-system/" class="title">memo of Ouranos Ecosystem IDI and data-transaction-system</a></p>
-                            <p class="item-date"><time datetime="2024-10-26T12:41:18.000Z" itemprop="datePublished">2024-10-26</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -3010,7 +2871,7 @@ Alluxioによる抽象化層でAuditログを取る、という方針も悪く�
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 

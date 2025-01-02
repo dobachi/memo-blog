@@ -170,7 +170,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                228
+                229
                 <span>投稿</span>
             </div>
             <div class="article-info-block">
@@ -205,6 +205,149 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-Fonts-overlap-on-Vim-on-Ubuntu" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2018/12/31/Fonts-overlap-on-Vim-on-Ubuntu/">Ubuntu上のgvimでフォントが重なる現象</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2018/12/31/Fonts-overlap-on-Vim-on-Ubuntu/">
+            <time datetime="2018-12-30T15:01:08.000Z" itemprop="datePublished">2018-12-31</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Home-server/">Home server</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Home-server/Ubuntu/">Ubuntu</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Home-server/Ubuntu/vim/">vim</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/vim/">vim</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
+</ul>
+</div>
+<h1><span id="参考">参考</span></h1>
+<ul>
+<li><a href="https://forums.ubuntulinux.jp/viewtopic.php?id=12459" target="_blank" rel="noopener">現象についての議論</a></li>
+</ul>
+<h1><span id="メモ">メモ</span></h1>
+<p><a href="https://forums.ubuntulinux.jp/viewtopic.php?id=12459" target="_blank" rel="noopener">現象についての議論</a>
+の通り、<code>~/.vimrc</code>に以下を追記して回避した。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set ambiwidth=double</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/31/Fonts-overlap-on-Vim-on-Ubuntu/" data-id="cm5f57p4z004m18lnc9g1idp9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-X-window-on-wsl-for-Ubuntu" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -315,7 +458,7 @@ $ gvim</code></pre>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/X-window-on-wsl-for-Ubuntu/" data-id="cm5enfg6v00e518ljucxt9jsg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/X-window-on-wsl-for-Ubuntu/" data-id="cm5f57p8k00eg18lnlw96k55g" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -487,7 +630,7 @@ HID デバイス」のところが 「Bluetooth 低エネルギーGTT 対応 HID
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/GPD-Pocket-unexpected-behavior-of-Bluetooth-mouse/" data-id="cm5enfg37004o18ljcjxx0bi6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/GPD-Pocket-unexpected-behavior-of-Bluetooth-mouse/" data-id="cm5f57p51004p18lnumu8kn2n" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -631,7 +774,7 @@ HID デバイス」のところが 「Bluetooth 低エネルギーGTT 対応 HID
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/Unexpected-behaviour-of-tmux-with-ctrl-l/" data-id="cm5enfg6e00ct18ljzsid7y4o" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/30/Unexpected-behaviour-of-tmux-with-ctrl-l/" data-id="cm5f57p8800d618ln9fsblo4e" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -837,7 +980,7 @@ HID デバイス」のところが 「Bluetooth 低エネルギーGTT 対応 HID
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/24/Basic-of-SQLAlchemy/" data-id="cm5enfgfg01et18ljnkkelrec" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/24/Basic-of-SQLAlchemy/" data-id="cm5f57pgt01d718lnczxr5pws" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1014,7 +1157,7 @@ Dockerイメージは上記で作ったものをベースとする。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/Flask-SQLAlchemy/" data-id="cm5enfg32004e18ljfpgw1low" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/Flask-SQLAlchemy/" data-id="cm5f57p4v004g18lneqxabpin" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1159,7 +1302,7 @@ Dockerイメージは上記で作ったものをベースとする。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/tmux-rectangle-select/" data-id="cm5enfgdr018q18ljl41qxygy" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/tmux-rectangle-select/" data-id="cm5f57pfk016p18lnfmt3dcjg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1316,7 +1459,7 @@ Dockerイメージは上記で作ったものをベースとする。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/Git-ignore-file/" data-id="cm5enfg3c005018lj0nw67brb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/Git-ignore-file/" data-id="cm5f57p58005818lncbhde255" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1471,7 +1614,7 @@ on Dockerのブログ</a> で作成したDockerイメージを使って環境を
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/Flask-extension/" data-id="cm5enfg32004a18ljcyysn9h8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/23/Flask-extension/" data-id="cm5f57p4u004d18lnnfovf7jm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1612,368 +1755,7 @@ on Dockerのブログ</a> で作成したDockerイメージを使って環境を
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/17/Check-global-IP-address/" data-id="cm5enfg2j002m18lj4e6iuugg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Flask-on-Docker" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2018/12/14/Flask-on-Docker/">Flask on Docker</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2018/12/14/Flask-on-Docker/">
-            <time datetime="2018-12-14T05:52:33.000Z" itemprop="datePublished">2018-12-14</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Flask/">Flask</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/Docker/">Docker</a>, <a class="tag-link" href="/memo-blog/tags/Dockerfile/">Dockerfile</a>, <a class="tag-link" href="/memo-blog/tags/Flask/">Flask</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#参考" id="toc-参考">参考</a></li>
-<li><a href="#自前のイメージを作って動かす手順" id="toc-自前のイメージを作って動かす手順">自前のイメージを作って動かす手順</a>
-<ul>
-<li><a href="#dockerfileとビルド" id="toc-dockerfileとビルド">Dockerfileとビルド</a></li>
-<li><a href="#アプリ作成と実行" id="toc-アプリ作成と実行">アプリ作成と実行</a></li>
-</ul></li>
-<li><a href="#公式手順に則ったシンプルな例" id="toc-公式手順に則ったシンプルな例">公式手順に則ったシンプルな例</a>
-<ul>
-<li><a href="#準備" id="toc-準備">準備</a></li>
-<li><a href="#実行" id="toc-実行">実行</a></li>
-</ul></li>
-<li><a href="#フォームを使う例" id="toc-フォームを使う例">フォームを使う例</a>
-<ul>
-<li><a href="#準備-1" id="toc-準備-1">準備</a></li>
-<li><a href="#実行-1" id="toc-実行-1">実行</a></li>
-</ul></li>
-<li><a href="#ファイルのアップロード" id="toc-ファイルのアップロード">ファイルのアップロード</a>
-<ul>
-<li><a href="#準備-2" id="toc-準備-2">準備</a></li>
-<li><a href="#実行-2" id="toc-実行-2">実行</a></li>
-</ul></li>
-<li><a href="#クッキー" id="toc-クッキー">クッキー</a>
-<ul>
-<li><a href="#準備-3" id="toc-準備-3">準備</a></li>
-<li><a href="#実行-3" id="toc-実行-3">実行</a></li>
-</ul></li>
-<li><a href="#ロギング" id="toc-ロギング">ロギング</a>
-<ul>
-<li><a href="#準備-4" id="toc-準備-4">準備</a></li>
-<li><a href="#実行-4" id="toc-実行-4">実行</a></li>
-</ul></li>
-<li><a href="#json形式でやり取りする例" id="toc-json形式でやり取りする例">JSON形式でやり取りする例</a>
-<ul>
-<li><a href="#dockerfile" id="toc-dockerfile">Dockerfile</a></li>
-<li><a href="#アプリ" id="toc-アプリ">アプリ</a></li>
-<li><a href="#動作確認" id="toc-動作確認">動作確認</a></li>
-</ul></li>
-<li><a href="#nginxと組み合わせて動かす" id="toc-nginxと組み合わせて動かす">nginxと組み合わせて動かす</a>
-<ul>
-<li><a href="#dockerfileアプリなど" id="toc-dockerfileアプリなど">Dockerfile、アプリなど</a></li>
-<li><a href="#ビルド" id="toc-ビルド">ビルド</a></li>
-<li><a href="#実行-5" id="toc-実行-5">実行</a></li>
-</ul></li>
-<li><a href="#nginxと組あわせてspa" id="toc-nginxと組あわせてspa">nginxと組あわせてSPA</a>
-<ul>
-<li><a href="#dockerfileとアプリ" id="toc-dockerfileとアプリ">Dockerfileとアプリ</a></li>
-<li><a href="#ビルド-1" id="toc-ビルド-1">ビルド</a></li>
-<li><a href="#実行-6" id="toc-実行-6">実行</a></li>
-</ul></li>
-<li><a href="#構造的なプロジェクト" id="toc-構造的なプロジェクト">構造的なプロジェクト</a>
-<ul>
-<li><a href="#アーカイブをダウンロード" id="toc-アーカイブをダウンロード">アーカイブをダウンロード</a></li>
-<li><a href="#ビルド-2" id="toc-ビルド-2">ビルド</a></li>
-<li><a href="#実行-7" id="toc-実行-7">実行</a></li>
-<li><a href="#一部修正してみる" id="toc-一部修正してみる">一部修正してみる</a></li>
-</ul></li>
-<li><a href="#flask-nginxでsslを使用ここがうまく動かない" id="toc-flask-nginxでsslを使用ここがうまく動かない">flask +
-NginxでSSLを使用（ここがうまく動かない）</a>
-<ul>
-<li><a href="#アドホックな対応" id="toc-アドホックな対応">アドホックな対応</a></li>
-</ul></li>
-<li><a href="#github-uwsgi-nginx-flask-dockerのアーキテクチャ" id="toc-github-uwsgi-nginx-flask-dockerのアーキテクチャ">gitHub:
-uwsgi-nginx-flask-dockerのアーキテクチャ</a>
-<ul>
-<li><a href="#supervisord化について" id="toc-supervisord化について">Supervisord化について</a></li>
-</ul></li>
-</ul>
-</div>
-<h1><span id="参考">参考</span></h1>
-<ul>
-<li><a href="http://flask.pocoo.org/" target="_blank" rel="noopener">Flask公式</a></li>
-<li><a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a></li>
-<li><a href="https://qiita.com/paperlefthand/items/82ab6df4a348f6070a55" target="_blank" rel="noopener">DockerコンテナでFlaskを起動し,
-JSONデータのPOSTとGET</a></li>
-<li><a href="https://github.com/dobachi/FlaskOnDockerExamples" target="_blank" rel="noopener">GitHub:
-FlaskOnDockerExamples</a></li>
-<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker" target="_blank" rel="noopener">GitHub:
-uwsgi-nginx-flask-docker</a></li>
-<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart" target="_blank" rel="noopener">GitHub:
-uwsgi-nginx-flask-dockerのクイックスタート</a></li>
-<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart-for-spas" target="_blank" rel="noopener">GitHub:
-uwsgi-nginx-flask-dockerのSPA</a></li>
-<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart-for-bigger-projects-structured-as-a-python-package" target="_blank" rel="noopener">GitHub:
-構造的なプロジェクトの例</a></li>
-<li><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker/releases/download/v0.3.10/example-flask-package-python3.7.zip" target="_blank" rel="noopener">example-flask-package-python3.7.zip</a></li>
-<li><a href="https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https" target="_blank" rel="noopener">Flask
-+ NginxでのSSL対応に関する記事</a></li>
-</ul>
-<h1><span id="自前のイメージを作って動かす手順">自前のイメージを作って動かす手順</span></h1>
-<p>基本的には <a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a>
-で記載された内容で問題ない。 自身の環境向けにアレンジは必要。</p>
-<h2><span id="dockerfileとビルド">Dockerfileとビルド</span></h2>
-<p>Dockerfileは <a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a>
-の通り。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/simple</span><br><span class="line">$ cd ~/Sources/docker_flask/simple</span><br><span class="line">$ cat &lt;&lt; EOF &gt; Dockerfile</span><br><span class="line">  FROM ubuntu:latest</span><br><span class="line">  </span><br><span class="line">  RUN apt-get update</span><br><span class="line">  RUN apt-get install python3 python3-pip -y</span><br><span class="line">  </span><br><span class="line">  RUN pip3 install flask</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
-<p>ビルドコマンドは自分の環境に合わせた。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker build . -t dobachi/flask:1.0</span><br></pre></td></tr></table></figure>
-<p>インタラクティブにつなげる例も自分の環境に合わせた。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it --rm dobachi/flask:1.0 /bin/bash</span><br></pre></td></tr></table></figure>
-<h2><span id="アプリ作成と実行">アプリ作成と実行</span></h2>
-<p>自分の環境に合わせた。 <a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a>
-では、
-<code>/bin/bash</code>を起動してから、<code>python3 &lt;アプリ &gt;</code>としていたが、
-ここでは直接指定して実行することにした。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir apps</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/app.py</span><br><span class="line">  from flask import Flask</span><br><span class="line">  </span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/&apos;)</span><br><span class="line">  def index():</span><br><span class="line">      return &quot;Hello world!!&quot;</span><br><span class="line">  EOF</span><br><span class="line">$ sudo docker run -it --rm -p 5000:5000 -v $(pwd)/apps:/usr/local/apps -e &quot;FLASK_APP=app.py&quot; -w /usr/local/apps -e &quot;LC_ALL=C.UTF-8&quot; -e &quot;LANG=UTF-8&quot; dobachi/flask:1.0 flask run --host 0.0.0.0</span><br></pre></td></tr></table></figure>
-<p>なお、もともとの <a href="https://qiita.com/phorizon20/items/57277fab1fd7aa994502" target="_blank" rel="noopener">Flask込みのDockerイメージを作る方法のブログ</a>
-では、以下のようにPythonコマンドから直接実行するように記載されていたが、
-今回は <a href="http://flask.pocoo.org/" target="_blank" rel="noopener">Flask公式</a>
-に従い、FlaskのCLIを用いることとした。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -it --rm -p 5000:5000 -v $(pwd)/apps:/usr/local/apps dobachi/flask:1.0 python3 /usr/local/apps/app.py</span><br></pre></td></tr></table></figure>
-<p>その際、手元の環境ではLANG等の事情により、いくつか環境変数を設定しないとエラーを吐いたので、
-上記のようなコマンドになった。</p>
-<h1><span id="公式手順に則ったシンプルな例">公式手順に則ったシンプルな例</span></h1>
-<p>上記で作ったDockerイメージを流用する。</p>
-<h2><span id="準備">準備</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/getting_started</span><br><span class="line">$ cd ~/Sources/docker_flask/getting_started</span><br><span class="line">$ mkdir apps</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/app.py</span><br><span class="line">  from flask import Flask, url_for, request, render_template</span><br><span class="line"></span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/&apos;)</span><br><span class="line">  def index():</span><br><span class="line">      return &apos;index&apos;</span><br><span class="line"></span><br><span class="line">  @app.route(&apos;/user/&lt;username&gt;&apos;)</span><br><span class="line">  def profile(username):</span><br><span class="line">      return &apos;&#123;&#125;\&apos;s profile&apos;.format(username)</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/post/&lt;int:post_id&gt;&apos;)</span><br><span class="line">  def post(post_id):</span><br><span class="line">      # show the post with the given id, the id is an integer</span><br><span class="line">      return &apos;Post %d&apos; % post_id</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/path/&lt;path:subpath&gt;&apos;)</span><br><span class="line">  def subpath(subpath):</span><br><span class="line">      # show the subpath after /path/</span><br><span class="line">      return &apos;Subpath %s&apos; % subpath</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/projects/&apos;)</span><br><span class="line">  def projects():</span><br><span class="line">      return &apos;The project page&apos;</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/about&apos;)</span><br><span class="line">  def about():</span><br><span class="line">      return &apos;The about page&apos;</span><br><span class="line"></span><br><span class="line">  @app.route(&apos;/login&apos;, methods=[&apos;GET&apos;, &apos;POST&apos;])</span><br><span class="line">  def login():</span><br><span class="line">      if request.method == &apos;POST&apos;:</span><br><span class="line">          return do_the_login()</span><br><span class="line">      else:</span><br><span class="line">          return show_the_login_form()</span><br><span class="line"></span><br><span class="line">  def do_the_login():</span><br><span class="line">    return &apos;Do log in&apos;</span><br><span class="line"></span><br><span class="line">  def show_the_login_form():</span><br><span class="line">    return &apos;This is a login form&apos;</span><br><span class="line"></span><br><span class="line">  @app.route(&apos;/hello/&apos;)</span><br><span class="line">  @app.route(&apos;/hello/&lt;name&gt;&apos;)</span><br><span class="line">  def hello(name=None):</span><br><span class="line">      return render_template(&apos;hello.html&apos;, name=name)</span><br><span class="line"></span><br><span class="line">  # Test for URLs</span><br><span class="line">  with app.test_request_context():</span><br><span class="line">      print(url_for(&apos;index&apos;))</span><br><span class="line">      print(url_for(&apos;login&apos;))</span><br><span class="line">      print(url_for(&apos;login&apos;, next=&apos;/&apos;))</span><br><span class="line">      print(url_for(&apos;profile&apos;, username=&apos;John Doe&apos;))</span><br><span class="line">  EOF</span><br><span class="line">$ mkdir -p apps/templates</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/hello.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Hello from Flask&lt;/title&gt;</span><br><span class="line">  &#123;% if name %&#125;</span><br><span class="line">    &lt;h1&gt;Hello &#123;&#123; name &#125;&#125;!&lt;/h1&gt;</span><br><span class="line">  &#123;% else %&#125;</span><br><span class="line">    &lt;h1&gt;Hello, World!&lt;/h1&gt;</span><br><span class="line">  &#123;% endif %&#125;</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
-<h2><span id="実行">実行</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -it --rm -p 5000:5000 -v $(pwd)/apps:/usr/local/apps -e &quot;FLASK_APP=app.py&quot; -w /usr/local/apps -e &quot;LC_ALL=C.UTF-8&quot; -e &quot;LANG=UTF-8&quot; dobachi/flask:1.0 flask run --host 0.0.0.0</span><br></pre></td></tr></table></figure>
-<h1><span id="フォームを使う例">フォームを使う例</span></h1>
-<p>上記で作ったDockerイメージを流用する。</p>
-<h2><span id="準備">準備</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/form</span><br><span class="line">$ cd ~/Sources/docker_flask/form</span><br><span class="line">$ mkdir apps</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/app.py</span><br><span class="line">  from flask import Flask, url_for, request, render_template, redirect, session</span><br><span class="line"></span><br><span class="line">  app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">  # Set the secret key to some random bytes. Keep this really secret!</span><br><span class="line">  app.secret_key = b&apos;_5#y2L&quot;F4Q8z\n\xec]/&apos;</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/login&apos;, methods=[&apos;POST&apos;, &apos;GET&apos;])</span><br><span class="line">  def login():</span><br><span class="line">      error = None</span><br><span class="line">      if request.method == &apos;POST&apos;:</span><br><span class="line">          if valid_login(request.form[&apos;username&apos;],</span><br><span class="line">                         request.form[&apos;password&apos;]):</span><br><span class="line">              session[&apos;username&apos;] = request.form[&apos;username&apos;]</span><br><span class="line">              return redirect(url_for(&apos;welcome&apos;))</span><br><span class="line">          else:</span><br><span class="line">              error = &apos;Invalid username/password&apos;</span><br><span class="line">      # the code below is executed if the request method</span><br><span class="line">      # was GET or the credentials were invalid</span><br><span class="line">      return render_template(&apos;login.html&apos;, error=error)</span><br><span class="line"></span><br><span class="line">  @app.route(&apos;/welcome&apos;)</span><br><span class="line">  def welcome():</span><br><span class="line">    if &apos;username&apos; in session:</span><br><span class="line">      return render_template(&apos;welcome.html&apos;, username=session[&apos;username&apos;])</span><br><span class="line">    else:</span><br><span class="line">      return redirect(url_for(&apos;login&apos;))</span><br><span class="line"></span><br><span class="line">  def valid_login(username, password):</span><br><span class="line">    if username == &apos;hoge&apos; and password == &apos;fuga&apos;:</span><br><span class="line">      return True</span><br><span class="line">    else:</span><br><span class="line">      return False</span><br><span class="line">  EOF</span><br><span class="line">$ mkdir -p apps/templates</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/welcome.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Hello from Flask&lt;/title&gt;</span><br><span class="line">  &lt;h1&gt;Hello &#123;&#123; username &#125;&#125;!&lt;/h1&gt;</span><br><span class="line">  EOF</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/login.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Question from Flask&lt;/title&gt;</span><br><span class="line">  &#123;% if error %&#125;</span><br><span class="line">    &lt;h1&gt;Please use valid username and password&lt;/h1&gt;</span><br><span class="line">  &#123;% endif %&#125;</span><br><span class="line">  &lt;form action=&quot;/login&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    &lt;div&gt;username: &lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;password: &lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;Send&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;reset&quot; value=&quot;Reset&quot;&gt;</span><br><span class="line">  &lt;/form&gt;</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
-<h2><span id="実行">実行</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -it --rm -p 5000:5000 -v $(pwd)/apps:/usr/local/apps -e &quot;FLASK_APP=app.py&quot; -w /usr/local/apps -e &quot;LC_ALL=C.UTF-8&quot; -e &quot;LANG=UTF-8&quot; dobachi/flask:1.0 flask run --host 0.0.0.0</span><br></pre></td></tr></table></figure>
-<h1><span id="ファイルのアップロード">ファイルのアップロード</span></h1>
-<p>上記で作ったDockerイメージを流用する。</p>
-<h2><span id="準備">準備</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/file_upload</span><br><span class="line">$ cd ~/Sources/docker_flask/file_upload</span><br><span class="line">$ mkdir apps</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/app.py</span><br><span class="line">  from flask import Flask, request, render_template, redirect, session, url_for</span><br><span class="line">  from werkzeug.utils import secure_filename</span><br><span class="line"></span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  </span><br><span class="line">  # Set the secret key to some random bytes. Keep this really secret!</span><br><span class="line">  app.secret_key = b&apos;_5#y2L&quot;F4Q8z\n\xec]/&apos;</span><br><span class="line"></span><br><span class="line">  @app.route(&apos;/upload&apos;, methods=[&apos;GET&apos;, &apos;POST&apos;])</span><br><span class="line">  def upload_file():</span><br><span class="line">      if request.method == &apos;POST&apos;:</span><br><span class="line">          f = request.files[&apos;the_file&apos;]</span><br><span class="line">          session[&apos;filename&apos;] = secure_filename(f.filename)</span><br><span class="line">          f.save(&apos;/tmp/&apos; + session[&apos;filename&apos;])</span><br><span class="line">          return redirect(url_for(&apos;done&apos;))</span><br><span class="line">      elif request.method == &apos;GET&apos;:</span><br><span class="line">          return render_template(&apos;upload.html&apos;)</span><br><span class="line"></span><br><span class="line">  @app.route(&apos;/done&apos;)</span><br><span class="line">  def done():</span><br><span class="line">      return render_template(&apos;done.html&apos;)</span><br><span class="line"></span><br><span class="line">  EOF</span><br><span class="line">$ mkdir -p apps/templates</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/upload.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Fileuploader by Flask&lt;/title&gt;</span><br><span class="line">  &lt;form action=&quot;/upload&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">    &lt;div&gt;file: &lt;input type=&quot;file&quot; name=&quot;the_file&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;Send&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;reset&quot; value=&quot;Reset&quot;&gt;</span><br><span class="line">  &lt;/form&gt;</span><br><span class="line">  EOF</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/done.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Fileuploader by Flask&lt;/title&gt;</span><br><span class="line">  &lt;h1&gt;The file: &#123;&#123; filename &#125;&#125; was uploaded&lt;/h1&gt;</span><br><span class="line">  &lt;a href=&quot;/upload&quot;&gt;Got to the first page&lt;/a&gt;</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
-<h2><span id="実行">実行</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -it --rm -p 5000:5000 -v $(pwd)/apps:/usr/local/apps -e &quot;FLASK_APP=app.py&quot; -w /usr/local/apps -e &quot;LC_ALL=C.UTF-8&quot; -e &quot;LANG=UTF-8&quot; dobachi/flask:1.0 flask run --host 0.0.0.0</span><br></pre></td></tr></table></figure>
-<h1><span id="クッキー">クッキー</span></h1>
-<p>上記で作ったDockerイメージを流用する。</p>
-<h2><span id="準備">準備</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/cookie</span><br><span class="line">$ cd ~/Sources/docker_flask/cookie</span><br><span class="line">$ mkdir apps</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/app.py</span><br><span class="line">  from flask import Flask, url_for, request, render_template, redirect, make_response</span><br><span class="line"></span><br><span class="line">  app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">  # Set the secret key to some random bytes. Keep this really secret!</span><br><span class="line">  app.secret_key = b&apos;_5#y2L&quot;F4Q8z\n\xec]/&apos;</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/login&apos;, methods=[&apos;POST&apos;, &apos;GET&apos;])</span><br><span class="line">  def login():</span><br><span class="line">      error = None</span><br><span class="line">      if request.method == &apos;POST&apos;:</span><br><span class="line">          if valid_login(request.form[&apos;username&apos;],</span><br><span class="line">                         request.form[&apos;password&apos;]):</span><br><span class="line">              username = request.form[&apos;username&apos;]</span><br><span class="line">              resp = make_response(render_template(&apos;success.html&apos;))</span><br><span class="line">              resp.set_cookie(&apos;username&apos;, username)</span><br><span class="line">              return resp</span><br><span class="line">          else:</span><br><span class="line">              error = &apos;Invalid username/password&apos;</span><br><span class="line">      elif request.method == &apos;GET&apos;:</span><br><span class="line">          if &apos;username&apos; in request.cookies:</span><br><span class="line">              return redirect(url_for(&apos;welcome&apos;))</span><br><span class="line">          else:</span><br><span class="line">              return render_template(&apos;login.html&apos;, error=error)</span><br><span class="line"></span><br><span class="line">  @app.route(&apos;/logout&apos;)</span><br><span class="line">  def logout():</span><br><span class="line">      resp = make_response(render_template(&apos;logout.html&apos;))</span><br><span class="line">      resp.delete_cookie(&apos;username&apos;)</span><br><span class="line">      return resp</span><br><span class="line"></span><br><span class="line">  @app.route(&apos;/welcome&apos;)</span><br><span class="line">  def welcome():</span><br><span class="line">    if &apos;username&apos; in request.cookies:</span><br><span class="line">      return render_template(&apos;welcome.html&apos;, username=request.cookies.get(&apos;username&apos;))</span><br><span class="line">    else:</span><br><span class="line">      return redirect(url_for(&apos;login&apos;))</span><br><span class="line"></span><br><span class="line">  def valid_login(username, password):</span><br><span class="line">    if username == &apos;hoge&apos; and password == &apos;fuga&apos;:</span><br><span class="line">      return True</span><br><span class="line">    else:</span><br><span class="line">      return False</span><br><span class="line">  EOF</span><br><span class="line">$ mkdir -p apps/templates</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/welcome.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Hello from Flask&lt;/title&gt;</span><br><span class="line">  &lt;h1&gt;Hello &#123;&#123; username &#125;&#125;!&lt;/h1&gt;</span><br><span class="line">  &lt;a href=&quot;/logout&quot;&gt;logout&lt;/a&gt;</span><br><span class="line">  EOF</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/success.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Login Success&lt;/title&gt;</span><br><span class="line">  &lt;h1&gt;Login!&lt;/h1&gt;</span><br><span class="line">  &lt;META http-equiv=&quot;Refresh&quot; content=&quot;3;URL=/welcome&quot;&gt;</span><br><span class="line">  &lt;p&gt;Jump in 3 seconds&lt;/p&gt;</span><br><span class="line">  EOF</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/logout.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Logout Success&lt;/title&gt;</span><br><span class="line">  &lt;h1&gt;Logout!&lt;/h1&gt;</span><br><span class="line">  &lt;META http-equiv=&quot;Refresh&quot; content=&quot;3;URL=/login&quot;&gt;</span><br><span class="line">  &lt;p&gt;Jump in 3 seconds&lt;/p&gt;</span><br><span class="line">  EOF</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/login.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Question from Flask&lt;/title&gt;</span><br><span class="line">  &#123;% if error %&#125;</span><br><span class="line">    &lt;h1&gt;Please use valid username and password&lt;/h1&gt;</span><br><span class="line">  &#123;% endif %&#125;</span><br><span class="line">  &lt;form action=&quot;/login&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    &lt;div&gt;username: &lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;password: &lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;Send&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;reset&quot; value=&quot;Reset&quot;&gt;</span><br><span class="line">  &lt;/form&gt;</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
-<h2><span id="実行">実行</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -it --rm -p 5000:5000 -v $(pwd)/apps:/usr/local/apps -e &quot;FLASK_APP=app.py&quot; -w /usr/local/apps -e &quot;LC_ALL=C.UTF-8&quot; -e &quot;LANG=UTF-8&quot; dobachi/flask:1.0 flask run --host 0.0.0.0</span><br></pre></td></tr></table></figure>
-<h1><span id="ロギング">ロギング</span></h1>
-<p>上記で作ったDockerイメージを流用する。</p>
-<h2><span id="準備">準備</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/logging</span><br><span class="line">$ cd ~/Sources/docker_flask/logging</span><br><span class="line">$ mkdir apps</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/app.py</span><br><span class="line">  from flask import Flask, url_for, request, render_template, redirect, session</span><br><span class="line"></span><br><span class="line">  app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">  # Set the secret key to some random bytes. Keep this really secret!</span><br><span class="line">  app.secret_key = b&apos;_5#y2L&quot;F4Q8z\n\xec]/&apos;</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/login&apos;, methods=[&apos;POST&apos;, &apos;GET&apos;])</span><br><span class="line">  def login():</span><br><span class="line">      error = None</span><br><span class="line">      if request.method == &apos;POST&apos;:</span><br><span class="line">          if valid_login(request.form[&apos;username&apos;],</span><br><span class="line">                         request.form[&apos;password&apos;]):</span><br><span class="line">              session[&apos;username&apos;] = request.form[&apos;username&apos;]</span><br><span class="line">              return redirect(url_for(&apos;welcome&apos;))</span><br><span class="line">          else:</span><br><span class="line">              app.logger.warning(&apos;Failed to login as:&apos; + request.form[&apos;username&apos;])</span><br><span class="line">              error = &apos;Invalid username/password&apos;</span><br><span class="line">      # the code below is executed if the request method</span><br><span class="line">      # was GET or the credentials were invalid</span><br><span class="line">      return render_template(&apos;login.html&apos;, error=error)</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/welcome&apos;)</span><br><span class="line">  def welcome():</span><br><span class="line">    if &apos;username&apos; in session:</span><br><span class="line">      return render_template(&apos;welcome.html&apos;, username=session[&apos;username&apos;])</span><br><span class="line">    else:</span><br><span class="line">      return redirect(url_for(&apos;login&apos;))</span><br><span class="line">  </span><br><span class="line">  def valid_login(username, password):</span><br><span class="line">    if username == &apos;hoge&apos; and password == &apos;fuga&apos;:</span><br><span class="line">      return True</span><br><span class="line">    else:</span><br><span class="line">      return False</span><br><span class="line">  EOF</span><br><span class="line">$ mkdir -p apps/templates</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/welcome.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Hello from Flask&lt;/title&gt;</span><br><span class="line">  &lt;h1&gt;Hello &#123;&#123; username &#125;&#125;!&lt;/h1&gt;</span><br><span class="line">  EOF</span><br><span class="line">$ cat &lt;&lt; EOF &gt; apps/templates/login.html</span><br><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;title&gt;Question from Flask&lt;/title&gt;</span><br><span class="line">  &#123;% if error %&#125;</span><br><span class="line">    &lt;h1&gt;Please use valid username and password&lt;/h1&gt;</span><br><span class="line">  &#123;% endif %&#125;</span><br><span class="line">  &lt;form action=&quot;/login&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    &lt;div&gt;username: &lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;password: &lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;Send&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;reset&quot; value=&quot;Reset&quot;&gt;</span><br><span class="line">  &lt;/form&gt;</span><br><span class="line">  EOF</span><br></pre></td></tr></table></figure>
-<h2><span id="実行">実行</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -it --rm -p 5000:5000 -v $(pwd)/apps:/usr/local/apps -e &quot;FLASK_APP=app.py&quot; -w /usr/local/apps -e &quot;LC_ALL=C.UTF-8&quot; -e &quot;LANG=UTF-8&quot; dobachi/flask:1.0 flask run --host 0.0.0.0</span><br></pre></td></tr></table></figure>
-<h1><span id="json形式でやり取りする例">JSON形式でやり取りする例</span></h1>
-<p>基本的には、 <a href="https://qiita.com/paperlefthand/items/82ab6df4a348f6070a55" target="_blank" rel="noopener">DockerコンテナでFlaskを起動し,
-JSONデータのPOSTとGET</a> の通り。</p>
-<h2><span id="dockerfile">Dockerfile</span></h2>
-<p>dockerfileを作る。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/post_json</span><br><span class="line">$ cd ~/Sources/docker_flask/post_json</span><br><span class="line">$ cat &lt;&lt; EOF &gt; Dockerfile</span><br><span class="line">  fROM python:3.6</span><br><span class="line">  </span><br><span class="line">  aRG project_dir=/app/</span><br><span class="line">  </span><br><span class="line">  # ADD requirements.txt \$project_dir</span><br><span class="line">  aDD reply.py \$project_dir</span><br><span class="line">  </span><br><span class="line">  wORKDIR \$project_dir</span><br><span class="line">  </span><br><span class="line">  rUN pip install flask</span><br><span class="line">  # RUN pip install -r requirements.txt</span><br><span class="line">  </span><br><span class="line">  cMD [&quot;python&quot;, &quot;reply.py&quot;]</span><br><span class="line">  eOF</span><br></pre></td></tr></table></figure>
-<h2><span id="アプリ">アプリ</span></h2>
-<p>アプリを作る。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt; EOF &gt; reply.py</span><br><span class="line">  from flask import Flask, jsonify, request</span><br><span class="line">  import json</span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  </span><br><span class="line">  @app.route(&quot;/&quot;, methods=[&apos;GET&apos;])</span><br><span class="line">  def hello():</span><br><span class="line">      return &quot;Hello World!&quot;</span><br><span class="line">  </span><br><span class="line">  @app.route(&apos;/reply&apos;, methods=[&apos;POST&apos;])</span><br><span class="line">  def reply():</span><br><span class="line">      data = json.loads(request.data)</span><br><span class="line">      answer = &quot;Yes, it is %s!\n&quot; % data[&quot;keyword&quot;]</span><br><span class="line">      result = &#123;</span><br><span class="line">        &quot;Content-Type&quot;: &quot;application/json&quot;,</span><br><span class="line">        &quot;Answer&quot;:&#123;&quot;Text&quot;: answer&#125;</span><br><span class="line">      &#125;</span><br><span class="line">      # return answer</span><br><span class="line">      return jsonify(result)</span><br><span class="line">  </span><br><span class="line">  if __name__ == &quot;__main__&quot;:</span><br><span class="line">      app.run(host=&apos;0.0.0.0&apos;,port=5000,debug=True)</span><br><span class="line">  eOF</span><br></pre></td></tr></table></figure>
-<p>ビルドする。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker build . -t dobachi/flask_json:1.0</span><br></pre></td></tr></table></figure>
-<h2><span id="動作確認">動作確認</span></h2>
-<p>ポート5000で起動する。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --rm -p 5000:5000 -it dobachi/flaskjson:1.0</span><br></pre></td></tr></table></figure>
-<p>動作確認する。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://localhost:5000/reply -X POST -H &quot;Content-Type: application/json&quot; -d &apos;&#123;&quot;keyword&quot;: &quot;Keffia&quot;&#125;&apos;</span><br></pre></td></tr></table></figure>
-<h1><span id="nginxと組み合わせて動かす">nginxと組み合わせて動かす</span></h1>
-<p><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker" target="_blank" rel="noopener">gitHub:
-uwsgi-nginx-flask-docker</a> を参考にする。 <a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart" target="_blank" rel="noopener">gitHub:
-uwsgi-nginx-flask-dockerのクイックスタート</a> を見ながら試す。</p>
-<h2><span id="dockerfile-アプリなど">Dockerfile、アプリなど</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/nginx</span><br><span class="line">$ cd ~/Sources/docker_flask/nginx</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt; EOF &gt; Dockerfile</span><br><span class="line">  fROM tiangolo/uwsgi-nginx-flask:python3.7</span><br><span class="line">  </span><br><span class="line">  cOPY ./app /app</span><br><span class="line">  eOF</span><br><span class="line">$ mkdir app</span><br><span class="line">$ cat &lt;&lt; EOF &gt; app/main.py</span><br><span class="line">  from flask import Flask</span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  </span><br><span class="line">  @app.route(&quot;/&quot;)</span><br><span class="line">  def hello():</span><br><span class="line">      return &quot;Hello World from Flask&quot;</span><br><span class="line">  </span><br><span class="line">  if __name__ == &quot;__main__&quot;:</span><br><span class="line">      # Only for debugging while developing</span><br><span class="line">      app.run(host=&apos;0.0.0.0&apos;, debug=True, port=80)</span><br><span class="line">  eOF</span><br></pre></td></tr></table></figure>
-<h2><span id="ビルド">ビルド</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker build -t dobachi/nginx-flask:1.0 .</span><br></pre></td></tr></table></figure>
-<h2><span id="実行">実行</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --rm -it -p 8080:80 dobachi/nginx-flask:1.0</span><br></pre></td></tr></table></figure>
-<h1><span id="nginxと組あわせてspa">nginxと組あわせてSPA</span></h1>
-<p><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart-for-spas" target="_blank" rel="noopener">gitHub:
-uwsgi-nginx-flask-dockerのSPA</a> を参考に進める。</p>
-<h2><span id="dockerfileとアプリ">Dockerfileとアプリ</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/nginx_spa</span><br><span class="line">$ cd ~/Sources/docker_flask/nginx_spa</span><br><span class="line">$ cat &lt;&lt; EOF &gt; Dockerfile</span><br><span class="line">  fROM tiangolo/uwsgi-nginx-flask:python3.7</span><br><span class="line">  </span><br><span class="line">  eNV STATIC_INDEX 1</span><br><span class="line">  </span><br><span class="line">  cOPY ./app /app</span><br><span class="line">  eOF</span><br><span class="line">$ mkdir app</span><br><span class="line">$ cat &lt;&lt; EOF &gt; app/main.py</span><br><span class="line">  import os</span><br><span class="line">  from flask import Flask, send_file</span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  @app.route(&quot;/hello&quot;)</span><br><span class="line">  def hello():</span><br><span class="line">      return &quot;Hello World from Flask&quot;</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  @app.route(&quot;/&quot;)</span><br><span class="line">  def main():</span><br><span class="line">      index_path = os.path.join(app.static_folder, &apos;index.html&apos;)</span><br><span class="line">      return send_file(index_path)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  # Everything not declared before (not a Flask route / API endpoint)...</span><br><span class="line">  @app.route(&apos;/&lt;path:path&gt;&apos;)</span><br><span class="line">  def route_frontend(path):</span><br><span class="line">      # ...could be a static file needed by the front end that</span><br><span class="line">      # doesn&apos;t use the `static` path (like in `&lt;script src=&quot;bundle.js&quot;&gt;`)</span><br><span class="line">      file_path = os.path.join(app.static_folder, path)</span><br><span class="line">      if os.path.isfile(file_path):</span><br><span class="line">          return send_file(file_path)</span><br><span class="line">      # ...or should be handled by the SPA&apos;s &quot;router&quot; in front end</span><br><span class="line">      else:</span><br><span class="line">          index_path = os.path.join(app.static_folder, &apos;index.html&apos;)</span><br><span class="line">          return send_file(index_path)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  if __name__ == &quot;__main__&quot;:</span><br><span class="line">      # Only for debugging while developing</span><br><span class="line">      app.run(host=&apos;0.0.0.0&apos;, debug=True, port=80)</span><br><span class="line">  eOF</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir app/static</span><br><span class="line">$ cat &lt;&lt; EOF &gt; app/static/index.html</span><br><span class="line">  &lt;!DOCTYPE html&gt;</span><br><span class="line">  &lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">      &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">      &lt;title&gt;Index&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">  &lt;h1&gt;Hello World from HTML&lt;/h1&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">  &lt;/html&gt;</span><br><span class="line">  eOF</span><br></pre></td></tr></table></figure>
-<h2><span id="ビルド">ビルド</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker build -t dobachi/nginx-flask-spa:1.0 .</span><br></pre></td></tr></table></figure>
-<h2><span id="実行">実行</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --rm -it -p 8080:80 dobachi/nginx-flask-spa:1.0</span><br></pre></td></tr></table></figure>
-<h1><span id="構造的なプロジェクト">構造的なプロジェクト</span></h1>
-<p><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#quickstart-for-bigger-projects-structured-as-a-python-package" target="_blank" rel="noopener">gitHub:
-構造的なプロジェクトの例</a> に記載の例を示す。 <a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker/releases/download/v0.3.10/example-flask-package-python3.7.zip" target="_blank" rel="noopener">example-flask-package-python3.7.zip</a>
-をダウンロードしてビルドしてみる。</p>
-<h2><span id="アーカイブをダウンロード">アーカイブをダウンロード</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ~/Sources/docker_flask/</span><br><span class="line">$ wget https://github.com/tiangolo/uwsgi-nginx-flask-docker/releases/download/v0.3.10/example-flask-package-python3.7.zip</span><br><span class="line">$ unzip example-flask-package-python3.7.zip</span><br><span class="line">$ cd example-flask-package-python3.7</span><br></pre></td></tr></table></figure>
-<h2><span id="ビルド">ビルド</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker build -t dobachi/nginx-flask-package:1.0 .</span><br></pre></td></tr></table></figure>
-<h2><span id="実行">実行</span></h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --rm -it -p 8080:80 dobachi/nginx-flask-package:1.0</span><br></pre></td></tr></table></figure>
-<h2><span id="一部修正してみる">一部修正してみる</span></h2>
-<p>apiを追加する。</p>
-<p>ファイルを修正 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat example-flask-package-python3.7/app/app/api/api.py </span><br><span class="line">from .endpoints import user</span><br><span class="line">from .endpoints import get_ip</span><br></pre></td></tr></table></figure></p>
-<p>ファイルを追加 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ cat example-flask-package-python3.7/app/app/api/endpoints/get_ip.py </span><br><span class="line">from flask import request</span><br><span class="line">from flask import jsonify</span><br><span class="line"></span><br><span class="line">from ..utils import senseless_print</span><br><span class="line"></span><br><span class="line">from ...main import app</span><br><span class="line"></span><br><span class="line">@app.route(&quot;/get_ip&quot;, methods=[&quot;GET&quot;])</span><br><span class="line">def get_ip():</span><br><span class="line">        return jsonify(&#123;&apos;ip&apos;: request.remote_addr&#125;), 200</span><br></pre></td></tr></table></figure></p>
-<p>ビルドし、実行して、/get_ipにアクセスすると、接続元のIPアドレスが表示される。</p>
-<h1><span id="flask-nginxでsslを使用ここがうまく動かない">flask +
-NginxでSSLを使用（ここがうまく動かない）</span></h1>
-<h2><span id="アドホックな対応">アドホックな対応</span></h2>
-<p><a href="https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https" target="_blank" rel="noopener">flask
-+ NginxでのSSL対応に関する記事</a> に記載された方法で試す。
-また上記で使った<code>example-flask-package-python3.7</code>の例を用いてみる。</p>
-<p>まずDockerfileを以下のように変更した。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ cat Dockerfile </span><br><span class="line">froM tiangolo/uwsgi-nginx-flask:python3.7</span><br><span class="line"></span><br><span class="line">run apt-get update</span><br><span class="line">run pip install pyopenssl</span><br><span class="line"></span><br><span class="line">copY ./app /app</span><br></pre></td></tr></table></figure>
-<p><code>main.py</code>を以下のように修正し、アドホックなSSL対応を試せるようにする。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ cat app/app/main.py </span><br><span class="line">from flask import Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">from .core import app_setup</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    # Only for debugging while developing</span><br><span class="line">    # app.run(host=&apos;0.0.0.0&apos;, debug=True, port=80)</span><br><span class="line">    app.run(host=&apos;0.0.0.0&apos;, debug=True, ssl_context=&apos;adhoc&apos;)</span><br></pre></td></tr></table></figure>
-<p>以上の修正を加えた上で、Dockerイメージをビルドし実行した。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker build -t dobachi/nginx-flask-package:1.0 .</span><br><span class="line">$ sudo docker run --rm -it -p 8080:80 dobachi/nginx-flask-package:1.0  /bin/bash</span><br></pre></td></tr></table></figure>
-<h1><span id="githubuwsgi-nginx-flask-dockerのアーキテクチャ">gitHub:
-uwsgi-nginx-flask-dockerのアーキテクチャ</span></h1>
-<p><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker#technical-details" target="_blank" rel="noopener">gitHub:
-uwsgi-nginx-flask-dockerのテクニカル詳細</a> で書かれている通り。
-以下の役割分担。</p>
-<ul>
-<li>ウェブサーバ：Nginx</li>
-<li>wSGIのアプリサーバ：uWSGI</li>
-</ul>
-<p>またアプリはFlaskで書かれていることを前提とし、
-プロセスはSupervisordで管理される。
-アプリはコンテナ内の<code>/app</code>以下に配備されることを前提とし、その中にとりあえずは動く<code>uwsgi.ini</code>も含まれる。
-そのため、Dockerfile内でuwsgi.iniを上書きさせるようにして用いることを想定しているようだ。</p>
-<h2><span id="supervisord化について">Supervisord化について</span></h2>
-<p>以下のように/bin/bashを起動して確認した。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --rm -it -p 8080:80 dobachi/nginx-flask-package:1.0  /bin/bash</span><br></pre></td></tr></table></figure>
-<p><code>/etc/supervisor/conf.d/supervisord.conf</code>を確認する。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># cat /etc/supervisor/conf.d/supervisord.conf </span><br><span class="line">[supervisord]</span><br><span class="line">nodaemon=true</span><br><span class="line"></span><br><span class="line">[program:uwsgi]</span><br><span class="line">command=/usr/local/bin/uwsgi --ini /etc/uwsgi/uwsgi.ini --die-on-term --need-app</span><br><span class="line">stdout_logfile=/dev/stdout</span><br><span class="line">stdout_logfile_maxbytes=0</span><br><span class="line">stderr_logfile=/dev/stderr</span><br><span class="line">stderr_logfile_maxbytes=0</span><br><span class="line"></span><br><span class="line">[program:nginx]</span><br><span class="line">command=/usr/sbin/nginx</span><br><span class="line">stdout_logfile=/dev/stdout</span><br><span class="line">stdout_logfile_maxbytes=0</span><br><span class="line">stderr_logfile=/dev/stderr</span><br><span class="line">stderr_logfile_maxbytes=0</span><br><span class="line"># graceful stop, see http://nginx.org/en/docs/control.html</span><br><span class="line">stopsignal=QUIT</span><br></pre></td></tr></table></figure>
-<p>uwsgiとnginxを起動させていることがわかる。</p>
-<p>続いて、nginxの設定において、uwsgiと連携しているのを設定している箇所を確認。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># cat /etc/nginx/conf.d/nginx.conf </span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    location / &#123;</span><br><span class="line">        try_files $uri @app;</span><br><span class="line">    &#125;</span><br><span class="line">    location @app &#123;</span><br><span class="line">        include uwsgi_params;</span><br><span class="line">        uwsgi_pass unix:///tmp/uwsgi.sock;</span><br><span class="line">    &#125;</span><br><span class="line">    location /static &#123;</span><br><span class="line">        alias /app/static;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>uwsgiでは、/appディレクトリ以下のuwsgi.iniと/etc/uwsgi/uwsgi.iniの両方を確認するようだ。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># cat /etc/uwsgi/uwsgi.ini </span><br><span class="line">[uwsgi]</span><br><span class="line">socket = /tmp/uwsgi.sock</span><br><span class="line">chown-socket = nginx:nginx</span><br><span class="line">chmod-socket = 664</span><br><span class="line"># graceful shutdown on SIGTERM, see https://github.com/unbit/uwsgi/issues/849#issuecomment-118869386</span><br><span class="line">hook-master-start = unix_signal:15 gracefully_kill_them_all</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># cat /app/uwsgi.ini </span><br><span class="line">[uwsgi]</span><br><span class="line">module = app.main</span><br><span class="line">callable = app</span><br></pre></td></tr></table></figure>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/" data-id="cm5enfgey01dv18ljqn1tuuu1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/17/Check-global-IP-address/" data-id="cm5f57p45002m18lnoyfy04l8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2067,6 +1849,15 @@ uwsgi-nginx-flask-dockerのテクニカル詳細</a> で書かれている通り
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/memo-blog/2025/01/02/Eclipse-Dataspace-Protocol-Unofficial-draft-13-Dec-2024/" class="title">Eclipse Dataspace Protocol Unofficial draft 13 Dec. 2024</a></p>
+                            <p class="item-date"><time datetime="2025-01-02T01:38:56.000Z" itemprop="datePublished">2025-01-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/memo-blog/2025/01/02/Business-model-paper-by-IDSA/" class="title">Business model paper by IDSA</a></p>
                             <p class="item-date"><time datetime="2025-01-02T01:24:53.000Z" itemprop="datePublished">2025-01-02</time></p>
                         </div>
@@ -2099,15 +1890,6 @@ uwsgi-nginx-flask-dockerのテクニカル詳細</a> で書かれている通り
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Spaces/">Data Spaces</a></p>
-                            <p class="item-title"><a href="/memo-blog/2024/10/26/memo-of-Ouranos-Ecosystem-IDI-and-data-transaction-system/" class="title">memo of Ouranos Ecosystem IDI and data-transaction-system</a></p>
-                            <p class="item-date"><time datetime="2024-10-26T12:41:18.000Z" itemprop="datePublished">2024-10-26</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2126,7 +1908,7 @@ uwsgi-nginx-flask-dockerのテクニカル詳細</a> で書かれている通り
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 

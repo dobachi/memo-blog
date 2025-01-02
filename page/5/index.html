@@ -170,7 +170,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                228
+                229
                 <span>投稿</span>
             </div>
             <div class="article-info-block">
@@ -205,6 +205,162 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-Socks-proxy-for-Jupyter-Lab" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2021/07/12/Socks-proxy-for-Jupyter-Lab/">Socks proxy for Jupyter Lab</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2021/07/12/Socks-proxy-for-Jupyter-Lab/">
+            <time datetime="2021-07-12T08:53:27.000Z" itemprop="datePublished">2021-07-12</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Python/">Python</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Python/Jupyter/">Jupyter</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/Jupyter/">Jupyter</a>, <a class="tag-link" href="/memo-blog/tags/Python/">Python</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
+</ul>
+</div>
+<h1><span id="参考">参考</span></h1>
+<h1><span id="メモ">メモ</span></h1>
+<p>以下の条件に当てはまる場合に設定する項目。</p>
+<ul>
+<li>Jupyter Labをリモート環境で実行している</li>
+<li>Socksプロキシを使っている</li>
+<li>ChromeやFirefoxのエクステンションでFoxyProxyのようなURLマッチングでプロキシを差し替えている</li>
+</ul>
+<p>このとき、https?に加え、wsも指定する必要があります。
+具体的には以下の通り。</p>
+<figure>
+<img src="/memo-blog/images/20210712_foxy_example1.png" alt="Foxy Proxyでの設定例1">
+<figcaption aria-hidden="true">Foxy Proxyでの設定例1</figcaption>
+</figure>
+<figure>
+<img src="/memo-blog/images/20210712_foxy_example2.png" alt="Foxy Proxyでの設定例2">
+<figcaption aria-hidden="true">Foxy Proxyでの設定例2</figcaption>
+</figure>
+<p>つまりは、ウェブソケットのことを忘れることなかれ、ということである。
+（いつも忘れるから、備忘録として記載しておく）</p>
+<!-- vim: set et tw=0 ts=2 sw=2: -->
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2021/07/12/Socks-proxy-for-Jupyter-Lab/" data-id="cm5f57p7l00b518lnhtl8f11g" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Minio-getting-started" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -436,7 +592,7 @@ Forbidenエラーであることがわかる。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/06/13/Minio-getting-started/" data-id="cm5enfgcw016j18ljfoz2tiof" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/06/13/Minio-getting-started/" data-id="cm5f57pej014c18lniatbdvar" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -712,7 +868,7 @@ pubnub&gt;=4.5.1</span></h3>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/05/06/PubNub/" data-id="cm5enfg59009u18ljd49xrl2c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/05/06/PubNub/" data-id="cm5f57p7500a218lnedeyxt82" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -857,7 +1013,7 @@ Windows用TrueTypeフォントを使用する</a> が参考になった。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/30/Use-any-fonts-in-CentOS7/" data-id="cm5enfg6l00d718lja39ggklk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/30/Use-any-fonts-in-CentOS7/" data-id="cm5f57p8d00dj18lnuvf2uljh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1047,7 +1203,7 @@ Stream</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/25/CentOS-on-WSL/" data-id="cm5enfg2i002i18lj1kh2mupg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/25/CentOS-on-WSL/" data-id="cm5f57p44002i18lnmuz9npgm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1237,7 +1393,7 @@ DELETEするとき、Updateするとき、Overwriteするとき（条件付き�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/23/readPredicates-in-inserting-records/" data-id="cm5enfgdl018a18ljp4l7pf78" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/23/readPredicates-in-inserting-records/" data-id="cm5f57pff016a18ln332ke1fg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1454,7 +1610,7 @@ values)</a> にも似たような議論があるようだ。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/09/Double-count-of-dstat/" data-id="cm5enfg2z003x18ljydw2dr0u" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/09/Double-count-of-dstat/" data-id="cm5f57p4q003z18lnf7pkuycf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1636,7 +1792,7 @@ LogのIDがいつ確定するのか、というのが気になり確認した。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/04/04/When-DeltaLog-ID-is-created/" data-id="cm5enfg6r00dm18lj5a238ok8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/04/04/When-DeltaLog-ID-is-created/" data-id="cm5f57p8f00dv18ln3qb2ij4f" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1778,7 +1934,7 @@ LogのIDがいつ確定するのか、というのが気になり確認した。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/02/12/Power-Grid-Data/" data-id="cm5enfg57009o18ljzk714sb1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/02/12/Power-Grid-Data/" data-id="cm5f57p6y009w18ln4noufcnh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2007,152 +2163,7 @@ DMZ機能を利用して、ルータ機能をHGWと自前ルータの療法で�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/31/Mesh-wifi/" data-id="cm5enfg4w008q18ljfdiepg6l" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/">Memo of How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/">
-            <time datetime="2021-01-18T16:06:28.000Z" itemprop="datePublished">2021-01-19</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Mesh/">Data Mesh</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/Data-Lake/">Data Lake</a>, <a class="tag-link" href="/memo-blog/tags/Data-Mesh/">Data Mesh</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#参考" id="toc-参考">参考</a></li>
-<li><a href="#メモ" id="toc-メモ">メモ</a></li>
-</ul>
-</div>
-<h1><span id="参考">参考</span></h1>
-<h1><span id="メモ">メモ</span></h1>
-<p><a href="https://martinfowler.com/articles/data-monolith-to-mesh.html" target="_blank" rel="noopener">Zhamak
-DehghaniによるHow to Move Beyond a Monolithic Data Laketo a Distributed
-Data Mesh</a> を読んで簡単にまとめた。</p>
-<p>この文章では、ドメインが所有し、提供するデータプロダクトの相互利用に基づく「データメッシュ」の考え方を提唱するものである。
-固有技術そのものではなく、アーキテクチャ検討の前の「データを基礎としたサービス開発、ソフトウェア開発のためのデータの取り回し方」に関する示唆を与えようとしたもの、という理解。</p>
-<iframe src="https://onedrive.live.com/embed?cid=C6E669622F542498&amp;resid=C6E669622F542498%21102281&amp;authkey=AMeTPUnKXIG6qVA&amp;em=2" width="402" height="327" frameborder="0" scrolling="no">
-</iframe>
-<!-- vim: set et tw=0 ts=2 sw=2: -->
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/" data-id="cm5enfg4t008i18ljsw9axlmv" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/31/Mesh-wifi/" data-id="cm5f57p6k008w18lnewu0bh71" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2246,6 +2257,15 @@ Data Mesh</a> を読んで簡単にまとめた。</p>
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/memo-blog/2025/01/02/Eclipse-Dataspace-Protocol-Unofficial-draft-13-Dec-2024/" class="title">Eclipse Dataspace Protocol Unofficial draft 13 Dec. 2024</a></p>
+                            <p class="item-date"><time datetime="2025-01-02T01:38:56.000Z" itemprop="datePublished">2025-01-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/memo-blog/2025/01/02/Business-model-paper-by-IDSA/" class="title">Business model paper by IDSA</a></p>
                             <p class="item-date"><time datetime="2025-01-02T01:24:53.000Z" itemprop="datePublished">2025-01-02</time></p>
                         </div>
@@ -2278,15 +2298,6 @@ Data Mesh</a> を読んで簡単にまとめた。</p>
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Spaces/">Data Spaces</a></p>
-                            <p class="item-title"><a href="/memo-blog/2024/10/26/memo-of-Ouranos-Ecosystem-IDI-and-data-transaction-system/" class="title">memo of Ouranos Ecosystem IDI and data-transaction-system</a></p>
-                            <p class="item-date"><time datetime="2024-10-26T12:41:18.000Z" itemprop="datePublished">2024-10-26</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2305,7 +2316,7 @@ Data Mesh</a> を読んで簡単にまとめた。</p>
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
