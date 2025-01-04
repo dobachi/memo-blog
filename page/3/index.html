@@ -170,7 +170,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                229
+                230
                 <span>投稿</span>
             </div>
             <div class="article-info-block">
@@ -205,6 +205,242 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-Dataspace-Protocol-of-EDC" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2023/09/20/Dataspace-Protocol-of-EDC/">Dataspace Protocol of EDC</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2023/09/20/Dataspace-Protocol-of-EDC/">
+            <time datetime="2023-09-20T14:07:49.000Z" itemprop="datePublished">2023-09-20</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Spaces/">Data Spaces</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Spaces/EDC/">EDC</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/Data-Spaces/">Data Spaces</a>, <a class="tag-link" href="/memo-blog/tags/Dataspace-Protocol/">Dataspace Protocol</a>, <a class="tag-link" href="/memo-blog/tags/EDC/">EDC</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#dsp-data-planeの実装を確認する" id="toc-dsp-data-planeの実装を確認する">DSP Data
+Planeの実装を確認する</a></li>
+<li><a href="#おまけ古いdata-planeの実装を確認するhttpの例" id="toc-おまけ古いdata-planeの実装を確認するhttpの例">おまけ）古い（？）Data
+Planeの実装を確認する（HTTPの例）</a></li>
+</ul></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#ドキュメント" id="toc-ドキュメント">ドキュメント</a></li>
+<li><a href="#ソースコード" id="toc-ソースコード">ソースコード</a></li>
+</ul></li>
+</ul>
+</div>
+<h1><span id="メモ">メモ</span></h1>
+<p>注意：このメモはかなり初期のものなので、今となっては怪しい内容が含まれてる・・・。</p>
+<p>EDCは現在IDSが提唱する、Dataspace
+Protocolにしたがって、コネクタ間でやりとりする。</p>
+<h2><span id="dsp-dataplaneの実装を確認する">DSP Data
+Planeの実装を確認する</span></h2>
+<p><code>data-protocols/dsp</code> （<a href="https://github.com/eclipse-edc/Connector/tree/main/data-protocols/dsp" target="_blank" rel="noopener">dsp</a>）以下に、Dataspace
+Protocolに対応したモジュールが含まれている。</p>
+<p>例えば、<code>org.eclipse.edc.protocol.dsp.dispatcher.PostDspHttpRequestFactory</code>、<code>org.eclipse.edc.protocol.dsp.dispatcher.GetDspHttpRequestFactory</code>などのファクトリが定義されている。
+これは、前述のPOST、GETオペレーションに対応するリクエストを生成するためのファクトリである。</p>
+<p>以下は、カタログのリクエストを送るための実装である。</p>
+<p>org/eclipse/edc/protocol/dsp/catalog/dispatcher/DspCatalogHttpDispatcherExtension.java:54</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(ServiceExtensionContext context)</span> </span>&#123;</span><br><span class="line">    messageDispatcher.registerMessage(</span><br><span class="line">            CatalogRequestMessage.class,</span><br><span class="line">            <span class="keyword">new</span> PostDspHttpRequestFactory&lt;&gt;(remoteMessageSerializer, m -&gt; BASE_PATH + CATALOG_REQUEST),</span><br><span class="line">            <span class="keyword">new</span> CatalogRequestHttpRawDelegate()</span><br><span class="line">    );</span><br><span class="line">    messageDispatcher.registerMessage(</span><br><span class="line">            DatasetRequestMessage.class,</span><br><span class="line">            <span class="keyword">new</span> GetDspHttpRequestFactory&lt;&gt;(m -&gt; BASE_PATH + DATASET_REQUEST + <span class="string">"/"</span> + m.getDatasetId()),</span><br><span class="line">            <span class="keyword">new</span> DatasetRequestHttpRawDelegate()</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>他にも、<code>org.eclipse.edc.protocol.dsp.transferprocess.dispatcher.DspTransferProcessDispatcherExtension</code>などが挙げられる。
+これは以下のように、<code>org.eclipse.edc.connector.transfer.spi.types.protocol.TransferRequestMessage</code>が含まれており、ConsumerがProviderにデータ転送プロセスをリクエストする際のメッセージのディスパッチャが登録されていることがわかる。</p>
+<p>org/eclipse/edc/protocol/dsp/transferprocess/dispatcher/DspTransferProcessDispatcherExtension.java:60</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(ServiceExtensionContext context)</span> </span>&#123;</span><br><span class="line">    messageDispatcher.registerMessage(</span><br><span class="line">            TransferRequestMessage.class,</span><br><span class="line">            <span class="keyword">new</span> PostDspHttpRequestFactory&lt;&gt;(remoteMessageSerializer, m -&gt; BASE_PATH + TRANSFER_INITIAL_REQUEST),</span><br><span class="line">            <span class="keyword">new</span> TransferRequestDelegate(remoteMessageSerializer)</span><br><span class="line">    );</span><br><span class="line">    messageDispatcher.registerMessage(</span><br><span class="line">            TransferCompletionMessage.class,</span><br><span class="line">            <span class="keyword">new</span> PostDspHttpRequestFactory&lt;&gt;(remoteMessageSerializer, m -&gt; BASE_PATH + m.getProcessId() + TRANSFER_COMPLETION),</span><br><span class="line">            <span class="keyword">new</span> TransferCompletionDelegate(remoteMessageSerializer)</span><br><span class="line">    );</span><br><span class="line">    messageDispatcher.registerMessage(</span><br><span class="line">            TransferStartMessage.class,</span><br><span class="line">            <span class="keyword">new</span> PostDspHttpRequestFactory&lt;&gt;(remoteMessageSerializer, m -&gt; BASE_PATH + m.getProcessId() + TRANSFER_START),</span><br><span class="line">            <span class="keyword">new</span> TransferStartDelegate(remoteMessageSerializer)</span><br><span class="line">    );</span><br><span class="line">    messageDispatcher.registerMessage(</span><br><span class="line">            TransferTerminationMessage.class,</span><br><span class="line">            <span class="keyword">new</span> PostDspHttpRequestFactory&lt;&gt;(remoteMessageSerializer, m -&gt; BASE_PATH + m.getProcessId() + TRANSFER_TERMINATION),</span><br><span class="line">            <span class="keyword">new</span> TransferTerminationDelegate(remoteMessageSerializer)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>◆参考情報はじめ</p>
+<p>このファクトリは、ディスパッチャの
+<code>org.eclipse.edc.protocol.dsp.dispatcher.DspHttpRemoteMessageDispatcherImpl#dispatch</code>
+メソッドから、間接的に呼び出されて利用される。
+このメソッドは<code>org.eclipse.edc.spi.message.RemoteMessageDispatcher#dispatch</code>メソッドを実装したものである。ディスパッチャとして、リモートへ送信するメッセージ生成をディスパッチするための。メソッドである。
+さらに、これは
+<code>org.eclipse.edc.connector.core.base.RemoteMessageDispatcherRegistryImpl</code>
+内で使われている。ディスパッチャのレジストリ内で、ディスパッチ処理が起動、管理されるようだ。
+なお、これは<code>org.eclipse.edc.spi.message.RemoteMessageDispatcherRegistry#dispatch</code>
+を実装したものである。このメソッドは、色々なところから呼び出される。</p>
+<p>例えば、TransferCoreExtensionクラスではサービス起動時に、転送プロセスを管理する<code>org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl</code>を起動する。</p>
+<p>org/eclipse/edc/connector/transfer/TransferCoreExtension.java:205</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    processManager.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>これにより、以下のようにステートマシンがビルド、起動され、各プロセッサが登録される。</p>
+<p>org/eclipse/edc/connector/transfer/process/TransferProcessManagerImpl.java:143</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">stateMachineManager = StateMachineManager.Builder.newInstance(<span class="string">"transfer-process"</span>, monitor, executorInstrumentation, waitStrategy)</span><br><span class="line">        .processor(processTransfersInState(INITIAL, <span class="keyword">this</span>::processInitial))</span><br><span class="line">        .processor(processTransfersInState(PROVISIONING, <span class="keyword">this</span>::processProvisioning))</span><br><span class="line">        .processor(processTransfersInState(PROVISIONED, <span class="keyword">this</span>::processProvisioned))</span><br><span class="line">        .processor(processTransfersInState(REQUESTING, <span class="keyword">this</span>::processRequesting))</span><br><span class="line">        .processor(processTransfersInState(STARTING, <span class="keyword">this</span>::processStarting))</span><br><span class="line">        .processor(processTransfersInState(STARTED, <span class="keyword">this</span>::processStarted))</span><br><span class="line">        .processor(processTransfersInState(COMPLETING, <span class="keyword">this</span>::processCompleting))</span><br><span class="line">        .processor(processTransfersInState(TERMINATING, <span class="keyword">this</span>::processTerminating))</span><br><span class="line">        .processor(processTransfersInState(DEPROVISIONING, <span class="keyword">this</span>::processDeprovisioning))</span><br><span class="line">        .build();</span><br><span class="line">stateMachineManager.start();</span><br></pre></td></tr></table></figure>
+<p>上記のプロセッサとして登録されている<code>org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl#processStarting</code>の中では
+<code>org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl#sendTransferStartMessage</code>
+が呼び出されている。</p>
+<p>org/eclipse/edc/connector/transfer/process/TransferProcessManagerImpl.java:376</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> entityRetryProcessFactory.doSyncProcess(process, () -&gt; dataFlowManager.initiate(process.getDataRequest(), contentAddress, policy))</span><br><span class="line">        .onSuccess((p, dataFlowResponse) -&gt; sendTransferStartMessage(p, dataFlowResponse, policy))</span><br><span class="line">        .onFatalError((p, failure) -&gt; transitionToTerminating(p, failure.getFailureDetail()))</span><br><span class="line">        .onFailure((t, failure) -&gt; transitionToStarting(t))</span><br><span class="line">        .onRetryExhausted((p, failure) -&gt; transitionToTerminating(p, failure.getFailureDetail()))</span><br><span class="line">        .execute(description);</span><br></pre></td></tr></table></figure>
+<p><code>org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl#sendTransferStartMessage</code>
+メソッド内では、
+<code>org.eclipse.edc.connector.transfer.spi.types.protocol.TransferStartMessage</code>のメッセージがビルドされ、
+ディスパッチャにメッセージとして渡される。</p>
+<p>org/eclipse/edc/connector/transfer/process/TransferProcessManagerImpl.java:386</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var message = TransferStartMessage.Builder.newInstance()</span><br><span class="line">        .processId(process.getCorrelationId())</span><br><span class="line">        .protocol(process.getProtocol())</span><br><span class="line">        .dataAddress(dataFlowResponse.getDataAddress())</span><br><span class="line">        .counterPartyAddress(process.getConnectorAddress())</span><br><span class="line">        .policy(policy)</span><br><span class="line">        .build();</span><br><span class="line"></span><br><span class="line">var description = format(<span class="string">"Send %s to %s"</span>, message.getClass().getSimpleName(), process.getConnectorAddress());</span><br><span class="line"></span><br><span class="line">entityRetryProcessFactory.doAsyncStatusResultProcess(process, () -&gt; dispatcherRegistry.dispatch(Object.class, message))</span><br><span class="line">        .entityRetrieve(id -&gt; transferProcessStore.findById(id))</span><br><span class="line">        .onSuccess((t, content) -&gt; transitionToStarted(t))</span><br><span class="line">        .onFailure((t, throwable) -&gt; transitionToStarting(t))</span><br><span class="line">        .onFatalError((n, failure) -&gt; transitionToTerminated(n, failure.getFailureDetail()))</span><br><span class="line">        .onRetryExhausted((t, throwable) -&gt; transitionToTerminating(t, throwable.getMessage(), throwable))</span><br><span class="line">        .execute(description);</span><br></pre></td></tr></table></figure>
+<p>◆参考情報おわり</p>
+<p>ということで、<code>org.eclipse.edc.protocol.dsp.spi.dispatcher.DspHttpRemoteMessageDispatcher</code>というディスパッチャは、Dataspace
+Protocolに基づくリモートメッセージを生成する際に用いられるディスパッチャである。</p>
+<h2><span id="おまけ古いdataplaneの実装を確認するhttpの例">おまけ）古い（？）Data
+Planeの実装を確認する（HTTPの例）</span></h2>
+<p>Dataspace Protocol以前の実装か？</p>
+<p><code>extensions/data-plane</code> 以下にData
+Planeの実装が拡張として含まれている。</p>
+<p>例えば、 <code>extensions/data-plane/data-plane-http</code>
+には、HTTPを用いてデータ共有するための拡張の実装が含まれている。
+当該拡張のREADMEの通り、 （transfer APIの）<code>DataFlowRequest</code>
+が<code>HttpData</code>だった場合に、</p>
+<ul>
+<li>HttpDataSourceFactory</li>
+<li>HttpDataSinkFactory</li>
+<li>HttpDataSource</li>
+<li>HttpDataSink</li>
+</ul>
+<p>の実装が用いられる。パラメータもREADMEに（<a href="https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/README.md#design-principles" target="_blank" rel="noopener">data-plane-httpのデザイン指針</a>）記載されている。
+基本的には、バックエンドがHTTPなのでそれにアクセスするためのパラメータが定義されている。</p>
+<p>当該ファクトリは、
+<code>org.eclipse.edc.connector.dataplane.http.DataPlaneHttpExtension#initialize</code>
+内で用いられている。</p>
+<p>org/eclipse/edc/connector/dataplane/http/DataPlaneHttpExtension.java:75</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var httpRequestFactory = <span class="keyword">new</span> HttpRequestFactory();</span><br><span class="line"></span><br><span class="line">var sourceFactory = <span class="keyword">new</span> HttpDataSourceFactory(httpClient, paramsProvider, monitor, httpRequestFactory);</span><br><span class="line">pipelineService.registerFactory(sourceFactory);</span><br><span class="line"></span><br><span class="line">var sinkFactory = <span class="keyword">new</span> HttpDataSinkFactory(httpClient, executorContainer.getExecutorService(), sinkPartitionSize, monitor, paramsProvider, httpRequestFactory);</span><br><span class="line">pipelineService.registerFactory(sinkFactory);</span><br></pre></td></tr></table></figure>
+<p>ここでは、試しにData Source側を確認してみる。</p>
+<p>org/eclipse/edc/connector/dataplane/http/pipeline/HttpDataSourceFactory.java:63</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> DataSource <span class="title">createSource</span><span class="params">(DataFlowRequest request)</span> </span>&#123;</span><br><span class="line">    var dataAddress = HttpDataAddress.Builder.newInstance()</span><br><span class="line">            .copyFrom(request.getSourceDataAddress())</span><br><span class="line">            .build();</span><br><span class="line">    <span class="keyword">return</span> HttpDataSource.Builder.newInstance()</span><br><span class="line">            .httpClient(httpClient)</span><br><span class="line">            .monitor(monitor)</span><br><span class="line">            .requestId(request.getId())</span><br><span class="line">            .name(dataAddress.getName())</span><br><span class="line">            .params(requestParamsProvider.provideSourceParams(request))</span><br><span class="line">            .requestFactory(requestFactory)</span><br><span class="line">            .build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上記の通り、まずデータのアドレスを格納するインスタンスが生成され、
+つづいて、HTTPのデータソースがビルドされる。</p>
+<p>HTTPのData Sourceの実体は
+<code>org.eclipse.edc.connector.dataplane.http.pipeline.HttpDataSource</code>
+である。 このクラスはSPIの
+<code>org.eclipse.edc.connector.dataplane.spi.pipeline.DataSource</code>インタフェースを実装したものである。</p>
+<p><code>org.eclipse.edc.connector.dataplane.http.pipeline.HttpDataSource#openPartStream</code>
+がオーバライドされて実装されている。 詳しくは、<a href="https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/src/main/java/org/eclipse/edc/connector/dataplane/http/pipeline/HttpDataSource.java#L48" target="_blank" rel="noopener">openPartStream</a>参照。</p>
+<h1><span id="参考">参考</span></h1>
+<h2><span id="ドキュメント">ドキュメント</span></h2>
+<ul>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/README.md#design-principles" target="_blank" rel="noopener">data-plane-httpのデザイン指針</a></li>
+</ul>
+<h2><span id="ソースコード">ソースコード</span></h2>
+<ul>
+<li><a href="https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/src/main/java/org/eclipse/edc/connector/dataplane/http/pipeline/HttpDataSource.java#L48" target="_blank" rel="noopener">openPartStream</a></li>
+<li><a href="https://github.com/eclipse-edc/Connector/tree/main/data-protocols/dsp" target="_blank" rel="noopener">dsp</a></li>
+</ul>
+<!-- vim: set et tw=0 ts=2 sw=2: -->
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/20/Dataspace-Protocol-of-EDC/" data-id="cm5iawlxe013318nd1xf5uf6z" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Generate-OpenAPI-Spec-of-EDC-Connector" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -777,7 +1013,7 @@ ConnectorのOpenAPI Spec</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/09/09/Generate-OpenAPI-Spec-of-EDC-Connector/" data-id="cm5f57pi301gj18lndkuvmulq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/09/Generate-OpenAPI-Spec-of-EDC-Connector/" data-id="cm5iawm1601gn18nd0sw61mve" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -968,7 +1204,7 @@ APIサーバのAPI定義と実装を関連付ける</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/09/07/OpenAPI-Generator-for-Flask/" data-id="cm5f57p6w009o18ln07qwjsls" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/09/07/OpenAPI-Generator-for-Flask/" data-id="cm5iawlqs009o18ndlilqndvq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1416,7 +1652,7 @@ ProcessのMessage Type</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/31/IDS-Dataspace-Protocol/" data-id="cm5f57pee013x18ln14ss6raq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/31/IDS-Dataspace-Protocol/" data-id="cm5iawlxq013u18ndfzcmv5gn" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1699,7 +1935,7 @@ SDKとは？</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/27/How-to-create-SDK/" data-id="cm5f57p5i005v18ln5tpvdxko" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/27/How-to-create-SDK/" data-id="cm5iawlpa005u18ndz5d1f8fx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1862,7 +2098,7 @@ SDKとは？</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/15/check-windows-cpu-resources/" data-id="cm5f57p8n00ev18lnd32hk1rb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/15/check-windows-cpu-resources/" data-id="cm5iawlwl011518nd38g2c48h" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2083,7 +2319,7 @@ Compatibility</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="cm5f57p6u009j18lnq9nq4nzh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2023/08/01/Open-project-of-EDC-Connector-with-Intellij/" data-id="cm5iawlqq009j18nd54zxsh1l" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2289,7 +2525,7 @@ Actionsでmarkdownをpdfで出力する</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/05/02/GitHub-Actions-for-Hexo-with-Pandoc/" data-id="cm5f57p5a005c18lnbr9lezf1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/05/02/GitHub-Actions-for-Hexo-with-Pandoc/" data-id="cm5iawlp4005c18ndz6s21nq6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2438,7 +2674,7 @@ Hyper-V の実行</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="cm5f57p6q009918lnjskhrnq8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/02/03/Nest-VM-on-Hyper-V/" data-id="cm5iawlqn009b18nd3cb2rkbg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2827,316 +3063,7 @@ CLI v2 Docker image</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="cm5f57pec013s18lnva1lzk7i" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Latency-Guarantee-of-Stream-Processing" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/">Latency Guarantee of Stream Processing</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/">
-            <time datetime="2022-01-17T15:49:18.000Z" itemprop="datePublished">2022-01-18</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Stream-Processing/">Stream Processing</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/Stream-Processing/">Stream Processing</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#メモ" id="toc-メモ">メモ</a>
-<ul>
-<li><a href="#特許" id="toc-特許">特許</a></li>
-<li><a href="#論文" id="toc-論文">論文</a></li>
-<li><a href="#ソフトウェア" id="toc-ソフトウェア">ソフトウェア</a></li>
-<li><a href="#そのほか" id="toc-そのほか">そのほか</a></li>
-</ul></li>
-<li><a href="#参考" id="toc-参考">参考</a>
-<ul>
-<li><a href="#特許-1" id="toc-特許-1">特許</a></li>
-<li><a href="#論文-1" id="toc-論文-1">論文</a></li>
-</ul></li>
-</ul>
-</div>
-<h1><span id="メモ">メモ</span></h1>
-<p>ストリーム処理におけるレイテンシ保証の仕組みにどんなものがあるか調査したメモ。</p>
-<p>ストリーム処理のレイテンシとして気にするべきは、</p>
-<ul>
-<li>正常時のレイテンシ</li>
-<li>故障発生時のリカバリ含むレイテンシ</li>
-</ul>
-<p>が挙げられそうである。</p>
-<h2><span id="特許">特許</span></h2>
-<ul>
-<li><a href="https://astamuse.com/ja/published/JP/No/2012094996" target="_blank" rel="noopener">ストリームデータ処理における性能保証方法および装置</a>
-<ul>
-<li>日立製作所</li>
-<li>予め複数の計算方法を用意しておき、過去の計算結果から
-ユーザの要求するレイテンシ、精度を実現する計算方式に
-切り替えて処理する仕組みに関する提案
-<ul>
-<li>切り替え判断の入力とするのは、処理量</li>
-</ul></li>
-<li>先行となる特許が2件あるようだ。</li>
-</ul></li>
-<li><a href="https://www.j-platpat.inpit.go.jp/p0200" target="_blank" rel="noopener">制御装置、情報処理装置、情報処理制御方法及びコンピュータプログラム</a>
-<ul>
-<li>アプリケーションの遅延要件を考慮して処理する</li>
-</ul></li>
-<li><a href="https://www.j-platpat.inpit.go.jp/p0200" target="_blank" rel="noopener">特開2021-60753(P2021-60753A):情報処理システム、情報処理方法、および情報処理プログラム</a>
-<ul>
-<li>待ち時間を考慮したストリーム処理</li>
-</ul></li>
-</ul>
-<h2><span id="論文">論文</span></h2>
-<ul>
-<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic
-Stream Processing with Latency Guarantees</a>
-<ul>
-<li>アブストラクトを読む限り、パフォーマンスを計測し、
-適切なスケーリングを実行時に決定する。
-これによりレイテンシ保証する。</li>
-<li>この論文の被引用数は大きいので、これを軸に情報を探すとよいか。</li>
-</ul></li>
-<li><a href="https://dl.acm.org/doi/abs/10.1145/3239576.3239621" target="_blank" rel="noopener">Topology-Aware
-Task Allocation for Distributed Stream Processing with Latency
-Guarantee</a>
-<ul>
-<li>レイテンシ保証。転送レイテンシとリソース需要を勘案。</li>
-</ul></li>
-<li><a href="https://www.usenix.org/system/files/nsdi21spring-xu.pdf" target="_blank" rel="noopener">Move Fast
-and Meet Deadlines: Fine-grained Real-time Stream Processing with
-Cameo</a>
-<ul>
-<li>Cameoの提案。ユーザが指定したレイテンシ対象に従い、イベントのプライオリティを伝搬し制御する。</li>
-</ul></li>
-<li><a href="https://www.cs.york.ac.uk/rts/static/papers/HaiTaoMe2016a.pdf" target="_blank" rel="noopener">Real-Time
-Stream Processing in Java</a>
-<ul>
-<li>Java8でストリーム処理。レイテンシ保証もありそう？</li>
-</ul></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/7959102" target="_blank" rel="noopener">Minimum
-Backups for Stream Processing With Recovery Latency Guarantees</a>
-<ul>
-<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic
-Stream Processing with Latency Guarantees</a>
-を引用している論文として見つけた。</li>
-<li>Fault Tolerancyにおけるレイテンシのトレードオフを扱っている。</li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/8280443" target="_blank" rel="noopener">Integrated
-recovery and task allocation for stream processing</a>
-にもFTに関する記載あり</li>
-</ul></li>
-<li><a href="https://ieeexplore.ieee.org/document/8048950" target="_blank" rel="noopener">Task
-Allocation for Stream Processing with Recovery Latency Guarantee</a>
-<ul>
-<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic
-Stream Processing with Latency Guarantees</a> を引用している</li>
-<li>故障発生時のリカバリ遅延を小さくする工夫</li>
-</ul></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/9251089" target="_blank" rel="noopener">A
-Reactive Batching Strategy of Apache Kafka for Reliable Stream
-Processing in Real-time</a>
-<ul>
-<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic
-Stream Processing with Latency Guarantees</a> を引用している</li>
-<li>バッチベースのストリーム処理ではバッチサイズがデータロスの様子に影響を与えることに着目し、理アクティブなバッチの仕組みを提案</li>
-</ul></li>
-<li><a href="https://dl.acm.org/doi/abs/10.1145/3419111.3421285" target="_blank" rel="noopener">InferLine:
-latency-aware provisioning and scaling for prediction serving
-pipelines</a>
-<ul>
-<li>ストリーム処理ではなく、機械学習の推論システムだがレイテンシアウェアな処理の話</li>
-</ul></li>
-<li><a href="https://dl.acm.org/doi/abs/10.1145/3328905.3332304" target="_blank" rel="noopener">Self-Adaptive
-Data Stream Processing in Geo-Distributed Computing Environments</a>
-<ul>
-<li>セルフアダプティブな地理分散ストリーム処理。レイテンシ保証の話とは直接関係ないが、エッジコンピューティングとの関連から。</li>
-</ul></li>
-</ul>
-<p>レイテンシ保証の話ではないが、ウォーターマークに関する取り組みもある。
-以下は、2021年の論文。</p>
-<ul>
-<li><a href="https://dl.acm.org/doi/abs/10.14778/3476311.3476389" target="_blank" rel="noopener">Watermarks in
-stream processing systems: semantics and comparative analysis of Apache
-Flink and Google cloud dataflow</a></li>
-</ul>
-<h2><span id="ソフトウェア">ソフトウェア</span></h2>
-<ul>
-<li>いわゆるタイムウィンドウ処理やウォータマークの仕組みは既存の
-ストリーム処理OSSに採用されている。</li>
-</ul>
-<h2><span id="そのほか">そのほか</span></h2>
-<ul>
-<li><a href="https://www.inderscienceonline.com/doi/pdf/10.1504/IJNVO.2019.097631" target="_blank" rel="noopener">A
-survey on data stream, big data and real-time</a>
-<ul>
-<li>ストリーム処理に関するサーベイ</li>
-</ul></li>
-<li><a href="https://arxiv.org/abs/2008.00842" target="_blank" rel="noopener">A Survey on the Evolution
-of Stream Processing Systems</a>
-<ul>
-<li>ストリーム処理に関するサーベイ</li>
-</ul></li>
-</ul>
-<h1><span id="参考">参考</span></h1>
-<h2><span id="特許">特許</span></h2>
-<ul>
-<li><a href="https://astamuse.com/ja/published/JP/No/2012094996" target="_blank" rel="noopener">ストリームデータ処理における性能保証方法および装置</a></li>
-<li><a href="https://www.j-platpat.inpit.go.jp/p0200" target="_blank" rel="noopener">制御装置、情報処理装置、情報処理制御方法及びコンピュータプログラム</a></li>
-<li><a href="https://www.j-platpat.inpit.go.jp/p0200" target="_blank" rel="noopener">特開2021-60753(P2021-60753A):情報処理システム、情報処理方法、および情報処理プログラム</a></li>
-</ul>
-<h2><span id="論文">論文</span></h2>
-<ul>
-<li><a href="https://www.dos.tu-berlin.de/fileadmin/a34331500/misc/icdcs15_preprint.pdf" target="_blank" rel="noopener">Elastic
-Stream Processing with Latency Guarantees</a></li>
-<li><a href="https://ieeexplore.ieee.org/document/8048950" target="_blank" rel="noopener">Task
-Allocation for Stream Processing with Recovery Latency
-Guarantee</a></li>
-<li><a href="https://dl.acm.org/doi/abs/10.1145/3239576.3239621" target="_blank" rel="noopener">Topology-Aware
-Task Allocation for Distributed Stream Processing with Latency
-Guarantee</a></li>
-<li><a href="https://www.usenix.org/system/files/nsdi21spring-xu.pdf" target="_blank" rel="noopener">Move Fast
-and Meet Deadlines: Fine-grained Real-time Stream Processing with
-Cameo</a></li>
-<li><a href="https://www.cs.york.ac.uk/rts/static/papers/HaiTaoMe2016a.pdf" target="_blank" rel="noopener">Real-Time
-Stream Processing in Java</a></li>
-<li><a href="https://dl.acm.org/doi/abs/10.14778/3476311.3476389" target="_blank" rel="noopener">Watermarks in
-stream processing systems: semantics and comparative analysis of Apache
-Flink and Google cloud dataflow</a></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/7959102" target="_blank" rel="noopener">Minimum
-Backups for Stream Processing With Recovery Latency Guarantees</a></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/8280443" target="_blank" rel="noopener">Integrated
-recovery and task allocation for stream processing</a></li>
-<li><a href="https://www.inderscienceonline.com/doi/pdf/10.1504/IJNVO.2019.097631" target="_blank" rel="noopener">A
-survey on data stream, big data and real-time</a></li>
-<li><a href="https://arxiv.org/abs/2008.00842" target="_blank" rel="noopener">A Survey on the Evolution
-of Stream Processing Systems</a></li>
-<li><a href="https://dl.acm.org/doi/abs/10.1145/3419111.3421285" target="_blank" rel="noopener">InferLine:
-latency-aware provisioning and scaling for prediction serving
-pipelines</a></li>
-<li><a href="https://dl.acm.org/doi/abs/10.1145/3328905.3332304" target="_blank" rel="noopener">Self-Adaptive
-Data Stream Processing in Geo-Distributed Computing
-Environments</a></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/9251089" target="_blank" rel="noopener">A
-Reactive Batching Strategy of Apache Kafka for Reliable Stream
-Processing in Real-time</a></li>
-</ul>
-<!-- vim: set et tw=0 ts=2 sw=2: -->
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/" data-id="cm5f57p67007j18ln3f4i5gjb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="cm5iawlxo013r18ndp0smdift" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3230,6 +3157,15 @@ Processing in Real-time</a></li>
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/memo-blog/2025/01/04/International-Data-Spaces-Trustworthy-and-sovereign-data-sharing-enable-the-data-economy/" class="title">International Data Spaces Trustworthy and sovereign data sharing enable the data economy</a></p>
+                            <p class="item-date"><time datetime="2025-01-03T15:26:59.000Z" itemprop="datePublished">2025-01-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/memo-blog/2025/01/02/Eclipse-Dataspace-Protocol-Unofficial-draft-13-Dec-2024/" class="title">Eclipse Dataspace Protocol Unofficial draft 13 Dec. 2024</a></p>
                             <p class="item-date"><time datetime="2025-01-02T01:38:56.000Z" itemprop="datePublished">2025-01-02</time></p>
                         </div>
@@ -3262,15 +3198,6 @@ Processing in Real-time</a></li>
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Kubenetes/">Kubenetes</a></p>
-                            <p class="item-title"><a href="/memo-blog/2024/11/04/Trouble-about-Qemu-when-I-use-minikube/" class="title">Trouble about Qemu when I use minikube</a></p>
-                            <p class="item-date"><time datetime="2024-11-03T15:52:13.000Z" itemprop="datePublished">2024-11-04</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -3289,7 +3216,7 @@ Processing in Real-time</a></li>
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 

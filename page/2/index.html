@@ -170,7 +170,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                229
+                230
                 <span>投稿</span>
             </div>
             <div class="article-info-block">
@@ -205,6 +205,179 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-Llama3-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2024/09/29/Llama3-2/">Llama3.2</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2024/09/29/Llama3-2/">
+            <time datetime="2024-09-29T13:59:17.000Z" itemprop="datePublished">2024-09-29</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/">AI</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/Llama/">Llama</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/AI/">AI</a>, <a class="tag-link" href="/memo-blog/tags/Llama/">Llama</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#メモ" id="toc-メモ">メモ</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+</ul>
+</div>
+<h1><span id="メモ">メモ</span></h1>
+<p><a href="https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/" target="_blank" rel="noopener">Llama
+3.2 Revolutionizing edge AI and vision with open, customizable
+models</a> にある通り、 2024/9/25にLlama3.2がリリースされた。</p>
+<p><a href="https://www.llama.com/" target="_blank" rel="noopener">Llama公式</a> の <a href="https://www.llama.com/llama-downloads/" target="_blank" rel="noopener">Llamaダウンロード</a>
+からモデルをダウンロードして用いる。</p>
+<figure>
+<img src="/memo-blog/images/20240929_llama32/download.png" alt="ダウンロードのための情報登録">
+<figcaption aria-hidden="true">ダウンロードのための情報登録</figcaption>
+</figure>
+<p>さらに利用規約に合意すると、具体的なダウンロード手順が表示される。</p>
+<figure>
+<img src="/memo-blog/images/20240929_llama32/procedures.png" alt="手順">
+<figcaption aria-hidden="true">手順</figcaption>
+</figure>
+<p>この手順の中には、リクエストIDやキーなどの情報が含まれているので注意。</p>
+<p>もし、Llama CLIをインストールしていなければ以下の通り実行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install llama-stack</span><br></pre></td></tr></table></figure>
+<p>モデルのリストを確認する。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">llama model list</span><br></pre></td></tr></table></figure>
+<p>結果例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">| Llama3.2-1B                      | meta-llama/Llama-3.2-1B                  | 128K           |</span><br><span class="line">| Llama3.2-3B                      | meta-llama/Llama-3.2-3B                  | 128K           |</span><br><span class="line">| Llama3.2-11B-Vision              | meta-llama/Llama-3.2-11B-Vision          | 128K           |</span><br><span class="line">| Llama3.2-90B-Vision              | meta-llama/Llama-3.2-90B-Vision          | 128K           |</span><br><span class="line">| Llama3.2-1B-Instruct             | meta-llama/Llama-3.2-1B-Instruct         | 128K           |</span><br><span class="line">| Llama3.2-3B-Instruct             | meta-llama/Llama-3.2-3B-Instruct         | 128K           |</span><br><span class="line">| Llama3.2-11B-Vision-Instruct     | meta-llama/Llama-3.2-11B-Vision-Instruct | 128K           |</span><br><span class="line">| Llama3.2-90B-Vision-Instruct     | meta-llama/Llama-3.2-90B-Vision-Instruct | 128K           |</span><br></pre></td></tr></table></figure>
+<p>モデルをダウンロードして用いる。ここではテストなので小さなモデルを用いる。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MODEL_ID=Llama3.2-3B</span><br><span class="line">llama model download --<span class="built_in">source</span> meta --model-id <span class="variable">$MODEL_ID</span></span><br></pre></td></tr></table></figure>
+<p>上記コマンドを実行すると、キー付きのURL入力を求められる。
+先程表示した手順の「4」に記載されたURLを入力する。</p>
+<p>このメモを書いている時点では混んでいるのか、ダウンロードにそれなりに時間がかかる。</p>
+<p>ダウンロードが完了すると、以下のディレクトリにチェックポイントがダウンロードされているはず。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/.llama/checkpoints/Llama3.2-3B</span><br></pre></td></tr></table></figure>
+<h1><span id="参考">参考</span></h1>
+<ul>
+<li><a href="https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/" target="_blank" rel="noopener">Llama
+3.2 Revolutionizing edge AI and vision with open, customizable
+models</a></li>
+<li><a href="https://www.llama.com/" target="_blank" rel="noopener">Llama公式</a></li>
+<li><a href="https://www.llama.com/llama-downloads/" target="_blank" rel="noopener">Llamaダウンロード</a></li>
+</ul>
+<!-- vim: set et tw=0 ts=2 sw=2: -->
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2024/09/29/Llama3-2/" data-id="cm5iawlq2007z18nd2w9r90tx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-ComfyUI" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -297,7 +470,7 @@ Diffusion」を使い倒す！　モジュラーシンセみたいな「ComfyUI�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2024/09/28/ComfyUI/" data-id="cm5f57p4b002p18lnq83g3vll" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2024/09/28/ComfyUI/" data-id="cm5iawlo8002q18nd9n18at15" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -459,7 +632,7 @@ Hubの機能や使い方・ライブラリをわかりやすく解説！</a></li
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2024/09/28/Jan/" data-id="cm5f57p5w006q18lnyuoqpqve" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2024/09/28/Jan/" data-id="cm5iawlpo006q18ndjsowmzqs" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -613,7 +786,7 @@ Hubの機能や使い方・ライブラリをわかりやすく解説！</a></li
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2024/09/08/US-keyboard-layout-on-Ubuntu22/" data-id="cm5f57p8600cv18lnfss901ta" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2024/09/08/US-keyboard-layout-on-Ubuntu22/" data-id="cm5iawlry00cv18ndne205bo6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -753,7 +926,7 @@ Hubの機能や使い方・ライブラリをわかりやすく解説！</a></li
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2024/09/06/Building-Block-of-Data-Spaces/" data-id="cm5f57p41002718lnycki57ts" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2024/09/06/Building-Block-of-Data-Spaces/" data-id="cm5iawlo2002818ndpvnzijy8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -974,7 +1147,7 @@ Act</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2024/09/01/Data-Sovereignty/" data-id="cm5f57p4m003m18lnmw4n1ya1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2024/09/01/Data-Sovereignty/" data-id="cm5iawloi003m18nd09fk09zz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1125,7 +1298,7 @@ Act</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2024/08/25/Use-HOME-in-case-of-using-sudo-ansible/" data-id="cm5f57p8b00dd18lnq1g87ai2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2024/08/25/Use-HOME-in-case-of-using-sudo-ansible/" data-id="cm5iawls000d618nd39bs6xf3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1381,7 +1554,7 @@ Planeをもつ例</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2024/07/14/Management-Domain/" data-id="cm5f57p6i008k18lnxz4xm6ng" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2024/07/14/Management-Domain/" data-id="cm5iawlq8008h18ndw8qney1g" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1581,7 +1754,7 @@ Tractus-X/identity-trust</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2024/07/07/MVD-of-EDC/" data-id="cm5f57p6e008a18ln7pfrtteg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2024/07/07/MVD-of-EDC/" data-id="cm5iawlq5008a18nda1v0g4t9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2141,243 +2314,7 @@ S3を指定しているところがポイント。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2024/02/24/EDCSample/" data-id="cm5f57piq01hp18lngj8acr8y" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Dataspace-Protocol-of-EDC" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2023/09/20/Dataspace-Protocol-of-EDC/">Dataspace Protocol of EDC</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2023/09/20/Dataspace-Protocol-of-EDC/">
-            <time datetime="2023-09-20T14:07:49.000Z" itemprop="datePublished">2023-09-20</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Spaces/">Data Spaces</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Spaces/EDC/">EDC</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/Data-Spaces/">Data Spaces</a>, <a class="tag-link" href="/memo-blog/tags/Dataspace-Protocol/">Dataspace Protocol</a>, <a class="tag-link" href="/memo-blog/tags/EDC/">EDC</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#メモ" id="toc-メモ">メモ</a>
-<ul>
-<li><a href="#dsp-data-planeの実装を確認する" id="toc-dsp-data-planeの実装を確認する">DSP Data
-Planeの実装を確認する</a></li>
-<li><a href="#おまけ古いdata-planeの実装を確認するhttpの例" id="toc-おまけ古いdata-planeの実装を確認するhttpの例">おまけ）古い（？）Data
-Planeの実装を確認する（HTTPの例）</a></li>
-</ul></li>
-<li><a href="#参考" id="toc-参考">参考</a>
-<ul>
-<li><a href="#ドキュメント" id="toc-ドキュメント">ドキュメント</a></li>
-<li><a href="#ソースコード" id="toc-ソースコード">ソースコード</a></li>
-</ul></li>
-</ul>
-</div>
-<h1><span id="メモ">メモ</span></h1>
-<p>注意：このメモはかなり初期のものなので、今となっては怪しい内容が含まれてる・・・。</p>
-<p>EDCは現在IDSが提唱する、Dataspace
-Protocolにしたがって、コネクタ間でやりとりする。</p>
-<h2><span id="dsp-dataplaneの実装を確認する">DSP Data
-Planeの実装を確認する</span></h2>
-<p><code>data-protocols/dsp</code> （<a href="https://github.com/eclipse-edc/Connector/tree/main/data-protocols/dsp" target="_blank" rel="noopener">dsp</a>）以下に、Dataspace
-Protocolに対応したモジュールが含まれている。</p>
-<p>例えば、<code>org.eclipse.edc.protocol.dsp.dispatcher.PostDspHttpRequestFactory</code>、<code>org.eclipse.edc.protocol.dsp.dispatcher.GetDspHttpRequestFactory</code>などのファクトリが定義されている。
-これは、前述のPOST、GETオペレーションに対応するリクエストを生成するためのファクトリである。</p>
-<p>以下は、カタログのリクエストを送るための実装である。</p>
-<p>org/eclipse/edc/protocol/dsp/catalog/dispatcher/DspCatalogHttpDispatcherExtension.java:54</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(ServiceExtensionContext context)</span> </span>&#123;</span><br><span class="line">    messageDispatcher.registerMessage(</span><br><span class="line">            CatalogRequestMessage.class,</span><br><span class="line">            <span class="keyword">new</span> PostDspHttpRequestFactory&lt;&gt;(remoteMessageSerializer, m -&gt; BASE_PATH + CATALOG_REQUEST),</span><br><span class="line">            <span class="keyword">new</span> CatalogRequestHttpRawDelegate()</span><br><span class="line">    );</span><br><span class="line">    messageDispatcher.registerMessage(</span><br><span class="line">            DatasetRequestMessage.class,</span><br><span class="line">            <span class="keyword">new</span> GetDspHttpRequestFactory&lt;&gt;(m -&gt; BASE_PATH + DATASET_REQUEST + <span class="string">"/"</span> + m.getDatasetId()),</span><br><span class="line">            <span class="keyword">new</span> DatasetRequestHttpRawDelegate()</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>他にも、<code>org.eclipse.edc.protocol.dsp.transferprocess.dispatcher.DspTransferProcessDispatcherExtension</code>などが挙げられる。
-これは以下のように、<code>org.eclipse.edc.connector.transfer.spi.types.protocol.TransferRequestMessage</code>が含まれており、ConsumerがProviderにデータ転送プロセスをリクエストする際のメッセージのディスパッチャが登録されていることがわかる。</p>
-<p>org/eclipse/edc/protocol/dsp/transferprocess/dispatcher/DspTransferProcessDispatcherExtension.java:60</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(ServiceExtensionContext context)</span> </span>&#123;</span><br><span class="line">    messageDispatcher.registerMessage(</span><br><span class="line">            TransferRequestMessage.class,</span><br><span class="line">            <span class="keyword">new</span> PostDspHttpRequestFactory&lt;&gt;(remoteMessageSerializer, m -&gt; BASE_PATH + TRANSFER_INITIAL_REQUEST),</span><br><span class="line">            <span class="keyword">new</span> TransferRequestDelegate(remoteMessageSerializer)</span><br><span class="line">    );</span><br><span class="line">    messageDispatcher.registerMessage(</span><br><span class="line">            TransferCompletionMessage.class,</span><br><span class="line">            <span class="keyword">new</span> PostDspHttpRequestFactory&lt;&gt;(remoteMessageSerializer, m -&gt; BASE_PATH + m.getProcessId() + TRANSFER_COMPLETION),</span><br><span class="line">            <span class="keyword">new</span> TransferCompletionDelegate(remoteMessageSerializer)</span><br><span class="line">    );</span><br><span class="line">    messageDispatcher.registerMessage(</span><br><span class="line">            TransferStartMessage.class,</span><br><span class="line">            <span class="keyword">new</span> PostDspHttpRequestFactory&lt;&gt;(remoteMessageSerializer, m -&gt; BASE_PATH + m.getProcessId() + TRANSFER_START),</span><br><span class="line">            <span class="keyword">new</span> TransferStartDelegate(remoteMessageSerializer)</span><br><span class="line">    );</span><br><span class="line">    messageDispatcher.registerMessage(</span><br><span class="line">            TransferTerminationMessage.class,</span><br><span class="line">            <span class="keyword">new</span> PostDspHttpRequestFactory&lt;&gt;(remoteMessageSerializer, m -&gt; BASE_PATH + m.getProcessId() + TRANSFER_TERMINATION),</span><br><span class="line">            <span class="keyword">new</span> TransferTerminationDelegate(remoteMessageSerializer)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>◆参考情報はじめ</p>
-<p>このファクトリは、ディスパッチャの
-<code>org.eclipse.edc.protocol.dsp.dispatcher.DspHttpRemoteMessageDispatcherImpl#dispatch</code>
-メソッドから、間接的に呼び出されて利用される。
-このメソッドは<code>org.eclipse.edc.spi.message.RemoteMessageDispatcher#dispatch</code>メソッドを実装したものである。ディスパッチャとして、リモートへ送信するメッセージ生成をディスパッチするための。メソッドである。
-さらに、これは
-<code>org.eclipse.edc.connector.core.base.RemoteMessageDispatcherRegistryImpl</code>
-内で使われている。ディスパッチャのレジストリ内で、ディスパッチ処理が起動、管理されるようだ。
-なお、これは<code>org.eclipse.edc.spi.message.RemoteMessageDispatcherRegistry#dispatch</code>
-を実装したものである。このメソッドは、色々なところから呼び出される。</p>
-<p>例えば、TransferCoreExtensionクラスではサービス起動時に、転送プロセスを管理する<code>org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl</code>を起動する。</p>
-<p>org/eclipse/edc/connector/transfer/TransferCoreExtension.java:205</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    processManager.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>これにより、以下のようにステートマシンがビルド、起動され、各プロセッサが登録される。</p>
-<p>org/eclipse/edc/connector/transfer/process/TransferProcessManagerImpl.java:143</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">stateMachineManager = StateMachineManager.Builder.newInstance(<span class="string">"transfer-process"</span>, monitor, executorInstrumentation, waitStrategy)</span><br><span class="line">        .processor(processTransfersInState(INITIAL, <span class="keyword">this</span>::processInitial))</span><br><span class="line">        .processor(processTransfersInState(PROVISIONING, <span class="keyword">this</span>::processProvisioning))</span><br><span class="line">        .processor(processTransfersInState(PROVISIONED, <span class="keyword">this</span>::processProvisioned))</span><br><span class="line">        .processor(processTransfersInState(REQUESTING, <span class="keyword">this</span>::processRequesting))</span><br><span class="line">        .processor(processTransfersInState(STARTING, <span class="keyword">this</span>::processStarting))</span><br><span class="line">        .processor(processTransfersInState(STARTED, <span class="keyword">this</span>::processStarted))</span><br><span class="line">        .processor(processTransfersInState(COMPLETING, <span class="keyword">this</span>::processCompleting))</span><br><span class="line">        .processor(processTransfersInState(TERMINATING, <span class="keyword">this</span>::processTerminating))</span><br><span class="line">        .processor(processTransfersInState(DEPROVISIONING, <span class="keyword">this</span>::processDeprovisioning))</span><br><span class="line">        .build();</span><br><span class="line">stateMachineManager.start();</span><br></pre></td></tr></table></figure>
-<p>上記のプロセッサとして登録されている<code>org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl#processStarting</code>の中では
-<code>org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl#sendTransferStartMessage</code>
-が呼び出されている。</p>
-<p>org/eclipse/edc/connector/transfer/process/TransferProcessManagerImpl.java:376</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> entityRetryProcessFactory.doSyncProcess(process, () -&gt; dataFlowManager.initiate(process.getDataRequest(), contentAddress, policy))</span><br><span class="line">        .onSuccess((p, dataFlowResponse) -&gt; sendTransferStartMessage(p, dataFlowResponse, policy))</span><br><span class="line">        .onFatalError((p, failure) -&gt; transitionToTerminating(p, failure.getFailureDetail()))</span><br><span class="line">        .onFailure((t, failure) -&gt; transitionToStarting(t))</span><br><span class="line">        .onRetryExhausted((p, failure) -&gt; transitionToTerminating(p, failure.getFailureDetail()))</span><br><span class="line">        .execute(description);</span><br></pre></td></tr></table></figure>
-<p><code>org.eclipse.edc.connector.transfer.process.TransferProcessManagerImpl#sendTransferStartMessage</code>
-メソッド内では、
-<code>org.eclipse.edc.connector.transfer.spi.types.protocol.TransferStartMessage</code>のメッセージがビルドされ、
-ディスパッチャにメッセージとして渡される。</p>
-<p>org/eclipse/edc/connector/transfer/process/TransferProcessManagerImpl.java:386</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var message = TransferStartMessage.Builder.newInstance()</span><br><span class="line">        .processId(process.getCorrelationId())</span><br><span class="line">        .protocol(process.getProtocol())</span><br><span class="line">        .dataAddress(dataFlowResponse.getDataAddress())</span><br><span class="line">        .counterPartyAddress(process.getConnectorAddress())</span><br><span class="line">        .policy(policy)</span><br><span class="line">        .build();</span><br><span class="line"></span><br><span class="line">var description = format(<span class="string">"Send %s to %s"</span>, message.getClass().getSimpleName(), process.getConnectorAddress());</span><br><span class="line"></span><br><span class="line">entityRetryProcessFactory.doAsyncStatusResultProcess(process, () -&gt; dispatcherRegistry.dispatch(Object.class, message))</span><br><span class="line">        .entityRetrieve(id -&gt; transferProcessStore.findById(id))</span><br><span class="line">        .onSuccess((t, content) -&gt; transitionToStarted(t))</span><br><span class="line">        .onFailure((t, throwable) -&gt; transitionToStarting(t))</span><br><span class="line">        .onFatalError((n, failure) -&gt; transitionToTerminated(n, failure.getFailureDetail()))</span><br><span class="line">        .onRetryExhausted((t, throwable) -&gt; transitionToTerminating(t, throwable.getMessage(), throwable))</span><br><span class="line">        .execute(description);</span><br></pre></td></tr></table></figure>
-<p>◆参考情報おわり</p>
-<p>ということで、<code>org.eclipse.edc.protocol.dsp.spi.dispatcher.DspHttpRemoteMessageDispatcher</code>というディスパッチャは、Dataspace
-Protocolに基づくリモートメッセージを生成する際に用いられるディスパッチャである。</p>
-<h2><span id="おまけ古いdataplaneの実装を確認するhttpの例">おまけ）古い（？）Data
-Planeの実装を確認する（HTTPの例）</span></h2>
-<p>Dataspace Protocol以前の実装か？</p>
-<p><code>extensions/data-plane</code> 以下にData
-Planeの実装が拡張として含まれている。</p>
-<p>例えば、 <code>extensions/data-plane/data-plane-http</code>
-には、HTTPを用いてデータ共有するための拡張の実装が含まれている。
-当該拡張のREADMEの通り、 （transfer APIの）<code>DataFlowRequest</code>
-が<code>HttpData</code>だった場合に、</p>
-<ul>
-<li>HttpDataSourceFactory</li>
-<li>HttpDataSinkFactory</li>
-<li>HttpDataSource</li>
-<li>HttpDataSink</li>
-</ul>
-<p>の実装が用いられる。パラメータもREADMEに（<a href="https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/README.md#design-principles" target="_blank" rel="noopener">data-plane-httpのデザイン指針</a>）記載されている。
-基本的には、バックエンドがHTTPなのでそれにアクセスするためのパラメータが定義されている。</p>
-<p>当該ファクトリは、
-<code>org.eclipse.edc.connector.dataplane.http.DataPlaneHttpExtension#initialize</code>
-内で用いられている。</p>
-<p>org/eclipse/edc/connector/dataplane/http/DataPlaneHttpExtension.java:75</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var httpRequestFactory = <span class="keyword">new</span> HttpRequestFactory();</span><br><span class="line"></span><br><span class="line">var sourceFactory = <span class="keyword">new</span> HttpDataSourceFactory(httpClient, paramsProvider, monitor, httpRequestFactory);</span><br><span class="line">pipelineService.registerFactory(sourceFactory);</span><br><span class="line"></span><br><span class="line">var sinkFactory = <span class="keyword">new</span> HttpDataSinkFactory(httpClient, executorContainer.getExecutorService(), sinkPartitionSize, monitor, paramsProvider, httpRequestFactory);</span><br><span class="line">pipelineService.registerFactory(sinkFactory);</span><br></pre></td></tr></table></figure>
-<p>ここでは、試しにData Source側を確認してみる。</p>
-<p>org/eclipse/edc/connector/dataplane/http/pipeline/HttpDataSourceFactory.java:63</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> DataSource <span class="title">createSource</span><span class="params">(DataFlowRequest request)</span> </span>&#123;</span><br><span class="line">    var dataAddress = HttpDataAddress.Builder.newInstance()</span><br><span class="line">            .copyFrom(request.getSourceDataAddress())</span><br><span class="line">            .build();</span><br><span class="line">    <span class="keyword">return</span> HttpDataSource.Builder.newInstance()</span><br><span class="line">            .httpClient(httpClient)</span><br><span class="line">            .monitor(monitor)</span><br><span class="line">            .requestId(request.getId())</span><br><span class="line">            .name(dataAddress.getName())</span><br><span class="line">            .params(requestParamsProvider.provideSourceParams(request))</span><br><span class="line">            .requestFactory(requestFactory)</span><br><span class="line">            .build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上記の通り、まずデータのアドレスを格納するインスタンスが生成され、
-つづいて、HTTPのデータソースがビルドされる。</p>
-<p>HTTPのData Sourceの実体は
-<code>org.eclipse.edc.connector.dataplane.http.pipeline.HttpDataSource</code>
-である。 このクラスはSPIの
-<code>org.eclipse.edc.connector.dataplane.spi.pipeline.DataSource</code>インタフェースを実装したものである。</p>
-<p><code>org.eclipse.edc.connector.dataplane.http.pipeline.HttpDataSource#openPartStream</code>
-がオーバライドされて実装されている。 詳しくは、<a href="https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/src/main/java/org/eclipse/edc/connector/dataplane/http/pipeline/HttpDataSource.java#L48" target="_blank" rel="noopener">openPartStream</a>参照。</p>
-<h1><span id="参考">参考</span></h1>
-<h2><span id="ドキュメント">ドキュメント</span></h2>
-<ul>
-<li><a href="https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/README.md#design-principles" target="_blank" rel="noopener">data-plane-httpのデザイン指針</a></li>
-</ul>
-<h2><span id="ソースコード">ソースコード</span></h2>
-<ul>
-<li><a href="https://github.com/eclipse-edc/Connector/blob/main/extensions/data-plane/data-plane-http/src/main/java/org/eclipse/edc/connector/dataplane/http/pipeline/HttpDataSource.java#L48" target="_blank" rel="noopener">openPartStream</a></li>
-<li><a href="https://github.com/eclipse-edc/Connector/tree/main/data-protocols/dsp" target="_blank" rel="noopener">dsp</a></li>
-</ul>
-<!-- vim: set et tw=0 ts=2 sw=2: -->
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2023/09/20/Dataspace-Protocol-of-EDC/" data-id="cm5f57pdy013518ln0ry84cj7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2024/02/24/EDCSample/" data-id="cm5iawm1q01ht18ndnlzw29c9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2471,6 +2408,15 @@ Planeの実装が拡張として含まれている。</p>
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/memo-blog/2025/01/04/International-Data-Spaces-Trustworthy-and-sovereign-data-sharing-enable-the-data-economy/" class="title">International Data Spaces Trustworthy and sovereign data sharing enable the data economy</a></p>
+                            <p class="item-date"><time datetime="2025-01-03T15:26:59.000Z" itemprop="datePublished">2025-01-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/memo-blog/2025/01/02/Eclipse-Dataspace-Protocol-Unofficial-draft-13-Dec-2024/" class="title">Eclipse Dataspace Protocol Unofficial draft 13 Dec. 2024</a></p>
                             <p class="item-date"><time datetime="2025-01-02T01:38:56.000Z" itemprop="datePublished">2025-01-02</time></p>
                         </div>
@@ -2503,15 +2449,6 @@ Planeの実装が拡張として含まれている。</p>
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Kubenetes/">Kubenetes</a></p>
-                            <p class="item-title"><a href="/memo-blog/2024/11/04/Trouble-about-Qemu-when-I-use-minikube/" class="title">Trouble about Qemu when I use minikube</a></p>
-                            <p class="item-date"><time datetime="2024-11-03T15:52:13.000Z" itemprop="datePublished">2024-11-04</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2530,7 +2467,7 @@ Planeの実装が拡張として含まれている。</p>
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
