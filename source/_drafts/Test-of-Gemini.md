@@ -16,6 +16,9 @@ tags:
 
 [【開発】StreamlitでGeminiを使用したアバター音声対話＆VQAアプリ作ってみた] を参考に、GoogleのGeminiを試す。
 
+なお、以下で実行しているnotebookの内容は、 [dobachi/gemini_test] に格納されている。
+Python環境の再現のために、 `requirements.txt` も含まれているので利用されたし。
+
 ## APIキーの取得
 
 [Googleのapikey] から任意のGoogleアカウントでログインしたうえでAPIキーを取得する。
@@ -32,10 +35,10 @@ python3 -m venv venv
 pip install google-generativeai
 ```
 
-テスト用にJupyterをインストールする。
+テスト用にJupyter、jpywidgetsをインストールする。
 
 ```shell
-pip install jupyter
+pip install jupyter ipywidgets
 ```
 
 Jupyter起動。
@@ -48,10 +51,13 @@ jupyter lab --ip 0.0.0.0
 
 * [【開発】StreamlitでGeminiを使用したアバター音声対話＆VQAアプリ作ってみた]
 * [Googleのapikey] 
+* [dobachi/gemini_test]
 
 [【開発】StreamlitでGeminiを使用したアバター音声対話＆VQAアプリ作ってみた]: https://qiita.com/Yuhei0531/items/db894a8fba9c671eb7b0
 
 [Googleのapikey]: https://makersuite.google.com/app/apikey
+
+[dobachi/gemini_test]: https://github.com/dobachi/gemini_test
 
 
 

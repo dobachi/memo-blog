@@ -14,11 +14,23 @@ tags:
 
 # メモ
 
+## クローンとコンパイル
+
 [build.md] に記載の通り、クローンしてmakeする。
 
 ```bash
 git clone git@github.com:ggerganov/llama.cpp.git
 make
+```
+
+## Llamaのコンバート
+
+念の為仮想環境構築してから、必要なPythonパッケージをインストール。
+
+```bash
+python3 -m venv venv
+. venv/bin/activate
+pip install -r requirements.txt
 ```
 
 # 参考

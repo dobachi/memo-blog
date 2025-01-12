@@ -3,7 +3,11 @@
 title: Data Governance part of Global Digital Compact
 date: 2024-12-07 23:03:43
 categories:
+  - Knowledge Management
+  - Data Governance
 tags:
+  - Data Spaces
+  - Data Governance
 
 ---
 

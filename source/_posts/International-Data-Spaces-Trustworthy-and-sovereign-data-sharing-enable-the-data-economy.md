@@ -1,10 +1,15 @@
 ---
+
 title: >-
   International Data Spaces Trustworthy and sovereign data sharing enable the
   data economy
 date: 2025-01-04 00:26:59
 categories:
+  - Knowledge Management
+  - Data Spaces
 tags:
+  - Data Spaces
+
 ---
 
 # メモ

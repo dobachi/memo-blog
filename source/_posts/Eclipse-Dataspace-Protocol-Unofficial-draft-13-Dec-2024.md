@@ -1,8 +1,14 @@
 ---
+
 title: Eclipse Dataspace Protocol Unofficial draft 13 Dec. 2024
 date: 2025-01-02 10:38:56
 categories:
+  - Knowledge Management
+  - Data Spaces
 tags:
+  - Data Spaces
+  - Eclipase
+
 ---
 
 # メモ
