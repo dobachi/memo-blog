@@ -170,7 +170,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                230
+                231
                 <span>投稿</span>
             </div>
             <div class="article-info-block">
@@ -205,6 +205,221 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-Automagica" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2019/10/22/Automagica/">Automagicaを試してみる</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2019/10/22/Automagica/">
+            <time datetime="2019-10-22T13:07:48.000Z" itemprop="datePublished">2019-10-22</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Tools/">Tools</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Tools/Selenium/">Selenium</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/Automagica/">Automagica</a>, <a class="tag-link" href="/memo-blog/tags/Python/">Python</a>, <a class="tag-link" href="/memo-blog/tags/RPA/">RPA</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#総合的感想" id="toc-総合的感想">総合的感想</a></li>
+<li><a href="#getting-startedを試す" id="toc-getting-startedを試す">Getting startedを試す</a>
+<ul>
+<li><a href="#環境構築" id="toc-環境構築">環境構築</a></li>
+<li><a href="#example-1の実行" id="toc-example-1の実行">Example
+1の実行</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<h1><span id="参考">参考</span></h1>
+<ul>
+<li><a href="https://automagica.readthedocs.io/" target="_blank" rel="noopener">Automagicaの公式ドキュメント</a></li>
+<li><a href="https://automagica.readthedocs.io/#getting-started" target="_blank" rel="noopener">AutomagicaのGetting
+started</a></li>
+<li><a href="https://automagica.readthedocs.io/#example-1" target="_blank" rel="noopener">Example
+1</a></li>
+</ul>
+<h1><span id="メモ">メモ</span></h1>
+<h2><span id="総合的感想">総合的感想</span></h2>
+<p>用途ごとに個別に開発されているライブラリを統合して使えるのは便利。エントリポイントが統一化され、
+<code>from automagica import *</code>
+ですべての機能が使えるのは画期的である。
+しかし以下の点は少し課題を感じた。</p>
+<ul>
+<li>ユーザ目線で似たもの同士に感じる機能に関し、APIが異なる
+<ul>
+<li>具体的にはWord、Excel操作</li>
+<li>ただし内部的に用いられるライブラリが別々のものなので致し方ない。（うまくすれば、APIレベルでも統合可能かもしれない）</li>
+</ul></li>
+<li>内部的に用いられているライブラリのAPIを直接利用したいケースがあるが少しわかりづらい
+<ul>
+<li>Automagicaが提供しているAPIよりも、内部的に用いられている元ネタのライブラリのAPIの方が機能豊富（少なくとも
+<code>docx</code> ライブラリはそうだと思う）</li>
+<li>ということから、まずはAutomagicaのAPIを基本として使用しつつ、必要に応じて内部で用いられているライブラリのAPIを直接利用するのが良さそう。
+実際に <code>OpenWordDocument</code> メソッドの戻り値は
+<code>docx.Document</code> クラスのインスタンス。
+しかし1個目の課題と関連するが、その使い方を想起させるドキュメントやAPI仕様に見えない。
+Word activities以外ではどうなのか、は、細かくは未確認。</li>
+</ul></li>
+<li>ドキュメントにバグがちらほら見られるのと、ドキュメント化されていない機能がある。
+<ul>
+<li>これは改善されるだろう</li>
+</ul></li>
+</ul>
+<h2><span id="getting-startedを試す">Getting startedを試す</span></h2>
+<h3><span id="環境構築">環境構築</span></h3>
+<p><a href="https://automagica.readthedocs.io/#getting-started" target="_blank" rel="noopener">AutomagicaのGetting
+started</a> を参考にしつつ、動かしてみる。
+Anacondaにはパッケージが含まれていなかった（conda-forge含む）のでpipenvを使って環境づくり。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; pipenv.exe --python 3.7</span><br><span class="line">&gt; pipenv.exe install jupyter</span><br><span class="line">&gt; pipenv.exe install https://github.com/OakwoodAI/automagica/tarball/master</span><br></pre></td></tr></table></figure>
+<p>なお、Python3.8系では依存関係上の問題が生じたので、いったん切り分けも兼ねて3.7で環境構築している。
+<a href="https://automagica.readthedocs.io/#getting-started" target="_blank" rel="noopener">AutomagicaのGetting
+started</a>
+では、Tesseract4のインストールもオプションとして示されていたが、いったん保留とする。</p>
+<h3><span id="example-1の実行">Example 1の実行</span></h3>
+<p><a href="https://automagica.readthedocs.io/#example-1" target="_blank" rel="noopener">Example 1</a>
+に載っていた例を動かそうとしたが、一部エラーが生じたので手直しして実行した。</p>
+<p>エラー生じた箇所1：</p>
+<p>ドキュメント上は、以下のとおり。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lookup_terms.append(ExcelReadCell(excel_path, 2, col))</span><br></pre></td></tr></table></figure></p>
+<p>しかし、行と列の番号で指定するAPIは、 <code>ExcelReadRowCol</code>
+である。
+また、例に示されていたエクセルでは1行目に検索対象文字列が含まれているため、第2引数は
+<code>2</code> ではなく、 <code>1</code> である。 したがって、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lookup_terms.append(ExcelReadRowCol(excel_path, 1, col))</span><br></pre></td></tr></table></figure>
+<p>とした。
+なお、ExcelReadCellメソッド、ExcelReadRowColメソッドの実装は以下の通り。（2019/10/24現在）</p>
+<p>automagica/activities.py:639 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def ExcelReadCell(path, cell=&quot;A1&quot;, sheet=None):</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    Read a cell from an Excel file and return its value.</span><br><span class="line">    Make sure you enter a valid path e.g. &quot;C:\\Users\\Bob\\Desktop\\RPA Examples\\data.xlsx&quot;.</span><br><span class="line">    The cell you want to read needs to be defined by a cell name e.g. &quot;A2&quot;. The third variable </span><br><span class="line">    is a string with the name of the sheet that needs to be read. If omitted, the </span><br><span class="line">    function reads the entered cell of the active sheet.</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    workbook = load_workbook(path)</span><br><span class="line">    if sheet:</span><br><span class="line">        worksheet = workbook.get_sheet_by_name(sheet)</span><br><span class="line">    else:</span><br><span class="line">        worksheet = workbook.active</span><br><span class="line"></span><br><span class="line">    return worksheet[cell].value</span><br></pre></td></tr></table></figure></p>
+<p>automagica/activities.py:656 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def ExcelReadRowCol(path, r=1, c=1, sheet=None):</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    Read a Cell from an Excel file and return its value.</span><br><span class="line">    Make sure you enter a valid path e.g. &quot;C:\\Users\\Bob\\Desktop\\RPA Examples\\data.xlsx&quot;.</span><br><span class="line">    The cell you want to read needs to be row and a column. E.g. r = 2 and c = 3 refers to cell C3. </span><br><span class="line">    The third variable needs to be a string with the name of the sheet that needs to be read. </span><br><span class="line">    If omitted, the function reads the entered cell of the active sheet. First row is defined </span><br><span class="line">    row number 1 and first column is defined column number 1.</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    workbook = load_workbook(path)</span><br><span class="line">    if sheet:</span><br><span class="line">        worksheet = workbook.get_sheet_by_name(sheet)</span><br><span class="line">    else:</span><br><span class="line">        worksheet = workbook.active</span><br><span class="line"></span><br><span class="line">    return worksheet.cell(row=r, column=c).value</span><br></pre></td></tr></table></figure></p>
+<p>エラーが生じた箇所2：</p>
+<p>ドキュメント上では、読み込んだ文字列のリストをそのまま使っているが、
+そのままではリスト後半に <code>None</code> が混ざることがある。
+そこで、リストをフィルタするようにした。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lookup_terms = list(filter(lambda x: x is not None, lookup_terms))</span><br></pre></td></tr></table></figure>
+<p>エラーが生じた箇所3：</p>
+<p>ドキュメント上では、以下の通り。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExcelWriteCell(excel_path, row=i+2, col=j+2, write_value=url)</span><br></pre></td></tr></table></figure>
+<p>これも読み込みの場合と同様にAPIが異なる。合わせて引数名が異なる。そこで、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExcelWriteRowCol(excel_path, r=i+2, c=j+2, write_value=url)</span><br></pre></td></tr></table></figure>
+<p>とした。</p>
+<!-- vim: set tw=0 ts=4 sw=4: -->
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2019/10/22/Automagica/" data-id="cm5tr55sx001y18phcui9ibny" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Selenium" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -351,7 +566,7 @@ SoupによるHTML解析も伴うことが多いだろう、ということで。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/10/19/Selenium/" data-id="cm5iawlr900b418nd0hy4s9jc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/10/19/Selenium/" data-id="cm5tr55w400az18phlc8oxuwc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -628,7 +843,7 @@ ATC20</a></p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/10/14/Conferences-at-Dec-2019/" data-id="cm5iawlo9002u18ndkci9sbqq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/10/14/Conferences-at-Dec-2019/" data-id="cm5tr55t6002s18pha5y7fngn" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -770,7 +985,7 @@ ATC20</a></p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/10/14/Scraping-with-session-information-using-Python/" data-id="cm5iawlr600aw18ndeqfrc54x" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/10/14/Scraping-with-session-information-using-Python/" data-id="cm5tr55w200as18pha6j23oy6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -914,7 +1129,7 @@ Snowflake</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/09/29/Redshift-vs-Snowflake/" data-id="cm5iawlqz00ac18ndsqeobdup" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/09/29/Redshift-vs-Snowflake/" data-id="cm5tr55vx00af18phxx3ef72i" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1225,7 +1440,7 @@ auto-sklearnはGitHubからダウンロードしたmasterブランチ一式を�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/09/22/Efficient-and-Robust-Automated-Machine-Learning/" data-id="cm5iawlxl013j18ndl59bk22n" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/09/22/Efficient-and-Robust-Automated-Machine-Learning/" data-id="cm5tr562t015a18ph3h49nbr5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1729,7 +1944,7 @@ TensorFlowを改造。パラメータサーバを改造。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/09/02/What-is-OpML/" data-id="cm5iawm0m01ec18ndzp285j46" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/09/02/What-is-OpML/" data-id="cm5tr565v01eo18phubcef8n9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1877,7 +2092,7 @@ https://github.com/dobachi/ideavimrc このあと色々と付け足す予定。<
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/26/ideavimrc/" data-id="cm5iawlya015d18ndzvxlulvb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/26/ideavimrc/" data-id="cm5tr563m017618ph2o1b57li" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2031,7 +2246,7 @@ sorting files and directories by modification time. #901</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/24/sort-by-timestamp-with-NERDTree/" data-id="cm5iawlys016o18ndtbvyt9lt" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/24/sort-by-timestamp-with-NERDTree/" data-id="cm5tr5644018h18phxuylrccm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2222,269 +2437,7 @@ Debianベースのほうが慣れているという気持ちもあり。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/24/Spark-Docker-Image/" data-id="cm5iawlr900b718ndur6csa7d" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Databricks-AutoML-Toolkit" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2019/08/23/Databricks-AutoML-Toolkit/">Databricks AutoML Toolkit</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2019/08/23/Databricks-AutoML-Toolkit/">
-            <time datetime="2019-08-23T13:04:58.000Z" itemprop="datePublished">2019-08-23</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Machine-Learning/">Machine Learning</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Machine-Learning/AutoML/">AutoML</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/AutoML/">AutoML</a>, <a class="tag-link" href="/memo-blog/tags/Machine-Learning/">Machine Learning</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#参考" id="toc-参考">参考</a></li>
-<li><a href="#メモ" id="toc-メモ">メモ</a>
-<ul>
-<li><a href="#ブログ記事" id="toc-ブログ記事">ブログ？記事？</a></li>
-<li><a href="#github" id="toc-github">GitHub</a>
-<ul>
-<li><a href="#readme20190823現在" id="toc-readme20190823現在">Readme（2019/08/23現在）</a></li>
-<li><a href="#実装を確認" id="toc-実装を確認">実装を確認</a></li>
-</ul></li>
-</ul></li>
-</ul>
-</div>
-<h1><span id="参考">参考</span></h1>
-<ul>
-<li><a href="https://venturebeat.com/2019/08/20/databricks-launches-automl-toolkit-for-model-building-and-deployment/" target="_blank" rel="noopener">Databricks
-launches AutoML Toolkit for model building and deployment</a></li>
-<li><a href="https://github.com/databrickslabs/automl-toolkit" target="_blank" rel="noopener">GitHub
-databrickslabs/automl-toolkit</a></li>
-</ul>
-<h1><span id="メモ">メモ</span></h1>
-<h2><span id="ブログ記事">ブログ？記事？</span></h2>
-<p><a href="https://venturebeat.com/2019/08/20/databricks-launches-automl-toolkit-for-model-building-and-deployment/" target="_blank" rel="noopener">Databricks
-launches AutoML Toolkit for model building and deployment</a>
-の内容を確認する。</p>
-<p>MLFlowなどをベースに開発された。
-ハイパーパラメタータチューニング、バッチ推論、モデルサーチを自動化する。</p>
-<p>TensorFlowやSageMakerなどと連携。</p>
-<p>データサイエンティストとエンジニアが連携可能という点が他のAutoMLと異なる要素。
-またコード実装能力が高い人、そうでない人混ざっているケースに対し、
-高い抽象度で実装なく動かせると同時に、細かなカスタマイズも可能にする。</p>
-<p>DatabricksのAutoMLは、Azureの機械学習サービスとも連携する。（パートナーシップあり）</p>
-<h2><span id="github">GitHub</span></h2>
-<p><a href="https://github.com/databrickslabs/automl-toolkit" target="_blank" rel="noopener">GitHub
-databrickslabs/automl-toolkit</a> を軽く確認する。</p>
-<h3><span id="readme20190823現在">Readme（2019/08/23現在）</span></h3>
-<p>「non-supported end-to-end supervised learning solution for
-automating」と定義されている。 以下の内容をautomationするようだ。</p>
-<ul>
-<li>Feature clean-up（特徴選択？特徴の前処理？）</li>
-<li>Feature vectorization（特徴のデータのベクトル化）</li>
-<li>Model selection and training（モデル選択と学習）</li>
-<li>Hyper parameter optimization and
-selection（ハイパーパラメータ最適化と選択）</li>
-<li>Batch Prediction（バッチ処理での推論）</li>
-<li>Logging of model results and training runs (using
-MLFlow)（MLFlowを使ってロギング、学習実行）</li>
-</ul>
-<p>対応している学習モデルは以下の通り。
-Sparkの機械学習ライブラリを利用しているようなので、それに準ずることになりそう。</p>
-<ul>
-<li>Decision Trees (Regressor and Classifier)</li>
-<li>Gradient Boosted Trees (Regressor and Classifier)</li>
-<li>Random Forest (Regressor and Classifier)</li>
-<li>Linear Regression</li>
-<li>Logistic Regression</li>
-<li>Multi-Layer Perceptron Classifier</li>
-<li>Support Vector Machines</li>
-<li>XGBoost (Regressor and Classifier)</li>
-</ul>
-<p>開発言語はScala（100%）</p>
-<p>DBFS APIを前提としているように見えることから、Databricks
-Cloud前提か？</p>
-<p>ハイレベルAPI（FamilyRunner）について載っている例から、ポイントを抜粋する。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// パッケージを見る限り、Databricksのラボとしての活動のようだ？</span><br><span class="line">import com.databricks.labs.automl.executor.config.ConfigurationGenerator</span><br><span class="line">import com.databricks.labs.automl.executor.FamilyRunner</span><br><span class="line"></span><br><span class="line">val data = spark.table(&quot;ben_demo.adult_data&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// MLFlowの設定値など、最低限の上書き設定を定義する</span><br><span class="line">val overrides = Map(&quot;labelCol&quot; -&gt; &quot;income&quot;,</span><br><span class="line">&quot;mlFlowExperimentName&quot; -&gt; &quot;My First AutoML Run&quot;,</span><br><span class="line"></span><br><span class="line">// Databrciks Cloud上で起動するDeltaの場所を指定</span><br><span class="line">&quot;mlFlowTrackingURI&quot; -&gt; &quot;https://&lt;my shard address&gt;&quot;,</span><br><span class="line">&quot;mlFlowAPIToken&quot; -&gt; dbutils.notebook.getContext().apiToken.get,</span><br><span class="line">&quot;mlFlowModelSaveDirectory&quot; -&gt; &quot;/ml/FirstAutoMLRun/&quot;,</span><br><span class="line">&quot;inferenceConfigSaveLocation&quot; -&gt; &quot;ml/FirstAutoMLRun/inference&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// コンフィグを適切に？自動生成。合わせてどのモデルを使うかを指定している。</span><br><span class="line">val randomForestConfig = ConfigurationGenerator.generateConfigFromMap(&quot;RandomForest&quot;, &quot;classifier&quot;, overrides)</span><br><span class="line">val gbtConfig = ConfigurationGenerator.generateConfigFromMap(&quot;GBT&quot;, &quot;classifier&quot;, overrides)</span><br><span class="line">val logConfig = ConfigurationGenerator.generateConfigFromMap(&quot;LogisticRegression&quot;, &quot;classifier&quot;, overrides)</span><br><span class="line"></span><br><span class="line">// 生成されたコンフィグでランナーを生成し、実行</span><br><span class="line">val runner = FamilyRunner(data, Array(randomForestConfig, gbtConfig, logConfig)).execute()</span><br></pre></td></tr></table></figure>
-<p>上記実装では、以下のようなことが裏で行われる。</p>
-<ul>
-<li>前処理</li>
-<li>特徴データのベクタライズ</li>
-<li>3種類のモデルについてパラメータチューニング</li>
-</ul>
-<h3><span id="実装を確認">実装を確認</span></h3>
-<p>エントリポイントとしては、
-<code>com.databricks.labs.automl.executor.FamilyRunner</code>
-としてみる。</p>
-<h4><span id="comdatabrickslabsautomlexecutorfamilyrunner">com.databricks.labs.automl.executor.FamilyRunner</span></h4>
-<p>executeメソッドが例として載っていたので確認。
-当該メソッド全体は以下の通り。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:115
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">def execute(): FamilyFinalOutput = &#123;</span><br><span class="line"></span><br><span class="line">  val outputBuffer = ArrayBuffer[FamilyOutput]()</span><br><span class="line"></span><br><span class="line">  configs.foreach &#123; x =&gt;</span><br><span class="line">    val mainConfiguration = ConfigurationGenerator.generateMainConfig(x)</span><br><span class="line"></span><br><span class="line">    val runner: AutomationRunner = new AutomationRunner(data)</span><br><span class="line">      .setMainConfig(mainConfiguration)</span><br><span class="line"></span><br><span class="line">    val preppedData = runner.prepData()</span><br><span class="line"></span><br><span class="line">    val preppedDataOverride = preppedData.copy(modelType = x.predictionType)</span><br><span class="line"></span><br><span class="line">    val output = runner.executeTuning(preppedDataOverride)</span><br><span class="line"></span><br><span class="line">    outputBuffer += new FamilyOutput(x.modelFamily, output.mlFlowOutput) &#123;</span><br><span class="line">      override def modelReport: Array[GenericModelReturn] = output.modelReport</span><br><span class="line">      override def generationReport: Array[GenerationalReport] =</span><br><span class="line">        output.generationReport</span><br><span class="line">      override def modelReportDataFrame: DataFrame =</span><br><span class="line">        augmentDF(x.modelFamily, output.modelReportDataFrame)</span><br><span class="line">      override def generationReportDataFrame: DataFrame =</span><br><span class="line">        augmentDF(x.modelFamily, output.generationReportDataFrame)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  unifyFamilyOutput(outputBuffer.toArray)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>また、再掲ではあるが、当該メソッドは以下のように呼び出されている。
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 生成されたコンフィグでランナーを生成し、実行</span><br><span class="line">val runner = FamilyRunner(data, Array(randomForestConfig, gbtConfig, logConfig)).execute()</span><br></pre></td></tr></table></figure></p>
-<p>第1引数はデータ、第2引数は採用するアルゴリズムごとのコンフィグを含んだArray。</p>
-<p>では、executeメソッドを少し細かく見る。</p>
-<p>まずループとなっている箇所があるが、ここはアルゴリズムごとのコンフィグをイテレートしている。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:119
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configs.foreach &#123; x =&gt;</span><br></pre></td></tr></table></figure></p>
-<p>つづいて、渡されたコンフィグを引数に取りながら、パラメータを生成する。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:120
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val mainConfiguration = ConfigurationGenerator.generateMainConfig(x)</span><br></pre></td></tr></table></figure></p>
-<p>次は上記で生成されたパラメータを引数に取りながら、処理の自動実行用のAutomationRunnerインスタンスを生成する。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:122
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val runner: AutomationRunner = new AutomationRunner(data)</span><br><span class="line">  .setMainConfig(mainConfiguration)</span><br></pre></td></tr></table></figure></p>
-<p>つづいてデータを前処理する。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:125
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val preppedData = runner.prepData()</span><br><span class="line"></span><br><span class="line">val preppedDataOverride = preppedData.copy(modelType = x.predictionType)</span><br></pre></td></tr></table></figure></p>
-<p>つづいて生成されたAutomationRunnerインスタンスを利用し、パラメータチューニングを実施する。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:129
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val output = runner.executeTuning(preppedDataOverride)</span><br></pre></td></tr></table></figure></p>
-<p>その後、出力内容が整理される。
-レポートの類にmodelFamilyの情報を付与したり、など。</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:131
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">outputBuffer += new FamilyOutput(x.modelFamily, output.mlFlowOutput) &#123;</span><br><span class="line">  override def modelReport: Array[GenericModelReturn] = output.modelReport</span><br><span class="line">  override def generationReport: Array[GenerationalReport] =</span><br><span class="line">    output.generationReport</span><br><span class="line">  override def modelReportDataFrame: DataFrame =</span><br><span class="line">    augmentDF(x.modelFamily, output.modelReportDataFrame)</span><br><span class="line">  override def generationReportDataFrame: DataFrame =</span><br><span class="line">    augmentDF(x.modelFamily, output.generationReportDataFrame)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>最後に、モデルごとのチューニングのループが完了したあとに、
-それにより得られた複数の出力内容をまとめ上げる。
-（Arrayをまとめたり、DataFrameをunionしたり、など）</p>
-<p>com/databricks/labs/automl/executor/FamilyRunner.scala:142
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unifyFamilyOutput(outputBuffer.toArray)</span><br></pre></td></tr></table></figure></p>
-<h4><span id="comdatabrickslabsautomlautomationrunnerexecutetuning">com.databricks.labs.automl.AutomationRunner#executeTuning</span></h4>
-<p>指定されたモデルごとにうチューニングを行う部分を確認する。</p>
-<p>当該メソッド内では、modelFamilyごとの処理の仕方が定義されている。
-以下にRandomForestの場合を示す。</p>
-<p>com/databricks/labs/automl/AutomationRunner.scala:1597 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">  protected[automl] def executeTuning(payload: DataGeneration): TunerOutput = &#123;</span><br><span class="line"></span><br><span class="line">    val genericResults = new ArrayBuffer[GenericModelReturn]</span><br><span class="line"></span><br><span class="line">    val (resultArray, modelStats, modelSelection, dataframe) =</span><br><span class="line">      _mainConfig.modelFamily match &#123;</span><br><span class="line">        case &quot;RandomForest&quot; =&gt;</span><br><span class="line">          val (results, stats, selection, data) = runRandomForest(payload)</span><br><span class="line">          results.foreach &#123; x =&gt;</span><br><span class="line">            genericResults += GenericModelReturn(</span><br><span class="line">              hyperParams = extractPayload(x.modelHyperParams),</span><br><span class="line">              model = x.model,</span><br><span class="line">              score = x.score,</span><br><span class="line">              metrics = x.evalMetrics,</span><br><span class="line">              generation = x.generation</span><br><span class="line">            )</span><br><span class="line">          &#125;</span><br><span class="line">          (genericResults, stats, selection, data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>なお、2019/8/25現在対応しているモデルは以下の通り。（caseになっていたのを抜粋）
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">case &quot;RandomForest&quot; =&gt;</span><br><span class="line">case &quot;XGBoost&quot; =&gt;</span><br><span class="line">case &quot;GBT&quot; =&gt;</span><br><span class="line">case &quot;MLPC&quot; =&gt;</span><br><span class="line">case &quot;LinearRegression&quot; =&gt;</span><br><span class="line">case &quot;LogisticRegression&quot; =&gt;</span><br><span class="line">case &quot;SVM&quot; =&gt;</span><br><span class="line">case &quot;Trees&quot; =&gt;</span><br></pre></td></tr></table></figure></p>
-<p>さて、モデルごとのチューニングの様子を確認する。
-RandomForestを例にすると、実態は以下の <code>runRandomForest</code>
-メソッドに見える。</p>
-<p>com/databricks/labs/automl/AutomationRunner.scala:1604 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val (results, stats, selection, data) = runRandomForest(payload)</span><br></pre></td></tr></table></figure></p>
-<p><code>runRandomForest</code>
-メソッドは、以下のようにペイロードを引数にとり、
-その中でチューニングを実施する。</p>
-<p>com/databricks/labs/automl/AutomationRunner.scala:46 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  private def runRandomForest(</span><br><span class="line">                               payload: DataGeneration</span><br><span class="line">                             ): (Array[RandomForestModelsWithResults], DataFrame, String, DataFrame) = &#123;</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>特徴的なのは、非常にきめ細やかに初期設定している箇所。
-これらの設定を上書きしてチューニングできる、はず。</p>
-<p>com/databricks/labs/automl/AutomationRunner.scala:58 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    val initialize = new RandomForestTuner(cachedData, payload.modelType)</span><br><span class="line">      .setLabelCol(_mainConfig.labelCol)</span><br><span class="line">      .setFeaturesCol(_mainConfig.featuresCol)</span><br><span class="line">      .setRandomForestNumericBoundaries(_mainConfig.numericBoundaries)</span><br><span class="line">      .setRandomForestStringBoundaries(_mainConfig.stringBoundaries)</span><br><span class="line"></span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure></p>
-<p>実際にチューニングしているのは、以下の箇所のように見える。
-<code>evolveWithScoringDF</code> 内では、 <code>RandomForestTuner</code>
-クラスのメソッドが呼び出され、
-ストラテジ（実装上は、バッチ方式か、continuous方式か）に従ったチューニングが実施される。</p>
-<p>com/databricks/labs/automl/AutomationRunner.scala:169 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val (modelResultsRaw, modelStatsRaw) = initialize.evolveWithScoringDF()</span><br></pre></td></tr></table></figure></p>
-<!-- vim: set tw=0 ts=4 sw=4: -->
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2019/08/23/Databricks-AutoML-Toolkit/" data-id="cm5iawlxc012z18nddx56ap0v" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/08/24/Spark-Docker-Image/" data-id="cm5tr55w600b618pho8fpxne6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2561,7 +2514,7 @@ RandomForestを例にすると、実態は以下の <code>runRandomForest</code>
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/memo-blog/page/10/">&laquo; 前</a><a class="page-number" href="/memo-blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/memo-blog/page/9/">9</a><a class="page-number" href="/memo-blog/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/memo-blog/page/12/">12</a><a class="page-number" href="/memo-blog/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/memo-blog/page/23/">23</a><a class="extend next" rel="next" href="/memo-blog/page/12/">次 &raquo;</a>
+        <a class="extend prev" rel="prev" href="/memo-blog/page/10/">&laquo; 前</a><a class="page-number" href="/memo-blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/memo-blog/page/9/">9</a><a class="page-number" href="/memo-blog/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/memo-blog/page/12/">12</a><a class="page-number" href="/memo-blog/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/memo-blog/page/24/">24</a><a class="extend next" rel="next" href="/memo-blog/page/12/">次 &raquo;</a>
     </nav>
 </section>
             
@@ -2573,6 +2526,15 @@ RandomForestを例にすると、実態は以下の <code>runRandomForest</code>
         <h3 class="widget-title">最近の記事</h3>
         <div class="widget">
             <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/memo-blog/2025/01/12/IoT-Trust-of-Toshiba-デバイス・ストレージ/" class="title">IoT Trust of Toshiba デバイス・ストレージ</a></p>
+                            <p class="item-date"><time datetime="2025-01-12T14:54:55.000Z" itemprop="datePublished">2025-01-12</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -2610,15 +2572,6 @@ RandomForestを例にすると、実態は以下の <code>runRandomForest</code>
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Docker/">Docker</a></p>
-                            <p class="item-title"><a href="/memo-blog/2024/11/04/Trouble-using-Docker-Desktop-and-docker/" class="title">Trouble using Docker Desktop and docker</a></p>
-                            <p class="item-date"><time datetime="2024-11-03T15:56:32.000Z" itemprop="datePublished">2024-11-04</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2637,7 +2590,7 @@ RandomForestを例にすると、実態は以下の <code>runRandomForest</code>
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 

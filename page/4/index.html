@@ -170,7 +170,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                230
+                231
                 <span>投稿</span>
             </div>
             <div class="article-info-block">
@@ -205,6 +205,395 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-Getting-started-CKAN" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2022/01/20/Getting-started-CKAN/">Getting_started_CKAN</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2022/01/20/Getting-started-CKAN/">
+            <time datetime="2022-01-20T09:04:05.000Z" itemprop="datePublished">2022-01-20</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Catalog/">Data Catalog</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Catalog/CKAN/">CKAN</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#ドキュメントより" id="toc-ドキュメントより">ドキュメントより</a>
+<ul>
+<li><a href="#特徴" id="toc-特徴">特徴</a></li>
+<li><a href="#データのモデル" id="toc-データのモデル">データのモデル</a></li>
+<li><a href="#datastoreとdatapusher" id="toc-datastoreとdatapusher">DataStoreとDataPusher</a></li>
+<li><a href="#datastoreの拡張" id="toc-datastoreの拡張">DataStoreの拡張</a></li>
+<li><a href="#バックグラウンドジョブ" id="toc-バックグラウンドジョブ">バックグラウンドジョブ</a></li>
+</ul></li>
+<li><a href="#dockerで動作確認" id="toc-dockerで動作確認">Dockerで動作確認</a>
+<ul>
+<li><a href="#セットアップ" id="toc-セットアップ">セットアップ</a></li>
+<li><a href="#データストアとしてminio環境を整える" id="toc-データストアとしてminio環境を整える">データストアとしてMinIO環境を整える</a></li>
+<li><a href="#aws-cliでアクセスする" id="toc-aws-cliでアクセスする">AWS
+CLIでアクセスする</a></li>
+<li><a href="#ckanのuiで操作" id="toc-ckanのuiで操作">CKANのUIで操作</a></li>
+<li><a href="#補足初期化" id="toc-補足初期化">（補足）初期化</a></li>
+</ul></li>
+<li><a href="#補足fiwareのckanは拡張済" id="toc-補足fiwareのckanは拡張済">（補足）FIWAREのCKANは拡張済？</a></li>
+<li><a href="#インストールパッケージ" id="toc-インストールパッケージ">インストール（パッケージ）</a></li>
+</ul></li>
+<li><a href="#参考" id="toc-参考">参考</a>
+<ul>
+<li><a href="#ckan" id="toc-ckan">CKAN</a></li>
+<li><a href="#minio" id="toc-minio">MinIO</a></li>
+<li><a href="#aws-cli" id="toc-aws-cli">AWS CLI</a></li>
+</ul></li>
+</ul>
+</div>
+<h1><span id="メモ">メモ</span></h1>
+<p><a href="https://ckan.org/" target="_blank" rel="noopener">CKAN公式サイト</a>
+によると、CKANはデータマネジメントシステムである。 <a href="https://ckan.org/" target="_blank" rel="noopener">CKAN公式サイト</a> の内容をもとに進める。</p>
+<p>このメモの時点では、CKAN 2.9.5を対象とする。</p>
+<p>なお、公式ドキュメントによると
+<code>CKAN is a tool for making open data websites.</code>
+とされており、 あくまで「オープンデータ向け」であることが伺える。</p>
+<h2><span id="ドキュメントより">ドキュメントより</span></h2>
+<h3><span id="特徴">特徴</span></h3>
+<p><a href="https://ckan.org/features" target="_blank" rel="noopener">CKANの特徴</a>
+の通り、以下のような特徴を有している。</p>
+<ul>
+<li>CKAN APIを提供</li>
+<li>バックエンドのデータストア（アドホックなデータ置き場）
+<ul>
+<li>データソースかデータがpullされ、ストアされる</li>
+<li>Data Explorer拡張を利用することでデータのプレビューが可能になる</li>
+<li>検索、更新などをデータ全てをダウンロード・アップロードせずにできる
+★要確認</li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#datapusher-automatically-add-data-to-the-datastore" target="_blank" rel="noopener">DataPusher</a>
+機能と一緒に使われることが多い
+<ul>
+<li>データソースから表形式のデータを取得し、DataStore
+APIを用いてCKANにデータ登録する仕組み</li>
+</ul></li>
+</ul></li>
+<li>拡張機能</li>
+<li>地理空間機能</li>
+<li>メタデータ</li>
+<li>データ管理のためのUI</li>
+<li>キーワード検索</li>
+<li>テーマ設定</li>
+<li>可視化</li>
+<li>フェデレーション</li>
+<li>ファイルストア</li>
+</ul>
+<h3><span id="データのモデル">データのモデル</span></h3>
+<p><a href="http://docs.ckan.org/en/2.9/user-guide.html#users-organizations-and-authorization" target="_blank" rel="noopener">Users,
+organizations and authorization</a>
+に記載の通り、基本的にはOrganizationに紐づけてDatasetが登録される。
+Datasetは任意のフォーマットでよい。CKANにアップロードしてもよいし、単純にURLを登録してもよい。
+デフォルトの挙動では、登録されたDatasetはPrivate扱いになり、所有するOrganizationに所属するユーザのみ見られる。</p>
+<p><a href="http://docs.ckan.org/en/2.9/user-guide.html#adding-a-new-dataset" target="_blank" rel="noopener">Adding
+a new dataset</a> にある通り、Datasetを登録できる。
+なお、Licenseに並んでいる項目を見ると、やはりオープンデータとの相性がよさそう、と感じる。</p>
+<h3><span id="datastoreとdatapusher">DataStoreとDataPusher</span></h3>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#datastore-extension" target="_blank" rel="noopener">DataStore
+Extension</a> に記載の通り、 DataStore拡張機能を利用すると、Data
+Explorer拡張機能と併用することで自動的にプレビュー可能になる。
+またDataStore
+APIを利用し、データ本体を丸ごとダウンロードすることなく、検索、フィルタ、更新できる。</p>
+<p>自動的にデータを取り込むData
+Pusher拡張機能と併用されることが多い。</p>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#datapusher-automatically-add-data-to-the-datastore" target="_blank" rel="noopener">DataPusher</a>
+の通り、データを取り出し自動的にCKANに登録できる。
+ただし、注意書きにある通り、制約があるので注意。</p>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#data-dictionary" target="_blank" rel="noopener">Data
+Dictionary</a>
+の通り、DataStoreのスキーマ情報はデータ辞書で管理できる。</p>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#downloading-resources" target="_blank" rel="noopener">Downloading
+Resources</a>
+の通り、表形式のデータをCSVやエクセルで読み込める形式でダウンロードできる。</p>
+<p>DataStore
+APIを利用すると、DataStoreリソースを検索したり、インクリメンタルにデータを追加できる。
+バリデーションの機能もあるようだ。</p>
+<p>APIについては、 <a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#api-reference" target="_blank" rel="noopener">API
+reference</a> に記載されている。</p>
+<h3><span id="datastoreの拡張">DataStoreの拡張</span></h3>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#extending-datastore" target="_blank" rel="noopener">Extending
+DataStore</a> に記載の通り、独自のDataStoreを利用可能。
+正確には、実装可能。</p>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#ckanext.datastore.backend.DatastoreBackend" target="_blank" rel="noopener">DatastoreBackend</a>
+がベースクラスである。</p>
+<h3><span id="バックグラウンドジョブ">バックグラウンドジョブ</span></h3>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/background-tasks.html" target="_blank" rel="noopener">Background
+jobs</a>
+の通り、メインのアプリケーションをブロックせずに処理を実行できる。</p>
+<h2><span id="dockerで動作確認">Dockerで動作確認</span></h2>
+<h3><span id="セットアップ">セットアップ</span></h3>
+<p><a href="http://docs.ckan.org/en/2.9/maintaining/installing/install-from-docker-compose.html" target="_blank" rel="noopener">Installing
+CKAN with Docker Compose</a> を参考に、Docker
+Composeを利用して簡易的に動作確認する。 事前に、DockerとDocker
+Composeを導入しておくこと。</p>
+<p>また、 <a href="https://dev.classmethod.jp/articles/try-oss-data-management-system-ckan/" target="_blank" rel="noopener">オープンソースのデータ管理システム「CKAN」を試してみた</a>
+が分かりやすかったのでおすすめ。</p>
+<p>ソースコードをダウンロード。
+ここではステーブルバージョンを利用することにした。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p ~/Sources</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/Sources</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/ckan/ckan.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout -b ckan-2.9.5 tags/ckan-2.9.5</span></span><br></pre></td></tr></table></figure>
+<p>設定ファイルのコピー 適宜パスワードを変更するなど。
+環境によっては、サイトURLを変更するのを忘れずに。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cp contrib/docker/.env.template contrib/docker/.env</span></span><br></pre></td></tr></table></figure>
+<p>ビルドと起動</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> contrib/docker</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker-compose up -d --build</span></span><br></pre></td></tr></table></figure>
+<p>後の作業のため、ストレージを変数化（しなくても、作業はできる。ボリュームのパスを覚えておけばよい）
+（公式サイト手順の「Convenience: paths to named
+volumes」に記載あり）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> VOL_CKAN_HOME=$(docker volume inspect docker_ckan_home | jq -r -c <span class="string">'.[] | .Mountpoint'</span>)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="variable">$VOL_CKAN_HOME</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> VOL_CKAN_CONFIG=$(docker volume inspect docker_ckan_config | jq -r -c <span class="string">'.[] | .Mountpoint'</span>)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="variable">$VOL_CKAN_CONFIG</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> VOL_CKAN_STORAGE=$(docker volume inspect docker_ckan_storage | jq -r -c <span class="string">'.[] | .Mountpoint'</span>)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="variable">$VOL_CKAN_STORAGE</span></span></span><br></pre></td></tr></table></figure>
+<p>Datastoreとdatapusherを機能させるため、いくつか設定する。
+まずはデータベースの設定。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> ckan /usr/<span class="built_in">local</span>/bin/ckan -c /etc/ckan/production.ini datastore <span class="built_in">set</span>-permissions | docker <span class="built_in">exec</span> -i db psql -U ckan</span></span><br></pre></td></tr></table></figure>
+<p>プラグインなどの設定</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo vim <span class="variable">$VOL_CKAN_CONFIG</span>/production.ini</span></span><br></pre></td></tr></table></figure>
+<p>なお変更点は以下の通り。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">$ sudo diff -u $VOL_CKAN_CONFIG/production.ini&#123;.org,&#125;</span><br><span class="line"><span class="comment">--- /var/lib/docker/volumes/docker_ckan_config/_data/production.ini.org 2022-01-22 22:22:11.992878002 +0900</span></span><br><span class="line"><span class="comment">+++ /var/lib/docker/volumes/docker_ckan_config/_data/production.ini     2022-01-22 22:23:56.367637134 +0900</span></span><br><span class="line"><span class="meta">@@ -21,7 +21,7 @@</span></span><br><span class="line"> use = egg:ckan</span><br><span class="line"></span><br><span class="line"> ## Development settings</span><br><span class="line"><span class="deletion">-ckan.devserver.host = localhost</span></span><br><span class="line"><span class="addition">+ckan.devserver.host = ubu18</span></span><br><span class="line"> ckan.devserver.port = 5000</span><br><span class="line"></span><br><span class="line"> @@ -47,10 +47,10 @@                                                                                                                                                                           [2/7337] # who.timeout = 86400</span><br><span class="line"></span><br><span class="line"> ## Database Settings</span><br><span class="line"><span class="deletion">-sqlalchemy.url = postgresql://ckan_default:pass@localhost/ckan_default</span></span><br><span class="line"><span class="addition">+sqlalchemy.url = postgresql://ckan_default:pass@ubu18/ckan_default</span></span><br><span class="line"></span><br><span class="line"><span class="deletion">-#ckan.datastore.write_url = postgresql://ckan_default:pass@localhost/datastore_default</span></span><br><span class="line"><span class="deletion">-#ckan.datastore.read_url = postgresql://datastore_default:pass@localhost/datastore_default</span></span><br><span class="line"><span class="addition">+ckan.datastore.write_url = postgresql://ckan_default:pass@ubu18/datastore_default</span></span><br><span class="line"><span class="addition">+ckan.datastore.read_url = postgresql://datastore_default:pass@ubu18/datastore_default</span></span><br><span class="line"></span><br><span class="line"> # PostgreSQL' full-text search parameters</span><br><span class="line"> ckan.datastore.default_fts_lang = english</span><br><span class="line"><span class="meta">@@ -101,7 +101,7 @@</span></span><br><span class="line"> ## Redis Settings</span><br><span class="line"></span><br><span class="line"> # URL to your Redis instance, including the database to be used.</span><br><span class="line"><span class="deletion">-#ckan.redis.url = redis://localhost:6379/0</span></span><br><span class="line"><span class="addition">+ckan.redis.url = redis://ubu18:6379/0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ## CORS Settings</span><br><span class="line"><span class="meta">@@ -119,7 +119,7 @@</span></span><br><span class="line"> #       Add ``datapusher`` to enable DataPusher</span><br><span class="line"> #              Add ``resource_proxy`` to enable resorce proxying and get around the</span><br><span class="line"> #              same origin policy</span><br><span class="line"><span class="deletion">-ckan.plugins = stats text_view image_view recline_view</span></span><br><span class="line"><span class="addition">+ckan.plugins = stats text_view image_view recline_view datastore datapusher</span></span><br><span class="line"></span><br><span class="line"> # Define which views should be created by default</span><br><span class="line"> # (plugins must be loaded in ckan.plugins)</span><br><span class="line"><span class="meta">@@ -181,7 +181,7 @@</span></span><br><span class="line"></span><br><span class="line"> # Make sure you have set up the DataStore</span><br><span class="line"></span><br><span class="line"><span class="deletion">-#ckan.datapusher.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</span></span><br><span class="line"><span class="addition">+ckan.datapusher.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</span></span><br><span class="line"> #ckan.datapusher.url = http://127.0.0.1:8800/</span><br><span class="line"> #ckan.datapusher.assume_task_stale_after = 3600</span><br><span class="line"></span><br><span class="line"><span class="meta">@@ -206,7 +206,7 @@</span></span><br><span class="line"></span><br><span class="line"> #email_to = errors@example.com</span><br><span class="line"> #error_email_from = ckan-errors@example.com</span><br><span class="line"><span class="deletion">-#smtp.server = localhost</span></span><br><span class="line"><span class="addition">+smtp.server = ubu18</span></span><br><span class="line"> #smtp.starttls = False</span><br><span class="line"> #smtp.user = username@example.com</span><br><span class="line"> #smtp.password = your_password</span><br></pre></td></tr></table></figure>
+<p>↑の変更点を説明する。</p>
+<p>まず、今回はVM上のDockerで起動したので、SSHトンネル経由でのアクセスで困らないように開発環境ホスト名を
+<code>localhost</code> から変更した。</p>
+<p>また、Datastore機能、Datapusher機能を利用するためにプラグインを追加。</p>
+<p>Datapusherのフォーマットを有効化（コメントアウトを解除）</p>
+<p>コンテナを再起動。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker-compose restart</span></span><br></pre></td></tr></table></figure>
+<p>公式サイトに記載の通り、APIに試しにアクセスるとレスポンスがあるはず。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl <span class="string">'http://localhost:5000/api/3/action/datastore_search?resource_id=_table_metadata'</span></span></span><br></pre></td></tr></table></figure>
+<p>アドミンユーザ作成。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it ckan /usr/<span class="built_in">local</span>/bin/ckan -c /etc/ckan/production.ini sysadmin add johndoe</span></span><br></pre></td></tr></table></figure>
+<p>http://<サイトのurl>/ckan にアクセスすれば、ウェブUIが確認できる。
+先に設定した、アドミンユーザでとりあえずログインする。</サイトのurl></p>
+<h3><span id="データストアとしてminio環境を整える">データストアとしてMinIO環境を整える</span></h3>
+<p><a href="https://min.io/download#/docker" target="_blank" rel="noopener">MinIOのDocker</a>
+を参考に、Dockerでサーバを立ち上げる。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run -p 9000:9000 -p 9001:9001 minio/minio server /data --console-address <span class="string">":9001"</span></span></span><br></pre></td></tr></table></figure>
+<p>http://<立ち上げたインスタンス>:9000
+でMinIOのウェブコンソールにアクセスできる。
+特に設定していなければ、ID：minioadmin、パスワード：minioadminである。</立ち上げたインスタンス></p>
+<figure>
+<img src="images/20220121_ckan_minio1.JPG" alt="MinIのUI">
+<figcaption aria-hidden="true">MinIのUI</figcaption>
+</figure>
+<figure>
+<img src="images/20220123_ckan_minio2.JPG" alt="MinIのUI">
+<figcaption aria-hidden="true">MinIのUI</figcaption>
+</figure>
+<figure>
+<img src="images/20220123_ckan_minio3.JPG" alt="MinIのUI">
+<figcaption aria-hidden="true">MinIのUI</figcaption>
+</figure>
+<p>別のコンソールで <code>mc</code>クライアントを立ち上げる。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run --name my-mc --hostname my-mc -it --entrypoint /bin/bash --rm minio/mc</span></span><br></pre></td></tr></table></figure>
+<p>エイリアスを設定し、バケットを作成する。
+（URLは、MinIO起動時にコンソールに表示されるAPI用のURLを利用すること）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> mc <span class="built_in">alias</span> <span class="built_in">set</span> myminio http://172.17.0.2:9000 minioadmin minioadmin</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mc mb myminio/mybucket</span></span><br></pre></td></tr></table></figure>
+<p>ファイルを作成し、MinIOにアップロード（コピー）する。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"hoge"</span> &gt; /tmp/hoge.txt</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mc cp /tmp/hoge.txt myminio/mybucket/hoge.txt</span></span><br></pre></td></tr></table></figure>
+<h3><span id="aws-cliでアクセスする">AWS CLIでアクセスする</span></h3>
+<p><a href="https://aws.amazon.com/jp/blogs/developer/aws-cli-v2-docker-image/" target="_blank" rel="noopener">AWS
+CLI v2 Docker image</a> を利用してAWS CLIを起動し、MinIOにアクセスする。
+なお、コンテナで起動するのでそのままではホスト側の <code>~/.aws</code>
+にアクセスできない。そこで <code>-v</code>
+オプションを利用しマウントしてから configure するようにしている。
+また、S3プロトコルでアクセスする際には、今回は手元のMinIO環境を利用するため、エンドポイントを指定していることに注意。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run --rm -it -v ~/.aws:/root/.aws amazon/aws-cli configure --profile myminio</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run --rm -it -v ~/.aws:/root/.aws amazon/aws-cli --profile myminio s3 --endpoint-url http://172.17.0.2:9000 ls s3://mybucket/hoge.txt</span></span><br><span class="line">2022-01-21 16:38:19          5 hoge.txt</span><br></pre></td></tr></table></figure>
+<p>無事にS3プロトコルでアクセスできたことが確かめられた。</p>
+<h3><span id="ckanのuiで操作">CKANのUIで操作</span></h3>
+<p>組織の作成</p>
+<figure>
+<img src="images/20220121_ckan_create_org1.JPG" alt="組織作成">
+<figcaption aria-hidden="true">組織作成</figcaption>
+</figure>
+<figure>
+<img src="images/20220123_ckan_create_org2.JPG" alt="組織作成">
+<figcaption aria-hidden="true">組織作成</figcaption>
+</figure>
+<figure>
+<img src="images/20220123_ckan_create_org3.JPG" alt="組織作成">
+<figcaption aria-hidden="true">組織作成</figcaption>
+</figure>
+<p>データセット作成</p>
+<figure>
+<img src="images/20220121_ckan_create_dataset1.JPG" alt="データセット作成">
+<figcaption aria-hidden="true">データセット作成</figcaption>
+</figure>
+<figure>
+<img src="images/20220123_ckan_create_dataset2.JPG" alt="データセット作成">
+<figcaption aria-hidden="true">データセット作成</figcaption>
+</figure>
+<figure>
+<img src="images/20220123_ckan_create_dataset3.JPG" alt="データセット作成">
+<figcaption aria-hidden="true">データセット作成</figcaption>
+</figure>
+<p>先ほどのS3プロトコルURL（ <code>s3://mybucket/hoge.txt</code>
+）を登録する。</p>
+<h3><span id="補足初期化">（補足）初期化</span></h3>
+<p>何らかの理由でDockerの環境をまっさらに戻したいことがあるかもしれない。
+その場合は以下の通り。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker-compose down</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi -f docker_ckan docker_db</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi $(docker images -f dangling=<span class="literal">true</span> -q)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker volume rm docker_ckan_config docker_ckan_home docker_ckan_storage docker_pg_data docker_solr_data</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker-compose build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker-compose up -d</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker-compose restart ckan <span class="comment"># give the db service time to initialize the db cluster on first run</span></span></span><br></pre></td></tr></table></figure>
+<h2><span id="補足fiwareのckanは拡張済">（補足）FIWAREのCKANは拡張済？</span></h2>
+<p><a href="https://fiwaretourguide.letsfiware.jp/publishing-open-data-in-fiware/how-to-publish-open-datasets-in-ckan-2/" target="_blank" rel="noopener">FIWAREのCKAN</a>
+の説明を見ると、Dataset登録時に <code>Searchable</code>
+のような項目がある。公式2.9.5で試したときにはなかった。 他にも
+<code>Additional Info</code> という項目があり、そこには
+<code>OAuth-Token</code> という項目もあった。
+このように、特にアクセス管理や認証認可の機能が拡張されているのか、と思った。</p>
+<h2><span id="インストールパッケージ">インストール（パッケージ）</span></h2>
+<p>Ubuntu18環境にCKANをインストールする。 基本的には、 <a href="http://docs.ckan.org/en/2.9/maintaining/installing/install-from-package.html" target="_blank" rel="noopener">Installing
+CKAN from package</a> に従う。</p>
+<h1><span id="参考">参考</span></h1>
+<h2><span id="ckan">CKAN</span></h2>
+<ul>
+<li><a href="https://ckan.org/" target="_blank" rel="noopener">CKAN公式サイト</a></li>
+<li><a href="https://ckan.org/features" target="_blank" rel="noopener">CKANの特徴</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/" target="_blank" rel="noopener">公式ドキュメント</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/installing/install-from-docker-compose.html" target="_blank" rel="noopener">Installing
+CKAN with Docker Compose</a></li>
+<li><a href="https://dev.classmethod.jp/articles/try-oss-data-management-system-ckan/" target="_blank" rel="noopener">オープンソースのデータ管理システム「CKAN」を試してみた</a></li>
+<li><a href="https://fiwaretourguide.letsfiware.jp/publishing-open-data-in-fiware/how-to-publish-open-datasets-in-ckan-2/" target="_blank" rel="noopener">FIWAREのCKAN</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/user-guide.html#users-organizations-and-authorization" target="_blank" rel="noopener">Users,
+organizations and authorization</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/user-guide.html#adding-a-new-dataset" target="_blank" rel="noopener">Adding
+a new dataset</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#datapusher-automatically-add-data-to-the-datastore" target="_blank" rel="noopener">DataPusher</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#data-dictionary" target="_blank" rel="noopener">Data
+Dictionary</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#downloading-resources" target="_blank" rel="noopener">Downloading
+Resources</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#api-reference" target="_blank" rel="noopener">API
+reference</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#extending-datastore" target="_blank" rel="noopener">Extending
+DataStore</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/datastore.html#ckanext.datastore.backend.DatastoreBackend" target="_blank" rel="noopener">DatastoreBackend</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/background-tasks.html" target="_blank" rel="noopener">Background
+jobs</a></li>
+<li><a href="http://docs.ckan.org/en/2.9/maintaining/background-tasks.html#background-job-queues" target="_blank" rel="noopener">background-job-queues</a></li>
+</ul>
+<h2><span id="minio">MinIO</span></h2>
+<ul>
+<li><a href="https://min.io/download#/docker" target="_blank" rel="noopener">MinIOのDocker</a></li>
+</ul>
+<h2><span id="aws-cli">AWS CLI</span></h2>
+<ul>
+<li><a href="https://aws.amazon.com/jp/blogs/developer/aws-cli-v2-docker-image/" target="_blank" rel="noopener">AWS
+CLI v2 Docker image</a></li>
+</ul>
+<!-- vim: set et tw=0 ts=2 sw=2: -->
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="cm5tr562y015l18phbe6af6yc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Latency-Guarantee-of-Stream-Processing" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -438,7 +827,7 @@ Processing in Real-time</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/" data-id="cm5iawlpz007j18ndc6k9g576" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/18/Latency-Guarantee-of-Stream-Processing/" data-id="cm5tr55ux007l18phzotjuf7t" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -616,7 +1005,7 @@ unable to limit memory (-m flag) on Ubuntu/Debian distros #6365</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/10/Error-about-the-memory-configuration-of-Minikube/" data-id="cm5iawloo004518nddbzmadww" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/10/Error-about-the-memory-configuration-of-Minikube/" data-id="cm5tr55tp004518phhc6lgtl1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -884,7 +1273,7 @@ Meetup Tokyoのコアメンバーが議論</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Blogs-about-the-portability-of-kubernetes/" data-id="cm5iawlx6012j18nd99oyj4ur" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Blogs-about-the-portability-of-kubernetes/" data-id="cm5tr562b014b18phz5369aga" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1096,7 +1485,7 @@ Spark on Kubernetes?</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Getting-started-Spark-on-k8s/" data-id="cm5iawloy004x18nd5cyka8kg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Getting-started-Spark-on-k8s/" data-id="cm5tr55u1004x18phlcyp3071" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1356,7 +1745,7 @@ DeltaSharingMinioExample</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/" data-id="cm5iawlxi013f18ndyi2p8v5i" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/" data-id="cm5tr562r015618phu41hkc5k" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1693,7 +2082,7 @@ API</a> を参考に確認する。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/09/10/Getting-Started-of-Delta-Sharing/" data-id="cm5iawlxn013m18nd7up10x0a" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/09/10/Getting-Started-of-Delta-Sharing/" data-id="cm5tr562v015e18phhxrvb402" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1932,7 +2321,7 @@ Security Server Architecture Process View</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/09/03/X-Road/" data-id="cm5iawlsb00ed18nd8lgwthom" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/09/03/X-Road/" data-id="cm5tr55x900eb18phqf2852id" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2653,7 +3042,7 @@ Reitsakasは、2001年の最初のX-Roadプロジェクトマネージャ。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/08/30/Software-for-Data-Sharing/" data-id="cm5iawm1a01gw18ndttah6k0b" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/08/30/Software-for-Data-Sharing/" data-id="cm5tr566r01h818pht79ya7yr" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2993,283 +3382,7 @@ Armeriaではなく、DeltaSharedTableのクラスローダの下で関数を実
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/08/30/Source-Code-Reading-of-Delta-Sharing/" data-id="cm5iawm0g01e118ndc2hm720s" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Recent-hot-activities-of-Delta-Sharing" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2021/08/27/Recent-hot-activities-of-Delta-Sharing/">Recent hot activities of Delta Sharing</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2021/08/27/Recent-hot-activities-of-Delta-Sharing/">
-            <time datetime="2021-08-27T00:22:38.000Z" itemprop="datePublished">2021-08-27</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Collaboration/">Data Collaboration</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Data-Collaboration/Delta-Sharing/">Delta Sharing</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/Delta-Lake/">Delta Lake</a>, <a class="tag-link" href="/memo-blog/tags/Delta-Sharing/">Delta Sharing</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#参考" id="toc-参考">参考</a></li>
-<li><a href="#メモ" id="toc-メモ">メモ</a>
-<ul>
-<li><a href="#いま何がどのくらいできるようになっているのか" id="toc-いま何がどのくらいできるようになっているのか">いま何がどのくらいできるようになっているのか？</a>
-<ul>
-<li><a href="#クライアント開発言語バインディング" id="toc-クライアント開発言語バインディング">クライアント、開発言語バインディング</a></li>
-<li><a href="#サーバの参考実装" id="toc-サーバの参考実装">サーバの参考実装</a></li>
-<li><a href="#プロトコル" id="toc-プロトコル">プロトコル</a></li>
-<li><a href="#テーブルメタデータ" id="toc-テーブルメタデータ">テーブルメタデータ</a></li>
-</ul></li>
-<li><a href="#support-writing-to-delta-shares" id="toc-support-writing-to-delta-shares">Support writing to Delta
-Shares</a></li>
-<li><a href="#add-pre-signed-url-request-logging-to-server" id="toc-add-pre-signed-url-request-logging-to-server">Add pre-signed URL
-request logging to server</a></li>
-<li><a href="#support-azure-storage-in-delta-sharing-server" id="toc-support-azure-storage-in-delta-sharing-server">Support Azure
-Storage in Delta Sharing Server</a></li>
-<li><a href="#support-google-cloud-storage-in-delta-sharing-server" id="toc-support-google-cloud-storage-in-delta-sharing-server">Support
-Google Cloud Storage in Delta Sharing Server</a></li>
-</ul></li>
-</ul>
-</div>
-<h1><span id="参考">参考</span></h1>
-<ul>
-<li><a href="https://github.com/delta-io/delta-sharing" target="_blank" rel="noopener">Delta
-Sharing公式GitHub</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md" target="_blank" rel="noopener">Delta
-Sharing Protocal</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/blob/main/server/src/universal/conf/delta-sharing-server.yaml.template" target="_blank" rel="noopener">delta-sharing-server.yaml.template</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts" target="_blank" rel="noopener">Concept</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#metadata" target="_blank" rel="noopener">Metadata</a></li>
-</ul>
-<ul>
-<li><a href="https://github.com/delta-io/delta-sharing/issues/33" target="_blank" rel="noopener">Support
-writing to Delta Shares #33</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/issues/39" target="_blank" rel="noopener">Add
-pre-signed URL request logging to server</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/issues/21" target="_blank" rel="noopener">Support Azure
-Storage in Delta Sharing Server</a></li>
-<li><a href="https://docs.microsoft.com/en-us/rest/api/storageservices/delegate-access-with-shared-access-signature" target="_blank" rel="noopener">Delegate
-access with a shared access signature</a></li>
-<li><a href="https://github.com/delta-io/delta-sharing/issues/20" target="_blank" rel="noopener">Support
-Google Cloud Storage in Delta Sharing Server</a></li>
-<li><a href="https://cloud.google.com/storage/docs/access-control/signed-urls" target="_blank" rel="noopener">署名付きURL</a></li>
-</ul>
-<h1><span id="メモ">メモ</span></h1>
-<h2><span id="いま何がどのくらいできるようになっているのか">いま何がどのくらいできるようになっているのか？</span></h2>
-<p>2021/9時点で何ができるのか？ <a href="https://github.com/delta-io/delta-sharing" target="_blank" rel="noopener">Delta
-Sharing公式GitHub</a> のREADMEによると以下の通り。</p>
-<h3><span id="クライアント-開発言語バインディング">クライアント、開発言語バインディング</span></h3>
-<ul>
-<li>SQL（Spark SQL）</li>
-<li>Python</li>
-<li>Scala</li>
-<li>Java</li>
-<li>R</li>
-</ul>
-<h3><span id="サーバの参考実装">サーバの参考実装</span></h3>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md" target="_blank" rel="noopener">Delta
-Sharing Protocal</a> に乗っ取ってデータ共有の動作確認が可能な
-参考実装が公開されている。</p>
-<p>ただし、この実装にはセキュリティ周りの機能が十分に実装されておらず、
-もし公開して利用する場合はプロキシの裏側で使うことが推奨されている。</p>
-<p>サーバを立ち上げるときに共有するデータの定義を渡せる。 <a href="https://github.com/delta-io/delta-sharing/blob/main/server/src/universal/conf/delta-sharing-server.yaml.template" target="_blank" rel="noopener">delta-sharing-server.yaml.template</a>
-にコンフィグのサンプルが載っている。</p>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts" target="_blank" rel="noopener">Concept</a>
-にデータモデル、主要なコンポーネントが載っている。</p>
-<ul>
-<li>Share（シェア）:
-<ul>
-<li>共有の論理的なグループ</li>
-<li>このグループに含まれるものが受信者に共有される。</li>
-</ul></li>
-<li>Schema（スキーマ）:
-<ul>
-<li>複数のTableを含む</li>
-</ul></li>
-<li>Table（テーブル）:
-<ul>
-<li>Delta Lakeのテーブルもしくはビュー</li>
-</ul></li>
-<li>Recipient（受信者）:
-<ul>
-<li>シェアにアクセス可能なBearerトークンをもつもの</li>
-</ul></li>
-<li>Sharing Server（共有サーバ）:
-<ul>
-<li>プロトコルを実装したサーバ</li>
-</ul></li>
-</ul>
-<h3><span id="プロトコル">プロトコル</span></h3>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md" target="_blank" rel="noopener">Delta
-Sharing Protocal</a> に載っている通り、 Delta
-Sharingのサーバとクライアントの間のプロトコルが規定されている。</p>
-<ul>
-<li>シェアをリスト</li>
-<li>シェア内のスキーマをリスト</li>
-<li>スキーマ内のテーブルをリスト</li>
-<li>テーブルのバージョン情報取得
-<ul>
-<li>おそらくDelta Lakeとしてのバージョン情報</li>
-</ul></li>
-<li>テーブルのメタデータ取得</li>
-<li>データ取得
-<ul>
-<li>データ取得時には、PredicateHint、LimitHintを渡せる</li>
-</ul></li>
-</ul>
-<h3><span id="テーブルメタデータ">テーブルメタデータ</span></h3>
-<p><a href="https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#metadata" target="_blank" rel="noopener">Metadata</a>
-にテーブルに付帯できるメタデータの定義が載っている。
-スキーマやフォーマットなどの情報に加え、任意の説明を保持できるようだ。</p>
-<h2><span id="support-writing-to-deltashares">Support writing to Delta
-Shares</span></h2>
-<p><a href="https://github.com/delta-io/delta-sharing/issues/33" target="_blank" rel="noopener">Support
-writing to Delta Shares #33</a></p>
-<p>書き込みへの対応について提案がなされたが、2021/8/27現在は保留となっている。
-いったん読み込みに注力、とのこと。</p>
-<p>なお、Treasure DataのTaroさんがTreasure
-Dataにおける対応例を紹介している。 （が、それに対する応答はない）</p>
-<h2><span id="add-pre-signed-urlrequest-logging-to-server">Add pre-signed URL
-request logging to server</span></h2>
-<p><a href="https://github.com/delta-io/delta-sharing/issues/39" target="_blank" rel="noopener">Add
-pre-signed URL request logging to server</a></p>
-<p>今のところ、プリサインドURLの件数を知る術がない。
-そこで、DEBUGログにプリサインドURLの発行情報を出力するのはどうか、というチケットが挙がっていた。</p>
-<h2><span id="support-azurestorage-in-delta-sharing-server">Support Azure
-Storage in Delta Sharing Server</span></h2>
-<p><a href="https://github.com/delta-io/delta-sharing/issues/21" target="_blank" rel="noopener">Support
-Azure Storage in Delta Sharing Server</a></p>
-<p>Azureでは、 <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/delegate-access-with-shared-access-signature" target="_blank" rel="noopener">Delegate
-access with a shared access signature</a>
-の機能が提供されているので、割と対応しやすいのでは？という議論になっている。
-AzureのSASは、定められたパーミッションで定められた期間だけリソースにアクセス可能にする。</p>
-<p>なお、SASにはアカウントレベル、サービスレベル、ユーザデリゲーションの3種類がある。
-それぞれスコープやできることが異なる。</p>
-<p>Delta
-Sharingがストレージに特化しているのであれば、まずはBlobに対するデリゲーションURLを発行できれば良さそうである。</p>
-<h2><span id="supportgoogle-cloud-storage-in-delta-sharing-server">Support
-Google Cloud Storage in Delta Sharing Server</span></h2>
-<p><a href="https://github.com/delta-io/delta-sharing/issues/20" target="_blank" rel="noopener">Support
-Google Cloud Storage in Delta Sharing Server</a></p>
-<p>Azureと同じく、 <a href="https://cloud.google.com/storage/docs/access-control/signed-urls" target="_blank" rel="noopener">署名付きURL</a>
-に対応しているため、そこまで難しくは無いだろう、というコメントがあった。</p>
-<p>これはどうだろうか？</p>
-<!-- vim: set et tw=0 ts=2 sw=2: -->
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2021/08/27/Recent-hot-activities-of-Delta-Sharing/" data-id="cm5iawlr000ah18ndjb0sbyd6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/08/30/Source-Code-Reading-of-Delta-Sharing/" data-id="cm5tr565q01ed18phrctltzf0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3346,7 +3459,7 @@ Google Cloud Storage in Delta Sharing Server</a></p>
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/memo-blog/page/3/">&laquo; 前</a><a class="page-number" href="/memo-blog/">1</a><a class="page-number" href="/memo-blog/page/2/">2</a><a class="page-number" href="/memo-blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/memo-blog/page/5/">5</a><a class="page-number" href="/memo-blog/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/memo-blog/page/23/">23</a><a class="extend next" rel="next" href="/memo-blog/page/5/">次 &raquo;</a>
+        <a class="extend prev" rel="prev" href="/memo-blog/page/3/">&laquo; 前</a><a class="page-number" href="/memo-blog/">1</a><a class="page-number" href="/memo-blog/page/2/">2</a><a class="page-number" href="/memo-blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/memo-blog/page/5/">5</a><a class="page-number" href="/memo-blog/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/memo-blog/page/24/">24</a><a class="extend next" rel="next" href="/memo-blog/page/5/">次 &raquo;</a>
     </nav>
 </section>
             
@@ -3358,6 +3471,15 @@ Google Cloud Storage in Delta Sharing Server</a></p>
         <h3 class="widget-title">最近の記事</h3>
         <div class="widget">
             <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/memo-blog/2025/01/12/IoT-Trust-of-Toshiba-デバイス・ストレージ/" class="title">IoT Trust of Toshiba デバイス・ストレージ</a></p>
+                            <p class="item-date"><time datetime="2025-01-12T14:54:55.000Z" itemprop="datePublished">2025-01-12</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -3395,15 +3517,6 @@ Google Cloud Storage in Delta Sharing Server</a></p>
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/Docker/">Docker</a></p>
-                            <p class="item-title"><a href="/memo-blog/2024/11/04/Trouble-using-Docker-Desktop-and-docker/" class="title">Trouble using Docker Desktop and docker</a></p>
-                            <p class="item-date"><time datetime="2024-11-03T15:56:32.000Z" itemprop="datePublished">2024-11-04</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -3422,7 +3535,7 @@ Google Cloud Storage in Delta Sharing Server</a></p>
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
