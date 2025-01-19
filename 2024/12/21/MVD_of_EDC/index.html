@@ -5,13 +5,13 @@
     
     <title>MVD_of_EDC | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="メモ  Eclipse Dataspace Componentsのセットアップ  準備 ソースコードのクローン ビルドと起動 データの流し込み コンシューマとプロバイダの登録  動作確認  カタログ コントラクトネゴシエーション 状況の確認 トランスファーの初期化 EDR（EndpointDataReference）取得   参考   メモ MVDを用いた動作確認用のメモ Eclipse D">
+    <meta name="description" content="メモ  Eclipse Dataspace Componentsのセットアップ  準備 ソースコードのクローン ビルドと起動 データの流し込み コンシューマとプロバイダの登録  動作確認  カタログ コントラクトネゴシエーション 状況の確認 トランスファーの初期化 EDR（EndpointDataReference）取得 アクセストークンの取得 データの取得   参考   メモ MVDを用い">
 <meta name="keywords" content="Dataspace Connector,IDS,EDC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MVD_of_EDC">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2024/12/21/MVD_of_EDC/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="メモ  Eclipse Dataspace Componentsのセットアップ  準備 ソースコードのクローン ビルドと起動 データの流し込み コンシューマとプロバイダの登録  動作確認  カタログ コントラクトネゴシエーション 状況の確認 トランスファーの初期化 EDR（EndpointDataReference）取得   参考   メモ MVDを用いた動作確認用のメモ Eclipse D">
+<meta property="og:description" content="メモ  Eclipse Dataspace Componentsのセットアップ  準備 ソースコードのクローン ビルドと起動 データの流し込み コンシューマとプロバイダの登録  動作確認  カタログ コントラクトネゴシエーション 状況の確認 トランスファーの初期化 EDR（EndpointDataReference）取得 アクセストークンの取得 データの取得   参考   メモ MVDを用い">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2024/12/21/MVD_of_EDC/images/20241221_edc_mvd_participants.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2024/12/21/MVD_of_EDC/images/20250119_Postman_env.png">
@@ -20,10 +20,13 @@
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2024/12/21/MVD_of_EDC/images/20250119_Postman_Contract_Nego.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2024/12/21/MVD_of_EDC/images/20250119_Postman_Get_ContractNegos.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2024/12/21/MVD_of_EDC/images/20250119_Postman_Init_Trans.png">
-<meta property="og:updated_time" content="2025-01-19T16:30:36.671Z">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/2024/12/21/MVD_of_EDC/images/20250119_Postman_get_EDRs.png">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/2024/12/21/MVD_of_EDC/images/20250119_Postman_get_EDR.png">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/2024/12/21/MVD_of_EDC/images/20250119_Postman_Get_Data_Token.png">
+<meta property="og:updated_time" content="2025-01-19T16:56:25.334Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MVD_of_EDC">
-<meta name="twitter:description" content="メモ  Eclipse Dataspace Componentsのセットアップ  準備 ソースコードのクローン ビルドと起動 データの流し込み コンシューマとプロバイダの登録  動作確認  カタログ コントラクトネゴシエーション 状況の確認 トランスファーの初期化 EDR（EndpointDataReference）取得   参考   メモ MVDを用いた動作確認用のメモ Eclipse D">
+<meta name="twitter:description" content="メモ  Eclipse Dataspace Componentsのセットアップ  準備 ソースコードのクローン ビルドと起動 データの流し込み コンシューマとプロバイダの登録  動作確認  カタログ コントラクトネゴシエーション 状況の確認 トランスファーの初期化 EDR（EndpointDataReference）取得 アクセストークンの取得 データの取得   参考   メモ MVDを用い">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/2024/12/21/MVD_of_EDC/images/20241221_edc_mvd_participants.png">
     
 
@@ -277,6 +280,8 @@ Componentsのセットアップ</a>
 <li><a href="#状況の確認" id="toc-状況の確認">状況の確認</a></li>
 <li><a href="#トランスファーの初期化" id="toc-トランスファーの初期化">トランスファーの初期化</a></li>
 <li><a href="#edrendpointdatareference取得" id="toc-edrendpointdatareference取得">EDR（EndpointDataReference）取得</a></li>
+<li><a href="#アクセストークンの取得" id="toc-アクセストークンの取得">アクセストークンの取得</a></li>
+<li><a href="#データの取得" id="toc-データの取得">データの取得</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#参考" id="toc-参考">参考</a></li>
@@ -506,6 +511,30 @@ Postman」を参考に実施。</p>
 <p>これでトランスファーの処理が開始された。ただし、実際のデータ転送が始まったわけではない。
 今回は、<code>HttpData-PULL</code>プロトコルを用いることになっており、そのためには実際のデータを取得するためのエンドポイントとアクセスキーを取得しないとならない。</p>
 <h3><span id="edrendpointdatareference取得">EDR（EndpointDataReference）取得</span></h3>
+<p><code>Get cached EDRs</code>を実行する。特に変数設定などは不要。</p>
+<figure>
+<img src="images/20250119_Postman_get_EDRs.png" alt="環境">
+<figcaption aria-hidden="true">環境</figcaption>
+</figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"@id"</span>: <span class="string">"0278e81e-5dea-4ab7-876f-60cd8a202e09"</span>,</span><br><span class="line">        <span class="attr">"@type"</span>: <span class="string">"EndpointDataReferenceEntry"</span>,</span><br><span class="line">        <span class="attr">"providerId"</span>: <span class="string">"did:web:provider-identityhub%3A7083:provider"</span>,</span><br><span class="line">        <span class="attr">"assetId"</span>: <span class="string">"asset-1"</span>,</span><br><span class="line">        <span class="attr">"agreementId"</span>: <span class="string">"59b8c0b1-a9b1-4b83-b85d-715758941595"</span>,</span><br><span class="line">        <span class="attr">"transferProcessId"</span>: <span class="string">"0278e81e-5dea-4ab7-876f-60cd8a202e09"</span>,</span><br><span class="line">        <span class="attr">"createdAt"</span>: <span class="number">1737304136114</span>,</span><br><span class="line">        <span class="attr">"contractNegotiationId"</span>: <span class="string">"378b9249-b869-426f-b224-7879d358d2a1"</span>,</span><br><span class="line">        <span class="attr">"@context"</span>: &#123;</span><br><span class="line">            <span class="attr">"@vocab"</span>: <span class="string">"https://w3id.org/edc/v0.0.1/ns/"</span>,</span><br><span class="line">            <span class="attr">"edc"</span>: <span class="string">"https://w3id.org/edc/v0.0.1/ns/"</span>,</span><br><span class="line">            <span class="attr">"odrl"</span>: <span class="string">"http://www.w3.org/ns/odrl/2/"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>今回は有効なEDRが1個なので上記の通り。
+EDRのIDがわかる。<code>0278e81e-5dea-4ab7-876f-60cd8a202e09</code></p>
+<h3><span id="アクセストークンの取得">アクセストークンの取得</span></h3>
+<p>先程確認したEDRのIDを用いて、EDRを取得する。</p>
+<figure>
+<img src="images/20250119_Postman_get_EDR.png" alt="環境">
+<figcaption aria-hidden="true">環境</figcaption>
+</figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"@type"</span>: <span class="string">"DataAddress"</span>,</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"https://w3id.org/idsa/v4.1/HTTP"</span>,</span><br><span class="line">    <span class="attr">"endpoint"</span>: <span class="string">"http://provider-qna-dataplane:11002/api/public"</span>,</span><br><span class="line">    <span class="attr">"authType"</span>: <span class="string">"bearer"</span>,</span><br><span class="line">    <span class="attr">"endpointType"</span>: <span class="string">"https://w3id.org/idsa/v4.1/HTTP"</span>,</span><br><span class="line">    <span class="attr">"authorization"</span>: <span class="string">"eyJraWQiOiJkaWQ6d2ViOnByb3ZpZGVyLWlkZW50aXR5aHViJTNBNzA4Mzpwcm92aWRlciNrZXktMSIsImFsZyI6IkVTMjU2In0.eyJpc3MiOiJkaWQ6d2ViOnByb3ZpZGVyLWlkZW50aXR5aHViJTNBNzA4Mzpwcm92aWRlciIsImF1ZCI6ImRpZDp3ZWI6Y29uc3VtZXItaWRlbnRpdHlodWIlM0E3MDgzOmNvbnN1bWVyIiwic3ViIjoiZGlkOndlYjpwcm92aWRlci1pZGVudGl0eWh1YiUzQTcwODM6cHJvdmlkZXIiLCJpYXQiOjE3MzczMDQxMzU3OTQsImp0aSI6IjI3Y2Y0ODFlLTQ5YWYtNDI0YS1iNjc5LTk2YzQ4MmY4ODAyNyJ9.whzgJzBy9ydxontusqowd_wG33KjSfzjxqXxb600csDUdrGHFl45CEQtbRdOfSvffjQTaincEKZpAovS9b2gqg"</span>,</span><br><span class="line">    <span class="attr">"@context"</span>: &#123;</span><br><span class="line">        <span class="attr">"@vocab"</span>: <span class="string">"https://w3id.org/edc/v0.0.1/ns/"</span>,</span><br><span class="line">        <span class="attr">"edc"</span>: <span class="string">"https://w3id.org/edc/v0.0.1/ns/"</span>,</span><br><span class="line">        <span class="attr">"odrl"</span>: <span class="string">"http://www.w3.org/ns/odrl/2/"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上記の通り、エンドポイント情報とアクセストークが得られた。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(snip)</span><br><span class="line">    "endpoint": "http://provider-qna-dataplane:11002/api/public",</span><br><span class="line">(snip)</span><br><span class="line">    "authorization": "eyJraWQiOiJkaWQ6d2ViOnByb3ZpZGVyLWlkZW50aXR5aHViJTNBNzA4Mzpwcm92aWRlciNrZXktMSIsImFsZyI6IkVTMjU2In0.eyJpc3MiOiJkaWQ6d2ViOnByb3ZpZGVyLWlkZW50aXR5aHViJTNBNzA4Mzpwcm92aWRlciIsImF1ZCI6ImRpZDp3ZWI6Y29uc3VtZXItaWRlbnRpdHlodWIlM0E3MDgzOmNvbnN1bWVyIiwic3ViIjoiZGlkOndlYjpwcm92aWRlci1pZGVudGl0eWh1YiUzQTcwODM6cHJvdmlkZXIiLCJpYXQiOjE3MzczMDQxMzU3OTQsImp0aSI6IjI3Y2Y0ODFlLTQ5YWYtNDI0YS1iNjc5LTk2YzQ4MmY4ODAyNyJ9.whzgJzBy9ydxontusqowd_wG33KjSfzjxqXxb600csDUdrGHFl45CEQtbRdOfSvffjQTaincEKZpAovS9b2gqg",</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
+<h3><span id="データの取得">データの取得</span></h3>
+<p>先程確認したトークンを用いてデータを取得する。</p>
+<figure>
+<img src="images/20250119_Postman_Get_Data_Token.png" alt="環境">
+<figcaption aria-hidden="true">環境</figcaption>
+</figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"userId"</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">"id"</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">"title"</span>: <span class="string">"delectus aut autem"</span>,</span><br><span class="line">        <span class="attr">"completed"</span>: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"userId"</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">"id"</span>: <span class="number">2</span>,</span><br><span class="line">        <span class="attr">"title"</span>: <span class="string">"quis ut nam facilis et officia qui"</span>,</span><br><span class="line">        <span class="attr">"completed"</span>: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"userId"</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">"id"</span>: <span class="number">3</span>,</span><br><span class="line">        <span class="attr">"title"</span>: <span class="string">"fugiat veniam minus"</span>,</span><br><span class="line">        <span class="attr">"completed"</span>: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <p>(wip)</p>
 <h1><span id="参考">参考</span></h1>
 <ul>
@@ -526,7 +555,7 @@ Desktop</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2024/12/21/MVD_of_EDC/" data-id="cm63u3k6x01ih18qpdelanw8c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2024/12/21/MVD_of_EDC/" data-id="cm63v0se301ij19qmmx2vo6va" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

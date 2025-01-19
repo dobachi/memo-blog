@@ -623,9 +623,95 @@ asset-1
 
 ### EDR（EndpointDataReference）取得
 
+`Get cached EDRs`を実行する。特に変数設定などは不要。
+
+![環境](images/20250119_Postman_get_EDRs.png)
+
+```json
+[
+    {
+        "@id": "0278e81e-5dea-4ab7-876f-60cd8a202e09",
+        "@type": "EndpointDataReferenceEntry",
+        "providerId": "did:web:provider-identityhub%3A7083:provider",
+        "assetId": "asset-1",
+        "agreementId": "59b8c0b1-a9b1-4b83-b85d-715758941595",
+        "transferProcessId": "0278e81e-5dea-4ab7-876f-60cd8a202e09",
+        "createdAt": 1737304136114,
+        "contractNegotiationId": "378b9249-b869-426f-b224-7879d358d2a1",
+        "@context": {
+            "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
+            "edc": "https://w3id.org/edc/v0.0.1/ns/",
+            "odrl": "http://www.w3.org/ns/odrl/2/"
+        }
+    }
+]
+```
+
+今回は有効なEDRが1個なので上記の通り。
+EDRのIDがわかる。`0278e81e-5dea-4ab7-876f-60cd8a202e09`
+
+### アクセストークンの取得
+
+先程確認したEDRのIDを用いて、EDRを取得する。
+
+![環境](images/20250119_Postman_get_EDR.png)
+
+```json
+{
+    "@type": "DataAddress",
+    "type": "https://w3id.org/idsa/v4.1/HTTP",
+    "endpoint": "http://provider-qna-dataplane:11002/api/public",
+    "authType": "bearer",
+    "endpointType": "https://w3id.org/idsa/v4.1/HTTP",
+    "authorization": "eyJraWQiOiJkaWQ6d2ViOnByb3ZpZGVyLWlkZW50aXR5aHViJTNBNzA4Mzpwcm92aWRlciNrZXktMSIsImFsZyI6IkVTMjU2In0.eyJpc3MiOiJkaWQ6d2ViOnByb3ZpZGVyLWlkZW50aXR5aHViJTNBNzA4Mzpwcm92aWRlciIsImF1ZCI6ImRpZDp3ZWI6Y29uc3VtZXItaWRlbnRpdHlodWIlM0E3MDgzOmNvbnN1bWVyIiwic3ViIjoiZGlkOndlYjpwcm92aWRlci1pZGVudGl0eWh1YiUzQTcwODM6cHJvdmlkZXIiLCJpYXQiOjE3MzczMDQxMzU3OTQsImp0aSI6IjI3Y2Y0ODFlLTQ5YWYtNDI0YS1iNjc5LTk2YzQ4MmY4ODAyNyJ9.whzgJzBy9ydxontusqowd_wG33KjSfzjxqXxb600csDUdrGHFl45CEQtbRdOfSvffjQTaincEKZpAovS9b2gqg",
+    "@context": {
+        "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
+        "edc": "https://w3id.org/edc/v0.0.1/ns/",
+        "odrl": "http://www.w3.org/ns/odrl/2/"
+    }
+}
+```
+
+上記の通り、エンドポイント情報とアクセストークが得られた。
+
+```json
+(snip)
+    "endpoint": "http://provider-qna-dataplane:11002/api/public",
+(snip)
+    "authorization": "eyJraWQiOiJkaWQ6d2ViOnByb3ZpZGVyLWlkZW50aXR5aHViJTNBNzA4Mzpwcm92aWRlciNrZXktMSIsImFsZyI6IkVTMjU2In0.eyJpc3MiOiJkaWQ6d2ViOnByb3ZpZGVyLWlkZW50aXR5aHViJTNBNzA4Mzpwcm92aWRlciIsImF1ZCI6ImRpZDp3ZWI6Y29uc3VtZXItaWRlbnRpdHlodWIlM0E3MDgzOmNvbnN1bWVyIiwic3ViIjoiZGlkOndlYjpwcm92aWRlci1pZGVudGl0eWh1YiUzQTcwODM6cHJvdmlkZXIiLCJpYXQiOjE3MzczMDQxMzU3OTQsImp0aSI6IjI3Y2Y0ODFlLTQ5YWYtNDI0YS1iNjc5LTk2YzQ4MmY4ODAyNyJ9.whzgJzBy9ydxontusqowd_wG33KjSfzjxqXxb600csDUdrGHFl45CEQtbRdOfSvffjQTaincEKZpAovS9b2gqg",
+(snip)
+```
+
+### データの取得
+
+先程確認したトークンを用いてデータを取得する。
+
+![環境](images/20250119_Postman_Get_Data_Token.png)
+
+```json
+[
+    {
+        "userId": 1,
+        "id": 1,
+        "title": "delectus aut autem",
+        "completed": false
+    },
+    {
+        "userId": 1,
+        "id": 2,
+        "title": "quis ut nam facilis et officia qui",
+        "completed": false
+    },
+    {
+        "userId": 1,
+        "id": 3,
+        "title": "fugiat veniam minus",
+        "completed": false
+    },
+    {
+(snip)
+```
 (wip)
-
-
 
 # 参考
 
