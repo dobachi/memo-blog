@@ -419,11 +419,15 @@ Postmanでインポートすると以下のように環境が見える。
 `asset-1`の場合は以下のような感じ。
 
 ```json
+            {
+                "@id": "fcc9cefa-c31e-4155-ad59-35294044cc6d",
+                "@type": "dcat:Catalog",
+                "dcat:dataset": [
                     {
                         "@id": "asset-1",
                         "@type": "dcat:Dataset",
                         "odrl:hasPolicy": {
-                            "@id": "bWVtYmVyLWFuZC1kYXRhcHJvY2Vzc29yLWRlZg==:YXNzZXQtMQ==:YmJhMTUzZTMtNjMxYi00ZTdhLWIxNTQtYWFhMDAyMTA5Njdh",
+                            "@id": "bWVtYmVyLWFuZC1kYXRhcHJvY2Vzc29yLWRlZg==:YXNzZXQtMQ==:OThhZGM3OGQtZDM1Ny00MDQwLTlhYmUtYzI3YTIzYTMyNmUz",
                             "@type": "odrl:Offer",
                             "odrl:permission": [],
                             "odrl:prohibition": [],
@@ -449,7 +453,7 @@ Postmanでインポートすると以下のように環境が見える。
                                     "@id": "HttpData-PULL"
                                 },
                                 "dcat:accessService": {
-                                    "@id": "1b089b75-4d54-4abe-bd24-d718b8446c4c",
+                                    "@id": "6cccbc00-9fa5-4f99-a2d9-524d2881f72f",
                                     "@type": "dcat:DataService"
                                 }
                             },
@@ -459,7 +463,7 @@ Postmanでインポートすると以下のように環境が見える。
                                     "@id": "HttpData-PUSH"
                                 },
                                 "dcat:accessService": {
-                                    "@id": "1b089b75-4d54-4abe-bd24-d718b8446c4c",
+                                    "@id": "6cccbc00-9fa5-4f99-a2d9-524d2881f72f",
                                     "@type": "dcat:DataService"
                                 }
                             }
@@ -474,13 +478,12 @@ README通り、今回はプロバイダのQ&A departmentに着目する。
 
 ```json
                 "dcat:service": {
-                    "@id": "1b089b75-4d54-4abe-bd24-d718b8446c4c",
+                    "@id": "6cccbc00-9fa5-4f99-a2d9-524d2881f72f",
                     "@type": "dcat:DataService",
                     "dcat:endpointDescription": "dspace:connector",
                     "dcat:endpointUrl": "http://provider-qna-controlplane:8082/api/dsp",
                     "dcat:endpointURL": "http://provider-qna-controlplane:8082/api/dsp"
                 },
-                "dspace:participantId": "did:web:provider-identityhub%3A7083:provider"
 ```
 それとアセットのIDを確認しておく、`odrl:hasPolicy.@id`にある。
 今回の例だと、
@@ -491,21 +494,14 @@ asset-1
                         "@id": "asset-1",
                         "@type": "dcat:Dataset",
                         "odrl:hasPolicy": {
-                            "@id": "bWVtYmVyLWFuZC1kYXRhcHJvY2Vzc29yLWRlZg==:YXNzZXQtMQ==:YmJhMTUzZTMtNjMxYi00ZTdhLWIxNTQtYWFhMDAyMTA5Njdh",
+                            "@id": "bWVtYmVyLWFuZC1kYXRhcHJvY2Vzc29yLWRlZg==:YXNzZXQtMQ==:OThhZGM3OGQtZDM1Ny00MDQwLTlhYmUtYzI3YTIzYTMyNmUz",
 ```
 
-asset-2
-
-```json
-                        "@id": "asset-2",
-                        "@type": "dcat:Dataset",
-                        "odrl:hasPolicy": {
-                            "@id": "c2Vuc2l0aXZlLW9ubHktZGVm:YXNzZXQtMg==:ODE2NWI2ZTMtNmI2MC00NWY1LTg3OWYtYjRkYjE5NWJmZGFh",
-```
+`asset-2` は一旦省略
 
 ### コントラクトネゴシエーション
 
-先の手順で確認した、`asset-1`のIDを変数に設定する。
+先の手順で確認した、`asset-1`のIDを変数に設定する。（実際には、各自の値を使用すること）
 
 ![環境](images/20250119_Postman_Policy_ID.png)
 
@@ -560,15 +556,15 @@ asset-2
 [
     {
         "@type": "ContractNegotiation",
-        "@id": "8fcf7e3f-1ef7-4cb4-8191-7a5cc888e564",
+        "@id": "378b9249-b869-426f-b224-7879d358d2a1",
         "type": "CONSUMER",
         "protocol": "dataspace-protocol-http",
         "state": "FINALIZED",
         "counterPartyId": "did:web:provider-identityhub%3A7083:provider",
         "counterPartyAddress": "http://provider-qna-controlplane:8082/api/dsp",
         "callbackAddresses": [],
-        "createdAt": 1737301528326,
-        "contractAgreementId": "dc9765e2-9e5c-471a-a959-821ce0aa5f57",
+        "createdAt": 1737304019738,
+        "contractAgreementId": "59b8c0b1-a9b1-4b83-b85d-715758941595",
         "@context": {
             "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
             "edc": "https://w3id.org/edc/v0.0.1/ns/",
@@ -578,7 +574,7 @@ asset-2
 ]
 ```
 
-上記から`contractAgreementId` がわかる。`dc9765e2-9e5c-471a-a959-821ce0aa5f57`
+上記から`contractAgreementId` がわかる。`59b8c0b1-a9b1-4b83-b85d-715758941595`である。
 このあとのデータ転送において利用する。
 
 ### トランスファーの初期化
@@ -603,6 +599,7 @@ asset-2
 ```
 
 上記の、`CONTRACT_AGREEMENT_ID`に渡す値を先ほど控えた値に書き換えて、`Initiate Transfer`を実行する。
+先程控えておいた値にする。各自の値を使用すること。
 
 ![環境](images/20250119_Postman_Init_Trans.png)
 
@@ -611,8 +608,8 @@ asset-2
 ```json
 {
     "@type": "IdResponse",
-    "@id": "4b80b375-be7e-4b16-9e60-594c009a264a",
-    "createdAt": 1737302625159,
+    "@id": "0278e81e-5dea-4ab7-876f-60cd8a202e09",
+    "createdAt": 1737304134741,
     "@context": {
         "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
         "edc": "https://w3id.org/edc/v0.0.1/ns/",
