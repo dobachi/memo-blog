@@ -79,7 +79,7 @@ cd MinimumViableDataspace
 
 公式サイトの環境構成図
 
-![環境構成](images/20241221_edc_mvd_participants.png)
+![環境構成](/images/20241221_edc_mvd_participants.png)
 
 
 ### ビルドと起動
