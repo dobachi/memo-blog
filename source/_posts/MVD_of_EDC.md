@@ -79,7 +79,7 @@ cd MinimumViableDataspace
 
 公式サイトの環境構成図
 
-![環境構成](/images/20241221_edc_mvd_participants.png)
+![環境構成](/memo-blog/images/20241221_edc_mvd_participants.png)
 
 
 ### ビルドと起動
@@ -402,7 +402,7 @@ READMEの「7. Executing REST requests using Postman」を参考に実施。
 
 Postmanでインポートすると以下のように環境が見える。
 
-![環境](images/20250119_Postman_env.png)
+![環境](/memo-blog/images/20250119_Postman_env.png)
 
 続いて、collectionをインポートする。
 
@@ -410,7 +410,7 @@ Postmanでインポートすると以下のように環境が見える。
 
 コレクションをインポートすると、以下のように各種リクエストをPostmanから送れるようになる。
 
-![環境](images/20250119_Postman_collection.png)
+![環境](/memo-blog/images/20250119_Postman_collection.png)
 
 ### カタログ
 
@@ -503,7 +503,7 @@ asset-1
 
 先の手順で確認した、`asset-1`のIDを変数に設定する。（実際には、各自の値を使用すること）
 
-![環境](images/20250119_Postman_Policy_ID.png)
+![環境](/memo-blog/images/20250119_Postman_Policy_ID.png)
 
 これは、リクエストボディの以下に用いられる。
 
@@ -538,7 +538,7 @@ asset-1
 
 続いて、`initiate negotiation`を実行する。
 
-![環境](images/20250119_Postman_Contract_Nego.png)
+![環境](/memo-blog/images/20250119_Postman_Contract_Nego.png)
 
 レスポンスが見られるはず。
 ただし、この状態ではまだコントラクトネゴシエーションを開始しただけ。状況確認が必要。
@@ -547,7 +547,7 @@ asset-1
 
 続いて、`Get Contract Negotiations`を実行する。
 
-![環境](images/20250119_Postman_Get_ContractNegos.png)
+![環境](/memo-blog/images/20250119_Postman_Get_ContractNegos.png)
 
 ステータスが`FINALIZED`になっていることがわかる。
 今回は、1回実行しただけなので、以下のとおりだが、複数回実行するとそのぶんだけ並ぶ。
@@ -601,7 +601,7 @@ asset-1
 上記の、`CONTRACT_AGREEMENT_ID`に渡す値を先ほど控えた値に書き換えて、`Initiate Transfer`を実行する。
 先程控えておいた値にする。各自の値を使用すること。
 
-![環境](images/20250119_Postman_Init_Trans.png)
+![環境](/memo-blog/images/20250119_Postman_Init_Trans.png)
 
 戻りは以下のような内容。
 
@@ -625,7 +625,7 @@ asset-1
 
 `Get cached EDRs`を実行する。特に変数設定などは不要。
 
-![環境](images/20250119_Postman_get_EDRs.png)
+![環境](/memo-blog/images/20250119_Postman_get_EDRs.png)
 
 ```json
 [
@@ -654,7 +654,7 @@ EDRのIDがわかる。`0278e81e-5dea-4ab7-876f-60cd8a202e09`
 
 先程確認したEDRのIDを用いて、EDRを取得する。
 
-![環境](images/20250119_Postman_get_EDR.png)
+![環境](/memo-blog/images/20250119_Postman_get_EDR.png)
 
 ```json
 {
@@ -686,7 +686,7 @@ EDRのIDがわかる。`0278e81e-5dea-4ab7-876f-60cd8a202e09`
 
 先程確認したトークンを用いてデータを取得する。
 
-![環境](images/20250119_Postman_Get_Data_Token.png)
+![環境](/memo-blog/images/20250119_Postman_Get_Data_Token.png)
 
 ```json
 [

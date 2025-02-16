@@ -23,11 +23,18 @@ Janを使ってみる。
 ここではUbuntu環境を前提にAppImageを用いる。
 このとき最新版だった、 [jan-linux-x86_64-0.5.4.AppImage] をダウンロードした。自分の環境の場合は、 `~/Applications/` 以下にダウンロードした。
 
-実行。
+Ansibleプレイブックとしてはいかが参考になる。
+
+- https://github.com/dobachi/ansible-miscs/blob/master/playbooks/conf/linux/jan.yml
+- https://github.com/dobachi/ansible-miscs/blob/master/roles/jan/tasks/main.yml
+
+環境が整ったら実行。
 
 ```bash
-$ ./Applications/jan-linux-x86_64-0.5.4.AppImage 
+$ ~/Applications/jan/default/jan-linux-x86_64-0.5.4.AppImage 
 ```
+
+初回起動時はインストールするかどうかを聞かれるのでYesとする。
 
 GUIからひとまず lama3.1-8b-instruct を試すことにした。
 

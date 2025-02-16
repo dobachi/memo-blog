@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="メモ 参考   メモ LLMプラットフォームの「JAN」、様々なモデルでチャットAIを作れる を参考に、 Janを使ってみる。 Janの公式サイト に掲載の通り、パッケージをダウンロードする。 ここではUbuntu環境を前提にAppImageを用いる。 このとき最新版だった、 jan-linux-x86_64-0.5.4.AppImage をダウンロードした。自分の環境の場合は、 ~/App">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2025-02-08T15:06:16.111Z">
+<meta property="og:updated_time" content="2025-02-16T14:32:07.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jan">
 <meta name="twitter:description" content="メモ 参考   メモ LLMプラットフォームの「JAN」、様々なモデルでチャットAIを作れる を参考に、 Janを使ってみる。 Janの公式サイト に掲載の通り、パッケージをダウンロードする。 ここではUbuntu環境を前提にAppImageを用いる。 このとき最新版だった、 jan-linux-x86_64-0.5.4.AppImage をダウンロードした。自分の環境の場合は、 ~/App">
@@ -263,8 +263,14 @@ ga('send', 'pageview');
 ここではUbuntu環境を前提にAppImageを用いる。 このとき最新版だった、 <a href="https://github.com/janhq/jan/releases/download/v0.5.4/jan-linux-x86_64-0.5.4.AppImage" target="_blank" rel="noopener">jan-linux-x86_64-0.5.4.AppImage</a>
 をダウンロードした。自分の環境の場合は、 <code>~/Applications/</code>
 以下にダウンロードした。</p>
-<p>実行。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./Applications/jan-linux-x86_64-0.5.4.AppImage</span><br></pre></td></tr></table></figure>
+<p>Ansibleプレイブックとしてはいかが参考になる。</p>
+<ul>
+<li>https://github.com/dobachi/ansible-miscs/blob/master/playbooks/conf/linux/jan.yml</li>
+<li>https://github.com/dobachi/ansible-miscs/blob/master/roles/jan/tasks/main.yml</li>
+</ul>
+<p>環境が整ったら実行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ~/Applications/jan/default/jan-linux-x86_64-0.5.4.AppImage</span><br></pre></td></tr></table></figure>
+<p>初回起動時はインストールするかどうかを聞かれるのでYesとする。</p>
 <p>GUIからひとまず lama3.1-8b-instruct を試すことにした。</p>
 <p>続いて、 <a href="https://xtech.nikkei.com/atcl/nxt/column/18/02920/082200002/?i_cid=nbpnxt_reco_atype&amp;utm_source=pocket_shared" target="_blank" rel="noopener">LLMプラットフォームの「JAN」、様々なモデルでチャットAIを作れる</a>
 の記事でも用いられている、<a href="https://huggingface.co/" target="_blank" rel="noopener">huggingface</a>からモデルを探して試す。
@@ -292,7 +298,7 @@ Hubの機能や使い方・ライブラリをわかりやすく解説！</a></li
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2024/09/28/Jan/" data-id="cm6wbw3q6006x19nu58kav165" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2024/09/28/Jan/" data-id="cm77q71ip006v17obqudvro63" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
