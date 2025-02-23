@@ -35,18 +35,22 @@ tags:
 
 1. **国連システム事務局長調整委員会（UN System Chief Executives Board）の報告書**では、
 「グローバルなコンセンサスの欠如と、政策および実践の断片化が、共通フレームワーク開発における課題となっている」と明確に指摘されています。
+
 URL: https://unsceb.org/sites/default/files/2023-05/Annex%201%20-%20Mapping%20and%20Comparing%20Data%20Governance%20Frameworks.pdf [2]
 
 2. **Information Technology and Innovation Foundation (ITIF)** の分析では、
 特にクロスボーダーデータフローに関して、統一された国際的なガバナンスフレームワークの不在が、グローバルなデジタル経済の発展を妨げる要因となっていることを指摘しています。
+
 URL: https://itif.org/publications/2021/07/19/how-barriers-cross-border-data-flows-are-spreading-globally-what-they-cost/ [3]
 
 3. **医療分野におけるAI技術の文脈**でも、
 統一された規制フレームワークの不在が、データの品質管理、ガバナンス、倫理的な課題に影響を与えていることが指摘されています。（ここではデータガバナンスに限らない広い意味でのガバナンス）
+
 URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC10879008/ [4]
 
 4. **ESGレポーティングの領域**においても、
 データガバナンスに関する「統一された」または「普遍的な」基準の不在が、グローバル企業の報告実務における重要な課題として認識されています。
+
 URL: https://novisto.com/resources/blogs/challenges-of-esg-reporting-and-strategies [1]
 
 これらの報告は、異なる分野や文脈から、グローバルに統一されたデータガバナンスフレームワークの必要性を指摘しており、この課題が広く認識されていることを示しています。特に、クロスボーダーでのデータ活用が増加する中、この課題の重要性は一層高まっていると言えます。
@@ -101,50 +105,184 @@ Global Digital Compactの採択は、国際社会がデータガバナンスの�
 
 ## 参考文献
 1. UN Sustainable Development (2024) - "Press Release: World leaders adopt Pact for the Future"
-   https://www.un.org/en/summit-of-the-future/pact-for-the-future
+   - https://www.un.org/en/summit-of-the-future/pact-for-the-future
 2. Broadband Commission (2024) - "Supporting the Global Digital Compact"
+   - https://www.broadbandcommission.org/global-digital-compact-data-governance/
+   - ブロードバンド委員会の主要な成果物のひとつにツールキットが挙げられます。政府と規制当局が責任をもって
+     データを管理する能力を構築するのを支援する。
 3. UN Office for Digital and Emerging Technologies (2024) - "Global Digital Compact Framework"
 4. Data4SDGs (2024) - "The Global Digital Compact opportunity for data governance"
 
 # データガバナンスの国際標準に関するまとめ
 
 ## はじめに
-デジタルトランスフォーメーションが加速する現代において、データは組織の最も重要な資産の一つとなっています。しかし、このデータを効果的に管理し、価値を最大化するためには、適切なガバナンスフレームワークが不可欠です。本記事では、エンジニアや実務者の視点から、データガバナンスの国際標準について詳しく解説します。
+デジタルトランスフォーメーションが加速する現代において、データは組織の最も重要な資産の一つとなっています。しかし、このデータを効果的に管理し、価値を最大化するためには、適切なガバナンスフレームワークが不可欠です。
 
 ## なぜ今、データガバナンスの標準化が重要なのか
 
 データガバナンスの標準化は、いくつかの理由から組織にとって重要性を増しています。例えば以下のようなものが挙げられます。：
 
 1. データ駆動型意思決定の増加
-2. 規制要件の厳格化
-3. データセキュリティリスクの高まり
+2. 規制要件の厳格化、多様化
+3. データセキュリティに関するリスクの高まり
 4. グローバルなデータ連携の必要性 [2]
+
+など。
 
 ## 主要な国際標準フレームワーク
 
 ### 1. ISO/IEC 38505-1:2017
+
+https://www.iso.org/standard/56639.html
+
+ISO/IEC 38505-1：2017は、組織内の効果的で効率的かつ許容可能な使用に関する組織の管理機関（所有者、取締役、パートナー、エグゼクティブマネージャーなど）のメンバーに指導原則を提供します。
+
+#### 注意点
+
+https://www.iso.org/standard/87195.html にあるように、これは「ISO/IEC CD 38505-1」によって置き換えられる予定である。
+
+#### 基礎原則
+
 このフレームワークは、データガバナンスの基本原則を定義し、以下の要素を含みます：
 
-- 責任（Responsibility）
-- 戦略（Strategy）
-- 取得（Acquisition）
-- パフォーマンス（Performance）
-- 適合性（Conformance）
-- 人間行動（Human Behavior） [1]
+| 原則 | 説明 |
+|------|------|
+| **責任（Responsibility）** | データに関する意思決定と行動に対する責任を明確にし、適切な権限を付与する。 |
+| **戦略（Strategy）** | データの取り扱いが組織の事業目標と一致し、現在および将来のビジネスニーズを満たすよう計画する。 |
+| **取得（Acquisition）** | データの取得、作成、管理が正当な理由に基づき、透明性のある手順で行われる。 |
+| **パフォーマンス（Performance）** | データが目的に適した品質を維持し、組織に価値を提供できるようにする。 |
+| **コンプライアンス（Compliance）** | データの取り扱いが法令、規制、契約要件、内部方針に準拠していることを確保する。 |
+| **人間行動（Human Behavior）** | データに関連する方針や意思決定において、人間の行動特性を考慮する。 |
+
+これらの原則は、データガバナンスを効果的に実施するための基盤となります。
+
+#### EDMモデル
+
+| モデル要素 | 説明 |
+|------------|------|
+| - 評価（Evaluate） | データの現状、使用状況、提案された施策を評価し、ビジネスニーズに照らして判断を行う |
+| - 指示（Direct） | 評価に基づき、方針の策定、計画の立案、手順の確立などの指示を行う |
+| - 監視（Monitor） | 実施状況、パフォーマンス、コンプライアンスを継続的に監視する |
+
+#### データのライフサイクル
+
+ISO/IEC 38505-1:2017におけるデータライフサイクルの管理を以下の表で整理します。
+
+注意）後で内容チェックする。
+
+| ライフサイクル段階        | 主な活動                                                   | ガバナンス上の考慮事項                                              |
+|------------------|--------------------------------------------------------|----------------------------------------------------------|
+| **計画（Plan）**     | - データニーズの特定<br>- データ要件の定義<br>- データ品質基準の設定<br>- 管理方針の策定 | - ビジネス目標との整合性<br>- 法規制要件の考慮<br>- リスク評価<br>- 必要なリソースの見積もり |
+| **取得（Obtain）**   | - データの収集<br>- データの作成<br>- データの購入<br>- 外部からの入手          | - データの出所の信頼性<br>- 収集方法の適切性<br>- プライバシーへの配慮<br>- 契約要件の遵守  |
+| **保管（Store）**    | - データの保存<br>- バックアップ<br>- アーカイブ<br>- セキュリティ対策          | - 保管場所の適切性<br>- アクセス制御<br>- データ保護措置<br>- 保持期間の管理         |
+| **共有（Share）**    | - データの配布<br>- アクセス権限管理<br>- データ交換<br>- 第三者提供           | - 共有範囲の適切性<br>- 機密性の確保<br>- データ形式の標準化<br>- 利用条件の明確化      |
+| **使用（Use）**      | - データの分析<br>- 意思決定への活用<br>- サービス提供<br>- 業務処理           | - 使用目的の妥当性<br>- データ品質の確保<br>- 利用権限の管理<br>- 価値創出の評価       |
+| **維持（Maintain）** | - データの更新<br>- 品質管理<br>- メタデータ管理<br>- 整合性確保             | - 更新手順の適切性<br>- 品質基準の遵守<br>- 変更管理<br>- 履歴管理              |
+| **廃棄（Dispose）**  | - データの削除<br>- 媒体の破棄<br>- アーカイブ判断<br>- 記録管理             | - 廃棄基準の明確化<br>- 完全性の確保<br>- 法的要件の遵守<br>- 証跡の保管           |
+
+注意事項：
+1. 各段階は独立したものではなく、相互に関連している
+2. すべての段階でEDM（評価・指示・監視）サイクルを適用する
+3. リスク管理とコンプライアンスは全段階を通じて考慮する
+4. データの価値とコストのバランスを常に意識する
+
+なお、https://www.jipdec.or.jp/library/report/u71kba000000dcyz-att/20171020summary_02.pdf では、
+収集（Collect）、保存（Store）、報告（Report）、決定（Decide）、配布（Distribute）、廃棄（Dispose）としている。
+
+#### モデル概要
+
+![モデル概要](/memo-blog/images/20250223_ISOIEC38505-1model)
+
+経産省『第３層：サイバー空間におけるつながり』の信頼性確保に向けたセキュリティ対策検討タスクフォースの検討の方向性より。
+https://www.meti.go.jp/shingikai/mono_info_service/sangyo_cyber/wg_seido/wg_bunyaodan/daisanso/pdf/002_03_00.pdf
 
 ### 2. ISO 8000シリーズ
+
+ISO 8000は、データ品質とエンタープライズマスターデータに関する国際標準規格です。組織におけるデータの品質管理、特にマスターデータの管理と交換に関する要件を定義しています。この規格は、データの作成、収集、保管、維持、および交換における品質基準を確立し、組織間でのデータの相互運用性を確保することを目的としています。
+
+なお、ISO 9000ではビジネスプロセスに関する品質・マネジメントを対象とするのに対し、ISO 8000はそこで扱われる様々なデータの質を対象としている。特に組織間・システム間でデータ交換する際のデータ品質要件・品質評価の方法やプロセスを規定します。
+
+ドイツ鉄道ネットワーク（Part 150）、韓国政府機関（Part 61）などで国際標準に準拠したデータ運用がなされています。
+
 データ品質に特化した標準で、以下をカバーします：
 
 - マスターデータ品質
 - データ交換の品質保証
 - プロセス改善のためのフレームワーク [3]
 
-### 3. ISO/IEC 27701:2019
-プライバシー情報管理の拡張規格として：
+#### データ品質とは？
 
-- データプライバシーの保護
-- 個人情報の管理
-- リスク評価とコントロール [3]
+[データにも品質があるの？ISO 8000ってなに？] にも記載されている通り、データ品質の考え方・要件は目的によって異なるので、いわば「目的適合性」と考えることもできる。
+
+ISO 8000におけるデータ品質の3個の側面
+
+- 構文的品質（syntactic quality）
+- 意味的品質（semantic quality）
+- 合目的品質（pragmatic quality）
+
+[データにも品質があるの？ISO 8000ってなに？] のp.29に以下の図が載っている。
+
+![データ品質の階層構造](/memo-blog/images/20250223_ISO8000_Layers.png)
+
+ISO 8000は水平規格であり、それを頂点とした個別の事業分野ごとのデータ品質規格が存在します。
+
+#### データスペースとの関係性
+
+[データにも品質があるの？ISO 8000ってなに？] のp.31にもあるが、IDSAがAAS（Asset Administration Shell）を拡張適用しています。
+
+International Data Spaces Association (IDSA)がAsset Administration Shell (AAS)を活用・拡張している事例について、以下の文献が参考になります：
+
+[IDSAのポジションペーパー March 2024](https://internationaldataspaces.org/wp-content/uploads/dlm_uploads/IDSA-Position-Paper-Bridging-the-Gap-Between-IDS-and-Industry-4.0.pdf)
+
+上記ペーパーでは、異なるアーキテクチャモデルの統合について議論しています。RAMI4.0とIDS-RAM。 
+IDSAとPI4.0では各レイヤごとに差分があるが、その統合のチャレンジについて記載されています。
+なお、特定の実装によらないように考慮されています。
+
+#### ISO 8000シリーズのリスト
+
+[データにも品質があるの？ISO 8000ってなに？] の末尾には、以下のようなまとめが記載されており、大変便利。感謝です。
+
+![ISO 8000関連のPartリスト1](/memo-blog/images/20250223_ISO8000_list1-2.png)
+
+![ISO 8000関連のPartリスト2](/memo-blog/images/20250223_ISO8000_list2-2.png)
+
+### 3. ISO/IEC 27701:2019
+
+#### 概要
+
+ISO/IEC 27701:2019は、ISO/IEC 27001および27002を拡張し、プライバシー情報管理システム（PIMS）のための規格です。この規格は、個人情報保護を強化し、データプライバシーに関するリスクを体系的に管理するための要件とガイドラインを提供します。特に、GDPRなどの国際的なプライバシー法への準拠を支援し、組織が透明性と信頼性を確立するためのフレームワークを構築します。 [1], [2]
+
+#### 主要なポイント
+
+##### 規格の特徴
+- ISO/IEC 27001の情報セキュリティ管理システム（ISMS）を基盤とした拡張規格
+- プライバシー情報管理システム（PIMS）の確立と維持のための要件を規定
+- 個人情報管理者（コントローラー）および処理者（プロセッサー）の役割に対応 [1], [4]
+
+##### 主な要素
+- **プライバシーリスク管理**: 個人情報保護のリスク評価と管理
+- **プライバシーバイデザイン**: プライバシーを考慮したシステム設計
+- **技術的および組織的対策**: データ保護のための具体的な手法 [2], [3]
+
+##### 適用範囲
+- 個人情報を取り扱うすべての組織（例: GDPR、CCPAなどの法律に準拠）
+- 情報セキュリティとプライバシー管理の統合的アプローチ [3], [4]
+
+#### 3. 関連キーワード
+- PIMS（Privacy Information Management System）
+- ISMS（Information Security Management System）
+- GDPR（General Data Protection Regulation）
+- プライバシーバイデザイン
+- データプライバシー
+- ISO/IEC 27001
+- ISO/IEC 27002 [1], [2]
+
+#### 4. 参考URL
+- [ISO公式サイト](https://www.iso.org/standard/71670.html) [1]
+- [Microsoft Learn Documentation](https://learn.microsoft.com/en-us/compliance/regulatory/offering-iso-27701) [2]
+- [AWS Compliance](https://aws.amazon.com/compliance/iso-27701-faqs/) [4]
+- [ISMS Online](https://www.isms.online/iso-27701/) [3]
+- [JQA ISO/IEC 27701（プライバシー情報）](https://www.jqa.jp/service_list/management/service/iso27701/)
 
 ## 実装のためのベストプラクティス
 
@@ -197,6 +335,9 @@ Global Digital Compactの採択は、国際社会がデータガバナンスの�
 2. Science Direct (2024) - "Data governance & quality management—Innovation and perspectives"
 3. Data View House (2023) - "ISO standards for data governance"
 4. LinkedIn Pulse (2024) - "The Ultimate Guide to Data Governance Frameworks"
+5. https://www.jipdec.or.jp/library/report/u71kba000000dcyz-att/20171020summary_02.pdf
+6. https://www.nistep.go.jp/wp/wp-content/uploads/KIDSASHI03.pdf
+7. [データにも品質があるの？ISO 8000ってなに？](https://webdesk.jsa.or.jp/pdf/dev/md_5550.pdf)
 
 このブログ記事が、皆様のデータガバナンス実装の一助となれば幸いです。ご質問やご意見がございましたら、コメントセクションでお待ちしております。
 
