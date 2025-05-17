@@ -6,9 +6,9 @@ tags:
 - Knowledge Management
 - GitHub
 - GitHub Actions
-- Git
 categories:
 - Technical
+- Git
 
 ---
 
@@ -22,7 +22,7 @@ categories:
 
 ### 1. 同期先リポジトリを新規作成
 
-GitHub上で同期先リポジトリを作成する（例: `dobachi-org/memo-blog-text`）。
+GitHub上で同期先リポジトリを作成する（例: `組織名/リポジトリ名`）。
 
 - **リポジトリの設定**:
     - 空のリポジトリとして作成（`README.md` や `.gitignore` は追加しない）。
@@ -37,8 +37,8 @@ GitHub上で同期先リポジトリを作成する（例: `dobachi-org/memo-blo
 ローカル環境に同期先リポジトリをクローンする。
 
 ```bash
-git clone git@github.com:dobachi-org/memo-blog-text.git
-cd memo-blog-text
+git clone git@github.com:組織名/リポジトリ名.git
+cd リポジトリ名
 ```
 
 ### (2) masterブランチを作成
@@ -51,10 +51,10 @@ git checkout -b master
 
 ### (3) 同期元リポジトリをリモートとして追加
 
-同期元リポジトリ（例: `dobachi/memo-blog-text`）をリモートとして追加する。
+同期元リポジトリ（例: `ユーザー名/リポジトリ名`）をリモートとして追加する。
 
 ```bash
-git remote add source git@github.com:dobachi/memo-blog-text.git
+git remote add source git@github.com:ユーザー名/リポジトリ名.git
 ```
 
 ### (4) 同期元リポジトリをpull
@@ -144,14 +144,14 @@ jobs:
       - name: Checkout source repository
         uses: actions/checkout@v3
         with:
-          repository: dobachi/memo-blog-text
+          repository: ユーザー名/リポジトリ名
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: master
       
       # ターゲットリポジトリにプッシュ
       - name: Push to target repository
         env:
-          TARGET_REPO: git@github.com:dobachi-org/memo-blog-text.git
+          TARGET_REPO: git@github.com:組織名/リポジトリ名.git
           SSH_PRIVATE_KEY: ${{ secrets.SYNC_SSH_KEY }}
         run: |
           # SSHキーの設定
