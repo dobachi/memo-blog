@@ -307,7 +307,7 @@ unable to limit memory (-m flag) on Ubuntu/Debian distros #6365</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/10/Error-about-the-memory-configuration-of-Minikube/" data-id="cmasir6sn007x18o9w0q0kcrb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/10/Error-about-the-memory-configuration-of-Minikube/" data-id="cmasiwer2002e18ldeg5xy92c" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -575,7 +575,7 @@ Meetup Tokyoのコアメンバーが議論</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Blogs-about-the-portability-of-kubernetes/" data-id="cmasir72p01a418o9evdl4dga" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Blogs-about-the-portability-of-kubernetes/" data-id="cmasiwf1y01al18ld4v03yrkz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -725,26 +725,26 @@ Spark on Kubernetes</a> の通りでよい。</p>
 今回はMinikube環境で動かしているので <code>-m</code>
 オプションを利用した。</p>
 <p>簡易的な例</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/docker-image-tool.sh -m -t testing build</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> /opt/spark/default/bin/docker-image-tool.sh -m -t testing build</span><br></pre></td></tr></table></figure>
 <p>Minikube内のDockerでイメージ一覧を確認すると以下の通り。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">eval</span> $(minikube -p minikube docker-env)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker images</span></span><br><span class="line">REPOSITORY                                TAG           IMAGE ID       CREATED          SIZE</span><br><span class="line">spark                                     testing       e19cebbf23e7   44 minutes ago   602MB</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> eval $(minikube -p minikube docker-env)</span><br><span class="line"><span class="meta">$</span> docker images</span><br><span class="line">REPOSITORY                                TAG           IMAGE ID       CREATED          SIZE</span><br><span class="line">spark                                     testing       e19cebbf23e7   44 minutes ago   602MB</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <h3><span id="実行">実行</span></h3>
 <p>サービスアカウントを作る。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> minikube kubectl -- create serviceaccount spark</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> minikube kubectl -- create clusterrolebinding spark-role --clusterrole=edit --serviceaccount=default:spark --namespace=default</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> minikube kubectl -- get serviceaccount</span></span><br><span class="line">NAME      SECRETS   AGE</span><br><span class="line">default   1         179m</span><br><span class="line">spark     1         2m39s</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> minikube kubectl -- create serviceaccount spark</span><br><span class="line"><span class="meta">$</span> minikube kubectl -- create clusterrolebinding spark-role --clusterrole=edit --serviceaccount=default:spark --namespace=default</span><br><span class="line"><span class="meta">$</span> minikube kubectl -- get serviceaccount</span><br><span class="line">NAME      SECRETS   AGE</span><br><span class="line">default   1         179m</span><br><span class="line">spark     1         2m39s</span><br></pre></td></tr></table></figure>
 <p>実行は以下の通り。先ほど作ったサービスアカウントを使用するようにする。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-submit --master k8s://https://192.168.49.2:8443 --deploy-mode cluster --name pi --class org.apache.spark.examples.SparkPi --conf spark.executor.instances=2 --conf spark.kubernetes.container.image=spark:testing --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark <span class="built_in">local</span>:///opt/spark/examples/jars/spark-examples_2.12-3.2.0.jar</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> /opt/spark/default/bin/spark-submit --master k8s://https://192.168.49.2:8443 --deploy-mode cluster --name pi --class org.apache.spark.examples.SparkPi --conf spark.executor.instances=2 --conf spark.kubernetes.container.image=spark:testing --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark local:///opt/spark/examples/jars/spark-examples_2.12-3.2.0.jar</span><br></pre></td></tr></table></figure>
 <p>なお、今回はMinikube上で実行しており、Jarファイルとして指定するのはMinikube内で起動したドライバのコンテナ内のローカルファイルシステムパスである。試しに、当該近店をアタッチして起動するとわかる。</p>
 <p>ドライバのログを確認する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> minikube kubectl -- logs pi-43bff77e450bdba3-driver</span></span><br><span class="line">(snip)</span><br><span class="line">22/01/10 17:32:02 INFO TaskSchedulerImpl: Killing all running tasks in stage 0: Stage finished</span><br><span class="line">22/01/10 17:32:02 INFO DAGScheduler: Job 0 finished: reduce at SparkPi.scala:38, took 0.824388 s</span><br><span class="line">Pi is roughly 3.142475712378562</span><br><span class="line">22/01/10 17:32:02 INFO SparkUI: Stopped Spark web UI at http://pi-43bff77e450bdba3-driver-svc.default.svc:4040</span><br><span class="line">22/01/10 17:32:02 INFO KubernetesClusterSchedulerBackend: Shutting down all executors</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> minikube kubectl -- logs pi-43bff77e450bdba3-driver</span><br><span class="line">(snip)</span><br><span class="line">22/01/10 17:32:02 INFO TaskSchedulerImpl: Killing all running tasks in stage 0: Stage finished</span><br><span class="line">22/01/10 17:32:02 INFO DAGScheduler: Job 0 finished: reduce at SparkPi.scala:38, took 0.824388 s</span><br><span class="line">Pi is roughly 3.142475712378562</span><br><span class="line">22/01/10 17:32:02 INFO SparkUI: Stopped Spark web UI at http://pi-43bff77e450bdba3-driver-svc.default.svc:4040</span><br><span class="line">22/01/10 17:32:02 INFO KubernetesClusterSchedulerBackend: Shutting down all executors</span><br><span class="line">(snip)</span><br></pre></td></tr></table></figure>
 <p>pi計算の結果がログに出力されているのがわかる。</p>
 <h3><span id="補足ビルドされたイメージを起動して内容確認">（補足）ビルドされたイメージを起動して内容確認</span></h3>
 <p>以下は、MinikubeのDockerを利用しビルドしたイメージのコンテナを起動して、シェルをアタッチした例。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">eval</span> $(minikube -p minikube docker-env)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -it --rm spark:testing /bin/bash</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> eval $(minikube -p minikube docker-env)</span><br><span class="line"><span class="meta">$</span> docker run -it --rm spark:testing /bin/bash</span><br></pre></td></tr></table></figure>
 <h3><span id="補足minikube使う場合のリソース設定についての注意事項">（補足）Minikube使う場合のリソース設定についての注意事項</span></h3>
 <p><a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html#prerequisites" target="_blank" rel="noopener">Prerequisites</a>
 の通り、Minikube等を使うようであれば、リソースに対して注意がある。
 以下、Minikube立ち上げ例。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> minikube start --memory=<span class="string">'4g'</span> --cpus=3</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> minikube start --memory='4g' --cpus=3</span><br></pre></td></tr></table></figure>
 <h2><span id="補足kubernetes環境">（補足）Kubernetes環境</span></h2>
 <p>動作確認のためには、Kubernetes環境が必要である。</p>
 <p><a href="https://minikube.sigs.k8s.io/docs/start/" target="_blank" rel="noopener">minikube start</a>
@@ -787,7 +787,7 @@ Spark on Kubernetes?</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Getting-started-Spark-on-k8s/" data-id="cmasir6td009118o9fv693ocy" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/07/Getting-started-Spark-on-k8s/" data-id="cmasiwerc003b18ldzj38ecuy" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1047,7 +1047,7 @@ DeltaSharingMinioExample</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/" data-id="cmasir73401aw18o9i0wrmsfk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/" data-id="cmasiwf2801b518ldll93nl7k" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1384,7 +1384,7 @@ API</a> を参考に確認する。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/09/10/Getting-Started-of-Delta-Sharing/" data-id="cmasir73a01b718o90864lgbw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/09/10/Getting-Started-of-Delta-Sharing/" data-id="cmasiwf2b01bc18lddc511rtz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1623,7 +1623,7 @@ Security Server Architecture Process View</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/09/03/X-Road/" data-id="cmasir6xb00jc18o96aie1ku3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/09/03/X-Road/" data-id="cmasiwev000cw18ldhx2ra4ui" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2344,7 +2344,7 @@ Reitsakasは、2001年の最初のX-Roadプロジェクトマネージャ。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/08/30/Software-for-Data-Sharing/" data-id="cmasir76k01ix18o9om34kmkb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/08/30/Software-for-Data-Sharing/" data-id="cmasiwf5h01k018ld7s82wlkd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2684,7 +2684,7 @@ Armeriaではなく、DeltaSharedTableのクラスローダの下で関数を実
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/08/30/Source-Code-Reading-of-Delta-Sharing/" data-id="cmasir75d01gi18o9ca7mwvs9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/08/30/Source-Code-Reading-of-Delta-Sharing/" data-id="cmasiwf4901hd18ldnrea5peq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2960,7 +2960,7 @@ Google Cloud Storage in Delta Sharing Server</a></p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/08/27/Recent-hot-activities-of-Delta-Sharing/" data-id="cmasir6vq00ey18o96evud1mx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/08/27/Recent-hot-activities-of-Delta-Sharing/" data-id="cmasiwett008p18ld43cldv1k" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3135,7 +3135,7 @@ Shuffle Service Push-based Shuffle at LinkedIn</span></h1>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/08/24/SparkSummit2021/" data-id="cmasir6w200fz18o98ps5925e" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/08/24/SparkSummit2021/" data-id="cmasiweu3009o18ld9gajtfci" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

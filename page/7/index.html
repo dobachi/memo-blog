@@ -274,7 +274,7 @@ Data Mesh</a> を読んで簡単にまとめた。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/" data-id="cmasir6uq00cz18o97zl7nt43" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/19/Memo-of-How-to-Move-Beyond-a-Monolithic-Data-Lake-to-a-Distributed-Data-Mesh/" data-id="cmasiwesu006l18ldrvgmwrvd" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -425,7 +425,7 @@ Engineを使用した際のTPC−DSの実行結果、クエリ実行コストの
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/16/Memo-of-Lakehouse-A-New-Generation-of-Open-Platforms-that-Unify-Data-Warehousing-and-Advanced-Analytics/" data-id="cmasir6ut00d318o9i38i69bz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/16/Memo-of-Lakehouse-A-New-Generation-of-Open-Platforms-that-Unify-Data-Warehousing-and-Advanced-Analytics/" data-id="cmasiwesv006n18ldfc8lflvl" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -589,19 +589,19 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
 <p>secret.yml</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hoge:</span></span><br><span class="line"><span class="attr">  fuga:</span> <span class="string">foo</span></span><br></pre></td></tr></table></figure>
 <p>ファイルを暗号化する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault create secret.yml</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault create secret.yml</span><br></pre></td></tr></table></figure>
 <p>上記ファイルを作成する際、Vault用パスワードを聞かれるので適切なパスワードを入力すること。
 あとでパスワードは利用する。</p>
 <h2><span id="参考復号して平文化">（参考）復号して平文化</span></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault decrypt secret.yml</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault decrypt secret.yml</span><br></pre></td></tr></table></figure>
 <h2><span id="参考暗号化されたファイルの編集">（参考）暗号化されたファイルの編集</span></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault edit secret.yml</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault edit secret.yml</span><br></pre></td></tr></table></figure>
 <h2><span id="参考vaultパスワードをファイルとして渡す">（参考）Vaultパスワードをファイルとして渡す</span></h2>
 <p>プロンプトで入力する代わりに、どこかプレイブック集の外などにVaultパスワードを保存し利用することもできる。
 ここでは、 <code>~/.vault_password</code>
 にパスワードを記載したファイルを準備したものとする。
 編集する例を示す。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-vault edit secret.yml --vault-password-file ~/.vault_password</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-vault edit secret.yml --vault-password-file ~/.vault_password</span><br></pre></td></tr></table></figure>
 <h2><span id="プレイブック内で変数として利用">プレイブック内で変数として利用</span></h2>
 <p>変数定義ファイルとして渡し、プレイブック内で変数として利用する。
 以下のようなプレイブックを作る。</p>
@@ -619,7 +619,7 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
 という内容がSTDOUTに表示されるはず。</li>
 </ul>
 <p>プレイブックを実行する。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ansible-playbook test.yml --ask-vault-pass</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ansible-playbook test.yml --ask-vault-pass</span><br></pre></td></tr></table></figure>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -631,7 +631,7 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/01/07/Getting-started-of-Ansible-Vault/" data-id="cmasir6te009418o9ccetihrv" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/01/07/Getting-started-of-Ansible-Vault/" data-id="cmasiwera003618ldc5emxkv9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -791,7 +791,7 @@ content with Ansible Vault</a> が網羅的でわかりやすいのだが、
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Use-static-image-on-Hexo-blog/" data-id="cmasir6wv00ia18o9u6gmha5l" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Use-static-image-on-Hexo-blog/" data-id="cmasiweus00by18ld6yld728o" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1072,7 +1072,7 @@ Impersonation」を読むと、 「なりすまし」を許可する設定があ
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Delta-Lake-with-Alluxio/" data-id="cmasir73101as18o9n252m7h5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/31/Delta-Lake-with-Alluxio/" data-id="cmasiwf2601b018ldc2ts77e8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1410,7 +1410,7 @@ Fabric</a>、 <a href="https://www.splunk.com/ja_jp/resources/enterprise-machine
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/26/Information-about-trends-in-2020/" data-id="cmasir73h01bi18o9xiaa003z" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/26/Information-about-trends-in-2020/" data-id="cmasiwf2g01bn18ld5wwryahs" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1722,7 +1722,7 @@ Connect形式に変換する。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/16/Reference-of-connector-plugin/" data-id="cmasir75b01gf18o9nandcykx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/16/Reference-of-connector-plugin/" data-id="cmasiwf4801h918ld0s86h62e" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1869,9 +1869,9 @@ Connect形式に変換する。</p>
 を使って最速でScalaの開発環境を整える</a>
 のブログに記載されているとおり、 Scala開発環境を簡単に整えられる。</p>
 <p>ひとまずDocker内で試す。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo docker pull ubuntu:18.04</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo docker run -rm -it -d --name ubu ubuntu:18.04</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo docker <span class="built_in">exec</span> -it ubu /bin/bash</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo docker pull ubuntu:18.04</span><br><span class="line"><span class="meta">$</span> sudo docker run -rm -it -d --name ubu ubuntu:18.04</span><br><span class="line"><span class="meta">$</span> sudo docker exec -it ubu /bin/bash</span><br></pre></td></tr></table></figure>
 <p>Dockerコンテナ内でインストール。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> apt update</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> apt install -y curl</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> curl -fLo cs https://git.io/coursier-cli-linux &amp;&amp;</span></span><br><span class="line">     chmod +x cs &amp;&amp;</span><br><span class="line">     ./cs</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> apt update</span><br><span class="line"><span class="meta">#</span> apt install -y curl</span><br><span class="line"><span class="meta">#</span> curl -fLo cs https://git.io/coursier-cli-linux &amp;&amp;</span><br><span class="line">     chmod +x cs &amp;&amp;</span><br><span class="line">     ./cs</span><br></pre></td></tr></table></figure>
 <p>結果として以下がインストールされた様子。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Checking if the standard Scala applications are installed</span><br><span class="line">  Installed ammonite</span><br><span class="line">  Installed cs</span><br><span class="line">  Installed coursier</span><br><span class="line">  Installed scala</span><br><span class="line">  Installed scalac</span><br><span class="line">  Installed sbt</span><br><span class="line">  Installed sbtn</span><br><span class="line">  Installed scalafmt</span><br></pre></td></tr></table></figure>
 <p><code>~/.profile</code>に環境変数等がまとまっているので有効化する。</p>
@@ -1896,7 +1896,7 @@ Connect形式に変換する。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/12/07/Create-project-includes-sbt-launcher/" data-id="cmasir6sa006v18o9jqi65jwe" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/12/07/Create-project-includes-sbt-launcher/" data-id="cmasiweqr001n18ldngkd3wms" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2331,7 +2331,7 @@ ignoreChanges オプション</span></h3>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/11/19/Read-and-write-data-on-Delta-Lake-streaming-manner/" data-id="cmasir75801ga18o9jj65w8n4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/11/19/Read-and-write-data-on-Delta-Lake-streaming-manner/" data-id="cmasiwf4601h518ldaleafz4j" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2595,7 +2595,7 @@ Spark RDDの <code>cache</code>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/11/13/BigDL-memory-usage/" data-id="cmasir72m01a218o9imllne6d" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/11/13/BigDL-memory-usage/" data-id="cmasiwf1w01aj18ldumg562u3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

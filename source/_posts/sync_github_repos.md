@@ -164,6 +164,7 @@ jobs:
           git remote add target "$TARGET_REPO"
           
           # ターゲットリポジトリにプッシュ
+          git fetch --unshallow
           git push --force target master
 ```
 
