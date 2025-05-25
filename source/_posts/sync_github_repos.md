@@ -2,13 +2,19 @@
 
 title: GitHub Actionsを使ったレポジトリの同期（一方向）
 date: 2025-05-18 01:17:00
+
+category:
+
+- GitHub
+- Actions
+
 tags:
-- Knowledge Management
+
 - GitHub
 - GitHub Actions
+- Git
 categories:
 - Technical
-- Git
 
 ---
 
@@ -173,6 +179,17 @@ jobs:
 1. GitHub Actionsが正常に動作するか確認するため、同期元リポジトリに変更を加える。
 2. 同期元リポジトリの`master`ブランチに変更をプッシュする。
 3. 同期先リポジトリでGitHub Actionsがトリガーされ、変更が同期されていることを確認する。
+
+### 6. 同期先のGitHub Actionsの無効化
+
+GitHub Actionsの設定ファイルは、`.github/workflows`以下に保存されるが、このファイルも同期され、同期先のGitHub Actionsも動作してしまう。
+
+これを防ぐため、以下の手順で同期先リポジトリのGitHub Actionsを無効化する：
+
+- 同期先リポジトリのページを開く
+- 「Actions」タブをクリック
+- 左サイドバーの「Actions」にある当該アクションを選択
+- 右の方にある三点リーダーから「Disable workflow」を選ぶ。
 
 ### 補足: トラブルシューティング
 
