@@ -3,7 +3,6 @@
 title: Getting started of Ansible Vault
 date: 2021-01-07 09:43:12
 categories:
-  - Knowledge Management
   - Configuration Management
   - Ansible
 tags:

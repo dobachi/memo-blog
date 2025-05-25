@@ -3,7 +3,6 @@
 title: Storage Layer ? Storage Engine ?
 date: 2019-05-10 14:36:50
 categories:
-  - Knowledge Management
   - Storage Layer
 tags:
   - Storage Layer

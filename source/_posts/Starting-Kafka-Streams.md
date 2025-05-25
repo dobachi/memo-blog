@@ -3,7 +3,6 @@
 title: Kafka Streamsの始め方
 date: 2020-02-14 14:56:58
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

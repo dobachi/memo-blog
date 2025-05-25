@@ -2,7 +2,6 @@
 title: Kafka Admin Commands
 date: 2019-11-04 23:12:19
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

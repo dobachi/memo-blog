@@ -3,7 +3,6 @@
 title: Generate PDF using pandoc
 date: 2020-10-29 22:17:31
 categories:
-  - Knowledge Management
   - Documentation
 tags:
   - pandoc

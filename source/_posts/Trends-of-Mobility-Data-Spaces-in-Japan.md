@@ -3,7 +3,6 @@
 title: Trends of Mobility Data Spaces in Japan
 date: 2025-01-05 00:03:54
 categories:
-  - Knowledge Management
   - Data Spaces
 tags:
   - Data Spaces

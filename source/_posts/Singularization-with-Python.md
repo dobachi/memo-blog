@@ -3,7 +3,6 @@
 title: Singularization with Python
 date: 2019-04-06 22:53:33
 categories:
-  - Knowledge Management
   - Data Engineering
   - Data Transformation
 tags:

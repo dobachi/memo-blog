@@ -3,7 +3,6 @@
 title: Hexoでふっとノートを用いる
 date: 2019-07-08 14:03:19
 categories:
-  - Knowledge Management
   - Hexo
 tags:
   - Hexo

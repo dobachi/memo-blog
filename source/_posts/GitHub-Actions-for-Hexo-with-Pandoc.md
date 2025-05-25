@@ -3,7 +3,6 @@
 title: GitHub Actions for Hexo with Pandoc
 date: 2022-05-02 09:57:25
 categories:
-  - Knowledge Management
   - Hexo
 tags:
   - Hexo

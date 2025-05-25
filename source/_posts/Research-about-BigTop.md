@@ -3,7 +3,6 @@
 title: Research about BigTop
 date: 2020-04-24 21:51:36
 categories:
-  - Knowledge Management
   - Hadoop
   - BigTop
 tags:

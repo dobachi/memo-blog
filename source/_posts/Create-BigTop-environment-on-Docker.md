@@ -3,7 +3,6 @@
 title: Create BigTop environment on Docker
 date: 2019-02-07 23:43:04
 categories:
-  - Knowledge Management
   - Hadoop
   - BigTop
 tags:

@@ -3,7 +3,6 @@
 title: dansbecker/data-leakage
 date: 2019-04-14 22:03:51
 categories:
-  - Knowledge Management
   - Machine Learning
   - Model
   - Data Leakage

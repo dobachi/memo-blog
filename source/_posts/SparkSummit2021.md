@@ -2,7 +2,6 @@
 title: Spark Summit 2021の前にきになってみたセッションのメモ
 date: 2021-08-24 14:19:25
 categories:
-  - Knowledge Management
   - Storage Layer
   - Delta Lake
 tags:

@@ -3,7 +3,6 @@
 title: AmbariのAgent登録時にSSL関連のエラー
 date: 2018-11-17 23:34:53
 categories:
-  - Knowledge Management
   - Hadoop
   - Ambari
 

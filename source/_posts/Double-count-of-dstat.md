@@ -3,7 +3,6 @@
 title: Double count of dstat
 date: 2021-04-09 08:28:03
 categories:
-  - Knowledge Management
   - Monitering
 tags:
   - dstat

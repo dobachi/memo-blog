@@ -2,7 +2,6 @@
 title: Hexoでソースファイルもデプロイする
 date: 2018-11-03 23:29:45
 categories:
-  - Knowledge Management
   - Hexo
 tags:
   - Hexo

@@ -3,7 +3,6 @@
 title: Seleniumを試してみる
 date: 2019-10-19 21:51:25
 categories:
-  - Knowledge Management
   - Tools
   - Selenium
 tags:

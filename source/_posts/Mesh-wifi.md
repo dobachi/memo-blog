@@ -3,7 +3,6 @@
 title: Mesh wifi for Home Network
 date: 2021-01-31 22:59:00
 categories:
-  - Knowledge Management
   - Home Network
 tags:
   - WiFi

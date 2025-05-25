@@ -2,7 +2,6 @@
 title: HexoのIcarusテーマを設定する
 date: 2018-10-14 22:27:07
 categories:
-  - Knowledge Management
   - Hexo
 tags:
   - Hexo

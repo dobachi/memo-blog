@@ -3,7 +3,6 @@
 title: dansbecker/using-categorical-data-with-one-hot-encoding
 date: 2019-04-12 16:10:22
 categories:
-  - Knowledge Management
   - Machine Learning
   - Preparation
 tags:

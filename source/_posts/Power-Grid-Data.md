@@ -3,7 +3,6 @@
 title: Power Grid Data
 date: 2021-02-12 01:03:03
 categories:
-  - Knowledge Management
   - Power Grid Data
 tags:
   - Power Grid Data

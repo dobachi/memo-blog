@@ -3,7 +3,6 @@
 title: Manage the flow of hexo documentation with CircleCI
 date: 2019-08-23 21:18:21
 categories:
-  - Knowledge Management
   - Hexo
 tags:
   - Hexo

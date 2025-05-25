@@ -3,7 +3,6 @@
 title: Tellus
 date: 2019-02-22 17:52:22
 categories:
-  - Knowledge Management
   - Open Data 
   - Tellus
 tags:

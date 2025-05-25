@@ -2,7 +2,6 @@
 title: ロゴを作る
 date: 2018-10-14 22:02:27
 categories:
-  - Knowledge Management
   - Hexo
 tags:
   - Hexo

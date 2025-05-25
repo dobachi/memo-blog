@@ -3,7 +3,6 @@
 title: GPD PocketでBluetoothトラックボールを使うと途中で使用できなくなる現象
 date: 2018-12-30 22:49:29
 categories:
-  - Knowledge Management
   - GPD Pocket
   - Device
   - Bluetooth

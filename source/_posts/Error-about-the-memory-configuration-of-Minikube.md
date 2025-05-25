@@ -3,7 +3,6 @@
 title: Error about the memory configuration of Minikube
 date: 2022-01-10 22:43:27
 categories:
-  - Knowledge Management
   - Kubernetes
 tags:
   - Kubernetes

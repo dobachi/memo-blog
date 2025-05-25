@@ -2,7 +2,6 @@
 title: Corne Chocolate
 date: 2019-03-20 23:29:23
 categories:
-  - Knowledge Management
   - Keyboard
   - Corne Chocolate
 tags:

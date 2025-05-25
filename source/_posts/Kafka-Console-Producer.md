@@ -3,7 +3,6 @@
 title: Kafkaコンソールプロデューサを起点とした確認
 date: 2019-06-26 21:43:58
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

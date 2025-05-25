@@ -3,7 +3,6 @@
 title: dansbecker/xgboost
 date: 2019-04-12 21:48:11
 categories:
-  - Knowledge Management
   - Machine Learning
   - Model
   - XGBoost

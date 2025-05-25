@@ -2,7 +2,6 @@
 title: Hexoでicarusテーマを使う
 date: 2018-10-14 21:22:08
 categories:
-  - Knowledge Management
   - Hexo
 tags:
   - Hexo

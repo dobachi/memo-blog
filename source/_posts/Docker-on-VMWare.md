@@ -3,7 +3,6 @@
 title: Docker on VMWare
 date: 2019-11-09 21:33:42
 categories:
-  - Knowledge Management
   - Windows
   - Docker
 tags:

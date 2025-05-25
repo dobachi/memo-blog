@@ -3,7 +3,6 @@
 title: Generate OpenAPI Spec of EDC Connector
 date: 2023-09-09 22:26:58
 categories:
-  - Knowledge Management
   - Data Spaces
   - EDC
 tags:

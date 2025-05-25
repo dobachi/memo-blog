@@ -2,7 +2,6 @@
 title: Hexoブログを作る
 date: 2018-09-20 00:30:33
 categories:
-  - Knowledge Management
   - Hexo
 tags: Hexo
 ---

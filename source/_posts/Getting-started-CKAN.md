@@ -3,7 +3,6 @@
 title: Getting_started_CKAN
 date: 2022-01-20 18:04:05
 categories:
-  - Knowledge Management
   - Data Catalog
   - CKAN
 tags:

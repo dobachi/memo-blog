@@ -3,7 +3,6 @@
 title: Standards of Data Governance
 date: 2025-01-27 17:33:26
 categories:
-  - Knowledge Management
   - Data Governance
 tags:
   - Data Spaces

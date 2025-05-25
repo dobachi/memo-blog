@@ -3,7 +3,6 @@
 title: Recent activity about Tuple Space
 date: 2025-03-24 22:36:11
 categories:
-  - Knowledge Management
   - Distributed Computing
 tags:
   - Distributed Computing

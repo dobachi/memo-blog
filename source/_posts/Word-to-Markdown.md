@@ -2,7 +2,6 @@
 title: WordからMarkdownを生成する
 date: 2018-10-20 22:14:16
 categories:
-  - Knowledge Management
   - Documentation
 tags:
   - Word

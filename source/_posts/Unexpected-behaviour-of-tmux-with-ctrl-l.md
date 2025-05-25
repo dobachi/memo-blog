@@ -3,7 +3,6 @@
 title: tmuxでctrl + lを押したときに改行の挙動がおかしくなる現象
 date: 2018-12-30 22:26:21
 categories:
-  - Knowledge Management
   - Tools
   - tmux
 tags:

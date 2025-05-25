@@ -3,7 +3,6 @@
 title: Delta Lake 0.7.0
 date: 2020-06-19 09:46:13
 categories:
-  - Knowledge Management
   - Storage Layer
   - Delta Lake
 tags:

@@ -3,7 +3,6 @@
 title: 機械学習向けのFeature StoreないしStorage Layer Software
 date: 2020-04-10 11:43:58
 categories:
-  - Knowledge Management
   - Storage Layer
 tags:
   - Machine Learning

@@ -2,7 +2,6 @@
 title: OpenMLを軽く確認してみる
 date: 2019-11-01 15:33:39
 categories:
-  - Knowledge Management
   - Machine Learning
 tags:
   - Machine Learning

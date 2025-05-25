@@ -3,7 +3,6 @@
 title: PubNub
 date: 2021-05-06 13:28:14
 categories:
-  - Knowledge Management
   - BaaS
 tags:
   - Messaging System

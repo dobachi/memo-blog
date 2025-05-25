@@ -3,7 +3,6 @@
 title: memo of CADDE
 date: 2024-10-21 00:03:15
 categories:
-  - Knowledge Management
   - Dataspace Connector
   - CADDE
 tags:

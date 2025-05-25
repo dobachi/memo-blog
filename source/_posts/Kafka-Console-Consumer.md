@@ -3,7 +3,6 @@
 title: Kafkaコンソールコンシューマを起点とした確認
 date: 2019-06-23 23:03:33
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

@@ -3,7 +3,6 @@
 title: WhereHows by LinkedIn
 date: 2019-02-06 22:27:59
 categories:
-  - Knowledge Management
   - Data Engineering
   - Data Lineage
 tags:

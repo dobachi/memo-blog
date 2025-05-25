@@ -3,7 +3,6 @@
 title: Flask on Docker
 date: 2018-12-14 14:52:33
 categories:
-  - Knowledge Management
   - Flask
 tags:
   - Docker

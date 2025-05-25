@@ -3,7 +3,6 @@
 title: Kafka Streams with ML
 date: 2019-11-25 22:14:32
 categories:
-  - Knowledge Management
   - Machine Learning
   - Stream Processing
 tags:

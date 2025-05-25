@@ -3,7 +3,6 @@
 title: Docker for Windows with WSL
 date: 2019-02-02 00:08:22
 categories:
-  - Knowledge Management
   - WSL
   - Docker
 tags:

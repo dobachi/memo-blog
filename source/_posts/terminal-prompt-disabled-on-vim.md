@@ -3,7 +3,6 @@
 title: terminal prompt disabled on vim
 date: 2019-01-13 23:48:42
 categories:
-  - Knowledge Management
   - vim
 tags:
   - vim

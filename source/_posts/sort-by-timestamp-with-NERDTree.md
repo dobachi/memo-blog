@@ -3,7 +3,6 @@
 title: sort by timestamp with NERDTree
 date: 2019-08-24 22:29:34
 categories:
-  - Knowledge Management
   - vim
 tags:
   - vim

@@ -3,7 +3,6 @@
 title: What is OpML
 date: 2019-09-02 22:36:25
 categories:
-  - Knowledge Management
   - Machine Learning
   - OpML
 tags:

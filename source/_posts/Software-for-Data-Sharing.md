@@ -3,7 +3,6 @@
 title: Softwares for Data Sharing
 date: 2021-08-30 16:01:26
 categories:
-  - Knowledge Management
   - Data Collaboration
 tags:
 

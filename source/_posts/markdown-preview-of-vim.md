@@ -3,7 +3,6 @@
 title: markdown preview of vim
 date: 2019-12-21 17:04:53
 categories:
-  - Knowledge Management
   - vim
 tags:
   - vim

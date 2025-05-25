@@ -3,7 +3,6 @@
 title: llama cpp
 date: 2024-09-30 01:24:13
 categories:
-  - Knowledge Management
   - AI
   - Llama
 tags:

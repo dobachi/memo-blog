@@ -3,7 +3,6 @@
 title: Dataspace Protocol of EDC
 date: 2023-09-20 23:07:49
 categories:
-  - Knowledge Management
   - Data Spaces
   - EDC
 tags:

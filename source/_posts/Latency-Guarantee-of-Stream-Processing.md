@@ -3,7 +3,6 @@
 title: Latency Guarantee of Stream Processing
 date: 2022-01-18 00:49:18
 categories:
-  - Knowledge Management
   - Stream Processing
 tags:
   - Stream Processing

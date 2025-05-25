@@ -3,7 +3,6 @@
 title: X Window on wsl for Ubuntu
 date: 2018-12-30 23:07:47
 categories:
-  - Knowledge Management
   - WSL
   - X Window
 tags:

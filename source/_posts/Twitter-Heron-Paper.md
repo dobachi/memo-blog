@@ -3,7 +3,6 @@
 title: Twitter Heronの論文
 date: 2019-07-03 21:59:46
 categories:
-  - Knowledge Management
   - Stream Processing
   - Twitter Heron
 tags:

@@ -3,7 +3,6 @@
 title: The 8 Requirements of Real-Time Stream Processing
 date: 2019-06-22 23:35:41
 categories:
-  - Knowledge Management
   - Stream Processing
 tags:
   - Stream Processing

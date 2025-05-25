@@ -3,7 +3,6 @@
 title: Distributed data stream processing and edge computing A survey on resource elasticity and future directions
 date: 2019-07-09 23:38:13
 categories:
-  - Knowledge Management
   - Stream Processing
 tags:
   - Stream Processing

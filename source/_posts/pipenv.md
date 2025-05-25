@@ -3,7 +3,6 @@
 title: pipenvを試す
 date: 2019-10-22 22:59:34
 categories:
-  - Knowledge Management
   - Python
   - Pipenv
 tags:

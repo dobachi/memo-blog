@@ -3,7 +3,6 @@
 title: check windows cpu resources
 date: 2023-08-15 00:32:07
 categories:
-  - Knowledge Management
   - Windows
 tags:
   - Windows

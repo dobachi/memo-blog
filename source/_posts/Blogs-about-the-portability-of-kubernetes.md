@@ -3,7 +3,6 @@
 title: 'Blogs about the portability of kubernetes '
 date: 2022-01-07 10:48:03
 categories:
-  - Knowledge Management
   - Kubernetes
 tags:
   - Kubernetes

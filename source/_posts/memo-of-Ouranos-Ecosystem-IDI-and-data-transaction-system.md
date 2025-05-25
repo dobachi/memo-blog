@@ -3,7 +3,6 @@
 title: memo of Ouranos Ecosystem IDI and data-transaction-system
 date: 2024-10-26 21:41:18
 categories:
-  - Knowledge Management
   - Data Spaces
   - Ouranos Ecosystem
 tags:

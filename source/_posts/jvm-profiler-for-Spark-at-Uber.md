@@ -3,7 +3,6 @@
 title: jvm profiler for Spark at Uber
 date: 2020-01-07 00:20:37
 categories:
-  - Knowledge Management 
   - Spark
 tags:
   - Java

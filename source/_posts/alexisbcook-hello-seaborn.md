@@ -3,7 +3,6 @@
 title: alexisbcook/hello-seaborn
 date: 2019-04-14 22:53:56
 categories:
-  - Knowledge Management
   - Machine Learning
   - Visualization
   - Seaborn

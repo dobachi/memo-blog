@@ -3,7 +3,6 @@
 title: Llama3.2
 date: 2024-09-29 22:59:17
 categories:
-  - Knowledge Management
   - AI
   - Llama
 tags:

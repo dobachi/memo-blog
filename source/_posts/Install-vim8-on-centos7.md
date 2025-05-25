@@ -3,7 +3,6 @@
 title: Install_vim8_on_centos7
 date: 2019-02-08 15:33:45
 categories:
-  - Knowledge Management
   - vim
 tags:
   - vim

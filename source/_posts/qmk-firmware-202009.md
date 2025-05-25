@@ -2,7 +2,6 @@
 title: qmk_firmware_202009
 date: 2020-09-06 03:14:27
 categories:
-  - Knowledge Management
   - Keyboard
   - QMK
 

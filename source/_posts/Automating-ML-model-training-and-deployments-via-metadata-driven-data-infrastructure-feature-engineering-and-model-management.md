@@ -5,7 +5,6 @@ title: >-
   infrastructure, feature engineering, and model management
 date: 2020-01-16 00:05:53
 categories:
-  - Knowledge Management
   - Machine Learning
 tags:
   - Machine Learning

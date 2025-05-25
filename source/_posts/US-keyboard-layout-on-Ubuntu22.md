@@ -3,7 +3,6 @@
 title: US keyboard layout on Ubuntu22
 date: 2024-09-08 23:20:17
 categories:
-  - Knowledge Management
   - Ubuntu
 tags:
   - Ubuntu

@@ -3,7 +3,6 @@
 title: Python3をHDP2.6のPySparkで用いたときのエラー
 date: 2018-11-18 21:31:02
 categories:
-  - Knowledge Management
   - Hadoop
   - HDP
 tags:

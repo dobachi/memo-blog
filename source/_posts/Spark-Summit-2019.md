@@ -3,7 +3,6 @@
 title: Spark Summit 2019
 date: 2019-05-17 01:21:34
 categories:
-  - Knowledge Management
   - Spark
 tags:
   - Apache Spark

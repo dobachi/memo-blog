@@ -3,7 +3,6 @@
 title: Delta Sharing with MinIO
 date: 2021-10-22 11:19:39
 categories:
-  - Knowledge Management
   - Data Collaboration
   - Delta Sharing
 tags:

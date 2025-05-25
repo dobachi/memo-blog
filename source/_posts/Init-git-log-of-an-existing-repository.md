@@ -2,7 +2,6 @@
 title: Init git log of an existing repository
 date: 2019-04-07 23:10:13
 categories:
-  - Knowledge Management
   - Machine Learning
   - Word2Vec
 tags:

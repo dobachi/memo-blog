@@ -2,7 +2,6 @@
 title: Stopword with Python
 date: 2019-04-06 21:47:58
 categories:
-  - Knowledge Management
   - Data Engineering
   - Data Transformation
 tags:

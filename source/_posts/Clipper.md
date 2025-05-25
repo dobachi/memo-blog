@@ -3,7 +3,6 @@
 title: Clipper
 date: 2019-02-24 23:29:27
 categories:
-  - Knowledge Management
   - Machine Learning
   - Model Management
   - Clipper

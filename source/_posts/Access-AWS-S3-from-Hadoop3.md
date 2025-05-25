@@ -2,7 +2,6 @@
 title: Access AWS S3 from Hadoop3 and Spark3
 date: 2020-09-14 23:01:29
 categories:
-  - Knowledge Management
   - Hadoop
 tags:
   - Hadoop

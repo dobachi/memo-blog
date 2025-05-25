@@ -2,7 +2,6 @@
 title: dein on windows
 date: 2018-11-02 21:06:45
 categories:
-  - Knowledge Management
   - vim
 tags:
   - vim

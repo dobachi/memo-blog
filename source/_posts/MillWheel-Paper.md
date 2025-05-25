@@ -3,7 +3,6 @@
 title: MillWheel Paper
 date: 2019-06-14 15:38:59
 categories:
-  - Knowledge Management
   - Stream Processing
   - MillWheel
 tags:

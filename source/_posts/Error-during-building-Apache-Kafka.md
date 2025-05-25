@@ -3,7 +3,6 @@
 title: Apache Kafkaビルド時のエラー
 date: 2019-06-28 10:13:33
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

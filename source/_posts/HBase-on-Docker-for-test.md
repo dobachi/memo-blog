@@ -3,7 +3,6 @@
 title: HBase on Docker for test
 date: 2019-06-03 00:31:51
 categories:
-  - Knowledge Management
   - HBase
 tags:
   - HBase

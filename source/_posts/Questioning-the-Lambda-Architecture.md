@@ -3,7 +3,6 @@
 title: Questioning the Lambda Architecture
 date: 2020-01-13 21:50:11
 categories:
-  - Knowledge Management
   - Stream Processing
   - Kappa Architecture
 tags:

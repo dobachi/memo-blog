@@ -2,7 +2,6 @@
 title: KafkaのJavaバージョン
 date: 2019-11-03 23:17:21
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

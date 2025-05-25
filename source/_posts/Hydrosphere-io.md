@@ -3,7 +3,6 @@
 title: Hydrosphere.io
 date: 2019-03-22 19:43:38
 categories:
-  - Knowledge Management
   - Machine Learning
 tags:
   - Machine Learning

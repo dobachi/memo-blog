@@ -3,7 +3,6 @@
 title: Getting started Spark on k8s
 date: 2022-01-07 10:20:58
 categories:
-  - Knowledge Management
   - Spark
 tags:
   - Apache Spark

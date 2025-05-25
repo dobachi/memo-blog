@@ -3,7 +3,6 @@
 title: Abstract of Analytics Zoo
 date: 2019-12-02 22:13:42
 categories:
-  - Knowledge Management
   - Machine Learning
   - Analytics Zoo
 tags:

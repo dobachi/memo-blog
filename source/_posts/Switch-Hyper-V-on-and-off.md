@@ -3,7 +3,6 @@
 title: Hyper-V機能のオン・オフを切り替える
 date: 2019-02-02 00:02:03
 categories:
-  - Knowledge Management
   - Windows
   - Hyper-V
 tags:

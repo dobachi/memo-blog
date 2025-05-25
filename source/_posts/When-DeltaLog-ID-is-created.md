@@ -3,7 +3,6 @@
 title: When DeltaLog ID is created
 date: 2021-04-04 00:13:19
 categories:
-  - Knowledge Management
   - Storage Layer
   - Delta Lake
 tags:

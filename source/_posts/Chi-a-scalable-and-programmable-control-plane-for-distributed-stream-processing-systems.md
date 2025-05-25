@@ -5,7 +5,6 @@ title: >-
   processing systems
 date: 2019-08-14 15:55:23
 categories:
-  - Knowledge Management
   - Stream Processing
 tags:
   - Stream Processing

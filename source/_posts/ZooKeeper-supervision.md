@@ -3,7 +3,6 @@
 title: ZooKeeperをスーパバイザでセルフヒーリングする
 date: 2019-07-08 22:35:59
 categories:
-  - Knowledge Management
   - ZooKeeper
 tags:
   - ZooKeeper

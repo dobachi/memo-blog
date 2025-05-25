@@ -3,7 +3,6 @@
 title: Minio getting started
 date: 2021-06-13 22:01:12
 categories:
-  - Knowledge Management
   - Storage Layer
   - Minio
 tags:

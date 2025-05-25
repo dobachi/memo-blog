@@ -3,7 +3,6 @@
 title: Manifold of Uber
 date: 2019-02-08 12:52:25
 categories:
-  - Knowledge Management
   - Machine Learning
   - Model Management
 tags:

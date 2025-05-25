@@ -3,7 +3,6 @@
 title: OpenAPI Generator for Flask
 date: 2023-09-07 22:10:58
 categories:
-  - Knowledge Management
   - Open API
 tags:
   - Open API

@@ -3,7 +3,6 @@
 title: EDCステータス変化の様子の謎メモ
 date: 2024-10-13 22:13:02
 categories:
-  - Knowledge Management
   - Data Spaces
   - EDC
 tags:

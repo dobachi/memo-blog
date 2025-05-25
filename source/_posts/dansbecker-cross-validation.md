@@ -4,7 +4,6 @@ title: dansbecker/cross-validation
 date: 2019-04-13 23:57:21
 ags:
 categories:
-  - Knowledge Management
   - Machine Learning
   - Model
   - Cross Validation

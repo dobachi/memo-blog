@@ -3,7 +3,6 @@
 title: Use static image on Hexo blog
 date: 2020-12-31 23:58:34
 categories:
-  - Knowledge Management
   - Hexo
 tags:
   - Hexo

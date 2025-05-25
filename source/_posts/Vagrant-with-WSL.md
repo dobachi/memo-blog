@@ -3,7 +3,6 @@
 title: WSLからVagrantを使う
 date: 2019-07-08 22:42:22
 categories:
-  - Knowledge Management
   - WSL
   - Vagrant
 tags:

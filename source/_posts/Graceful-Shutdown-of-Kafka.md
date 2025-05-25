@@ -3,7 +3,6 @@
 title: Kafkaのグレースフルシャットダウン
 date: 2019-03-13 22:29:42
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

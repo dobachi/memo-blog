@@ -3,7 +3,6 @@
 title: WSL向けのターミナルツール
 date: 2019-01-01 23:30:45
 categories:
-  - Knowledge Management
   - WSL
   - Terminal tool
 tags:

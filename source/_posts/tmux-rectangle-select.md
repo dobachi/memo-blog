@@ -3,7 +3,6 @@
 title: tmux_rectangle_select
 date: 2018-12-23 22:58:52
 categories:
-  - Knowledge Management
   - Tools
   - tmux
 tags:

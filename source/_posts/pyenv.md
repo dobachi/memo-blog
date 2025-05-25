@@ -3,7 +3,6 @@
 title: pyenv を使う
 date: 2019-10-25 23:31:45
 categories:
-  - Knowledge Management
   - Python
   - pyenv
 tags:

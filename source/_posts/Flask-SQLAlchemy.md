@@ -3,7 +3,6 @@
 title: Flask SQLAlchemy
 date: 2018-12-23 23:29:57
 categories:
-  - Knowledge Management
   - Flask
 tags:
   - Flask

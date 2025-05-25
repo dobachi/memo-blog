@@ -3,7 +3,6 @@
 title: Business model paper by IDSA
 date: 2025-01-02 10:24:53
 categories:
-  - Knowledge Management
   - Data Spaces
 tags:
   - Data Spaces

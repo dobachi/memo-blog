@@ -3,7 +3,6 @@
 title: dansbecker/partial-dependence-plots
 date: 2019-04-13 22:33:24
 categories:
-  - Knowledge Management
   - Machine Learning
   - Model
   - Partial Dependency Plot

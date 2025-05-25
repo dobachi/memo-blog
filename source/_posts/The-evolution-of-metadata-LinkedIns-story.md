@@ -3,7 +3,6 @@
 title: 'The evolution of metadata: LinkedIn’s story'
 date: 2020-01-04 15:42:04
 categories:
-  - Knowledge Management
   - Metadata Management
 tags:
   - Metadata Management

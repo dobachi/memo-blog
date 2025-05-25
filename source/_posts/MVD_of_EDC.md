@@ -3,7 +3,6 @@
 title: MVD_of_EDC
 date: 2024-12-21 15:50:22
 categories:
-  - Knowledge Management
   - Dataspace Connector
   - Eclipse Dataspace Components
 tags:

@@ -3,7 +3,6 @@
 title: Efficient and Robust Automated Machine Learning
 date: 2019-09-22 17:27:47
 categories:
-  - Knowledge Management
   - Machine Learning
   - AutoML
 tags:

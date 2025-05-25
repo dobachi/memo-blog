@@ -3,7 +3,6 @@
 title: CDC Kafka and master table cache
 date: 2020-01-25 23:32:13
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

@@ -3,7 +3,6 @@
 title: Getting Started of Delta Sharing
 date: 2021-09-10 11:14:58
 categories:
-  - Knowledge Management
   - Data Collaboration
   - Delta Sharing
 tags:

@@ -3,7 +3,6 @@
 title: Machine Learning Model Management Tools
 date: 2019-02-09 12:54:33
 categories:
-  - Knowledge Management
   - Machine Learning
   - Model Management
 tags:

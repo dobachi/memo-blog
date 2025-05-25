@@ -3,7 +3,6 @@
 title: Studying Software Engineering Patterns for Designing Machine Learning Systems
 date: 2019-11-12 22:54:19
 categories:
-  - Knowledge Management
   - Machine Learning
   - Software Engineering Patterns
 tags:

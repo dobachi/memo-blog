@@ -3,7 +3,6 @@
 title: KafkaConnectでTwitterデータを取り込む
 date: 2019-03-08 22:37:11
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

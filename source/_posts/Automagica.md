@@ -3,7 +3,6 @@
 title: Automagicaを試してみる
 date: 2019-10-22 22:07:48
 categories:
-  - Knowledge Management
   - Tools
   - Selenium
 tags:

@@ -3,7 +3,6 @@
 title: Hyper plugin
 date: 2019-01-20 22:52:29
 categories:
-  - Knowledge Management
   - Hyper
   - Plugin
 tags:

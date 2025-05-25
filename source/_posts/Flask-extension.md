@@ -3,7 +3,6 @@
 title: Flask extension
 date: 2018-12-23 21:56:25
 categories:
-  - Knowledge Management
   - Flask
 tags:
   - Docker

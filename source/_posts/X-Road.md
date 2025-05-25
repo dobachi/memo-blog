@@ -3,7 +3,6 @@
 title: X-Road
 date: 2021-09-03 22:58:43
 categories:
-  - Knowledge Management
   - Data Collaboration
   - X-Road
 tags:

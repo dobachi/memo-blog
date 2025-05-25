@@ -5,7 +5,6 @@ title: >-
   Warehousing and Advanced Analytics
 date: 2021-01-16 23:18:14
 categories:
-  - Knowledge Management
   - Storage Layer
   - Delta Lake
 

@@ -3,7 +3,6 @@
 title: Apache KafkaにおけるZooKeeper
 date: 2019-03-05 22:03:17
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

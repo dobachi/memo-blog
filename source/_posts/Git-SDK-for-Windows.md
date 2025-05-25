@@ -3,7 +3,6 @@
 title: Git SDK for Windows
 date: 2019-11-09 22:42:58
 categories:
-  - Knowledge Management
   - Tools
   - Git
 tags:

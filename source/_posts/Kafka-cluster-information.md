@@ -2,7 +2,6 @@
 title: Kafka cluster information
 date: 2019-11-05 23:55:22
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

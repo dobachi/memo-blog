@@ -3,7 +3,6 @@
 title: IDS Dataspace Protocol
 date: 2023-08-31 15:56:27
 categories:
-  - Knowledge Management
   - Data Spaces
   - IDS
 tags:

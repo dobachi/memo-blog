@@ -3,7 +3,6 @@
 title: 'ML Ops: Machine Learning as an Engineering Discipline'
 date: 2020-01-11 22:26:40
 categories:
-  - Knowledge Management
   - Machine Learning
   - OpML
 tags:

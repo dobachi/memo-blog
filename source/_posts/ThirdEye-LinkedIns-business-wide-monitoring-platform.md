@@ -3,7 +3,6 @@
 title: ThirdEye LinkedIn’s business-wide monitoring platform
 date: 2020-01-16 00:41:28
 categories:
-  - Knowledge Management
   - Monitering
 tags:
   - Monitering

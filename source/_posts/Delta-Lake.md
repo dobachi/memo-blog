@@ -3,7 +3,6 @@
 title: Delta Lake
 date: 2019-05-05 23:27:14
 categories:
-  - Knowledge Management
   - Storage Layer
   - Delta Lake
 tags:

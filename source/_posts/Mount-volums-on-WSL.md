@@ -3,7 +3,6 @@
 title: Docker DesktopをWSLから利用している場合のマウントについて
 date: 2019-06-09 23:59:02
 categories:
-  - Knowledge Management
   - WSL
   - Docker
 tags:

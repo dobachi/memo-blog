@@ -3,7 +3,6 @@
 title: Open Messaging Benchmark
 date: 2019-01-16 00:25:15
 categories:
-  - Knowledge Management
   - Messaging System
 tags:
   - Open Messaging Benchmark

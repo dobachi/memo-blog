@@ -3,7 +3,6 @@
 title: Kaggle入門
 date: 2019-04-10 00:01:41
 categories:
-  - Knowledge Management
   - Machine Learning
   - Kaggle
 tags:

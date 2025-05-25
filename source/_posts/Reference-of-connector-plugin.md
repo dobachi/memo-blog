@@ -3,7 +3,6 @@
 title: Reference of connector plugin
 date: 2020-12-16 23:31:01
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

@@ -3,7 +3,6 @@
 title: How to create SDK (WIP)
 date: 2023-08-27 14:11:45
 categories:
-  - Knowledge Management
   - SDK
 tags:
   - SDK

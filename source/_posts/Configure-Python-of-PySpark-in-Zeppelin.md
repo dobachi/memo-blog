@@ -3,7 +3,6 @@
 title: Configure Python of PySpark in Zeppelin
 date: 2019-12-27 23:43:45
 categories:
-    - Knowledge Management
     - Zeppelin
 
 tags:

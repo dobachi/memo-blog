@@ -2,7 +2,6 @@
 title: Hudi
 date: 2020-03-25 23:40:12
 categories:
-  - Knowledge Management
   - Storage Layer
   - Hudi
 tags:

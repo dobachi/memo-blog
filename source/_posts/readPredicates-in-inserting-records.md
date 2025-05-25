@@ -3,7 +3,6 @@
 title: readPredicates in inserting records
 date: 2021-04-23 09:28:13
 categories:
-  - Knowledge Management
   - Storage Layer
   - Delta Lake
 tags:

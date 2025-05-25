@@ -3,7 +3,6 @@
 title: Kafkaのログ周りの調査メモ
 date: 2019-03-08 13:32:23
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

@@ -3,7 +3,6 @@
 title: Delta Lake with Alluxio
 date: 2020-12-31 01:13:15
 categories:
-  - Knowledge Management
   - Storage Layer
   - Delta Lake
 tags:

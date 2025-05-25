@@ -3,7 +3,6 @@
 title: Memo of How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh
 date: 2021-01-19 01:06:28
 categories:
-  - Knowledge Management
   - Data Mesh
 tags:
   - Data Mesh

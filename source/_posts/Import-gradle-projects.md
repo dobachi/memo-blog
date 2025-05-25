@@ -3,7 +3,6 @@
 title: GradleプロジェクトをIntellijでインポート
 date: 2019-06-24 22:55:09
 categories:
-  - Knowledge Management
   - Tools
   - Intellij
 tags:

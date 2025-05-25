@@ -3,7 +3,6 @@
 title: Source Code Reading of Delta Sharing
 date: 2021-08-30 12:51:21
 categories:
-  - Knowledge Management
   - Data Collaboration
   - Delta Sharing
 tags:

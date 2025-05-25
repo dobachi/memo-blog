@@ -3,7 +3,6 @@
 title: Socks proxy for Jupyter Lab
 date: 2021-07-12 17:53:27
 categories:
-  - Knowledge Management
   - Python
   - Jupyter
 tags:

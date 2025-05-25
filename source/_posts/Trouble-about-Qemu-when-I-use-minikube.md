@@ -3,7 +3,6 @@
 title: Trouble about Qemu when I use minikube
 date: 2024-11-04 00:52:13
 categories:
-  - Knowledge Management
   - Kubenetes
   - Minikube
 tags:

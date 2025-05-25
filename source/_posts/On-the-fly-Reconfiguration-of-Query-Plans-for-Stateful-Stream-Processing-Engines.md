@@ -5,7 +5,6 @@ title: >-
   Engines
 date: 2019-08-03 19:51:29
 categories:
-  - Knowledge Management
   - Stream Processing
 tags:
   - Stream Processing

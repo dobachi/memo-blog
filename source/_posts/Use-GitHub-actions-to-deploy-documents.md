@@ -3,7 +3,6 @@
 title: Use GitHub actions to deploy documents
 date: 2020-08-09 23:30:38
 categories:
-  - Knowledge Management
   - Documentation
 tags:
   - GitHub Actions

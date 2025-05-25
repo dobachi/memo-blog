@@ -3,7 +3,6 @@
 title: Data Platform for Machine Learning
 date: 2019-12-10 08:23:12
 categories:
-  - Knowledge Management
   - Machine Learning
   - Data Platform
 tags:

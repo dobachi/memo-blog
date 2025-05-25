@@ -3,7 +3,6 @@
 title: Data Sovereignty
 date: 2024-09-01 21:40:49
 categories:
-  - Knowledge Management
   - Data Spaces
 tags:
   - Data Spaces

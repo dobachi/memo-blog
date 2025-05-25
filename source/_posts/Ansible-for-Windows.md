@@ -3,7 +3,6 @@
 title: Ansible for Windows
 date: 2019-02-11 21:31:26
 categories:
-  - Knowledge Management
   - Windows
   - Ansible
 tags:

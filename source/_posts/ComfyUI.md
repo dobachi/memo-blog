@@ -3,7 +3,6 @@
 title: ComfyUI
 date: 2024-09-28 20:16:16
 categories:
-  - Knowledge Management
   - AI
   - ComfyUI
 tags:

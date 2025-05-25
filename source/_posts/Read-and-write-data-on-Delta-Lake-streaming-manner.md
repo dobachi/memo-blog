@@ -2,7 +2,6 @@
 title: Read and write data on Delta Lake streaming manner
 date: 2020-11-19 00:11:42
 categories:
-  - Knowledge Management
   - Storage Layer
   - Delta Lake
 tags:

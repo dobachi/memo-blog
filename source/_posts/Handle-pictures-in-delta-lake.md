@@ -3,7 +3,6 @@
 title: Handle pictures in delta lake and hudi
 date: 2020-05-12 22:58:43
 categories:
-  - Knowledge Management
   - Storage Layer
   - Delta Lake
 tags:

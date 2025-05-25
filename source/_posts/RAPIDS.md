@@ -3,7 +3,6 @@
 title: RAPIDS
 date: 2019-04-16 22:40:07
 categories:
-  - Knowledge Management
   - Data Processing Engine
 tags:
   - Machine Learning

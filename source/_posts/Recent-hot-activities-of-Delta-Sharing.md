@@ -3,7 +3,6 @@
 title: Recent hot activities of Delta Sharing
 date: 2021-08-27 09:22:38
 categories:
-  - Knowledge Management
   - Data Collaboration
   - Delta Sharing
 tags:

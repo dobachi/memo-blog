@@ -3,7 +3,6 @@
 title: CentOS on WSL
 date: 2021-04-25 13:30:49
 categories:
-  - Knowledge Management
   - WSL
   - CentOS
 tags:

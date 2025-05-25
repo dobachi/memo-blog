@@ -3,7 +3,6 @@
 title: Building Block of Data Spaces
 date: 2024-09-06 10:06:09
 categories:
-  - Knowledge Management
   - Data Spaces
 tags:
   - Data Spaces

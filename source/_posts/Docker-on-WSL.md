@@ -3,7 +3,6 @@
 title: Docker on WSL
 date: 2019-01-14 21:12:59
 categories:
-  - Knowledge Management
   - WSL
   - Docker
 tags:

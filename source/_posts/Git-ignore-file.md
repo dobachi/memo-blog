@@ -3,7 +3,6 @@
 title: Gitのgitignore
 date: 2018-12-23 22:10:41
 categories:
-  - Knowledge Management
   - Tools
   - Git
 tags:

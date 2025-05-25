@@ -3,7 +3,6 @@
 title: ideavimrc
 date: 2019-08-26 00:03:53
 categories:
-  - Knowledge Management
   - Tools
   - Intellij
 tags:

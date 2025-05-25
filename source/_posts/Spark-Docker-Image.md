@@ -3,7 +3,6 @@
 title: Spark Docker Image
 date: 2019-08-24 20:51:44
 categories:
-  - Knowledge Management
   - Spark
 tags:
   - Spark

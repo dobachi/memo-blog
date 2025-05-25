@@ -3,7 +3,6 @@
 title: Create projects includes sbt launcher
 date: 2020-12-07 01:12:13
 categories:
-  - Knowledge Management
   - Scala
   - SBT
 tags:

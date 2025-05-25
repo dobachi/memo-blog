@@ -3,7 +3,6 @@
 title: Ansibleでコマンド実行結果のJSONを辞書型に変換して用いる
 date: 2019-02-14 22:06:57
 categories:
-  - Knowledge Management
   - Configuration Management
   - Ansible
 tags:

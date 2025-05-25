@@ -3,7 +3,6 @@
 title: About tream table theory
 date: 2020-05-20 00:12:43
 categories:
-  - Knowledge Management
   - Messaging System
   - Kafka
 tags:

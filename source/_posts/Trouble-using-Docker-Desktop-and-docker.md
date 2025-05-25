@@ -3,7 +3,6 @@
 title: Trouble using Docker Desktop and docker
 date: 2024-11-04 00:56:32
 categories:
-  - Knowledge Management
   - Docker
 tags:
   - Docker

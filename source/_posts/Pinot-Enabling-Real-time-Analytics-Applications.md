@@ -3,7 +3,6 @@
 title: 'Pinot: Enabling Real-time Analytics Applications'
 date: 2020-01-01 23:01:36
 categories:
-  - Knowledge Management
   - Pinot
 tags:
   - Pinot

@@ -2,7 +2,6 @@
 title: Dask of Python
 date: 2019-04-23 23:12:05
 categories:
-  - Knowledge Management
   - Data Processing Engine
 tags:
   - Machine Learning

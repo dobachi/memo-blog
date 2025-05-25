@@ -3,7 +3,6 @@
 title: Alluxio Security
 date: 2019-05-10 16:07:48
 categories:
-  - Knowledge Management
   - Alluxio
 tags:
   - Alluxio

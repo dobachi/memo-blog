@@ -3,7 +3,6 @@
 title: Open project of EDC Connector with Intellij
 date: 2023-08-01 10:46:35
 categories:
-  - Knowledge Management
   - Data Spaces
   - EDC
 tags:

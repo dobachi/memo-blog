@@ -3,7 +3,6 @@
 title: Jan
 date: 2024-09-28 13:14:04
 categories:
-  - Knowledge Management
   - AI
   - LocalLLM
   - Jan

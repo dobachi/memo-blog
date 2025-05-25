@@ -3,7 +3,6 @@
 title: Nest VM on Hyper-V
 date: 2022-02-03 23:47:34
 categories:
-    - Knowledge Management
     - Hyper-V
 tags:
     - Hyper-V

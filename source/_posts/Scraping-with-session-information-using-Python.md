@@ -3,7 +3,6 @@
 title: Scraping with session information using Python
 date: 2019-10-14 08:51:54
 categories:
-  - Knowledge Management
   - Open Data
   - Scraping
 tags:

@@ -3,7 +3,6 @@
 title: Apache Edgent
 date: 2019-07-26 21:56:26
 categories:
-  - Knowledge Management
   - Stream Processing
   - Apache Edgent
 tags:

@@ -3,7 +3,6 @@
 title: Spark Summit NA 2019
 date: 2019-04-22 21:20:43
 categories:
-  - Knowledge Management
   - Spark
   - Spark Summit
 tags:

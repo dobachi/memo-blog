@@ -3,7 +3,6 @@
 title: EDCSample
 date: 2024-02-24 22:15:17
 categories:
-  - Knowledge Management
   - Dataspace Connector
   - Eclipse Dataspace Components
 tags:
