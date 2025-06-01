@@ -118,7 +118,7 @@ body,
 body {
   color: #565a5f;
   background: #f5f8f9;
-  font: 14px "open sans", "Helvetica Neue", "Microsoft Yahei", Helvetica, Arial, sans-serif;
+  font: 14px "open sans", "Helvetica Neue", "Noto Sans JP", Helvetica, Arial, sans-serif;
   -webkit-text-size-adjust: 100%;
 }
 a {
@@ -567,7 +567,7 @@ code {
   line-height: 1.6em;
   outline: none !important;
   background: none !important;
-  font: 14px "open sans", "Helvetica Neue", "Microsoft Yahei", Helvetica, Arial, sans-serif;
+  font: 14px "open sans", "Helvetica Neue", "Noto Sans JP", Helvetica, Arial, sans-serif;
   border: 1px solid #eceff2 !important;
 }
 .search-form-input:focus,
@@ -999,7 +999,7 @@ a.article-title:hover {
 }
 .article-entry blockquote {
   position: static;
-  font-family: Georgia, "Times New Roman", "Microsoft Yahei", serif;
+  font-family: Georgia, "Times New Roman", "Noto Sans JP", serif;
   font-size: 1.1em;
   margin: 0 -20px;
   padding: 10px 20px 10px 54px;
@@ -1020,7 +1020,7 @@ a.article-title:hover {
 .article-entry blockquote footer {
   font-size: 14px;
   margin: 1.6em 0;
-  font-family: "open sans", "Helvetica Neue", "Microsoft Yahei", Helvetica, Arial, sans-serif;
+  font-family: "open sans", "Helvetica Neue", "Noto Sans JP", Helvetica, Arial, sans-serif;
 }
 .article-entry blockquote footer cite:before {
   content: "—";
@@ -1218,7 +1218,7 @@ a.article-title:hover {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  font: 14px "open sans", "Helvetica Neue", "Microsoft Yahei", Helvetica, Arial, sans-serif;
+  font: 14px "open sans", "Helvetica Neue", "Noto Sans JP", Helvetica, Arial, sans-serif;
   padding: 0 10px;
   color: #565a5f;
   outline: none;
@@ -2003,7 +2003,7 @@ a.article-title:hover {
   box-sizing: border-box;
   padding: 12px 28px 12px 20px;
   border-bottom: 1px solid #e2e2e2;
-  font-family: "Microsoft Yahei Light", "Microsoft Yahei", Helvetica, Arial, sans-serif;
+  font-family: "Noto Sans JP Light", "Noto Sans JP", Helvetica, Arial, sans-serif;
 }
 .ins-close {
   top: 50%;
