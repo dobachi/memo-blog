@@ -6,14 +6,14 @@
     <title>Flask on Docker | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="参考 自前のイメージを作って動かす手順  Dockerfileとビルド アプリ作成と実行  公式手順に則ったシンプルな例  準備 実行  フォームを使う例  準備 実行  ファイルのアップロード  準備 実行  クッキー  準備 実行  ロギング  準備 実行  JSON形式でやり取りする例  Dockerfile アプリ 動作確認  nginxと組み合わせて動かす  Dockerfile、">
-<meta name="keywords" content="Docker,Dockerfile,Flask">
+<meta name="keywords" content="Docker,Flask,Dockerfile">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flask on Docker">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/index.html">
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 自前のイメージを作って動かす手順  Dockerfileとビルド アプリ作成と実行  公式手順に則ったシンプルな例  準備 実行  フォームを使う例  準備 実行  ファイルのアップロード  準備 実行  クッキー  準備 実行  ロギング  準備 実行  JSON形式でやり取りする例  Dockerfile アプリ 動作確認  nginxと組み合わせて動かす  Dockerfile、">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2025-05-31T17:13:51.024Z">
+<meta property="og:updated_time" content="2025-06-01T12:59:53.874Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flask on Docker">
 <meta name="twitter:description" content="参考 自前のイメージを作って動かす手順  Dockerfileとビルド アプリ作成と実行  公式手順に則ったシンプルな例  準備 実行  フォームを使う例  準備 実行  ファイルのアップロード  準備 実行  クッキー  準備 実行  ロギング  準備 実行  JSON形式でやり取りする例  Dockerfile アプリ 動作確認  nginxと組み合わせて動かす  Dockerfile、">
@@ -42,21 +42,19 @@
         <link rel="stylesheet" href="/memo-blog/libs/justified-gallery/justifiedGallery.min.css">
     
     
-        <script type="text/javascript">
-(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-155235180-1', 'auto');
-ga('send', 'pageview');
-
-</script>
-    
     
     
 
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L85XH3PQ9N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-L85XH3PQ9N');
+    </script>
 </head>
 </html>
 <body>
@@ -491,7 +489,7 @@ uwsgi-nginx-flask-dockerのテクニカル詳細</a> で書かれている通り
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/" data-id="cmbchrmjz01bo18mn4nqmqhwe" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2018/12/14/Flask-on-Docker/" data-id="cmbdo4xv201bj17qt9upryem5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
