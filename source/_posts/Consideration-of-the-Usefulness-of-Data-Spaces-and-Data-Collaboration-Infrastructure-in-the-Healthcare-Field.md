@@ -1,4 +1,18 @@
-# **医療分野におけるデータスペース、データ連携基盤の有用性に関する考察**
+---
+
+title: >-
+  Consideration of the Usefulness of Data Spaces and Data Collaboration
+  Infrastructure in the Healthcare Field
+date: 2025-06-03 01:39:35
+categories:
+  - Data Spaces
+  - Healthcare
+tags:
+  - Data Spaces
+  - Healthcare
+  - Data Collaboration
+
+---
 
 ## 1. はじめに
 
