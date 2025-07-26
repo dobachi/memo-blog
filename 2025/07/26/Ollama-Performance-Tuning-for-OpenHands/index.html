@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="メモ 参考  はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  パフォーマンス監視とデバッグ  GPU使用率の確認 デバッグモードの活用  よくあるトラブルシューティング">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2025-07-26T15:20:24.692Z">
+<meta property="og:updated_time" content="2025-07-26T15:29:28.372Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenHandsでOllamaを使う際のパフォーマンスチューニング">
 <meta name="twitter:description" content="メモ 参考  はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  パフォーマンス監視とデバッグ  GPU使用率の確認 デバッグモードの活用  よくあるトラブルシューティング">
@@ -323,12 +323,18 @@
 <h2><span id="wsl2環境での考慮事項">WSL2環境での考慮事項</span></h2>
 <h3><span id="パフォーマンスオーバーヘッド">パフォーマンスオーバーヘッド</span></h3>
 <p>WSL2では仮想化によるオーバーヘッドが発生します： -
-約10-13%のパフォーマンス低下が報告されています -
-ファイルシステムのI/O速度制限による影響もあります</p>
+約10-13%のパフォーマンス低下が報告されています（<a href="https://www.quickinference.com/2024/11/03/ollama-speed-test-windows-vs-linux-in-wsl2/" target="_blank" rel="noopener">Quick
+Inference ベンチマーク</a>による検証） -
+ファイルシステムのI/O速度制限による影響もあります - <a href="https://github.com/ollama/ollama/issues/2529" target="_blank" rel="noopener">Ollama公式リポジトリのIssue
+#2529</a>でも複数のユーザーがWSL2でのパフォーマンス問題を報告</p>
 <h3><span id="ネットワーク設定の課題">ネットワーク設定の課題</span></h3>
 <p>WSL2は仮想化されたイーサネットアダプタを使用するため： -
-ローカルネットワークからのアクセスに制限があります -
-DockerコンテナからWSL2上のOllamaへの接続に問題が発生することがあります</p>
+ローカルネットワークからのアクセスに制限があります（<a href="https://github.com/ollama/ollama/issues/1431" target="_blank" rel="noopener">Ollama Issue
+#1431</a>で報告） -
+DockerコンテナからWSL2上のOllamaへの接続に問題が発生することがあります（<a href="https://github.com/open-webui/open-webui/discussions/510" target="_blank" rel="noopener">Open
+WebUI Discussion #510</a>） -
+WSL2のIPアドレスがWindows再起動時に動的に変更される問題（<a href="https://stackoverflow.com/questions/61002681/connecting-to-wsl2-server-via-local-network" target="_blank" rel="noopener">Stack
+Overflow</a>で議論）</p>
 <h2><span id="openhandsとの統合における最適化">OpenHandsとの統合における最適化</span></h2>
 <h3><span id="一般的な問題と解決策">一般的な問題と解決策</span></h3>
 <ol type="1">
@@ -411,7 +417,7 @@ GitHub Issues</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/" data-id="cmdkedhbj008818ogksbhrakz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/" data-id="cmdkep3wn008c17p9cq0lh3kr" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

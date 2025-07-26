@@ -69,14 +69,16 @@ export OLLAMA_GPU_MEMORY_FRACTION=0.8
 ### パフォーマンスオーバーヘッド
 
 WSL2では仮想化によるオーバーヘッドが発生します：
-- 約10-13%のパフォーマンス低下が報告されています
+- 約10-13%のパフォーマンス低下が報告されています（[Quick Inference ベンチマーク](https://www.quickinference.com/2024/11/03/ollama-speed-test-windows-vs-linux-in-wsl2/)による検証）
 - ファイルシステムのI/O速度制限による影響もあります
+- [Ollama公式リポジトリのIssue #2529](https://github.com/ollama/ollama/issues/2529)でも複数のユーザーがWSL2でのパフォーマンス問題を報告
 
 ### ネットワーク設定の課題
 
 WSL2は仮想化されたイーサネットアダプタを使用するため：
-- ローカルネットワークからのアクセスに制限があります
-- DockerコンテナからWSL2上のOllamaへの接続に問題が発生することがあります
+- ローカルネットワークからのアクセスに制限があります（[Ollama Issue #1431](https://github.com/ollama/ollama/issues/1431)で報告）
+- DockerコンテナからWSL2上のOllamaへの接続に問題が発生することがあります（[Open WebUI Discussion #510](https://github.com/open-webui/open-webui/discussions/510)）
+- WSL2のIPアドレスがWindows再起動時に動的に変更される問題（[Stack Overflow](https://stackoverflow.com/questions/61002681/connecting-to-wsl2-server-via-local-network)で議論）
 
 ## OpenHandsとの統合における最適化
 
