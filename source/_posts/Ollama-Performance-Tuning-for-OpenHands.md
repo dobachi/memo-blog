@@ -79,7 +79,7 @@ export OLLAMA_HOST="0.0.0.0:11434"  # 外部アクセス許可
 
 ### CPU負荷の調整
 
-**重要**: `OLLAMA_NUM_THREADS`の設定によってCPU使用率が大きく変わります：
+**重要**: `OLLAMA_NUM_THREADS`（使用するCPUコア数）の設定によってCPU使用率が大きく変わります：
 
 | 設定値 | CPU使用率 | 推奨用途 |
 |--------|-----------|----------|
@@ -145,14 +145,14 @@ systemctl status ollama
 sudo mkdir -p /etc/systemd/system/ollama.service.d
 
 # WSL2 CPU専用設定（CPUコア数の半分を自動計算）
-THREAD_COUNT=$(($(nproc) / 2))
-echo "CPU threads設定: $(nproc) コア中 ${THREAD_COUNT} スレッドを使用"
+CORE_COUNT=$(($(nproc) / 2))
+echo "CPU設定: $(nproc) コア中 ${CORE_COUNT} コアを使用"
 
 sudo tee /etc/systemd/system/ollama.service.d/wsl2-override.conf <<EOF
 [Service]
 Environment="OLLAMA_HOST=0.0.0.0:11434"
 Environment="OLLAMA_GPU_LAYERS=0"
-Environment="OLLAMA_NUM_THREADS=${THREAD_COUNT}"
+Environment="OLLAMA_NUM_THREADS=${CORE_COUNT}"
 Environment="OLLAMA_MAX_LOADED_MODELS=1"
 Environment="OLLAMA_NUM_PARALLEL=1"
 Environment="OLLAMA_KEEP_ALIVE=5m"
@@ -202,8 +202,8 @@ export OLLAMA_GPU_MEMORY_FRACTION=0.8
 sudo mkdir -p /etc/systemd/system/ollama.service.d
 
 # GPUがある場合は全コア使用、CPU負荷が問題なら調整
-THREAD_COUNT=$(nproc)
-# THREAD_COUNT=$(($(nproc) / 2))  # CPU負荷軽減が必要な場合
+CORE_COUNT=$(nproc)
+# CORE_COUNT=$(($(nproc) / 2))  # CPU負荷軽減が必要な場合
 
 sudo tee /etc/systemd/system/ollama.service.d/nvidia.conf <<EOF
 [Service]
@@ -256,7 +256,7 @@ export ROCR_VISIBLE_DEVICES=0
 
 ```bash
 # /etc/systemd/system/ollama.service.d/amd.conf
-THREAD_COUNT=$(($(nproc) * 3 / 4))  # AMD GPUでは控えめに
+CORE_COUNT=$(($(nproc) * 3 / 4))  # AMD GPUでは控えめに
 
 sudo tee /etc/systemd/system/ollama.service.d/amd.conf <<EOF
 [Service]
