@@ -356,9 +356,166 @@ fi
 echo -e "\n7. WSL2 Check (if applicable):"
 if [ -e /dev/dxg ]; then
     echo "✓ WSL2 GPU passthrough detected"
+    if [ -e /dev/dri/ ]; then
+        echo "✓ DRI devices available: $(ls /dev/dri/)"
+    fi
+    
+    # OpenCLプラットフォーム数確認
+    if command -v clinfo >/dev/null 2>&1; then
+        PLATFORMS=$(clinfo 2>/dev/null | grep "Number of platforms" | awk '{print $4}')
+        if [ "$PLATFORMS" = "0" ]; then
+            echo "⚠ WSL2 GPU detected but OpenCL platforms: 0"
+            echo "  → Consider CPU-only setup or install OpenCL runtime"
+        else
+            echo "✓ OpenCL platforms available: $PLATFORMS"
+        fi
+    fi
 else
     echo "- Not WSL2 or GPU passthrough not enabled"
 fi
+
+echo -e "\n8. Recommendation:"
+if [ -e /dev/dxg ] && [ "$(clinfo 2>/dev/null | grep "Number of platforms" | awk '{print $4}')" = "0" ]; then
+    echo "→ Use CPU-optimized Ollama configuration"
+    echo "  export OLLAMA_GPU_LAYERS=0"
+    echo "  export OLLAMA_NUM_THREADS=\$(nproc)"
+fi
+```
+
+#### AMD GPUが検出されない場合のトラブルシューティング
+
+**現象**: `lspci | grep -i amd` で何も表示されない場合
+
+**考えられる原因と対処法:**
+
+**1. 実際にAMD GPUが搭載されていない**
+```bash
+# 全てのGPU/VGAデバイスを確認
+lspci | grep -i vga
+lspci | grep -i display
+lspci | grep -i "3d controller"
+
+# システム情報でGPU確認
+sudo lshw -C display
+inxi -Gx
+```
+
+**2. Intel統合GPU環境の場合**
+```bash
+# Intel GPUの確認
+lspci | grep -i intel
+
+# Intel GPU用OpenCL確認
+apt search intel-opencl
+apt search beignet
+
+# Intel GPU向けOllama設定（限定的サポート）
+export OLLAMA_GPU_LAYERS=0  # CPU使用を強制
+export OLLAMA_NUM_THREADS=8  # CPUスレッド数最適化
+```
+
+**3. WSL2でのGPU設定問題**
+
+**症状**: `/dev/dxg`は存在するが`clinfo`で"Number of platforms 0"と表示される
+
+```bash
+# WSL2のGPUパススルー状態確認
+ls /dev/dxg        # 存在する場合はパススルー有効
+ls /dev/dri/       # DRIデバイスの確認
+
+# OpenCLプラットフォーム確認
+clinfo | head -5   # プラットフォーム数を確認
+```
+
+**解決方法:**
+
+**方法1: Windows側でのGPUドライバー更新**
+```powershell
+# PowerShell（管理者権限で実行）
+# 1. 最新のGPUドライバーをインストール
+# 2. WSLを完全に再起動
+wsl --shutdown
+wsl
+
+# 3. WSL2設定ファイルの確認
+# %USERPROFILE%\.wslconfig
+[wsl2]
+nestedVirtualization=true
+guiApplications=true
+```
+
+**方法2: WSL2でのOpenCLランタイムインストール**
+```bash
+# Intel OpenCLランタイム（多くのWSL2環境で有効）
+sudo apt update
+sudo apt install intel-opencl-icd opencl-headers
+
+# または汎用OpenCLローダー
+sudo apt install ocl-icd-opencl-dev ocl-icd-libopencl1
+
+# インストール後確認
+clinfo
+```
+
+**方法3: CPU専用でのOllama実行（推奨）**
+```bash
+# WSL2でGPU加速が困難な場合のCPU最適化
+export OLLAMA_GPU_LAYERS=0          # GPU使用を無効化
+export OLLAMA_NUM_THREADS=$(nproc)  # 全CPUコア使用
+export OLLAMA_MAX_LOADED_MODELS=1   # メモリ使用量を制限
+export OLLAMA_NUM_PARALLEL=1        # 保守的な並列設定
+
+# 軽量モデルの使用
+ollama pull phi:mini         # 3.8Bの軽量モデル
+ollama pull llama2:7b-q4_0   # 7Bの4bit量子化モデル
+```
+
+**4. NVIDIA GPU環境でAMD設定を確認している場合**
+```bash
+# NVIDIA GPU確認
+lspci | grep -i nvidia
+nvidia-smi 2>/dev/null || echo "NVIDIA drivers not available"
+
+# NVIDIA用Ollama設定
+export CUDA_VISIBLE_DEVICES=0
+export OLLAMA_GPU_LAYERS=32
+# AMD固有の環境変数は不要
+```
+
+**5. ハイブリッドGPU構成の場合**
+```bash
+# プライマリGPUの確認
+glxinfo | grep "OpenGL renderer"
+vulkaninfo | grep deviceName
+
+# 使用可能なGPUドライバー確認
+ls /usr/share/vulkan/icd.d/
+ls /etc/OpenCL/vendors/
+```
+
+#### 代替実行環境での最適化
+
+**CPU専用実行の場合**
+```bash
+# CPU最適化設定
+export OLLAMA_NUM_THREADS=$(nproc)
+export OLLAMA_MAX_LOADED_MODELS=1
+export OLLAMA_NUM_PARALLEL=1
+export OLLAMA_KEEP_ALIVE=5m
+
+# 軽量モデルの使用推奨
+ollama pull llama2:7b-q4_0
+ollama pull phi:mini
+```
+
+**Intel統合GPU使用の場合**
+```bash
+# Intel GPU確認コマンド
+intel_gpu_top 2>/dev/null || echo "intel-gpu-tools not installed"
+
+# Intel用OpenCL設定（実験的）
+export OCL_DEVICE_TYPE=GPU
+export ONEAPI_DEVICE_SELECTOR=opencl:gpu
 ```
 
 #### 基本的なシステム設定
