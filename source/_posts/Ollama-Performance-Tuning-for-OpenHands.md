@@ -64,10 +64,10 @@ fi
 
 ### 共通環境変数
 
-以下の環境変数はすべての環境で有効です：
+以下の環境変数はすべての環境で有効です（値は設定例）：
 
 ```bash
-# 並行処理設定
+# 並行処理設定の例
 export OLLAMA_NUM_PARALLEL=2        # 同時リクエスト数
 export OLLAMA_MAX_LOADED_MODELS=1   # 同時ロードモデル数
 export OLLAMA_MAX_QUEUE=4           # キューサイズ
@@ -77,16 +77,18 @@ export OLLAMA_KEEP_ALIVE=5m         # モデル保持時間
 export OLLAMA_HOST="0.0.0.0:11434"  # 外部アクセス許可
 ```
 
-### CPU負荷の調整
+### CPU負荷の調整原理
 
-**重要**: `OLLAMA_NUM_THREADS`（使用するCPUコア数）の設定によってCPU使用率が大きく変わります：
+**重要**: `OLLAMA_NUM_THREADS`はOllamaが使用するCPUスレッド数を制御します。この設定により、システムリソースの使用量を調整できます：
 
-| 設定値 | CPU使用率 | 推奨用途 |
-|--------|-----------|----------|
-| `$(nproc)` | 90-100% | ベンチマーク時のみ |
-| `$(nproc) / 2` | 40-50% | 通常使用（推奨） |
-| `$(nproc) / 3` | 30-40% | バックグラウンド実行 |
-| `8` (固定値) | 環境依存 | 安定運用 |
+| 設定値 | 期待される動作 | 推奨用途 |
+|--------|----------------|----------|
+| `$(nproc)` | 全コア使用（最大負荷） | ベンチマーク時のみ |
+| `$(nproc) / 2` | 半数のコア使用 | 通常使用（推奨） |
+| `$(nproc) / 3` | 約1/3のコア使用 | バックグラウンド実行 |
+| `8` (固定値) | 固定スレッド数 | 安定運用 |
+
+実際のCPU使用率は、モデルサイズ、プロンプト長、他のプロセスの状況などに依存します。
 
 ### パフォーマンス監視方法
 
@@ -113,10 +115,10 @@ watch -n 2 'ollama ps && echo "=== GPU ===" && nvidia-smi --query-gpu=utilizatio
 
 **重要**: WSL2環境では、GPU種類に関わらずCPU専用設定が最も安定します。
 
-#### 推奨設定（CPU専用）
+#### 設定例（CPU専用）
 
 ```bash
-# WSL2環境での安定設定
+# WSL2環境での安定設定の例
 export OLLAMA_GPU_LAYERS=0          # GPU使用を無効化
 export OLLAMA_NUM_THREADS=$(($(nproc) / 2))  # CPUコアの半分を使用（システム負荷軽減）
 export OLLAMA_MAX_LOADED_MODELS=1   # メモリ制限
@@ -183,16 +185,16 @@ sudo systemctl show ollama | grep Environment
 
 ### ネイティブLinux + NVIDIA GPU
 
-#### 推奨設定
+#### 設定例
 
 ```bash
-# NVIDIA GPU最適化設定
+# NVIDIA GPU最適化設定の例
 export CUDA_VISIBLE_DEVICES=0
 export OLLAMA_GPU_LAYERS=32          # モデルサイズに応じて調整
-export OLLAMA_NUM_PARALLEL=4        # 高性能GPU用
-export OLLAMA_MAX_LOADED_MODELS=2   # VRAM容量に応じて
-export OLLAMA_FLASH_ATTENTION=1     # パフォーマンス向上
-export OLLAMA_GPU_MEMORY_FRACTION=0.8
+export OLLAMA_NUM_PARALLEL=4        # 並列処理数の例
+export OLLAMA_MAX_LOADED_MODELS=2   # VRAM容量に応じて調整
+export OLLAMA_FLASH_ATTENTION=1     # パフォーマンス向上オプション
+export OLLAMA_GPU_MEMORY_FRACTION=0.8  # GPU メモリ使用率の例
 ```
 
 #### systemd設定
@@ -430,11 +432,13 @@ export OLLAMA_NUM_PARALLEL=1
 export OLLAMA_HOST="0.0.0.0:11434"
 ```
 
-**パフォーマンス結果**:
-- llama3.1:8b: 10 tokens/sec
-- qwen2.5:7b: 12 tokens/sec
-- llama3.2:1b: 20-25 tokens/sec
-- プロンプト処理: 120 tokens/sec
+**パフォーマンスの目安**:
+各モデルの処理速度は環境により大きく異なりますが、一般的な傾向として：
+- 軽量モデル（1B-3B）: より高速な処理が期待できる
+- 中規模モデル（7B-8B）: バランスの取れた性能
+- 大規模モデル（13B以上）: より多くのリソースと時間が必要
+
+※具体的なトークン/秒の値は、CPU性能、メモリ帯域、システム負荷、モデルの量子化レベルなど多くの要因に依存するため、実際に計測することをお勧めします。
 
 ## まとめ
 

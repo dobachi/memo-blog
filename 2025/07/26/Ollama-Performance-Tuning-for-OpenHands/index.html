@@ -5,18 +5,18 @@
     
     <title>OpenHandsでOllamaを使う際のパフォーマンスチューニング | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="はじめに 環境別アプローチの選択  環境の特定方法 推奨アプローチマトリックス  基本的なパフォーマンスチューニング  共通環境変数 CPU負荷の調整 パフォーマンス監視方法  環境別詳細設定  WSL2環境での設定 ネイティブLinux + NVIDIA GPU ネイティブLinux + AMD GPU  OpenHandsとの統合  Docker環境での設定 一般的な問題と解決策  トラ">
+    <meta name="description" content="はじめに 環境別アプローチの選択  環境の特定方法 推奨アプローチマトリックス  基本的なパフォーマンスチューニング  共通環境変数 CPU負荷の調整原理 パフォーマンス監視方法  環境別詳細設定  WSL2環境での設定 ネイティブLinux + NVIDIA GPU ネイティブLinux + AMD GPU  OpenHandsとの統合  Docker環境での設定 一般的な問題と解決策">
 <meta name="keywords" content="AI,Ollama,LocalLLM,OpenHands,Performance,WSL2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenHandsでOllamaを使う際のパフォーマンスチューニング">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="はじめに 環境別アプローチの選択  環境の特定方法 推奨アプローチマトリックス  基本的なパフォーマンスチューニング  共通環境変数 CPU負荷の調整 パフォーマンス監視方法  環境別詳細設定  WSL2環境での設定 ネイティブLinux + NVIDIA GPU ネイティブLinux + AMD GPU  OpenHandsとの統合  Docker環境での設定 一般的な問題と解決策  トラ">
+<meta property="og:description" content="はじめに 環境別アプローチの選択  環境の特定方法 推奨アプローチマトリックス  基本的なパフォーマンスチューニング  共通環境変数 CPU負荷の調整原理 パフォーマンス監視方法  環境別詳細設定  WSL2環境での設定 ネイティブLinux + NVIDIA GPU ネイティブLinux + AMD GPU  OpenHandsとの統合  Docker環境での設定 一般的な問題と解決策">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2025-07-26T17:26:30.119Z">
+<meta property="og:updated_time" content="2025-07-26T23:25:55.566Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenHandsでOllamaを使う際のパフォーマンスチューニング">
-<meta name="twitter:description" content="はじめに 環境別アプローチの選択  環境の特定方法 推奨アプローチマトリックス  基本的なパフォーマンスチューニング  共通環境変数 CPU負荷の調整 パフォーマンス監視方法  環境別詳細設定  WSL2環境での設定 ネイティブLinux + NVIDIA GPU ネイティブLinux + AMD GPU  OpenHandsとの統合  Docker環境での設定 一般的な問題と解決策  トラ">
+<meta name="twitter:description" content="はじめに 環境別アプローチの選択  環境の特定方法 推奨アプローチマトリックス  基本的なパフォーマンスチューニング  共通環境変数 CPU負荷の調整原理 パフォーマンス監視方法  環境別詳細設定  WSL2環境での設定 ネイティブLinux + NVIDIA GPU ネイティブLinux + AMD GPU  OpenHandsとの統合  Docker環境での設定 一般的な問題と解決策">
     
 
     
@@ -258,7 +258,7 @@
 <li><a href="#基本的なパフォーマンスチューニング" id="toc-基本的なパフォーマンスチューニング">基本的なパフォーマンスチューニング</a>
 <ul>
 <li><a href="#共通環境変数" id="toc-共通環境変数">共通環境変数</a></li>
-<li><a href="#cpu負荷の調整" id="toc-cpu負荷の調整">CPU負荷の調整</a></li>
+<li><a href="#cpu負荷の調整原理" id="toc-cpu負荷の調整原理">CPU負荷の調整原理</a></li>
 <li><a href="#パフォーマンス監視方法" id="toc-パフォーマンス監視方法">パフォーマンス監視方法</a></li>
 </ul></li>
 <li><a href="#環境別詳細設定" id="toc-環境別詳細設定">環境別詳細設定</a>
@@ -356,50 +356,51 @@ GPU</a></li>
 </table>
 <h2><span id="基本的なパフォーマンスチューニング">基本的なパフォーマンスチューニング</span></h2>
 <h3><span id="共通環境変数">共通環境変数</span></h3>
-<p>以下の環境変数はすべての環境で有効です：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 並行処理設定</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=2        <span class="comment"># 同時リクエスト数</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=1   <span class="comment"># 同時ロードモデル数</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_QUEUE=4           <span class="comment"># キューサイズ</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_KEEP_ALIVE=5m         <span class="comment"># モデル保持時間</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ネットワーク設定（OpenHands連携用）</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_HOST=<span class="string">"0.0.0.0:11434"</span>  <span class="comment"># 外部アクセス許可</span></span><br></pre></td></tr></table></figure>
-<h3><span id="cpu負荷の調整">CPU負荷の調整</span></h3>
+<p>以下の環境変数はすべての環境で有効です（値は設定例）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 並行処理設定の例</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=2        <span class="comment"># 同時リクエスト数</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=1   <span class="comment"># 同時ロードモデル数</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_QUEUE=4           <span class="comment"># キューサイズ</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_KEEP_ALIVE=5m         <span class="comment"># モデル保持時間</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ネットワーク設定（OpenHands連携用）</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_HOST=<span class="string">"0.0.0.0:11434"</span>  <span class="comment"># 外部アクセス許可</span></span><br></pre></td></tr></table></figure>
+<h3><span id="cpu負荷の調整原理">CPU負荷の調整原理</span></h3>
 <p><strong>重要</strong>:
-<code>OLLAMA_NUM_THREADS</code>（使用するCPUコア数）の設定によってCPU使用率が大きく変わります：</p>
+<code>OLLAMA_NUM_THREADS</code>はOllamaが使用するCPUスレッド数を制御します。この設定により、システムリソースの使用量を調整できます：</p>
 <table>
 <thead>
 <tr class="header">
 <th>設定値</th>
-<th>CPU使用率</th>
+<th>期待される動作</th>
 <th>推奨用途</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><code>$(nproc)</code></td>
-<td>90-100%</td>
+<td>全コア使用（最大負荷）</td>
 <td>ベンチマーク時のみ</td>
 </tr>
 <tr class="even">
 <td><code>$(nproc) / 2</code></td>
-<td>40-50%</td>
+<td>半数のコア使用</td>
 <td>通常使用（推奨）</td>
 </tr>
 <tr class="odd">
 <td><code>$(nproc) / 3</code></td>
-<td>30-40%</td>
+<td>約1/3のコア使用</td>
 <td>バックグラウンド実行</td>
 </tr>
 <tr class="even">
 <td><code>8</code> (固定値)</td>
-<td>環境依存</td>
+<td>固定スレッド数</td>
 <td>安定運用</td>
 </tr>
 </tbody>
 </table>
+<p>実際のCPU使用率は、モデルサイズ、プロンプト長、他のプロセスの状況などに依存します。</p>
 <h3><span id="パフォーマンス監視方法">パフォーマンス監視方法</span></h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GPU使用状況（NVIDIA）</span></span><br><span class="line">nvidia-smi</span><br><span class="line"></span><br><span class="line"><span class="comment"># GPU使用状況（AMD - ネイティブLinux）</span></span><br><span class="line">rocm-smi</span><br><span class="line"></span><br><span class="line"><span class="comment"># CPU使用状況</span></span><br><span class="line">htop</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ollama状況</span></span><br><span class="line">ollama ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># リアルタイム監視</span></span><br><span class="line">watch -n 2 <span class="string">'ollama ps &amp;&amp; echo "=== GPU ===" &amp;&amp; nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.total --format=csv'</span></span><br></pre></td></tr></table></figure>
 <h2><span id="環境別詳細設定">環境別詳細設定</span></h2>
 <h3><span id="wsl2環境での設定">WSL2環境での設定</span></h3>
 <p><strong>重要</strong>:
 WSL2環境では、GPU種類に関わらずCPU専用設定が最も安定します。</p>
-<h4><span id="推奨設定cpu専用">推奨設定（CPU専用）</span></h4>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># WSL2環境での安定設定</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_LAYERS=0          <span class="comment"># GPU使用を無効化</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_THREADS=$(($(nproc) / 2))  <span class="comment"># CPUコアの半分を使用（システム負荷軽減）</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=1   <span class="comment"># メモリ制限</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=1        <span class="comment"># 安定性重視</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_HOST=<span class="string">"0.0.0.0:11434"</span>  <span class="comment"># Docker連携用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># CPU使用率が高すぎる場合の調整例</span></span><br><span class="line"><span class="comment"># export OLLAMA_NUM_THREADS=8      # 固定値で制限</span></span><br><span class="line"><span class="comment"># export OLLAMA_NUM_THREADS=$(($(nproc) / 3))  # コアの1/3使用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 軽量モデルの使用推奨</span></span><br><span class="line">ollama pull llama3.2:1b              <span class="comment"># 1B - 超軽量（最新）</span></span><br><span class="line">ollama pull phi3:mini                <span class="comment"># 3.8B - 軽量</span></span><br><span class="line">ollama pull qwen2.5:7b               <span class="comment"># 7B - バランス良好</span></span><br></pre></td></tr></table></figure>
+<h4><span id="設定例cpu専用">設定例（CPU専用）</span></h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># WSL2環境での安定設定の例</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_LAYERS=0          <span class="comment"># GPU使用を無効化</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_THREADS=$(($(nproc) / 2))  <span class="comment"># CPUコアの半分を使用（システム負荷軽減）</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=1   <span class="comment"># メモリ制限</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=1        <span class="comment"># 安定性重視</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_HOST=<span class="string">"0.0.0.0:11434"</span>  <span class="comment"># Docker連携用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># CPU使用率が高すぎる場合の調整例</span></span><br><span class="line"><span class="comment"># export OLLAMA_NUM_THREADS=8      # 固定値で制限</span></span><br><span class="line"><span class="comment"># export OLLAMA_NUM_THREADS=$(($(nproc) / 3))  # コアの1/3使用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 軽量モデルの使用推奨</span></span><br><span class="line">ollama pull llama3.2:1b              <span class="comment"># 1B - 超軽量（最新）</span></span><br><span class="line">ollama pull phi3:mini                <span class="comment"># 3.8B - 軽量</span></span><br><span class="line">ollama pull qwen2.5:7b               <span class="comment"># 7B - バランス良好</span></span><br></pre></td></tr></table></figure>
 <h4><span id="systemdでollamaを管理する場合wsl2">systemdでOllamaを管理する場合（WSL2）</span></h4>
 <p>WSL2でもsystemdを有効化している場合は、以下の方法で設定できます：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ollamaサービスの状態確認</span></span><br><span class="line">systemctl status ollama</span><br><span class="line"></span><br><span class="line"><span class="comment"># 環境変数設定用のオーバーライドディレクトリを作成</span></span><br><span class="line">sudo mkdir -p /etc/systemd/system/ollama.service.d</span><br><span class="line"></span><br><span class="line"><span class="comment"># WSL2 CPU専用設定（CPUコア数の半分を自動計算）</span></span><br><span class="line">CORE_COUNT=$(($(nproc) / 2))</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"CPU設定: <span class="variable">$(nproc)</span> コア中 <span class="variable">$&#123;CORE_COUNT&#125;</span> コアを使用"</span></span><br><span class="line"></span><br><span class="line">sudo tee /etc/systemd/system/ollama.service.d/wsl2-override.conf &lt;&lt;EOF</span><br><span class="line">[Service]</span><br><span class="line">Environment=<span class="string">"OLLAMA_HOST=0.0.0.0:11434"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_GPU_LAYERS=0"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_NUM_THREADS=<span class="variable">$&#123;CORE_COUNT&#125;</span>"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_MAX_LOADED_MODELS=1"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_NUM_PARALLEL=1"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_KEEP_ALIVE=5m"</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># systemdの設定を再読み込み</span></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ollamaサービスを再起動</span></span><br><span class="line">sudo systemctl restart ollama</span><br><span class="line"></span><br><span class="line"><span class="comment"># 設定が反映されているか確認</span></span><br><span class="line">sudo systemctl show ollama | grep Environment</span><br><span class="line"></span><br><span class="line"><span class="comment"># ポート使用中エラーが出る場合</span></span><br><span class="line"><span class="comment"># すでにOllamaがsystemdで起動している可能性が高い</span></span><br><span class="line"><span class="comment"># 手動で`ollama serve`を実行する必要はない</span></span><br></pre></td></tr></table></figure>
@@ -416,8 +417,8 @@ WSL2でsystemdを使用している場合、Ollamaは自動起動するため、
 OpenGL描画は可能だが、OllamaのCUDA/ROCm加速には対応不可</li>
 </ul>
 <h3><span id="ネイティブlinux-nvidia-gpu">ネイティブLinux + NVIDIA GPU</span></h3>
-<h4><span id="推奨設定">推奨設定</span></h4>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># NVIDIA GPU最適化設定</span></span><br><span class="line"><span class="built_in">export</span> CUDA_VISIBLE_DEVICES=0</span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_LAYERS=32          <span class="comment"># モデルサイズに応じて調整</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=4        <span class="comment"># 高性能GPU用</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=2   <span class="comment"># VRAM容量に応じて</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_FLASH_ATTENTION=1     <span class="comment"># パフォーマンス向上</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_MEMORY_FRACTION=0.8</span><br></pre></td></tr></table></figure>
+<h4><span id="設定例">設定例</span></h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># NVIDIA GPU最適化設定の例</span></span><br><span class="line"><span class="built_in">export</span> CUDA_VISIBLE_DEVICES=0</span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_LAYERS=32          <span class="comment"># モデルサイズに応じて調整</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=4        <span class="comment"># 並列処理数の例</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=2   <span class="comment"># VRAM容量に応じて調整</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_FLASH_ATTENTION=1     <span class="comment"># パフォーマンス向上オプション</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_MEMORY_FRACTION=0.8  <span class="comment"># GPU メモリ使用率の例</span></span><br></pre></td></tr></table></figure>
 <h4><span id="systemd設定">systemd設定</span></h4>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/systemd/system/ollama.service.d/nvidia.conf</span></span><br><span class="line">sudo mkdir -p /etc/systemd/system/ollama.service.d</span><br><span class="line"></span><br><span class="line"><span class="comment"># GPUがある場合は全コア使用、CPU負荷が問題なら調整</span></span><br><span class="line">CORE_COUNT=$(nproc)</span><br><span class="line"><span class="comment"># CORE_COUNT=$(($(nproc) / 2))  # CPU負荷軽減が必要な場合</span></span><br><span class="line"></span><br><span class="line">sudo tee /etc/systemd/system/ollama.service.d/nvidia.conf &lt;&lt;EOF</span><br><span class="line">[Service]</span><br><span class="line">Environment=<span class="string">"CUDA_VISIBLE_DEVICES=0"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_GPU_LAYERS=32"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_NUM_PARALLEL=4"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_FLASH_ATTENTION=1"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_HOST=0.0.0.0:11434"</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart ollama</span><br></pre></td></tr></table></figure>
 <h3><span id="ネイティブlinux-amd-gpu">ネイティブLinux + AMD GPU</span></h3>
@@ -462,9 +463,12 @@ OpenGL描画は可能だが、OllamaのCUDA/ROCm加速には対応不可</li>
 Graphics (統合GPU) - OpenCL: 0プラットフォーム（GPU加速不可） - OpenGL:
 Mesa D3D12対応（描画のみ、計算処理不可）</p>
 <p><strong>実際の設定</strong>: <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CPU専用設定（推奨・安定）</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_LAYERS=0</span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_THREADS=12         <span class="comment"># 24コアの半分使用</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=1</span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=1</span><br><span class="line"><span class="built_in">export</span> OLLAMA_HOST=<span class="string">"0.0.0.0:11434"</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>パフォーマンス結果</strong>: - llama3.1:8b: 10 tokens/sec -
-qwen2.5:7b: 12 tokens/sec - llama3.2:1b: 20-25 tokens/sec -
-プロンプト処理: 120 tokens/sec</p>
+<p><strong>パフォーマンスの目安</strong>:
+各モデルの処理速度は環境により大きく異なりますが、一般的な傾向として： -
+軽量モデル（1B-3B）: より高速な処理が期待できる - 中規模モデル（7B-8B）:
+バランスの取れた性能 - 大規模モデル（13B以上）:
+より多くのリソースと時間が必要</p>
+<p>※具体的なトークン/秒の値は、CPU性能、メモリ帯域、システム負荷、モデルの量子化レベルなど多くの要因に依存するため、実際に計測することをお勧めします。</p>
 <h2><span id="まとめ">まとめ</span></h2>
 <h3><span id="環境別推奨設定まとめ">環境別推奨設定まとめ</span></h3>
 <ol type="1">
@@ -507,7 +511,7 @@ WebUI Discussion #510 - Docker接続問題</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/" data-id="cmdkivnf5018u18qtkibvfaba" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/" data-id="cmdkvpwd5019018mjn76reira" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
