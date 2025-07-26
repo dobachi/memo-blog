@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  AMD GPU環境での特別な考慮事項  環境の種類と適用範囲 ROCm環境の確認とセットアップ（ネイティブLinux環境">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2025-07-26T16:42:57.663Z">
+<meta property="og:updated_time" content="2025-07-26T16:50:03.183Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenHandsでOllamaを使う際のパフォーマンスチューニング">
 <meta name="twitter:description" content="はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  AMD GPU環境での特別な考慮事項  環境の種類と適用範囲 ROCm環境の確認とセットアップ（ネイティブLinux環境">
@@ -285,7 +285,15 @@ GPUパフォーマンス最適化のベストプラクティス</a></li>
 <li><a href="#ポートがすでに使用されているエラー" id="toc-ポートがすでに使用されているエラー">ポートがすでに使用されているエラー</a></li>
 </ul></li>
 <li><a href="#実践的なチューニング手順" id="toc-実践的なチューニング手順">実践的なチューニング手順</a></li>
-<li><a href="#まとめ" id="toc-まとめ">まとめ</a></li>
+<li><a href="#実環境での設定例" id="toc-実環境での設定例">実環境での設定例</a>
+<ul>
+<li><a href="#wsl2-amd-radeon-890m環境実例" id="toc-wsl2-amd-radeon-890m環境実例">WSL2 + AMD Radeon
+890M環境（実例）</a></li>
+</ul></li>
+<li><a href="#まとめ" id="toc-まとめ">まとめ</a>
+<ul>
+<li><a href="#環境別推奨アプローチ" id="toc-環境別推奨アプローチ">環境別推奨アプローチ</a></li>
+</ul></li>
 <li><a href="#参考" id="toc-参考">参考</a></li>
 </ul>
 </div>
@@ -527,8 +535,31 @@ GPUパフォーマンス最適化のベストプラクティス</span></h3>
 <li>必要に応じて微調整</li>
 </ul></li>
 </ol>
+<h2><span id="実環境での設定例">実環境での設定例</span></h2>
+<h3><span id="wsl2-amd-radeon890m環境実例">WSL2 + AMD Radeon
+890M環境（実例）</span></h3>
+<p>以下は実際のWSL2環境での設定例です：</p>
+<p><strong>環境詳細:</strong> - OS: Ubuntu 22.04.5 LTS (WSL2) - CPU:
+24コア (AMD Ryzen 9 7940HS相当) - RAM: 29GB - GPU: AMD Radeon 890M
+Graphics (統合GPU) - Mesa: 23.2.1-1ubuntu3.1~22.04.3 - OpenGL: D3D12
+(AMD Radeon 890M Graphics) - OpenCLプラットフォーム: 0個
+(WSL2環境の特徴)</p>
+<p><strong>検証済み設定:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># WSL2 + AMD 890M向けCPU専用設定（推奨）</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_LAYERS=0</span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_THREADS=24         <span class="comment"># 全コア使用</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=1</span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用中のモデル例（動作確認済み）</span></span><br><span class="line">ollama run llama3.1:8b <span class="string">"プログラミングについて教えて"</span></span><br><span class="line">ollama run qwen2.5:7b <span class="string">"WSL2でのGPU設定について"</span></span><br><span class="line">ollama run gemma2:9b <span class="string">"軽量なAIモデルの特徴は？"</span></span><br></pre></td></tr></table></figure>
+<p><strong>パフォーマンス期待値:</strong> - 7B-8Bモデル: 8-12 tokens/sec
+(CPU使用時) - プロンプト処理: 100-150 tokens/sec - メモリ使用量: 4-6GB
+(モデルサイズ依存)</p>
+<p><strong>WSL2環境の特徴:</strong> - ROCmインストール不要 -
+GPU加速は限定的（OpenCLプラットフォーム0） - CPU専用設定が最も安定 -
+Mesa D3D12ドライバーによるOpenGL対応</p>
 <h2><span id="まとめ">まとめ</span></h2>
 <p>Ollamaのパフォーマンスチューニングは、ハードウェア構成と使用環境に大きく依存します。特にOpenHandsとの統合においては、WSL2の制限事項やDocker環境の特性を理解した上で、適切な設定を行うことが重要です。</p>
+<h3><span id="環境別推奨アプローチ">環境別推奨アプローチ</span></h3>
+<ol type="1">
+<li><strong>ネイティブLinux + AMD GPU</strong>: ROCm + 専用GPU設定</li>
+<li><strong>WSL2 + AMD GPU</strong>: CPU専用設定（最も安定）</li>
+<li><strong>NVIDIA GPU環境</strong>: CUDA + GPU最適化設定</li>
+</ol>
 <p>上記の設定を参考に、自身の環境に合わせて調整を行い、最適なパフォーマンスを実現してください。実際の使用環境でのパフォーマンステストを必ず行い、必要に応じて設定を微調整することをお勧めします。</p>
 <h2><span id="参考">参考</span></h2>
 <ul>
@@ -558,7 +589,7 @@ WebUI Discussion #510 - Docker接続問題</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/" data-id="cmdkhbni901g118o1da7d0iwp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/" data-id="cmdkhkpxe01df18o67jvyv8hg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
