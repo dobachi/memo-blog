@@ -115,7 +115,7 @@ export OLLAMA_HOST="0.0.0.0:11434"  # Docker連携用
 # 軽量モデルの使用推奨
 ollama pull phi3:mini                # 3.8B - 最軽量
 ollama pull qwen2.5:7b               # 7B - バランス良好
-ollama pull llama2:7b-q4_0           # 7B量子化 - メモリ効率
+ollama pull llama2:7b                # 7B - 標準サイズ
 ```
 
 #### systemdでOllamaを管理する場合（WSL2）
@@ -362,10 +362,9 @@ export OLLAMA_NUM_THREADS=$(nproc)
 export OLLAMA_GPU_LAYERS=10       # レイヤー数削減
 export GPU_MAX_ALLOC_PERCENT=70   # メモリ使用量制限
 
-# 量子化モデル使用
-ollama pull llama2:7b-q4_0        # 4bit量子化
-# または
-ollama pull qwen2.5:7b-q4_0      # 4bit量子化版
+# より小さいモデルを使用
+ollama pull llama2:7b              # 7Bモデル
+ollama pull gemma:2b               # 2Bモデル（超軽量）
 ```
 
 ### 環境診断スクリプト
