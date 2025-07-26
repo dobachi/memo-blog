@@ -13,16 +13,6 @@ tags:
   - WSL2
 ---
 
-# メモ
-
-# 参考
-
-
-
-
-
-<!-- vim: set et tw=0 ts=2 sw=2: -->
-
 
 ## はじめに
 
@@ -47,13 +37,19 @@ Ollamaのパフォーマンスに影響する主要な環境変数は以下の�
 - `OLLAMA_GPU_OVERHEAD`: GPU メモリオーバーヘッド（例: 2147483648 = 2GB）
 - `OLLAMA_FLASH_ATTENTION`: フラッシュアテンションの有効化（1で有効）
 
+#### AMD GPU固有の最適化
+- `HSA_OVERRIDE_GFX_VERSION`: GPU世代の指定（例: 10.3.0 for RX 6900/6600シリーズ、11.0.0 for RX 7900シリーズ）
+- `ROCR_VISIBLE_DEVICES`: 使用するAMD GPUの指定（例: 0）
+- `GPU_MAX_ALLOC_PERCENT`: GPU メモリ割り当て上限（例: 80）
+- `GPU_MAX_HEAP_SIZE`: GPU ヒープサイズ（例: 100）
+
 #### メモリ管理
 - `OLLAMA_KEEP_ALIVE`: モデル保持時間（例: 30m）
 - `OLLAMA_NUM_THREADS`: CPU スレッド数（例: 8）
 
 ### 推奨設定例
 
-高性能環境（例：RTX 4090、192GB RAM）での設定例：
+#### NVIDIA GPU環境での設定例（例：RTX 4090、192GB RAM）
 
 ```bash
 export OLLAMA_NUM_PARALLEL=3
@@ -62,6 +58,27 @@ export OLLAMA_MAX_QUEUE=512
 export OLLAMA_GPU_LAYERS=32
 export OLLAMA_FLASH_ATTENTION=1
 export OLLAMA_GPU_MEMORY_FRACTION=0.8
+```
+
+#### AMD GPU環境での設定例（例：RX 6900 XT、32GB RAM）
+
+```bash
+# ROCm基本設定
+export ROCM_PATH=/opt/rocm
+export HIP_PATH=/opt/rocm
+export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
+export PATH=/opt/rocm/bin:$PATH
+
+# GPU世代指定（RX 6900/6600シリーズの場合）
+export HSA_OVERRIDE_GFX_VERSION=10.3.0
+
+# Ollama最適化設定
+export OLLAMA_NUM_PARALLEL=2
+export OLLAMA_MAX_LOADED_MODELS=1
+export OLLAMA_MAX_QUEUE=4
+export OLLAMA_GPU_LAYERS=35
+export GPU_MAX_ALLOC_PERCENT=80
+export ROCR_VISIBLE_DEVICES=0
 ```
 
 ## WSL2環境での考慮事項
@@ -153,19 +170,176 @@ sudo systemctl status ollama
 
 この方法により、システム起動時に自動的にパフォーマンス最適化された設定でOllamaが起動します。
 
+## AMD GPU環境での特別な考慮事項
+
+### ROCmの設定とインストール
+
+AMD GPUでOllamaを使用する場合、ROCm（Radeon Open Compute）の適切な設定が必要です。
+
+#### 基本的なシステム設定
+
+```bash
+# ユーザーを適切なグループに追加
+sudo usermod -a -G render,video $USER
+
+# 再ログインが必要
+# ログイン後、権限を確認
+groups $USER | grep -E "(render|video)"
+```
+
+#### Docker環境でのAMD GPU設定
+
+```bash
+# AMD GPU対応のOllamaコンテナを使用
+docker run -d --name ollama \
+  --device /dev/kfd --device /dev/dri \
+  -e HSA_OVERRIDE_GFX_VERSION=10.3.0 \
+  -e OLLAMA_MAX_LOADED_MODELS=1 \
+  -e OLLAMA_NUM_PARALLEL=2 \
+  -e GPU_MAX_ALLOC_PERCENT=80 \
+  -v ollama:/root/.ollama \
+  -p 11434:11434 \
+  ollama/ollama:rocm
+```
+
+### AMD GPU向けsystemd設定
+
+```bash
+# AMD GPU用のオーバーライド設定
+sudo tee /etc/systemd/system/ollama.service.d/amd-override.conf <<EOF
+[Service]
+Environment="ROCM_PATH=/opt/rocm"
+Environment="HIP_PATH=/opt/rocm"
+Environment="HSA_OVERRIDE_GFX_VERSION=10.3.0"
+Environment="ROCR_VISIBLE_DEVICES=0"
+Environment="GPU_MAX_ALLOC_PERCENT=80"
+Environment="OLLAMA_HOST=0.0.0.0:11434"
+Environment="OLLAMA_NUM_PARALLEL=2"
+Environment="OLLAMA_MAX_LOADED_MODELS=1"
+Environment="OLLAMA_GPU_LAYERS=35"
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl restart ollama
+```
+
+### よくあるAMD GPU問題とトラブルシューティング
+
+#### GPU世代の互換性問題
+
+多くのAMD GPUは直接サポートされていないため、世代のオーバーライドが必要です：
+
+```bash
+# gfx1032（例：RX 6400）をgfx1030として認識させる
+export HSA_OVERRIDE_GFX_VERSION=10.3.0
+
+# gfx1103（例：RX 7600）をgfx1100として認識させる  
+export HSA_OVERRIDE_GFX_VERSION=11.0.0
+
+# 対応表
+# RX 6000シリーズ → 10.3.0
+# RX 7000シリーズ → 11.0.0
+```
+
+#### メモリ不足エラーの対処
+
+```bash
+# "HIP out of memory" エラーの場合
+export GPU_MAX_ALLOC_PERCENT=70  # より保守的な設定
+
+# 量子化モデルの使用を検討
+ollama pull llama2:7b-q4_0  # 4bit量子化でメモリ使用量を削減
+```
+
+#### 統合GPU（iGPU）使用時の注意点
+
+```bash
+# iGPUを使用する場合（例：Ryzen APU）
+# BIOSでiGPU専用メモリを2GB以上に設定することを推奨
+
+# パフォーマンス期待値（例：Ryzen 5600G）
+# - プロンプト処理: ~70 tokens/sec
+# - テキスト生成: ~6 tokens/sec
+# （CPU単体の約2-3倍の性能）
+```
+
+### AMD GPUパフォーマンス最適化のベストプラクティス
+
+1. **適切な量子化モデルの選択**
+   ```bash
+   # VRAM容量に応じたモデル選択
+   # 8GB VRAM → 7Bモデル（q4_0量子化）
+   # 16GB VRAM → 13Bモデル（q4_0量子化）
+   # 24GB VRAM → 30Bモデル（q4_0量子化）
+   ```
+
+2. **並行処理の調整**
+   ```bash
+   # AMD GPUでは保守的な設定を推奨
+   export OLLAMA_NUM_PARALLEL=1  # 大きなモデル使用時
+   export OLLAMA_NUM_PARALLEL=2  # 小さなモデル使用時
+   ```
+
+3. **定期的な健全性チェック**
+   ```bash
+   # GPU認識状況の確認
+   rocminfo | grep "Name:"
+   
+   # デバイスアクセス権限の確認
+   ls -la /dev/kfd /dev/dri/
+   
+   # Ollama GPU使用状況の確認
+   curl -s http://localhost:11434/api/ps
+   ```
+
 ## パフォーマンス監視とデバッグ
 
 ### GPU使用率の確認
 
+#### NVIDIA GPUの場合
+
 ```bash
-# NVIDIA GPUの場合
+# NVIDIA GPU情報の表示
 nvidia-smi
 
 # 継続的な監視
 watch -n 1 nvidia-smi
+```
 
+#### AMD GPUの場合
+
+```bash
+# ROCm SMI（推奨）- 基本情報表示
+rocm-smi
+
+# 詳細情報表示
+rocm-smi --showclocks      # クロック周波数
+rocm-smi --showmeminfo     # メモリ使用状況
+rocm-smi --showtemp        # 温度情報
+rocm-smi --showpower       # 電力消費
+
+# AMD SMI（新しいツール、ROCm 6.0以降）
+amd-smi
+
+# radeontop（軽量な監視ツール）
+radeontop
+
+# 継続的な監視例
+watch -n 1 rocm-smi
+watch -n 2 'rocm-smi --showmeminfo --showtemp'
+
+# GUI監視ツール（インストール可能な場合）
+amdgpu_top  # より視覚的なインターフェース
+```
+
+#### 共通コマンド
+
+```bash
 # Ollamaの詳細情報
 ollama ps --verbose
+
+# システム全体のGPU情報
+lspci | grep -E "(VGA|3D)"
 ```
 
 ### デバッグモードの活用
@@ -249,5 +423,9 @@ Ollamaのパフォーマンスチューニングは、ハードウェア構成�
 - [Ollama公式ドキュメント - GPU設定](https://github.com/ollama/ollama/blob/main/docs/gpu.md)
 - [Qiita - Ollamaのパフォーマンスチューニング](https://qiita.com/kiyotaman/items/1aeb098b5ff0d6d5e641)
 - [OpenHands GitHub Issues](https://github.com/All-Hands-AI/OpenHands/issues)
+- [Quick Inference ベンチマーク - Windows vs Linux in WSL2](https://www.quickinference.com/2024/11/03/ollama-speed-test-windows-vs-linux-in-wsl2/)
+- [Ollama Issue #2529 - WSL2 パフォーマンス問題](https://github.com/ollama/ollama/issues/2529)
+- [Ollama Issue #1431 - WSL2 ネットワーク制限](https://github.com/ollama/ollama/issues/1431)
+- [Open WebUI Discussion #510 - Docker接続問題](https://github.com/open-webui/open-webui/discussions/510)
 
 <!-- vim: set et tw=0 ts=2 sw=2: -->

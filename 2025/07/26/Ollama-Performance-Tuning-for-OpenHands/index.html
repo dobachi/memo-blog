@@ -5,18 +5,18 @@
     
     <title>OpenHandsでOllamaを使う際のパフォーマンスチューニング | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="メモ 参考  はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  パフォーマンス監視とデバッグ  GPU使用率の確認 デバッグモードの活用  よくあるトラブルシューティング">
+    <meta name="description" content="はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  AMD GPU環境での特別な考慮事項  ROCmの設定とインストール AMD GPU向けsystemd設定 よくあるAM">
 <meta name="keywords" content="AI,Ollama,LocalLLM,OpenHands,Performance,WSL2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenHandsでOllamaを使う際のパフォーマンスチューニング">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="メモ 参考  はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  パフォーマンス監視とデバッグ  GPU使用率の確認 デバッグモードの活用  よくあるトラブルシューティング">
+<meta property="og:description" content="はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  AMD GPU環境での特別な考慮事項  ROCmの設定とインストール AMD GPU向けsystemd設定 よくあるAM">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2025-07-26T15:37:32.847Z">
+<meta property="og:updated_time" content="2025-07-26T16:15:17.038Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenHandsでOllamaを使う際のパフォーマンスチューニング">
-<meta name="twitter:description" content="メモ 参考  はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  パフォーマンス監視とデバッグ  GPU使用率の確認 デバッグモードの活用  よくあるトラブルシューティング">
+<meta name="twitter:description" content="はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  AMD GPU環境での特別な考慮事項  ROCmの設定とインストール AMD GPU向けsystemd設定 よくあるAM">
     
 
     
@@ -249,9 +249,6 @@
             
             <div id="TOC">
 	<ul>
-<li><a href="#メモ" id="toc-メモ">メモ</a></li>
-<li><a href="#参考" id="toc-参考">参考</a>
-<ul>
 <li><a href="#はじめに" id="toc-はじめに">はじめに</a></li>
 <li><a href="#ollamaの基本的なパフォーマンスチューニング" id="toc-ollamaの基本的なパフォーマンスチューニング">Ollamaの基本的なパフォーマンスチューニング</a>
 <ul>
@@ -268,6 +265,15 @@
 <li><a href="#一般的な問題と解決策" id="toc-一般的な問題と解決策">一般的な問題と解決策</a></li>
 <li><a href="#docker環境での最適設定" id="toc-docker環境での最適設定">Docker環境での最適設定</a></li>
 </ul></li>
+<li><a href="#amd-gpu環境での特別な考慮事項" id="toc-amd-gpu環境での特別な考慮事項">AMD GPU環境での特別な考慮事項</a>
+<ul>
+<li><a href="#rocmの設定とインストール" id="toc-rocmの設定とインストール">ROCmの設定とインストール</a></li>
+<li><a href="#amd-gpu向けsystemd設定" id="toc-amd-gpu向けsystemd設定">AMD GPU向けsystemd設定</a></li>
+<li><a href="#よくあるamd-gpu問題とトラブルシューティング" id="toc-よくあるamd-gpu問題とトラブルシューティング">よくあるAMD
+GPU問題とトラブルシューティング</a></li>
+<li><a href="#amd-gpuパフォーマンス最適化のベストプラクティス" id="toc-amd-gpuパフォーマンス最適化のベストプラクティス">AMD
+GPUパフォーマンス最適化のベストプラクティス</a></li>
+</ul></li>
 <li><a href="#パフォーマンス監視とデバッグ" id="toc-パフォーマンス監視とデバッグ">パフォーマンス監視とデバッグ</a>
 <ul>
 <li><a href="#gpu使用率の確認" id="toc-gpu使用率の確認">GPU使用率の確認</a></li>
@@ -279,13 +285,9 @@
 </ul></li>
 <li><a href="#実践的なチューニング手順" id="toc-実践的なチューニング手順">実践的なチューニング手順</a></li>
 <li><a href="#まとめ" id="toc-まとめ">まとめ</a></li>
-<li><a href="#参考-1" id="toc-参考-1">参考</a></li>
-</ul></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
 </ul>
 </div>
-<h1><span id="メモ">メモ</span></h1>
-<h1><span id="参考">参考</span></h1>
-<!-- vim: set et tw=0 ts=2 sw=2: -->
 <h2><span id="はじめに">はじめに</span></h2>
 <p>OpenHandsでローカルLLMのOllamaを使用する際に、パフォーマンスの問題に直面することがあります。本記事では、Ollamaのパフォーマンスチューニング方法と、特にOpenHandsとの統合における最適化について調査した内容をまとめます。</p>
 <a id="more"></a>
@@ -312,14 +314,28 @@
 <li><code>OLLAMA_FLASH_ATTENTION</code>:
 フラッシュアテンションの有効化（1で有効）</li>
 </ul>
+<h4><span id="amd-gpu固有の最適化">AMD GPU固有の最適化</span></h4>
+<ul>
+<li><code>HSA_OVERRIDE_GFX_VERSION</code>: GPU世代の指定（例: 10.3.0 for
+RX 6900/6600シリーズ、11.0.0 for RX 7900シリーズ）</li>
+<li><code>ROCR_VISIBLE_DEVICES</code>: 使用するAMD GPUの指定（例:
+0）</li>
+<li><code>GPU_MAX_ALLOC_PERCENT</code>: GPU メモリ割り当て上限（例:
+80）</li>
+<li><code>GPU_MAX_HEAP_SIZE</code>: GPU ヒープサイズ（例: 100）</li>
+</ul>
 <h4><span id="メモリ管理">メモリ管理</span></h4>
 <ul>
 <li><code>OLLAMA_KEEP_ALIVE</code>: モデル保持時間（例: 30m）</li>
 <li><code>OLLAMA_NUM_THREADS</code>: CPU スレッド数（例: 8）</li>
 </ul>
 <h3><span id="推奨設定例">推奨設定例</span></h3>
-<p>高性能環境（例：RTX 4090、192GB RAM）での設定例：</p>
+<h4><span id="nvidiagpu環境での設定例例rtx-4090-192gb-ram">NVIDIA
+GPU環境での設定例（例：RTX 4090、192GB RAM）</span></h4>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=3</span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=3</span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_QUEUE=512</span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_LAYERS=32</span><br><span class="line"><span class="built_in">export</span> OLLAMA_FLASH_ATTENTION=1</span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_MEMORY_FRACTION=0.8</span><br></pre></td></tr></table></figure>
+<h4><span id="amdgpu環境での設定例例rx-6900-xt-32gb-ram">AMD
+GPU環境での設定例（例：RX 6900 XT、32GB RAM）</span></h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ROCm基本設定</span></span><br><span class="line"><span class="built_in">export</span> ROCM_PATH=/opt/rocm</span><br><span class="line"><span class="built_in">export</span> HIP_PATH=/opt/rocm</span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=/opt/rocm/lib:<span class="variable">$LD_LIBRARY_PATH</span></span><br><span class="line"><span class="built_in">export</span> PATH=/opt/rocm/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># GPU世代指定（RX 6900/6600シリーズの場合）</span></span><br><span class="line"><span class="built_in">export</span> HSA_OVERRIDE_GFX_VERSION=10.3.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ollama最適化設定</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=2</span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=1</span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_QUEUE=4</span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_LAYERS=35</span><br><span class="line"><span class="built_in">export</span> GPU_MAX_ALLOC_PERCENT=80</span><br><span class="line"><span class="built_in">export</span> ROCR_VISIBLE_DEVICES=0</span><br></pre></td></tr></table></figure>
 <h2><span id="wsl2環境での考慮事項">WSL2環境での考慮事項</span></h2>
 <h3><span id="パフォーマンスオーバーヘッド">パフォーマンスオーバーヘッド</span></h3>
 <p>WSL2では仮想化によるオーバーヘッドが発生します： -
@@ -362,9 +378,42 @@ Overflow</a>で議論）</p>
 <p>systemdサービスとしてOllamaを起動している場合は、以下の方法で環境変数を設定できます：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># サービスの状態確認</span></span><br><span class="line">sudo systemctl status ollama</span><br><span class="line"></span><br><span class="line"><span class="comment"># 環境変数設定用のオーバーライドディレクトリを作成</span></span><br><span class="line">sudo mkdir -p /etc/systemd/system/ollama.service.d</span><br><span class="line"></span><br><span class="line"><span class="comment"># パフォーマンスチューニング用の環境変数を設定</span></span><br><span class="line">sudo tee /etc/systemd/system/ollama.service.d/override.conf &lt;&lt;EOF</span><br><span class="line">[Service]</span><br><span class="line">Environment=<span class="string">"OLLAMA_HOST=0.0.0.0:11434"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_NUM_PARALLEL=4"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_MAX_LOADED_MODELS=3"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_MAX_QUEUE=512"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_GPU_LAYERS=32"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_FLASH_ATTENTION=1"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_GPU_MEMORY_FRACTION=0.8"</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># systemdの設定を再読み込み</span></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ollamaサービスを再起動</span></span><br><span class="line">sudo systemctl restart ollama</span><br><span class="line"></span><br><span class="line"><span class="comment"># サービスの状態を確認</span></span><br><span class="line">sudo systemctl status ollama</span><br></pre></td></tr></table></figure>
 <p>この方法により、システム起動時に自動的にパフォーマンス最適化された設定でOllamaが起動します。</p>
+<h2><span id="amdgpu環境での特別な考慮事項">AMD
+GPU環境での特別な考慮事項</span></h2>
+<h3><span id="rocmの設定とインストール">ROCmの設定とインストール</span></h3>
+<p>AMD GPUでOllamaを使用する場合、ROCm（Radeon Open
+Compute）の適切な設定が必要です。</p>
+<h4><span id="基本的なシステム設定">基本的なシステム設定</span></h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ユーザーを適切なグループに追加</span></span><br><span class="line">sudo usermod -a -G render,video <span class="variable">$USER</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 再ログインが必要</span></span><br><span class="line"><span class="comment"># ログイン後、権限を確認</span></span><br><span class="line">groups <span class="variable">$USER</span> | grep -E <span class="string">"(render|video)"</span></span><br></pre></td></tr></table></figure>
+<h4><span id="docker環境でのamd-gpu設定">Docker環境でのAMD GPU設定</span></h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># AMD GPU対応のOllamaコンテナを使用</span></span><br><span class="line">docker run -d --name ollama \</span><br><span class="line">  --device /dev/kfd --device /dev/dri \</span><br><span class="line">  -e HSA_OVERRIDE_GFX_VERSION=10.3.0 \</span><br><span class="line">  -e OLLAMA_MAX_LOADED_MODELS=1 \</span><br><span class="line">  -e OLLAMA_NUM_PARALLEL=2 \</span><br><span class="line">  -e GPU_MAX_ALLOC_PERCENT=80 \</span><br><span class="line">  -v ollama:/root/.ollama \</span><br><span class="line">  -p 11434:11434 \</span><br><span class="line">  ollama/ollama:rocm</span><br></pre></td></tr></table></figure>
+<h3><span id="amd-gpu向けsystemd設定">AMD GPU向けsystemd設定</span></h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># AMD GPU用のオーバーライド設定</span></span><br><span class="line">sudo tee /etc/systemd/system/ollama.service.d/amd-override.conf &lt;&lt;EOF</span><br><span class="line">[Service]</span><br><span class="line">Environment=<span class="string">"ROCM_PATH=/opt/rocm"</span></span><br><span class="line">Environment=<span class="string">"HIP_PATH=/opt/rocm"</span></span><br><span class="line">Environment=<span class="string">"HSA_OVERRIDE_GFX_VERSION=10.3.0"</span></span><br><span class="line">Environment=<span class="string">"ROCR_VISIBLE_DEVICES=0"</span></span><br><span class="line">Environment=<span class="string">"GPU_MAX_ALLOC_PERCENT=80"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_HOST=0.0.0.0:11434"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_NUM_PARALLEL=2"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_MAX_LOADED_MODELS=1"</span></span><br><span class="line">Environment=<span class="string">"OLLAMA_GPU_LAYERS=35"</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart ollama</span><br></pre></td></tr></table></figure>
+<h3><span id="よくあるamdgpu問題とトラブルシューティング">よくあるAMD
+GPU問題とトラブルシューティング</span></h3>
+<h4><span id="gpu世代の互換性問題">GPU世代の互換性問題</span></h4>
+<p>多くのAMD
+GPUは直接サポートされていないため、世代のオーバーライドが必要です：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># gfx1032（例：RX 6400）をgfx1030として認識させる</span></span><br><span class="line"><span class="built_in">export</span> HSA_OVERRIDE_GFX_VERSION=10.3.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># gfx1103（例：RX 7600）をgfx1100として認識させる  </span></span><br><span class="line"><span class="built_in">export</span> HSA_OVERRIDE_GFX_VERSION=11.0.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 対応表</span></span><br><span class="line"><span class="comment"># RX 6000シリーズ → 10.3.0</span></span><br><span class="line"><span class="comment"># RX 7000シリーズ → 11.0.0</span></span><br></pre></td></tr></table></figure>
+<h4><span id="メモリ不足エラーの対処">メモリ不足エラーの対処</span></h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># "HIP out of memory" エラーの場合</span></span><br><span class="line"><span class="built_in">export</span> GPU_MAX_ALLOC_PERCENT=70  <span class="comment"># より保守的な設定</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 量子化モデルの使用を検討</span></span><br><span class="line">ollama pull llama2:7b-q4_0  <span class="comment"># 4bit量子化でメモリ使用量を削減</span></span><br></pre></td></tr></table></figure>
+<h4><span id="統合gpuigpu使用時の注意点">統合GPU（iGPU）使用時の注意点</span></h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iGPUを使用する場合（例：Ryzen APU）</span></span><br><span class="line"><span class="comment"># BIOSでiGPU専用メモリを2GB以上に設定することを推奨</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># パフォーマンス期待値（例：Ryzen 5600G）</span></span><br><span class="line"><span class="comment"># - プロンプト処理: ~70 tokens/sec</span></span><br><span class="line"><span class="comment"># - テキスト生成: ~6 tokens/sec</span></span><br><span class="line"><span class="comment"># （CPU単体の約2-3倍の性能）</span></span><br></pre></td></tr></table></figure>
+<h3><span id="amdgpuパフォーマンス最適化のベストプラクティス">AMD
+GPUパフォーマンス最適化のベストプラクティス</span></h3>
+<ol type="1">
+<li><p><strong>適切な量子化モデルの選択</strong> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># VRAM容量に応じたモデル選択</span></span><br><span class="line"><span class="comment"># 8GB VRAM → 7Bモデル（q4_0量子化）</span></span><br><span class="line"><span class="comment"># 16GB VRAM → 13Bモデル（q4_0量子化）</span></span><br><span class="line"><span class="comment"># 24GB VRAM → 30Bモデル（q4_0量子化）</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p><strong>並行処理の調整</strong> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># AMD GPUでは保守的な設定を推奨</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=1  <span class="comment"># 大きなモデル使用時</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=2  <span class="comment"># 小さなモデル使用時</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p><strong>定期的な健全性チェック</strong> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GPU認識状況の確認</span></span><br><span class="line">rocminfo | grep <span class="string">"Name:"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># デバイスアクセス権限の確認</span></span><br><span class="line">ls -la /dev/kfd /dev/dri/</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ollama GPU使用状況の確認</span></span><br><span class="line">curl -s http://localhost:11434/api/ps</span><br></pre></td></tr></table></figure></p></li>
+</ol>
 <h2><span id="パフォーマンス監視とデバッグ">パフォーマンス監視とデバッグ</span></h2>
 <h3><span id="gpu使用率の確認">GPU使用率の確認</span></h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># NVIDIA GPUの場合</span></span><br><span class="line">nvidia-smi</span><br><span class="line"></span><br><span class="line"><span class="comment"># 継続的な監視</span></span><br><span class="line">watch -n 1 nvidia-smi</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ollamaの詳細情報</span></span><br><span class="line">ollama ps --verbose</span><br></pre></td></tr></table></figure>
+<h4><span id="nvidia-gpuの場合">NVIDIA GPUの場合</span></h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># NVIDIA GPU情報の表示</span></span><br><span class="line">nvidia-smi</span><br><span class="line"></span><br><span class="line"><span class="comment"># 継続的な監視</span></span><br><span class="line">watch -n 1 nvidia-smi</span><br></pre></td></tr></table></figure>
+<h4><span id="amd-gpuの場合">AMD GPUの場合</span></h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ROCm SMI（推奨）- 基本情報表示</span></span><br><span class="line">rocm-smi</span><br><span class="line"></span><br><span class="line"><span class="comment"># 詳細情報表示</span></span><br><span class="line">rocm-smi --showclocks      <span class="comment"># クロック周波数</span></span><br><span class="line">rocm-smi --showmeminfo     <span class="comment"># メモリ使用状況</span></span><br><span class="line">rocm-smi --showtemp        <span class="comment"># 温度情報</span></span><br><span class="line">rocm-smi --showpower       <span class="comment"># 電力消費</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># AMD SMI（新しいツール、ROCm 6.0以降）</span></span><br><span class="line">amd-smi</span><br><span class="line"></span><br><span class="line"><span class="comment"># radeontop（軽量な監視ツール）</span></span><br><span class="line">radeontop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 継続的な監視例</span></span><br><span class="line">watch -n 1 rocm-smi</span><br><span class="line">watch -n 2 <span class="string">'rocm-smi --showmeminfo --showtemp'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># GUI監視ツール（インストール可能な場合）</span></span><br><span class="line">amdgpu_top  <span class="comment"># より視覚的なインターフェース</span></span><br></pre></td></tr></table></figure>
+<h4><span id="共通コマンド">共通コマンド</span></h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ollamaの詳細情報</span></span><br><span class="line">ollama ps --verbose</span><br><span class="line"></span><br><span class="line"><span class="comment"># システム全体のGPU情報</span></span><br><span class="line">lspci | grep -E <span class="string">"(VGA|3D)"</span></span><br></pre></td></tr></table></figure>
 <h3><span id="デバッグモードの活用">デバッグモードの活用</span></h3>
 <p>問題の診断には以下の環境変数が有用です：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> OLLAMA_DEBUG=1</span><br><span class="line"><span class="built_in">export</span> OLLAMA_FLASH_ATTENTION=1  <span class="comment"># パフォーマンスログを有効化</span></span><br></pre></td></tr></table></figure>
@@ -410,6 +459,14 @@ Overflow</a>で議論）</p>
 Ollamaのパフォーマンスチューニング</a></li>
 <li><a href="https://github.com/All-Hands-AI/OpenHands/issues" target="_blank" rel="noopener">OpenHands
 GitHub Issues</a></li>
+<li><a href="https://www.quickinference.com/2024/11/03/ollama-speed-test-windows-vs-linux-in-wsl2/" target="_blank" rel="noopener">Quick
+Inference ベンチマーク - Windows vs Linux in WSL2</a></li>
+<li><a href="https://github.com/ollama/ollama/issues/2529" target="_blank" rel="noopener">Ollama Issue
+#2529 - WSL2 パフォーマンス問題</a></li>
+<li><a href="https://github.com/ollama/ollama/issues/1431" target="_blank" rel="noopener">Ollama Issue
+#1431 - WSL2 ネットワーク制限</a></li>
+<li><a href="https://github.com/open-webui/open-webui/discussions/510" target="_blank" rel="noopener">Open
+WebUI Discussion #510 - Docker接続問題</a></li>
 </ul>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
@@ -422,7 +479,7 @@ GitHub Issues</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/" data-id="cmdkezi95013118p6cmsxryc0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/" data-id="cmdkgc0xy018z18o3b3xeh08s" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
