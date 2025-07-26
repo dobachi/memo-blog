@@ -303,7 +303,7 @@ Codeでは、カスタムコマンド（スラッシュコマンド）を作成�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Introduction-to-Claude-Code-Custom-Commands/" data-id="cmdkhkpnu00dw18o6g4twbwxx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Introduction-to-Claude-Code-Custom-Commands/" data-id="cmdkhtxeu009418pouppp36l4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -424,55 +424,48 @@ Codeでは、カスタムコマンド（スラッシュコマンド）を作成�
             <p><div id="TOC">
 	<ul>
 <li><a href="#はじめに" id="toc-はじめに">はじめに</a></li>
-<li><a href="#ollamaの基本的なパフォーマンスチューニング" id="toc-ollamaの基本的なパフォーマンスチューニング">Ollamaの基本的なパフォーマンスチューニング</a>
+<li><a href="#環境別アプローチの選択" id="toc-環境別アプローチの選択">環境別アプローチの選択</a>
 <ul>
-<li><a href="#主要な環境変数" id="toc-主要な環境変数">主要な環境変数</a></li>
-<li><a href="#推奨設定例" id="toc-推奨設定例">推奨設定例</a></li>
+<li><a href="#環境の特定方法" id="toc-環境の特定方法">環境の特定方法</a></li>
+<li><a href="#推奨アプローチマトリックス" id="toc-推奨アプローチマトリックス">推奨アプローチマトリックス</a></li>
 </ul></li>
-<li><a href="#wsl2環境での考慮事項" id="toc-wsl2環境での考慮事項">WSL2環境での考慮事項</a>
+<li><a href="#基本的なパフォーマンスチューニング" id="toc-基本的なパフォーマンスチューニング">基本的なパフォーマンスチューニング</a>
 <ul>
-<li><a href="#パフォーマンスオーバーヘッド" id="toc-パフォーマンスオーバーヘッド">パフォーマンスオーバーヘッド</a></li>
-<li><a href="#ネットワーク設定の課題" id="toc-ネットワーク設定の課題">ネットワーク設定の課題</a></li>
+<li><a href="#共通環境変数" id="toc-共通環境変数">共通環境変数</a></li>
+<li><a href="#パフォーマンス監視方法" id="toc-パフォーマンス監視方法">パフォーマンス監視方法</a></li>
 </ul></li>
-<li><a href="#openhandsとの統合における最適化" id="toc-openhandsとの統合における最適化">OpenHandsとの統合における最適化</a>
+<li><a href="#環境別詳細設定" id="toc-環境別詳細設定">環境別詳細設定</a>
 <ul>
+<li><a href="#wsl2環境での設定" id="toc-wsl2環境での設定">WSL2環境での設定</a></li>
+<li><a href="#ネイティブlinux-nvidia-gpu" id="toc-ネイティブlinux-nvidia-gpu">ネイティブLinux + NVIDIA
+GPU</a></li>
+<li><a href="#ネイティブlinux-amd-gpu" id="toc-ネイティブlinux-amd-gpu">ネイティブLinux + AMD GPU</a></li>
+</ul></li>
+<li><a href="#openhandsとの統合" id="toc-openhandsとの統合">OpenHandsとの統合</a>
+<ul>
+<li><a href="#docker環境での設定" id="toc-docker環境での設定">Docker環境での設定</a></li>
 <li><a href="#一般的な問題と解決策" id="toc-一般的な問題と解決策">一般的な問題と解決策</a></li>
-<li><a href="#docker環境での最適設定" id="toc-docker環境での最適設定">Docker環境での最適設定</a></li>
 </ul></li>
-<li><a href="#amd-gpu環境での特別な考慮事項" id="toc-amd-gpu環境での特別な考慮事項">AMD GPU環境での特別な考慮事項</a>
+<li><a href="#トラブルシューティング" id="toc-トラブルシューティング">トラブルシューティング</a>
 <ul>
-<li><a href="#環境の種類と適用範囲" id="toc-環境の種類と適用範囲">環境の種類と適用範囲</a></li>
-<li><a href="#rocm環境の確認とセットアップネイティブlinux環境" id="toc-rocm環境の確認とセットアップネイティブlinux環境">ROCm環境の確認とセットアップ（ネイティブLinux環境）</a></li>
-<li><a href="#amd-gpu向けsystemd設定" id="toc-amd-gpu向けsystemd設定">AMD GPU向けsystemd設定</a></li>
-<li><a href="#よくあるamd-gpu問題とトラブルシューティング" id="toc-よくあるamd-gpu問題とトラブルシューティング">よくあるAMD
-GPU問題とトラブルシューティング</a></li>
-<li><a href="#amd-gpuパフォーマンス最適化のベストプラクティス" id="toc-amd-gpuパフォーマンス最適化のベストプラクティス">AMD
-GPUパフォーマンス最適化のベストプラクティス</a></li>
+<li><a href="#よくある問題" id="toc-よくある問題">よくある問題</a></li>
+<li><a href="#環境診断スクリプト" id="toc-環境診断スクリプト">環境診断スクリプト</a></li>
 </ul></li>
-<li><a href="#パフォーマンス監視とデバッグ" id="toc-パフォーマンス監視とデバッグ">パフォーマンス監視とデバッグ</a>
+<li><a href="#実践例" id="toc-実践例">実践例</a>
 <ul>
-<li><a href="#gpu使用率の確認" id="toc-gpu使用率の確認">GPU使用率の確認</a></li>
-<li><a href="#デバッグモードの活用" id="toc-デバッグモードの活用">デバッグモードの活用</a></li>
-</ul></li>
-<li><a href="#よくあるトラブルシューティング" id="toc-よくあるトラブルシューティング">よくあるトラブルシューティング</a>
-<ul>
-<li><a href="#ポートがすでに使用されているエラー" id="toc-ポートがすでに使用されているエラー">ポートがすでに使用されているエラー</a></li>
-</ul></li>
-<li><a href="#実践的なチューニング手順" id="toc-実践的なチューニング手順">実践的なチューニング手順</a></li>
-<li><a href="#実環境での設定例" id="toc-実環境での設定例">実環境での設定例</a>
-<ul>
-<li><a href="#wsl2-amd-radeon-890m環境実例" id="toc-wsl2-amd-radeon-890m環境実例">WSL2 + AMD Radeon
-890M環境（実例）</a></li>
+<li><a href="#wsl2-amd-radeon-890m環境検証済み" id="toc-wsl2-amd-radeon-890m環境検証済み">WSL2 + AMD Radeon
+890M環境（検証済み）</a></li>
 </ul></li>
 <li><a href="#まとめ" id="toc-まとめ">まとめ</a>
 <ul>
-<li><a href="#環境別推奨アプローチ" id="toc-環境別推奨アプローチ">環境別推奨アプローチ</a></li>
+<li><a href="#環境別推奨設定まとめ" id="toc-環境別推奨設定まとめ">環境別推奨設定まとめ</a></li>
+<li><a href="#実践的なアプローチ" id="toc-実践的なアプローチ">実践的なアプローチ</a></li>
 </ul></li>
 <li><a href="#参考" id="toc-参考">参考</a></li>
 </ul>
 </div>
 <h2 id="はじめに">はじめに</h2>
-<p>OpenHandsでローカルLLMのOllamaを使用する際に、パフォーマンスの問題に直面することがあります。本記事では、Ollamaのパフォーマンスチューニング方法と、特にOpenHandsとの統合における最適化について調査した内容をまとめます。</p></p>
+<p>OpenHandsでローカルLLMのOllamaを使用する際に、パフォーマンスの問題に直面することがあります。本記事では、Ollamaのパフォーマンスチューニング方法と、特にOpenHandsとの統合における最適化について実践的な内容をまとめます。</p></p>
             <p class="article-more-link">
                 <a href="/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/#more">Read More</a>
             </p>
@@ -485,7 +478,7 @@ GPUパフォーマンス最適化のベストプラクティス</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/" data-id="cmdkhkpxe01df18o67jvyv8hg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/" data-id="cmdkhtxqt017r18pow4wobine" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -772,7 +765,7 @@ Japanグループ</a>）。改正次世代医療基盤法が、日本の医療�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/06/09/Medical-Data-Utilization-Act-Legal-Framework-New-Era/" data-id="cmdkhkpve016o18o6ccvo96az" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/06/09/Medical-Data-Utilization-Act-Legal-Framework-New-Era/" data-id="cmdkhtxqp017j18po1m85asdf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -957,7 +950,7 @@ https://qiita.com/youtoy/items/adfeedeedf1309f194ce</li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/06/08/MCP-Server-on-VS-Code-in-WSL2/" data-id="cmdkhkpod00fj18o6ti9ifml5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/06/08/MCP-Server-on-VS-Code-in-WSL2/" data-id="cmdkhtxfe00ar18pomspxryyr" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1261,7 +1254,7 @@ are the minimum hardware requirements to run an ollama model?</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/06/08/Getting-Started-Ollama/" data-id="cmdkhkpmy00bv18o6kszjx0ds" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/06/08/Getting-Started-Ollama/" data-id="cmdkhtxe3007q18pouhkyhn1g" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1399,7 +1392,7 @@ are the minimum hardware requirements to run an ollama model?</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/06/08/Tuning-memory-size-of-AMD-GPU/" data-id="cmdkhkpqg00l118o6autrlm52" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/06/08/Tuning-memory-size-of-AMD-GPU/" data-id="cmdkhtxha00fs18pozg0501em" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1887,7 +1880,7 @@ Resources）の適用を促進し、データの相互運用性を確保する�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/06/03/Consideration-of-the-Usefulness-of-Data-Spaces-and-Data-Collaboration-Infrastructure-in-the-Healthcare-Field/" data-id="cmdkhkpx801d418o6meixxeg9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/06/03/Consideration-of-the-Usefulness-of-Data-Spaces-and-Data-Collaboration-Infrastructure-in-the-Healthcare-Field/" data-id="cmdkhtxvi01g018po96jfovmw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2191,7 +2184,7 @@ Analytical Notesー金融庁分析事例集ー について</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/05/31/Joint-Data-Platform-of-Financial-Services-Agency-and-Bank-of-Japan-Current-Status-and-Future-Prospects/" data-id="cmdkhkpv8016b18o6woeunlo7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/05/31/Joint-Data-Platform-of-Financial-Services-Agency-and-Bank-of-Japan-Current-Status-and-Future-Prospects/" data-id="cmdkhtxqk017718poguxk6cc5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2492,7 +2485,7 @@ Analytical Notesー金融庁分析事例集ー について</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/05/25/FSA-Financial-Services-Agency-topics/" data-id="cmdkhkpuy015o18o62rxf0z19" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/05/25/FSA-Financial-Services-Agency-topics/" data-id="cmdkhtxq7016c18poco5jafau" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2751,7 +2744,7 @@ Analytical Notesー金融庁分析事例集ー について</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/05/25/Summary-of-Future-Directions-in-Financial-Administration/" data-id="cmdkhkppt00js18o6utgknr0u" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/05/25/Summary-of-Future-Directions-in-Financial-Administration/" data-id="cmdkhtxgv00ep18pomxibfe8n" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

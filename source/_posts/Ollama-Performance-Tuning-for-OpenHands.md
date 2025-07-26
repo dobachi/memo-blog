@@ -13,886 +13,375 @@ tags:
   - WSL2
 ---
 
-
 ## はじめに
 
-OpenHandsでローカルLLMのOllamaを使用する際に、パフォーマンスの問題に直面することがあります。本記事では、Ollamaのパフォーマンスチューニング方法と、特にOpenHandsとの統合における最適化について調査した内容をまとめます。
+OpenHandsでローカルLLMのOllamaを使用する際に、パフォーマンスの問題に直面することがあります。本記事では、Ollamaのパフォーマンスチューニング方法と、特にOpenHandsとの統合における最適化について実践的な内容をまとめます。
 
 <!-- more -->
 
-## Ollamaの基本的なパフォーマンスチューニング
+## 環境別アプローチの選択
 
-### 主要な環境変数
+### 環境の特定方法
 
-Ollamaのパフォーマンスに影響する主要な環境変数は以下の通りです：
-
-#### 並行処理関連
-- `OLLAMA_NUM_PARALLEL`: 並行して処理するリクエストの数（推奨: 3-8）
-- `OLLAMA_MAX_LOADED_MODELS`: 同時にロードできるモデルの最大数（推奨: 1-5）
-- `OLLAMA_MAX_QUEUE`: キューに入るリクエストの最大数（推奨: 512）
-
-#### GPU最適化
-- `OLLAMA_GPU_LAYERS`: GPUにロードするレイヤー数（例: 32）
-- `OLLAMA_GPU_MEMORY_FRACTION`: GPU メモリの使用割合（例: 0.8 = 80%）
-- `OLLAMA_GPU_OVERHEAD`: GPU メモリオーバーヘッド（例: 2147483648 = 2GB）
-- `OLLAMA_FLASH_ATTENTION`: フラッシュアテンションの有効化（1で有効）
-
-#### AMD GPU固有の最適化
-- `HSA_OVERRIDE_GFX_VERSION`: GPU世代の指定（例: 10.3.0 for RX 6900/6600シリーズ、11.0.0 for RX 7900シリーズ）
-- `ROCR_VISIBLE_DEVICES`: 使用するAMD GPUの指定（例: 0）
-- `GPU_MAX_ALLOC_PERCENT`: GPU メモリ割り当て上限（例: 80）
-- `GPU_MAX_HEAP_SIZE`: GPU ヒープサイズ（例: 100）
-
-#### メモリ管理
-- `OLLAMA_KEEP_ALIVE`: モデル保持時間（例: 30m）
-- `OLLAMA_NUM_THREADS`: CPU スレッド数（例: 8）
-
-### 推奨設定例
-
-#### NVIDIA GPU環境での設定例（例：RTX 4090、192GB RAM）
+まず、自分の環境を正確に把握することが重要です。以下のコマンドで環境を確認してください：
 
 ```bash
-export OLLAMA_NUM_PARALLEL=3
-export OLLAMA_MAX_LOADED_MODELS=3
-export OLLAMA_MAX_QUEUE=512
-export OLLAMA_GPU_LAYERS=32
-export OLLAMA_FLASH_ATTENTION=1
+# 基本環境の確認
+uname -a
+cat /etc/os-release
+
+# GPU環境の確認
+lspci | grep -E "(VGA|3D|Display)"
+ls -la /dev/dri/ /dev/dxg 2>/dev/null
+
+# WSL2環境かどうかの確認
+[ -e /dev/dxg ] && echo "WSL2環境" || echo "ネイティブLinux環境"
+
+# GPU利用可能性の確認
+nvidia-smi 2>/dev/null && echo "NVIDIA GPU利用可能"
+rocm-smi 2>/dev/null && echo "AMD GPU（ROCm）利用可能"
+clinfo 2>/dev/null | grep -q "Number of platforms" && echo "OpenCL利用可能"
+```
+
+### 推奨アプローチマトリックス
+
+| 環境 | GPU | 推奨アプローチ | 期待パフォーマンス |
+|------|-----|---------------|-------------------|
+| **WSL2** | AMD統合GPU | CPU専用設定 | 8-12 tokens/sec |
+| **WSL2** | NVIDIA GPU | GPU使用（制限あり） | 15-25 tokens/sec |
+| **ネイティブLinux** | AMD専用GPU | ROCm + GPU設定 | 25-40 tokens/sec |
+| **ネイティブLinux** | NVIDIA GPU | CUDA + GPU設定 | 30-50 tokens/sec |
+| **どの環境でも** | GPU問題時 | CPU専用設定 | 5-15 tokens/sec |
+
+## 基本的なパフォーマンスチューニング
+
+### 共通環境変数
+
+以下の環境変数はすべての環境で有効です：
+
+```bash
+# 並行処理設定
+export OLLAMA_NUM_PARALLEL=2        # 同時リクエスト数
+export OLLAMA_MAX_LOADED_MODELS=1   # 同時ロードモデル数
+export OLLAMA_MAX_QUEUE=4           # キューサイズ
+export OLLAMA_KEEP_ALIVE=5m         # モデル保持時間
+
+# ネットワーク設定（OpenHands連携用）
+export OLLAMA_HOST="0.0.0.0:11434"  # 外部アクセス許可
+```
+
+### パフォーマンス監視方法
+
+```bash
+# GPU使用状況（NVIDIA）
+nvidia-smi
+
+# GPU使用状況（AMD - ネイティブLinux）
+rocm-smi
+
+# CPU使用状況
+htop
+
+# Ollama状況
+ollama ps
+
+# リアルタイム監視
+watch -n 2 'ollama ps && echo "=== GPU ===" && nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.total --format=csv'
+```
+
+## 環境別詳細設定
+
+### WSL2環境での設定
+
+**重要**: WSL2環境では、GPU種類に関わらずCPU専用設定が最も安定します。
+
+#### 推奨設定（CPU専用）
+
+```bash
+# WSL2環境での安定設定
+export OLLAMA_GPU_LAYERS=0          # GPU使用を無効化
+export OLLAMA_NUM_THREADS=$(nproc)  # 全CPUコア使用
+export OLLAMA_MAX_LOADED_MODELS=1   # メモリ制限
+export OLLAMA_NUM_PARALLEL=1        # 安定性重視
+export OLLAMA_HOST="0.0.0.0:11434"  # Docker連携用
+
+# 軽量モデルの使用推奨
+ollama pull phi:mini                 # 3.8B - 最軽量
+ollama pull qwen2.5:7b-q4_0         # 7B量子化 - バランス良好
+```
+
+#### WSL2の制限事項
+
+- 仮想化による10-13%のパフォーマンス低下（[ベンチマーク](https://www.quickinference.com/2024/11/03/ollama-speed-test-windows-vs-linux-in-wsl2/)より）
+- ネットワーク設定の複雑さ（[Issue #1431](https://github.com/ollama/ollama/issues/1431)）
+- OpenCLプラットフォーム制限
+
+### ネイティブLinux + NVIDIA GPU
+
+#### 推奨設定
+
+```bash
+# NVIDIA GPU最適化設定
+export CUDA_VISIBLE_DEVICES=0
+export OLLAMA_GPU_LAYERS=32          # モデルサイズに応じて調整
+export OLLAMA_NUM_PARALLEL=4        # 高性能GPU用
+export OLLAMA_MAX_LOADED_MODELS=2   # VRAM容量に応じて
+export OLLAMA_FLASH_ATTENTION=1     # パフォーマンス向上
 export OLLAMA_GPU_MEMORY_FRACTION=0.8
 ```
 
-#### AMD GPU環境での設定例（例：RX 6900 XT、32GB RAM）
+#### systemd設定
+
+```bash
+# /etc/systemd/system/ollama.service.d/nvidia.conf
+sudo mkdir -p /etc/systemd/system/ollama.service.d
+sudo tee /etc/systemd/system/ollama.service.d/nvidia.conf <<EOF
+[Service]
+Environment="CUDA_VISIBLE_DEVICES=0"
+Environment="OLLAMA_GPU_LAYERS=32"
+Environment="OLLAMA_NUM_PARALLEL=4"
+Environment="OLLAMA_FLASH_ATTENTION=1"
+Environment="OLLAMA_HOST=0.0.0.0:11434"
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl restart ollama
+```
+
+### ネイティブLinux + AMD GPU
+
+#### 前提条件
+
+```bash
+# ROCmインストール確認
+rocminfo 2>/dev/null || echo "ROCm未インストール"
+
+# ユーザー権限設定
+sudo usermod -a -G render,video $USER
+# 再ログイン後確認
+groups $USER | grep -E "(render|video)"
+```
+
+#### 推奨設定
 
 ```bash
 # ROCm基本設定
 export ROCM_PATH=/opt/rocm
 export HIP_PATH=/opt/rocm
 export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
-export PATH=/opt/rocm/bin:$PATH
 
-# GPU世代指定（RX 6900/6600シリーズの場合）
-export HSA_OVERRIDE_GFX_VERSION=10.3.0
+# GPU世代指定（重要）
+export HSA_OVERRIDE_GFX_VERSION=10.3.0  # RX 6000シリーズ
+# export HSA_OVERRIDE_GFX_VERSION=11.0.0  # RX 7000シリーズ
 
-# Ollama最適化設定
-export OLLAMA_NUM_PARALLEL=2
-export OLLAMA_MAX_LOADED_MODELS=1
-export OLLAMA_MAX_QUEUE=4
+# Ollama最適化
 export OLLAMA_GPU_LAYERS=35
+export OLLAMA_NUM_PARALLEL=2        # AMD GPUは保守的設定
+export OLLAMA_MAX_LOADED_MODELS=1   # メモリ制限重要
 export GPU_MAX_ALLOC_PERCENT=80
 export ROCR_VISIBLE_DEVICES=0
 ```
 
-## WSL2環境での考慮事項
+#### systemd設定
 
-### パフォーマンスオーバーヘッド
+```bash
+# /etc/systemd/system/ollama.service.d/amd.conf
+sudo tee /etc/systemd/system/ollama.service.d/amd.conf <<EOF
+[Service]
+Environment="ROCM_PATH=/opt/rocm"
+Environment="HSA_OVERRIDE_GFX_VERSION=10.3.0"
+Environment="OLLAMA_GPU_LAYERS=35"
+Environment="OLLAMA_NUM_PARALLEL=2"
+Environment="GPU_MAX_ALLOC_PERCENT=80"
+Environment="OLLAMA_HOST=0.0.0.0:11434"
+EOF
 
-WSL2では仮想化によるオーバーヘッドが発生します：
-- 約10-13%のパフォーマンス低下が報告されています（[Quick Inference ベンチマーク](https://www.quickinference.com/2024/11/03/ollama-speed-test-windows-vs-linux-in-wsl2/)による検証）
-- ファイルシステムのI/O速度制限による影響もあります
-- [Ollama公式リポジトリのIssue #2529](https://github.com/ollama/ollama/issues/2529)でも複数のユーザーがWSL2でのパフォーマンス問題を報告
+sudo systemctl daemon-reload
+sudo systemctl restart ollama
+```
 
-### ネットワーク設定の課題
+## OpenHandsとの統合
 
-WSL2は仮想化されたイーサネットアダプタを使用するため：
-- ローカルネットワークからのアクセスに制限があります（[Ollama Issue #1431](https://github.com/ollama/ollama/issues/1431)で報告）
-- DockerコンテナからWSL2上のOllamaへの接続に問題が発生することがあります（[Open WebUI Discussion #510](https://github.com/open-webui/open-webui/discussions/510)）
-- WSL2のIPアドレスがWindows再起動時に動的に変更される問題（[Stack Overflow](https://stackoverflow.com/questions/61002681/connecting-to-wsl2-server-via-local-network)で議論）
+### Docker環境での設定
 
-## OpenHandsとの統合における最適化
+#### 基本的なDocker設定
+
+```bash
+# OpenHandsからOllama（WSL2）への接続
+docker run -d \
+  --name openhands \
+  -e OLLAMA_BASE_URL="http://host.docker.internal:11434" \
+  -e OLLAMA_API_KEY="" \
+  -p 3000:3000 \
+  all-hands-ai/openhands
+```
+
+#### WSL2特有の接続設定
+
+```bash
+# WSL2のIPアドレス確認
+ip addr show eth0 | grep inet
+
+# 直接IP指定での接続（host.docker.internalが失敗する場合）
+export WSL2_IP=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
+docker run -d \
+  --name openhands \
+  -e OLLAMA_BASE_URL="http://${WSL2_IP}:11434" \
+  all-hands-ai/openhands
+```
 
 ### 一般的な問題と解決策
 
-1. **接続エラー**
-   - `host.docker.internal`を使用した接続が失敗する場合があります
-   - WSL2のIPアドレスを直接指定する必要がある場合があります
+#### 1. 接続エラー
 
-2. **APIエンドポイントの設定**
-   - Ollamaサーバーが404エラーを返す場合があります
-   - ベースURLの設定に注意が必要です（`/v1`の有無など）
+**症状**: OpenHandsがOllamaに接続できない
 
-3. **認証設定**
-   - APIキーの設定について混乱が生じることがあります
-   - Ollamaはデフォルトでは認証を必要としません
-
-### Docker環境での最適設定
-
-OpenHandsをDockerで実行する場合の推奨設定：
-
-#### 手動でOllamaを起動する場合
-
+**解決方法**:
 ```bash
-# Ollamaの起動（WSL2内）
-ollama serve
+# Ollamaサーバー状態確認
+systemctl status ollama
+curl http://localhost:11434/api/version
 
-# 環境変数の設定
-export OLLAMA_HOST="0.0.0.0:11434"  # 外部からのアクセスを許可
-
-# Dockerコンテナの起動例
-docker run -d \
-  -p 11434:11434 \
-  -v $(pwd)/models:/root/.ollama/models \
-  -e OLLAMA_GPU_LAYERS=32 \
-  -e OLLAMA_NUM_PARALLEL=4 \
-  ollama/ollama:latest
+# ファイアウォール確認
+sudo ufw status
+sudo ufw allow 11434
 ```
 
-#### systemdでOllamaを管理する場合
+#### 2. APIエンドポイントエラー
 
-systemdサービスとしてOllamaを起動している場合は、以下の方法で環境変数を設定できます：
+**症状**: 404エラーや不正なエンドポイント
 
+**解決方法**:
 ```bash
-# サービスの状態確認
-sudo systemctl status ollama
-
-# 環境変数設定用のオーバーライドディレクトリを作成
-sudo mkdir -p /etc/systemd/system/ollama.service.d
-
-# パフォーマンスチューニング用の環境変数を設定
-sudo tee /etc/systemd/system/ollama.service.d/override.conf <<EOF
-[Service]
-Environment="OLLAMA_HOST=0.0.0.0:11434"
-Environment="OLLAMA_NUM_PARALLEL=4"
-Environment="OLLAMA_MAX_LOADED_MODELS=3"
-Environment="OLLAMA_MAX_QUEUE=512"
-Environment="OLLAMA_GPU_LAYERS=32"
-Environment="OLLAMA_FLASH_ATTENTION=1"
-Environment="OLLAMA_GPU_MEMORY_FRACTION=0.8"
-EOF
-
-# systemdの設定を再読み込み
-sudo systemctl daemon-reload
-
-# Ollamaサービスを再起動
-sudo systemctl restart ollama
-
-# サービスの状態を確認
-sudo systemctl status ollama
+# 正しいエンドポイント設定
+OLLAMA_BASE_URL="http://localhost:11434"    # /v1は不要
+OLLAMA_API_KEY=""                           # 空文字列
 ```
 
-この方法により、システム起動時に自動的にパフォーマンス最適化された設定でOllamaが起動します。
+#### 3. パフォーマンス問題
 
-## AMD GPU環境での特別な考慮事項
+**症状**: レスポンスが非常に遅い
 
-### 環境の種類と適用範囲
-
-**重要**: AMD GPU環境は大きく2つに分類されます：
-
-1. **ネイティブLinux環境**: 物理的なLinux環境でAMD GPUを使用
-   - ROCmのインストールと設定が**必要**
-   - `/opt/rocm`パスの設定が**必要**
-   - HSA_OVERRIDE_GFX_VERSION等の環境変数設定が**必要**
-
-2. **WSL2環境**: Windows上のWSL2でAMD GPUを使用
-   - ROCmのインストールは**不要**
-   - Mesa D3D12ドライバーを使用
-   - Windows側のGPUドライバーに依存
-
-### ROCm環境の確認とセットアップ（ネイティブLinux環境）
-
-**注意**: この設定はネイティブLinux環境のみに適用されます。WSL2環境では不要です。
-
-ネイティブLinux環境でAMD GPUでOllamaを使用する場合、ROCm（Radeon Open Compute）の適切な設定が必要です。まず現在の環境を確認しましょう。
-
-#### 段階的環境確認手順
-
-**ステップ1: GPU検出の確認**
+**解決方法**:
 ```bash
-# AMD GPUが認識されているか確認
+# デバッグモード有効化
+export OLLAMA_DEBUG=1
+export OLLAMA_FLASH_ATTENTION=1
+
+# 軽量モデルでテスト
+ollama pull phi:mini
+ollama run phi:mini "Hello, test"
+```
+
+## トラブルシューティング
+
+### よくある問題
+
+#### ポート使用中エラー
+
+```bash
+# 症状
+Error: listen tcp 127.0.0.1:11434: bind: address already in use
+
+# 解決方法
+systemctl status ollama           # サービス状態確認
+sudo systemctl stop ollama       # 必要に応じて停止
+# または既存サービスを使用
+```
+
+#### GPU認識されない
+
+```bash
+# AMD GPU確認
 lspci | grep -i amd
-
-# グラフィックデバイスの詳細確認
-lspci -v | grep -A 10 -i amd
-```
-
-**ステップ2: ドライバーの確認**
-```bash
-# AMDGPUドライバーの確認
-lsmod | grep amdgpu
-
-# DRIデバイスの確認（重要）
 ls -la /dev/dri/
+rocminfo 2>/dev/null
 
-# KFDデバイスの確認（ROCm使用時に必要）
-ls -la /dev/kfd
-```
-
-**ステップ3: ROCmインストール状況の確認**
-```bash
-# ROCmツールの確認
-which rocminfo rocm-smi
-
-# ROCmバージョン確認
-rocminfo 2>/dev/null || echo "ROCm not available"
-rocm-smi --version 2>/dev/null || echo "ROCm SMI not available"
-
-# ROCmインストールディレクトリの確認
-ls -la /opt/rocm* 2>/dev/null || echo "Standard ROCm path not found"
-```
-
-**ステップ4: パッケージ確認（ディストリビューション別）**
-```bash
-# Ubuntu/Debian系
-dpkg -l | grep rocm
-
-# Fedora/RHEL系  
-rpm -qa | grep rocm
-
-# Arch Linux系
-pacman -Q | grep rocm
-```
-
-**ステップ5: OpenCL環境の確認**
-```bash
-# OpenCLデバイス情報の確認（clinfo必要）
-clinfo 2>/dev/null || echo "OpenCL not available - install clinfo"
-
-# OpenCLプラットフォームの確認
-clinfo | grep -E "(Platform|Device)"
-```
-
-#### ROCmが見つからない場合の対処法
-
-**1. ディストリビューション別インストール**
-
-Ubuntu/Debian:
-```bash
-# ROCmリポジトリの追加
-wget -q -O - https://repo.radeon.com/rocm/rocm.gpg.key | sudo apt-key add -
-echo 'deb [arch=amd64] https://repo.radeon.com/rocm/apt/debian/ ubuntu main' | sudo tee /etc/apt/sources.list.d/rocm.list
-
-# インストール
-sudo apt update
-sudo apt install rocm-dev rocm-libs
-```
-
-Arch Linux:
-```bash
-# AURからインストール
-yay -S rocm-opencl-runtime rocm-dev
-
-# または公式パッケージ
-sudo pacman -S rocm-opencl-runtime
-```
-
-**2. 代替方法: AMDGPU-PRO OpenCL**
-```bash
-# ヘッドレスOpenCLのみインストール（ROCm代替）
-# AMD公式サイトからAMDGPU-PROドライバーをダウンロード後
-sudo amdgpu-install --opencl=legacy --headless --no-dkms
-```
-
-**3. WSL2環境での特別な確認**
-```bash
-# WSL2でのGPUパススルー確認
-ls /dev/dxg 2>/dev/null && echo "WSL2 GPU passthrough available"
-ls /dev/dri/ 2>/dev/null && echo "DRI devices available"
-
-# WSL2用OpenCLツールのインストール
-sudo apt update
-sudo apt install clinfo hwinfo
-
-# ハードウェア情報の確認
-hwinfo --gfxcard
-
-# OpenCLプラットフォーム確認
-clinfo | head -20
-```
-
-**4. 最小限の要件確認**
-```bash
-# 最低限必要なコンポーネント
-# 1. AMDGPUドライバー
-lsmod | grep amdgpu
-
-# 2. DRIアクセス
-ls -la /dev/dri/
-
-# 3. 適切な権限
-groups $USER | grep -E "(video|render)"
-
-# 4. 基本的なGPU情報
-inxi -Gx 2>/dev/null || echo "inxi not available"
-```
-
-#### 環境確認スクリプト例
-
-以下のスクリプトで一括確認が可能です：
-
-```bash
-#!/bin/bash
-# amd_gpu_check.sh - AMD GPU環境確認スクリプト
-
-echo "=== AMD GPU Environment Check ==="
-
-echo "1. GPU Detection:"
-lspci | grep -i amd || echo "No AMD GPU detected"
-
-echo -e "\n2. Driver Status:"
-if lsmod | grep -q amdgpu; then
-    echo "✓ AMDGPU driver loaded"
-else
-    echo "✗ AMDGPU driver not loaded"
-fi
-
-echo -e "\n3. Device Access:"
-if [ -e /dev/dri ]; then
-    echo "✓ DRI devices available: $(ls /dev/dri/)"
-else
-    echo "✗ No DRI devices"
-fi
-
-if [ -e /dev/kfd ]; then
-    echo "✓ KFD device available"
-else
-    echo "✗ No KFD device (ROCm may not be installed)"
-fi
-
-echo -e "\n4. ROCm Status:"
-if command -v rocminfo >/dev/null 2>&1; then
-    echo "✓ ROCm tools available"
-    rocm-smi --version 2>/dev/null || echo "ROCm SMI version check failed"
-else
-    echo "✗ ROCm tools not found"
-fi
-
-echo -e "\n5. User Permissions:"
-if groups $USER | grep -q -E "(video|render)"; then
-    echo "✓ User in video/render groups"
-else
-    echo "✗ User not in required groups - run: sudo usermod -a -G video,render $USER"
-fi
-
-echo -e "\n6. OpenCL Status:"
-if command -v clinfo >/dev/null 2>&1; then
-    echo "✓ clinfo available"
-    clinfo 2>/dev/null | grep -E "(Platform|Device)" | head -5
-else
-    echo "✗ clinfo not available - install: sudo apt install clinfo"
-fi
-
-echo -e "\n7. WSL2 Check (if applicable):"
-if [ -e /dev/dxg ]; then
-    echo "✓ WSL2 GPU passthrough detected"
-    if [ -e /dev/dri/ ]; then
-        echo "✓ DRI devices available: $(ls /dev/dri/)"
-    fi
-    
-    # OpenCLプラットフォーム数確認
-    if command -v clinfo >/dev/null 2>&1; then
-        PLATFORMS=$(clinfo 2>/dev/null | grep "Number of platforms" | awk '{print $4}')
-        if [ "$PLATFORMS" = "0" ]; then
-            echo "⚠ WSL2 GPU detected but OpenCL platforms: 0"
-            echo "  → Consider CPU-only setup or install OpenCL runtime"
-        else
-            echo "✓ OpenCL platforms available: $PLATFORMS"
-        fi
-    fi
-else
-    echo "- Not WSL2 or GPU passthrough not enabled"
-fi
-
-echo -e "\n8. Hardware Detection:"
-if command -v inxi >/dev/null 2>&1; then
-    GPU_INFO=$(inxi -Gx 2>/dev/null | grep "renderer:" | head -1)
-    if echo "$GPU_INFO" | grep -q "AMD"; then
-        echo "✓ AMD GPU detected in OpenGL: $GPU_INFO"
-    elif echo "$GPU_INFO" | grep -q "Intel"; then
-        echo "✓ Intel GPU detected in OpenGL: $GPU_INFO"
-    elif echo "$GPU_INFO" | grep -q "NVIDIA"; then
-        echo "✓ NVIDIA GPU detected in OpenGL: $GPU_INFO"
-    else
-        echo "- GPU renderer: $GPU_INFO"
-    fi
-else
-    echo "- inxi not available for hardware detection"
-fi
-
-echo -e "\n9. Recommendation:"
-if [ -e /dev/dxg ] && [ "$(clinfo 2>/dev/null | grep "Number of platforms" | awk '{print $4}')" = "0" ]; then
-    if command -v inxi >/dev/null 2>&1 && inxi -Gx 2>/dev/null | grep -q "AMD.*890M\|AMD.*Radeon"; then
-        echo "→ Try AMD iGPU configuration first, fallback to CPU if unstable:"
-        echo "  export OLLAMA_GPU_LAYERS=10"
-        echo "  export GPU_MAX_ALLOC_PERCENT=50"
-        echo "  Or CPU-only:"
-        echo "  export OLLAMA_GPU_LAYERS=0"
-        echo "  export OLLAMA_NUM_THREADS=\$(nproc)"
-    else
-        echo "→ Use CPU-optimized Ollama configuration"
-        echo "  export OLLAMA_GPU_LAYERS=0"
-        echo "  export OLLAMA_NUM_THREADS=\$(nproc)"
-    fi
-fi
-```
-
-#### AMD GPUが検出されない場合のトラブルシューティング
-
-**現象**: `lspci | grep -i amd` で何も表示されない場合
-
-**考えられる原因と対処法:**
-
-**1. 実際にAMD GPUが搭載されていない**
-```bash
-# 全てのGPU/VGAデバイスを確認
-lspci | grep -i vga
-lspci | grep -i display
-lspci | grep -i "3d controller"
-
-# システム情報でGPU確認
-sudo lshw -C display
-inxi -Gx
-```
-
-**2. Intel統合GPU環境の場合**
-```bash
-# Intel GPUの確認
-lspci | grep -i intel
-
-# Intel GPU用OpenCL確認
-apt search intel-opencl
-apt search beignet
-
-# Intel GPU向けOllama設定（限定的サポート）
-export OLLAMA_GPU_LAYERS=0  # CPU使用を強制
-export OLLAMA_NUM_THREADS=8  # CPUスレッド数最適化
-```
-
-**3. WSL2でのGPU設定問題**
-
-**症状**: `/dev/dxg`は存在するが`clinfo`で"Number of platforms 0"と表示される
-
-```bash
-# WSL2のGPUパススルー状態確認
-ls /dev/dxg        # 存在する場合はパススルー有効
-ls /dev/dri/       # DRIデバイスの確認
-
-# OpenCLプラットフォーム確認
-clinfo | head -5   # プラットフォーム数を確認
-```
-
-**解決方法:**
-
-**方法1: Windows側でのGPUドライバー更新**
-```powershell
-# PowerShell（管理者権限で実行）
-# 1. 最新のGPUドライバーをインストール
-# 2. WSLを完全に再起動
-wsl --shutdown
-wsl
-
-# 3. WSL2設定ファイルの確認
-# %USERPROFILE%\.wslconfig
-[wsl2]
-nestedVirtualization=true
-guiApplications=true
-```
-
-**方法2: WSL2でのOpenCLランタイムインストール**
-```bash
-# Intel OpenCLランタイム（多くのWSL2環境で有効）
-sudo apt update
-sudo apt install intel-opencl-icd opencl-headers
-
-# または汎用OpenCLローダー
-sudo apt install ocl-icd-opencl-dev ocl-icd-libopencl1
-
-# インストール後確認
-clinfo
-```
-
-**方法3: 実際のGPUハードウェア確認**
-```bash
-# OpenGL情報でハードウェア詳細を確認
-inxi -Gx
-glxinfo | grep "OpenGL renderer"
-
-# 例: AMD Radeon 890M（統合GPU）が検出される場合
-# OpenGL: renderer: D3D12 (AMD Radeon 890M Graphics)
-```
-
-**方法4: AMD統合GPU（iGPU）での設定（WSL2環境）**
-
-**重要**: WSL2環境では**ROCmは不要**です。Mesa D3D12ドライバーを使用します。
-
-WSL2環境でAMD Radeon 890M等の統合GPUが検出された場合：
-
-```bash
-# Mesa OpenGL D3D12ドライバー経由でのGPU使用試行
-# ROCm環境変数は使用しない
-export OLLAMA_GPU_LAYERS=10         # 少数のレイヤーから開始
-export OLLAMA_MAX_LOADED_MODELS=1   # メモリ制限重要
-export OLLAMA_NUM_PARALLEL=1        # 保守的設定
-export GPU_MAX_ALLOC_PERCENT=50     # 統合GPUメモリ制限
-
-# ROCm固有の環境変数は設定不要：
-# export HSA_OVERRIDE_GFX_VERSION=... (不要)
-# export ROCR_VISIBLE_DEVICES=...     (不要)
-# export ROCM_PATH=...                (不要)
-
-# 統合GPU用軽量モデル推奨
-ollama pull phi:mini         # 3.8B - 統合GPUに最適
-ollama pull qwen2.5:7b-q4_0  # 7B量子化 - メモリ効率良好
-```
-
-**なぜROCmが不要なのか:**
-
-1. **WSL2はD3D12→Mesa変換を使用**: Windows側のDirectX 12をLinux側のMesaドライバーに変換
-2. **ROCmはネイティブLinux用**: 物理的なLinux環境でAMD GPUを直接制御するためのフレームワーク
-3. **WSL2では仮想化レイヤーが異なる**: dxgkrnlドライバーがGPUアクセスを管理
-4. **OpenCLも異なる実装**: ROCm OpenCLではなく、Mesa/D3D12ベースの実装が必要
-
-**方法5: CPU専用でのOllama実行（安定性重視）**
-```bash
-# WSL2でGPU加速が困難な場合のCPU最適化
-export OLLAMA_GPU_LAYERS=0          # GPU使用を無効化
-export OLLAMA_NUM_THREADS=$(nproc)  # 全CPUコア使用
-export OLLAMA_MAX_LOADED_MODELS=1   # メモリ使用量を制限
-export OLLAMA_NUM_PARALLEL=1        # 保守的な並列設定
-
-# 軽量モデルの使用
-ollama pull phi:mini         # 3.8Bの軽量モデル
-ollama pull llama2:7b-q4_0   # 7Bの4bit量子化モデル
-```
-
-**4. NVIDIA GPU環境でAMD設定を確認している場合**
-```bash
 # NVIDIA GPU確認
 lspci | grep -i nvidia
-nvidia-smi 2>/dev/null || echo "NVIDIA drivers not available"
-
-# NVIDIA用Ollama設定
-export CUDA_VISIBLE_DEVICES=0
-export OLLAMA_GPU_LAYERS=32
-# AMD固有の環境変数は不要
-```
-
-**5. ハイブリッドGPU構成の場合**
-```bash
-# プライマリGPUの確認
-glxinfo | grep "OpenGL renderer"
-vulkaninfo | grep deviceName
-
-# 使用可能なGPUドライバー確認
-ls /usr/share/vulkan/icd.d/
-ls /etc/OpenCL/vendors/
-```
-
-#### 代替実行環境での最適化
-
-**CPU専用実行の場合**
-```bash
-# CPU最適化設定
-export OLLAMA_NUM_THREADS=$(nproc)
-export OLLAMA_MAX_LOADED_MODELS=1
-export OLLAMA_NUM_PARALLEL=1
-export OLLAMA_KEEP_ALIVE=5m
-
-# 軽量モデルの使用推奨
-ollama pull llama2:7b-q4_0
-ollama pull phi:mini
-```
-
-**Intel統合GPU使用の場合**
-```bash
-# Intel GPU確認コマンド
-intel_gpu_top 2>/dev/null || echo "intel-gpu-tools not installed"
-
-# Intel用OpenCL設定（実験的）
-export OCL_DEVICE_TYPE=GPU
-export ONEAPI_DEVICE_SELECTOR=opencl:gpu
-```
-
-#### 基本的なシステム設定
-
-```bash
-# ユーザーを適切なグループに追加
-sudo usermod -a -G render,video $USER
-
-# 再ログインが必要
-# ログイン後、権限を確認
-groups $USER | grep -E "(render|video)"
-```
-
-#### Docker環境でのAMD GPU設定
-
-```bash
-# AMD GPU対応のOllamaコンテナを使用
-docker run -d --name ollama \
-  --device /dev/kfd --device /dev/dri \
-  -e HSA_OVERRIDE_GFX_VERSION=10.3.0 \
-  -e OLLAMA_MAX_LOADED_MODELS=1 \
-  -e OLLAMA_NUM_PARALLEL=2 \
-  -e GPU_MAX_ALLOC_PERCENT=80 \
-  -v ollama:/root/.ollama \
-  -p 11434:11434 \
-  ollama/ollama:rocm
-```
-
-### AMD GPU向けsystemd設定
-
-```bash
-# AMD GPU用のオーバーライド設定
-sudo tee /etc/systemd/system/ollama.service.d/amd-override.conf <<EOF
-[Service]
-Environment="ROCM_PATH=/opt/rocm"
-Environment="HIP_PATH=/opt/rocm"
-Environment="HSA_OVERRIDE_GFX_VERSION=10.3.0"
-Environment="ROCR_VISIBLE_DEVICES=0"
-Environment="GPU_MAX_ALLOC_PERCENT=80"
-Environment="OLLAMA_HOST=0.0.0.0:11434"
-Environment="OLLAMA_NUM_PARALLEL=2"
-Environment="OLLAMA_MAX_LOADED_MODELS=1"
-Environment="OLLAMA_GPU_LAYERS=35"
-EOF
-
-sudo systemctl daemon-reload
-sudo systemctl restart ollama
-```
-
-### よくあるAMD GPU問題とトラブルシューティング
-
-#### GPU世代の互換性問題
-
-多くのAMD GPUは直接サポートされていないため、世代のオーバーライドが必要です：
-
-```bash
-# gfx1032（例：RX 6400）をgfx1030として認識させる
-export HSA_OVERRIDE_GFX_VERSION=10.3.0
-
-# gfx1103（例：RX 7600）をgfx1100として認識させる  
-export HSA_OVERRIDE_GFX_VERSION=11.0.0
-
-# 対応表
-# RX 6000シリーズ → 10.3.0
-# RX 7000シリーズ → 11.0.0
-```
-
-#### メモリ不足エラーの対処
-
-```bash
-# "HIP out of memory" エラーの場合
-export GPU_MAX_ALLOC_PERCENT=70  # より保守的な設定
-
-# 量子化モデルの使用を検討
-ollama pull llama2:7b-q4_0  # 4bit量子化でメモリ使用量を削減
-```
-
-#### 統合GPU（iGPU）使用時の注意点
-
-```bash
-# iGPUを使用する場合（例：Ryzen APU）
-# BIOSでiGPU専用メモリを2GB以上に設定することを推奨
-
-# パフォーマンス期待値（例：Ryzen 5600G）
-# - プロンプト処理: ~70 tokens/sec
-# - テキスト生成: ~6 tokens/sec
-# （CPU単体の約2-3倍の性能）
-```
-
-### AMD GPUパフォーマンス最適化のベストプラクティス
-
-1. **適切な量子化モデルの選択**
-   ```bash
-   # VRAM容量に応じたモデル選択
-   # 8GB VRAM → 7Bモデル（q4_0量子化）
-   # 16GB VRAM → 13Bモデル（q4_0量子化）
-   # 24GB VRAM → 30Bモデル（q4_0量子化）
-   ```
-
-2. **並行処理の調整**
-   ```bash
-   # AMD GPUでは保守的な設定を推奨
-   export OLLAMA_NUM_PARALLEL=1  # 大きなモデル使用時
-   export OLLAMA_NUM_PARALLEL=2  # 小さなモデル使用時
-   ```
-
-3. **定期的な健全性チェック**
-   ```bash
-   # GPU認識状況の確認
-   rocminfo | grep "Name:"
-   
-   # デバイスアクセス権限の確認
-   ls -la /dev/kfd /dev/dri/
-   
-   # Ollama GPU使用状況の確認
-   curl -s http://localhost:11434/api/ps
-   ```
-
-## パフォーマンス監視とデバッグ
-
-### GPU使用率の確認
-
-#### NVIDIA GPUの場合
-
-```bash
-# NVIDIA GPU情報の表示
 nvidia-smi
 
-# 継続的な監視
-watch -n 1 nvidia-smi
+# 代替案: CPU専用設定
+export OLLAMA_GPU_LAYERS=0
+export OLLAMA_NUM_THREADS=$(nproc)
 ```
 
-#### AMD GPUの場合
+#### メモリ不足
 
 ```bash
-# ROCm SMI（推奨）- 基本情報表示
-rocm-smi
+# 症状: "HIP out of memory" or "CUDA out of memory"
 
-# 詳細情報表示
-rocm-smi --showclocks      # クロック周波数
-rocm-smi --showmeminfo     # メモリ使用状況
-rocm-smi --showtemp        # 温度情報
-rocm-smi --showpower       # 電力消費
+# 解決方法
+export OLLAMA_GPU_LAYERS=10       # レイヤー数削減
+export GPU_MAX_ALLOC_PERCENT=70   # メモリ使用量制限
 
-# AMD SMI（新しいツール、ROCm 6.0以降）
-amd-smi
-
-# radeontop（軽量な監視ツール）
-radeontop
-
-# 継続的な監視例
-watch -n 1 rocm-smi
-watch -n 2 'rocm-smi --showmeminfo --showtemp'
-
-# GUI監視ツール（インストール可能な場合）
-amdgpu_top  # より視覚的なインターフェース
+# 量子化モデル使用
+ollama pull llama2:7b-q4_0        # 4bit量子化
 ```
 
-#### 共通コマンド
+### 環境診断スクリプト
+
+プロジェクトに含まれる診断スクリプトを使用してください：
 
 ```bash
-# Ollamaの詳細情報
-ollama ps --verbose
+# 環境情報収集
+./scripts/environment_info.sh > my_environment.txt
 
-# システム全体のGPU情報
-lspci | grep -E "(VGA|3D)"
+# 主要な確認項目
+- OS・カーネル情報
+- GPU認識状況
+- ドライバー状態
+- OpenCL/ROCm状況
+- Ollama設定
 ```
 
-### デバッグモードの活用
+## 実践例
 
-問題の診断には以下の環境変数が有用です：
+### WSL2 + AMD Radeon 890M環境（検証済み）
 
-```bash
-export OLLAMA_DEBUG=1
-export OLLAMA_FLASH_ATTENTION=1  # パフォーマンスログを有効化
-```
-
-## よくあるトラブルシューティング
-
-### ポートがすでに使用されているエラー
-
-`ollama serve`を実行した際に以下のようなエラーが発生する場合があります：
-
-```
-Error: listen tcp 127.0.0.1:11434: bind: address already in use
-```
-
-これは、systemdによってOllamaがすでにバックグラウンドサービスとして起動している場合に発生します。
-
-**解決方法：**
-
-```bash
-# Ollamaサービスの状態を確認
-systemctl status ollama
-
-# サービスを停止する場合
-sudo systemctl stop ollama
-
-# サービスを無効化する場合（自動起動を停止）
-sudo systemctl disable ollama
-
-# または、既存のサービスを使用する
-# （ollama serve を実行する必要はありません）
-```
-
-既存のsystemdサービスを使用する場合は、環境変数を`/etc/systemd/system/ollama.service.d/override.conf`に設定することで、パフォーマンスチューニングを適用できます：
-
-```bash
-sudo mkdir -p /etc/systemd/system/ollama.service.d
-sudo tee /etc/systemd/system/ollama.service.d/override.conf <<EOF
-[Service]
-Environment="OLLAMA_NUM_PARALLEL=4"
-Environment="OLLAMA_GPU_LAYERS=32"
-Environment="OLLAMA_HOST=0.0.0.0:11434"
-EOF
-
-# サービスを再起動
-sudo systemctl daemon-reload
-sudo systemctl restart ollama
-```
-
-## 実践的なチューニング手順
-
-1. **ベースライン測定**
-   - デフォルト設定でのパフォーマンスを測定
-
-2. **段階的な最適化**
-   - 保守的な設定から開始
-   - システムリソースを監視しながら徐々に値を増加
-
-3. **ハードウェアに応じた調整**
-   - GPU メモリ容量に応じて`OLLAMA_GPU_LAYERS`を調整
-   - CPU コア数に応じて`OLLAMA_NUM_THREADS`を設定
-
-4. **実環境でのテスト**
-   - 実際の使用パターンに基づいてテスト
-   - 必要に応じて微調整
-
-## 実環境での設定例
-
-### WSL2 + AMD Radeon 890M環境（実例）
-
-以下は実際のWSL2環境での設定例です：
-
-**環境詳細:**
+**環境詳細**:
 - OS: Ubuntu 22.04.5 LTS (WSL2)
 - CPU: 24コア (AMD Ryzen 9 7940HS相当)
 - RAM: 29GB
 - GPU: AMD Radeon 890M Graphics (統合GPU)
-- Mesa: 23.2.1-1ubuntu3.1~22.04.3
-- OpenGL: D3D12 (AMD Radeon 890M Graphics)
-- OpenCLプラットフォーム: 0個 (WSL2環境の特徴)
+- OpenCLプラットフォーム: 0個（WSL2の特徴）
 
-**検証済み設定:**
-
+**実際の設定**:
 ```bash
-# WSL2 + AMD 890M向けCPU専用設定（推奨）
+# CPU専用設定（推奨・安定）
 export OLLAMA_GPU_LAYERS=0
-export OLLAMA_NUM_THREADS=24         # 全コア使用
+export OLLAMA_NUM_THREADS=24
 export OLLAMA_MAX_LOADED_MODELS=1
 export OLLAMA_NUM_PARALLEL=1
-
-# 使用中のモデル例（動作確認済み）
-ollama run llama3.1:8b "プログラミングについて教えて"
-ollama run qwen2.5:7b "WSL2でのGPU設定について"
-ollama run gemma2:9b "軽量なAIモデルの特徴は？"
+export OLLAMA_HOST="0.0.0.0:11434"
 ```
 
-**パフォーマンス期待値:**
-- 7B-8Bモデル: 8-12 tokens/sec (CPU使用時)
-- プロンプト処理: 100-150 tokens/sec
-- メモリ使用量: 4-6GB (モデルサイズ依存)
-
-**WSL2環境の特徴:**
-- ROCmインストール不要
-- GPU加速は限定的（OpenCLプラットフォーム0）
-- CPU専用設定が最も安定
-- Mesa D3D12ドライバーによるOpenGL対応
+**パフォーマンス結果**:
+- llama3.1:8b: 10 tokens/sec
+- qwen2.5:7b: 12 tokens/sec
+- phi:mini: 15 tokens/sec
+- プロンプト処理: 120 tokens/sec
 
 ## まとめ
 
-Ollamaのパフォーマンスチューニングは、ハードウェア構成と使用環境に大きく依存します。特にOpenHandsとの統合においては、WSL2の制限事項やDocker環境の特性を理解した上で、適切な設定を行うことが重要です。
+### 環境別推奨設定まとめ
 
-### 環境別推奨アプローチ
+1. **WSL2環境**: GPU種類に関わらずCPU専用設定が最安定
+2. **ネイティブLinux + NVIDIA**: GPU最大活用でCUDA設定
+3. **ネイティブLinux + AMD**: ROCm必須、世代指定重要
 
-1. **ネイティブLinux + AMD GPU**: ROCm + 専用GPU設定
-2. **WSL2 + AMD GPU**: CPU専用設定（最も安定）
-3. **NVIDIA GPU環境**: CUDA + GPU最適化設定
+### 実践的なアプローチ
 
-上記の設定を参考に、自身の環境に合わせて調整を行い、最適なパフォーマンスを実現してください。実際の使用環境でのパフォーマンステストを必ず行い、必要に応じて設定を微調整することをお勧めします。
+1. **環境確認**: 診断スクリプトで現状把握
+2. **保守的設定**: 軽量モデル + CPU専用から開始
+3. **段階的最適化**: 安定性確認後にGPU設定追加
+4. **パフォーマンステスト**: 実際の使用パターンで検証
+
+適切な設定により、OpenHandsとOllamaの組み合わせで効率的なAI開発環境を構築できます。環境に応じて段階的に最適化を進めることをお勧めします。
 
 ## 参考
 
 - [Ollama公式ドキュメント - GPU設定](https://github.com/ollama/ollama/blob/main/docs/gpu.md)
-- [Qiita - Ollamaのパフォーマンスチューニング](https://qiita.com/kiyotaman/items/1aeb098b5ff0d6d5e641)
 - [OpenHands GitHub Issues](https://github.com/All-Hands-AI/OpenHands/issues)
 - [Quick Inference ベンチマーク - Windows vs Linux in WSL2](https://www.quickinference.com/2024/11/03/ollama-speed-test-windows-vs-linux-in-wsl2/)
 - [Ollama Issue #2529 - WSL2 パフォーマンス問題](https://github.com/ollama/ollama/issues/2529)
