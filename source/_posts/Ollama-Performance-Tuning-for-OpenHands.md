@@ -172,9 +172,194 @@ sudo systemctl status ollama
 
 ## AMD GPU環境での特別な考慮事項
 
-### ROCmの設定とインストール
+### ROCm環境の確認とセットアップ
 
-AMD GPUでOllamaを使用する場合、ROCm（Radeon Open Compute）の適切な設定が必要です。
+AMD GPUでOllamaを使用する場合、ROCm（Radeon Open Compute）の適切な設定が必要です。まず現在の環境を確認しましょう。
+
+#### 段階的環境確認手順
+
+**ステップ1: GPU検出の確認**
+```bash
+# AMD GPUが認識されているか確認
+lspci | grep -i amd
+
+# グラフィックデバイスの詳細確認
+lspci -v | grep -A 10 -i amd
+```
+
+**ステップ2: ドライバーの確認**
+```bash
+# AMDGPUドライバーの確認
+lsmod | grep amdgpu
+
+# DRIデバイスの確認（重要）
+ls -la /dev/dri/
+
+# KFDデバイスの確認（ROCm使用時に必要）
+ls -la /dev/kfd
+```
+
+**ステップ3: ROCmインストール状況の確認**
+```bash
+# ROCmツールの確認
+which rocminfo rocm-smi
+
+# ROCmバージョン確認
+rocminfo 2>/dev/null || echo "ROCm not available"
+rocm-smi --version 2>/dev/null || echo "ROCm SMI not available"
+
+# ROCmインストールディレクトリの確認
+ls -la /opt/rocm* 2>/dev/null || echo "Standard ROCm path not found"
+```
+
+**ステップ4: パッケージ確認（ディストリビューション別）**
+```bash
+# Ubuntu/Debian系
+dpkg -l | grep rocm
+
+# Fedora/RHEL系  
+rpm -qa | grep rocm
+
+# Arch Linux系
+pacman -Q | grep rocm
+```
+
+**ステップ5: OpenCL環境の確認**
+```bash
+# OpenCLデバイス情報の確認（clinfo必要）
+clinfo 2>/dev/null || echo "OpenCL not available - install clinfo"
+
+# OpenCLプラットフォームの確認
+clinfo | grep -E "(Platform|Device)"
+```
+
+#### ROCmが見つからない場合の対処法
+
+**1. ディストリビューション別インストール**
+
+Ubuntu/Debian:
+```bash
+# ROCmリポジトリの追加
+wget -q -O - https://repo.radeon.com/rocm/rocm.gpg.key | sudo apt-key add -
+echo 'deb [arch=amd64] https://repo.radeon.com/rocm/apt/debian/ ubuntu main' | sudo tee /etc/apt/sources.list.d/rocm.list
+
+# インストール
+sudo apt update
+sudo apt install rocm-dev rocm-libs
+```
+
+Arch Linux:
+```bash
+# AURからインストール
+yay -S rocm-opencl-runtime rocm-dev
+
+# または公式パッケージ
+sudo pacman -S rocm-opencl-runtime
+```
+
+**2. 代替方法: AMDGPU-PRO OpenCL**
+```bash
+# ヘッドレスOpenCLのみインストール（ROCm代替）
+# AMD公式サイトからAMDGPU-PROドライバーをダウンロード後
+sudo amdgpu-install --opencl=legacy --headless --no-dkms
+```
+
+**3. WSL2環境での特別な確認**
+```bash
+# WSL2でのGPUパススルー確認
+ls /dev/dxg 2>/dev/null && echo "WSL2 GPU passthrough available"
+ls /dev/dri/ 2>/dev/null && echo "DRI devices available"
+
+# WSL2用OpenCLツールのインストール
+sudo apt update
+sudo apt install clinfo hwinfo
+
+# ハードウェア情報の確認
+hwinfo --gfxcard
+
+# OpenCLプラットフォーム確認
+clinfo | head -20
+```
+
+**4. 最小限の要件確認**
+```bash
+# 最低限必要なコンポーネント
+# 1. AMDGPUドライバー
+lsmod | grep amdgpu
+
+# 2. DRIアクセス
+ls -la /dev/dri/
+
+# 3. 適切な権限
+groups $USER | grep -E "(video|render)"
+
+# 4. 基本的なGPU情報
+inxi -Gx 2>/dev/null || echo "inxi not available"
+```
+
+#### 環境確認スクリプト例
+
+以下のスクリプトで一括確認が可能です：
+
+```bash
+#!/bin/bash
+# amd_gpu_check.sh - AMD GPU環境確認スクリプト
+
+echo "=== AMD GPU Environment Check ==="
+
+echo "1. GPU Detection:"
+lspci | grep -i amd || echo "No AMD GPU detected"
+
+echo -e "\n2. Driver Status:"
+if lsmod | grep -q amdgpu; then
+    echo "✓ AMDGPU driver loaded"
+else
+    echo "✗ AMDGPU driver not loaded"
+fi
+
+echo -e "\n3. Device Access:"
+if [ -e /dev/dri ]; then
+    echo "✓ DRI devices available: $(ls /dev/dri/)"
+else
+    echo "✗ No DRI devices"
+fi
+
+if [ -e /dev/kfd ]; then
+    echo "✓ KFD device available"
+else
+    echo "✗ No KFD device (ROCm may not be installed)"
+fi
+
+echo -e "\n4. ROCm Status:"
+if command -v rocminfo >/dev/null 2>&1; then
+    echo "✓ ROCm tools available"
+    rocm-smi --version 2>/dev/null || echo "ROCm SMI version check failed"
+else
+    echo "✗ ROCm tools not found"
+fi
+
+echo -e "\n5. User Permissions:"
+if groups $USER | grep -q -E "(video|render)"; then
+    echo "✓ User in video/render groups"
+else
+    echo "✗ User not in required groups - run: sudo usermod -a -G video,render $USER"
+fi
+
+echo -e "\n6. OpenCL Status:"
+if command -v clinfo >/dev/null 2>&1; then
+    echo "✓ clinfo available"
+    clinfo 2>/dev/null | grep -E "(Platform|Device)" | head -5
+else
+    echo "✗ clinfo not available - install: sudo apt install clinfo"
+fi
+
+echo -e "\n7. WSL2 Check (if applicable):"
+if [ -e /dev/dxg ]; then
+    echo "✓ WSL2 GPU passthrough detected"
+else
+    echo "- Not WSL2 or GPU passthrough not enabled"
+fi
+```
 
 #### 基本的なシステム設定
 
