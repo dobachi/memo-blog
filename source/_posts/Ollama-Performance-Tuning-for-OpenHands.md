@@ -117,6 +117,44 @@ ollama pull phi:mini                 # 3.8B - 最軽量
 ollama pull qwen2.5:7b-q4_0         # 7B量子化 - バランス良好
 ```
 
+#### systemdでOllamaを管理する場合（WSL2）
+
+WSL2でもsystemdを有効化している場合は、以下の方法で設定できます：
+
+```bash
+# Ollamaサービスの状態確認
+systemctl status ollama
+
+# 環境変数設定用のオーバーライドディレクトリを作成
+sudo mkdir -p /etc/systemd/system/ollama.service.d
+
+# WSL2 CPU専用設定
+sudo tee /etc/systemd/system/ollama.service.d/wsl2-override.conf <<EOF
+[Service]
+Environment="OLLAMA_HOST=0.0.0.0:11434"
+Environment="OLLAMA_GPU_LAYERS=0"
+Environment="OLLAMA_NUM_THREADS=$(nproc)"
+Environment="OLLAMA_MAX_LOADED_MODELS=1"
+Environment="OLLAMA_NUM_PARALLEL=1"
+Environment="OLLAMA_KEEP_ALIVE=5m"
+EOF
+
+# systemdの設定を再読み込み
+sudo systemctl daemon-reload
+
+# Ollamaサービスを再起動
+sudo systemctl restart ollama
+
+# 設定が反映されているか確認
+sudo systemctl show ollama | grep Environment
+
+# ポート使用中エラーが出る場合
+# すでにOllamaがsystemdで起動している可能性が高い
+# 手動で`ollama serve`を実行する必要はない
+```
+
+**注意**: WSL2でsystemdを使用している場合、Ollamaは自動起動するため、手動での`ollama serve`は不要です。
+
 #### WSL2の制限事項
 
 - 仮想化による10-13%のパフォーマンス低下（[ベンチマーク](https://www.quickinference.com/2024/11/03/ollama-speed-test-windows-vs-linux-in-wsl2/)より）
