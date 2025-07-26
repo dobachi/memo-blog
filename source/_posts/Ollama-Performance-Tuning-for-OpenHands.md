@@ -100,6 +100,8 @@ WSL2は仮想化されたイーサネットアダプタを使用するため：
 
 OpenHandsをDockerで実行する場合の推奨設定：
 
+#### 手動でOllamaを起動する場合
+
 ```bash
 # Ollamaの起動（WSL2内）
 ollama serve
@@ -115,6 +117,41 @@ docker run -d \
   -e OLLAMA_NUM_PARALLEL=4 \
   ollama/ollama:latest
 ```
+
+#### systemdでOllamaを管理する場合
+
+systemdサービスとしてOllamaを起動している場合は、以下の方法で環境変数を設定できます：
+
+```bash
+# サービスの状態確認
+sudo systemctl status ollama
+
+# 環境変数設定用のオーバーライドディレクトリを作成
+sudo mkdir -p /etc/systemd/system/ollama.service.d
+
+# パフォーマンスチューニング用の環境変数を設定
+sudo tee /etc/systemd/system/ollama.service.d/override.conf <<EOF
+[Service]
+Environment="OLLAMA_HOST=0.0.0.0:11434"
+Environment="OLLAMA_NUM_PARALLEL=4"
+Environment="OLLAMA_MAX_LOADED_MODELS=3"
+Environment="OLLAMA_MAX_QUEUE=512"
+Environment="OLLAMA_GPU_LAYERS=32"
+Environment="OLLAMA_FLASH_ATTENTION=1"
+Environment="OLLAMA_GPU_MEMORY_FRACTION=0.8"
+EOF
+
+# systemdの設定を再読み込み
+sudo systemctl daemon-reload
+
+# Ollamaサービスを再起動
+sudo systemctl restart ollama
+
+# サービスの状態を確認
+sudo systemctl status ollama
+```
+
+この方法により、システム起動時に自動的にパフォーマンス最適化された設定でOllamaが起動します。
 
 ## パフォーマンス監視とデバッグ
 
