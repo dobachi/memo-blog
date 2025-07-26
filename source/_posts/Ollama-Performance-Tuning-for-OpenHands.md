@@ -1,5 +1,6 @@
 ---
 title: OpenHandsでOllamaを使う際のパフォーマンスチューニング
+date: 2025-07-26
 categories:
   - AI
   - Technical
@@ -10,7 +11,6 @@ tags:
   - LocalLLM
   - AI
   - WSL2
-date: 2025-01-26 00:00:00
 ---
 
 # メモ
