@@ -77,6 +77,17 @@ export OLLAMA_KEEP_ALIVE=5m         # モデル保持時間
 export OLLAMA_HOST="0.0.0.0:11434"  # 外部アクセス許可
 ```
 
+### CPU負荷の調整
+
+**重要**: `OLLAMA_NUM_THREADS`の設定によってCPU使用率が大きく変わります：
+
+| 設定値 | CPU使用率 | 推奨用途 |
+|--------|-----------|----------|
+| `$(nproc)` | 90-100% | ベンチマーク時のみ |
+| `$(nproc) / 2` | 40-50% | 通常使用（推奨） |
+| `$(nproc) / 3` | 30-40% | バックグラウンド実行 |
+| `8` (固定値) | 環境依存 | 安定運用 |
+
 ### パフォーマンス監視方法
 
 ```bash
@@ -107,10 +118,14 @@ watch -n 2 'ollama ps && echo "=== GPU ===" && nvidia-smi --query-gpu=utilizatio
 ```bash
 # WSL2環境での安定設定
 export OLLAMA_GPU_LAYERS=0          # GPU使用を無効化
-export OLLAMA_NUM_THREADS=$(nproc)  # 全CPUコア使用
+export OLLAMA_NUM_THREADS=$(($(nproc) / 2))  # CPUコアの半分を使用（システム負荷軽減）
 export OLLAMA_MAX_LOADED_MODELS=1   # メモリ制限
 export OLLAMA_NUM_PARALLEL=1        # 安定性重視
 export OLLAMA_HOST="0.0.0.0:11434"  # Docker連携用
+
+# CPU使用率が高すぎる場合の調整例
+# export OLLAMA_NUM_THREADS=8      # 固定値で制限
+# export OLLAMA_NUM_THREADS=$(($(nproc) / 3))  # コアの1/3使用
 
 # 軽量モデルの使用推奨
 ollama pull llama3.2:1b              # 1B - 超軽量（最新）
@@ -129,12 +144,15 @@ systemctl status ollama
 # 環境変数設定用のオーバーライドディレクトリを作成
 sudo mkdir -p /etc/systemd/system/ollama.service.d
 
-# WSL2 CPU専用設定
+# WSL2 CPU専用設定（CPUコア数の半分を自動計算）
+THREAD_COUNT=$(($(nproc) / 2))
+echo "CPU threads設定: $(nproc) コア中 ${THREAD_COUNT} スレッドを使用"
+
 sudo tee /etc/systemd/system/ollama.service.d/wsl2-override.conf <<EOF
 [Service]
 Environment="OLLAMA_HOST=0.0.0.0:11434"
 Environment="OLLAMA_GPU_LAYERS=0"
-Environment="OLLAMA_NUM_THREADS=$(nproc)"
+Environment="OLLAMA_NUM_THREADS=${THREAD_COUNT}"
 Environment="OLLAMA_MAX_LOADED_MODELS=1"
 Environment="OLLAMA_NUM_PARALLEL=1"
 Environment="OLLAMA_KEEP_ALIVE=5m"
@@ -182,6 +200,11 @@ export OLLAMA_GPU_MEMORY_FRACTION=0.8
 ```bash
 # /etc/systemd/system/ollama.service.d/nvidia.conf
 sudo mkdir -p /etc/systemd/system/ollama.service.d
+
+# GPUがある場合は全コア使用、CPU負荷が問題なら調整
+THREAD_COUNT=$(nproc)
+# THREAD_COUNT=$(($(nproc) / 2))  # CPU負荷軽減が必要な場合
+
 sudo tee /etc/systemd/system/ollama.service.d/nvidia.conf <<EOF
 [Service]
 Environment="CUDA_VISIBLE_DEVICES=0"
@@ -233,6 +256,8 @@ export ROCR_VISIBLE_DEVICES=0
 
 ```bash
 # /etc/systemd/system/ollama.service.d/amd.conf
+THREAD_COUNT=$(($(nproc) * 3 / 4))  # AMD GPUでは控えめに
+
 sudo tee /etc/systemd/system/ollama.service.d/amd.conf <<EOF
 [Service]
 Environment="ROCM_PATH=/opt/rocm"
@@ -399,7 +424,7 @@ ollama pull gemma:2b               # 2Bモデル（超軽量）
 ```bash
 # CPU専用設定（推奨・安定）
 export OLLAMA_GPU_LAYERS=0
-export OLLAMA_NUM_THREADS=24
+export OLLAMA_NUM_THREADS=12         # 24コアの半分使用
 export OLLAMA_MAX_LOADED_MODELS=1
 export OLLAMA_NUM_PARALLEL=1
 export OLLAMA_HOST="0.0.0.0:11434"
