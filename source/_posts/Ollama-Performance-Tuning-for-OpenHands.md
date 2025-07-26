@@ -40,18 +40,25 @@ ls -la /dev/dri/ /dev/dxg 2>/dev/null
 # GPU利用可能性の確認
 nvidia-smi 2>/dev/null && echo "NVIDIA GPU利用可能"
 rocm-smi 2>/dev/null && echo "AMD GPU（ROCm）利用可能"
-clinfo 2>/dev/null | grep -q "Number of platforms" && echo "OpenCL利用可能"
+
+# OpenCL確認（正確な方法）
+PLATFORMS=$(clinfo 2>/dev/null | grep "Number of platforms" | awk '{print $4}')
+if [ "$PLATFORMS" -gt 0 ] 2>/dev/null; then
+    echo "OpenCL利用可能: $PLATFORMS プラットフォーム"
+else
+    echo "OpenCL利用不可: プラットフォーム数 ${PLATFORMS:-0}"
+fi
 ```
 
 ### 推奨アプローチマトリックス
 
-| 環境 | GPU | 推奨アプローチ | 期待パフォーマンス |
-|------|-----|---------------|-------------------|
-| **WSL2** | AMD統合GPU | CPU専用設定 | 8-12 tokens/sec |
-| **WSL2** | NVIDIA GPU | GPU使用（制限あり） | 15-25 tokens/sec |
-| **ネイティブLinux** | AMD専用GPU | ROCm + GPU設定 | 25-40 tokens/sec |
-| **ネイティブLinux** | NVIDIA GPU | CUDA + GPU設定 | 30-50 tokens/sec |
-| **どの環境でも** | GPU問題時 | CPU専用設定 | 5-15 tokens/sec |
+| 環境 | GPU | OpenCL | 推奨アプローチ | 期待パフォーマンス |
+|------|-----|-------|---------------|-------------------|
+| **WSL2** | AMD統合GPU | 0プラットフォーム | CPU専用設定 | 8-12 tokens/sec |
+| **WSL2** | NVIDIA GPU | >0プラットフォーム | GPU使用（制限あり） | 15-25 tokens/sec |
+| **ネイティブLinux** | AMD専用GPU | >0プラットフォーム | ROCm + GPU設定 | 25-40 tokens/sec |
+| **ネイティブLinux** | NVIDIA GPU | >0プラットフォーム | CUDA + GPU設定 | 30-50 tokens/sec |
+| **どの環境でも** | GPU問題時 | - | CPU専用設定 | 5-15 tokens/sec |
 
 ## 基本的なパフォーマンスチューニング
 
@@ -114,7 +121,8 @@ ollama pull qwen2.5:7b-q4_0         # 7B量子化 - バランス良好
 
 - 仮想化による10-13%のパフォーマンス低下（[ベンチマーク](https://www.quickinference.com/2024/11/03/ollama-speed-test-windows-vs-linux-in-wsl2/)より）
 - ネットワーク設定の複雑さ（[Issue #1431](https://github.com/ollama/ollama/issues/1431)）
-- OpenCLプラットフォーム制限
+- **OpenCLプラットフォーム制限**: 通常0個のため、GPU加速困難
+- **Mesa D3D12の限界**: OpenGL描画は可能だが、OllamaのCUDA/ROCm加速には対応不可
 
 ### ネイティブLinux + NVIDIA GPU
 
@@ -344,7 +352,8 @@ ollama pull llama2:7b-q4_0        # 4bit量子化
 - CPU: 24コア (AMD Ryzen 9 7940HS相当)
 - RAM: 29GB
 - GPU: AMD Radeon 890M Graphics (統合GPU)
-- OpenCLプラットフォーム: 0個（WSL2の特徴）
+- OpenCL: 0プラットフォーム（GPU加速不可）
+- OpenGL: Mesa D3D12対応（描画のみ、計算処理不可）
 
 **実際の設定**:
 ```bash
