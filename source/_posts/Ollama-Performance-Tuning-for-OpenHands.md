@@ -374,11 +374,36 @@ else
     echo "- Not WSL2 or GPU passthrough not enabled"
 fi
 
-echo -e "\n8. Recommendation:"
+echo -e "\n8. Hardware Detection:"
+if command -v inxi >/dev/null 2>&1; then
+    GPU_INFO=$(inxi -Gx 2>/dev/null | grep "renderer:" | head -1)
+    if echo "$GPU_INFO" | grep -q "AMD"; then
+        echo "✓ AMD GPU detected in OpenGL: $GPU_INFO"
+    elif echo "$GPU_INFO" | grep -q "Intel"; then
+        echo "✓ Intel GPU detected in OpenGL: $GPU_INFO"
+    elif echo "$GPU_INFO" | grep -q "NVIDIA"; then
+        echo "✓ NVIDIA GPU detected in OpenGL: $GPU_INFO"
+    else
+        echo "- GPU renderer: $GPU_INFO"
+    fi
+else
+    echo "- inxi not available for hardware detection"
+fi
+
+echo -e "\n9. Recommendation:"
 if [ -e /dev/dxg ] && [ "$(clinfo 2>/dev/null | grep "Number of platforms" | awk '{print $4}')" = "0" ]; then
-    echo "→ Use CPU-optimized Ollama configuration"
-    echo "  export OLLAMA_GPU_LAYERS=0"
-    echo "  export OLLAMA_NUM_THREADS=\$(nproc)"
+    if command -v inxi >/dev/null 2>&1 && inxi -Gx 2>/dev/null | grep -q "AMD.*890M\|AMD.*Radeon"; then
+        echo "→ Try AMD iGPU configuration first, fallback to CPU if unstable:"
+        echo "  export OLLAMA_GPU_LAYERS=10"
+        echo "  export GPU_MAX_ALLOC_PERCENT=50"
+        echo "  Or CPU-only:"
+        echo "  export OLLAMA_GPU_LAYERS=0"
+        echo "  export OLLAMA_NUM_THREADS=\$(nproc)"
+    else
+        echo "→ Use CPU-optimized Ollama configuration"
+        echo "  export OLLAMA_GPU_LAYERS=0"
+        echo "  export OLLAMA_NUM_THREADS=\$(nproc)"
+    fi
 fi
 ```
 
@@ -457,7 +482,33 @@ sudo apt install ocl-icd-opencl-dev ocl-icd-libopencl1
 clinfo
 ```
 
-**方法3: CPU専用でのOllama実行（推奨）**
+**方法3: 実際のGPUハードウェア確認**
+```bash
+# OpenGL情報でハードウェア詳細を確認
+inxi -Gx
+glxinfo | grep "OpenGL renderer"
+
+# 例: AMD Radeon 890M（統合GPU）が検出される場合
+# OpenGL: renderer: D3D12 (AMD Radeon 890M Graphics)
+```
+
+**方法4: AMD統合GPU（iGPU）での設定**
+
+WSL2環境でAMD Radeon 890M等の統合GPUが検出された場合：
+
+```bash
+# Mesa OpenGL D3D12ドライバー経由でのGPU使用試行
+export OLLAMA_GPU_LAYERS=10         # 少数のレイヤーから開始
+export OLLAMA_MAX_LOADED_MODELS=1   # メモリ制限重要
+export OLLAMA_NUM_PARALLEL=1        # 保守的設定
+export GPU_MAX_ALLOC_PERCENT=50     # 統合GPUメモリ制限
+
+# 統合GPU用軽量モデル推奨
+ollama pull phi:mini         # 3.8B - 統合GPUに最適
+ollama pull qwen2.5:7b-q4_0  # 7B量子化 - メモリ効率良好
+```
+
+**方法5: CPU専用でのOllama実行（安定性重視）**
 ```bash
 # WSL2でGPU加速が困難な場合のCPU最適化
 export OLLAMA_GPU_LAYERS=0          # GPU使用を無効化
