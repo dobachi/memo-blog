@@ -113,8 +113,9 @@ export OLLAMA_NUM_PARALLEL=1        # 安定性重視
 export OLLAMA_HOST="0.0.0.0:11434"  # Docker連携用
 
 # 軽量モデルの使用推奨
-ollama pull phi:mini                 # 3.8B - 最軽量
-ollama pull qwen2.5:7b-q4_0         # 7B量子化 - バランス良好
+ollama pull phi3:mini                # 3.8B - 最軽量
+ollama pull qwen2.5:7b               # 7B - バランス良好
+ollama pull llama2:7b-q4_0           # 7B量子化 - メモリ効率
 ```
 
 #### systemdでOllamaを管理する場合（WSL2）
@@ -315,8 +316,8 @@ export OLLAMA_DEBUG=1
 export OLLAMA_FLASH_ATTENTION=1
 
 # 軽量モデルでテスト
-ollama pull phi:mini
-ollama run phi:mini "Hello, test"
+ollama pull phi3:mini
+ollama run phi3:mini "Hello, test"
 ```
 
 ## トラブルシューティング
@@ -363,6 +364,8 @@ export GPU_MAX_ALLOC_PERCENT=70   # メモリ使用量制限
 
 # 量子化モデル使用
 ollama pull llama2:7b-q4_0        # 4bit量子化
+# または
+ollama pull qwen2.5:7b-q4_0      # 4bit量子化版
 ```
 
 ### 環境診断スクリプト
@@ -406,7 +409,7 @@ export OLLAMA_HOST="0.0.0.0:11434"
 **パフォーマンス結果**:
 - llama3.1:8b: 10 tokens/sec
 - qwen2.5:7b: 12 tokens/sec
-- phi:mini: 15 tokens/sec
+- phi3:mini: 15 tokens/sec
 - プロンプト処理: 120 tokens/sec
 
 ## まとめ
