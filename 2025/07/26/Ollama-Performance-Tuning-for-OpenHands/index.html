@@ -5,18 +5,18 @@
     
     <title>OpenHandsでOllamaを使う際のパフォーマンスチューニング | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  AMD GPU環境での特別な考慮事項  ROCm環境の確認とセットアップ AMD GPU向けsystemd設定 よくある">
+    <meta name="description" content="はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  AMD GPU環境での特別な考慮事項  環境の種類と適用範囲 ROCm環境の確認とセットアップ（ネイティブLinux環境">
 <meta name="keywords" content="AI,Ollama,LocalLLM,OpenHands,Performance,WSL2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenHandsでOllamaを使う際のパフォーマンスチューニング">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  AMD GPU環境での特別な考慮事項  ROCm環境の確認とセットアップ AMD GPU向けsystemd設定 よくある">
+<meta property="og:description" content="はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  AMD GPU環境での特別な考慮事項  環境の種類と適用範囲 ROCm環境の確認とセットアップ（ネイティブLinux環境">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2025-07-26T16:39:51.855Z">
+<meta property="og:updated_time" content="2025-07-26T16:42:57.663Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenHandsでOllamaを使う際のパフォーマンスチューニング">
-<meta name="twitter:description" content="はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  AMD GPU環境での特別な考慮事項  ROCm環境の確認とセットアップ AMD GPU向けsystemd設定 よくある">
+<meta name="twitter:description" content="はじめに Ollamaの基本的なパフォーマンスチューニング  主要な環境変数 推奨設定例  WSL2環境での考慮事項  パフォーマンスオーバーヘッド ネットワーク設定の課題  OpenHandsとの統合における最適化  一般的な問題と解決策 Docker環境での最適設定  AMD GPU環境での特別な考慮事項  環境の種類と適用範囲 ROCm環境の確認とセットアップ（ネイティブLinux環境">
     
 
     
@@ -267,7 +267,8 @@
 </ul></li>
 <li><a href="#amd-gpu環境での特別な考慮事項" id="toc-amd-gpu環境での特別な考慮事項">AMD GPU環境での特別な考慮事項</a>
 <ul>
-<li><a href="#rocm環境の確認とセットアップ" id="toc-rocm環境の確認とセットアップ">ROCm環境の確認とセットアップ</a></li>
+<li><a href="#環境の種類と適用範囲" id="toc-環境の種類と適用範囲">環境の種類と適用範囲</a></li>
+<li><a href="#rocm環境の確認とセットアップネイティブlinux環境" id="toc-rocm環境の確認とセットアップネイティブlinux環境">ROCm環境の確認とセットアップ（ネイティブLinux環境）</a></li>
 <li><a href="#amd-gpu向けsystemd設定" id="toc-amd-gpu向けsystemd設定">AMD GPU向けsystemd設定</a></li>
 <li><a href="#よくあるamd-gpu問題とトラブルシューティング" id="toc-よくあるamd-gpu問題とトラブルシューティング">よくあるAMD
 GPU問題とトラブルシューティング</a></li>
@@ -380,8 +381,27 @@ Overflow</a>で議論）</p>
 <p>この方法により、システム起動時に自動的にパフォーマンス最適化された設定でOllamaが起動します。</p>
 <h2><span id="amdgpu環境での特別な考慮事項">AMD
 GPU環境での特別な考慮事項</span></h2>
-<h3><span id="rocm環境の確認とセットアップ">ROCm環境の確認とセットアップ</span></h3>
-<p>AMD GPUでOllamaを使用する場合、ROCm（Radeon Open
+<h3><span id="環境の種類と適用範囲">環境の種類と適用範囲</span></h3>
+<p><strong>重要</strong>: AMD GPU環境は大きく2つに分類されます：</p>
+<ol type="1">
+<li><strong>ネイティブLinux環境</strong>: 物理的なLinux環境でAMD
+GPUを使用
+<ul>
+<li>ROCmのインストールと設定が<strong>必要</strong></li>
+<li><code>/opt/rocm</code>パスの設定が<strong>必要</strong></li>
+<li>HSA_OVERRIDE_GFX_VERSION等の環境変数設定が<strong>必要</strong></li>
+</ul></li>
+<li><strong>WSL2環境</strong>: Windows上のWSL2でAMD GPUを使用
+<ul>
+<li>ROCmのインストールは<strong>不要</strong></li>
+<li>Mesa D3D12ドライバーを使用</li>
+<li>Windows側のGPUドライバーに依存</li>
+</ul></li>
+</ol>
+<h3><span id="rocm環境の確認とセットアップネイティブlinux環境">ROCm環境の確認とセットアップ（ネイティブLinux環境）</span></h3>
+<p><strong>注意</strong>:
+この設定はネイティブLinux環境のみに適用されます。WSL2環境では不要です。</p>
+<p>ネイティブLinux環境でAMD GPUでOllamaを使用する場合、ROCm（Radeon Open
 Compute）の適切な設定が必要です。まず現在の環境を確認しましょう。</p>
 <h4><span id="段階的環境確認手順">段階的環境確認手順</span></h4>
 <p><strong>ステップ1: GPU検出の確認</strong> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># AMD GPUが認識されているか確認</span></span><br><span class="line">lspci | grep -i amd</span><br><span class="line"></span><br><span class="line"><span class="comment"># グラフィックデバイスの詳細確認</span></span><br><span class="line">lspci -v | grep -A 10 -i amd</span><br></pre></td></tr></table></figure></p>
@@ -417,9 +437,23 @@ platforms 0"と表示される</p>
 <p><strong>方法2: WSL2でのOpenCLランタイムインストール</strong>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Intel OpenCLランタイム（多くのWSL2環境で有効）</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install intel-opencl-icd opencl-headers</span><br><span class="line"></span><br><span class="line"><span class="comment"># または汎用OpenCLローダー</span></span><br><span class="line">sudo apt install ocl-icd-opencl-dev ocl-icd-libopencl1</span><br><span class="line"></span><br><span class="line"><span class="comment"># インストール後確認</span></span><br><span class="line">clinfo</span><br></pre></td></tr></table></figure></p>
 <p><strong>方法3: 実際のGPUハードウェア確認</strong> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># OpenGL情報でハードウェア詳細を確認</span></span><br><span class="line">inxi -Gx</span><br><span class="line">glxinfo | grep <span class="string">"OpenGL renderer"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 例: AMD Radeon 890M（統合GPU）が検出される場合</span></span><br><span class="line"><span class="comment"># OpenGL: renderer: D3D12 (AMD Radeon 890M Graphics)</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>方法4: AMD統合GPU（iGPU）での設定</strong></p>
+<p><strong>方法4: AMD統合GPU（iGPU）での設定（WSL2環境）</strong></p>
+<p><strong>重要</strong>:
+WSL2環境では<strong>ROCmは不要</strong>です。Mesa
+D3D12ドライバーを使用します。</p>
 <p>WSL2環境でAMD Radeon 890M等の統合GPUが検出された場合：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Mesa OpenGL D3D12ドライバー経由でのGPU使用試行</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_LAYERS=10         <span class="comment"># 少数のレイヤーから開始</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=1   <span class="comment"># メモリ制限重要</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=1        <span class="comment"># 保守的設定</span></span><br><span class="line"><span class="built_in">export</span> GPU_MAX_ALLOC_PERCENT=50     <span class="comment"># 統合GPUメモリ制限</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 統合GPU用軽量モデル推奨</span></span><br><span class="line">ollama pull phi:mini         <span class="comment"># 3.8B - 統合GPUに最適</span></span><br><span class="line">ollama pull qwen2.5:7b-q4_0  <span class="comment"># 7B量子化 - メモリ効率良好</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Mesa OpenGL D3D12ドライバー経由でのGPU使用試行</span></span><br><span class="line"><span class="comment"># ROCm環境変数は使用しない</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_LAYERS=10         <span class="comment"># 少数のレイヤーから開始</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=1   <span class="comment"># メモリ制限重要</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=1        <span class="comment"># 保守的設定</span></span><br><span class="line"><span class="built_in">export</span> GPU_MAX_ALLOC_PERCENT=50     <span class="comment"># 統合GPUメモリ制限</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ROCm固有の環境変数は設定不要：</span></span><br><span class="line"><span class="comment"># export HSA_OVERRIDE_GFX_VERSION=... (不要)</span></span><br><span class="line"><span class="comment"># export ROCR_VISIBLE_DEVICES=...     (不要)</span></span><br><span class="line"><span class="comment"># export ROCM_PATH=...                (不要)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 統合GPU用軽量モデル推奨</span></span><br><span class="line">ollama pull phi:mini         <span class="comment"># 3.8B - 統合GPUに最適</span></span><br><span class="line">ollama pull qwen2.5:7b-q4_0  <span class="comment"># 7B量子化 - メモリ効率良好</span></span><br></pre></td></tr></table></figure>
+<p><strong>なぜROCmが不要なのか:</strong></p>
+<ol type="1">
+<li><strong>WSL2はD3D12→Mesa変換を使用</strong>: Windows側のDirectX
+12をLinux側のMesaドライバーに変換</li>
+<li><strong>ROCmはネイティブLinux用</strong>: 物理的なLinux環境でAMD
+GPUを直接制御するためのフレームワーク</li>
+<li><strong>WSL2では仮想化レイヤーが異なる</strong>:
+dxgkrnlドライバーがGPUアクセスを管理</li>
+<li><strong>OpenCLも異なる実装</strong>: ROCm
+OpenCLではなく、Mesa/D3D12ベースの実装が必要</li>
+</ol>
 <p><strong>方法5: CPU専用でのOllama実行（安定性重視）</strong>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># WSL2でGPU加速が困難な場合のCPU最適化</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_GPU_LAYERS=0          <span class="comment"># GPU使用を無効化</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_THREADS=$(nproc)  <span class="comment"># 全CPUコア使用</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_MAX_LOADED_MODELS=1   <span class="comment"># メモリ使用量を制限</span></span><br><span class="line"><span class="built_in">export</span> OLLAMA_NUM_PARALLEL=1        <span class="comment"># 保守的な並列設定</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 軽量モデルの使用</span></span><br><span class="line">ollama pull phi:mini         <span class="comment"># 3.8Bの軽量モデル</span></span><br><span class="line">ollama pull llama2:7b-q4_0   <span class="comment"># 7Bの4bit量子化モデル</span></span><br></pre></td></tr></table></figure></p>
 <p><strong>4. NVIDIA GPU環境でAMD設定を確認している場合</strong>
@@ -524,7 +558,7 @@ WebUI Discussion #510 - Docker接続問題</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/" data-id="cmdkh7n4301g518objq3iko9i" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/07/26/Ollama-Performance-Tuning-for-OpenHands/" data-id="cmdkhbni901g118o1da7d0iwp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

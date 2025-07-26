@@ -172,9 +172,25 @@ sudo systemctl status ollama
 
 ## AMD GPU環境での特別な考慮事項
 
-### ROCm環境の確認とセットアップ
+### 環境の種類と適用範囲
 
-AMD GPUでOllamaを使用する場合、ROCm（Radeon Open Compute）の適切な設定が必要です。まず現在の環境を確認しましょう。
+**重要**: AMD GPU環境は大きく2つに分類されます：
+
+1. **ネイティブLinux環境**: 物理的なLinux環境でAMD GPUを使用
+   - ROCmのインストールと設定が**必要**
+   - `/opt/rocm`パスの設定が**必要**
+   - HSA_OVERRIDE_GFX_VERSION等の環境変数設定が**必要**
+
+2. **WSL2環境**: Windows上のWSL2でAMD GPUを使用
+   - ROCmのインストールは**不要**
+   - Mesa D3D12ドライバーを使用
+   - Windows側のGPUドライバーに依存
+
+### ROCm環境の確認とセットアップ（ネイティブLinux環境）
+
+**注意**: この設定はネイティブLinux環境のみに適用されます。WSL2環境では不要です。
+
+ネイティブLinux環境でAMD GPUでOllamaを使用する場合、ROCm（Radeon Open Compute）の適切な設定が必要です。まず現在の環境を確認しましょう。
 
 #### 段階的環境確認手順
 
@@ -492,21 +508,36 @@ glxinfo | grep "OpenGL renderer"
 # OpenGL: renderer: D3D12 (AMD Radeon 890M Graphics)
 ```
 
-**方法4: AMD統合GPU（iGPU）での設定**
+**方法4: AMD統合GPU（iGPU）での設定（WSL2環境）**
+
+**重要**: WSL2環境では**ROCmは不要**です。Mesa D3D12ドライバーを使用します。
 
 WSL2環境でAMD Radeon 890M等の統合GPUが検出された場合：
 
 ```bash
 # Mesa OpenGL D3D12ドライバー経由でのGPU使用試行
+# ROCm環境変数は使用しない
 export OLLAMA_GPU_LAYERS=10         # 少数のレイヤーから開始
 export OLLAMA_MAX_LOADED_MODELS=1   # メモリ制限重要
 export OLLAMA_NUM_PARALLEL=1        # 保守的設定
 export GPU_MAX_ALLOC_PERCENT=50     # 統合GPUメモリ制限
 
+# ROCm固有の環境変数は設定不要：
+# export HSA_OVERRIDE_GFX_VERSION=... (不要)
+# export ROCR_VISIBLE_DEVICES=...     (不要)
+# export ROCM_PATH=...                (不要)
+
 # 統合GPU用軽量モデル推奨
 ollama pull phi:mini         # 3.8B - 統合GPUに最適
 ollama pull qwen2.5:7b-q4_0  # 7B量子化 - メモリ効率良好
 ```
+
+**なぜROCmが不要なのか:**
+
+1. **WSL2はD3D12→Mesa変換を使用**: Windows側のDirectX 12をLinux側のMesaドライバーに変換
+2. **ROCmはネイティブLinux用**: 物理的なLinux環境でAMD GPUを直接制御するためのフレームワーク
+3. **WSL2では仮想化レイヤーが異なる**: dxgkrnlドライバーがGPUアクセスを管理
+4. **OpenCLも異なる実装**: ROCm OpenCLではなく、Mesa/D3D12ベースの実装が必要
 
 **方法5: CPU専用でのOllama実行（安定性重視）**
 ```bash
