@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="参考 メモ  補足    参考  マウントの仕方を示しているブログ  メモ マウントの仕方を示しているブログ の通りで問題ない。 補足 「ハードウェアの追加」から「ファイルシステム」を追加する。 ゲストOSでマウントするときに、ディレクトリを作成し忘れないこと。 手動でマウント 1$ sudo mount -t 9p -o trans=virtio hostdata /mnt/data fs">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2025-08-13T08:09:53.272Z">
+<meta property="og:updated_time" content="2025-08-13T08:51:24.098Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mount host&#39;s filesystem on KVM">
 <meta name="twitter:description" content="参考 メモ  補足    参考  マウントの仕方を示しているブログ  メモ マウントの仕方を示しているブログ の通りで問題ない。 補足 「ハードウェアの追加」から「ファイルシステム」を追加する。 ゲストOSでマウントするときに、ディレクトリを作成し忘れないこと。 手動でマウント 1$ sudo mount -t 9p -o trans=virtio hostdata /mnt/data fs">
@@ -280,7 +280,7 @@
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2019/02/03/Mount-host-s-filesystem-on-KVM/" data-id="cme9ox5q6007x18mzsrydfolo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2019/02/03/Mount-host-s-filesystem-on-KVM/" data-id="cme9qehx4007t18k5a66u0s1p" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -531,5 +531,20 @@
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
