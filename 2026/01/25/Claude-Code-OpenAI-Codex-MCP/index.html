@@ -5,18 +5,18 @@
     
     <title>Claude CodeからOpenAI Codexを使う方法 - MCPで実現するマルチAI開発環境 | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="はじめに  Claude CodeとOpenAI Codexの位置づけ 両方を使いたいユースケース MCPによる連携の概要  前提条件 Codex CLIのセットアップ  インストール方法 認証設定  APIキーを使用する場合 ChatGPTアカウントを使用する場合  動作確認  方法1: codex-mcp-server（Node.js版）  特徴と利点 セットアップ手順 提供ツール一覧">
+    <meta name="description" content="はじめに  Claude CodeとOpenAI Codexの位置づけ 両方を使いたいユースケース MCPによる連携の概要 MCPサーバーのスコープ設定  前提条件 Codex CLIのセットアップ  インストール方法 認証設定  APIキーを使用する場合 ChatGPTアカウントを使用する場合  動作確認  方法1: codex-mcp-server（Node.js版）  特徴と利点 セッ">
 <meta name="keywords" content="Claude Code,OpenAI,Codex,MCP,AI開発">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Claude CodeからOpenAI Codexを使う方法 - MCPで実現するマルチAI開発環境">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-OpenAI-Codex-MCP/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="はじめに  Claude CodeとOpenAI Codexの位置づけ 両方を使いたいユースケース MCPによる連携の概要  前提条件 Codex CLIのセットアップ  インストール方法 認証設定  APIキーを使用する場合 ChatGPTアカウントを使用する場合  動作確認  方法1: codex-mcp-server（Node.js版）  特徴と利点 セットアップ手順 提供ツール一覧">
+<meta property="og:description" content="はじめに  Claude CodeとOpenAI Codexの位置づけ 両方を使いたいユースケース MCPによる連携の概要 MCPサーバーのスコープ設定  前提条件 Codex CLIのセットアップ  インストール方法 認証設定  APIキーを使用する場合 ChatGPTアカウントを使用する場合  動作確認  方法1: codex-mcp-server（Node.js版）  特徴と利点 セッ">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2026-01-25T12:31:54.116Z">
+<meta property="og:updated_time" content="2026-01-25T12:51:09.759Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Claude CodeからOpenAI Codexを使う方法 - MCPで実現するマルチAI開発環境">
-<meta name="twitter:description" content="はじめに  Claude CodeとOpenAI Codexの位置づけ 両方を使いたいユースケース MCPによる連携の概要  前提条件 Codex CLIのセットアップ  インストール方法 認証設定  APIキーを使用する場合 ChatGPTアカウントを使用する場合  動作確認  方法1: codex-mcp-server（Node.js版）  特徴と利点 セットアップ手順 提供ツール一覧">
+<meta name="twitter:description" content="はじめに  Claude CodeとOpenAI Codexの位置づけ 両方を使いたいユースケース MCPによる連携の概要 MCPサーバーのスコープ設定  前提条件 Codex CLIのセットアップ  インストール方法 認証設定  APIキーを使用する場合 ChatGPTアカウントを使用する場合  動作確認  方法1: codex-mcp-server（Node.js版）  特徴と利点 セッ">
     
 
     
@@ -255,6 +255,7 @@
 Codexの位置づけ</a></li>
 <li><a href="#両方を使いたいユースケース" id="toc-両方を使いたいユースケース">両方を使いたいユースケース</a></li>
 <li><a href="#mcpによる連携の概要" id="toc-mcpによる連携の概要">MCPによる連携の概要</a></li>
+<li><a href="#mcpサーバーのスコープ設定" id="toc-mcpサーバーのスコープ設定">MCPサーバーのスコープ設定</a></li>
 </ul></li>
 <li><a href="#前提条件" id="toc-前提条件">前提条件</a></li>
 <li><a href="#codex-cliのセットアップ" id="toc-codex-cliのセットアップ">Codex CLIのセットアップ</a>
@@ -339,6 +340,38 @@ Codexは、OpenAI社が提供するコーディング支援システムであり
 Protocol（MCP）は、AIアシスタント間でツールやコンテキストを共有するための標準プロトコルである。
 MCPサーバーを介することで、Claude CodeからOpenAI
 Codexの機能を呼び出すことが可能になる。</p>
+<h2><span id="mcpサーバーのスコープ設定">MCPサーバーのスコープ設定</span></h2>
+<p>Claude CodeでMCPサーバーを設定する際、スコープを選択できる。</p>
+<table>
+<colgroup>
+<col style="width: 32%">
+<col style="width: 46%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>スコープ</th>
+<th>設定ファイル</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ユーザー</td>
+<td><code>~/.claude.json</code></td>
+<td>どのプロジェクトでも使いたい場合</td>
+</tr>
+<tr class="even">
+<td>プロジェクト</td>
+<td><code>.mcp.json</code>（リポジトリ内）</td>
+<td>特定プロジェクトのみで使う場合</td>
+</tr>
+</tbody>
+</table>
+<p>コマンドラインで追加する場合は <code>-s</code>
+オプションでスコープを指定する。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ユーザースコープ（推奨）</span></span><br><span class="line">claude mcp add codex -s user -- npx -y codex-mcp-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># プロジェクトスコープ</span></span><br><span class="line">claude mcp add codex -s project -- npx -y codex-mcp-server</span><br></pre></td></tr></table></figure>
+<p>Codex連携は汎用的なツールなので、ユーザースコープでの設定が便利である。</p>
 <h1><span id="前提条件">前提条件</span></h1>
 <p>本記事の手順を実行するには、以下の環境が必要である。</p>
 <ul>
@@ -377,8 +410,9 @@ codex-mcp-server（Node.js版）</span></h1>
 <li><strong>コードレビュー</strong>: ファイルの自動レビュー機能</li>
 </ul>
 <h2><span id="セットアップ手順">セットアップ手順</span></h2>
-<p>Claude
-Codeの設定ファイル（<code>~/.claude.json</code>または<code>~/.config/claude/settings.json</code>）に以下を追加する。</p>
+<p>コマンドラインでセットアップする場合:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude mcp add codex -s user -- npx -y codex-mcp-server</span><br></pre></td></tr></table></figure>
+<p>または、設定ファイル（<code>~/.claude.json</code>）に直接記述する場合:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"mcpServers"</span>: &#123;</span><br><span class="line">    <span class="attr">"codex"</span>: &#123;</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"npx"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [<span class="string">"-y"</span>, <span class="string">"codex-mcp-server"</span>],</span><br><span class="line">      <span class="attr">"env"</span>: &#123;</span><br><span class="line">        <span class="attr">"OPENAI_API_KEY"</span>: <span class="string">"your-api-key-here"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2><span id="提供ツール一覧">提供ツール一覧</span></h2>
 <p>codex-mcp-serverは以下のツールを提供する。</p>
@@ -421,9 +455,15 @@ o3、o4-mini、gpt-4.1など複数モデルから選択可能</li>
 </ul>
 <h2><span id="セットアップ手順">セットアップ手順</span></h2>
 <h3><span id="uvを使用する場合推奨">uvを使用する場合（推奨）</span></h3>
+<p>コマンドラインでセットアップする場合:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude mcp add openai-codex -s user -- uvx openai-codex-mcp</span><br></pre></td></tr></table></figure>
+<p>または、設定ファイル（<code>~/.claude.json</code>）に直接記述する場合:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"mcpServers"</span>: &#123;</span><br><span class="line">    <span class="attr">"openai-codex"</span>: &#123;</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"uvx"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [<span class="string">"openai-codex-mcp"</span>],</span><br><span class="line">      <span class="attr">"env"</span>: &#123;</span><br><span class="line">        <span class="attr">"OPENAI_API_KEY"</span>: <span class="string">"your-api-key-here"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3><span id="pipを使用する場合">pipを使用する場合</span></h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install openai-codex-mcp</span><br></pre></td></tr></table></figure>
+<p>コマンドラインでセットアップする場合:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude mcp add openai-codex -s user -- python -m openai_codex_mcp</span><br></pre></td></tr></table></figure>
+<p>または、設定ファイル（<code>~/.claude.json</code>）に直接記述する場合:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"mcpServers"</span>: &#123;</span><br><span class="line">    <span class="attr">"openai-codex"</span>: &#123;</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"python"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [<span class="string">"-m"</span>, <span class="string">"openai_codex_mcp"</span>],</span><br><span class="line">      <span class="attr">"env"</span>: &#123;</span><br><span class="line">        <span class="attr">"OPENAI_API_KEY"</span>: <span class="string">"your-api-key-here"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2><span id="専用メソッド">専用メソッド</span></h2>
 <p>openai-codex-mcpは以下の専用メソッドを提供する。</p>
@@ -562,7 +602,7 @@ Codexを組み合わせたマルチAI開発環境を構築できる。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-OpenAI-Codex-MCP/" data-id="cmktpxr7y00dq18n16gf0kxc4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-OpenAI-Codex-MCP/" data-id="cmktqmedw018f18masnvkmauf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

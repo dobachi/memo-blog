@@ -5,18 +5,18 @@
     
     <title>Gemini with Claude Code | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="メモ  gemini-mcp-tool  特徴 提供機能 インストール ユースケース  mcp-gemini-cli  特徴 提供機能 インストール ユースケース  @rlabs-inc/gemini-mcp  特徴 主な機能 インストール 設定オプション  どれを選ぶか  参考   メモ Claude CodeからGeminiを利用する方法についてのメモ。 MCPサーバーを使うことで、Cl">
+    <meta name="description" content="メモ  MCPサーバーのスコープ設定 gemini-mcp-tool  特徴 提供機能 インストール ユースケース  mcp-gemini-cli  特徴 提供機能 インストール ユースケース  @rlabs-inc/gemini-mcp  特徴 主な機能 インストール 設定オプション  gemini-mcp-server  特徴 提供機能 インストール ユースケース  どれを選ぶか  参考">
 <meta name="keywords" content="Gemini,Claude Code,AI,MCP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gemini with Claude Code">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2026/01/25/Gemini-with-Claude-Code/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="メモ  gemini-mcp-tool  特徴 提供機能 インストール ユースケース  mcp-gemini-cli  特徴 提供機能 インストール ユースケース  @rlabs-inc/gemini-mcp  特徴 主な機能 インストール 設定オプション  どれを選ぶか  参考   メモ Claude CodeからGeminiを利用する方法についてのメモ。 MCPサーバーを使うことで、Cl">
+<meta property="og:description" content="メモ  MCPサーバーのスコープ設定 gemini-mcp-tool  特徴 提供機能 インストール ユースケース  mcp-gemini-cli  特徴 提供機能 インストール ユースケース  @rlabs-inc/gemini-mcp  特徴 主な機能 インストール 設定オプション  gemini-mcp-server  特徴 提供機能 インストール ユースケース  どれを選ぶか  参考">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2026-01-25T12:31:54.120Z">
+<meta property="og:updated_time" content="2026-01-25T12:51:09.763Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gemini with Claude Code">
-<meta name="twitter:description" content="メモ  gemini-mcp-tool  特徴 提供機能 インストール ユースケース  mcp-gemini-cli  特徴 提供機能 インストール ユースケース  @rlabs-inc/gemini-mcp  特徴 主な機能 インストール 設定オプション  どれを選ぶか  参考   メモ Claude CodeからGeminiを利用する方法についてのメモ。 MCPサーバーを使うことで、Cl">
+<meta name="twitter:description" content="メモ  MCPサーバーのスコープ設定 gemini-mcp-tool  特徴 提供機能 インストール ユースケース  mcp-gemini-cli  特徴 提供機能 インストール ユースケース  @rlabs-inc/gemini-mcp  特徴 主な機能 インストール 設定オプション  gemini-mcp-server  特徴 提供機能 インストール ユースケース  どれを選ぶか  参考">
     
 
     
@@ -251,6 +251,7 @@
 	<ul>
 <li><a href="#メモ" id="toc-メモ">メモ</a>
 <ul>
+<li><a href="#mcpサーバーのスコープ設定" id="toc-mcpサーバーのスコープ設定">MCPサーバーのスコープ設定</a></li>
 <li><a href="#gemini-mcp-tool" id="toc-gemini-mcp-tool">gemini-mcp-tool</a>
 <ul>
 <li><a href="#特徴" id="toc-特徴">特徴</a></li>
@@ -272,6 +273,13 @@
 <li><a href="#インストール-2" id="toc-インストール-2">インストール</a></li>
 <li><a href="#設定オプション" id="toc-設定オプション">設定オプション</a></li>
 </ul></li>
+<li><a href="#gemini-mcp-server" id="toc-gemini-mcp-server">gemini-mcp-server</a>
+<ul>
+<li><a href="#特徴-3" id="toc-特徴-3">特徴</a></li>
+<li><a href="#提供機能-2" id="toc-提供機能-2">提供機能</a></li>
+<li><a href="#インストール-3" id="toc-インストール-3">インストール</a></li>
+<li><a href="#ユースケース-2" id="toc-ユースケース-2">ユースケース</a></li>
+</ul></li>
 <li><a href="#どれを選ぶか" id="toc-どれを選ぶか">どれを選ぶか</a></li>
 </ul></li>
 <li><a href="#参考" id="toc-参考">参考</a></li>
@@ -288,7 +296,43 @@ CLIラッパー（大規模ファイル分析向け）</li>
 <li><strong>mcp-gemini-cli</strong>: シンプルなGemini CLIラッパー</li>
 <li><strong><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></strong>:
 多機能なGemini統合サーバー</li>
+<li><strong>gemini-mcp-server</strong>: 多機能なGemini CLIラッパー</li>
 </ol>
+<h2><span id="mcpサーバーのスコープ設定">MCPサーバーのスコープ設定</span></h2>
+<p>Claude CodeでMCPサーバーを追加する際、<code>-s</code>
+オプションでスコープを指定できる。</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 28%">
+<col style="width: 33%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>スコープ</th>
+<th>オプション</th>
+<th>設定ファイル</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ユーザー</td>
+<td><code>-s user</code></td>
+<td><code>~/.claude.json</code></td>
+<td>どのプロジェクトでも使いたい場合</td>
+</tr>
+<tr class="even">
+<td>プロジェクト</td>
+<td><code>-s project</code></td>
+<td><code>.mcp.json</code>（リポジトリ内）</td>
+<td>特定プロジェクトのみで使う場合</td>
+</tr>
+</tbody>
+</table>
+<p>Gemini連携は汎用的なツールなので、ユーザースコープ（<code>-s user</code>）での設定が便利。
+以下の各ツールのインストール例では、用途に応じてスコープを調整すること。</p>
 <h2><span id="gemini-mcp-tool">gemini-mcp-tool</span></h2>
 <p><a href="https://github.com/jamubc/gemini-mcp-tool" target="_blank" rel="noopener">gemini-mcp-tool</a>
 はGemini CLIのMCPサーバーラッパー。
@@ -325,7 +369,7 @@ Geminiの大規模トークンウィンドウを活用し、大規模ファイ�
 <p>前提として、Gemini
 CLIのインストールと認証を完了しておく必要がある。</p>
 <p>Claude Codeでのセットアップ:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude mcp add gemini-cli -- npx -y gemini-mcp-tool</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude mcp add gemini-cli -s user -- npx -y gemini-mcp-tool</span><br></pre></td></tr></table></figure>
 <p>または、設定ファイル（<code>~/.claude.json</code>
 など）に直接記述:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"mcpServers"</span>: &#123;</span><br><span class="line">    <span class="attr">"gemini-cli"</span>: &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"stdio"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"npx"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [</span><br><span class="line">        <span class="string">"-y"</span>,</span><br><span class="line">        <span class="string">"gemini-mcp-tool"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"env"</span>: &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -370,7 +414,7 @@ Gemini CLI入門：Claude CodeとGeminiの連携でAIコーディングを強化
 </table>
 <h3><span id="インストール">インストール</span></h3>
 <p>前提として、Gemini CLIの認証を完了しておく必要がある。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude mcp add -s project gemini-cli -- npx @choplin/mcp-gemini-cli --allow-npx</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude mcp add -s user gemini-cli -- npx @choplin/mcp-gemini-cli --allow-npx</span><br></pre></td></tr></table></figure>
 <h3><span id="ユースケース">ユースケース</span></h3>
 <ul>
 <li>「Geminiに最新のNext.js 15の新機能を検索してもらって」</li>
@@ -450,13 +494,68 @@ Gemini CLI入門：Claude CodeとGeminiの連携でAIコーディングを強化
 </tr>
 </tbody>
 </table>
+<h2><span id="gemini-mcp-server">gemini-mcp-server</span></h2>
+<p><a href="https://github.com/tuannvm/gemini-mcp-server" target="_blank" rel="noopener">gemini-mcp-server</a>
+はGemini CLIをラップした多機能なMCPサーバー。
+「ClaudeにGeminiの巨大コンテキストウィンドウのスーパーパワーを与える」というコンセプトで開発されている。</p>
+<h3><span id="特徴">特徴</span></h3>
+<ul>
+<li>Geminiの100万トークン超のコンテキストウィンドウを活用</li>
+<li>5つのツールによる多機能性</li>
+<li>VS Code、Cursorなど複数のIDE対応</li>
+</ul>
+<h3><span id="提供機能">提供機能</span></h3>
+<table>
+<thead>
+<tr class="header">
+<th>ツール名</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>gemini</td>
+<td>ファイルやコードベースをGeminiの大規模コンテキストで分析</td>
+</tr>
+<tr class="even">
+<td>web-search</td>
+<td>Google検索グラウンディング対応のWeb検索</td>
+</tr>
+<tr class="odd">
+<td>analyze-media</td>
+<td>画像、PDF、スクリーンショットの処理</td>
+</tr>
+<tr class="even">
+<td>shell</td>
+<td>シェルコマンドの生成・実行</td>
+</tr>
+<tr class="odd">
+<td>brainstorm</td>
+<td>構造化手法による創造的なアイデア出し</td>
+</tr>
+</tbody>
+</table>
+<h3><span id="インストール">インストール</span></h3>
+<p>前提として、Gemini
+CLIのインストールと認証を完了しておく必要がある。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g @google/gemini-cli</span><br></pre></td></tr></table></figure>
+<p>Claude Codeでのセットアップ:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude mcp add gemini-cli -s user -- npx -y @tuannvm/gemini-mcp-server</span><br></pre></td></tr></table></figure>
+<h3><span id="ユースケース">ユースケース</span></h3>
+<ul>
+<li>大規模なコードベースの分析</li>
+<li>Web検索を組み合わせた調査</li>
+<li>画像やPDFの分析</li>
+<li>アイデアのブレインストーミング</li>
+</ul>
 <h2><span id="どれを選ぶか">どれを選ぶか</span></h2>
 <table>
 <colgroup>
-<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 21%">
+<col style="width: 20%">
 <col style="width: 27%">
-<col style="width: 26%">
-<col style="width: 36%">
+<col style="width: 23%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -464,6 +563,7 @@ Gemini CLI入門：Claude CodeとGeminiの連携でAIコーディングを強化
 <th>gemini-mcp-tool</th>
 <th>mcp-gemini-cli</th>
 <th><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></th>
+<th>gemini-mcp-server</th>
 </tr>
 </thead>
 <tbody>
@@ -472,30 +572,35 @@ Gemini CLI入門：Claude CodeとGeminiの連携でAIコーディングを強化
 <td>◎</td>
 <td>◎</td>
 <td>○ API Key取得が必要</td>
+<td>◎</td>
 </tr>
 <tr class="even">
 <td>機能数</td>
 <td>○ 2機能+コマンド</td>
 <td>△ 3機能</td>
 <td>◎ 30+機能</td>
+<td>○ 5機能</td>
 </tr>
 <tr class="odd">
 <td>用途</td>
 <td>大規模ファイル分析、サンドボックス</td>
 <td>検索・対話・ファイル分析</td>
 <td>画像/動画生成、コード実行など多目的</td>
+<td>コードベース分析、Web検索、メディア分析</td>
 </tr>
 <tr class="even">
 <td>依存関係</td>
 <td>Gemini CLI</td>
 <td>Gemini CLI</td>
 <td>なし（API直接利用）</td>
+<td>Gemini CLI</td>
 </tr>
 <tr class="odd">
 <td>特徴</td>
 <td>大規模トークンウィンドウ活用</td>
 <td>シンプル</td>
 <td>多機能</td>
+<td>バランス型、IDE対応</td>
 </tr>
 </tbody>
 </table>
@@ -504,6 +609,8 @@ Gemini CLI入門：Claude CodeとGeminiの連携でAIコーディングを強化
 <li>シンプルに検索や対話を追加したい場合は
 <strong>mcp-gemini-cli</strong></li>
 <li>多機能な統合が必要な場合は <strong><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></strong></li>
+<li>バランスの良い機能とIDE対応が欲しい場合は
+<strong>gemini-mcp-server</strong></li>
 </ul>
 <h1><span id="参考">参考</span></h1>
 <ul>
@@ -513,6 +620,7 @@ Gemini CLI入門：Claude CodeとGeminiの連携でAIコーディングを強化
 Gemini CLI入門：Claude
 CodeとGeminiの連携でAIコーディングを強化する</a></li>
 <li><a href="https://github.com/RLabs-Inc/gemini-mcp" target="_blank" rel="noopener">RLabs-Inc/gemini-mcp</a></li>
+<li><a href="https://github.com/tuannvm/gemini-mcp-server" target="_blank" rel="noopener">gemini-mcp-server</a></li>
 <li><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a></li>
 </ul>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
@@ -526,7 +634,7 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Gemini-with-Claude-Code/" data-id="cmktpxr8i00fg18n1i7u4eljf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Gemini-with-Claude-Code/" data-id="cmktqmeeg019u18ma9c0qql8j" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

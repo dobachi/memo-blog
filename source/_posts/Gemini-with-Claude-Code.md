@@ -24,6 +24,19 @@ MCPサーバーを使うことで、Claude CodeのセッションからGeminiの
 1. **gemini-mcp-tool**: Gemini CLIラッパー（大規模ファイル分析向け）
 2. **mcp-gemini-cli**: シンプルなGemini CLIラッパー
 3. **@rlabs-inc/gemini-mcp**: 多機能なGemini統合サーバー
+4. **gemini-mcp-server**: 多機能なGemini CLIラッパー
+
+## MCPサーバーのスコープ設定
+
+Claude CodeでMCPサーバーを追加する際、`-s` オプションでスコープを指定できる。
+
+| スコープ | オプション | 設定ファイル | 用途 |
+|---------|-----------|-------------|------|
+| ユーザー | `-s user` | `~/.claude.json` | どのプロジェクトでも使いたい場合 |
+| プロジェクト | `-s project` | `.mcp.json`（リポジトリ内） | 特定プロジェクトのみで使う場合 |
+
+Gemini連携は汎用的なツールなので、ユーザースコープ（`-s user`）での設定が便利。
+以下の各ツールのインストール例では、用途に応じてスコープを調整すること。
 
 ## gemini-mcp-tool
 
@@ -52,7 +65,7 @@ Geminiの大規模トークンウィンドウを活用し、大規模ファイ�
 Claude Codeでのセットアップ:
 
 ```bash
-$ claude mcp add gemini-cli -- npx -y gemini-mcp-tool
+$ claude mcp add gemini-cli -s user -- npx -y gemini-mcp-tool
 ```
 
 または、設定ファイル（`~/.claude.json` など）に直接記述:
@@ -102,7 +115,7 @@ $ claude mcp add gemini-cli -- npx -y gemini-mcp-tool
 前提として、Gemini CLIの認証を完了しておく必要がある。
 
 ```bash
-$ claude mcp add -s project gemini-cli -- npx @choplin/mcp-gemini-cli --allow-npx
+$ claude mcp add -s user gemini-cli -- npx @choplin/mcp-gemini-cli --allow-npx
 ```
 
 ### ユースケース
@@ -153,19 +166,62 @@ $ npm install -g @rlabs-inc/gemini-mcp
 | GEMINI_OUTPUT_DIR | 生成ファイルの保存先（デフォルト: ./gemini-output） |
 | VERBOSE | 詳細ログの有効化 |
 
+## gemini-mcp-server
+
+[gemini-mcp-server] はGemini CLIをラップした多機能なMCPサーバー。
+「ClaudeにGeminiの巨大コンテキストウィンドウのスーパーパワーを与える」というコンセプトで開発されている。
+
+### 特徴
+
+- Geminiの100万トークン超のコンテキストウィンドウを活用
+- 5つのツールによる多機能性
+- VS Code、Cursorなど複数のIDE対応
+
+### 提供機能
+
+| ツール名 | 説明 |
+|---------|------|
+| gemini | ファイルやコードベースをGeminiの大規模コンテキストで分析 |
+| web-search | Google検索グラウンディング対応のWeb検索 |
+| analyze-media | 画像、PDF、スクリーンショットの処理 |
+| shell | シェルコマンドの生成・実行 |
+| brainstorm | 構造化手法による創造的なアイデア出し |
+
+### インストール
+
+前提として、Gemini CLIのインストールと認証を完了しておく必要がある。
+
+```bash
+$ npm install -g @google/gemini-cli
+```
+
+Claude Codeでのセットアップ:
+
+```bash
+$ claude mcp add gemini-cli -s user -- npx -y @tuannvm/gemini-mcp-server
+```
+
+### ユースケース
+
+- 大規模なコードベースの分析
+- Web検索を組み合わせた調査
+- 画像やPDFの分析
+- アイデアのブレインストーミング
+
 ## どれを選ぶか
 
-| 観点 | gemini-mcp-tool | mcp-gemini-cli | @rlabs-inc/gemini-mcp |
-|------|-----------------|----------------|----------------------|
-| 導入の手軽さ | ◎ | ◎ | ○ API Key取得が必要 |
-| 機能数 | ○ 2機能+コマンド | △ 3機能 | ◎ 30+機能 |
-| 用途 | 大規模ファイル分析、サンドボックス | 検索・対話・ファイル分析 | 画像/動画生成、コード実行など多目的 |
-| 依存関係 | Gemini CLI | Gemini CLI | なし（API直接利用） |
-| 特徴 | 大規模トークンウィンドウ活用 | シンプル | 多機能 |
+| 観点 | gemini-mcp-tool | mcp-gemini-cli | @rlabs-inc/gemini-mcp | gemini-mcp-server |
+|------|-----------------|----------------|----------------------|-------------------|
+| 導入の手軽さ | ◎ | ◎ | ○ API Key取得が必要 | ◎ |
+| 機能数 | ○ 2機能+コマンド | △ 3機能 | ◎ 30+機能 | ○ 5機能 |
+| 用途 | 大規模ファイル分析、サンドボックス | 検索・対話・ファイル分析 | 画像/動画生成、コード実行など多目的 | コードベース分析、Web検索、メディア分析 |
+| 依存関係 | Gemini CLI | Gemini CLI | なし（API直接利用） | Gemini CLI |
+| 特徴 | 大規模トークンウィンドウ活用 | シンプル | 多機能 | バランス型、IDE対応 |
 
 - 大規模コードベースの分析には **gemini-mcp-tool**
 - シンプルに検索や対話を追加したい場合は **mcp-gemini-cli**
 - 多機能な統合が必要な場合は **@rlabs-inc/gemini-mcp**
+- バランスの良い機能とIDE対応が欲しい場合は **gemini-mcp-server**
 
 # 参考
 
@@ -173,12 +229,14 @@ $ npm install -g @rlabs-inc/gemini-mcp
 * [mcp-gemini-cli]
 * [MCP Gemini CLI入門：Claude CodeとGeminiの連携でAIコーディングを強化する]
 * [RLabs-Inc/gemini-mcp]
+* [gemini-mcp-server]
 * [Google AI Studio]
 
 [gemini-mcp-tool]: https://github.com/jamubc/gemini-mcp-tool
 [mcp-gemini-cli]: https://github.com/choplin/mcp-gemini-cli
 [MCP Gemini CLI入門：Claude CodeとGeminiの連携でAIコーディングを強化する]: https://zenn.dev/choplin/articles/2025-06-28-mcp-gemini-cli-intro
 [RLabs-Inc/gemini-mcp]: https://github.com/RLabs-Inc/gemini-mcp
+[gemini-mcp-server]: https://github.com/tuannvm/gemini-mcp-server
 [Google AI Studio]: https://aistudio.google.com/
 
 

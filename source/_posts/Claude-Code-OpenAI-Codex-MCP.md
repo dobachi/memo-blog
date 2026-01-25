@@ -42,6 +42,27 @@ Claude Codeは、Anthropic社が提供するターミナルベースのコーデ
 Model Context Protocol（MCP）は、AIアシスタント間でツールやコンテキストを共有するための標準プロトコルである。
 MCPサーバーを介することで、Claude CodeからOpenAI Codexの機能を呼び出すことが可能になる。
 
+## MCPサーバーのスコープ設定
+
+Claude CodeでMCPサーバーを設定する際、スコープを選択できる。
+
+| スコープ | 設定ファイル | 用途 |
+|---------|-------------|------|
+| ユーザー | `~/.claude.json` | どのプロジェクトでも使いたい場合 |
+| プロジェクト | `.mcp.json`（リポジトリ内） | 特定プロジェクトのみで使う場合 |
+
+コマンドラインで追加する場合は `-s` オプションでスコープを指定する。
+
+```bash
+# ユーザースコープ（推奨）
+claude mcp add codex -s user -- npx -y codex-mcp-server
+
+# プロジェクトスコープ
+claude mcp add codex -s project -- npx -y codex-mcp-server
+```
+
+Codex連携は汎用的なツールなので、ユーザースコープでの設定が便利である。
+
 # 前提条件
 
 本記事の手順を実行するには、以下の環境が必要である。
@@ -108,7 +129,13 @@ codex "Hello, world"
 
 ## セットアップ手順
 
-Claude Codeの設定ファイル（`~/.claude.json`または`~/.config/claude/settings.json`）に以下を追加する。
+コマンドラインでセットアップする場合:
+
+```bash
+claude mcp add codex -s user -- npx -y codex-mcp-server
+```
+
+または、設定ファイル（`~/.claude.json`）に直接記述する場合:
 
 ```json
 {
@@ -160,6 +187,14 @@ Claude Code内でCodexを呼び出す例を示す。
 
 ### uvを使用する場合（推奨）
 
+コマンドラインでセットアップする場合:
+
+```bash
+claude mcp add openai-codex -s user -- uvx openai-codex-mcp
+```
+
+または、設定ファイル（`~/.claude.json`）に直接記述する場合:
+
 ```json
 {
   "mcpServers": {
@@ -179,6 +214,14 @@ Claude Code内でCodexを呼び出す例を示す。
 ```bash
 pip install openai-codex-mcp
 ```
+
+コマンドラインでセットアップする場合:
+
+```bash
+claude mcp add openai-codex -s user -- python -m openai_codex_mcp
+```
+
+または、設定ファイル（`~/.claude.json`）に直接記述する場合:
 
 ```json
 {
