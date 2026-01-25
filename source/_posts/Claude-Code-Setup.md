@@ -1,7 +1,7 @@
 ---
 
 title: Claude Code Setup
-date: 2025-01-25 00:00:00
+date: 2026-01-25 00:00:00
 categories:
   - Knowledge Management
   - AI

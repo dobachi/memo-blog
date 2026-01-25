@@ -1,7 +1,7 @@
 ---
 
 title: Gemini with Claude Code
-date: 2025-01-25 12:00:00
+date: 2026-01-25 12:00:00
 categories:
   - Knowledge Management
   - AI

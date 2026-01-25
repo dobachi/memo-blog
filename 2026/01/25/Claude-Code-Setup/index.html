@@ -3,20 +3,20 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     
-    <title>Gemini with Claude Code | memo-blog</title>
+    <title>Claude Code Setup | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="メモ  gemini-mcp-tool  特徴 提供機能 インストール ユースケース  mcp-gemini-cli  特徴 提供機能 インストール ユースケース  @rlabs-inc/gemini-mcp  特徴 主な機能 インストール 設定オプション  どれを選ぶか  参考   メモ Claude CodeからGeminiを利用する方法についてのメモ。 MCPサーバーを使うことで、Cl">
-<meta name="keywords" content="Gemini,Claude Code,AI,MCP">
+    <meta name="description" content="メモ  システム要件 ネイティブインストール（推奨）  既存のnpmインストールからの移行  npmインストール（非推奨） インストール後の確認  PATHの問題  認証  個人利用の場合 チーム・組織での利用  アンインストール  ネイティブインストールの場合 npmインストールの場合 設定ファイルのクリーンアップ（オプション）   参考   メモ Claude CodeのCLI版をセット">
+<meta name="keywords" content="Claude Code,AI,CLI">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Gemini with Claude Code">
-<meta property="og:url" content="https://dobachi.github.io/memo-blog/2025/01/25/Gemini-with-Claude-Code/index.html">
+<meta property="og:title" content="Claude Code Setup">
+<meta property="og:url" content="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-Setup/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="メモ  gemini-mcp-tool  特徴 提供機能 インストール ユースケース  mcp-gemini-cli  特徴 提供機能 インストール ユースケース  @rlabs-inc/gemini-mcp  特徴 主な機能 インストール 設定オプション  どれを選ぶか  参考   メモ Claude CodeからGeminiを利用する方法についてのメモ。 MCPサーバーを使うことで、Cl">
+<meta property="og:description" content="メモ  システム要件 ネイティブインストール（推奨）  既存のnpmインストールからの移行  npmインストール（非推奨） インストール後の確認  PATHの問題  認証  個人利用の場合 チーム・組織での利用  アンインストール  ネイティブインストールの場合 npmインストールの場合 設定ファイルのクリーンアップ（オプション）   参考   メモ Claude CodeのCLI版をセット">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2026-01-25T03:08:47.142Z">
+<meta property="og:updated_time" content="2026-01-25T03:15:09.744Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gemini with Claude Code">
-<meta name="twitter:description" content="メモ  gemini-mcp-tool  特徴 提供機能 インストール ユースケース  mcp-gemini-cli  特徴 提供機能 インストール ユースケース  @rlabs-inc/gemini-mcp  特徴 主な機能 インストール 設定オプション  どれを選ぶか  参考   メモ Claude CodeからGeminiを利用する方法についてのメモ。 MCPサーバーを使うことで、Cl">
+<meta name="twitter:title" content="Claude Code Setup">
+<meta name="twitter:description" content="メモ  システム要件 ネイティブインストール（推奨）  既存のnpmインストールからの移行  npmインストール（非推奨） インストール後の確認  PATHの問題  認証  個人利用の場合 チーム・組織での利用  アンインストール  ネイティブインストールの場合 npmインストールの場合 設定ファイルのクリーンアップ（オプション）   参考   メモ Claude CodeのCLI版をセット">
     
 
     
@@ -204,7 +204,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Gemini-with-Claude-Code" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Claude-Code-Setup" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -212,7 +212,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Gemini with Claude Code
+            Claude Code Setup
         </h1>
     
 
@@ -221,8 +221,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2025/01/25/Gemini-with-Claude-Code/">
-            <time datetime="2025-01-25T03:00:00.000Z" itemprop="datePublished">2025-01-25</time>
+        <a href="/memo-blog/2026/01/25/Claude-Code-Setup/">
+            <time datetime="2026-01-24T15:00:00.000Z" itemprop="datePublished">2026-01-25</time>
         </a>
     </div>
 
@@ -236,7 +236,7 @@
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/AI/">AI</a>, <a class="tag-link" href="/memo-blog/tags/Claude-Code/">Claude Code</a>, <a class="tag-link" href="/memo-blog/tags/Gemini/">Gemini</a>, <a class="tag-link" href="/memo-blog/tags/MCP/">MCP</a>
+        <a class="tag-link" href="/memo-blog/tags/AI/">AI</a>, <a class="tag-link" href="/memo-blog/tags/CLI/">CLI</a>, <a class="tag-link" href="/memo-blog/tags/Claude-Code/">Claude Code</a>
     </div>
 
                     </div>
@@ -251,270 +251,106 @@
 	<ul>
 <li><a href="#メモ" id="toc-メモ">メモ</a>
 <ul>
-<li><a href="#gemini-mcp-tool" id="toc-gemini-mcp-tool">gemini-mcp-tool</a>
+<li><a href="#システム要件" id="toc-システム要件">システム要件</a></li>
+<li><a href="#ネイティブインストール推奨" id="toc-ネイティブインストール推奨">ネイティブインストール（推奨）</a>
 <ul>
-<li><a href="#特徴" id="toc-特徴">特徴</a></li>
-<li><a href="#提供機能" id="toc-提供機能">提供機能</a></li>
-<li><a href="#インストール" id="toc-インストール">インストール</a></li>
-<li><a href="#ユースケース" id="toc-ユースケース">ユースケース</a></li>
+<li><a href="#既存のnpmインストールからの移行" id="toc-既存のnpmインストールからの移行">既存のnpmインストールからの移行</a></li>
 </ul></li>
-<li><a href="#mcp-gemini-cli" id="toc-mcp-gemini-cli">mcp-gemini-cli</a>
+<li><a href="#npmインストール非推奨" id="toc-npmインストール非推奨">npmインストール（非推奨）</a></li>
+<li><a href="#インストール後の確認" id="toc-インストール後の確認">インストール後の確認</a>
 <ul>
-<li><a href="#特徴-1" id="toc-特徴-1">特徴</a></li>
-<li><a href="#提供機能-1" id="toc-提供機能-1">提供機能</a></li>
-<li><a href="#インストール-1" id="toc-インストール-1">インストール</a></li>
-<li><a href="#ユースケース-1" id="toc-ユースケース-1">ユースケース</a></li>
+<li><a href="#pathの問題" id="toc-pathの問題">PATHの問題</a></li>
 </ul></li>
-<li><a href="#rlabs-incgemini-mcp" id="toc-rlabs-incgemini-mcp"><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></a>
+<li><a href="#認証" id="toc-認証">認証</a>
 <ul>
-<li><a href="#特徴-2" id="toc-特徴-2">特徴</a></li>
-<li><a href="#主な機能" id="toc-主な機能">主な機能</a></li>
-<li><a href="#インストール-2" id="toc-インストール-2">インストール</a></li>
-<li><a href="#設定オプション" id="toc-設定オプション">設定オプション</a></li>
+<li><a href="#個人利用の場合" id="toc-個人利用の場合">個人利用の場合</a></li>
+<li><a href="#チーム組織での利用" id="toc-チーム組織での利用">チーム・組織での利用</a></li>
 </ul></li>
-<li><a href="#どれを選ぶか" id="toc-どれを選ぶか">どれを選ぶか</a></li>
+<li><a href="#アンインストール" id="toc-アンインストール">アンインストール</a>
+<ul>
+<li><a href="#ネイティブインストールの場合" id="toc-ネイティブインストールの場合">ネイティブインストールの場合</a></li>
+<li><a href="#npmインストールの場合" id="toc-npmインストールの場合">npmインストールの場合</a></li>
+<li><a href="#設定ファイルのクリーンアップオプション" id="toc-設定ファイルのクリーンアップオプション">設定ファイルのクリーンアップ（オプション）</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#参考" id="toc-参考">参考</a></li>
 </ul>
 </div>
 <h1><span id="メモ">メモ</span></h1>
-<p>Claude CodeからGeminiを利用する方法についてのメモ。
-MCPサーバーを使うことで、Claude
-CodeのセッションからGeminiの機能を呼び出すことができる。</p>
-<p>主な選択肢として以下がある。</p>
+<p>Claude CodeのCLI版をセットアップするメモ。
+以前はnpmでインストールしていたが、ネイティブインストールに切り替えた。</p>
+<h2><span id="システム要件">システム要件</span></h2>
+<p><a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Set up Claude
+Code</a> によると、以下の要件がある。</p>
+<ul>
+<li><strong>OS</strong>: macOS 13.0+、Ubuntu 20.04+/Debian 10+、Windows
+10+ (WSL 1、WSL 2、またはGit for Windows)</li>
+<li><strong>ハードウェア</strong>: 4 GB以上のRAM</li>
+<li><strong>ネットワーク</strong>: インターネット接続が必要</li>
+<li><strong>シェル</strong>: BashまたはZshが推奨</li>
+</ul>
+<p>なお、ネイティブインストールの場合はNode.jsは不要。npmインストール（非推奨）の場合のみNode.js
+18以上が必要。</p>
+<h2><span id="ネイティブインストール推奨">ネイティブインストール（推奨）</span></h2>
+<p>現在はネイティブインストールが推奨されている。
+Ubuntu/Linux/WSLの場合、以下のコマンドでインストールする。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -fsSL https://claude.ai/install.sh | bash</span><br></pre></td></tr></table></figure>
+<p>ネイティブインストールの場合、バックグラウンドで自動更新されるため、常に最新バージョンが利用可能。</p>
+<h3><span id="既存のnpmインストールからの移行">既存のnpmインストールからの移行</span></h3>
+<p>既存のnpmインストールからネイティブインストールへ移行するには、以下のコマンドを実行する。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude install</span><br></pre></td></tr></table></figure>
+<h2><span id="npmインストール非推奨">npmインストール（非推奨）</span></h2>
+<p>npmインストールは非推奨となっている。
+可能な限りネイティブインストールを使用すること。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
+<p>注意: <code>sudo npm install -g</code>
+は使用しないこと。パーミッションの問題やセキュリティリスクにつながる可能性がある。</p>
+<h2><span id="インストール後の確認">インストール後の確認</span></h2>
+<p>インストール後、以下のコマンドでインストールの種類とバージョンを確認できる。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude doctor</span><br></pre></td></tr></table></figure>
+<h3><span id="pathの問題">PATHの問題</span></h3>
+<p><code>command not found: claude</code>
+というエラーが出る場合は、PATHに追加する。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">'export PATH="$HOME/.claude/bin:$HOME/.local/bin:$PATH"'</span> &gt;&gt; ~/.bashrc</span><br><span class="line">$ <span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+<h2><span id="認証">認証</span></h2>
+<h3><span id="個人利用の場合">個人利用の場合</span></h3>
 <ol type="1">
-<li><strong>gemini-mcp-tool</strong>: Gemini
-CLIラッパー（大規模ファイル分析向け）</li>
-<li><strong>mcp-gemini-cli</strong>: シンプルなGemini CLIラッパー</li>
-<li><strong><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></strong>:
-多機能なGemini統合サーバー</li>
+<li><strong>Claude ProまたはMaxプラン（推奨）</strong>: <a href="https://claude.ai/pricing" target="_blank" rel="noopener">Claude's Pro or Max plan</a>
+でサブスクライブし、Claude.aiアカウントでログイン</li>
+<li><strong>Claude Console</strong>: <a href="https://console.anthropic.com" target="_blank" rel="noopener">Claude Console</a>
+からOAuthプロセスを完了。Anthropic
+Consoleでのアクティブな請求が必要</li>
 </ol>
-<h2><span id="gemini-mcp-tool">gemini-mcp-tool</span></h2>
-<p><a href="https://github.com/jamubc/gemini-mcp-tool" target="_blank" rel="noopener">gemini-mcp-tool</a>
-はGemini CLIのMCPサーバーラッパー。
-Geminiの大規模トークンウィンドウを活用し、大規模ファイル分析やコードベース理解に適している。</p>
-<h3><span id="特徴">特徴</span></h3>
-<ul>
-<li>Gemini CLIの大規模トークンウィンドウを活用</li>
-<li>サンドボックスでのコード実行に対応</li>
-<li><span class="citation" data-cites="構文によるファイル/ディレクトリ参照">@構文によるファイル/ディレクトリ参照</span></li>
-</ul>
-<h3><span id="提供機能">提供機能</span></h3>
-<table>
-<thead>
-<tr class="header">
-<th>ツール名</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ask-gemini</td>
-<td>ファイル解析や一般的な質問への回答</td>
-</tr>
-<tr class="even">
-<td>sandbox-test</td>
-<td>Geminiのサンドボックスでコード/コマンドを安全に実行</td>
-</tr>
-</tbody>
-</table>
-<p>スラッシュコマンドとして
-<code>/analyze</code>、<code>/sandbox</code>、<code>/help</code>、<code>/ping</code>
-も提供。</p>
-<h3><span id="インストール">インストール</span></h3>
-<p>前提として、Gemini
-CLIのインストールと認証を完了しておく必要がある。</p>
-<p>Claude Codeでのセットアップ:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude mcp add gemini-cli -- npx -y gemini-mcp-tool</span><br></pre></td></tr></table></figure>
-<p>または、設定ファイル（<code>~/.claude.json</code>
-など）に直接記述:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"mcpServers"</span>: &#123;</span><br><span class="line">    <span class="attr">"gemini-cli"</span>: &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"stdio"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"npx"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [</span><br><span class="line">        <span class="string">"-y"</span>,</span><br><span class="line">        <span class="string">"gemini-mcp-tool"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"env"</span>: &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3><span id="ユースケース">ユースケース</span></h3>
-<ul>
-<li>大規模なコードベースの分析</li>
-<li><code>@largefile.js</code> のような構文でファイルを指定して解析</li>
-<li>サンドボックス環境でのコードテスト</li>
-</ul>
-<h2><span id="mcp-gemini-cli">mcp-gemini-cli</span></h2>
-<p><a href="https://github.com/choplin/mcp-gemini-cli" target="_blank" rel="noopener">mcp-gemini-cli</a>
-はGemini CLIのシンプルなMCPサーバーラッパー。 <a href="https://zenn.dev/choplin/articles/2025-06-28-mcp-gemini-cli-intro" target="_blank" rel="noopener">MCP
-Gemini CLI入門：Claude CodeとGeminiの連携でAIコーディングを強化する</a>
-に詳しい解説がある。</p>
-<h3><span id="特徴">特徴</span></h3>
-<ul>
-<li>シンプルな設計で3つの機能を提供</li>
-<li>Gemini CLIの認証を利用</li>
-</ul>
-<h3><span id="提供機能">提供機能</span></h3>
-<table>
-<thead>
-<tr class="header">
-<th>ツール名</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>googleSearch</td>
-<td>Gemini経由でGoogle検索を実行</td>
-</tr>
-<tr class="even">
-<td>chat</td>
-<td>Geminiとの直接会話</td>
-</tr>
-<tr class="odd">
-<td>analyzeFile</td>
-<td>画像、PDF、テキストファイルの分析</td>
-</tr>
-</tbody>
-</table>
-<h3><span id="インストール">インストール</span></h3>
-<p>前提として、Gemini CLIの認証を完了しておく必要がある。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude mcp add -s project gemini-cli -- npx @choplin/mcp-gemini-cli --allow-npx</span><br></pre></td></tr></table></figure>
-<h3><span id="ユースケース">ユースケース</span></h3>
-<ul>
-<li>「Geminiに最新のNext.js 15の新機能を検索してもらって」</li>
-<li>「Geminiにこのエラーメッセージの解決方法を聞いて」</li>
-</ul>
-<h2><span id="rlabs-incgemini-mcp"><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></span></h2>
-<p><a href="https://github.com/RLabs-Inc/gemini-mcp" target="_blank" rel="noopener">RLabs-Inc/gemini-mcp</a>
-はGemini 3モデルとの統合を提供する多機能なMCPサーバー。
-30以上のツールを提供し、画像生成、動画生成、コード実行など幅広い機能が利用可能。</p>
-<h3><span id="特徴">特徴</span></h3>
-<ul>
-<li>30以上のツールを提供</li>
-<li>Gemini API Keyを使用（無料で取得可能）</li>
-<li>画像生成（最大4K）、動画生成（Veo 2.0）、TTSなど</li>
-</ul>
-<h3><span id="主な機能">主な機能</span></h3>
-<table>
-<thead>
-<tr class="header">
-<th>カテゴリ</th>
-<th>機能</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>コンテンツ生成</td>
-<td>画像生成、動画生成、TTS（30種類の音声）</td>
-</tr>
-<tr class="even">
-<td>Web統合</td>
-<td>リアルタイム検索、YouTube動画分析</td>
-</tr>
-<tr class="odd">
-<td>ドキュメント処理</td>
-<td>PDF/DOCX分析、テーブル抽出、要約</td>
-</tr>
-<tr class="even">
-<td>コード実行</td>
-<td>Python実行（numpy, pandas, matplotlib対応）</td>
-</tr>
-<tr class="odd">
-<td>AI推論</td>
-<td>Geminiへの直接クエリ、思考レベル調整</td>
-</tr>
-</tbody>
-</table>
-<h3><span id="インストール">インストール</span></h3>
-<p><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a>
-からGemini API Keyを取得し、以下のコマンドでインストール。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude mcp add gemini -s user -- env GEMINI_API_KEY=YOUR_KEY npx -y @rlabs-inc/gemini-mcp</span><br></pre></td></tr></table></figure>
-<p>グローバルインストールの場合:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g @rlabs-inc/gemini-mcp</span><br></pre></td></tr></table></figure>
-<h3><span id="設定オプション">設定オプション</span></h3>
-<table>
-<colgroup>
-<col style="width: 60%">
-<col style="width: 40%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>環境変数</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>GEMINI_API_KEY</td>
-<td>必須。Google AI Studioで取得</td>
-</tr>
-<tr class="even">
-<td>GEMINI_OUTPUT_DIR</td>
-<td>生成ファイルの保存先（デフォルト: ./gemini-output）</td>
-</tr>
-<tr class="odd">
-<td>VERBOSE</td>
-<td>詳細ログの有効化</td>
-</tr>
-</tbody>
-</table>
-<h2><span id="どれを選ぶか">どれを選ぶか</span></h2>
-<table>
-<colgroup>
-<col style="width: 9%">
-<col style="width: 27%">
-<col style="width: 26%">
-<col style="width: 36%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>観点</th>
-<th>gemini-mcp-tool</th>
-<th>mcp-gemini-cli</th>
-<th><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>導入の手軽さ</td>
-<td>◎</td>
-<td>◎</td>
-<td>○ API Key取得が必要</td>
-</tr>
-<tr class="even">
-<td>機能数</td>
-<td>○ 2機能+コマンド</td>
-<td>△ 3機能</td>
-<td>◎ 30+機能</td>
-</tr>
-<tr class="odd">
-<td>用途</td>
-<td>大規模ファイル分析、サンドボックス</td>
-<td>検索・対話・ファイル分析</td>
-<td>画像/動画生成、コード実行など多目的</td>
-</tr>
-<tr class="even">
-<td>依存関係</td>
-<td>Gemini CLI</td>
-<td>Gemini CLI</td>
-<td>なし（API直接利用）</td>
-</tr>
-<tr class="odd">
-<td>特徴</td>
-<td>大規模トークンウィンドウ活用</td>
-<td>シンプル</td>
-<td>多機能</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>大規模コードベースの分析には <strong>gemini-mcp-tool</strong></li>
-<li>シンプルに検索や対話を追加したい場合は
-<strong>mcp-gemini-cli</strong></li>
-<li>多機能な統合が必要な場合は <strong><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></strong></li>
-</ul>
+<h3><span id="チーム組織での利用">チーム・組織での利用</span></h3>
+<ol type="1">
+<li><strong>Claude for Teams または Enterprise（推奨）</strong>:
+一元化された請求とチーム管理</li>
+<li><strong>Claude Console with team billing</strong>:
+共有組織を設定</li>
+<li><strong>クラウドプロバイダ</strong>: Amazon Bedrock、Google Vertex
+AI、Microsoft Foundryを使用</li>
+</ol>
+<h2><span id="アンインストール">アンインストール</span></h2>
+<h3><span id="ネイティブインストールの場合">ネイティブインストールの場合</span></h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rm -f ~/.<span class="built_in">local</span>/bin/claude</span><br><span class="line">$ rm -rf ~/.<span class="built_in">local</span>/share/claude</span><br></pre></td></tr></table></figure>
+<h3><span id="npmインストールの場合">npmインストールの場合</span></h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm uninstall -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
+<h3><span id="設定ファイルのクリーンアップオプション">設定ファイルのクリーンアップ（オプション）</span></h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rm -rf ~/.claude</span><br><span class="line">$ rm ~/.claude.json</span><br></pre></td></tr></table></figure>
+<p>注意:
+これにより全ての設定、許可されたツール、MCPサーバー設定、セッション履歴が削除される。</p>
 <h1><span id="参考">参考</span></h1>
 <ul>
-<li><a href="https://github.com/jamubc/gemini-mcp-tool" target="_blank" rel="noopener">gemini-mcp-tool</a></li>
-<li><a href="https://github.com/choplin/mcp-gemini-cli" target="_blank" rel="noopener">mcp-gemini-cli</a></li>
-<li><a href="https://zenn.dev/choplin/articles/2025-06-28-mcp-gemini-cli-intro" target="_blank" rel="noopener">MCP
-Gemini CLI入門：Claude
-CodeとGeminiの連携でAIコーディングを強化する</a></li>
-<li><a href="https://github.com/RLabs-Inc/gemini-mcp" target="_blank" rel="noopener">RLabs-Inc/gemini-mcp</a></li>
-<li><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a></li>
+<li><a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Set up Claude
+Code</a></li>
+<li><a href="https://claude.ai/pricing" target="_blank" rel="noopener">Claude's Pro or Max
+plan</a></li>
+<li><a href="https://console.anthropic.com" target="_blank" rel="noopener">Claude Console</a></li>
+<li><span class="citation" data-cites="anthropic-ai/claude-code">[@anthropic-ai/claude-code -
+npm]</span></li>
 </ul>
+<p><span class="citation" data-cites="anthropic-ai/claude-code">[@anthropic-ai/claude-code -
+npm]</span>: https://www.npmjs.com/package/<span class="citation" data-cites="anthropic-ai/claude-code">@anthropic-ai/claude-code</span></p>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -526,7 +362,7 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/01/25/Gemini-with-Claude-Code/" data-id="cmkt5thb6004u17o1ik2vketw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-Setup/" data-id="cmkt61orz002l18p8gnles5zg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -601,19 +437,19 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
         
 <nav id="article-nav">
     
-        <a href="/memo-blog/2025/01/27/Standards-of-Data-Governance/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/memo-blog/2026/01/25/Gemini-with-Claude-Code/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">新しい記事</strong>
             <div class="article-nav-title">
                 
-                    Standards of Data Governance
+                    Gemini with Claude Code
                 
             </div>
         </a>
     
     
-        <a href="/memo-blog/2025/01/25/Claude-Code-Setup/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/memo-blog/2026/01/09/Claude-Code-with-Claude-Code-Web/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">古い記事</strong>
-            <div class="article-nav-title">Claude Code Setup</div>
+            <div class="article-nav-title">Claude Code with Claude Code Web</div>
         </a>
     
 </nav>
@@ -636,6 +472,24 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
         <h3 class="widget-title">最近の記事</h3>
         <div class="widget">
             <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/">AI</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/01/25/Gemini-with-Claude-Code/" class="title">Gemini with Claude Code</a></p>
+                            <p class="item-date"><time datetime="2026-01-25T03:00:00.000Z" itemprop="datePublished">2026-01-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/">AI</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/01/25/Claude-Code-Setup/" class="title">Claude Code Setup</a></p>
+                            <p class="item-date"><time datetime="2026-01-24T15:00:00.000Z" itemprop="datePublished">2026-01-25</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -664,24 +518,6 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/ヘルスケア/">ヘルスケア</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/ヘルスケア/政策分析/">政策分析</a></p>
-                            <p class="item-title"><a href="/memo-blog/2025/08/18/EHDS-European-Health-Data-Space-Analysis-Report/" class="title">欧州健康データ空間（EHDS）分析レポートをGitHub Pagesで公開</a></p>
-                            <p class="item-date"><time datetime="2025-08-18T09:55:02.000Z" itemprop="datePublished">2025-08-18</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/デジタル政策/">デジタル政策</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/デジタル政策/規制分析/">規制分析</a></p>
-                            <p class="item-title"><a href="/memo-blog/2025/08/04/EU-Regulatory-Approach-vs-Japan-Strategic-Response/" class="title">欧州の規制駆動アプローチと日本の戦略的対応：デジタル規制に関する基礎調査</a></p>
-                            <p class="item-date"><time datetime="2025-08-04T05:54:32.000Z" itemprop="datePublished">2025-08-04</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -700,7 +536,7 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2026/01/">1月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/12/">12月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/08/">8月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/07/">7月 2025</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/06/">6月 2025</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/05/">5月 2025</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/03/">3月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/02/">2月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2026/01/">1月 2026</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/12/">12月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/08/">8月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/07/">7月 2025</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/06/">6月 2025</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/05/">5月 2025</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/03/">3月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/02/">2月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -777,20 +613,5 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

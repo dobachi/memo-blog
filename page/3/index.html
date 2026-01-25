@@ -203,6 +203,669 @@
 
             
             <section id="main">
+    <article id="post-sync_github_repos" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2025/05/18/sync_github_repos/">GitHub Actionsを使ったレポジトリの同期（一方向）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2025/05/18/sync_github_repos/">
+            <time datetime="2025-05-17T16:17:00.000Z" itemprop="datePublished">2025-05-18</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Technical/">Technical</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/Git/">Git</a>, <a class="tag-link" href="/memo-blog/tags/GitHub/">GitHub</a>, <a class="tag-link" href="/memo-blog/tags/GitHub-Actions/">GitHub Actions</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#動機" id="toc-動機">動機</a></li>
+<li><a href="#手順-同期先リポジトリの初期設定と同期プロセス" id="toc-手順-同期先リポジトリの初期設定と同期プロセス">手順:
+同期先リポジトリの初期設定と同期プロセス</a>
+<ul>
+<li><a href="#同期先リポジトリを新規作成" id="toc-同期先リポジトリを新規作成">1.
+同期先リポジトリを新規作成</a></li>
+<li><a href="#ローカル環境での初期設定" id="toc-ローカル環境での初期設定">2. ローカル環境での初期設定</a></li>
+<li><a href="#同期先リポジトリをクローン" id="toc-同期先リポジトリをクローン">(1)
+同期先リポジトリをクローン</a></li>
+<li><a href="#masterブランチを作成" id="toc-masterブランチを作成">(2)
+masterブランチを作成</a></li>
+<li><a href="#同期元リポジトリをリモートとして追加" id="toc-同期元リポジトリをリモートとして追加">(3)
+同期元リポジトリをリモートとして追加</a></li>
+<li><a href="#同期元リポジトリをpull" id="toc-同期元リポジトリをpull">(4) 同期元リポジトリをpull</a></li>
+<li><a href="#同期先リポジトリにpush" id="toc-同期先リポジトリにpush">(5) 同期先リポジトリにpush</a></li>
+<li><a href="#sshキーの生成と登録" id="toc-sshキーの生成と登録">3.
+SSHキーの生成と登録</a></li>
+<li><a href="#sshキーの生成" id="toc-sshキーの生成">(1)
+SSHキーの生成</a></li>
+<li><a href="#公開鍵をdeploy-keysに登録" id="toc-公開鍵をdeploy-keysに登録">(2) 公開鍵を「Deploy
+Keys」に登録</a></li>
+<li><a href="#秘密鍵をsecretsに登録" id="toc-秘密鍵をsecretsに登録">(3)
+秘密鍵をSecretsに登録</a></li>
+<li><a href="#github-actionsを設定" id="toc-github-actionsを設定">4.
+GitHub Actionsを設定</a></li>
+<li><a href="#github-actionsワークフローの作成" id="toc-github-actionsワークフローの作成">(1) GitHub
+Actionsワークフローの作成</a></li>
+<li><a href="#github-actionsの実行確認" id="toc-github-actionsの実行確認">5. GitHub Actionsの実行確認</a></li>
+<li><a href="#同期先のgithub-actionsの無効化" id="toc-同期先のgithub-actionsの無効化">6. 同期先のGitHub
+Actionsの無効化</a></li>
+<li><a href="#補足-トラブルシューティング" id="toc-補足-トラブルシューティング">補足:
+トラブルシューティング</a></li>
+<li><a href="#エラー-permission-denied-publickey" id="toc-エラー-permission-denied-publickey">エラー:
+<code>Permission denied (publickey)</code></a></li>
+<li><a href="#エラー-remote-unpack-failed-index-pack-failed" id="toc-エラー-remote-unpack-failed-index-pack-failed">エラー:
+<code>remote unpack failed: index-pack failed</code></a></li>
+<li><a href="#エラー-gitgithub.com-permission-denied-publickey" id="toc-エラー-gitgithub.com-permission-denied-publickey">エラー:
+<code>git@github.com: Permission denied (publickey)</code></a></li>
+<li><a href="#まとめ" id="toc-まとめ">まとめ</a></li>
+</ul></li>
+</ul>
+</div>
+<h2><span id="動機">動機</span></h2>
+<p>これまで組織名を設けずにGitHubを使っていた。しかし、Notion
+AIのConnect機能を利用して、GitHub上のレポジトリ群を読み取らせようとしたところ、組織下のレポジトリしか参照できないようだった。そこで、新たに組織を作成し、元のレポジトリから新しく作成した組織下のレポジトリに同期するようにした。</p>
+<p>なお、この手順は、同期先のレポジトリがもともと存在しないことを想定して書いてある。</p>
+<h2><span id="手順同期先リポジトリの初期設定と同期プロセス">手順:
+同期先リポジトリの初期設定と同期プロセス</span></h2>
+<h3><span id="1-同期先リポジトリを新規作成">1. 同期先リポジトリを新規作成</span></h3>
+<p>GitHub上で同期先リポジトリを作成する（例:
+<code>組織名/リポジトリ名</code>）。</p>
+<ul>
+<li><strong>リポジトリの設定</strong>:
+<ul>
+<li>空のリポジトリとして作成（<code>README.md</code> や
+<code>.gitignore</code> は追加しない）。</li>
+<li>必要に応じて「Write Access」のあるユーザーやDeploy Keyを設定。</li>
+</ul></li>
+</ul>
+<h3><span id="2-ローカル環境での初期設定">2. ローカル環境での初期設定</span></h3>
+<p>ローカル環境を使って、同期元リポジトリから同期先リポジトリへ初期データを移行する。</p>
+<h3><span id="1-同期先リポジトリをクローン">(1) 同期先リポジトリをクローン</span></h3>
+<p>ローカル環境に同期先リポジトリをクローンする。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:組織名/リポジトリ名.git</span><br><span class="line"><span class="built_in">cd</span> リポジトリ名</span><br></pre></td></tr></table></figure>
+<h3><span id="2-masterブランチを作成">(2) masterブランチを作成</span></h3>
+<p>新規作成したリポジトリにはブランチが存在しないため、<code>master</code>
+ブランチを作成する。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b master</span><br></pre></td></tr></table></figure>
+<h3><span id="3同期元リポジトリをリモートとして追加">(3)
+同期元リポジトリをリモートとして追加</span></h3>
+<p>同期元リポジトリ（例:
+<code>ユーザー名/リポジトリ名</code>）をリモートとして追加する。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add <span class="built_in">source</span> git@github.com:ユーザー名/リポジトリ名.git</span><br></pre></td></tr></table></figure>
+<h3><span id="4-同期元リポジトリをpull">(4) 同期元リポジトリをpull</span></h3>
+<p>同期元リポジトリからデータを取得する。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull <span class="built_in">source</span> master</span><br></pre></td></tr></table></figure>
+<h3><span id="5-同期先リポジトリにpush">(5) 同期先リポジトリにpush</span></h3>
+<p>同期先リポジトリにデータをプッシュする。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<h3><span id="3-sshキーの生成と登録">3. SSHキーの生成と登録</span></h3>
+<p>GitHub
+Actionsが同期先リポジトリにアクセスできるようにするため、SSHキーを設定する。</p>
+<h3><span id="1-sshキーの生成">(1) SSHキーの生成</span></h3>
+<p>以下のコマンドを実行し、新しいSSHキーを生成する（既存のSSHキーを使用する場合はこの手順を省略可能）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">"your-email@example.com"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>入力プロンプト</strong>:
+<ul>
+<li>「Enter file in which to save the key」では、デフォルトの
+<code>~/.ssh/id_ed25519</code>
+を使用する場合、そのままEnterを押す。</li>
+<li>「Enter
+passphrase」では、必要に応じてパスフレーズを設定する（空でも可）。</li>
+</ul></li>
+<li><strong>生成されるファイル</strong>:
+<ul>
+<li>秘密鍵: <code>~/.ssh/id_ed25519</code></li>
+<li>公開鍵: <code>~/.ssh/id_ed25519.pub</code></li>
+</ul></li>
+</ul>
+<h3><span id="2-公開鍵をdeploykeysに登録">(2) 公開鍵を「Deploy
+Keys」に登録</span></h3>
+<p>生成された公開鍵（<code>id_ed25519.pub</code>）を同期先リポジトリの「Deploy
+Keys」に追加する。</p>
+<ul>
+<li><strong>手順</strong>:
+<ul>
+<li>GitHubで同期先リポジトリを開く。</li>
+<li><strong>「Settings」 &gt; 「Deploy keys」</strong> に移動する。</li>
+<li><strong>「Add deploy key」</strong> をクリックする。</li>
+<li>以下の情報を入力する:
+<ul>
+<li><strong>Title</strong>: 任意の名前（例:
+<code>GitHub Actions Key</code>）。</li>
+<li><strong>Key</strong>: <code>id_ed25519.pub</code>
+の内容をコピーして貼り付ける。</li>
+<li><strong>Allow write access</strong>:
+チェックを入れる（書き込み権限を付与するため）。</li>
+</ul></li>
+<li><strong>「Add key」</strong> をクリックして登録を完了する。</li>
+</ul></li>
+</ul>
+<h3><span id="3-秘密鍵をsecretsに登録">(3) 秘密鍵をSecretsに登録</span></h3>
+<p>生成された秘密鍵（<code>id_ed25519</code>）を同期元リポジトリのSecretsに登録する。</p>
+<ul>
+<li><strong>手順</strong>:
+<ul>
+<li>GitHubで同期元リポジトリを開く。</li>
+<li><strong>「Settings」 &gt; 「Secrets and variables」 &gt;
+「Actions」</strong> に移動する。</li>
+<li><strong>「New repository secret」</strong> をクリックする。</li>
+<li>以下の情報を入力する:
+<ul>
+<li><strong>Name</strong>: <code>SYNC_SSH_KEY</code></li>
+<li><strong>Value</strong>: <code>id_ed25519</code>
+の内容をコピーして貼り付ける。</li>
+</ul></li>
+<li><strong>「Add secret」</strong> をクリックして登録を完了する。</li>
+</ul></li>
+</ul>
+<h3><span id="4-github-actionsを設定">4. GitHub Actionsを設定</span></h3>
+<p>リポジトリの初期化が完了したら、GitHub
+Actionsを設定して自動同期を有効にする。</p>
+<h3><span id="1-githubactionsワークフローの作成">(1) GitHub
+Actionsワークフローの作成</span></h3>
+<p>以下のワークフローを <code>.github/workflows/sync.yml</code>
+に保存する。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Sync</span> <span class="string">Repository</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line"><span class="attr">  push:</span></span><br><span class="line"><span class="attr">    branches:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line"><span class="attr">  sync:</span></span><br><span class="line"><span class="attr">    runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    </span><br><span class="line"><span class="attr">    steps:</span></span><br><span class="line">      <span class="comment"># ソースリポジトリをチェックアウト</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">Checkout</span> <span class="string">source</span> <span class="string">repository</span></span><br><span class="line"><span class="attr">        uses:</span> <span class="string">actions/checkout@v3</span></span><br><span class="line"><span class="attr">        with:</span></span><br><span class="line"><span class="attr">          repository:</span> <span class="string">ユーザー名/リポジトリ名</span></span><br><span class="line"><span class="attr">          token:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line"><span class="attr">          ref:</span> <span class="string">master</span></span><br><span class="line">      </span><br><span class="line">      <span class="comment"># ターゲットリポジトリにプッシュ</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">Push</span> <span class="string">to</span> <span class="string">target</span> <span class="string">repository</span></span><br><span class="line"><span class="attr">        env:</span></span><br><span class="line"><span class="attr">          TARGET_REPO:</span> <span class="string">git@github.com:組織名/リポジトリ名.git</span></span><br><span class="line"><span class="attr">          SSH_PRIVATE_KEY:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.SYNC_SSH_KEY</span> <span class="string">&#125;&#125;</span></span><br><span class="line"><span class="attr">        run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          # SSHキーの設定</span></span><br><span class="line"><span class="string">          mkdir -p ~/.ssh</span></span><br><span class="line"><span class="string">          echo "$SSH_PRIVATE_KEY" &gt; ~/.ssh/id_ed25519</span></span><br><span class="line"><span class="string">          chmod 600 ~/.ssh/id_ed25519</span></span><br><span class="line"><span class="string">          ssh-keyscan -H github.com &gt;&gt; ~/.ssh/known_hosts</span></span><br><span class="line"><span class="string">          </span></span><br><span class="line"><span class="string">          # ターゲットリポジトリをリモートとして追加</span></span><br><span class="line"><span class="string">          git remote add target "$TARGET_REPO"</span></span><br><span class="line"><span class="string">          </span></span><br><span class="line"><span class="string">          # ターゲットリポジトリにプッシュ</span></span><br><span class="line"><span class="string">          git fetch --unshallow</span></span><br><span class="line"><span class="string">          git push --force target master</span></span><br></pre></td></tr></table></figure>
+<h3><span id="5-github-actionsの実行確認">5. GitHub Actionsの実行確認</span></h3>
+<ol type="1">
+<li>GitHub
+Actionsが正常に動作するか確認するため、同期元リポジトリに変更を加える。</li>
+<li>同期元リポジトリの<code>master</code>ブランチに変更をプッシュする。</li>
+<li>同期先リポジトリでGitHub
+Actionsがトリガーされ、変更が同期されていることを確認する。</li>
+</ol>
+<h3><span id="6-同期先のgithubactionsの無効化">6. 同期先のGitHub
+Actionsの無効化</span></h3>
+<p>GitHub
+Actionsの設定ファイルは、<code>.github/workflows</code>以下に保存されるが、このファイルも同期され、同期先のGitHub
+Actionsも動作してしまう。</p>
+<p>これを防ぐため、以下の手順で同期先リポジトリのGitHub
+Actionsを無効化する：</p>
+<ul>
+<li>同期先リポジトリのページを開く</li>
+<li>「Actions」タブをクリック</li>
+<li>左サイドバーの「Actions」にある当該アクションを選択</li>
+<li>右の方にある三点リーダーから「Disable workflow」を選ぶ。</li>
+</ul>
+<h3><span id="補足-トラブルシューティング">補足: トラブルシューティング</span></h3>
+<h3><span id="エラーpermission-denied-publickey">エラー:
+<code>Permission denied (publickey)</code></span></h3>
+<p>SSHキーが正しく設定されていない可能性がある。以下を再確認すること：</p>
+<ul>
+<li><code>SYNC_SSH_KEY</code> に登録した秘密鍵が正しいか。</li>
+<li>公開鍵が同期先リポジトリの「Deploy
+Keys」に正しく登録されているか。</li>
+<li>公開鍵に書き込み権限（Write Access）が付与されているか。</li>
+</ul>
+<h3><span id="エラーremote-unpack-failed-index-pack-failed">エラー:
+<code>remote unpack failed: index-pack failed</code></span></h3>
+<p>同期元リポジトリが大きすぎる場合に発生する。リポジトリサイズを縮小する方法については、<a href="https://docs.github.com/en/repositories/working-with-large-files" target="_blank" rel="noopener">こちらの手順</a>を参照のこと。</p>
+<h3><span id="エラーgitgithubcom-permission-denied-publickey">エラー:
+<code>git@github.com: Permission denied (publickey)</code></span></h3>
+<p>SSH接続が正しく設定されていない可能性がある。以下を確認すること：</p>
+<ul>
+<li>SSHキーペアが正しく生成されているか。</li>
+<li>GitHub Actionsのワークフローで正しいSSHキーが使用されているか。</li>
+<li><code>~/.ssh/known_hosts</code>
+ファイルが正しく設定されているか。</li>
+</ul>
+<h3><span id="まとめ">まとめ</span></h3>
+<ol type="1">
+<li>同期先リポジトリを新規作成した場合、ローカル環境で初期設定を行う。</li>
+<li>初期設定後、GitHub Actionsを設定して自動同期を有効にする。</li>
+<li>必要に応じてトラブルシューティングを実施する。</li>
+</ol>
+<p>これにより、同期先リポジトリの初期化とGitHub
+Actionsを用いた同期がスムーズに行えるようになる。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2025/05/18/sync_github_repos/" data-id="cmkt61p5g01by18p8gvqci0j1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Recent-activity-about-Tuple-Space" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2025/03/24/Recent-activity-about-Tuple-Space/">Recent activity about Tuple Space</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2025/03/24/Recent-activity-about-Tuple-Space/">
+            <time datetime="2025-03-24T13:36:11.000Z" itemprop="datePublished">2025-03-24</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Distributed-Computing/">Distributed Computing</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/Distributed-Computing/">Distributed Computing</a>, <a class="tag-link" href="/memo-blog/tags/Linda/">Linda</a>, <a class="tag-link" href="/memo-blog/tags/Tuple-Space/">Tuple Space</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#メモ" id="toc-メモ">メモ</a>
+<ul>
+<li><a href="#twenty-years-of-coordination-technologiesの概要" id="toc-twenty-years-of-coordination-technologiesの概要">Twenty years of
+coordination technologiesの概要</a>
+<ul>
+<li><a href="#全体的なトレンド" id="toc-全体的なトレンド">全体的なトレンド</a></li>
+<li><a href="#年初期" id="toc-年初期">1996-2000年（初期）</a></li>
+<li><a href="#年" id="toc-年">2001-2010年</a></li>
+<li><a href="#年-1" id="toc-年-1">2011-2018年</a></li>
+<li><a href="#論文執筆辞典2020年現在の課題" id="toc-論文執筆辞典2020年現在の課題">論文執筆辞典（2020年）現在の課題</a></li>
+<li><a href="#貢献" id="toc-貢献">貢献</a></li>
+</ul></li>
+<li><a href="#tuple-spaceに類似した技術" id="toc-tuple-spaceに類似した技術">Tuple Spaceに類似した技術</a>
+<ul>
+<li><a href="#概要" id="toc-概要">概要</a></li>
+<li><a href="#主要なポイント" id="toc-主要なポイント">主要なポイント</a></li>
+<li><a href="#類似技術の分類" id="toc-類似技術の分類">類似技術の分類</a></li>
+<li><a href="#共通と思われる特徴" id="toc-共通と思われる特徴">共通と思われる特徴</a></li>
+<li><a href="#技術的な差異を考えるうえでの観点の例" id="toc-技術的な差異を考えるうえでの観点の例">技術的な差異を考えるうえでの観点の例</a></li>
+<li><a href="#関連検索に用いるキーワード" id="toc-関連検索に用いるキーワード">関連検索に用いるキーワード</a></li>
+<li><a href="#参考文献url" id="toc-参考文献url">参考文献・URL</a></li>
+<li><a href="#本分野の主な応用分野" id="toc-本分野の主な応用分野">本分野の主な応用分野</a></li>
+<li><a href="#今後の話の広がりの方向性の例" id="toc-今後の話の広がりの方向性の例">今後の話の広がりの方向性の例</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+</ul>
+</div>
+<h1><span id="メモ">メモ</span></h1>
+<p>とあることをきっかけに、Tuple
+Spaceに関して今一度整理しておきたくて検索した。 <a href="https://www.sciencedirect.com/science/article/pii/S235222082030016X" target="_blank" rel="noopener">Twenty
+years of coordination technologies</a> が2020年ころまでのCordiantion
+Technologyの歴史を振り返っており大変参考になった。</p>
+<h2><span id="twenty-years-ofcoordination-technologiesの概要">Twenty years of
+coordination technologiesの概要</span></h2>
+<p>長いのでざっくり要約すると…</p>
+<p>概要:
+この論文は、COORDINATIONカンファレンスの20年の歴史を振り返り、調整技術（Coordination
+Technologies）の発展と現状を分析した包括的なレビュー論文。
+IoTなどの影響で、システム間の相互作用の複雑さが増していることから調整技術の重要性を強調。
+サクセスストーリーや制限を明確にする。</p>
+<p>なお、ここでいう調整技術とは、<a href="https://www.researchgate.net/publication/2349828_Coordination_Models_and_Languages" target="_blank" rel="noopener">Coordination
+Models and
+Languages</a>に基づき、「複数の異種コンポーネントを統合する手段を提供する」ことを目指す技術を指すことにする。</p>
+<h3><span id="全体的なトレンド">全体的なトレンド</span></h3>
+<p>初期：基礎的なモデルと実験的な実装
+中期：モバイル環境やセキュリティへの対応
+後期：IoTや分散システムへの実践的な適用</p>
+<h3><span id="1996-2000年初期">1996-2000年（初期）</span></h3>
+<p>Linda モデルをベースとした多くの技術が登場</p>
+<p>主な技術： - ACLT (1996) - 後のTuCSoNの基礎となる - Manifold (1996) -
+後のReoの基礎となる - Moses (2000) - 法に基づく相互作用(LGI)モデルの実装
+- Piccola (2000) - コンポジション言語</p>
+<h3><span id="2001-2010年">2001-2010年</span></h3>
+<p>より専門化・多様化した技術の出現</p>
+<p>主な技術： - Reo (2002) - チャネルベースの調整モデル - O'Klaim (2004)
+- モバイルコード向けの調整 - Limone (2004) -
+モバイルエージェント向けの軽量調整 - CRIME (2007) - 論理ベースの調整 -
+CiAN (2008) - MANETsのためのワークフロー管理</p>
+<h3><span id="2011-2018年">2011-2018年</span></h3>
+<p>より実践的で特定領域に特化した技術の登場</p>
+<p>主な技術： - LINC (2015) - IoT向けの商用調整技術 - RepliKlaim (2015)
+- データレプリケーション管理 - Logic Fragments (2015) -
+論理推論ベースの調整 - TuCSoN - 継続的な発展と実用化</p>
+<h3><span id="論文執筆辞典2020年現在の課題">論文執筆辞典（2020年）現在の課題</span></h3>
+<ul>
+<li>産業界での採用が限定的</li>
+<li>開発・デプロイメントツールの不足</li>
+<li>メインストリームの開発言語・プラットフォームとの統合の必要性</li>
+<li>実用的なモニタリング・デバッグツールの不足</li>
+</ul>
+<h3><span id="貢献">貢献</span></h3>
+<p>理論的貢献: - 形式的なモデリング言語の発展 - 検証技術の進歩 -
+新しい調整パラダイムの提案</p>
+<p>実践的な応用: - 分散システムの設計パターン -
+ミドルウェアソリューション - クラウドサービスの調整メカニズム</p>
+<p>将来の展望: - AIと機械学習を活用した適応型調整メカニズム -
+ブロックチェーンベースの分散調整 -
+エッジコンピューティングにおける調整課題 -
+大規模分散システムのための新しい調整モデル</p>
+<p>参考文献： -
+https://www.researchgate.net/publication/339464058_Twenty_years_of_coordination_technologies_COORDINATION_contribution_to_the_state_of_art
+-
+https://www.researchgate.net/publication/325388738_Twenty_Years_of_Coordination_Technologies_State-of-the-Art_and_Perspectives
+- https://core.ac.uk/download/pdf/196287252.pdf -
+https://scispace.com/journals/the-journal-of-logic-and-algebraic-programming-1ay8iggr/2020</p>
+<h2><span id="tuple-spaceに類似した技術">Tuple Spaceに類似した技術</span></h2>
+<h3><span id="概要">概要</span></h3>
+<p>Tuple
+Spaceに類似した技術は、分散システムにおけるデータ共有と通信を実現するための抽象化モデルとして発展してた。Linda
+modelを起点として、クラウドコンピューティング、IoT、マイクロサービスアーキテクチャなどの現代的なコンテキストで進化している。これらの技術は共通して、非同期通信、データの永続性、空間的・時間的な分離を特徴としている。
+ここでは直接の派生とは言えないものも列挙してみる。</p>
+<h3><span id="主要なポイント">主要なポイント</span></h3>
+<h3><span id="類似技術の分類">類似技術の分類</span></h3>
+<ul>
+<li><strong>メッセージキューイングシステム</strong>
+<ul>
+<li>Apache Kafka</li>
+<li>RabbitMQ</li>
+<li>Amazon SQS</li>
+<li>Redis Pub/Sub</li>
+</ul></li>
+<li><strong>分散キーバリューストア</strong>
+<ul>
+<li>Apache Cassandra</li>
+<li>Redis</li>
+<li>Hazelcast</li>
+<li>Apache Ignite</li>
+</ul></li>
+<li><strong>分散共有メモリシステム</strong>
+<ul>
+<li>JavaSpaces</li>
+<li>GigaSpaces</li>
+<li>TSpaces (IBM)</li>
+<li>Lime (Mobile Tuple Spaces)</li>
+</ul></li>
+<li><strong>Triple Space</strong>
+<ul>
+<li>TripCom (Triple Space Communication)</li>
+<li>Web Service Execution Environment (WSMX)との統合</li>
+</ul></li>
+</ul>
+<h3><span id="共通と思われる特徴">共通と思われる特徴</span></h3>
+<ul>
+<li>非同期通信モデル</li>
+<li>データの永続性サポート（実装の途中から対応したものもある）</li>
+<li>分散トランザクション処理（厳密にはトランザクション管理されていないものもある。あるいは後付けでトランザクション管理の機能が追加されたものもある）</li>
+<li>スケーラビリティ</li>
+<li>耐障害性</li>
+</ul>
+<h3><span id="技術的な差異を考えるうえでの観点の例">技術的な差異を考えるうえでの観点の例</span></h3>
+<ul>
+<li>データモデル（構造化vs非構造化）</li>
+<li>一貫性モデル（強一貫性vs結果一貫性）</li>
+<li>スケーリング方式（水平vs垂直）</li>
+<li>実装アプローチ（中央集権型vs分散型）</li>
+</ul>
+<h3><span id="関連検索に用いるキーワード">関連検索に用いるキーワード</span></h3>
+<ul>
+<li>Linda Model</li>
+<li>Distributed Coordination</li>
+<li>Shared Memory Systems</li>
+<li>Message-Oriented Middleware</li>
+<li>Distributed Hash Tables</li>
+<li>Space-Based Architecture</li>
+<li>Content-Based Publish/Subscribe</li>
+<li>Distributed Data Structures</li>
+</ul>
+<h3><span id="参考文献url">参考文献・URL</span></h3>
+<p>(作業途中。とりあえず簡単な例を記載しているが網羅性を高める必要あり)</p>
+<h4><span id="学術論文">学術論文</span></h4>
+<ol type="1">
+<li><p>"Coordination Models and Languages" (2001)
+https://link.springer.com/chapter/10.1007/3-540-45587-6_3</p></li>
+<li><p>"A Survey of Tuple Space Implementations" (1998)
+https://dl.acm.org/doi/10.1145/292834.292836</p></li>
+<li><p>"Space-Based Computing and Reliable Distributed Systems" (2019)
+https://ieeexplore.ieee.org/document/8731537</p></li>
+</ol>
+<h4><span id="技術記事ドキュメント">技術記事・ドキュメント</span></h4>
+<ol type="1">
+<li><p>Apache Kafka Documentation
+https://kafka.apache.org/documentation/</p></li>
+<li><p>JavaSpaces Principles, Patterns, and Practice
+https://www.oracle.com/technical-resources/articles/javase/javaspaces.html</p></li>
+<li><p>GigaSpaces Technical Documentation
+https://docs.gigaspaces.com/latest/overview/index.html</p></li>
+</ol>
+<h4><span id="研究プロジェクト">研究プロジェクト</span></h4>
+<ol type="1">
+<li><p>LIME Project (Mobile Tuple Spaces)
+http://lime.sourceforge.net/</p></li>
+<li><p>T-Spaces Project (IBM Research)
+https://researcher.watson.ibm.com/researcher/view_group.php?id=128</p></li>
+</ol>
+<h3><span id="本分野の主な応用分野">本分野の主な応用分野</span></h3>
+<ul>
+<li>クラウドコンピューティング</li>
+<li>IoTシステム</li>
+<li>マイクロサービスアーキテクチャ</li>
+<li>分散データ処理</li>
+<li>リアルタイムアナリティクス</li>
+<li>エッジコンピューティング</li>
+<li>データスペース ※きっと…という期待を込めて。</li>
+</ul>
+<h3><span id="今後の話の広がりの方向性の例">今後の話の広がりの方向性の例</span></h3>
+<ul>
+<li>AIや機械学習システムとの統合</li>
+<li>ブロックチェーン技術との関係性整理と統合、あるいは分担</li>
+<li>エッジコンピューティングでの活用</li>
+<li>次世代ネットワーク通信での応用</li>
+<li>量子コンピューティングとの関係性、応用</li>
+<li>データスペースのモデル化</li>
+</ul>
+<h1><span id="参考">参考</span></h1>
+<ul>
+<li><a href="https://www.sciencedirect.com/science/article/pii/S235222082030016X" target="_blank" rel="noopener">Twenty
+years of coordination technologies</a></li>
+<li><a href="https://www.researchgate.net/publication/2349828_Coordination_Models_and_Languages" target="_blank" rel="noopener">Coordination
+Models and Languages</a></li>
+</ul>
+<!-- vim: set et tw=0 ts=2 sw=2: -->
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2025/03/24/Recent-activity-about-Tuple-Space/" data-id="cmkt61ouv009y18p8toj296iw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Mouse-wheel-on-Chrome" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -274,7 +937,7 @@ Chrome ブラウザーでのスクロールが遅い</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/02/16/Mouse-wheel-on-Chrome/" data-id="cmkt5thdi008n17o1a6n0l58o" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/02/16/Mouse-wheel-on-Chrome/" data-id="cmkt61oub008g18p8ctanvycc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -918,639 +1581,7 @@ Frameworks"</li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/01/27/Standards-of-Data-Governance/" data-id="cmkt5thqh01gw17o1go4h4us9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Gemini-with-Claude-Code" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2025/01/25/Gemini-with-Claude-Code/">Gemini with Claude Code</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2025/01/25/Gemini-with-Claude-Code/">
-            <time datetime="2025-01-25T03:00:00.000Z" itemprop="datePublished">2025-01-25</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/">AI</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/Claude-Code/">Claude Code</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/AI/">AI</a>, <a class="tag-link" href="/memo-blog/tags/Claude-Code/">Claude Code</a>, <a class="tag-link" href="/memo-blog/tags/Gemini/">Gemini</a>, <a class="tag-link" href="/memo-blog/tags/MCP/">MCP</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#メモ" id="toc-メモ">メモ</a>
-<ul>
-<li><a href="#gemini-mcp-tool" id="toc-gemini-mcp-tool">gemini-mcp-tool</a>
-<ul>
-<li><a href="#特徴" id="toc-特徴">特徴</a></li>
-<li><a href="#提供機能" id="toc-提供機能">提供機能</a></li>
-<li><a href="#インストール" id="toc-インストール">インストール</a></li>
-<li><a href="#ユースケース" id="toc-ユースケース">ユースケース</a></li>
-</ul></li>
-<li><a href="#mcp-gemini-cli" id="toc-mcp-gemini-cli">mcp-gemini-cli</a>
-<ul>
-<li><a href="#特徴-1" id="toc-特徴-1">特徴</a></li>
-<li><a href="#提供機能-1" id="toc-提供機能-1">提供機能</a></li>
-<li><a href="#インストール-1" id="toc-インストール-1">インストール</a></li>
-<li><a href="#ユースケース-1" id="toc-ユースケース-1">ユースケース</a></li>
-</ul></li>
-<li><a href="#rlabs-incgemini-mcp" id="toc-rlabs-incgemini-mcp"><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></a>
-<ul>
-<li><a href="#特徴-2" id="toc-特徴-2">特徴</a></li>
-<li><a href="#主な機能" id="toc-主な機能">主な機能</a></li>
-<li><a href="#インストール-2" id="toc-インストール-2">インストール</a></li>
-<li><a href="#設定オプション" id="toc-設定オプション">設定オプション</a></li>
-</ul></li>
-<li><a href="#どれを選ぶか" id="toc-どれを選ぶか">どれを選ぶか</a></li>
-</ul></li>
-<li><a href="#参考" id="toc-参考">参考</a></li>
-</ul>
-</div>
-<h1><span id="メモ">メモ</span></h1>
-<p>Claude CodeからGeminiを利用する方法についてのメモ。
-MCPサーバーを使うことで、Claude
-CodeのセッションからGeminiの機能を呼び出すことができる。</p>
-<p>主な選択肢として以下がある。</p>
-<ol type="1">
-<li><strong>gemini-mcp-tool</strong>: Gemini
-CLIラッパー（大規模ファイル分析向け）</li>
-<li><strong>mcp-gemini-cli</strong>: シンプルなGemini CLIラッパー</li>
-<li><strong><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></strong>:
-多機能なGemini統合サーバー</li>
-</ol>
-<h2><span id="gemini-mcp-tool">gemini-mcp-tool</span></h2>
-<p><a href="https://github.com/jamubc/gemini-mcp-tool" target="_blank" rel="noopener">gemini-mcp-tool</a>
-はGemini CLIのMCPサーバーラッパー。
-Geminiの大規模トークンウィンドウを活用し、大規模ファイル分析やコードベース理解に適している。</p>
-<h3><span id="特徴">特徴</span></h3>
-<ul>
-<li>Gemini CLIの大規模トークンウィンドウを活用</li>
-<li>サンドボックスでのコード実行に対応</li>
-<li><span class="citation" data-cites="構文によるファイル/ディレクトリ参照">@構文によるファイル/ディレクトリ参照</span></li>
-</ul>
-<h3><span id="提供機能">提供機能</span></h3>
-<table>
-<thead>
-<tr class="header">
-<th>ツール名</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ask-gemini</td>
-<td>ファイル解析や一般的な質問への回答</td>
-</tr>
-<tr class="even">
-<td>sandbox-test</td>
-<td>Geminiのサンドボックスでコード/コマンドを安全に実行</td>
-</tr>
-</tbody>
-</table>
-<p>スラッシュコマンドとして
-<code>/analyze</code>、<code>/sandbox</code>、<code>/help</code>、<code>/ping</code>
-も提供。</p>
-<h3><span id="インストール">インストール</span></h3>
-<p>前提として、Gemini
-CLIのインストールと認証を完了しておく必要がある。</p>
-<p>Claude Codeでのセットアップ:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude mcp add gemini-cli -- npx -y gemini-mcp-tool</span><br></pre></td></tr></table></figure>
-<p>または、設定ファイル（<code>~/.claude.json</code>
-など）に直接記述:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"mcpServers"</span>: &#123;</span><br><span class="line">    <span class="attr">"gemini-cli"</span>: &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"stdio"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"npx"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [</span><br><span class="line">        <span class="string">"-y"</span>,</span><br><span class="line">        <span class="string">"gemini-mcp-tool"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"env"</span>: &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3><span id="ユースケース">ユースケース</span></h3>
-<ul>
-<li>大規模なコードベースの分析</li>
-<li><code>@largefile.js</code> のような構文でファイルを指定して解析</li>
-<li>サンドボックス環境でのコードテスト</li>
-</ul>
-<h2><span id="mcp-gemini-cli">mcp-gemini-cli</span></h2>
-<p><a href="https://github.com/choplin/mcp-gemini-cli" target="_blank" rel="noopener">mcp-gemini-cli</a>
-はGemini CLIのシンプルなMCPサーバーラッパー。 <a href="https://zenn.dev/choplin/articles/2025-06-28-mcp-gemini-cli-intro" target="_blank" rel="noopener">MCP
-Gemini CLI入門：Claude CodeとGeminiの連携でAIコーディングを強化する</a>
-に詳しい解説がある。</p>
-<h3><span id="特徴">特徴</span></h3>
-<ul>
-<li>シンプルな設計で3つの機能を提供</li>
-<li>Gemini CLIの認証を利用</li>
-</ul>
-<h3><span id="提供機能">提供機能</span></h3>
-<table>
-<thead>
-<tr class="header">
-<th>ツール名</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>googleSearch</td>
-<td>Gemini経由でGoogle検索を実行</td>
-</tr>
-<tr class="even">
-<td>chat</td>
-<td>Geminiとの直接会話</td>
-</tr>
-<tr class="odd">
-<td>analyzeFile</td>
-<td>画像、PDF、テキストファイルの分析</td>
-</tr>
-</tbody>
-</table>
-<h3><span id="インストール">インストール</span></h3>
-<p>前提として、Gemini CLIの認証を完了しておく必要がある。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude mcp add -s project gemini-cli -- npx @choplin/mcp-gemini-cli --allow-npx</span><br></pre></td></tr></table></figure>
-<h3><span id="ユースケース">ユースケース</span></h3>
-<ul>
-<li>「Geminiに最新のNext.js 15の新機能を検索してもらって」</li>
-<li>「Geminiにこのエラーメッセージの解決方法を聞いて」</li>
-</ul>
-<h2><span id="rlabs-incgemini-mcp"><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></span></h2>
-<p><a href="https://github.com/RLabs-Inc/gemini-mcp" target="_blank" rel="noopener">RLabs-Inc/gemini-mcp</a>
-はGemini 3モデルとの統合を提供する多機能なMCPサーバー。
-30以上のツールを提供し、画像生成、動画生成、コード実行など幅広い機能が利用可能。</p>
-<h3><span id="特徴">特徴</span></h3>
-<ul>
-<li>30以上のツールを提供</li>
-<li>Gemini API Keyを使用（無料で取得可能）</li>
-<li>画像生成（最大4K）、動画生成（Veo 2.0）、TTSなど</li>
-</ul>
-<h3><span id="主な機能">主な機能</span></h3>
-<table>
-<thead>
-<tr class="header">
-<th>カテゴリ</th>
-<th>機能</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>コンテンツ生成</td>
-<td>画像生成、動画生成、TTS（30種類の音声）</td>
-</tr>
-<tr class="even">
-<td>Web統合</td>
-<td>リアルタイム検索、YouTube動画分析</td>
-</tr>
-<tr class="odd">
-<td>ドキュメント処理</td>
-<td>PDF/DOCX分析、テーブル抽出、要約</td>
-</tr>
-<tr class="even">
-<td>コード実行</td>
-<td>Python実行（numpy, pandas, matplotlib対応）</td>
-</tr>
-<tr class="odd">
-<td>AI推論</td>
-<td>Geminiへの直接クエリ、思考レベル調整</td>
-</tr>
-</tbody>
-</table>
-<h3><span id="インストール">インストール</span></h3>
-<p><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a>
-からGemini API Keyを取得し、以下のコマンドでインストール。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude mcp add gemini -s user -- env GEMINI_API_KEY=YOUR_KEY npx -y @rlabs-inc/gemini-mcp</span><br></pre></td></tr></table></figure>
-<p>グローバルインストールの場合:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g @rlabs-inc/gemini-mcp</span><br></pre></td></tr></table></figure>
-<h3><span id="設定オプション">設定オプション</span></h3>
-<table>
-<colgroup>
-<col style="width: 60%">
-<col style="width: 40%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>環境変数</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>GEMINI_API_KEY</td>
-<td>必須。Google AI Studioで取得</td>
-</tr>
-<tr class="even">
-<td>GEMINI_OUTPUT_DIR</td>
-<td>生成ファイルの保存先（デフォルト: ./gemini-output）</td>
-</tr>
-<tr class="odd">
-<td>VERBOSE</td>
-<td>詳細ログの有効化</td>
-</tr>
-</tbody>
-</table>
-<h2><span id="どれを選ぶか">どれを選ぶか</span></h2>
-<table>
-<colgroup>
-<col style="width: 9%">
-<col style="width: 27%">
-<col style="width: 26%">
-<col style="width: 36%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>観点</th>
-<th>gemini-mcp-tool</th>
-<th>mcp-gemini-cli</th>
-<th><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>導入の手軽さ</td>
-<td>◎</td>
-<td>◎</td>
-<td>○ API Key取得が必要</td>
-</tr>
-<tr class="even">
-<td>機能数</td>
-<td>○ 2機能+コマンド</td>
-<td>△ 3機能</td>
-<td>◎ 30+機能</td>
-</tr>
-<tr class="odd">
-<td>用途</td>
-<td>大規模ファイル分析、サンドボックス</td>
-<td>検索・対話・ファイル分析</td>
-<td>画像/動画生成、コード実行など多目的</td>
-</tr>
-<tr class="even">
-<td>依存関係</td>
-<td>Gemini CLI</td>
-<td>Gemini CLI</td>
-<td>なし（API直接利用）</td>
-</tr>
-<tr class="odd">
-<td>特徴</td>
-<td>大規模トークンウィンドウ活用</td>
-<td>シンプル</td>
-<td>多機能</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>大規模コードベースの分析には <strong>gemini-mcp-tool</strong></li>
-<li>シンプルに検索や対話を追加したい場合は
-<strong>mcp-gemini-cli</strong></li>
-<li>多機能な統合が必要な場合は <strong><span class="citation" data-cites="rlabs-inc/gemini-mcp">@rlabs-inc/gemini-mcp</span></strong></li>
-</ul>
-<h1><span id="参考">参考</span></h1>
-<ul>
-<li><a href="https://github.com/jamubc/gemini-mcp-tool" target="_blank" rel="noopener">gemini-mcp-tool</a></li>
-<li><a href="https://github.com/choplin/mcp-gemini-cli" target="_blank" rel="noopener">mcp-gemini-cli</a></li>
-<li><a href="https://zenn.dev/choplin/articles/2025-06-28-mcp-gemini-cli-intro" target="_blank" rel="noopener">MCP
-Gemini CLI入門：Claude
-CodeとGeminiの連携でAIコーディングを強化する</a></li>
-<li><a href="https://github.com/RLabs-Inc/gemini-mcp" target="_blank" rel="noopener">RLabs-Inc/gemini-mcp</a></li>
-<li><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a></li>
-</ul>
-<!-- vim: set et tw=0 ts=2 sw=2: -->
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2025/01/25/Gemini-with-Claude-Code/" data-id="cmkt5thb6004u17o1ik2vketw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Claude-Code-Setup" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2025/01/25/Claude-Code-Setup/">Claude Code Setup</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2025/01/25/Claude-Code-Setup/">
-            <time datetime="2025-01-24T15:00:00.000Z" itemprop="datePublished">2025-01-25</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/">AI</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/Claude-Code/">Claude Code</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/AI/">AI</a>, <a class="tag-link" href="/memo-blog/tags/CLI/">CLI</a>, <a class="tag-link" href="/memo-blog/tags/Claude-Code/">Claude Code</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#メモ" id="toc-メモ">メモ</a>
-<ul>
-<li><a href="#システム要件" id="toc-システム要件">システム要件</a></li>
-<li><a href="#ネイティブインストール推奨" id="toc-ネイティブインストール推奨">ネイティブインストール（推奨）</a>
-<ul>
-<li><a href="#既存のnpmインストールからの移行" id="toc-既存のnpmインストールからの移行">既存のnpmインストールからの移行</a></li>
-</ul></li>
-<li><a href="#npmインストール非推奨" id="toc-npmインストール非推奨">npmインストール（非推奨）</a></li>
-<li><a href="#インストール後の確認" id="toc-インストール後の確認">インストール後の確認</a>
-<ul>
-<li><a href="#pathの問題" id="toc-pathの問題">PATHの問題</a></li>
-</ul></li>
-<li><a href="#認証" id="toc-認証">認証</a>
-<ul>
-<li><a href="#個人利用の場合" id="toc-個人利用の場合">個人利用の場合</a></li>
-<li><a href="#チーム組織での利用" id="toc-チーム組織での利用">チーム・組織での利用</a></li>
-</ul></li>
-<li><a href="#アンインストール" id="toc-アンインストール">アンインストール</a>
-<ul>
-<li><a href="#ネイティブインストールの場合" id="toc-ネイティブインストールの場合">ネイティブインストールの場合</a></li>
-<li><a href="#npmインストールの場合" id="toc-npmインストールの場合">npmインストールの場合</a></li>
-<li><a href="#設定ファイルのクリーンアップオプション" id="toc-設定ファイルのクリーンアップオプション">設定ファイルのクリーンアップ（オプション）</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#参考" id="toc-参考">参考</a></li>
-</ul>
-</div>
-<h1><span id="メモ">メモ</span></h1>
-<p>Claude CodeのCLI版をセットアップするメモ。
-以前はnpmでインストールしていたが、ネイティブインストールに切り替えた。</p>
-<h2><span id="システム要件">システム要件</span></h2>
-<p><a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Set up Claude
-Code</a> によると、以下の要件がある。</p>
-<ul>
-<li><strong>OS</strong>: macOS 13.0+、Ubuntu 20.04+/Debian 10+、Windows
-10+ (WSL 1、WSL 2、またはGit for Windows)</li>
-<li><strong>ハードウェア</strong>: 4 GB以上のRAM</li>
-<li><strong>ネットワーク</strong>: インターネット接続が必要</li>
-<li><strong>シェル</strong>: BashまたはZshが推奨</li>
-</ul>
-<p>なお、ネイティブインストールの場合はNode.jsは不要。npmインストール（非推奨）の場合のみNode.js
-18以上が必要。</p>
-<h2><span id="ネイティブインストール推奨">ネイティブインストール（推奨）</span></h2>
-<p>現在はネイティブインストールが推奨されている。
-Ubuntu/Linux/WSLの場合、以下のコマンドでインストールする。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -fsSL https://claude.ai/install.sh | bash</span><br></pre></td></tr></table></figure>
-<p>ネイティブインストールの場合、バックグラウンドで自動更新されるため、常に最新バージョンが利用可能。</p>
-<h3><span id="既存のnpmインストールからの移行">既存のnpmインストールからの移行</span></h3>
-<p>既存のnpmインストールからネイティブインストールへ移行するには、以下のコマンドを実行する。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude install</span><br></pre></td></tr></table></figure>
-<h2><span id="npmインストール非推奨">npmインストール（非推奨）</span></h2>
-<p>npmインストールは非推奨となっている。
-可能な限りネイティブインストールを使用すること。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
-<p>注意: <code>sudo npm install -g</code>
-は使用しないこと。パーミッションの問題やセキュリティリスクにつながる可能性がある。</p>
-<h2><span id="インストール後の確認">インストール後の確認</span></h2>
-<p>インストール後、以下のコマンドでインストールの種類とバージョンを確認できる。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ claude doctor</span><br></pre></td></tr></table></figure>
-<h3><span id="pathの問題">PATHの問題</span></h3>
-<p><code>command not found: claude</code>
-というエラーが出る場合は、PATHに追加する。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">'export PATH="$HOME/.claude/bin:$HOME/.local/bin:$PATH"'</span> &gt;&gt; ~/.bashrc</span><br><span class="line">$ <span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
-<h2><span id="認証">認証</span></h2>
-<h3><span id="個人利用の場合">個人利用の場合</span></h3>
-<ol type="1">
-<li><strong>Claude ProまたはMaxプラン（推奨）</strong>: <a href="https://claude.ai/pricing" target="_blank" rel="noopener">Claude's Pro or Max plan</a>
-でサブスクライブし、Claude.aiアカウントでログイン</li>
-<li><strong>Claude Console</strong>: <a href="https://console.anthropic.com" target="_blank" rel="noopener">Claude Console</a>
-からOAuthプロセスを完了。Anthropic
-Consoleでのアクティブな請求が必要</li>
-</ol>
-<h3><span id="チーム組織での利用">チーム・組織での利用</span></h3>
-<ol type="1">
-<li><strong>Claude for Teams または Enterprise（推奨）</strong>:
-一元化された請求とチーム管理</li>
-<li><strong>Claude Console with team billing</strong>:
-共有組織を設定</li>
-<li><strong>クラウドプロバイダ</strong>: Amazon Bedrock、Google Vertex
-AI、Microsoft Foundryを使用</li>
-</ol>
-<h2><span id="アンインストール">アンインストール</span></h2>
-<h3><span id="ネイティブインストールの場合">ネイティブインストールの場合</span></h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rm -f ~/.<span class="built_in">local</span>/bin/claude</span><br><span class="line">$ rm -rf ~/.<span class="built_in">local</span>/share/claude</span><br></pre></td></tr></table></figure>
-<h3><span id="npmインストールの場合">npmインストールの場合</span></h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm uninstall -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
-<h3><span id="設定ファイルのクリーンアップオプション">設定ファイルのクリーンアップ（オプション）</span></h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rm -rf ~/.claude</span><br><span class="line">$ rm ~/.claude.json</span><br></pre></td></tr></table></figure>
-<p>注意:
-これにより全ての設定、許可されたツール、MCPサーバー設定、セッション履歴が削除される。</p>
-<h1><span id="参考">参考</span></h1>
-<ul>
-<li><a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Set up Claude
-Code</a></li>
-<li><a href="https://claude.ai/pricing" target="_blank" rel="noopener">Claude's Pro or Max
-plan</a></li>
-<li><a href="https://console.anthropic.com" target="_blank" rel="noopener">Claude Console</a></li>
-<li><span class="citation" data-cites="anthropic-ai/claude-code">[@anthropic-ai/claude-code -
-npm]</span></li>
-</ul>
-<p><span class="citation" data-cites="anthropic-ai/claude-code">[@anthropic-ai/claude-code -
-npm]</span>: https://www.npmjs.com/package/<span class="citation" data-cites="anthropic-ai/claude-code">@anthropic-ai/claude-code</span></p>
-<!-- vim: set et tw=0 ts=2 sw=2: -->
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2025/01/25/Claude-Code-Setup/" data-id="cmkt5th9k002o17o1q31b4001" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/01/27/Standards-of-Data-Governance/" data-id="cmkt61p8m01h118p87eupcd4y" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1843,7 +1874,7 @@ eDocCenter関連情報</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/01/13/WebSAM-eDocCenter-by-NEC/" data-id="cmkt5thga00ct17o1rj0s887y" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/01/13/WebSAM-eDocCenter-by-NEC/" data-id="cmkt61ow300cu18p87qgez97n" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2229,7 +2260,7 @@ Spacesと関係あるトラストサービスについて調査しまとめた�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/01/13/CyberTrust-and-iTrust/" data-id="cmkt5th9y003e17o146y41omj" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/01/13/CyberTrust-and-iTrust/" data-id="cmkt61os8003f18p8v1c3na9o" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2494,7 +2525,7 @@ Analysis）耐性を持つ。</li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/01/12/IoT-Trust-of-Toshiba-デバイス・ストレージ/" data-id="cmkt5thc3006f17o1314mtoum" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/01/12/IoT-Trust-of-Toshiba-デバイス・ストレージ/" data-id="cmkt61otk006g18p84g7f7ghh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2823,7 +2854,7 @@ Service）」の導入が進められています。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/01/05/Trends-of-Mobility-Data-Spaces-in-Japan/" data-id="cmkt5thow01bu17o1shly3k5d" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/01/05/Trends-of-Mobility-Data-Spaces-in-Japan/" data-id="cmkt61p5e01bv18p8fvur0jd9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3129,7 +3160,7 @@ Group</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/01/04/International-Data-Spaces-Trustworthy-and-sovereign-data-sharing-enable-the-data-economy/" data-id="cmkt5thob01aj17o1lqlainx3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/01/04/International-Data-Spaces-Trustworthy-and-sovereign-data-sharing-enable-the-data-economy/" data-id="cmkt61p4c01aj18p8t3m02dks" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3328,7 +3359,7 @@ Dataspace Protocolのドラフト</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/01/02/Eclipse-Dataspace-Protocol-Unofficial-draft-13-Dec-2024/" data-id="cmkt5thaj004317o11qjnjduu" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/01/02/Eclipse-Dataspace-Protocol-Unofficial-draft-13-Dec-2024/" data-id="cmkt61osg004418p8ooyw8r7o" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3421,6 +3452,24 @@ Dataspace Protocolのドラフト</a></li>
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/">AI</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/01/25/Gemini-with-Claude-Code/" class="title">Gemini with Claude Code</a></p>
+                            <p class="item-date"><time datetime="2026-01-25T03:00:00.000Z" itemprop="datePublished">2026-01-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/">AI</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/01/25/Claude-Code-Setup/" class="title">Claude Code Setup</a></p>
+                            <p class="item-date"><time datetime="2026-01-24T15:00:00.000Z" itemprop="datePublished">2026-01-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/AI/">AI</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/AI/Tools/">Tools</a></p>
                             <p class="item-title"><a href="/memo-blog/2026/01/09/Claude-Code-with-Claude-Code-Web/" class="title">Claude Code with Claude Code Web</a></p>
                             <p class="item-date"><time datetime="2026-01-09T03:00:00.000Z" itemprop="datePublished">2026-01-09</time></p>
@@ -3445,24 +3494,6 @@ Dataspace Protocolのドラフト</a></li>
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/ヘルスケア/">ヘルスケア</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/ヘルスケア/政策分析/">政策分析</a></p>
-                            <p class="item-title"><a href="/memo-blog/2025/08/18/EHDS-European-Health-Data-Space-Analysis-Report/" class="title">欧州健康データ空間（EHDS）分析レポートをGitHub Pagesで公開</a></p>
-                            <p class="item-date"><time datetime="2025-08-18T09:55:02.000Z" itemprop="datePublished">2025-08-18</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/デジタル政策/">デジタル政策</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/デジタル政策/規制分析/">規制分析</a></p>
-                            <p class="item-title"><a href="/memo-blog/2025/08/04/EU-Regulatory-Approach-vs-Japan-Strategic-Response/" class="title">欧州の規制駆動アプローチと日本の戦略的対応：デジタル規制に関する基礎調査</a></p>
-                            <p class="item-date"><time datetime="2025-08-04T05:54:32.000Z" itemprop="datePublished">2025-08-04</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -3481,7 +3512,7 @@ Dataspace Protocolのドラフト</a></li>
     <div class="widget-wrap">
         <h3 class="widget-title">アーカイブ</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2026/01/">1月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/12/">12月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/08/">8月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/07/">7月 2025</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/06/">6月 2025</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/05/">5月 2025</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/03/">3月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/02/">2月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2026/01/">1月 2026</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/12/">12月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/08/">8月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/07/">7月 2025</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/06/">6月 2025</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/05/">5月 2025</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/03/">3月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/02/">2月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -3558,20 +3589,5 @@ Dataspace Protocolのドラフト</a></li>
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
