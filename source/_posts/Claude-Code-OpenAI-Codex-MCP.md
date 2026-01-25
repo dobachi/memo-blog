@@ -279,6 +279,8 @@ openai-codex-mcpは以下の専用メソッドを提供する。
 - **Node.js環境のみの場合**: codex-mcp-server
 - **モデルを切り替えたい場合**: openai-codex-mcp
 
+筆者は現在 **codex-mcp-server** を使用している。
+
 # ユースケースと活用Tips
 
 ## 効果的な使い分け例

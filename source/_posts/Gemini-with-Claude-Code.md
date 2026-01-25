@@ -223,6 +223,8 @@ $ claude mcp add gemini-cli -s user -- npx -y @tuannvm/gemini-mcp-server
 - 多機能な統合が必要な場合は **@rlabs-inc/gemini-mcp**
 - バランスの良い機能とIDE対応が欲しい場合は **gemini-mcp-server**
 
+筆者は現在 **gemini-mcp-server** を使用している。
+
 # 参考
 
 * [gemini-mcp-tool]
