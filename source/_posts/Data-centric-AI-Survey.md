@@ -57,6 +57,8 @@ Andrew Ng が提唱した **Data-centric AI（DCAI）** の概念は、この状
 
 論文の中核は、データライフサイクル全体を3つの目標で整理した**goal-driven taxonomy**である。
 
+![Goal-driven Taxonomy](/memo-blog/images/dcai-taxonomy.png)
+
 * **Training Data Development**：学習データの収集から前処理・拡張までのパイプライン
 * **Inference Data Development**：モデルに入力するデータの設計・評価
 * **Data Maintenance**：データの継続的なメンテナンス
@@ -152,6 +154,8 @@ Andrew Ng が提唱した **Data-centric AI（DCAI）** の概念は、この状
 ## 横断的な分析視点：自動化 vs. 人間協働
 
 各タスクを「自動化の程度」と「人間の関与度」という2軸でさらに分類している点が本論文の独自性の一つである。2軸はそれぞれ独立したスペクトラムであり、論文内の各手法はいずれかに分類される。
+
+![自動化 vs. 人間協働の2軸](/memo-blog/images/dcai-axes.png)
 
 ### 自動化の3レベル
 
