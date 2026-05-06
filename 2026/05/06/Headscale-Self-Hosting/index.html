@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    <title>Headscale を自宅サーバまたは AWS EC2 で運用する | memo-blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="はじめに Headscale の概要 構成パターンの選択 事前準備（AWS アカウントとローカル環境）  AWS を使う場合  1. AWS アカウントと IAM ユーザー 2. AWS CLI のプロファイル設定 3. SSH 鍵と EC2 キーペア 4. 利用可能な AZ の確認 5. ドメイン  自宅サーバを使う場合 ローカル PC のツール 想定コスト（AWS 構成、東京リージョン）">
+<meta name="keywords" content="Ansible,AWS,Headscale,Tailscale,WireGuard,VPN,Terraform,SelfHosting">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Headscale を自宅サーバまたは AWS EC2 で運用する">
+<meta property="og:url" content="https://dobachi.github.io/memo-blog/2026/05/06/Headscale-Self-Hosting/index.html">
+<meta property="og:site_name" content="memo-blog">
+<meta property="og:description" content="はじめに Headscale の概要 構成パターンの選択 事前準備（AWS アカウントとローカル環境）  AWS を使う場合  1. AWS アカウントと IAM ユーザー 2. AWS CLI のプロファイル設定 3. SSH 鍵と EC2 キーペア 4. 利用可能な AZ の確認 5. ドメイン  自宅サーバを使う場合 ローカル PC のツール 想定コスト（AWS 構成、東京リージョン）">
+<meta property="og:locale" content="ja">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/images/headscale-control-data-plane.png">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/images/headscale-cgnat-vps.png">
+<meta property="og:updated_time" content="2026-05-06T16:11:58.199Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Headscale を自宅サーバまたは AWS EC2 で運用する">
+<meta name="twitter:description" content="はじめに Headscale の概要 構成パターンの選択 事前準備（AWS アカウントとローカル環境）  AWS を使う場合  1. AWS アカウントと IAM ユーザー 2. AWS CLI のプロファイル設定 3. SSH 鍵と EC2 キーペア 4. 利用可能な AZ の確認 5. ドメイン  自宅サーバを使う場合 ローカル PC のツール 想定コスト（AWS 構成、東京リージョン）">
+<meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/headscale-control-data-plane.png">
+    
+
+    
+        <link rel="alternate" href="/" title="memo-blog" type="application/atom+xml">
+    
+
+    
+
+    <link rel="stylesheet" href="/memo-blog/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/memo-blog/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/memo-blog/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/memo-blog/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/memo-blog/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/memo-blog/css/style.css">
+
+    <script src="/memo-blog/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/memo-blog/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/memo-blog/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L85XH3PQ9N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-L85XH3PQ9N');
+    </script>
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/memo-blog/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">memo-blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/memo-blog/.">Home</a>
+                
+                    <a class="main-nav-link" href="/memo-blog/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/memo-blog/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/memo-blog/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/memo-blog/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/memo-blog/css/images/avatar.png" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="検索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '投稿',
+            PAGES: 'Pages',
+            CATEGORIES: 'カテゴリ',
+            TAGS: 'タグ',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/memo-blog/',
+        CONTENT_URL: '/memo-blog/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/memo-blog/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/memo-blog/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/memo-blog/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/memo-blog/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/memo-blog/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/memo-blog/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="検索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/memo-blog/css/images/avatar.png" />
+            <h2 id="name">dobachi</h2>
+            <h3 id="title">man of leisure</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Tokyo, Japan</span>
+            <a id="follow" target="_blank" href="https://github.com/dobachi">フォローする</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                246
+                <span>投稿</span>
+            </div>
+            <div class="article-info-block">
+                290
+                <span>タグ</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/dobachi" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/memo-blog/" target="_blank" title="rss" class=tooltip>
+                            <i class="fab fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-Headscale-Self-Hosting" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Headscale を自宅サーバまたは AWS EC2 で運用する
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2026/05/06/Headscale-Self-Hosting/">
+            <time datetime="2026-05-06T12:20:11.000Z" itemprop="datePublished">2026-05-06</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/Infrastructure/">Infrastructure</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Infrastructure/Networking/">Networking</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/AWS/">AWS</a>, <a class="tag-link" href="/memo-blog/tags/Ansible/">Ansible</a>, <a class="tag-link" href="/memo-blog/tags/Headscale/">Headscale</a>, <a class="tag-link" href="/memo-blog/tags/SelfHosting/">SelfHosting</a>, <a class="tag-link" href="/memo-blog/tags/Tailscale/">Tailscale</a>, <a class="tag-link" href="/memo-blog/tags/Terraform/">Terraform</a>, <a class="tag-link" href="/memo-blog/tags/VPN/">VPN</a>, <a class="tag-link" href="/memo-blog/tags/WireGuard/">WireGuard</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#はじめに" id="toc-はじめに">はじめに</a></li>
+<li><a href="#headscale-の概要" id="toc-headscale-の概要">Headscale
+の概要</a></li>
+<li><a href="#構成パターンの選択" id="toc-構成パターンの選択">構成パターンの選択</a></li>
+<li><a href="#事前準備aws-アカウントとローカル環境" id="toc-事前準備aws-アカウントとローカル環境">事前準備（AWS
+アカウントとローカル環境）</a>
+<ul>
+<li><a href="#aws-を使う場合" id="toc-aws-を使う場合">AWS を使う場合</a>
+<ul>
+<li><a href="#aws-アカウントと-iam-ユーザー" id="toc-aws-アカウントと-iam-ユーザー">1. AWS アカウントと IAM
+ユーザー</a></li>
+<li><a href="#aws-cli-のプロファイル設定" id="toc-aws-cli-のプロファイル設定">2. AWS CLI
+のプロファイル設定</a></li>
+<li><a href="#ssh-鍵と-ec2-キーペア" id="toc-ssh-鍵と-ec2-キーペア">3.
+SSH 鍵と EC2 キーペア</a></li>
+<li><a href="#利用可能な-az-の確認" id="toc-利用可能な-az-の確認">4.
+利用可能な AZ の確認</a></li>
+<li><a href="#ドメイン" id="toc-ドメイン">5. ドメイン</a></li>
+</ul></li>
+<li><a href="#自宅サーバを使う場合" id="toc-自宅サーバを使う場合">自宅サーバを使う場合</a></li>
+<li><a href="#ローカル-pc-のツール" id="toc-ローカル-pc-のツール">ローカル PC のツール</a></li>
+<li><a href="#想定コストaws-構成東京リージョン" id="toc-想定コストaws-構成東京リージョン">想定コスト（AWS
+構成、東京リージョン）</a></li>
+</ul></li>
+<li><a href="#案a-aws-ec2-単体構成" id="toc-案a-aws-ec2-単体構成">案A:
+AWS EC2 単体構成</a>
+<ul>
+<li><a href="#インスタンスの準備" id="toc-インスタンスの準備">1.
+インスタンスの準備</a></li>
+<li><a href="#headscale-のインストール" id="toc-headscale-のインストール">2. Headscale のインストール</a></li>
+<li><a href="#設定ファイル" id="toc-設定ファイル">3.
+設定ファイル</a></li>
+<li><a href="#caddy-で自動-https" id="toc-caddy-で自動-https">4. Caddy
+で自動 HTTPS</a></li>
+</ul></li>
+<li><a href="#案b-自宅-linux-サーバでの構成" id="toc-案b-自宅-linux-サーバでの構成">案B: 自宅 Linux
+サーバでの構成</a>
+<ul>
+<li><a href="#グローバル-ip-まわりの整理" id="toc-グローバル-ip-まわりの整理">1. グローバル IP まわりの整理</a>
+<ul>
+<li><a href="#パターンa-公衆-ip-ポート開放可" id="toc-パターンa-公衆-ip-ポート開放可">パターンA: 公衆 IP +
+ポート開放可</a></li>
+<li><a href="#パターンb-cgnat-ポート開放不可" id="toc-パターンb-cgnat-ポート開放不可">パターンB: CGNAT /
+ポート開放不可</a></li>
+<li><a href="#cloudflare-tunnel-が使えない理由補足" id="toc-cloudflare-tunnel-が使えない理由補足">Cloudflare Tunnel
+が使えない理由（補足）</a></li>
+</ul></li>
+<li><a href="#ソフトウェアのセットアップ" id="toc-ソフトウェアのセットアップ">2.
+ソフトウェアのセットアップ</a></li>
+</ul></li>
+<li><a href="#dns-レコードの設定" id="toc-dns-レコードの設定">DNS
+レコードの設定</a>
+<ul>
+<li><a href="#お名前.com-で運用する場合" id="toc-お名前.com-で運用する場合">お名前.com で運用する場合</a>
+<ul>
+<li><a href="#dns-レコード設定を利用するを選んでネームサーバごと切替" id="toc-dns-レコード設定を利用するを選んでネームサーバごと切替">1. 「DNS
+レコード設定を利用する」を選んでネームサーバごと切替</a></li>
+<li><a href="#ns-切替の反映を確認" id="toc-ns-切替の反映を確認">2. NS
+切替の反映を確認</a></li>
+</ul></li>
+<li><a href="#動的-ip-の自宅サーバの場合補足" id="toc-動的-ip-の自宅サーバの場合補足">動的 IP
+の自宅サーバの場合（補足）</a></li>
+<li><a href="#route-53-で運用する場合" id="toc-route-53-で運用する場合">Route 53 で運用する場合</a></li>
+</ul></li>
+<li><a href="#クライアントの接続" id="toc-クライアントの接続">クライアントの接続</a></li>
+<li><a href="#構築の自動化terraform-ansible" id="toc-構築の自動化terraform-ansible">構築の自動化（Terraform /
+Ansible）</a>
+<ul>
+<li><a href="#terraform-aws-側のリソース構築" id="toc-terraform-aws-側のリソース構築">Terraform: AWS
+側のリソース構築</a></li>
+<li><a href="#ansible-headscale-caddy-のセットアップ" id="toc-ansible-headscale-caddy-のセットアップ">Ansible: Headscale +
+Caddy のセットアップ</a>
+<ul>
+<li><a href="#ansible-のインストール" id="toc-ansible-のインストール">Ansible のインストール</a></li>
+<li><a href="#実行" id="toc-実行">実行</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#運用" id="toc-運用">運用</a>
+<ul>
+<li><a href="#acl-ポリシー" id="toc-acl-ポリシー">ACL ポリシー</a></li>
+<li><a href="#バックアップ" id="toc-バックアップ">バックアップ</a></li>
+<li><a href="#アップデート" id="toc-アップデート">アップデート</a></li>
+<li><a href="#ログとトラブルシュート" id="toc-ログとトラブルシュート">ログとトラブルシュート</a></li>
+</ul></li>
+<li><a href="#つまずきポイント集" id="toc-つまずきポイント集">つまずきポイント集</a>
+<ul>
+<li><a href="#terraform-unexpected-state-unavailableサブネット作成" id="toc-terraform-unexpected-state-unavailableサブネット作成">Terraform:
+<code>unexpected state 'unavailable'</code>（サブネット作成）</a></li>
+<li><a href="#terraform-invalidkeypair.notfound" id="toc-terraform-invalidkeypair.notfound">Terraform:
+<code>InvalidKeyPair.NotFound</code></a></li>
+<li><a href="#dns-パーキング用-ip150.95.x.xが返る" id="toc-dns-パーキング用-ip150.95.x.xが返る">DNS: パーキング用
+IP（<code>150.95.x.x</code>）が返る</a></li>
+<li><a href="#ansible-no-module-named-ansible.module_utils.six.moves" id="toc-ansible-no-module-named-ansible.module_utils.six.moves">Ansible:
+<code>No module named 'ansible.module_utils.six.moves'</code></a></li>
+<li><a href="#ansible-headscale-configtest-が-acl.hujson-不在で失敗" id="toc-ansible-headscale-configtest-が-acl.hujson-不在で失敗">Ansible:
+<code>headscale configtest</code> が <code>acl.hujson</code>
+不在で失敗</a></li>
+<li><a href="#v0.28.0-以降-preauthkeys-create--u-ユーザー名-が失敗" id="toc-v0.28.0-以降-preauthkeys-create--u-ユーザー名-が失敗">v0.28.0
+以降: <code>preauthkeys create -u &lt;ユーザー名&gt;</code>
+が失敗</a></li>
+</ul></li>
+<li><a href="#おわりに" id="toc-おわりに">おわりに</a></li>
+<li><a href="#参考" id="toc-参考">参考</a></li>
+</ul>
+</div>
+<h1><span id="はじめに">はじめに</span></h1>
+<p><a href="https://tailscale.com/" target="_blank" rel="noopener">Tailscale</a> は WireGuard
+をベースとしたメッシュ型 VPN
+サービスで、複数のデバイスを安全に相互接続できます。
+普段はマネージドサービスとして利用すれば十分ですが、</p>
+<ul>
+<li>制御サーバ（コーディネーションサーバ）を自分の管理下に置きたい</li>
+<li>ベンダーロックインを避け、構成情報を自身で持ちたい</li>
+<li>WireGuard と Tailscale の仕組みを学びたい</li>
+</ul>
+<p>といった動機がある場合、<a href="https://headscale.net/stable/" target="_blank" rel="noopener">Headscale</a>
+を使ってセルフホスト構成を組むという選択肢があります。
+本稿では、個人利用を想定して、Headscale を <strong>AWS EC2 単体</strong>
+または <strong>自宅 Linux サーバ</strong> で運用する手順を整理します。
+あわせて、設定の自動化のための Terraform と Ansible
+の構成例も紹介します。</p>
+<h1><span id="headscale-の概要">Headscale の概要</span></h1>
+<p>Headscale は Tailscale 制御サーバの OSS 互換実装です。
+データプレーン（実際のトラフィック）は Tailscale 公式と同じく WireGuard
+で構成され、 クライアントは公式の <a href="https://tailscale.com/download" target="_blank" rel="noopener">Tailscale クライアント</a>（macOS
+/ Windows / Linux / iOS / Android）をそのまま利用します。 Headscale
+が代替するのは、ノード登録、鍵管理、ACL 配布、DNS、DERP
+リレーの調整といった「制御プレーン」の部分のみです。</p>
+<figure>
+<img src="/memo-blog/images/headscale-control-data-plane.png" alt="Headscale 制御プレーンとデータプレーン">
+<figcaption aria-hidden="true">Headscale
+制御プレーンとデータプレーン</figcaption>
+</figure>
+<p>公式によれば「単一 tailnet を対象とした、個人や小規模 OSS
+組織向けの実装」とされています <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。
+本稿の執筆時点における最新版は <strong>v0.28.0</strong>（2025-02-04
+リリース）です <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。</p>
+<h1><span id="構成パターンの選択">構成パターンの選択</span></h1>
+<p>ホストする場所は、大きく次の 2 通りがあります。</p>
+<table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>構成</th>
+<th>長所</th>
+<th>短所</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AWS EC2 単体</td>
+<td>公衆 IP・DNS・帯域が安定。ポート開放を気にしなくてよい。</td>
+<td>月額のランニングコストが発生する。</td>
+</tr>
+<tr class="even">
+<td>自宅 Linux サーバ</td>
+<td>既存サーバを活用できる。電気代以外の月額コストはほぼゼロ。</td>
+<td>グローバル IP の確保や、ISP の制約（CGNAT
+等）に応じた工夫が必要。</td>
+</tr>
+</tbody>
+</table>
+<p>リバースプロキシは <strong>Caddy を推奨</strong>します。Tailscale
+プロトコルは WebSocket POST を必要とするため、
+<strong>Cloudflare（および Cloudflare Tunnel）は使えない</strong>
+点に注意してください。 公式のリバースプロキシリファレンス <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+でも明記されています。</p>
+<h1><span id="事前準備awsアカウントとローカル環境">事前準備（AWS
+アカウントとローカル環境）</span></h1>
+<p>実際に試す前に整えておくと、以降の手順がスムーズになります。 AWS
+で構築する場合と、自宅サーバ構成のどちらでも共通する項目を先に列挙します。</p>
+<h2><span id="aws-を使う場合">AWS を使う場合</span></h2>
+<h3><span id="1-aws-アカウントと-iamユーザー">1. AWS アカウントと IAM
+ユーザー</span></h3>
+<p>ルートアカウントは使わず、Terraform 用の IAM
+ユーザーを作成します。</p>
+<ol type="1">
+<li>AWS マネジメントコンソール → IAM → 「ユーザーの作成」</li>
+<li>必要な権限ポリシー（個人利用なら以下のマネージドポリシーで十分）:
+<ul>
+<li><code>AmazonEC2FullAccess</code>（VPC・EIP も含む）</li>
+<li><code>AmazonRoute53FullAccess</code>（Route 53 を使う場合のみ）</li>
+</ul></li>
+<li>作成後、対象ユーザー → 「セキュリティ認証情報」 →
+「アクセスキーを作成」 →
+用途「コマンドラインインターフェイス（CLI）」</li>
+<li>アクセスキー ID
+とシークレットアクセスキーを控えておきます（<strong>一度しか表示されない</strong>）</li>
+</ol>
+<h3><span id="2-aws-cli-のプロファイル設定">2. AWS CLI のプロファイル設定</span></h3>
+<p>ローカル PC（WSL2 や Linux）に AWS CLI
+をインストールして、プロファイルを設定します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y awscli   <span class="comment"># 未インストールなら</span></span><br><span class="line"></span><br><span class="line">aws configure --profile headscale</span><br><span class="line"><span class="comment"># AWS Access Key ID:     &lt;控えたアクセスキー&gt;</span></span><br><span class="line"><span class="comment"># AWS Secret Access Key: &lt;控えたシークレット&gt;</span></span><br><span class="line"><span class="comment"># Default region name:   ap-northeast-1</span></span><br><span class="line"><span class="comment"># Default output format: json</span></span><br></pre></td></tr></table></figure>
+<p>以降のコマンドではプロファイルを環境変数で固定すると楽です。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> AWS_PROFILE=headscale</span><br><span class="line"><span class="built_in">export</span> AWS_REGION=ap-northeast-1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 認証確認</span></span><br><span class="line">aws sts get-caller-identity</span><br></pre></td></tr></table></figure>
+<h3><span id="3-ssh-鍵と-ec2-キーペア">3. SSH 鍵と EC2 キーペア</span></h3>
+<p>EC2 にログインするための鍵です（IAM のアクセスキーとは別物）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ローカルの SSH 鍵が無ければ生成</span></span><br><span class="line">[ -f ~/.ssh/id_ed25519.pub ] || ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N <span class="string">""</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># AWS にキーペアを import</span></span><br><span class="line">aws ec2 import-key-pair \</span><br><span class="line">  --key-name headscale-key \</span><br><span class="line">  --public-key-material fileb://~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
+<p>ここで指定した <code>--key-name</code> の値（例:
+<code>headscale-key</code>）を、後で Terraform の <code>key_name</code>
+変数に渡します。両者の名前が一致していないと EC2 起動時に
+<code>InvalidKeyPair.NotFound</code>
+で失敗するので注意してください。</p>
+<h3><span id="4-利用可能な-az-の確認">4. 利用可能な AZ の確認</span></h3>
+<p>新規 AWS アカウントには <strong>特定の AZ（例:
+<code>ap-northeast-1a</code>）が割り当てられないことがあります</strong>。
+事前に利用可能な AZ を確認してください。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 describe-availability-zones \</span><br><span class="line">  --query <span class="string">"AvailabilityZones[?State=='available'].[ZoneName,ZoneId]"</span> \</span><br><span class="line">  --output table</span><br></pre></td></tr></table></figure>
+<p>返ってきた中から 1 つを Terraform の <code>availability_zone</code>
+に指定します。 割り当てられていない AZ を指定すると、サブネット作成時に
+<code>unexpected state 'unavailable'</code> エラーが出ます。</p>
+<h3><span id="5-ドメイン">5. ドメイン</span></h3>
+<p><code>hs.example.com</code> のように、Headscale
+サーバを公開するドメイン（あるいはサブドメイン）が必要です。
+お名前.com、Cloudflare、Route 53 など好みの DNS
+で構いません（後述の「DNS レコードの設定」で具体例を示します）。</p>
+<h2><span id="自宅サーバを使う場合">自宅サーバを使う場合</span></h2>
+<ul>
+<li>Ubuntu 24.04 LTS（ARM64 / AMD64 どちらでも）が動作するマシン</li>
+<li>ローカルから SSH 接続できる状態</li>
+<li>以降の DNS / グローバル IP 関連は「案B: 自宅 Linux
+サーバでの構成」で扱います</li>
+</ul>
+<h2><span id="ローカル-pc-のツール">ローカル PC のツール</span></h2>
+<table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ツール</th>
+<th>用途</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Terraform &gt;= 1.6</td>
+<td>AWS リソース構築</td>
+<td>自宅サーバ構成の場合は不要</td>
+</tr>
+<tr class="even">
+<td>Ansible &gt;= 2.16（ansible-core）</td>
+<td>サーバへのソフトウェアインストール</td>
+<td>後述の通り apt 版は古い場合があるので注意</td>
+</tr>
+<tr class="odd">
+<td>AWS CLI v2</td>
+<td>AWS との対話</td>
+<td>AWS 構成の場合のみ</td>
+</tr>
+<tr class="even">
+<td>ssh / dig / curl</td>
+<td>動作確認</td>
+<td>通常入っている</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="想定コストaws構成-東京リージョン">想定コスト（AWS
+構成、東京リージョン）</span></h2>
+<table>
+<thead>
+<tr class="header">
+<th>項目</th>
+<th>月額目安</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>EC2 <code>t4g.micro</code>（24h 稼働）</td>
+<td>$7.78</td>
+</tr>
+<tr class="even">
+<td>EBS gp3 16 GiB</td>
+<td>$1.54</td>
+</tr>
+<tr class="odd">
+<td>Public IPv4（EIP）※</td>
+<td>$3.60</td>
+</tr>
+<tr class="even">
+<td><strong>合計</strong></td>
+<td><strong>約 $13 / 月（≒ ¥2,000）</strong></td>
+</tr>
+</tbody>
+</table>
+<p>※ 2024 年 2 月以降、AWS は接続中・未接続を問わずすべての Public IPv4
+アドレスに対して $0.005/h の課金を行います。 試用後はすみやかに
+<code>terraform destroy</code>
+で削除すれば、それ以降の課金は止まります。</p>
+<h1><span id="案a-aws-ec2-単体構成">案A: AWS EC2 単体構成</span></h1>
+<p>先に前提条件が単純な EC2 構成から扱います。 本稿では Ubuntu 24.04
+LTS（ARM64、<code>t4g.small</code>）を 1 台立ち上げ、Caddy で TLS
+終端し、Headscale 本体はバックエンドに置く構成とします。</p>
+<h2><span id="1-インスタンスの準備">1. インスタンスの準備</span></h2>
+<ul>
+<li>インスタンスタイプ: <code>t4g.micro</code>（2 vCPU / 1
+GiB、ARM64）で個人利用には十分（クライアント数が増える / ACL を凝るなら
+<code>t4g.small</code> 推奨）</li>
+<li>AMI: 最新の Ubuntu 24.04（Canonical 公式）</li>
+<li>ストレージ: gp3 16 GiB（暗号化）</li>
+<li>パブリック IP: Elastic IP を付与（再起動でも IP
+を維持するため）</li>
+<li>AZ と キーペアは「事前準備」で確認した値を使用</li>
+</ul>
+<p>セキュリティグループの受信ルールは次の通りです。</p>
+<ul>
+<li><code>22/tcp</code>: 管理用、自宅 IP の <code>/32</code>
+のみ許可</li>
+<li><code>80/tcp</code>、<code>443/tcp</code>: Caddy（自動 TLS 取得と
+HTTPS 公開）</li>
+<li><code>3478/udp</code>: 組み込み DERP を使う場合のみ。本稿の構成では
+Tailscale 公式 DERP を利用するので <strong>不要</strong></li>
+</ul>
+<p>EIP を確保したら、後述の「<a href="#DNS-レコードの設定">DNS
+レコードの設定</a>」に従って、利用するドメイン（例:
+<code>hs.example.com</code>）の A レコードを EIP に向けます。</p>
+<h2><span id="2-headscale-のインストール">2. Headscale のインストール</span></h2>
+<p>DEB パッケージでのインストールが公式推奨です <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。
+<code>HEADSCALE_VERSION</code>
+は最新リリースに合わせて更新してください。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HEADSCALE_VERSION=<span class="string">"0.28.0"</span></span><br><span class="line">HEADSCALE_ARCH=<span class="string">"arm64"</span>   <span class="comment"># x86_64 の場合は amd64</span></span><br><span class="line"></span><br><span class="line">wget --output-document=headscale.deb \</span><br><span class="line">  <span class="string">"https://github.com/juanfont/headscale/releases/download/v<span class="variable">$&#123;HEADSCALE_VERSION&#125;</span>/headscale_<span class="variable">$&#123;HEADSCALE_VERSION&#125;</span>_linux_<span class="variable">$&#123;HEADSCALE_ARCH&#125;</span>.deb"</span></span><br><span class="line">sudo apt install ./headscale.deb</span><br></pre></td></tr></table></figure>
+<p>DEB パッケージなら、<code>headscale</code> ユーザー、systemd
+サービス、<code>/etc/headscale/</code>
+以下のディレクトリ、<code>/var/lib/headscale/</code>
+のデータ領域などが一式整備されます。</p>
+<h2><span id="3-設定ファイル">3. 設定ファイル</span></h2>
+<p><code>/etc/headscale/config.yaml</code>
+を編集します。最小構成は次のようなものです。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server_url:</span> <span class="attr">https://hs.example.com</span></span><br><span class="line"><span class="attr">listen_addr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8080</span>      <span class="comment"># Caddy 経由なのでローカル限定</span></span><br><span class="line"><span class="attr">metrics_listen_addr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:9090</span></span><br><span class="line"><span class="attr">grpc_listen_addr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:50443</span></span><br><span class="line"><span class="attr">grpc_allow_insecure:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">tls_cert_path:</span> <span class="string">""</span>                 <span class="comment"># TLS は Caddy で終端</span></span><br><span class="line"><span class="attr">tls_key_path:</span> <span class="string">""</span></span><br><span class="line"></span><br><span class="line"><span class="attr">noise:</span></span><br><span class="line"><span class="attr">  private_key_path:</span> <span class="string">/var/lib/headscale/noise_private.key</span></span><br><span class="line"></span><br><span class="line"><span class="attr">prefixes:</span></span><br><span class="line"><span class="attr">  v4:</span> <span class="number">100.64</span><span class="number">.0</span><span class="number">.0</span><span class="string">/10</span></span><br><span class="line"><span class="attr">  v6:</span> <span class="attr">fd7a:115c:a1e0::/48</span></span><br><span class="line"><span class="attr">  allocation:</span> <span class="string">sequential</span></span><br><span class="line"></span><br><span class="line"><span class="attr">derp:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enabled:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">  urls:</span></span><br><span class="line"><span class="attr">    - https:</span><span class="string">//controlplane.tailscale.com/derpmap/default</span></span><br><span class="line"></span><br><span class="line"><span class="attr">database:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">sqlite</span></span><br><span class="line"><span class="attr">  sqlite:</span></span><br><span class="line"><span class="attr">    path:</span> <span class="string">/var/lib/headscale/db.sqlite</span></span><br><span class="line"><span class="attr">    write_ahead_log:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="attr">dns:</span></span><br><span class="line"><span class="attr">  magic_dns:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  base_domain:</span> <span class="string">hs-net.example.com</span>   <span class="comment"># server_url のドメインとは別にする</span></span><br><span class="line"><span class="attr">  nameservers:</span></span><br><span class="line"><span class="attr">    global:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">9.9</span><span class="number">.9</span><span class="number">.9</span></span><br><span class="line"></span><br><span class="line"><span class="attr">policy:</span></span><br><span class="line"><span class="attr">  mode:</span> <span class="string">file</span></span><br><span class="line"><span class="attr">  path:</span> <span class="string">/etc/headscale/acl.hujson</span></span><br><span class="line"></span><br><span class="line"><span class="attr">unix_socket:</span> <span class="string">/var/run/headscale/headscale.sock</span></span><br><span class="line"><span class="attr">unix_socket_permission:</span> <span class="string">"0770"</span></span><br></pre></td></tr></table></figure>
+<p>要点は次の通りです。</p>
+<ul>
+<li><code>server_url</code> はクライアントが接続する URL。後述の Caddy
+が公開するドメインに合わせます。</li>
+<li><code>tls_cert_path</code> / <code>tls_key_path</code>
+を空にして、TLS 終端は Caddy に任せます。</li>
+<li><code>dns.base_domain</code> は <code>server_url</code> のドメインと
+<strong>別の</strong>
+ドメインを指定する必要があります（重複していると起動に失敗します）。</li>
+<li>個人利用ではデータベースは SQLite で十分です。Postgres
+はレガシー扱いとされています <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>。</li>
+<li>設定の検証は <code>sudo headscale configtest</code>
+で行えます。</li>
+</ul>
+<h2><span id="4-caddy-で自動-https">4. Caddy で自動 HTTPS</span></h2>
+<p>Caddy は自動 HTTPS と WebSocket
+対応をデフォルトで備えており、Headscale との相性が良いです。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl</span><br><span class="line">curl -fsSL https://dl.cloudsmith.io/public/caddy/stable/gpg.key \</span><br><span class="line">  | sudo tee /usr/share/keyrings/caddy-stable.asc &gt; /dev/null</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb [signed-by=/usr/share/keyrings/caddy-stable.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"</span> \</span><br><span class="line">  | sudo tee /etc/apt/sources.list.d/caddy-stable.list</span><br><span class="line">sudo apt update &amp;&amp; sudo apt install -y caddy</span><br></pre></td></tr></table></figure>
+<p><code>/etc/caddy/Caddyfile</code> を以下のように書き換えます。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    email you@example.com</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hs.example.com &#123;</span><br><span class="line">    reverse_proxy 127.0.0.1:8080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>設定を反映します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl reload caddy</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now headscale</span><br></pre></td></tr></table></figure>
+<p><code>https://hs.example.com/health</code> にアクセスして
+<code>pass</code> が返ってくれば疎通できています。</p>
+<h1><span id="案b-自宅-linuxサーバでの構成">案B: 自宅 Linux
+サーバでの構成</span></h1>
+<p>自宅サーバで運用する場合、最大の論点は
+<strong>インターネットからの到達性</strong> です。 ISP
+の契約によって状況が異なるため、まずは前提を整理します。</p>
+<h2><span id="1-グローバル-ip-まわりの整理">1. グローバル IP まわりの整理</span></h2>
+<p>確認すべき項目は次の 3 点です。</p>
+<ol type="1">
+<li><strong>公衆 IPv4 アドレスを持っているか</strong>
+<ul>
+<li>固定 IP か、動的 IP か</li>
+<li>ルータの WAN 側 IP と、<code>curl ifconfig.me</code> で取得できる IP
+が一致していれば公衆 IP を直接持っています</li>
+<li>一致しない場合は ISP 側で NAT されており、おそらく
+<strong>CGNAT</strong> 環境です</li>
+</ul></li>
+<li><strong>ポート 80 / 443 を外向けに開けられるか</strong>
+<ul>
+<li>ルータでポートフォワードができるか</li>
+<li>ISP が 80 / 443 をブロックしていないか</li>
+</ul></li>
+<li><strong>IPv6 が利用できるか</strong>
+<ul>
+<li>利用できる場合でも、接続するクライアント側で必ず IPv6
+が使えるとは限らないため、IPv6
+単独は実用上の冗長系として捉えるのが無難です</li>
+</ul></li>
+</ol>
+<p>これらの結果に応じて、以下のパターンに分かれます。</p>
+<h3><span id="パターンa-公衆-ip-ポート開放可">パターンA: 公衆 IP +
+ポート開放可</span></h3>
+<p>最も素直な構成です。</p>
+<ul>
+<li>動的 IP の場合は <strong>DDNS</strong> で名前を固定します。
+Cloudflare の DNS（普通の DNS のみ。Cloudflare Tunnel
+ではない）を使う場合、API
+トークンと簡単なスクリプト（<code>ddclient</code> や自前の cron
+スクリプト）でレコードを更新できます。</li>
+<li>自宅ルータで <code>80/tcp</code> と <code>443/tcp</code>
+をサーバへフォワードします。</li>
+<li>サーバ側のセットアップは前述の AWS EC2 構成と同じです。Caddy が
+Let's Encrypt から自動で証明書を取得します。</li>
+</ul>
+<h3><span id="パターンb-cgnat-ポート開放不可">パターンB: CGNAT /
+ポート開放不可</span></h3>
+<p>外側からの着信が物理的に通せないため、外部に「踏み台」が必要になります。</p>
+<ul>
+<li><strong>解1: 安価な VPS に Headscale を直接置く</strong> 実質的に
+AWS EC2 と同じ構成になります。Hetzner や Vultr、Oracle Cloud の Always
+Free 枠などが選択肢です。</li>
+<li><strong>解2: VPS をリバースプロキシにし、自宅サーバへ WireGuard
+等で逆トンネル</strong> Headscale
+本体は自宅サーバに置きつつ、外部に対する HTTPS エンドポイントは VPS
+が担う構成です。 自宅サーバから VPS に向けて WireGuard を張り、VPS の
+Caddy が自宅側へ <code>reverse_proxy</code> します。
+自宅サーバの計算資源を活用したい場合に有用ですが、構成要素が増えるため
+<strong>解1 のほうがおすすめ</strong>です。</li>
+</ul>
+<figure>
+<img src="/memo-blog/images/headscale-cgnat-vps.png" alt="CGNAT 配下の自宅サーバを VPS 経由で公開する構成">
+<figcaption aria-hidden="true">CGNAT 配下の自宅サーバを VPS
+経由で公開する構成</figcaption>
+</figure>
+<h3><span id="cloudflare-tunnelが使えない理由補足">Cloudflare Tunnel
+が使えない理由（補足）</span></h3>
+<p>外部公開の手段として人気のある Cloudflare Tunnel
+ですが、<strong>Headscale では使えません</strong>。
+公式リバースプロキシリファレンス <a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
+にも明記されている通り、Tailscale プロトコルは WebSocket の
+<code>POST</code> を必要とし、これを Cloudflare
+はサポートしていないためです。 Cloudflare 経由の HTTPS
+化には魅力がありますが、Headscale
+に関しては別の方法を検討してください。</p>
+<h2><span id="2-ソフトウェアのセットアップ">2. ソフトウェアのセットアップ</span></h2>
+<p>ここから先（Headscale + Caddy
+のインストール、<code>config.yaml</code> と <code>Caddyfile</code>
+の内容）は AWS EC2 構成と共通です。</p>
+<h1><span id="dns-レコードの設定">DNS レコードの設定</span></h1>
+<p>Headscale サーバには、<code>server_url</code> で指定したドメイン（例:
+<code>hs.example.com</code>）の <strong>A レコード</strong>
+を、サーバの公開 IP に向ける設定が必須です。 EC2 構成の場合は Elastic
+IP、自宅サーバ構成の場合は自宅ルータの公衆 IP（または踏み台 VPS の
+IP）が対象になります。 ドメインを管理している DNS
+提供元ごとに、設定の入り口が異なります。</p>
+<h2><span id="お名前com-で運用する場合">お名前.com で運用する場合</span></h2>
+<p>お名前.com
+には紛らわしい点があり、<strong>初期状態ではドメインのネームサーバが「お名前.com
+DNS（実際にレコード管理ができるサービス）」に向いていない</strong>
+ことが多いです。 ドメイン購入直後は <code>dns1.onamae.com</code> /
+<code>dns2.onamae.com</code>（パーキング用 NS）が設定されており、A
+レコードを追加しようとしても画面が出てきません。</p>
+<p>切り替えの最短手順は次の通りです。</p>
+<h3><span id="1-dnsレコード設定を利用するを選んでネームサーバごと切替">1. 「DNS
+レコード設定を利用する」を選んでネームサーバごと切替</span></h3>
+<ol type="1">
+<li><strong><a href="https://navi.onamae.com/" target="_blank" rel="noopener">お名前.com
+Navi</a></strong> にログイン</li>
+<li>上部メニューの「<strong>ドメイン</strong>」 →
+対象ドメインの行で「<strong>DNS</strong>」または「<strong>ドメインの DNS
+関連機能の設定</strong>」をクリック</li>
+<li>表示された選択肢から <strong>「DNS レコード設定を利用する」 →
+「設定する」</strong>
+<ul>
+<li>この操作で、ネームサーバが自動的に <code>01.dnsv.jp</code> 〜
+<code>04.dnsv.jp</code> に切り替わります</li>
+</ul></li>
+<li>レコード追加フォームで以下を設定して「追加」:
+<ul>
+<li><strong>ホスト名</strong>: <code>hs</code>（フルで
+<code>hs.example.com</code> の場合）</li>
+<li><strong>TYPE</strong>: <code>A</code></li>
+<li><strong>TTL</strong>: <code>3600</code>（初期検証中は
+<code>300</code> でも可）</li>
+<li><strong>VALUE</strong>: サーバの公開 IP（EIP など）</li>
+<li><strong>状態</strong>: 有効</li>
+</ul></li>
+<li>画面下の「<strong>確認画面へ進む</strong>」 →
+「<strong>設定する</strong>」で確定</li>
+</ol>
+<h3><span id="2-ns-切替の反映を確認">2. NS 切替の反映を確認</span></h3>
+<p>ネームサーバの変更は反映に時間がかかります（最長 24
+時間、通常は数分〜1 時間）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 権威 NS が切り替わったか</span></span><br><span class="line">dig +short NS example.com</span><br><span class="line"><span class="comment"># 期待値: 01.dnsv.jp. 〜 04.dnsv.jp.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># A レコードが返るか（権威 DNS に直接問い合わせ）</span></span><br><span class="line">dig +short hs.example.com @01.dnsv.jp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通常解決でも見えるか</span></span><br><span class="line">dig +short hs.example.com</span><br></pre></td></tr></table></figure>
+<p>NS が <code>dns1.onamae.com</code> のままだと、A
+レコードを設定しても応答に反映されない、あるいは <strong>パーキング用の
+IP（<code>150.95.x.x</code> 等）が返ってきてしまう</strong> ので、まず
+NS の切替を完了させてください。</p>
+<h2><span id="動的-ipの自宅サーバの場合補足">動的 IP
+の自宅サーバの場合（補足）</span></h2>
+<p>お名前.com DNS は API 経由の自動更新（DDNS）に対応していません。 公衆
+IP が動的に変わる環境では、ドメインはお名前.com
+で管理したまま、<strong>ネームサーバを Cloudflare
+DNS（無料プラン）に変更</strong> する構成がよく使われます。 Cloudflare
+の API トークンと <code>ddclient</code> などのスクリプトがあれば、IP
+変更時に A レコードを自動更新できます。 本稿で除外している「Cloudflare
+Tunnel」は WebSocket 制約により使えませんが、DNS としての Cloudflare
+利用は問題ありません。</p>
+<h2><span id="route-53-で運用する場合">Route 53 で運用する場合</span></h2>
+<p>DNS を AWS Route 53 でホスティングしているなら、Terraform で A
+レコードまで一括管理できます。 本稿の Terraform
+に次のリソースを追加するだけです。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">data &quot;aws_route53_zone&quot; &quot;this&quot; &#123;</span><br><span class="line">  name = &quot;example.com.&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;aws_route53_record&quot; &quot;headscale&quot; &#123;</span><br><span class="line">  zone_id = data.aws_route53_zone.this.zone_id</span><br><span class="line">  name    = &quot;hs.example.com&quot;</span><br><span class="line">  type    = &quot;A&quot;</span><br><span class="line">  ttl     = 300</span><br><span class="line">  records = [aws_eip.headscale.public_ip]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1><span id="クライアントの接続">クライアントの接続</span></h1>
+<p>サーバ側ではユーザーと事前認証鍵を発行します。 v0.28.0 から
+<code>preauthkeys</code> コマンドはユーザー名ではなく <strong>ユーザー
+ID</strong> を引数に取る仕様に変わっているため、 先に
+<code>users list</code> で ID を確認します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo headscale users create alice</span><br><span class="line">sudo headscale users list</span><br><span class="line"><span class="comment"># 表示された ID（例: 1）を控える</span></span><br><span class="line"></span><br><span class="line">sudo headscale preauthkeys create --user 1 --reusable --expiration 24h</span><br></pre></td></tr></table></figure>
+<p>クライアント側からは、<code>--login-server</code> で Headscale
+を指定するだけです。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Linux クライアント</span></span><br><span class="line">sudo tailscale up \</span><br><span class="line">  --login-server https://hs.example.com \</span><br><span class="line">  --authkey tskey-auth-xxxxxxxxxxxxxxxxxxxxx</span><br></pre></td></tr></table></figure>
+<p>macOS / iOS / Windows / Android のアプリ版 Tailscale
+でも、設定画面から「カスタムログインサーバ」を指定できます <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>。 接続後、サーバ側で
+<code>headscale nodes list</code>
+を実行すれば、登録されたノードが確認できます。</p>
+<h1><span id="構築の自動化terraform-ansible">構築の自動化（Terraform /
+Ansible）</span></h1>
+<p>ここまでの手順を自動化するための Terraform と Ansible
+の最小構成を用意しています。 記事と対応するソースは <a href="https://github.com/dobachi/memo-blog-text/tree/master/research/articles/headscale-self-hosting/iac" target="_blank" rel="noopener">GitHub
+リポジトリの
+<code>research/articles/headscale-self-hosting/iac/</code></a>
+に置いてあります。</p>
+<h2><span id="terraform-aws側のリソース構築">Terraform: AWS
+側のリソース構築</span></h2>
+<p>新規 VPC、パブリックサブネット、セキュリティグループ、Ubuntu 24.04
+ARM64 の EC2、Elastic IP を一括で作成します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> iac/terraform</span><br><span class="line">cp terraform.tfvars.example terraform.tfvars</span><br><span class="line"><span class="comment"># key_name と allowed_ssh_cidr を編集</span></span><br><span class="line">terraform init</span><br><span class="line">terraform apply</span><br></pre></td></tr></table></figure>
+<p>主な変数（<code>variables.tf</code>）は次の通りです。</p>
+<ul>
+<li><code>region</code> / <code>availability_zone</code>:
+デフォルトは東京リージョン</li>
+<li><code>vpc_cidr</code> / <code>public_subnet_cidr</code>: VPC
+とサブネットの CIDR</li>
+<li><code>instance_type</code>: 既定
+<code>t4g.small</code>（個人利用なら <code>t4g.micro</code>
+でも十分。コストを優先したいときに切り替え）</li>
+<li><code>key_name</code>: 事前に作成済みの EC2 キーペア名</li>
+<li><code>allowed_ssh_cidr</code>: 自宅の <code>/32</code> を指定</li>
+<li><code>enable_stun</code>: 組み込み DERP を使う場合に
+<code>true</code></li>
+</ul>
+<p>apply 後、<code>terraform output public_ip</code> で Elastic IP
+を確認し、DNS の A レコード（例: <code>hs.example.com</code>）をその IP
+へ向けます。</p>
+<h2><span id="ansible-headscale-caddy-のセットアップ">Ansible: Headscale +
+Caddy のセットアップ</span></h2>
+<p>EC2 でも自宅サーバでも同じ Playbook が使えます。Ubuntu 24.04
+を前提とし、</p>
+<ul>
+<li>Headscale の DEB をダウンロード・インストール</li>
+<li><code>/etc/headscale/config.yaml</code> をテンプレートから配置</li>
+<li>初期 ACL ファイル（全許可、後で絞り込み）を配置</li>
+<li><code>headscale configtest</code> で構文検証</li>
+<li>Caddy をインストールし、<code>Caddyfile</code> を配置</li>
+<li>初期ユーザーを作成</li>
+</ul>
+<p>までを行います。</p>
+<h3><span id="ansible-のインストール">Ansible のインストール</span></h3>
+<p>Ubuntu の apt で入る <code>ansible 2.10</code> 系は古く、Python 3.12
+が動くターゲット（Ubuntu 24.04）では
+<code>No module named 'ansible.module_utils.six.moves'</code>
+のような互換性エラーが出ます。 <strong>pipx で最新の ansible-core
+を入れる</strong> のが確実です。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt remove --purge -y ansible ansible-core 2&gt;/dev/null || <span class="literal">true</span></span><br><span class="line">sudo apt install -y pipx python3-venv</span><br><span class="line">pipx ensurepath</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line">pipx install --include-deps ansible</span><br><span class="line"></span><br><span class="line">ansible --version</span><br><span class="line"><span class="comment"># ansible [core 2.16.x] 以上 が表示されることを確認</span></span><br></pre></td></tr></table></figure>
+<h3><span id="実行">実行</span></h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> iac/ansible</span><br><span class="line">cp inventory.example.ini inventory.ini</span><br><span class="line">cp group_vars/all.yml.example group_vars/all.yml</span><br><span class="line"><span class="comment"># inventory.ini と group_vars/all.yml を編集</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 接続テスト（pong が返ればOK）</span></span><br><span class="line">ansible -i inventory.ini headscale -m ping</span><br><span class="line"></span><br><span class="line">ansible-playbook -i inventory.ini playbook.yml</span><br></pre></td></tr></table></figure>
+<p><code>group_vars/all.yml</code>
+で設定する主な変数は次の通りです。</p>
+<ul>
+<li><code>headscale_server_url</code>: クライアントが接続する URL（例:
+<code>https://hs.example.com</code>）</li>
+<li><code>headscale_base_domain</code>: MagicDNS
+のベースドメイン（<code>server_url</code> のドメインとは別にする）</li>
+<li><code>caddy_admin_email</code>: Let's Encrypt の連絡先</li>
+<li><code>headscale_users</code>: 初期作成するユーザー名のリスト</li>
+<li><code>headscale_arch</code>: <code>arm64</code>（AWS
+<code>t4g.*</code> や Raspberry Pi）または <code>amd64</code></li>
+</ul>
+<h1><span id="運用">運用</span></h1>
+<h2><span id="acl-ポリシー">ACL ポリシー</span></h2>
+<p><code>policy.mode: file</code>
+の場合、<code>/etc/headscale/acl.hujson</code>
+を編集することでアクセス制御を行います。
+最小構成として「同一ユーザーのデバイス間のみ通信可」とする例です。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"acls"</span>: [</span><br><span class="line">    &#123; <span class="attr">"action"</span>: <span class="string">"accept"</span>, <span class="attr">"src"</span>: [<span class="string">"alice"</span>], <span class="attr">"dst"</span>: [<span class="string">"alice:*"</span>] &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ACL 構文は Tailscale の ACL
+とほぼ互換で、グループ・タグ・ユーザー単位で細かく制御できます <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>。 編集後は
+<code>sudo headscale policy check --file /etc/headscale/acl.hujson</code>
+で検証してから、サービスを再読み込みします。</p>
+<h2><span id="バックアップ">バックアップ</span></h2>
+<p>最低限バックアップすべき対象は次の 3 つです。</p>
+<ul>
+<li><code>/var/lib/headscale/db.sqlite</code>:
+ノード・ユーザー・鍵などの実体</li>
+<li><code>/var/lib/headscale/noise_private.key</code>:
+ノイズプロトコルの秘密鍵（<strong>紛失すると全クライアントの再登録が必要</strong>）</li>
+<li><code>/etc/headscale/</code>: 設定一式と ACL</li>
+</ul>
+<p>cron で日次に固める例です。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo tar czf /var/backups/headscale-$(date +%F).tgz \</span><br><span class="line">  /etc/headscale /var/lib/headscale</span><br></pre></td></tr></table></figure>
+<p>S3 や別ホストへ rsync する仕組みと併用するとより安全です。</p>
+<h2><span id="アップデート">アップデート</span></h2>
+<p>DEB パッケージを上書きインストールするだけで完了します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop headscale</span><br><span class="line">sudo apt install ./headscale_&lt;NEW_VERSION&gt;_linux_arm64.deb</span><br><span class="line">sudo headscale configtest</span><br><span class="line">sudo systemctl start headscale</span><br></pre></td></tr></table></figure>
+<p>マイナーバージョンを跨ぐ場合は、必ず CHANGELOG を確認してください。
+v0.28.0 のように、PreAuthKey の保存形式変更（bcrypt
+化）など破壊的変更が入ることがあります <a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>。</p>
+<h2><span id="ログとトラブルシュート">ログとトラブルシュート</span></h2>
+<p>サーバ側のログは journald で確認します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo journalctl -u headscale -f</span><br><span class="line">sudo journalctl -u caddy -f</span><br></pre></td></tr></table></figure>
+<p>つながらないときの典型的なチェックリストは次の通りです。</p>
+<ul>
+<li>DNS が EIP / 自宅の IP を正しく指しているか</li>
+<li>セキュリティグループ（あるいはルータ）で 443/tcp が開いているか</li>
+<li>Caddy が証明書を取得できているか（80/tcp が空いているかどうかが ACME
+取得に効きます）</li>
+<li><code>headscale nodes list</code> でノードが登録されているか</li>
+<li>クライアント側の <code>tailscale status</code>
+でコントロールプレーンへの接続状況を確認</li>
+</ul>
+<h1><span id="つまずきポイント集">つまずきポイント集</span></h1>
+<p>実際に手順をなぞる過程で発生しやすいエラーをまとめておきます。</p>
+<h2><span id="terraformunexpected-state-unavailableサブネット作成">Terraform:
+<code>unexpected state 'unavailable'</code>（サブネット作成）</span></h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error: waiting for EC2 Subnet (subnet-xxxx) create:</span><br><span class="line">  unexpected state &apos;unavailable&apos;, wanted target &apos;available&apos;.</span><br></pre></td></tr></table></figure>
+<p><strong>原因</strong>: <code>terraform.tfvars</code> の
+<code>availability_zone</code> が、AWS アカウントに割り当てられていない
+AZ を指している。 新規 AWS アカウントは <code>ap-northeast-1a</code>
+などが使えないことがあります。</p>
+<p><strong>対応</strong>: 「事前準備」の AZ 確認コマンドで使える AZ
+に書き換えて <code>terraform apply</code>。
+すでに失敗したサブネットが残っている場合は
+<code>terraform state rm aws_subnet.public</code>
+で状態をクリアしてから再実行します。</p>
+<h2><span id="terraforminvalidkeypairnotfound">Terraform:
+<code>InvalidKeyPair.NotFound</code></span></h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: ... api error InvalidKeyPair.NotFound: The key pair &apos;xxx&apos; does not exist</span><br></pre></td></tr></table></figure>
+<p><strong>原因</strong>: <code>key_name</code> の値が AWS
+に登録済みのキーペア名と一致していない。</p>
+<p><strong>対応</strong>:
+<code>aws ec2 describe-key-pairs --query "KeyPairs[].KeyName"</code>
+で確認し、<code>terraform.tfvars</code> の <code>key_name</code>
+を実在する名前に修正。</p>
+<h2><span id="dns-パーキング用ip15095xxが返る">DNS: パーキング用
+IP（<code>150.95.x.x</code>）が返る</span></h2>
+<p><strong>原因</strong>: お名前.com の場合、NS が
+<code>dns1/dns2.onamae.com</code>（パーキング用）のままになっている。</p>
+<p><strong>対応</strong>: 上述の「お名前.com
+で運用する場合」の手順で、NS を <code>01.dnsv.jp</code> 〜
+<code>04.dnsv.jp</code> に切り替え、A レコードを再設定。</p>
+<h2><span id="ansibleno-module-named-ansiblemodule_utilssixmoves">Ansible:
+<code>No module named 'ansible.module_utils.six.moves'</code></span></h2>
+<p><strong>原因</strong>: ローカル Ansible のバージョンが古く（2.10
+系等）、ターゲット側の Python 3.12 と互換性がない。</p>
+<p><strong>対応</strong>: 上述の「Ansible のインストール」に従って pipx
+で最新版を入れ替え。</p>
+<h2><span id="ansibleheadscale-configtest-が-aclhujson不在で失敗">Ansible:
+<code>headscale configtest</code> が <code>acl.hujson</code>
+不在で失敗</span></h2>
+<p><strong>原因</strong>: 設定で <code>policy.mode: file</code>
+を有効にしているが、ACL ファイル本体を配置していない。</p>
+<p><strong>対応</strong>: 本稿の Ansible ロールには ACL
+テンプレート（<code>templates/acl.hujson.j2</code>）を含めてあるので、ロールを最新化してから再実行してください。手動セットアップの場合は次のようなファイルを
+<code>/etc/headscale/acl.hujson</code> に置きます。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"acls"</span>: [</span><br><span class="line">    &#123; <span class="attr">"action"</span>: <span class="string">"accept"</span>, <span class="attr">"src"</span>: [<span class="string">"*"</span>], <span class="attr">"dst"</span>: [<span class="string">"*:*"</span>] &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="v0280以降-preauthkeys-create-u-ltユーザー名gt-が失敗">v0.28.0
+以降: <code>preauthkeys create -u &lt;ユーザー名&gt;</code> が失敗</span></h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error: invalid argument &quot;alice&quot; for &quot;-u, --user&quot; flag:</span><br><span class="line">  strconv.ParseUint: parsing &quot;alice&quot;: invalid syntax</span><br></pre></td></tr></table></figure>
+<p><strong>原因</strong>: v0.28.0 で <code>preauthkeys</code> コマンドの
+<code>--user</code> がユーザー名から <strong>ユーザー ID 指定</strong>
+に変わった。</p>
+<p><strong>対応</strong>: <code>headscale users list</code> で ID
+を確認してから渡す。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo headscale users list           <span class="comment"># ID を確認</span></span><br><span class="line">sudo headscale preauthkeys create --user 1 --reusable --expiration 24h</span><br></pre></td></tr></table></figure>
+<h1><span id="おわりに">おわりに</span></h1>
+<p>本稿では、個人利用を想定して Headscale を AWS EC2 と自宅 Linux
+サーバの 2 通りで運用するための具体的な手順をまとめ、Terraform と
+Ansible による自動化の足場も用意しました。 EC2 構成は前提が単純で
+<code>t4g.small</code> でも快適に動きます。 自宅サーバ構成は ISP
+環境次第で構成が分かれますが、CGNAT 配下でも安価な VPS
+を踏み台として使えば現実的に運用できます。 セルフホスト Tailscale
+を起点に、自宅とクラウド、外出先の端末をひとつの仮想ネットワークでつなぐ運用は、個人の学習用途としても実用上もよい題材だと感じます。</p>
+<h1><span id="参考">参考</span></h1>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+<!-- vim: set et tw=0 ts=2 sw=2: -->
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>Headscale 公式ドキュメント, <a href="https://headscale.net/stable/" target="_blank" rel="noopener">Headscale</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Headscale v0.28.0 リリースノート, <a href="https://github.com/juanfont/headscale/releases" class="uri" target="_blank" rel="noopener">https://github.com/juanfont/headscale/releases</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>公式リバースプロキシリファレンス, <a href="https://headscale.net/stable/ref/integration/reverse-proxy/" class="uri" target="_blank" rel="noopener">https://headscale.net/stable/ref/integration/reverse-proxy/</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>公式インストールガイド, <a href="https://headscale.net/stable/setup/install/official/" class="uri" target="_blank" rel="noopener">https://headscale.net/stable/setup/install/official/</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>公式設定リファレンス, <a href="https://headscale.net/stable/ref/configuration/" class="uri" target="_blank" rel="noopener">https://headscale.net/stable/ref/configuration/</a><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>公式リバースプロキシリファレンス, <a href="https://headscale.net/stable/ref/integration/reverse-proxy/" class="uri" target="_blank" rel="noopener">https://headscale.net/stable/ref/integration/reverse-proxy/</a><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>クライアント接続ガイド, <a href="https://headscale.net/stable/usage/" class="uri" target="_blank" rel="noopener">https://headscale.net/stable/usage/</a><a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>ACL 構文の解説, <a href="https://tailscale.com/kb/1018/acls" class="uri" target="_blank" rel="noopener">https://tailscale.com/kb/1018/acls</a><a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>Headscale v0.28.0 リリースノート, <a href="https://github.com/juanfont/headscale/releases" class="uri" target="_blank" rel="noopener">https://github.com/juanfont/headscale/releases</a><a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/06/Headscale-Self-Hosting/" data-id="cmou99owl01jf18o5kzd8wp9s" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/memo-blog/2026/04/05/Data-centric-AI-Survey/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">古い記事</strong>
+            <div class="article-nav-title">論文解説：Data-centric Artificial Intelligence: A Survey</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最近の記事</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Infrastructure/">Infrastructure</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Infrastructure/Networking/">Networking</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/05/06/Headscale-Self-Hosting/" class="title">Headscale を自宅サーバまたは AWS EC2 で運用する</a></p>
+                            <p class="item-date"><time datetime="2026-05-06T12:20:11.000Z" itemprop="datePublished">2026-05-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/">AI</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/04/05/Data-centric-AI-Survey/" class="title">論文解説：Data-centric Artificial Intelligence: A Survey</a></p>
+                            <p class="item-date"><time datetime="2026-04-04T15:00:00.000Z" itemprop="datePublished">2026-04-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/AI/">AI</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/AI/開発環境/">開発環境</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/01/25/Claude-Code-OpenAI-Codex-MCP/" class="title">Claude CodeからOpenAI Codexを使う方法 - MCPで実現するマルチAI開発環境</a></p>
+                            <p class="item-date"><time datetime="2026-01-25T10:12:20.000Z" itemprop="datePublished">2026-01-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/">AI</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/01/25/Gemini-with-Claude-Code/" class="title">Gemini with Claude Code</a></p>
+                            <p class="item-date"><time datetime="2026-01-25T03:00:00.000Z" itemprop="datePublished">2026-01-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/memo-blog/categories/Knowledge-Management/AI/">AI</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/01/25/Claude-Code-Setup/" class="title">Claude Code Setup</a></p>
+                            <p class="item-date"><time datetime="2026-01-24T15:00:00.000Z" itemprop="datePublished">2026-01-25</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">カテゴリ</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI/">AI</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI/Claude/">Claude</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI/ComfyUI/">ComfyUI</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI/Llama/">Llama</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI/Llama/Ollama/">Ollama</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI/LocalLLM/">LocalLLM</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI/LocalLLM/Jan/">Jan</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI/MCP/">MCP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI/Technical/">Technical</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI/開発環境/">開発環境</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI開発/">AI開発</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AI開発/Claude-Code/">Claude Code</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AMD/">AMD</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/AMD/GPU/">GPU</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Alluxio/">Alluxio</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/BaaS/">BaaS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Configuration-Management/">Configuration Management</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Configuration-Management/Ansible/">Ansible</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Catalog/">Data Catalog</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Catalog/CKAN/">CKAN</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Collaboration/">Data Collaboration</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Collaboration/Delta-Sharing/">Delta Sharing</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Collaboration/X-Road/">X-Road</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Engineering/">Data Engineering</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Engineering/Data-Lineage/">Data Lineage</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Engineering/Data-Transformation/">Data Transformation</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Governance/">Data Governance</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Mesh/">Data Mesh</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Processing-Engine/">Data Processing Engine</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Spaces/">Data Spaces</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Spaces/EDC/">EDC</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Spaces/Healthcare/">Healthcare</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Spaces/IDS/">IDS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Data-Spaces/Ouranos-Ecosystem/">Ouranos Ecosystem</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Dataspace-Connector/">Dataspace Connector</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Dataspace-Connector/CADDE/">CADDE</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Dataspace-Connector/Eclipse-Dataspace-Components/">Eclipse Dataspace Components</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Distributed-Computing/">Distributed Computing</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Docker/">Docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Documentation/">Documentation</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Financial-Administration/">Financial Administration</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Financial-administration/">Financial administration</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Flask/">Flask</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/GPD-Pocket/">GPD Pocket</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/GPD-Pocket/Device/">Device</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/GPD-Pocket/Device/Bluetooth/">Bluetooth</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/HBase/">HBase</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Hadoop/Ambari/">Ambari</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Hadoop/BigTop/">BigTop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Hadoop/HDP/">HDP</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Hexo/">Hexo</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-Network/">Home Network</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-Server/">Home Server</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-Server/Ubuntu/">Ubuntu</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/">Home server</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/File-server/">File server</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/Hardware/">Hardware</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/Nature-Remo/">Nature Remo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/Network/">Network</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/Remote-desktop/">Remote desktop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/Ubuntu/">Ubuntu</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/Ubuntu/Adobe-Reader/">Adobe Reader</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/Ubuntu/Gnome/">Gnome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/Ubuntu/KVM/">KVM</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/Ubuntu/OneDrive/">OneDrive</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/Ubuntu/vim/">vim</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Home-server/Video-processing/">Video processing</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Hyper/">Hyper</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Hyper/Plugin/">Plugin</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Hyper-V/">Hyper-V</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Infrastructure/">Infrastructure</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Infrastructure/Networking/">Networking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Keyboard/">Keyboard</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Keyboard/Corne-Chocolate/">Corne Chocolate</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Keyboard/QMK/">QMK</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Knowledge-Management/">Knowledge Management</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Knowledge-Management/AI/">AI</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Knowledge-Management/AI/Claude-Code/">Claude Code</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Knowledge-Management/AI/Machine-Learning/">Machine Learning</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Knowledge-Management/AI/Machine-Learning/Data-Engineering/">Data Engineering</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Knowledge-Management/Ansible/">Ansible</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Knowledge-Management/Dataspace-Connector/">Dataspace Connector</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Knowledge-Management/Dataspace-Connector/Eclipse-Dataspace-Components/">Eclipse Dataspace Components</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Knowledge-Management/Raspberry-Pi/">Raspberry Pi</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Knowledge-Management/Raspberry-Pi/Image-Modification/">Image Modification</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Knowledge-Management/Raspberry-Pi/Keyboard/">Keyboard</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Kubenetes/">Kubenetes</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Kubenetes/Minikube/">Minikube</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Kubernetes/">Kubernetes</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Analytics-Zoo/">Analytics Zoo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/AutoML/">AutoML</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Data-Platform/">Data Platform</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Flow-Engine/">Flow Engine</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/MLflow/">MLflow</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Model/">Model</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Model/Cross-Validation/">Cross Validation</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Model/Data-Leakage/">Data Leakage</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Model/Partial-Dependency-Plot/">Partial Dependency Plot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Model/XGBoost/">XGBoost</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Model-Management/">Model Management</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Model-Management/Clipper/">Clipper</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/OpML/">OpML</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Preparation/">Preparation</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Software-Engineering-Patterns/">Software Engineering Patterns</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Stream-Processing/">Stream Processing</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Visualization/">Visualization</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Visualization/Seaborn/">Seaborn</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Machine-Learning/Word2Vec/">Word2Vec</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Messaging-System/">Messaging System</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Messaging-System/Kafka/">Kafka</a><span class="category-list-count">14</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Metadata-Management/">Metadata Management</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Monitering/">Monitering</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Open-API/">Open API</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Open-Data/">Open Data</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Open-Data/Scraping/">Scraping</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Open-Data/Tellus/">Tellus</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Pinot/">Pinot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Power-Grid-Data/">Power Grid Data</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Python/">Python</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Python/Jupyter/">Jupyter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Python/Pipenv/">Pipenv</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Python/pyenv/">pyenv</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/">Research</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/AWS/">AWS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/Conference/">Conference</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/Conference/DevSumi/">DevSumi</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/Data-Analytics/">Data Analytics</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/Data-Analytics/Tools/">Tools</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/Machine-Learning/">Machine Learning</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/Machine-Learning/BigDL/">BigDL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/Machine-Learning/TensorFlow/">TensorFlow</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/NVM/">NVM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/SX-Aurora-Frovedis/">SX-Aurora/Frovedis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/Trends/">Trends</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/Video-processing/">Video processing</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/Video-processing/BlazeIt/">BlazeIt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/Visualization/">Visualization</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Research/Visualization/Superset/">Superset</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/SDK/">SDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/SQLAlchemy/">SQLAlchemy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Scala/">Scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Scala/SBT/">SBT</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Spark/">Spark</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Spark/Spark-Summit/">Spark Summit</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Storage-Layer/">Storage Layer</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Storage-Layer/Delta-Lake/">Delta Lake</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Storage-Layer/Hudi/">Hudi</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Storage-Layer/Minio/">Minio</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Stream-Processing/">Stream Processing</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Stream-Processing/Apache-Edgent/">Apache Edgent</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Stream-Processing/Kappa-Architecture/">Kappa Architecture</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Stream-Processing/MillWheel/">MillWheel</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Stream-Processing/Twitter-Heron/">Twitter Heron</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Technical/">Technical</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Tools/">Tools</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Tools/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Tools/Intellij/">Intellij</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Tools/Selenium/">Selenium</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Tools/tmux/">tmux</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Trust-Services/">Trust Services</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Ubuntu/">Ubuntu</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/WSL/">WSL</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/WSL/CentOS/">CentOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/WSL/Docker/">Docker</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/WSL/Terminal-tool/">Terminal tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/WSL/Vagrant/">Vagrant</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/WSL/X-Window/">X Window</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Windows/">Windows</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Windows/Ansible/">Ansible</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Windows/Docker/">Docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Windows/Hyper-V/">Hyper-V</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Work/">Work</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Work/Guide/">Guide</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/Zeppelin/">Zeppelin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/ZooKeeper/">ZooKeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/vim/">vim</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/デジタル政策/">デジタル政策</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/デジタル政策/規制分析/">規制分析</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/ヘルスケア/">ヘルスケア</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/ヘルスケア/政策分析/">政策分析</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/ヘルスケア/政策分析/オープンソース/">オープンソース</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/医療/">医療</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/医療/改正次世代医療基盤法/">改正次世代医療基盤法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/金融/">金融</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/memo-blog/categories/金融/データプラットフォーム/">データプラットフォーム</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">アーカイブ</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2026/05/">5月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2026/04/">4月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2026/01/">1月 2026</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/12/">12月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/08/">8月 2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/07/">7月 2025</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/06/">6月 2025</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/05/">5月 2025</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/03/">3月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/02/">2月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2025/01/">1月 2025</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/12/">12月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/11/">11月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/10/">10月 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/09/">9月 2024</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/08/">8月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/07/">7月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2024/02/">2月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/09/">9月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2023/08/">8月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/05/">5月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/02/">2月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2022/01/">1月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/10/">10月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/09/">9月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/08/">8月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/07/">7月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/06/">6月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/05/">5月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/04/">4月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/02/">2月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2021/01/">1月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/12/">12月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/11/">11月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/10/">10月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/09/">9月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/08/">8月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/07/">7月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/06/">6月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/05/">5月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/04/">4月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/03/">3月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/02/">2月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2020/01/">1月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/12/">12月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/11/">11月 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/10/">10月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/09/">9月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/08/">8月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/07/">7月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/06/">6月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/05/">5月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/04/">4月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/03/">3月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/02/">2月 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2019/01/">1月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/12/">12月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/11/">11月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/10/">10月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/memo-blog/archives/2018/09/">9月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">タグ</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/AI/">AI</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/AI-Coding-Assistant/">AI Coding Assistant</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/AI規制/">AI規制</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/AI開発/">AI開発</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/AMD/">AMD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/API/">API</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/AWS/">AWS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Academia/">Academia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Adobe-Reader/">Adobe Reader</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Alluxio/">Alluxio</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Ambari/">Ambari</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Analytics-Zoo/">Analytics Zoo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Ansible/">Ansible</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Apache-Edgent/">Apache Edgent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Apache-Hudi/">Apache Hudi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Apache-Kafka/">Apache Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Apache-Spark/">Apache Spark</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Apple/">Apple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/AutoML/">AutoML</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Automagica/">Automagica</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/BaaS/">BaaS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Big-Data/">Big Data</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/BigDL/">BigDL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/BigTop/">BigTop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/BlazeIt/">BlazeIt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Bluetooth/">Bluetooth</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Business-Model/">Business Model</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/CDC/">CDC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/CLI/">CLI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/CentOS/">CentOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/CentOS7/">CentOS7</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/CircleCI/">CircleCI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Claude-Code/">Claude Code</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Clipper/">Clipper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Codex/">Codex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Comcast/">Comcast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/ComfyUI/">ComfyUI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Conference/">Conference</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Configuration-Management/">Configuration Management</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Connector/">Connector</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Corne-Chocolate/">Corne Chocolate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Cross-Validation/">Cross Validation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Dask/">Dask</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Analysis/">Data Analysis</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Analytics/">Data Analytics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Collaboration/">Data Collaboration</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Engineering/">Data Engineering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Governance/">Data Governance</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Lake/">Data Lake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Leakage/">Data Leakage</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Lineage/">Data Lineage</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Mesh/">Data Mesh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Platform/">Data Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Processing-Engine/">Data Processing Engine</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Space/">Data Space</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Spaces/">Data Spaces</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-Transformation/">Data Transformation</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Data-centric-AI/">Data-centric AI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Dataspace-Connector/">Dataspace Connector</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Dataspace-Protocol/">Dataspace Protocol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Delta-Lake/">Delta Lake</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Delta-Sharing/">Delta Sharing</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/DevSumi/">DevSumi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Distributed-Computing/">Distributed Computing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Docker/">Docker</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Dockerfile/">Dockerfile</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Druid/">Druid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/EDC/">EDC</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/EHDS/">EHDS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/EU規制/">EU規制</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Eclipase/">Eclipase</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Flask/">Flask</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Flow-Engine/">Flow Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Frovedis/">Frovedis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Fundamentals/">Fundamentals</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/GIS/">GIS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/GNOME/">GNOME</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/GPD-Pocket/">GPD Pocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/GPU/">GPU</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Gemini/">Gemini</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Gimp/">Gimp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Git/">Git</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/GitHub-Actions/">GitHub Actions</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/GitHub-Pages/">GitHub Pages</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Google/">Google</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Goverment/">Goverment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Graceful-Shutdown/">Graceful Shutdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Gradle/">Gradle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/HBase/">HBase</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/HDP/">HDP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/HPC/">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Hadoop/">Hadoop</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Headscale/">Headscale</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Healthcare/">Healthcare</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Hexo/">Hexo</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Hexo-Plugin/">Hexo Plugin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Hyper/">Hyper</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Hyper-V/">Hyper-V</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/IDS/">IDS</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/IEEE/">IEEE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/IPv6/">IPv6</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Icarus/">Icarus</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Intel/">Intel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Intellij/">Intellij</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/JSON/">JSON</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Jan/">Jan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Jupyter/">Jupyter</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/KVM/">KVM</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Kafak-Connect/">Kafak Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Kafka/">Kafka</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Kafka-Connect/">Kafka Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Kafka-Streams/">Kafka Streams</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Kaggle/">Kaggle</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Kappa-Architecture/">Kappa Architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Keyboard/">Keyboard</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Kinesis/">Kinesis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Kubenetes/">Kubenetes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Kubernetes/">Kubernetes</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/LLM/">LLM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Lambda-Architecture/">Lambda Architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Linda/">Linda</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/LinkedIn/">LinkedIn</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Llama/">Llama</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/LocalLLM/">LocalLLM</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/MATE-Desktop/">MATE Desktop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/MCP/">MCP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/ML-Model-Management/">ML Model Management</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/ML-Ops/">ML Ops</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/MLflow/">MLflow</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">30</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Machine-Learning-Lifecycle/">Machine Learning Lifecycle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Machine-Learning-Lifecycle/">Machine Learning Lifecycle/</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Map/">Map</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Messaging-System/">Messaging System</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Metadata-Management/">Metadata Management</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/MillWheel/">MillWheel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Minikube/">Minikube</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Minio/">Minio</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Mobility/">Mobility</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Model/">Model</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Model-Management/">Model Management</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Monitering/">Monitering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Mouse/">Mouse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/NERDTree/">NERDTree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/NVM/">NVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Nature-Remo/">Nature Remo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Network/">Network</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/New-Employee/">New Employee</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/OLAP/">OLAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Ollama/">Ollama</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Onboarding/">Onboarding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/OneDrive/">OneDrive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/OpML/">OpML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Open-API/">Open API</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Open-Data/">Open Data</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Open-Messaging-Benchmark/">Open Messaging Benchmark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/OpenAI/">OpenAI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/OpenAPI/">OpenAPI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/OpenHands/">OpenHands</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/OpenML/">OpenML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Ouranos-Ecosystem/">Ouranos Ecosystem</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/PAPIDS/">PAPIDS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/PDF/">PDF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Pandoc/">Pandoc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Paper/">Paper</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Parquet/">Parquet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Partial-Dependency-Plot/">Partial Dependency Plot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Performance/">Performance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Pinot/">Pinot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Pipenv/">Pipenv</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Power-Grid-Data/">Power Grid Data</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/PowerShell/">PowerShell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Preparation/">Preparation</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Profiler/">Profiler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Proxy/">Proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Pulsar/">Pulsar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/PySpark/">PySpark</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Python/">Python</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Python3/">Python3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/QMK/">QMK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Quarto/">Quarto</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Query-Engine/">Query Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/RDBMS/">RDBMS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/RPA/">RPA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Raspberry-Pi/">Raspberry Pi</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/S3/">S3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/SBT/">SBT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/SDK/">SDK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/SQLAlchemy/">SQLAlchemy</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/SQLite/">SQLite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/SX-Aurora/">SX-Aurora</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Samba/">Samba</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Scala/">Scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Scraping/">Scraping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Seaborn/">Seaborn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/SelfHosting/">SelfHosting</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Session/">Session</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Shotwell/">Shotwell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Slenium/">Slenium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Smart-Home/">Smart Home</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Software-Engineering-Patterns/">Software Engineering Patterns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Spark/">Spark</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Spark-Summit/">Spark Summit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Sphinx/">Sphinx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Stonebraker/">Stonebraker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Storage/">Storage</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Storage-Engine/">Storage Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Storage-Layer/">Storage Layer</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Storage-Layer-Software/">Storage Layer Software</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Stream-Processing/">Stream Processing</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Superset/">Superset</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Supervision/">Supervision</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Survey/">Survey</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Tailscale/">Tailscale</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Tellus/">Tellus</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/TensorFlow/">TensorFlow</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/TensorFlowOnSpark/">TensorFlowOnSpark</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Terraform/">Terraform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Trends/">Trends</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Troubleshoot/">Troubleshoot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Troubleshooting/">Troubleshooting</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Trust-Services/">Trust Services</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Tuple-Space/">Tuple Space</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Twitter/">Twitter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Twitter-Heron/">Twitter Heron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Uber/">Uber</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/VMWare/">VMWare</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/VPN/">VPN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/VS-Code/">VS Code</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Vagrant/">Vagrant</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Vault/">Vault</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Vector-Engine/">Vector Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Video-Processing/">Video Processing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Visualization/">Visualization</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/WSL/">WSL</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/WSL2/">WSL2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Web/">Web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/WhereHows/">WhereHows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/WiFi/">WiFi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/WiFi6/">WiFi6</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Windows/">Windows</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/WireGuard/">WireGuard</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Word/">Word</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Word2Vec/">Word2Vec</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Work/">Work</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/X-Window/">X Window</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/X-Road/">X-Road</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/XGBoost/">XGBoost</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/Zeppelin/">Zeppelin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/ZooKeeper/">ZooKeeper</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/ansible/">ansible</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/dein/">dein</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/dstat/">dstat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/keyboard/">keyboard</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/libvirt/">libvirt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/nltk/">nltk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/pandoc/">pandoc</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/pyenv/">pyenv</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/tmux/">tmux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/vim/">vim</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/windows/">windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/カスタムコマンド/">カスタムコマンド</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/サステナブルファイナンス/">サステナブルファイナンス</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/チューニング/">チューニング</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/デジタル化/">デジタル化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/デジタル政策/">デジタル政策</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/データ利活用/">データ利活用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/データ連携/">データ連携</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/医療/">医療</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/医療IT/">医療IT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/国際比較/">国際比較</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/戦略/">戦略</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/改正次世代医療基盤法/">改正次世代医療基盤法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/政策動向/">政策動向</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/政策研究/">政策研究</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/日本政策/">日本政策</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/日本経済/">日本経済</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/規制戦略/">規制戦略</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/資産運用/">資産運用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/金融庁/">金融庁</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/memo-blog/tags/開発効率化/">開発効率化</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">タグクラウド</h3>
+        <div class="widget tagcloud">
+            <a href="/memo-blog/tags/AI/" style="font-size: 17.14px;">AI</a> <a href="/memo-blog/tags/AI-Coding-Assistant/" style="font-size: 10px;">AI Coding Assistant</a> <a href="/memo-blog/tags/AI規制/" style="font-size: 10px;">AI規制</a> <a href="/memo-blog/tags/AI開発/" style="font-size: 10px;">AI開発</a> <a href="/memo-blog/tags/AMD/" style="font-size: 10px;">AMD</a> <a href="/memo-blog/tags/API/" style="font-size: 10px;">API</a> <a href="/memo-blog/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/memo-blog/tags/Academia/" style="font-size: 10px;">Academia</a> <a href="/memo-blog/tags/Adobe-Reader/" style="font-size: 10px;">Adobe Reader</a> <a href="/memo-blog/tags/Alluxio/" style="font-size: 10.71px;">Alluxio</a> <a href="/memo-blog/tags/Ambari/" style="font-size: 10px;">Ambari</a> <a href="/memo-blog/tags/Analytics-Zoo/" style="font-size: 10px;">Analytics Zoo</a> <a href="/memo-blog/tags/Ansible/" style="font-size: 12.14px;">Ansible</a> <a href="/memo-blog/tags/Apache-Edgent/" style="font-size: 10px;">Apache Edgent</a> <a href="/memo-blog/tags/Apache-Hudi/" style="font-size: 10px;">Apache Hudi</a> <a href="/memo-blog/tags/Apache-Kafka/" style="font-size: 10px;">Apache Kafka</a> <a href="/memo-blog/tags/Apache-Spark/" style="font-size: 11.43px;">Apache Spark</a> <a href="/memo-blog/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/memo-blog/tags/AutoML/" style="font-size: 10.71px;">AutoML</a> <a href="/memo-blog/tags/Automagica/" style="font-size: 10px;">Automagica</a> <a href="/memo-blog/tags/BaaS/" style="font-size: 10px;">BaaS</a> <a href="/memo-blog/tags/Big-Data/" style="font-size: 10px;">Big Data</a> <a href="/memo-blog/tags/BigDL/" style="font-size: 10.71px;">BigDL</a> <a href="/memo-blog/tags/BigTop/" style="font-size: 10.71px;">BigTop</a> <a href="/memo-blog/tags/BlazeIt/" style="font-size: 10px;">BlazeIt</a> <a href="/memo-blog/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/memo-blog/tags/Business-Model/" style="font-size: 10px;">Business Model</a> <a href="/memo-blog/tags/CDC/" style="font-size: 10px;">CDC</a> <a href="/memo-blog/tags/CLI/" style="font-size: 10px;">CLI</a> <a href="/memo-blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/memo-blog/tags/CentOS7/" style="font-size: 11.43px;">CentOS7</a> <a href="/memo-blog/tags/CircleCI/" style="font-size: 10px;">CircleCI</a> <a href="/memo-blog/tags/Claude-Code/" style="font-size: 13.57px;">Claude Code</a> <a href="/memo-blog/tags/Clipper/" style="font-size: 10px;">Clipper</a> <a href="/memo-blog/tags/Codex/" style="font-size: 10px;">Codex</a> <a href="/memo-blog/tags/Comcast/" style="font-size: 10px;">Comcast</a> <a href="/memo-blog/tags/ComfyUI/" style="font-size: 10px;">ComfyUI</a> <a href="/memo-blog/tags/Conference/" style="font-size: 10px;">Conference</a> <a href="/memo-blog/tags/Configuration-Management/" style="font-size: 10px;">Configuration Management</a> <a href="/memo-blog/tags/Connector/" style="font-size: 10.71px;">Connector</a> <a href="/memo-blog/tags/Corne-Chocolate/" style="font-size: 10px;">Corne Chocolate</a> <a href="/memo-blog/tags/Cross-Validation/" style="font-size: 10px;">Cross Validation</a> <a href="/memo-blog/tags/Dask/" style="font-size: 10.71px;">Dask</a> <a href="/memo-blog/tags/Data-Analysis/" style="font-size: 10.71px;">Data Analysis</a> <a href="/memo-blog/tags/Data-Analytics/" style="font-size: 10px;">Data Analytics</a> <a href="/memo-blog/tags/Data-Collaboration/" style="font-size: 10px;">Data Collaboration</a> <a href="/memo-blog/tags/Data-Engineering/" style="font-size: 10px;">Data Engineering</a> <a href="/memo-blog/tags/Data-Governance/" style="font-size: 10.71px;">Data Governance</a> <a href="/memo-blog/tags/Data-Lake/" style="font-size: 10px;">Data Lake</a> <a href="/memo-blog/tags/Data-Leakage/" style="font-size: 10px;">Data Leakage</a> <a href="/memo-blog/tags/Data-Lineage/" style="font-size: 10px;">Data Lineage</a> <a href="/memo-blog/tags/Data-Mesh/" style="font-size: 10px;">Data Mesh</a> <a href="/memo-blog/tags/Data-Platform/" style="font-size: 10px;">Data Platform</a> <a href="/memo-blog/tags/Data-Processing-Engine/" style="font-size: 10.71px;">Data Processing Engine</a> <a href="/memo-blog/tags/Data-Space/" style="font-size: 10px;">Data Space</a> <a href="/memo-blog/tags/Data-Spaces/" style="font-size: 19.29px;">Data Spaces</a> <a href="/memo-blog/tags/Data-Transformation/" style="font-size: 10.71px;">Data Transformation</a> <a href="/memo-blog/tags/Data-centric-AI/" style="font-size: 10px;">Data-centric AI</a> <a href="/memo-blog/tags/Dataspace-Connector/" style="font-size: 12.14px;">Dataspace Connector</a> <a href="/memo-blog/tags/Dataspace-Protocol/" style="font-size: 10px;">Dataspace Protocol</a> <a href="/memo-blog/tags/Delta-Lake/" style="font-size: 17.14px;">Delta Lake</a> <a href="/memo-blog/tags/Delta-Sharing/" style="font-size: 12.14px;">Delta Sharing</a> <a href="/memo-blog/tags/DevSumi/" style="font-size: 10px;">DevSumi</a> <a href="/memo-blog/tags/Distributed-Computing/" style="font-size: 10px;">Distributed Computing</a> <a href="/memo-blog/tags/Docker/" style="font-size: 15.71px;">Docker</a> <a href="/memo-blog/tags/Dockerfile/" style="font-size: 10.71px;">Dockerfile</a> <a href="/memo-blog/tags/Druid/" style="font-size: 10px;">Druid</a> <a href="/memo-blog/tags/EDC/" style="font-size: 15px;">EDC</a> <a href="/memo-blog/tags/EHDS/" style="font-size: 10px;">EHDS</a> <a href="/memo-blog/tags/EU規制/" style="font-size: 10px;">EU規制</a> <a href="/memo-blog/tags/Eclipase/" style="font-size: 10px;">Eclipase</a> <a href="/memo-blog/tags/Flask/" style="font-size: 12.14px;">Flask</a> <a href="/memo-blog/tags/Flow-Engine/" style="font-size: 10px;">Flow Engine</a> <a href="/memo-blog/tags/Frovedis/" style="font-size: 10px;">Frovedis</a> <a href="/memo-blog/tags/Fundamentals/" style="font-size: 10px;">Fundamentals</a> <a href="/memo-blog/tags/GIS/" style="font-size: 10px;">GIS</a> <a href="/memo-blog/tags/GNOME/" style="font-size: 10px;">GNOME</a> <a href="/memo-blog/tags/GPD-Pocket/" style="font-size: 10px;">GPD Pocket</a> <a href="/memo-blog/tags/GPU/" style="font-size: 10px;">GPU</a> <a href="/memo-blog/tags/Gemini/" style="font-size: 10px;">Gemini</a> <a href="/memo-blog/tags/Gimp/" style="font-size: 10px;">Gimp</a> <a href="/memo-blog/tags/Git/" style="font-size: 11.43px;">Git</a> <a href="/memo-blog/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/memo-blog/tags/GitHub-Actions/" style="font-size: 10.71px;">GitHub Actions</a> <a href="/memo-blog/tags/GitHub-Pages/" style="font-size: 10px;">GitHub Pages</a> <a href="/memo-blog/tags/Google/" style="font-size: 10px;">Google</a> <a href="/memo-blog/tags/Goverment/" style="font-size: 10px;">Goverment</a> <a href="/memo-blog/tags/Graceful-Shutdown/" style="font-size: 10px;">Graceful Shutdown</a> <a href="/memo-blog/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/memo-blog/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/memo-blog/tags/HDP/" style="font-size: 10px;">HDP</a> <a href="/memo-blog/tags/HPC/" style="font-size: 10px;">HPC</a> <a href="/memo-blog/tags/Hadoop/" style="font-size: 11.43px;">Hadoop</a> <a href="/memo-blog/tags/Headscale/" style="font-size: 10px;">Headscale</a> <a href="/memo-blog/tags/Healthcare/" style="font-size: 10px;">Healthcare</a> <a href="/memo-blog/tags/Hexo/" style="font-size: 16.43px;">Hexo</a> <a href="/memo-blog/tags/Hexo-Plugin/" style="font-size: 10px;">Hexo Plugin</a> <a href="/memo-blog/tags/Hyper/" style="font-size: 10.71px;">Hyper</a> <a href="/memo-blog/tags/Hyper-V/" style="font-size: 10.71px;">Hyper-V</a> <a href="/memo-blog/tags/IDS/" style="font-size: 12.86px;">IDS</a> <a href="/memo-blog/tags/IEEE/" style="font-size: 10.71px;">IEEE</a> <a href="/memo-blog/tags/IPv6/" style="font-size: 10px;">IPv6</a> <a href="/memo-blog/tags/Icarus/" style="font-size: 10px;">Icarus</a> <a href="/memo-blog/tags/Intel/" style="font-size: 10px;">Intel</a> <a href="/memo-blog/tags/Intellij/" style="font-size: 10.71px;">Intellij</a> <a href="/memo-blog/tags/JSON/" style="font-size: 10px;">JSON</a> <a href="/memo-blog/tags/Jan/" style="font-size: 10px;">Jan</a> <a href="/memo-blog/tags/Java/" style="font-size: 10px;">Java</a> <a href="/memo-blog/tags/Jupyter/" style="font-size: 10.71px;">Jupyter</a> <a href="/memo-blog/tags/KVM/" style="font-size: 11.43px;">KVM</a> <a href="/memo-blog/tags/Kafak-Connect/" style="font-size: 10px;">Kafak Connect</a> <a href="/memo-blog/tags/Kafka/" style="font-size: 18.57px;">Kafka</a> <a href="/memo-blog/tags/Kafka-Connect/" style="font-size: 10px;">Kafka Connect</a> <a href="/memo-blog/tags/Kafka-Streams/" style="font-size: 10.71px;">Kafka Streams</a> <a href="/memo-blog/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/memo-blog/tags/Kappa-Architecture/" style="font-size: 10px;">Kappa Architecture</a> <a href="/memo-blog/tags/Keyboard/" style="font-size: 10.71px;">Keyboard</a> <a href="/memo-blog/tags/Kinesis/" style="font-size: 10px;">Kinesis</a> <a href="/memo-blog/tags/Kubenetes/" style="font-size: 10px;">Kubenetes</a> <a href="/memo-blog/tags/Kubernetes/" style="font-size: 11.43px;">Kubernetes</a> <a href="/memo-blog/tags/LLM/" style="font-size: 10px;">LLM</a> <a href="/memo-blog/tags/Lambda-Architecture/" style="font-size: 10px;">Lambda Architecture</a> <a href="/memo-blog/tags/Linda/" style="font-size: 10px;">Linda</a> <a href="/memo-blog/tags/LinkedIn/" style="font-size: 12.14px;">LinkedIn</a> <a href="/memo-blog/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/memo-blog/tags/Llama/" style="font-size: 10.71px;">Llama</a> <a href="/memo-blog/tags/LocalLLM/" style="font-size: 10.71px;">LocalLLM</a> <a href="/memo-blog/tags/MATE-Desktop/" style="font-size: 10px;">MATE Desktop</a> <a href="/memo-blog/tags/MCP/" style="font-size: 10.71px;">MCP</a> <a href="/memo-blog/tags/ML-Model-Management/" style="font-size: 10.71px;">ML Model Management</a> <a href="/memo-blog/tags/ML-Ops/" style="font-size: 10px;">ML Ops</a> <a href="/memo-blog/tags/MLflow/" style="font-size: 10px;">MLflow</a> <a href="/memo-blog/tags/Machine-Learning/" style="font-size: 20px;">Machine Learning</a> <a href="/memo-blog/tags/Machine-Learning-Lifecycle/" style="font-size: 10px;">Machine Learning Lifecycle</a> <a href="/memo-blog/tags/Machine-Learning-Lifecycle/" style="font-size: 10px;">Machine Learning Lifecycle/</a> <a href="/memo-blog/tags/Map/" style="font-size: 10px;">Map</a> <a href="/memo-blog/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/memo-blog/tags/Messaging-System/" style="font-size: 10px;">Messaging System</a> <a href="/memo-blog/tags/Metadata-Management/" style="font-size: 10px;">Metadata Management</a> <a href="/memo-blog/tags/MillWheel/" style="font-size: 10px;">MillWheel</a> <a href="/memo-blog/tags/Minikube/" style="font-size: 10.71px;">Minikube</a> <a href="/memo-blog/tags/Minio/" style="font-size: 10.71px;">Minio</a> <a href="/memo-blog/tags/Mobility/" style="font-size: 10px;">Mobility</a> <a href="/memo-blog/tags/Model/" style="font-size: 12.14px;">Model</a> <a href="/memo-blog/tags/Model-Management/" style="font-size: 12.14px;">Model Management</a> <a href="/memo-blog/tags/Monitering/" style="font-size: 10px;">Monitering</a> <a href="/memo-blog/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/memo-blog/tags/NERDTree/" style="font-size: 10px;">NERDTree</a> <a href="/memo-blog/tags/NVM/" style="font-size: 10px;">NVM</a> <a href="/memo-blog/tags/Nature-Remo/" style="font-size: 10px;">Nature Remo</a> <a href="/memo-blog/tags/Network/" style="font-size: 10.71px;">Network</a> <a href="/memo-blog/tags/New-Employee/" style="font-size: 10px;">New Employee</a> <a href="/memo-blog/tags/OLAP/" style="font-size: 10px;">OLAP</a> <a href="/memo-blog/tags/Ollama/" style="font-size: 10.71px;">Ollama</a> <a href="/memo-blog/tags/Onboarding/" style="font-size: 10px;">Onboarding</a> <a href="/memo-blog/tags/OneDrive/" style="font-size: 10px;">OneDrive</a> <a href="/memo-blog/tags/OpML/" style="font-size: 10px;">OpML</a> <a href="/memo-blog/tags/Open-API/" style="font-size: 10px;">Open API</a> <a href="/memo-blog/tags/Open-Data/" style="font-size: 10.71px;">Open Data</a> <a href="/memo-blog/tags/Open-Messaging-Benchmark/" style="font-size: 10px;">Open Messaging Benchmark</a> <a href="/memo-blog/tags/OpenAI/" style="font-size: 10px;">OpenAI</a> <a href="/memo-blog/tags/OpenAPI/" style="font-size: 10px;">OpenAPI</a> <a href="/memo-blog/tags/OpenHands/" style="font-size: 10px;">OpenHands</a> <a href="/memo-blog/tags/OpenML/" style="font-size: 10px;">OpenML</a> <a href="/memo-blog/tags/Ouranos-Ecosystem/" style="font-size: 10px;">Ouranos Ecosystem</a> <a href="/memo-blog/tags/PAPIDS/" style="font-size: 10px;">PAPIDS</a> <a href="/memo-blog/tags/PDF/" style="font-size: 10px;">PDF</a> <a href="/memo-blog/tags/Pandoc/" style="font-size: 10px;">Pandoc</a> <a href="/memo-blog/tags/Paper/" style="font-size: 16.43px;">Paper</a> <a href="/memo-blog/tags/Parquet/" style="font-size: 10px;">Parquet</a> <a href="/memo-blog/tags/Partial-Dependency-Plot/" style="font-size: 10px;">Partial Dependency Plot</a> <a href="/memo-blog/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/memo-blog/tags/Pinot/" style="font-size: 10px;">Pinot</a> <a href="/memo-blog/tags/Pipenv/" style="font-size: 10px;">Pipenv</a> <a href="/memo-blog/tags/Power-Grid-Data/" style="font-size: 10px;">Power Grid Data</a> <a href="/memo-blog/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/memo-blog/tags/Preparation/" style="font-size: 10.71px;">Preparation</a> <a href="/memo-blog/tags/Profiler/" style="font-size: 10px;">Profiler</a> <a href="/memo-blog/tags/Proxy/" style="font-size: 10px;">Proxy</a> <a href="/memo-blog/tags/Pulsar/" style="font-size: 10px;">Pulsar</a> <a href="/memo-blog/tags/PySpark/" style="font-size: 12.14px;">PySpark</a> <a href="/memo-blog/tags/Python/" style="font-size: 17.86px;">Python</a> <a href="/memo-blog/tags/Python3/" style="font-size: 10px;">Python3</a> <a href="/memo-blog/tags/QMK/" style="font-size: 10px;">QMK</a> <a href="/memo-blog/tags/Quarto/" style="font-size: 10px;">Quarto</a> <a href="/memo-blog/tags/Query-Engine/" style="font-size: 10px;">Query Engine</a> <a href="/memo-blog/tags/RDBMS/" style="font-size: 10px;">RDBMS</a> <a href="/memo-blog/tags/RPA/" style="font-size: 10px;">RPA</a> <a href="/memo-blog/tags/Raspberry-Pi/" style="font-size: 10.71px;">Raspberry Pi</a> <a href="/memo-blog/tags/S3/" style="font-size: 10px;">S3</a> <a href="/memo-blog/tags/SBT/" style="font-size: 10px;">SBT</a> <a href="/memo-blog/tags/SDK/" style="font-size: 10px;">SDK</a> <a href="/memo-blog/tags/SQLAlchemy/" style="font-size: 10.71px;">SQLAlchemy</a> <a href="/memo-blog/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/memo-blog/tags/SX-Aurora/" style="font-size: 10px;">SX-Aurora</a> <a href="/memo-blog/tags/Samba/" style="font-size: 10px;">Samba</a> <a href="/memo-blog/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/memo-blog/tags/Scraping/" style="font-size: 10px;">Scraping</a> <a href="/memo-blog/tags/Seaborn/" style="font-size: 10px;">Seaborn</a> <a href="/memo-blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/memo-blog/tags/SelfHosting/" style="font-size: 10px;">SelfHosting</a> <a href="/memo-blog/tags/Session/" style="font-size: 10px;">Session</a> <a href="/memo-blog/tags/Shotwell/" style="font-size: 10px;">Shotwell</a> <a href="/memo-blog/tags/Slenium/" style="font-size: 10px;">Slenium</a> <a href="/memo-blog/tags/Smart-Home/" style="font-size: 10px;">Smart Home</a> <a href="/memo-blog/tags/Software-Engineering-Patterns/" style="font-size: 10px;">Software Engineering Patterns</a> <a href="/memo-blog/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/memo-blog/tags/Spark-Summit/" style="font-size: 10px;">Spark Summit</a> <a href="/memo-blog/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/memo-blog/tags/Stonebraker/" style="font-size: 10px;">Stonebraker</a> <a href="/memo-blog/tags/Storage/" style="font-size: 10px;">Storage</a> <a href="/memo-blog/tags/Storage-Engine/" style="font-size: 10px;">Storage Engine</a> <a href="/memo-blog/tags/Storage-Layer/" style="font-size: 11.43px;">Storage Layer</a> <a href="/memo-blog/tags/Storage-Layer-Software/" style="font-size: 10px;">Storage Layer Software</a> <a href="/memo-blog/tags/Stream-Processing/" style="font-size: 16.43px;">Stream Processing</a> <a href="/memo-blog/tags/Superset/" style="font-size: 10px;">Superset</a> <a href="/memo-blog/tags/Supervision/" style="font-size: 10px;">Supervision</a> <a href="/memo-blog/tags/Survey/" style="font-size: 10px;">Survey</a> <a href="/memo-blog/tags/Tailscale/" style="font-size: 10px;">Tailscale</a> <a href="/memo-blog/tags/Tellus/" style="font-size: 10px;">Tellus</a> <a href="/memo-blog/tags/TensorFlow/" style="font-size: 11.43px;">TensorFlow</a> <a href="/memo-blog/tags/TensorFlowOnSpark/" style="font-size: 10.71px;">TensorFlowOnSpark</a> <a href="/memo-blog/tags/Terraform/" style="font-size: 10px;">Terraform</a> <a href="/memo-blog/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/memo-blog/tags/Trends/" style="font-size: 10px;">Trends</a> <a href="/memo-blog/tags/Troubleshoot/" style="font-size: 10px;">Troubleshoot</a> <a href="/memo-blog/tags/Troubleshooting/" style="font-size: 10px;">Troubleshooting</a> <a href="/memo-blog/tags/Trust-Services/" style="font-size: 11.43px;">Trust Services</a> <a href="/memo-blog/tags/Tuple-Space/" style="font-size: 10px;">Tuple Space</a> <a href="/memo-blog/tags/Twitter/" style="font-size: 10px;">Twitter</a> <a href="/memo-blog/tags/Twitter-Heron/" style="font-size: 10px;">Twitter Heron</a> <a href="/memo-blog/tags/Uber/" style="font-size: 10px;">Uber</a> <a href="/memo-blog/tags/Ubuntu/" style="font-size: 17.14px;">Ubuntu</a> <a href="/memo-blog/tags/VMWare/" style="font-size: 10px;">VMWare</a> <a href="/memo-blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/memo-blog/tags/VS-Code/" style="font-size: 10px;">VS Code</a> <a href="/memo-blog/tags/Vagrant/" style="font-size: 10.71px;">Vagrant</a> <a href="/memo-blog/tags/Vault/" style="font-size: 10px;">Vault</a> <a href="/memo-blog/tags/Vector-Engine/" style="font-size: 10px;">Vector Engine</a> <a href="/memo-blog/tags/Video-Processing/" style="font-size: 10px;">Video Processing</a> <a href="/memo-blog/tags/Visualization/" style="font-size: 10.71px;">Visualization</a> <a href="/memo-blog/tags/WSL/" style="font-size: 14.29px;">WSL</a> <a href="/memo-blog/tags/WSL2/" style="font-size: 10px;">WSL2</a> <a href="/memo-blog/tags/Web/" style="font-size: 10px;">Web</a> <a href="/memo-blog/tags/WhereHows/" style="font-size: 10px;">WhereHows</a> <a href="/memo-blog/tags/WiFi/" style="font-size: 10px;">WiFi</a> <a href="/memo-blog/tags/WiFi6/" style="font-size: 10px;">WiFi6</a> <a href="/memo-blog/tags/Windows/" style="font-size: 13.57px;">Windows</a> <a href="/memo-blog/tags/WireGuard/" style="font-size: 10px;">WireGuard</a> <a href="/memo-blog/tags/Word/" style="font-size: 10px;">Word</a> <a href="/memo-blog/tags/Word2Vec/" style="font-size: 10px;">Word2Vec</a> <a href="/memo-blog/tags/Work/" style="font-size: 10px;">Work</a> <a href="/memo-blog/tags/X-Window/" style="font-size: 10px;">X Window</a> <a href="/memo-blog/tags/X-Road/" style="font-size: 10px;">X-Road</a> <a href="/memo-blog/tags/XGBoost/" style="font-size: 10px;">XGBoost</a> <a href="/memo-blog/tags/Zeppelin/" style="font-size: 10px;">Zeppelin</a> <a href="/memo-blog/tags/ZooKeeper/" style="font-size: 12.14px;">ZooKeeper</a> <a href="/memo-blog/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/memo-blog/tags/dein/" style="font-size: 10px;">dein</a> <a href="/memo-blog/tags/dstat/" style="font-size: 10px;">dstat</a> <a href="/memo-blog/tags/git/" style="font-size: 10px;">git</a> <a href="/memo-blog/tags/keyboard/" style="font-size: 10.71px;">keyboard</a> <a href="/memo-blog/tags/libvirt/" style="font-size: 10px;">libvirt</a> <a href="/memo-blog/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/memo-blog/tags/nltk/" style="font-size: 10px;">nltk</a> <a href="/memo-blog/tags/pandoc/" style="font-size: 11.43px;">pandoc</a> <a href="/memo-blog/tags/pyenv/" style="font-size: 10px;">pyenv</a> <a href="/memo-blog/tags/tmux/" style="font-size: 10.71px;">tmux</a> <a href="/memo-blog/tags/vim/" style="font-size: 14.29px;">vim</a> <a href="/memo-blog/tags/windows/" style="font-size: 10px;">windows</a> <a href="/memo-blog/tags/カスタムコマンド/" style="font-size: 10px;">カスタムコマンド</a> <a href="/memo-blog/tags/サステナブルファイナンス/" style="font-size: 10px;">サステナブルファイナンス</a> <a href="/memo-blog/tags/チューニング/" style="font-size: 10px;">チューニング</a> <a href="/memo-blog/tags/デジタル化/" style="font-size: 10.71px;">デジタル化</a> <a href="/memo-blog/tags/デジタル政策/" style="font-size: 10px;">デジタル政策</a> <a href="/memo-blog/tags/データ利活用/" style="font-size: 10px;">データ利活用</a> <a href="/memo-blog/tags/データ連携/" style="font-size: 10.71px;">データ連携</a> <a href="/memo-blog/tags/医療/" style="font-size: 10px;">医療</a> <a href="/memo-blog/tags/医療IT/" style="font-size: 10px;">医療IT</a> <a href="/memo-blog/tags/国際比較/" style="font-size: 10px;">国際比較</a> <a href="/memo-blog/tags/戦略/" style="font-size: 10px;">戦略</a> <a href="/memo-blog/tags/改正次世代医療基盤法/" style="font-size: 10px;">改正次世代医療基盤法</a> <a href="/memo-blog/tags/政策動向/" style="font-size: 10px;">政策動向</a> <a href="/memo-blog/tags/政策研究/" style="font-size: 10px;">政策研究</a> <a href="/memo-blog/tags/日本政策/" style="font-size: 10px;">日本政策</a> <a href="/memo-blog/tags/日本経済/" style="font-size: 10px;">日本経済</a> <a href="/memo-blog/tags/規制戦略/" style="font-size: 10px;">規制戦略</a> <a href="/memo-blog/tags/資産運用/" style="font-size: 10px;">資産運用</a> <a href="/memo-blog/tags/金融庁/" style="font-size: 11.43px;">金融庁</a> <a href="/memo-blog/tags/開発効率化/" style="font-size: 10px;">開発効率化</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">リンク</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2026 dobachi<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/memo-blog/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/memo-blog/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/memo-blog/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/memo-blog/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/memo-blog/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/memo-blog/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/memo-blog/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/memo-blog/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/memo-blog/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/memo-blog/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/memo-blog/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
