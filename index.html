@@ -312,7 +312,41 @@ AWS EC2 単体構成</a>
 の自宅サーバの場合（補足）</a></li>
 <li><a href="#route-53-で運用する場合" id="toc-route-53-で運用する場合">Route 53 で運用する場合</a></li>
 </ul></li>
-<li><a href="#クライアントの接続" id="toc-クライアントの接続">クライアントの接続</a></li>
+<li><a href="#クライアントの接続" id="toc-クライアントの接続">クライアントの接続</a>
+<ul>
+<li><a href="#サーバ側-ユーザーと事前認証鍵の発行" id="toc-サーバ側-ユーザーと事前認証鍵の発行">サーバ側:
+ユーザーと事前認証鍵の発行</a></li>
+<li><a href="#方法-a-事前認証鍵で自動登録推奨" id="toc-方法-a-事前認証鍵で自動登録推奨">方法 A:
+事前認証鍵で自動登録（推奨）</a></li>
+<li><a href="#方法-b-インタラクティブ登録事前認証鍵を使わない" id="toc-方法-b-インタラクティブ登録事前認証鍵を使わない">方法 B:
+インタラクティブ登録（事前認証鍵を使わない）</a></li>
+<li><a href="#公式アプリmacos-ios-windows-android" id="toc-公式アプリmacos-ios-windows-android">公式アプリ（macOS / iOS /
+Windows / Android）</a></li>
+<li><a href="#起動時に指定できる代表的なフラグ" id="toc-起動時に指定できる代表的なフラグ">起動時に指定できる代表的なフラグ</a></li>
+<li><a href="#接続後の動作確認クライアント側" id="toc-接続後の動作確認クライアント側">接続後の動作確認（クライアント側）</a>
+<ul>
+<li><a href="#ノードの状態とピア一覧" id="toc-ノードの状態とピア一覧">1.
+ノードの状態とピア一覧</a></li>
+<li><a href="#接続性とリレー判定" id="toc-接続性とリレー判定">2.
+接続性とリレー判定</a></li>
+<li><a href="#デーモンの状態とログ" id="toc-デーモンの状態とログ">3.
+デーモンの状態とログ</a></li>
+<li><a href="#再ログインと切断" id="toc-再ログインと切断">4.
+再ログインと切断</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#複数ノード間で-ssh-するまで" id="toc-複数ノード間で-ssh-するまで">複数ノード間で SSH するまで</a>
+<ul>
+<li><a href="#ノードがサーバに登録されているかを確認" id="toc-ノードがサーバに登録されているかを確認">1.
+ノードがサーバに登録されているかを確認</a></li>
+<li><a href="#ピア間の疎通確認" id="toc-ピア間の疎通確認">2.
+ピア間の疎通確認</a></li>
+<li><a href="#magicdns-による名前解決" id="toc-magicdns-による名前解決">3. MagicDNS による名前解決</a></li>
+<li><a href="#通常の-ssh-で接続する" id="toc-通常の-ssh-で接続する">4.
+通常の SSH で接続する</a></li>
+<li><a href="#任意tailscale-ssh-を有効化する" id="toc-任意tailscale-ssh-を有効化する">5. （任意）Tailscale SSH
+を有効化する</a></li>
+</ul></li>
 <li><a href="#構築の自動化terraform-ansible" id="toc-構築の自動化terraform-ansible">構築の自動化（Terraform /
 Ansible）</a>
 <ul>
@@ -751,25 +785,290 @@ Tunnel」は WebSocket 制約により使えませんが、DNS としての Clou
 に次のリソースを追加するだけです。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">data &quot;aws_route53_zone&quot; &quot;this&quot; &#123;</span><br><span class="line">  name = &quot;example.com.&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;aws_route53_record&quot; &quot;headscale&quot; &#123;</span><br><span class="line">  zone_id = data.aws_route53_zone.this.zone_id</span><br><span class="line">  name    = &quot;hs.example.com&quot;</span><br><span class="line">  type    = &quot;A&quot;</span><br><span class="line">  ttl     = 300</span><br><span class="line">  records = [aws_eip.headscale.public_ip]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1><span id="クライアントの接続">クライアントの接続</span></h1>
-<p>サーバ側ではユーザーと事前認証鍵を発行します。 v0.28.0 から
-<code>preauthkeys</code> コマンドはユーザー名ではなく <strong>ユーザー
-ID</strong> を引数に取る仕様に変わっているため、 先に
+<p>クライアントを Tailnet
+に参加させる手順は、大きく次の流れになります。</p>
+<ol type="1">
+<li>サーバ側でユーザーと（必要なら）事前認証鍵を発行する</li>
+<li>クライアント側で公式 Tailscale を起動し、<code>--login-server</code>
+で Headscale を指定する</li>
+<li>必要に応じてサーバ側でノードを承認する</li>
+</ol>
+<h2><span id="サーバ側ユーザーと事前認証鍵の発行">サーバ側:
+ユーザーと事前認証鍵の発行</span></h2>
+<p>v0.28.0 から <code>preauthkeys</code> コマンドはユーザー名ではなく
+<strong>ユーザー ID</strong> を引数に取る仕様に変わっているため、先に
 <code>users list</code> で ID を確認します。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo headscale users create alice</span><br><span class="line">sudo headscale users list</span><br><span class="line"><span class="comment"># 表示された ID（例: 1）を控える</span></span><br><span class="line"></span><br><span class="line">sudo headscale preauthkeys create --user 1 --reusable --expiration 24h</span><br></pre></td></tr></table></figure>
-<p>クライアント側からは、<code>--login-server</code> で Headscale
-を指定するだけです。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo headscale users create alice</span><br><span class="line">sudo headscale users list</span><br><span class="line"><span class="comment"># 表示された ID（例: 1）を控える</span></span><br><span class="line"></span><br><span class="line">sudo headscale preauthkeys create --user 1 --reusable --expiration 24h</span><br><span class="line"><span class="comment"># 出力された tskey-auth-xxxxxxxxxxxxxxxxxxxxx を控える</span></span><br></pre></td></tr></table></figure>
+<p><code>preauthkeys create</code> の主なフラグは次の通りです。</p>
+<ul>
+<li><code>--reusable</code>: 同じ鍵を複数台に使い回す（IaC
+との併用で便利）</li>
+<li><code>--ephemeral</code>: 切断時にノード登録を自動削除（CI
+ランナーや一時的なサーバ向け）</li>
+<li><code>--expiration &lt;duration&gt;</code>: 有効期限（例:
+<code>24h</code>、<code>30d</code>）</li>
+</ul>
+<h2><span id="方法-a事前認証鍵で自動登録推奨">方法 A:
+事前認証鍵で自動登録（推奨）</span></h2>
+<p>クライアント側で <code>--login-server</code> と
+<code>--authkey</code> を渡すだけで完了します。スクリプトや cloud-init
+から無人で投入できるため、複数台を一気に追加する場合や、サーバ系のノードを登録する場面に向いています。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Linux クライアント</span></span><br><span class="line">sudo tailscale up \</span><br><span class="line">  --login-server https://hs.example.com \</span><br><span class="line">  --authkey tskey-auth-xxxxxxxxxxxxxxxxxxxxx</span><br></pre></td></tr></table></figure>
-<p>macOS / iOS / Windows / Android のアプリ版 Tailscale
-でも、設定画面から「カスタムログインサーバ」を指定できます <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>。 接続後、サーバ側で
-<code>headscale nodes list</code>
-を実行すれば、登録されたノードが確認できます。</p>
+<p>実行後、サーバ側で <code>sudo headscale nodes list</code>
+を打つと、登録済みノードとして表示されます。</p>
+<h2><span id="方法-bインタラクティブ登録事前認証鍵を使わない">方法 B:
+インタラクティブ登録（事前認証鍵を使わない）</span></h2>
+<p><code>--authkey</code> を渡さずに <code>tailscale up</code>
+を実行すると、クライアント側に登録用 URL が表示されます。Headscale
+ではその URL を踏むだけでは登録が完了せず、URL に含まれる
+<strong>ノードキー（<code>nodekey:...</code>）をサーバ側で承認</strong>
+する流れになります。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># クライアント側</span></span><br><span class="line">sudo tailscale up --login-server https://hs.example.com</span><br><span class="line"><span class="comment"># 出力例:</span></span><br><span class="line"><span class="comment"># To authenticate, visit:</span></span><br><span class="line"><span class="comment">#   https://hs.example.com/register/nodekey:abcdef0123...</span></span><br></pre></td></tr></table></figure>
+<p>URL の末尾にあるノードキーをサーバ側に渡して承認します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># サーバ側（Headscale）</span></span><br><span class="line">sudo headscale users list                              <span class="comment"># 対象ユーザー ID を確認</span></span><br><span class="line">sudo headscale nodes register \</span><br><span class="line">  --user 1 \</span><br><span class="line">  --key nodekey:abcdef0123...</span><br></pre></td></tr></table></figure>
+<p>事前認証鍵の発行・配布が不要な代わりに、サーバ側で 1
+台ずつ手動承認する手間が増えます。少数のノードを慎重に管理したいケースや、認証鍵をクライアント側に置きたくない運用ポリシーで有効です。</p>
+<h2><span id="公式アプリmacos-ios-windows-android">公式アプリ（macOS / iOS /
+Windows / Android）</span></h2>
+<p>GUI クライアントでも Headscale
+に接続できます。共通する流れは次の通りです <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>。</p>
+<ol type="1">
+<li>アプリの設定で「カスタムコーディネーションサーバ（Custom
+coordination server / Alternate server URL）」に
+<code>https://hs.example.com</code> を指定</li>
+<li>ログイン操作を行うと、ブラウザで Headscale の登録ページが開く</li>
+<li>表示されたコマンド（<code>headscale nodes register --user &lt;id&gt; --key &lt;nodekey&gt;</code>）をサーバ側で実行して承認</li>
+</ol>
+<p>事前認証鍵を使わせたい場合は、各アプリの「authkey
+でサインイン」相当のメニューに鍵を貼り付けます。 UI の文言や設定階層は
+OS
+とアプリ版によって変わりやすいため、本稿では公式ドキュメントへのリンクに留めます。</p>
+<h2><span id="起動時に指定できる代表的なフラグ">起動時に指定できる代表的なフラグ</span></h2>
+<p><code>tailscale up</code>
+には接続時に指定できる便利なフラグがあります。よく使うものを用途別にまとめます。</p>
+<table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>フラグ</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--hostname=&lt;name&gt;</code></td>
+<td>Tailnet 上での表示名・MagicDNS 名を上書き</td>
+</tr>
+<tr class="even">
+<td><code>--reset</code></td>
+<td>過去のフラグを破棄して指定したフラグだけで再構成</td>
+</tr>
+<tr class="odd">
+<td><code>--ssh</code></td>
+<td>Tailscale SSH を有効化（ACL で <code>ssh</code>
+ルール定義が必要）</td>
+</tr>
+<tr class="even">
+<td><code>--accept-routes</code></td>
+<td>他ノードが広告したサブネット経路を取り込む</td>
+</tr>
+<tr class="odd">
+<td><code>--accept-dns=false</code></td>
+<td>MagicDNS を使わず既存の DNS 設定を保つ</td>
+</tr>
+<tr class="even">
+<td><code>--advertise-routes=&lt;cidr&gt;</code></td>
+<td>自ノードをサブネットルータとして広告（要
+<code>ip_forward</code>）</td>
+</tr>
+<tr class="odd">
+<td><code>--advertise-exit-node</code></td>
+<td>Exit Node として広告</td>
+</tr>
+<tr class="even">
+<td><code>--exit-node=&lt;peer&gt;</code></td>
+<td>通信を peer 経由でインターネットに出す</td>
+</tr>
+</tbody>
+</table>
+<p>サブネットルータや Exit Node
+として広告する場合は、サーバ側でも経路の承認が必要です（<code>headscale nodes list-routes</code>
+で一覧、<code>headscale nodes approve-routes</code> で承認）。 ACL
+や経路まわりの細かい挙動は公式リファレンス <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>
+に委ね、本稿では「クライアントを Tailnet
+に参加させる」ところまでをカバーします。</p>
+<h2><span id="接続後の動作確認クライアント側">接続後の動作確認（クライアント側）</span></h2>
+<p>Headscale 構成でも、クライアント側のサブコマンド体系は公式 Tailscale
+と同一です <a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>。
+接続が完了したら、まず以下の順で状態を確認します。</p>
+<h3><span id="1-ノードの状態とピア一覧">1. ノードの状態とピア一覧</span></h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tailscale ip          <span class="comment"># 自ノードの Tailnet IP（既定では 100.64.0.0/10 から払い出し）</span></span><br><span class="line">tailscale status      <span class="comment"># ピア一覧と各ノードの状態（idle / active / offline 等）</span></span><br><span class="line">tailscale version</span><br></pre></td></tr></table></figure>
+<p><code>tailscale status</code> の各行末に <code>idle</code> や
+<code>offline</code>
+が並んだ状態のままになる場合、クライアント自身がコーディネーションサーバへ到達できていない可能性が高いため、次の
+<code>netcheck</code> とログで切り分けます。</p>
+<h3><span id="2-接続性とリレー判定">2. 接続性とリレー判定</span></h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tailscale netcheck            <span class="comment"># NAT 種別と各 DERP リレーまでの遅延を計測</span></span><br><span class="line">tailscale ping &lt;peer&gt;         <span class="comment"># 特定ピアまでの経路を確認（DERP 経由 / 直接 P2P を判別）</span></span><br></pre></td></tr></table></figure>
+<p><code>tailscale ping</code> は ICMP ではなく Tailscale
+プロトコル上での到達性を測るため、経路途中で ICMP
+がブロックされていても結果が得られます。 出力に <code>via DERP</code>
+と表示されればリレー経由、<code>via direct</code> であれば P2P
+で接続できています。</p>
+<h3><span id="3-デーモンの状態とログ">3. デーモンの状態とログ</span></h3>
+<p>Linux クライアントでは <code>tailscaled</code> の状態と journald
+のログから原因を絞り込めます。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl status tailscaled</span><br><span class="line">sudo journalctl -u tailscaled -n 100 --no-pager</span><br></pre></td></tr></table></figure>
+<p><code>Unable to connect to the Tailscale coordination server</code>
+のような出力がある場合は、</p>
+<ul>
+<li><code>server_url</code>（例: <code>hs.example.com</code>）の DNS
+が公開 IP を指しているか</li>
+<li>Caddy が稼働しており <code>https://hs.example.com/health</code> が
+<code>pass</code> を返すか</li>
+<li>クライアントの <code>--login-server</code> が
+<code>server_url</code>
+と完全一致しているか（末尾スラッシュやスキームの差にも注意）</li>
+</ul>
+<p>の順で見直すとスムーズです。</p>
+<h3><span id="4-再ログインと切断">4. 再ログインと切断</span></h3>
+<p>ログインサーバを変更したり、状態をリセットしたい場合は次のコマンドを使います。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo tailscale up --login-server https://hs.example.com --reset</span><br><span class="line">sudo tailscale down       <span class="comment"># トンネルだけ切断（設定は維持）</span></span><br><span class="line">sudo tailscale <span class="built_in">logout</span>     <span class="comment"># ノード登録を破棄</span></span><br></pre></td></tr></table></figure>
+<p><code>--reset</code>
+を付けると過去に渡したフラグを引き継がず、指定したフラグのみで再構成できるため、設定変更時の事故を避けられます。</p>
+<h1><span id="複数ノード間で-ssh-するまで">複数ノード間で SSH するまで</span></h1>
+<p>ここまでで 1 台のクライアントを Tailnet
+に参加させる手順を整理しました。 実用上は <strong>複数のノード（ノート
+PC、サーバ、自宅マシンなど）を相互につなぎ、Tailnet 経由で SSH
+や各種サービスへ到達できる</strong> ところまでを確認したいはずです。
+本節では、2 台のクライアント（仮に <code>client-a</code> と
+<code>client-b</code> と呼びます）を登録した直後から、SSH
+接続が通るまでの流れを順に追います。</p>
+<h2><span id="1ノードがサーバに登録されているかを確認">1.
+ノードがサーバに登録されているかを確認</span></h2>
+<p>サーバ側で <code>headscale nodes list</code>
+を打ち、両ノードが並んで表示されることを確認します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo headscale nodes list</span><br></pre></td></tr></table></figure>
+<table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>列の見方</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ID</code></td>
+<td>Headscale 内部のノード ID</td>
+</tr>
+<tr class="even">
+<td><code>Hostname</code></td>
+<td>クライアント側の OS ホスト名（変更したい場合は
+<code>tailscale up --hostname</code> で上書き可能）</td>
+</tr>
+<tr class="odd">
+<td><code>IP addresses</code></td>
+<td>払い出された Tailnet IP（既定では <code>100.64.0.0/10</code>
+内）</td>
+</tr>
+<tr class="even">
+<td><code>Online</code></td>
+<td>コーディネーションサーバとの接続状態</td>
+</tr>
+<tr class="odd">
+<td><code>Expired</code></td>
+<td>ノードキーの有効期限切れ</td>
+</tr>
+</tbody>
+</table>
+<p><code>Online: true</code>
+で両方が並べば、登録は完了です。クライアント側でも同様に状態を確認します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># client-a で</span></span><br><span class="line">tailscale status</span><br><span class="line"><span class="comment"># 自ノードの行に続いて、ピアとして client-b が表示される想定</span></span><br></pre></td></tr></table></figure>
+<h2><span id="2-ピア間の疎通確認">2. ピア間の疎通確認</span></h2>
+<p>Tailscale プロトコル経由で相手ノードに到達できるかを
+<code>tailscale ping</code> で確認します。 このコマンドは ICMP ではなく
+Tailscale 内部の到達性を測るため、経路上で ICMP
+がブロックされていても結果が出ます。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># client-a から client-b へ</span></span><br><span class="line">tailscale ping client-b</span><br><span class="line"></span><br><span class="line"><span class="comment"># IP 指定でも可</span></span><br><span class="line">tailscale ping 100.64.0.x</span><br></pre></td></tr></table></figure>
+<p>出力に注目するのは経路の種別です。</p>
+<ul>
+<li><code>pong from client-b ... via DERP(tok) in 12ms</code> → DERP
+リレー経由（NAT 越えに失敗した場合の自動フォールバック）</li>
+<li><code>pong from client-b ... via 198.51.100.20:41641 in 5ms</code> →
+直接 P2P 接続</li>
+</ul>
+<p>最初は DERP 経由でも、しばらくすると P2P に切り替わることがあります。
+NAT が厳しい環境では DERP
+のままになることもありますが、通信は成立します。</p>
+<p>通常の <code>ping</code> も合わせて確認しておくと、ICMP
+まで通るかを把握できます。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping -c 3 100.64.0.x</span><br></pre></td></tr></table></figure>
+<h2><span id="3-magicdns-による名前解決">3. MagicDNS による名前解決</span></h2>
+<p><code>config.yaml</code> で <code>dns.magic_dns: true</code>
+にしている場合、<code>&lt;hostname&gt;.&lt;base_domain&gt;</code>
+形式でノード名を引けます。 たとえば <code>base_domain</code> を
+<code>hs-net.example.com</code>
+に設定していれば、<code>client-b.hs-net.example.com</code> が
+<code>client-b</code> の Tailnet IP に解決されます。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 名前解決を確認</span></span><br><span class="line">tailscale status                              <span class="comment"># 各ノードの完全名（FQDN）を表示</span></span><br><span class="line">ping -c 1 client-b.hs-net.example.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># どうしても解決できない場合の切り分け</span></span><br><span class="line">tailscale debug prefs | grep -i corpdns       <span class="comment"># MagicDNS が有効か</span></span><br><span class="line">resolvectl status                             <span class="comment"># systemd-resolved 環境</span></span><br></pre></td></tr></table></figure>
+<p><code>tailscale up</code> 時に <code>--accept-dns=false</code>
+を付けていると MagicDNS は無効になります。 その場合は IP 直打ち、または
+OS の <code>/etc/hosts</code>
+などで明示的に名前解決の経路を作る必要があります。</p>
+<h2><span id="4-通常の-ssh-で接続する">4. 通常の SSH で接続する</span></h2>
+<p>ここまで来れば、Tailnet 内であれば通常の OpenSSH で接続できます。
+クライアント側に <code>tailscaled</code> が動いていて IP
+が振られていれば、SSH デーモン側は特別な設定なしで Tailnet
+からの接続を受け付けます。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Tailnet IP で接続</span></span><br><span class="line">ssh user@100.64.0.x</span><br><span class="line"></span><br><span class="line"><span class="comment"># MagicDNS 名で接続（推奨。IP が変わっても影響しない）</span></span><br><span class="line">ssh user@client-b.hs-net.example.com</span><br></pre></td></tr></table></figure>
+<p>接続できない場合のチェック順は次の通りです。</p>
+<ol type="1">
+<li>ピア側で <code>sshd</code>
+が稼働しているか（<code>systemctl status ssh</code>）</li>
+<li>ピア側のファイアウォール（<code>ufw status</code> など）が
+<code>tailscale0</code> インターフェイスからの 22/tcp
+を許可しているか</li>
+<li>ACL（<code>/etc/headscale/acl.hujson</code>）で <code>dst</code>
+側の 22/tcp が許可されているか</li>
+<li>Tailnet IP / MagicDNS 名のどちらでも <code>tailscale ping</code>
+で疎通できているか</li>
+</ol>
+<p>ACL を初期状態（全許可）から絞り込んだ場合、SSH
+のために次のような最小ルールを残しておくと運用しやすいです。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"acls"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"action"</span>: <span class="string">"accept"</span>,</span><br><span class="line">      <span class="attr">"src"</span>:    [<span class="string">"alice"</span>],</span><br><span class="line">      <span class="attr">"dst"</span>:    [<span class="string">"alice:22"</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>alice</code> の部分は、Headscale 上で <code>users create</code>
+したユーザー名に置き換えます。
+ユーザー単位で許可することで、後から別ユーザーを追加しても影響範囲を分離できます。</p>
+<h2><span id="5-任意tailscale-sshを有効化する">5. （任意）Tailscale SSH
+を有効化する</span></h2>
+<p>各ノードに OpenSSH
+を立てて鍵を配るのが面倒な場合、<code>tailscaled</code> 経由で SSH
+を提供する <strong>Tailscale SSH</strong> が便利です <a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>。
+鍵管理が不要になり、ACL でアクセス可否を一元的に制御できます。</p>
+<p>クライアント側で SSH サーバ機能を有効化します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo tailscale up \</span><br><span class="line">  --login-server https://hs.example.com \</span><br><span class="line">  --ssh \</span><br><span class="line">  --reset</span><br></pre></td></tr></table></figure>
+<p>ACL には <code>ssh</code> ルールを追加します。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"acls"</span>: [</span><br><span class="line">    &#123; <span class="attr">"action"</span>: <span class="string">"accept"</span>, <span class="attr">"src"</span>: [<span class="string">"*"</span>], <span class="attr">"dst"</span>: [<span class="string">"*:*"</span>] &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"ssh"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"action"</span>: <span class="string">"accept"</span>,</span><br><span class="line">      <span class="attr">"src"</span>:    [<span class="string">"alice"</span>],</span><br><span class="line">      <span class="attr">"dst"</span>:    [<span class="string">"alice"</span>],</span><br><span class="line">      <span class="attr">"users"</span>:  [<span class="string">"autogroup:nonroot"</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>利用側からは通常の <code>ssh</code> コマンドで接続できます。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh alice@client-b.hs-net.example.com</span><br><span class="line"><span class="comment"># OpenSSH の鍵ではなく、Tailscale ACL で認可される</span></span><br></pre></td></tr></table></figure>
+<p><code>autogroup:nonroot</code> は root
+以外のすべてのユーザーを意味します。 特定ユーザーだけに絞りたい場合は
+<code>["alice", "bob"]</code> のように列挙します。 ポリシー編集後は
+<code>sudo headscale policy check --file /etc/headscale/acl.hujson</code>
+で構文を確認してから反映してください。</p>
 <h1><span id="構築の自動化terraform-ansible">構築の自動化（Terraform /
 Ansible）</span></h1>
 <p>ここまでの手順を自動化するための Terraform と Ansible
-の最小構成を用意しています。 記事と対応するソースは <a href="https://github.com/dobachi/memo-blog-text/tree/master/research/articles/headscale-self-hosting/iac" target="_blank" rel="noopener">GitHub
-リポジトリの
-<code>research/articles/headscale-self-hosting/iac/</code></a>
-に置いてあります。</p>
+の最小構成を用意しています。 記事と対応するソースは <a href="https://github.com/dobachi/headscale-iac-sample" target="_blank" rel="noopener">GitHub の
+<code>dobachi/headscale-iac-sample</code>
+リポジトリ</a>に置いてあるので、<code>git clone</code>
+してそのまま試せます。</p>
 <h2><span id="terraform-aws側のリソース構築">Terraform: AWS
 側のリソース構築</span></h2>
 <p>新規 VPC、パブリックサブネット、セキュリティグループ、Ubuntu 24.04
@@ -834,7 +1133,7 @@ Caddy のセットアップ</span></h2>
 最小構成として「同一ユーザーのデバイス間のみ通信可」とする例です。</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"acls"</span>: [</span><br><span class="line">    &#123; <span class="attr">"action"</span>: <span class="string">"accept"</span>, <span class="attr">"src"</span>: [<span class="string">"alice"</span>], <span class="attr">"dst"</span>: [<span class="string">"alice:*"</span>] &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>ACL 構文は Tailscale の ACL
-とほぼ互換で、グループ・タグ・ユーザー単位で細かく制御できます <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>。 編集後は
+とほぼ互換で、グループ・タグ・ユーザー単位で細かく制御できます <a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>。 編集後は
 <code>sudo headscale policy check --file /etc/headscale/acl.hujson</code>
 で検証してから、サービスを再読み込みします。</p>
 <h2><span id="バックアップ">バックアップ</span></h2>
@@ -854,7 +1153,7 @@ Caddy のセットアップ</span></h2>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop headscale</span><br><span class="line">sudo apt install ./headscale_&lt;NEW_VERSION&gt;_linux_arm64.deb</span><br><span class="line">sudo headscale configtest</span><br><span class="line">sudo systemctl start headscale</span><br></pre></td></tr></table></figure>
 <p>マイナーバージョンを跨ぐ場合は、必ず CHANGELOG を確認してください。
 v0.28.0 のように、PreAuthKey の保存形式変更（bcrypt
-化）など破壊的変更が入ることがあります <a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>。</p>
+化）など破壊的変更が入ることがあります <a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>。</p>
 <h2><span id="ログとトラブルシュート">ログとトラブルシュート</span></h2>
 <p>サーバ側のログは journald で確認します。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo journalctl -u headscale -f</span><br><span class="line">sudo journalctl -u caddy -f</span><br></pre></td></tr></table></figure>
@@ -939,6 +1238,7 @@ Ansible による自動化の足場も用意しました。 EC2 構成は前提�
 <li></li>
 <li></li>
 <li></li>
+<li></li>
 </ul>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 <section class="footnotes footnotes-end-of-document" role="doc-endnotes">
@@ -952,7 +1252,10 @@ Ansible による自動化の足場も用意しました。 EC2 構成は前提�
 <li id="fn6" role="doc-endnote"><p>公式リバースプロキシリファレンス, <a href="https://headscale.net/stable/ref/integration/reverse-proxy/" class="uri" target="_blank" rel="noopener">https://headscale.net/stable/ref/integration/reverse-proxy/</a><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7" role="doc-endnote"><p>クライアント接続ガイド, <a href="https://headscale.net/stable/usage/" class="uri" target="_blank" rel="noopener">https://headscale.net/stable/usage/</a><a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8" role="doc-endnote"><p>ACL 構文の解説, <a href="https://tailscale.com/kb/1018/acls" class="uri" target="_blank" rel="noopener">https://tailscale.com/kb/1018/acls</a><a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9" role="doc-endnote"><p>Headscale v0.28.0 リリースノート, <a href="https://github.com/juanfont/headscale/releases" class="uri" target="_blank" rel="noopener">https://github.com/juanfont/headscale/releases</a><a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>Tailscale CLI リファレンス, <a href="https://tailscale.com/kb/1080/cli" class="uri" target="_blank" rel="noopener">https://tailscale.com/kb/1080/cli</a><a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>ACL 構文の解説, <a href="https://tailscale.com/kb/1018/acls" class="uri" target="_blank" rel="noopener">https://tailscale.com/kb/1018/acls</a><a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>ACL 構文の解説, <a href="https://tailscale.com/kb/1018/acls" class="uri" target="_blank" rel="noopener">https://tailscale.com/kb/1018/acls</a><a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>Headscale v0.28.0 リリースノート, <a href="https://github.com/juanfont/headscale/releases" class="uri" target="_blank" rel="noopener">https://github.com/juanfont/headscale/releases</a><a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -965,7 +1268,7 @@ Ansible による自動化の足場も用意しました。 EC2 構成は前提�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/05/06/Headscale-Self-Hosting/" data-id="cmou99owl01jf18o5kzd8wp9s" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/06/Headscale-Self-Hosting/" data-id="cmowv1foa01l918l2k3mnvlin" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1331,7 +1634,7 @@ GitHub</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/04/05/Data-centric-AI-Survey/" data-id="cmou99ov201ga18o56qstkywh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/04/05/Data-centric-AI-Survey/" data-id="cmowv1flt01g618l2nfhd9232" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1530,7 +1833,7 @@ Codexを呼び出す方法を解説する。</p></p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-OpenAI-Codex-MCP/" data-id="cmou99osn018m18o5hiax9fgz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-OpenAI-Codex-MCP/" data-id="cmowv1fj8018618l2bmf96nrn" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2037,7 +2340,7 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Gemini-with-Claude-Code/" data-id="cmou99osz019l18o55v84emrk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Gemini-with-Claude-Code/" data-id="cmowv1fjq019d18l252dsf299" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2271,7 +2574,7 @@ npm]</span>: https://www.npmjs.com/package/<span class="citation" data-cites="an
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-Setup/" data-id="cmou99ohr002g18o5fm4m1uav" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-Setup/" data-id="cmowv1f91002g18l2g9outbwz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2517,7 +2820,7 @@ Planあれば、<code>claude login</code>でブラウザ認証すればAPIキー
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/09/Claude-Code-with-Claude-Code-Web/" data-id="cmou99ohr002j18o5gsu0fpcb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/09/Claude-Code-with-Claude-Code-Web/" data-id="cmowv1f92002k18l22nnnhegf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2829,7 +3132,7 @@ Forbiddenで拒否される。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/12/30/Claude-Code-Cloud-Network-Limitations/" data-id="cmou99ohu002x18o5yq4ijlwm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/12/30/Claude-Code-Cloud-Network-Limitations/" data-id="cmowv1f90002c18l2mry5p8ds" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3025,7 +3328,7 @@ Fundamentals GitHub Repository</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/12/30/Introducing-Work-Fundamentals/" data-id="cmou99ojp006818o50ji5lugc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/12/30/Introducing-Work-Fundamentals/" data-id="cmowv1fai006318l2crruh1m0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3243,7 +3546,7 @@ EHDS規則提案</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/08/18/EHDS-European-Health-Data-Space-Analysis-Report/" data-id="cmou99oid004018o5dd201j5y" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/08/18/EHDS-European-Health-Data-Space-Analysis-Report/" data-id="cmowv1f9h003x18l29xlacycz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3616,7 +3919,7 @@ https://asean.org/wp-content/uploads/2024/02/ASEAN-Guide-on-AI-Governance-and-Et
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2025/08/04/EU-Regulatory-Approach-vs-Japan-Strategic-Response/" data-id="cmou99osw019d18o5c5avnhd2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2025/08/04/EU-Regulatory-Approach-vs-Japan-Strategic-Response/" data-id="cmowv1fjl019118l225uz7za6" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

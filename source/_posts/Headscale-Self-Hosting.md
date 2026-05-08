@@ -412,9 +412,15 @@ resource "aws_route53_record" "headscale" {
 
 # クライアントの接続
 
-サーバ側ではユーザーと事前認証鍵を発行します。
-v0.28.0 から `preauthkeys` コマンドはユーザー名ではなく **ユーザー ID** を引数に取る仕様に変わっているため、
-先に `users list` で ID を確認します。
+クライアントを Tailnet に参加させる手順は、大きく次の流れになります。
+
+1. サーバ側でユーザーと（必要なら）事前認証鍵を発行する
+2. クライアント側で公式 Tailscale を起動し、`--login-server` で Headscale を指定する
+3. 必要に応じてサーバ側でノードを承認する
+
+## サーバ側: ユーザーと事前認証鍵の発行
+
+v0.28.0 から `preauthkeys` コマンドはユーザー名ではなく **ユーザー ID** を引数に取る仕様に変わっているため、先に `users list` で ID を確認します。
 
 ```bash
 sudo headscale users create alice
@@ -422,9 +428,18 @@ sudo headscale users list
 # 表示された ID（例: 1）を控える
 
 sudo headscale preauthkeys create --user 1 --reusable --expiration 24h
+# 出力された tskey-auth-xxxxxxxxxxxxxxxxxxxxx を控える
 ```
 
-クライアント側からは、`--login-server` で Headscale を指定するだけです。
+`preauthkeys create` の主なフラグは次の通りです。
+
+- `--reusable`: 同じ鍵を複数台に使い回す（IaC との併用で便利）
+- `--ephemeral`: 切断時にノード登録を自動削除（CI ランナーや一時的なサーバ向け）
+- `--expiration <duration>`: 有効期限（例: `24h`、`30d`）
+
+## 方法 A: 事前認証鍵で自動登録（推奨）
+
+クライアント側で `--login-server` と `--authkey` を渡すだけで完了します。スクリプトや cloud-init から無人で投入できるため、複数台を一気に追加する場合や、サーバ系のノードを登録する場面に向いています。
 
 ```bash
 # Linux クライアント
@@ -433,13 +448,274 @@ sudo tailscale up \
   --authkey tskey-auth-xxxxxxxxxxxxxxxxxxxxx
 ```
 
-macOS / iOS / Windows / Android のアプリ版 Tailscale でも、設定画面から「カスタムログインサーバ」を指定できます [^connect]。
-接続後、サーバ側で `headscale nodes list` を実行すれば、登録されたノードが確認できます。
+実行後、サーバ側で `sudo headscale nodes list` を打つと、登録済みノードとして表示されます。
+
+## 方法 B: インタラクティブ登録（事前認証鍵を使わない）
+
+`--authkey` を渡さずに `tailscale up` を実行すると、クライアント側に登録用 URL が表示されます。Headscale ではその URL を踏むだけでは登録が完了せず、URL に含まれる **ノードキー（`nodekey:...`）をサーバ側で承認** する流れになります。
+
+```bash
+# クライアント側
+sudo tailscale up --login-server https://hs.example.com
+# 出力例:
+# To authenticate, visit:
+#   https://hs.example.com/register/nodekey:abcdef0123...
+```
+
+URL の末尾にあるノードキーをサーバ側に渡して承認します。
+
+```bash
+# サーバ側（Headscale）
+sudo headscale users list                              # 対象ユーザー ID を確認
+sudo headscale nodes register \
+  --user 1 \
+  --key nodekey:abcdef0123...
+```
+
+事前認証鍵の発行・配布が不要な代わりに、サーバ側で 1 台ずつ手動承認する手間が増えます。少数のノードを慎重に管理したいケースや、認証鍵をクライアント側に置きたくない運用ポリシーで有効です。
+
+## 公式アプリ（macOS / iOS / Windows / Android）
+
+GUI クライアントでも Headscale に接続できます。共通する流れは次の通りです [^connect]。
+
+1. アプリの設定で「カスタムコーディネーションサーバ（Custom coordination server / Alternate server URL）」に `https://hs.example.com` を指定
+2. ログイン操作を行うと、ブラウザで Headscale の登録ページが開く
+3. 表示されたコマンド（`headscale nodes register --user <id> --key <nodekey>`）をサーバ側で実行して承認
+
+事前認証鍵を使わせたい場合は、各アプリの「authkey でサインイン」相当のメニューに鍵を貼り付けます。
+UI の文言や設定階層は OS とアプリ版によって変わりやすいため、本稿では公式ドキュメントへのリンクに留めます。
+
+## 起動時に指定できる代表的なフラグ
+
+`tailscale up` には接続時に指定できる便利なフラグがあります。よく使うものを用途別にまとめます。
+
+| フラグ | 用途 |
+| --- | --- |
+| `--hostname=<name>` | Tailnet 上での表示名・MagicDNS 名を上書き |
+| `--reset` | 過去のフラグを破棄して指定したフラグだけで再構成 |
+| `--ssh` | Tailscale SSH を有効化（ACL で `ssh` ルール定義が必要） |
+| `--accept-routes` | 他ノードが広告したサブネット経路を取り込む |
+| `--accept-dns=false` | MagicDNS を使わず既存の DNS 設定を保つ |
+| `--advertise-routes=<cidr>` | 自ノードをサブネットルータとして広告（要 `ip_forward`） |
+| `--advertise-exit-node` | Exit Node として広告 |
+| `--exit-node=<peer>` | 通信を peer 経由でインターネットに出す |
+
+サブネットルータや Exit Node として広告する場合は、サーバ側でも経路の承認が必要です（`headscale nodes list-routes` で一覧、`headscale nodes approve-routes` で承認）。
+ACL や経路まわりの細かい挙動は公式リファレンス [^acl] に委ね、本稿では「クライアントを Tailnet に参加させる」ところまでをカバーします。
+
+## 接続後の動作確認（クライアント側）
+
+Headscale 構成でも、クライアント側のサブコマンド体系は公式 Tailscale と同一です [^cli]。
+接続が完了したら、まず以下の順で状態を確認します。
+
+### 1. ノードの状態とピア一覧
+
+```bash
+tailscale ip          # 自ノードの Tailnet IP（既定では 100.64.0.0/10 から払い出し）
+tailscale status      # ピア一覧と各ノードの状態（idle / active / offline 等）
+tailscale version
+```
+
+`tailscale status` の各行末に `idle` や `offline` が並んだ状態のままになる場合、クライアント自身がコーディネーションサーバへ到達できていない可能性が高いため、次の `netcheck` とログで切り分けます。
+
+### 2. 接続性とリレー判定
+
+```bash
+tailscale netcheck            # NAT 種別と各 DERP リレーまでの遅延を計測
+tailscale ping <peer>         # 特定ピアまでの経路を確認（DERP 経由 / 直接 P2P を判別）
+```
+
+`tailscale ping` は ICMP ではなく Tailscale プロトコル上での到達性を測るため、経路途中で ICMP がブロックされていても結果が得られます。
+出力に `via DERP` と表示されればリレー経由、`via direct` であれば P2P で接続できています。
+
+### 3. デーモンの状態とログ
+
+Linux クライアントでは `tailscaled` の状態と journald のログから原因を絞り込めます。
+
+```bash
+systemctl status tailscaled
+sudo journalctl -u tailscaled -n 100 --no-pager
+```
+
+`Unable to connect to the Tailscale coordination server` のような出力がある場合は、
+
+- `server_url`（例: `hs.example.com`）の DNS が公開 IP を指しているか
+- Caddy が稼働しており `https://hs.example.com/health` が `pass` を返すか
+- クライアントの `--login-server` が `server_url` と完全一致しているか（末尾スラッシュやスキームの差にも注意）
+
+の順で見直すとスムーズです。
+
+### 4. 再ログインと切断
+
+ログインサーバを変更したり、状態をリセットしたい場合は次のコマンドを使います。
+
+```bash
+sudo tailscale up --login-server https://hs.example.com --reset
+sudo tailscale down       # トンネルだけ切断（設定は維持）
+sudo tailscale logout     # ノード登録を破棄
+```
+
+`--reset` を付けると過去に渡したフラグを引き継がず、指定したフラグのみで再構成できるため、設定変更時の事故を避けられます。
+
+# 複数ノード間で SSH するまで
+
+ここまでで 1 台のクライアントを Tailnet に参加させる手順を整理しました。
+実用上は **複数のノード（ノート PC、サーバ、自宅マシンなど）を相互につなぎ、Tailnet 経由で SSH や各種サービスへ到達できる** ところまでを確認したいはずです。
+本節では、2 台のクライアント（仮に `client-a` と `client-b` と呼びます）を登録した直後から、SSH 接続が通るまでの流れを順に追います。
+
+## 1. ノードがサーバに登録されているかを確認
+
+サーバ側で `headscale nodes list` を打ち、両ノードが並んで表示されることを確認します。
+
+```bash
+sudo headscale nodes list
+```
+
+| 列の見方 | 意味 |
+| --- | --- |
+| `ID` | Headscale 内部のノード ID |
+| `Hostname` | クライアント側の OS ホスト名（変更したい場合は `tailscale up --hostname` で上書き可能） |
+| `IP addresses` | 払い出された Tailnet IP（既定では `100.64.0.0/10` 内） |
+| `Online` | コーディネーションサーバとの接続状態 |
+| `Expired` | ノードキーの有効期限切れ |
+
+`Online: true` で両方が並べば、登録は完了です。クライアント側でも同様に状態を確認します。
+
+```bash
+# client-a で
+tailscale status
+# 自ノードの行に続いて、ピアとして client-b が表示される想定
+```
+
+## 2. ピア間の疎通確認
+
+Tailscale プロトコル経由で相手ノードに到達できるかを `tailscale ping` で確認します。
+このコマンドは ICMP ではなく Tailscale 内部の到達性を測るため、経路上で ICMP がブロックされていても結果が出ます。
+
+```bash
+# client-a から client-b へ
+tailscale ping client-b
+
+# IP 指定でも可
+tailscale ping 100.64.0.x
+```
+
+出力に注目するのは経路の種別です。
+
+- `pong from client-b ... via DERP(tok) in 12ms` → DERP リレー経由（NAT 越えに失敗した場合の自動フォールバック）
+- `pong from client-b ... via 198.51.100.20:41641 in 5ms` → 直接 P2P 接続
+
+最初は DERP 経由でも、しばらくすると P2P に切り替わることがあります。
+NAT が厳しい環境では DERP のままになることもありますが、通信は成立します。
+
+通常の `ping` も合わせて確認しておくと、ICMP まで通るかを把握できます。
+
+```bash
+ping -c 3 100.64.0.x
+```
+
+## 3. MagicDNS による名前解決
+
+`config.yaml` で `dns.magic_dns: true` にしている場合、`<hostname>.<base_domain>` 形式でノード名を引けます。
+たとえば `base_domain` を `hs-net.example.com` に設定していれば、`client-b.hs-net.example.com` が `client-b` の Tailnet IP に解決されます。
+
+```bash
+# 名前解決を確認
+tailscale status                              # 各ノードの完全名（FQDN）を表示
+ping -c 1 client-b.hs-net.example.com
+
+# どうしても解決できない場合の切り分け
+tailscale debug prefs | grep -i corpdns       # MagicDNS が有効か
+resolvectl status                             # systemd-resolved 環境
+```
+
+`tailscale up` 時に `--accept-dns=false` を付けていると MagicDNS は無効になります。
+その場合は IP 直打ち、または OS の `/etc/hosts` などで明示的に名前解決の経路を作る必要があります。
+
+## 4. 通常の SSH で接続する
+
+ここまで来れば、Tailnet 内であれば通常の OpenSSH で接続できます。
+クライアント側に `tailscaled` が動いていて IP が振られていれば、SSH デーモン側は特別な設定なしで Tailnet からの接続を受け付けます。
+
+```bash
+# Tailnet IP で接続
+ssh user@100.64.0.x
+
+# MagicDNS 名で接続（推奨。IP が変わっても影響しない）
+ssh user@client-b.hs-net.example.com
+```
+
+接続できない場合のチェック順は次の通りです。
+
+1. ピア側で `sshd` が稼働しているか（`systemctl status ssh`）
+2. ピア側のファイアウォール（`ufw status` など）が `tailscale0` インターフェイスからの 22/tcp を許可しているか
+3. ACL（`/etc/headscale/acl.hujson`）で `dst` 側の 22/tcp が許可されているか
+4. Tailnet IP / MagicDNS 名のどちらでも `tailscale ping` で疎通できているか
+
+ACL を初期状態（全許可）から絞り込んだ場合、SSH のために次のような最小ルールを残しておくと運用しやすいです。
+
+```json
+{
+  "acls": [
+    {
+      "action": "accept",
+      "src":    ["alice"],
+      "dst":    ["alice:22"]
+    }
+  ]
+}
+```
+
+`alice` の部分は、Headscale 上で `users create` したユーザー名に置き換えます。
+ユーザー単位で許可することで、後から別ユーザーを追加しても影響範囲を分離できます。
+
+## 5. （任意）Tailscale SSH を有効化する
+
+各ノードに OpenSSH を立てて鍵を配るのが面倒な場合、`tailscaled` 経由で SSH を提供する **Tailscale SSH** が便利です [^acl]。
+鍵管理が不要になり、ACL でアクセス可否を一元的に制御できます。
+
+クライアント側で SSH サーバ機能を有効化します。
+
+```bash
+sudo tailscale up \
+  --login-server https://hs.example.com \
+  --ssh \
+  --reset
+```
+
+ACL には `ssh` ルールを追加します。
+
+```json
+{
+  "acls": [
+    { "action": "accept", "src": ["*"], "dst": ["*:*"] }
+  ],
+  "ssh": [
+    {
+      "action": "accept",
+      "src":    ["alice"],
+      "dst":    ["alice"],
+      "users":  ["autogroup:nonroot"]
+    }
+  ]
+}
+```
+
+利用側からは通常の `ssh` コマンドで接続できます。
+
+```bash
+ssh alice@client-b.hs-net.example.com
+# OpenSSH の鍵ではなく、Tailscale ACL で認可される
+```
+
+`autogroup:nonroot` は root 以外のすべてのユーザーを意味します。
+特定ユーザーだけに絞りたい場合は `["alice", "bob"]` のように列挙します。
+ポリシー編集後は `sudo headscale policy check --file /etc/headscale/acl.hujson` で構文を確認してから反映してください。
 
 # 構築の自動化（Terraform / Ansible）
 
 ここまでの手順を自動化するための Terraform と Ansible の最小構成を用意しています。
-記事と対応するソースは [GitHub リポジトリの `research/articles/headscale-self-hosting/iac/`][iac-source] に置いてあります。
+記事と対応するソースは [GitHub の `dobachi/headscale-iac-sample` リポジトリ][iac-source]に置いてあるので、`git clone` してそのまま試せます。
 
 ## Terraform: AWS 側のリソース構築
 
@@ -667,12 +943,13 @@ EC2 構成は前提が単純で `t4g.small` でも快適に動きます。
 - [^reverse-proxy]: 公式リバースプロキシリファレンス, <https://headscale.net/stable/ref/integration/reverse-proxy/>
 - [^db]: 公式設定リファレンス, <https://headscale.net/stable/ref/configuration/>
 - [^connect]: クライアント接続ガイド, <https://headscale.net/stable/usage/>
+- [^cli]: Tailscale CLI リファレンス, <https://tailscale.com/kb/1080/cli>
 - [^acl]: ACL 構文の解説, <https://tailscale.com/kb/1018/acls>
 
 [tailscale]: https://tailscale.com/
 [tailscale-download]: https://tailscale.com/download
 [headscale]: https://headscale.net/stable/
 [onamae-navi]: https://navi.onamae.com/
-[iac-source]: https://github.com/dobachi/memo-blog-text/tree/master/research/articles/headscale-self-hosting/iac
+[iac-source]: https://github.com/dobachi/headscale-iac-sample
 
 <!-- vim: set et tw=0 ts=2 sw=2: -->
