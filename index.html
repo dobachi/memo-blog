@@ -466,7 +466,7 @@ NapeProConfiguration を使えば、設定を JSON
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/keychron-nape-pro-settings-backup/" data-id="cmrgk4llo01ch18o5xe81kccy" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/keychron-nape-pro-settings-backup/" data-id="cmrglf6so01ak18nzhysk0pyi" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -613,18 +613,15 @@ multi-industry 転換と EDWG 提携</a></li>
 Connector Report 2026 — DSP 2025-1 と DCP 1.0
 でコネクタエコシステムが成熟段階へ</span></h1>
 <h2><span id="概要">概要</span></h2>
-<p>[[idsa|IDSA]]（International Data Spaces
+<p>IDSA（International Data Spaces
 Association）が2026年6月30日付で「Connector Report」を更新した。今回は
-[[dataspace-protocol|DSP 2025-1]] と [[decentralized-claims-protocol|DCP
-1.0]]
-のリリースが主軸であり、テスト（[[dsp-tck|TCK]]）合格コネクタ数が8件に達するなど、データスペースのインフラが実装・拡張フェーズへ移行したことを示している。また、自動車業界主導だった
-[[eclipse-tractus-x|Tractus-X]]
-も他産業へ展開する「multi-industry」戦略へ舵を切った。</p>
+DSP 2025-1 と DCP 1.0
+のリリースが主軸であり、テスト（TCK）合格コネクタ数が8件に達するなど、データスペースのインフラが実装・拡張フェーズへ移行したことを示している。また、自動車業界主導だった
+Tractus-X も他産業へ展開する「multi-industry」戦略へ舵を切った。</p>
 <h2><span id="詳細">詳細</span></h2>
 <h3><span id="プロトコル標準の確立dsp-2025-1-と後方互換性">プロトコル標準の確立:
 DSP 2025-1 と後方互換性</span></h3>
-<p>主要コネクタが共通標準として [[dataspace-protocol|DSP 2025-1]]
-を採択した。旧バージョン（DSP
+<p>主要コネクタが共通標準として DSP 2025-1 を採択した。旧バージョン（DSP
 0.8）との後方互換性も維持されており、既存のコネクタ資産を段階的に移行できる<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。</p>
 <figure>
 <img src="/memo-blog/images/idsa-connector-report-2026.png" alt="DSPとDCPによるコネクタエコシステム">
@@ -632,28 +629,28 @@ DSP 2025-1 と後方互換性</span></h3>
 </figure>
 <h3><span id="dcp-10-と-tck合格エコシステム">DCP 1.0 と TCK
 合格エコシステム</span></h3>
-<p>TCK合格コネクタは8件。[[eclipse-dataspace-components|EDC]]フレームワークをベースに、DCP
-1.0およびDSP 2025-1のサポートが実装されている<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。特にDCP
+<p>TCK合格コネクタは8件。EDCフレームワークをベースに、DCP 1.0およびDSP
+2025-1のサポートが実装されている<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。特にDCP
 1.0による分散クレーム認証（Decentralized
 Claims）が実用レベルに達したことで、データスペースにおけるアイデンティティ管理とコネクタ接続の統合が現実的になった。</p>
 <h3><span id="edcの本番導入障壁の低下単一ソース情報">EDC
 の本番導入障壁の低下（単一ソース情報）</span></h3>
 <p>EDCの本番運用に向けた改善として、EDR（Endpoint Data
-Reference）トークンのリフレッシュ機能追加や、[[kubernetes|Kubernetes]]用Helm
+Reference）トークンのリフレッシュ機能追加や、Kubernetes用Helm
 Chartの整備が挙げられている<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。これによりコンテナ環境での運用が標準化され、導入のハードルが下がった。</p>
 <h3><span id="tractus-x-のmulti-industry-転換と-edwg-提携">Tractus-X の
 multi-industry 転換と EDWG 提携</span></h3>
-<p>Tractus-Xはこれまでの自動車業界（[[catena-x|Catena-X]]）特化から、複数産業や異なるデータスペースを繋ぐ「multi-dataspace
+<p>Tractus-Xはこれまでの自動車業界（Catena-X）特化から、複数産業や異なるデータスペースを繋ぐ「multi-dataspace
 /
 multi-industry」戦略へシフトした。2026年2月にマドリードで開催されたData
-Spaces
-Symposiumにおいて、[[eclipse-dataspace-working-group|EDWG]]との公式連携が合意されている<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。アーキテクチャは製造業、半導体、建設、化学などの他セクターへの横展開を見据えた設計に変更された<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>。あわせて、IDS認証（Level
+Spaces Symposiumにおいて、EDWGとの公式連携が合意されている<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。アーキテクチャは製造業、半導体、建設、化学などの他セクターへの横展開を見据えた設計に変更された<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>。あわせて、IDS認証（Level
 1〜2）の段階的な認定スキームも整備された<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>。</p>
 <h2><span id="考察">考察</span></h2>
 <p>DSP 2025-1とDCP
 1.0の同時リリースは、データスペースの技術レイヤーが仕様策定から実用フェーズへ入ったことを意味する。これまで各プロジェクトで個別実装されがちだったアイデンティティ連携がDCP
 1.0として規格化され、異なるデータスペース間でも共通の信頼基盤を構築しやすくなった点は大きい。</p>
-<p>Tractus-Xの他産業展開も、この技術的標準化が背景にある。Catena-Xで培った仕組みをポータブルな基盤として化学や半導体といった他業界に水平展開することで、IDSAや[[gaia-x|Gaia-X]]が描く「欧州データスペースの共通インフラ」という構想の実効性が高まる。</p>
+<p>Tractus-Xの他産業展開も、この技術的標準化が背景にある。Catena-Xで培った仕組みをポータブルな基盤として化学や半導体といった他業界に水平展開することで、IDSAやGaia-Xが描く「欧州データスペース
+of 共通インフラ」という構想の実効性が高まる。</p>
 <p>ただし、TCK合格コネクタがまだ8件に留まっている点は課題だ。実運用を広げるには、認定プロセスの効率化はもちろん、EDC以外の独自実装コネクタ（例えば国産コネクタや他ベンダーの軽量コネクタなど）の合格例が増える必要がある。</p>
 <h2><span id="参考文献">参考文献</span></h2>
 <h2><span id="更新履歴">更新履歴</span></h2>
@@ -687,7 +684,7 @@ Data Space Connector Report</a>", アクセス日 2026-07-11<a href="#fnref6" cl
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/IDSA-Connector-Report-2026/" data-id="cmrgk4la2005o18o51aqnu1bc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/IDSA-Connector-Report-2026/" data-id="cmrglf6iy008z18nzlkezy628" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -964,7 +961,7 @@ IP のある拠点に置く</li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/05/24/Tailscale-slow-internet-troubleshooting/" data-id="cmrgk4lci00b618o591wt0yby" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/24/Tailscale-slow-internet-troubleshooting/" data-id="cmrglf6l100fo18nzzasr0mke" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1550,7 +1547,7 @@ OSでCapslockをCTRLにする</a>（過去記事、X11時代の手法との比�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/05/09/Customize-keyboard-on-Ubuntu26/" data-id="cmrgk4lmv01hg18o5gaadriev" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/09/Customize-keyboard-on-Ubuntu26/" data-id="cmrglf6ty01fe18nztolbt53b" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2691,7 +2688,7 @@ Ansible による自動化の足場も用意しました。 EC2 構成は前提�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/05/06/Headscale-Self-Hosting/" data-id="cmrgk4lps01my18o55ui5f4q1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/06/Headscale-Self-Hosting/" data-id="cmrglf6we01kn18nz0u1ig7u4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3057,7 +3054,7 @@ GitHub</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/04/05/Data-centric-AI-Survey/" data-id="cmrgk4lmz01hi18o5s81nliaz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/04/05/Data-centric-AI-Survey/" data-id="cmrglf6u001fg18nzyjr6taoa" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3256,7 +3253,7 @@ Codexを呼び出す方法を解説する。</p></p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-OpenAI-Codex-MCP/" data-id="cmrgk4lkc019418o5jdx2g9we" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-OpenAI-Codex-MCP/" data-id="cmrglf6r5017j18nzg0l1gn30" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3763,7 +3760,7 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Gemini-with-Claude-Code/" data-id="cmrgk4lks01a718o5aq6yk4m5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Gemini-with-Claude-Code/" data-id="cmrglf6rl018n18nza2kwlklb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3997,7 +3994,7 @@ npm]</span>: https://www.npmjs.com/package/<span class="citation" data-cites="an
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-Setup/" data-id="cmrgk4l8m002i18o56kck5b6t" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-Setup/" data-id="cmrglf6hb005l18nz0qiai9k8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -4243,7 +4240,7 @@ Planあれば、<code>claude login</code>でブラウザ認証すればAPIキー
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/09/Claude-Code-with-Claude-Code-Web/" data-id="cmrgk4l8n002k18o587c529r2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/09/Claude-Code-with-Claude-Code-Web/" data-id="cmrglf6hc005p18nzriazcnu7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
