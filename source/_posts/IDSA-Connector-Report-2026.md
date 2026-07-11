@@ -18,8 +18,6 @@ related:
 
 # IDSA Connector Report 2026 — DSP 2025-1 と DCP 1.0 でコネクタエコシステムが成熟段階へ
 
-> [← 目次に戻る](README.md)
-
 ## 概要
 
 [[idsa|IDSA]]（International Data Spaces Association）が2026年6月30日付で「Connector Report」を更新した。今回は [[dataspace-protocol|DSP 2025-1]] と [[decentralized-claims-protocol|DCP 1.0]] のリリースが主軸であり、テスト（[[dsp-tck|TCK]]）合格コネクタ数が8件に達するなど、データスペースのインフラが実装・拡張フェーズへ移行したことを示している。また、自動車業界主導だった [[eclipse-tractus-x|Tractus-X]] も他産業へ展開する「multi-industry」戦略へ舵を切った。
@@ -61,6 +59,3 @@ Tractus-Xの他産業展開も、この技術的標準化が背景にある。Ca
 
 - 2026-07-11: 初版
 
----
-
-> この議題にフィードバック → [Issue を作成](https://github.com/dobachi/daily-curation-reports/issues/new?labels=feedback&title=%5B2026-07-11%2F01-idsa-connector-report-2026%5D+&body=%23%23+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%0Areports%2F2026%2F07%2F11%2F01-idsa-connector-report-2026.md%0A%0A%23%23+%E7%A8%AE%E5%88%A5%0A-+%5B+%5D+%E8%A8%82%E6%AD%A3%2F%E8%A3%9C%E8%B6%B3%0A-+%5B+%5D+%E7%B6%9A%E7%B7%A8%E5%B8%8C%E6%9C%9B%0A-+%5B+%5D+%E6%96%B0%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E7%A4%BA%E5%94%86%0A%0A%23%23+%E5%86%85%E5%AE%B9%0A%0A)
