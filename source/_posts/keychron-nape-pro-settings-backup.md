@@ -64,7 +64,7 @@ WebHID API に対応したブラウザ（Google Chrome や Microsoft Edge など
 
 NapeProConfiguration の動作イメージは以下の通りである。
 
-![NapeProConfiguration 仕組み概要](/images/nape-pro-architecture.jpg)
+![NapeProConfiguration 仕組み概要](/memo-blog/images/nape-pro-architecture.jpg)
 
 - Launcher のページ上で動くスクリプトが、WebHID API 経由でキーボードに接続する
 - **エクスポート**時は、キーマップ・エンコーダ・DPI などの現在値を読み出し、バージョン情報を添えて JSON ファイルとしてダウンロードする

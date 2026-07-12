@@ -5,19 +5,19 @@
     
     <title>IDSA Connector Report 2026 — DSP 2025-1 と DCP 1.0 でコネクタエコシステムが成熟段階へ | memo-blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="IDSA Connector Report 2026 — DSP 2025-1 と DCP 1.0 でコネクタエコシステムが成熟段階へ  概要 詳細  プロトコル標準の確立: DSP 2025-1 と後方互換性 DCP 1.0 と TCK 合格エコシステム EDC の本番導入障壁の低下（単一ソース情報） Tractus-X の multi-industry 転換と EDWG 提携  考察 参">
+    <meta name="description" content="IDSA Connector Report 2026 — DSP 2025-1 と DCP 1.0 でコネクタエコシステムが成熟段階へ  概要 詳細  プロトコル標準の確立: DSP 2025-1 と後方互換性 DCP 1.0 と TCK 合格エコシステム DSP 2025-1 と DCP 1.0 の役割分担 EDC の本番導入障壁の低下（単一ソース情報） Tractus-X の multi">
 <meta name="keywords" content="データスペース,コネクタ,DSP,DCP,Eclipse EDC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IDSA Connector Report 2026 — DSP 2025-1 と DCP 1.0 でコネクタエコシステムが成熟段階へ">
 <meta property="og:url" content="https://dobachi.github.io/memo-blog/2026/07/11/IDSA-Connector-Report-2026/index.html">
 <meta property="og:site_name" content="memo-blog">
-<meta property="og:description" content="IDSA Connector Report 2026 — DSP 2025-1 と DCP 1.0 でコネクタエコシステムが成熟段階へ  概要 詳細  プロトコル標準の確立: DSP 2025-1 と後方互換性 DCP 1.0 と TCK 合格エコシステム EDC の本番導入障壁の低下（単一ソース情報） Tractus-X の multi-industry 転換と EDWG 提携  考察 参">
+<meta property="og:description" content="IDSA Connector Report 2026 — DSP 2025-1 と DCP 1.0 でコネクタエコシステムが成熟段階へ  概要 詳細  プロトコル標準の確立: DSP 2025-1 と後方互換性 DCP 1.0 と TCK 合格エコシステム DSP 2025-1 と DCP 1.0 の役割分担 EDC の本番導入障壁の低下（単一ソース情報） Tractus-X の multi">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/idsa-connector-report-2026.png">
-<meta property="og:updated_time" content="2026-07-11T17:01:37.571Z">
+<meta property="og:updated_time" content="2026-07-12T08:25:00.979Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IDSA Connector Report 2026 — DSP 2025-1 と DCP 1.0 でコネクタエコシステムが成熟段階へ">
-<meta name="twitter:description" content="IDSA Connector Report 2026 — DSP 2025-1 と DCP 1.0 でコネクタエコシステムが成熟段階へ  概要 詳細  プロトコル標準の確立: DSP 2025-1 と後方互換性 DCP 1.0 と TCK 合格エコシステム EDC の本番導入障壁の低下（単一ソース情報） Tractus-X の multi-industry 転換と EDWG 提携  考察 参">
+<meta name="twitter:description" content="IDSA Connector Report 2026 — DSP 2025-1 と DCP 1.0 でコネクタエコシステムが成熟段階へ  概要 詳細  プロトコル標準の確立: DSP 2025-1 と後方互換性 DCP 1.0 と TCK 合格エコシステム DSP 2025-1 と DCP 1.0 の役割分担 EDC の本番導入障壁の低下（単一ソース情報） Tractus-X の multi">
 <meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/idsa-connector-report-2026.png">
     
 
@@ -262,6 +262,8 @@ Connector Report 2026 — DSP 2025-1 と DCP 1.0
 DSP 2025-1 と後方互換性</a></li>
 <li><a href="#dcp-1.0-と-tck-合格エコシステム" id="toc-dcp-1.0-と-tck-合格エコシステム">DCP 1.0 と TCK
 合格エコシステム</a></li>
+<li><a href="#dsp-2025-1-と-dcp-1.0-の役割分担" id="toc-dsp-2025-1-と-dcp-1.0-の役割分担">DSP 2025-1 と DCP 1.0
+の役割分担</a></li>
 <li><a href="#edc-の本番導入障壁の低下単一ソース情報" id="toc-edc-の本番導入障壁の低下単一ソース情報">EDC
 の本番導入障壁の低下（単一ソース情報）</a></li>
 <li><a href="#tractus-x-の-multi-industry-転換と-edwg-提携" id="toc-tractus-x-の-multi-industry-転換と-edwg-提携">Tractus-X の
@@ -297,18 +299,67 @@ DSP 2025-1 と後方互換性</span></h3>
 2025-1のサポートが実装されている<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。特にDCP
 1.0による分散クレーム認証（Decentralized
 Claims）が実用レベルに達したことで、データスペースにおけるアイデンティティ管理とコネクタ接続の統合が現実的になった。</p>
+<h3><span id="dsp-2025-1-と-dcp-10の役割分担">DSP 2025-1 と DCP 1.0
+の役割分担</span></h3>
+<p>DSP と DCP は、いずれも Eclipse Dataspace Working
+Group（EDWG）が管理する別々の仕様だが、レイヤーが異なり互いを補完する。</p>
+<table>
+<colgroup>
+<col style="width: 17%">
+<col style="width: 37%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>仕様</th>
+<th>担うレイヤー</th>
+<th>標準化する範囲</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DSP 2025-1</td>
+<td>データ取引の制御</td>
+<td>カタログ（アセットとODRLポリシーの公開・発見）、契約交渉のステートマシン、データ転送プロセスの制御</td>
+</tr>
+<tr class="even">
+<td>DCP 1.0</td>
+<td>アイデンティティと信頼</td>
+<td>Verifiable Presentation
+の提示・検証、クレデンシャル発行、自己署名アイデンティティトークンの形式</td>
+</tr>
+</tbody>
+</table>
+<p>DSP は認証方式に対して中立で、HTTPSリクエストは
+<code>Authorization</code>
+ヘッダにトークンを載せる（SHOULD）とだけ定め、「トークンの意味づけは本仕様の対象外」としている。中身が
+OAuth2 か OIDC か分散IDかは問わない<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。DCP
+はそこに載せるトークンとして、W3C の Verifiable Credential /
+Presentation
+や自己署名アイデンティティトークンの生成・検証手順を定める<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。</p>
+<p>EDCベースのコネクタでは、両者は次のように組み合わさる。消費者コネクタが
+Credential Service（Identity Hub）で DCP 準拠のトークンを生成し、DSP
+の各メッセージ（カタログ取得・契約交渉・転送要求）の
+<code>Authorization</code> ヘッダに載せて送る。受け取ったプロバイダは
+DCP
+の手順でトークンとクレデンシャルを検証し、相手がデータスペースの正規メンバーか、契約を結ぶ属性を満たすかを判定してから、DSP
+のカタログ・交渉・転送処理を実行する<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>。検証は特定の一点ではなく、カタログ要求・契約交渉・データ転送の各段階で行われる。</p>
+<p>なお DSP 2025-1 は DCP を規範的に必須とはしていない。OAuth2 や OIDC
+といった集中型・フェデレーション型の認証と組み合わせることも仕様上は可能である<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>。ただし分散・主権型のデータスペースを構築する
+EDC や Catena-X の実装では、DSP と DCP
+をペアで導入する構成が事実上の標準になっている<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>。</p>
 <h3><span id="edcの本番導入障壁の低下単一ソース情報">EDC
 の本番導入障壁の低下（単一ソース情報）</span></h3>
 <p>EDCの本番運用に向けた改善として、EDR（Endpoint Data
 Reference）トークンのリフレッシュ機能追加や、Kubernetes用Helm
-Chartの整備が挙げられている<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。これによりコンテナ環境での運用が標準化され、導入のハードルが下がった。</p>
+Chartの整備が挙げられている<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>。これによりコンテナ環境での運用が標準化され、導入のハードルが下がった。</p>
 <h3><span id="tractus-x-のmulti-industry-転換と-edwg-提携">Tractus-X の
 multi-industry 転換と EDWG 提携</span></h3>
 <p>Tractus-Xはこれまでの自動車業界（Catena-X）特化から、複数産業や異なるデータスペースを繋ぐ「multi-dataspace
 /
 multi-industry」戦略へシフトした。2026年2月にマドリードで開催されたData
-Spaces Symposiumにおいて、EDWGとの公式連携が合意されている<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。アーキテクチャは製造業、半導体、建設、化学などの他セクターへの横展開を見据えた設計に変更された<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>。あわせて、IDS認証（Level
-1〜2）の段階的な認定スキームも整備された<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>。</p>
+Spaces Symposiumにおいて、EDWGとの公式連携が合意されている<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>。アーキテクチャは製造業、半導体、建設、化学などの他セクターへの横展開を見据えた設計に変更された<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>。あわせて、IDS認証（Level
+1〜2）の段階的な認定スキームも整備された<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>。</p>
 <h2><span id="考察">考察</span></h2>
 <p>DSP 2025-1とDCP
 1.0の同時リリースは、データスペースの技術レイヤーが仕様策定から実用フェーズへ入ったことを意味する。これまで各プロジェクトで個別実装されがちだったアイデンティティ連携がDCP
@@ -320,6 +371,7 @@ of 共通インフラ」という構想の実効性が高まる。</p>
 <h2><span id="更新履歴">更新履歴</span></h2>
 <ul>
 <li>2026-07-11: 初版</li>
+<li>2026-07-12: 「DSP 2025-1 と DCP 1.0 の役割分担」章を追加</li>
 </ul>
 <section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -328,14 +380,24 @@ of 共通インフラ」という構想の実効性が高まる。</p>
 Data Space Connector Report</a>", アクセス日 2026-07-11<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>IDSA, "<a href="https://internationaldataspaces.org/idsa-data-space-connector-report/" target="_blank" rel="noopener">IDSA
 Data Space Connector Report</a>", アクセス日 2026-07-11<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>IDSA, "<a href="https://internationaldataspaces.org/idsa-data-space-connector-report/" target="_blank" rel="noopener">IDSA
-Data Space Connector Report</a>", アクセス日 2026-07-11<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>Eclipse Tractus-X, "<a href="https://eclipse-tractusx.github.io/blog/" target="_blank" rel="noopener">Tractus-X Blog</a>",
-アクセス日 2026-07-11<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Eclipse Tractus-X, "<a href="https://eclipse-tractusx.github.io/blog/" target="_blank" rel="noopener">Tractus-X Blog</a>",
-アクセス日 2026-07-11<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>IDSA, "<a href="https://internationaldataspaces.org/idsa-data-space-connector-report/" target="_blank" rel="noopener">IDSA
-Data Space Connector Report</a>", アクセス日 2026-07-11<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Eclipse Dataspace Working Group, "<a href="https://github.com/eclipse-dataspace-protocol-base/DataspaceProtocol" target="_blank" rel="noopener">Dataspace
+Protocol</a>", アクセス日 2026-07-12<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Eclipse Dataspace Working Group, "<a href="https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol" target="_blank" rel="noopener">Decentralized
+Claims Protocol</a>", アクセス日 2026-07-12<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>Eclipse Dataspace Working Group, "<a href="https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol" target="_blank" rel="noopener">Decentralized
+Claims Protocol</a>", アクセス日 2026-07-12<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Eclipse Dataspace Working Group, "<a href="https://github.com/eclipse-dataspace-protocol-base/DataspaceProtocol" target="_blank" rel="noopener">Dataspace
+Protocol</a>", アクセス日 2026-07-12<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>Eclipse Dataspace Working Group, "<a href="https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol" target="_blank" rel="noopener">Decentralized
+Claims Protocol</a>", アクセス日 2026-07-12<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>IDSA, "<a href="https://internationaldataspaces.org/idsa-data-space-connector-report/" target="_blank" rel="noopener">IDSA
+Data Space Connector Report</a>", アクセス日 2026-07-11<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>Eclipse Tractus-X, "<a href="https://eclipse-tractusx.github.io/blog/" target="_blank" rel="noopener">Tractus-X Blog</a>",
+アクセス日 2026-07-11<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>Eclipse Tractus-X, "<a href="https://eclipse-tractusx.github.io/blog/" target="_blank" rel="noopener">Tractus-X Blog</a>",
+アクセス日 2026-07-11<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>IDSA, "<a href="https://internationaldataspaces.org/idsa-data-space-connector-report/" target="_blank" rel="noopener">IDSA
+Data Space Connector Report</a>", アクセス日 2026-07-11<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -348,7 +410,7 @@ Data Space Connector Report</a>", アクセス日 2026-07-11<a href="#fnref6" cl
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/IDSA-Connector-Report-2026/" data-id="cmrgm3s23009h18mj636pv1o5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/IDSA-Connector-Report-2026/" data-id="cmrhj37jh005v18l7rnudw2x8" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
