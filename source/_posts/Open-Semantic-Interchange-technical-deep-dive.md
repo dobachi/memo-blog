@@ -74,17 +74,22 @@ expression:
 
 `source` はウェアハウス上の完全修飾名（`database.schema.table`）で、dbt は各データセットを既存の dbt モデルに突き合わせる[^3]。エクスポート側では、データカタログの Dawiso がデータプロダクトを OSI 形式へ書き出す機能を提供している。コア開発は Snowflake・dbt Labs・Dremio が担う[^5]。
 
-### 参加組織と5つのワーキンググループ
+### 参加組織とワーキンググループ
 
-参加組織は50を超える。Snowflake・Databricks・Salesforce・Oracle・Alation・BlackRock・ServiceNow・Mistral AI などが名を連ねる[^1][^2]。仕様策定は次の5つのワーキンググループで進む[^4]。
+参加組織は50を超える。Snowflake・Databricks・Salesforce・Oracle・Alation・BlackRock・ServiceNow・Mistral AI などが名を連ねる[^1][^2]。仕様策定は、Apache Ossie の ROADMAP が「Current Efforts / Working Groups」として整理する複数のワーキンググループで進む[^6]。現在の主なグループは次のとおり[^6]。
 
-- 高度なメトリクス・式言語（Advanced Metrics & Expression Language）
-- コンポーザビリティ（Composability）
-- カタログ統合（Catalog Integration）
-- オントロジー表現（Ontology Representation）
-- モデル変換・開発者ツール（Model Converters & Developer Tools）
+- Metric Semantics & Core Semantic Model（メトリクス意味論とコアモデル）
+- Catalog Integration & Semantic Services（カタログ統合とセマンティックサービス）
+- Ontology & Semantic Interoperability（オントロジーと意味的相互運用）
+- Dataset Abstraction & Logical Modeling（データセット抽象化と論理モデリング）
+- Semantic Query Language & Reference Engine（セマンティッククエリ言語と参照エンジン）
+- SQL Dialect, Expressions, and Execution Boundaries（SQL方言・式・実行境界）
+- Dimensions, Hierarchies, and Time Semantics（ディメンション・階層・時間意味論）
+- AI-Native Semantic Layer（AIネイティブなセマンティック層）
+- Governance, Identity, and Validation（ガバナンス・アイデンティティ・検証）
+- Industry / Domain-Specific Semantic Models（業界・ドメイン特化モデル）
 
-加えて、2026年6月には金融サービス向けのセマンティック WG も設置された[^4]。
+初回のワーキンググループ会合は2025年10月に開かれた[^7]。業界特化の動きとして、2026年には金融サービス向けのセマンティック WG が立ち上がり、Net Asset Value のような定義の統一を進めている[^8]。
 
 ### AI統合対応
 
@@ -98,9 +103,9 @@ OSI は AI エージェントにセマンティックコンテキストを渡す
 
 A社とB社が別々のセマンティックモデルを持つ場合、OSI は両社のモデルを同じ文法（YAML／JSON）で表現させる。相手のメトリクス定義（式・ディメンション・関係・方言別の式）が機械可読で明示的になり、プロプライエタリなサイロや専用コネクタから解放される。ただし A社の「churn」と B社の「churn」を自動で同一視することはしない。定義が食い違えば OSI はその差分を正確に可視化するが、対応づけ（マッピングや統一定義の合意）は当事者のガバナンスに委ねられる。コア仕様にモデル間クロスウォークの仕組みはまだなく、ロードマップ上の目標にとどまる[^4]。
 
-差分を可視化した先を担うのが2つの WG だ。Composability WG は、モデルが互いを参照・再利用・拡張できるようにする。巨大な単一モデルを作り直すのではなく、財務・製品といったドメインごとに定義を保持したまま安全に参照し合うフェデレーテッド構成を可能にする[^4]。Ontology Representation WG は、OSI 概念を形式オントロジーに対応づけ、意味を保管場所から切り離した概念的相互運用を狙う[^4]。
+この線引きは Apache Ossie の ROADMAP でも明言されている。「現状は構造的相互運用は解けている（どのツールも共通フォーマットでモデルを読み書きできる）が、概念的相互運用（conceptual interoperability）はまだ解けていない」という認識だ[^6]。差分を可視化した先を担う取り組みも進む。「Dataset Abstraction & Logical Modeling」はモデルをまたいだデータセット・関係の再利用（composability）を、「Ontology & Semantic Interoperability」は業務概念を物理レイアウトから切り離し、オントロジーベースのモデルとモデル間の概念的アラインメントを可能にすることを目標に掲げる[^6]。
 
-業界横断では「業界が OSI の上に共通ドメイン語彙を作る」パターンになる。金融サービス向けのセマンティック WG は、Net Asset Value のような定義を業界で揃えようとする例だ[^1]。異なる業界どうしなら、双方が参照する共通リファレンス・オントロジー（金融の FIBO など）へのマッピングが鍵になるが、これは現時点ではロードマップであり、完成したスキーマ機能ではない[^4]。
+業界横断では「業界が OSI の上に共通ドメイン語彙を作る」パターンになる。金融サービス向けのセマンティック WG は、Net Asset Value のような定義を業界で揃えようとする例だ[^8]。異なる業界どうしなら、双方が参照する共通リファレンス・オントロジー（金融の FIBO など）へのマッピングが鍵になるが、これは現時点ではロードマップであり、完成したスキーマ機能ではない[^6]。
 
 要するに、OSI は共通の文法・ファイル形式であって共通の意味辞書ではない。「同じ単語で違う意味」を自動解決はしないが、各自の意味を交渉可能なほど明示化し、Composability や Ontology 層で整合を積み上げる土台を与える。
 
@@ -115,9 +120,13 @@ OSI が解くのは「セマンティック層の断片化」という古くて�
 [^1]: Open Semantic Interchange, "[Open Semantic Interchange](https://open-semantic-interchange.org/)", アクセス日 2026-07-10
 [^2]: Snowflake, "[Open Semantic Interchange (OSI) Specification Finalized](https://www.snowflake.com/en/blog/open-semantic-interchanges-specs-finalized/)", アクセス日 2026-07-10
 [^3]: dbt Labs, "[OSI semantic layer documents](https://docs.getdbt.com/docs/build/osi-semantic-models)", アクセス日 2026-07-12
-[^4]: Open Semantic Interchange, "[OSI Specification (GitHub)](https://github.com/open-semantic-interchange/OSI)", アクセス日 2026-07-12
+[^4]: Apache Ossie, "[Apache Ossie (旧 OSI) 仕様リポジトリ](https://github.com/apache/ossie)", アクセス日 2026-07-13
 [^5]: Apache Incubator, "[Apache Ossie (incubating)](https://incubator.apache.org/clutch/ossie.html)", アクセス日 2026-07-12
+[^6]: Apache Ossie, "[ROADMAP.md — Current Efforts / Working Groups](https://github.com/apache/ossie/blob/main/ROADMAP.md)", アクセス日 2026-07-13
+[^7]: Snowflake, "[OSI Further Expands Partner Ecosystem and Holds First Working Group Meeting](https://www.snowflake.com/en/blog/osi-initiative-expands-partners/)", アクセス日 2026-07-13
+[^8]: Open Semantic Interchange, "[Updates（金融サービス向けWG ほか）](https://open-semantic-interchange.org/updates/)", アクセス日 2026-07-13
 
 ## 更新履歴
 
 - 2026-07-10: 初版
+- 2026-07-13: ワーキンググループの記述を最新の Apache Ossie ROADMAP に合わせて修正し、WG関連の出典（ROADMAP・初回WG会合・金融WG）を追加。仕様リポジトリのURLを Apache Ossie に更新

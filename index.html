@@ -466,7 +466,7 @@ NapeProConfiguration を使えば、設定を JSON
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/keychron-nape-pro-settings-backup/" data-id="cmriicolg01cx18qvu515be76" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/keychron-nape-pro-settings-backup/" data-id="cmriil2ji01cq18qnaf9edsv4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -746,7 +746,384 @@ Data Space Connector Report</a>", アクセス日 2026-07-11<a href="#fnref11" c
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/IDSA-Connector-Report-2026/" data-id="cmriico9k005r18qv0gl981ti" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/IDSA-Connector-Report-2026/" data-id="cmriil264005s18qnpbgluogx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Open-Semantic-Interchange-technical-deep-dive" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/">Open Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/">
+            <time datetime="2026-07-09T15:00:00.000Z" itemprop="datePublished">2026-07-10</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/cross/">cross</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/Apache-Ossie/">Apache Ossie</a>, <a class="tag-link" href="/memo-blog/tags/Open-Semantic-Interchange/">Open Semantic Interchange</a>, <a class="tag-link" href="/memo-blog/tags/セマンティック層/">セマンティック層</a>, <a class="tag-link" href="/memo-blog/tags/データ相互運用性/">データ相互運用性</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#open-semantic-interchange-osi-技術深掘り-スコープと利用実例" id="toc-open-semantic-interchange-osi-技術深掘り-スコープと利用実例">Open
+Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</a>
+<ul>
+<li><a href="#概要" id="toc-概要">概要</a></li>
+<li><a href="#詳細" id="toc-詳細">詳細</a>
+<ul>
+<li><a href="#仕様概要とライセンス" id="toc-仕様概要とライセンス">仕様概要とライセンス</a></li>
+<li><a href="#osiのスコープ" id="toc-osiのスコープ">OSIのスコープ</a></li>
+<li><a href="#技術的イメージと利用実例" id="toc-技術的イメージと利用実例">技術的イメージと利用実例</a></li>
+<li><a href="#参加組織とワーキンググループ" id="toc-参加組織とワーキンググループ">参加組織とワーキンググループ</a></li>
+<li><a href="#ai統合対応" id="toc-ai統合対応">AI統合対応</a></li>
+<li><a href="#異なるセマンティックモデルをまたぐ連携" id="toc-異なるセマンティックモデルをまたぐ連携">異なるセマンティックモデルをまたぐ連携</a></li>
+</ul></li>
+<li><a href="#考察" id="toc-考察">考察</a></li>
+<li><a href="#参考文献" id="toc-参考文献">参考文献</a></li>
+<li><a href="#更新履歴" id="toc-更新履歴">更新履歴</a></li>
+</ul></li>
+</ul>
+</div>
+<h1><span id="opensemantic-interchange-osi-技術深掘り-スコープと利用実例">Open
+Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</span></h1>
+<h2><span id="概要">概要</span></h2>
+<p>Open Semantic
+Interchange（OSI）は、セマンティック層の構成要素（データセット・メトリクス・ディメンション・関係・コンテキスト）をベンダー中立かつ拡張可能な形式で表現するオープン標準だ。Snowflake
+が主導し、Salesforce・dbt Labs・BlackRock
+らと2025年9月23日に発足、2026年1月27日に初版仕様（v0.1系）を GitHub
+上で公開した<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。「Write Once, Query
+Anywhere」の原則で、メトリクス定義を一度書けば
+BI・AI・分析ツール間で一貫して解釈できるようにする。2026年6月には Apache
+Software Foundation の Incubator に受け入れられ、「Apache Ossie
+(incubating)」として開発が続いている<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。</p>
+<h2><span id="詳細">詳細</span></h2>
+<h3><span id="仕様概要とライセンス">仕様概要とライセンス</span></h3>
+<p>OSI は YAML／JSON で宣言的にセマンティックモデルを定義する Apache 2.0
+ライセンスのオープン標準である<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>。ベンダー中立な形式で構成要素を定義し、BI・AI・分析ツール間で一貫した解釈を可能にする<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>。公開された初版はバージョン v0.1
+系で、dbt の実装も document version <code>0.1.0</code> /
+<code>0.1.1</code> を対象としている<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>。「v1.0」という表記が流通することがあるが、正式なバージョンタグではない点に注意したい。</p>
+<h3><span id="osiのスコープ">OSIのスコープ</span></h3>
+<p>OSI
+は「論理的なセマンティック層」に範囲を絞り、物理層や実行層には踏み込まない。何を対象とし、何を対象外とするかは明確に線引きされている<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>。</p>
+<table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>区分</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>スコープ内</td>
+<td>Semantic
+Model（データセット・関係・メトリクスを束ねる最上位コンテナ）、Datasets（ファクト／ディメンションの論理エンティティ、主キー・一意キー）、Fields（グルーピング・フィルタ・式に使う行レベル属性）、Relationships（データセット間の外部キー、単純／複合キー）、Metrics（複数データセットにまたがる集計指標）、Custom
+Extensions（ベンダー固有メタデータ）、AI
+Context（指示・同義語・サンプルクエリ等の注釈）</td>
+</tr>
+<tr class="even">
+<td>スコープ外</td>
+<td>物理データ形式（Parquet・Arrow）、クエリ／アクセスインターフェース（ODBC・JDBC）、カタログメタデータ（Hive
+Metastore 等）、クエリの実行そのもの</td>
+</tr>
+</tbody>
+</table>
+<p>OSI
+はこれらの既存標準を置き換えるものではなく、補完する位置づけを明言している<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>。オーサリングツールを置き換えるのではなく、その出力を相互運用可能にすることが狙いだ。Custom
+Extensions
+は互換性保証の対象外だが、仕様を理解しないツールを経由しても往復変換で保持されるため、ベンダー間の変換で情報が失われない<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>。</p>
+<h3><span id="技術的イメージと利用実例">技術的イメージと利用実例</span></h3>
+<p>構造はハブ&amp;スポークだ。各ツールが OSI
+という単一の交換フォーマットを介するため、ツール同士を N×N
+で個別接続する必要がなくなる。定義側（dbt/MetricFlow、Snowflake、Cube
+など）が OSI を出力し、利用側（Tableau・Sigma・ThoughtSpot などの BI、AI
+エージェント、分析ツール）が OSI を読む。</p>
+<figure>
+<img src="/memo-blog/images/open-semantic-interchange-architecture.png" alt="OSIによるWrite Once, Query Anywhereのハブ&amp;スポーク構造">
+<figcaption aria-hidden="true">OSIによるWrite Once, Query
+Anywhereのハブ&amp;スポーク構造</figcaption>
+</figure>
+<p>技術的な特徴のひとつが、フィールドやメトリクスの式を SQL
+方言ごとに持てることだ。同じ論理定義に対して、実行先の方言に応じた式を並記する<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">expression:</span></span><br><span class="line"><span class="attr">  dialects:</span></span><br><span class="line"><span class="attr">    - dialect:</span> <span class="string">ANSI_SQL</span></span><br><span class="line"><span class="attr">      expression:</span> <span class="string">LOWER(email)</span></span><br><span class="line"><span class="attr">    - dialect:</span> <span class="string">SNOWFLAKE</span></span><br><span class="line"><span class="attr">      expression:</span> <span class="string">LOWER(email)::VARCHAR</span></span><br><span class="line"><span class="attr">    - dialect:</span> <span class="string">DATABRICKS</span></span><br><span class="line"><span class="attr">      expression:</span> <span class="string">lower(email)</span></span><br></pre></td></tr></table></figure>
+<p>実装例として、dbt Core は v1.12 以降で OSI
+をサポートする。プロジェクト直下の <code>OSI/</code>
+ディレクトリ（または <code>dbt_project.yml</code> の
+<code>osi-paths</code> で指定した場所）に OSI
+ドキュメントを置き、<code>dbt compile</code> または <code>dbt run</code>
+で解析させると、<code>target/</code> 配下に
+<code>osi_document.json</code>・<code>manifest.json</code>・<code>semantic_manifest.json</code>
+が生成される<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>。OSI 由来の定義と dbt
+ネイティブのセマンティックモデルは同一プロジェクトで共存できる<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.1.1"</span>,</span><br><span class="line">  <span class="attr">"semantic_model"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"orders"</span>,</span><br><span class="line">      <span class="attr">"datasets"</span>: [</span><br><span class="line">        &#123; <span class="attr">"name"</span>: <span class="string">"orders"</span>, <span class="attr">"source"</span>: <span class="string">"my_database.my_schema.fct_orders"</span> &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>source</code>
+はウェアハウス上の完全修飾名（<code>database.schema.table</code>）で、dbt
+は各データセットを既存の dbt モデルに突き合わせる<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>。エクスポート側では、データカタログの
+Dawiso がデータプロダクトを OSI
+形式へ書き出す機能を提供している。コア開発は Snowflake・dbt Labs・Dremio
+が担う<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>。</p>
+<h3><span id="参加組織とワーキンググループ">参加組織とワーキンググループ</span></h3>
+<p>参加組織は50を超える。Snowflake・Databricks・Salesforce・Oracle・Alation・BlackRock・ServiceNow・Mistral
+AI などが名を連ねる<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a><a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>。仕様策定は、Apache
+Ossie の ROADMAP が「Current Efforts / Working
+Groups」として整理する複数のワーキンググループで進む<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>。現在の主なグループは次のとおり<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>。</p>
+<ul>
+<li>Metric Semantics &amp; Core Semantic
+Model（メトリクス意味論とコアモデル）</li>
+<li>Catalog Integration &amp; Semantic
+Services（カタログ統合とセマンティックサービス）</li>
+<li>Ontology &amp; Semantic
+Interoperability（オントロジーと意味的相互運用）</li>
+<li>Dataset Abstraction &amp; Logical
+Modeling（データセット抽象化と論理モデリング）</li>
+<li>Semantic Query Language &amp; Reference
+Engine（セマンティッククエリ言語と参照エンジン）</li>
+<li>SQL Dialect, Expressions, and Execution
+Boundaries（SQL方言・式・実行境界）</li>
+<li>Dimensions, Hierarchies, and Time
+Semantics（ディメンション・階層・時間意味論）</li>
+<li>AI-Native Semantic Layer（AIネイティブなセマンティック層）</li>
+<li>Governance, Identity, and
+Validation（ガバナンス・アイデンティティ・検証）</li>
+<li>Industry / Domain-Specific Semantic
+Models（業界・ドメイン特化モデル）</li>
+</ul>
+<p>初回のワーキンググループ会合は2025年10月に開かれた<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>。業界特化の動きとして、2026年には金融サービス向けのセマンティック
+WG が立ち上がり、Net Asset Value のような定義の統一を進めている<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>。</p>
+<h3><span id="ai統合対応">AI統合対応</span></h3>
+<p>OSI は AI
+エージェントにセマンティックコンテキストを渡すことを設計に組み込んでいる。AI
+Context
+として、指示・同義語・サンプルクエリといった注釈をモデルに付与できる<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a>。すべてのツールとエージェントが同一の定義から動くことで、チーム間の定義不一致や重複作業を避けられる<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a>。</p>
+<h3><span id="異なるセマンティックモデルをまたぐ連携">異なるセマンティックモデルをまたぐ連携</span></h3>
+<p>押さえるべき線引きは、OSI
+が与えるのは「フォーマット（構造）の相互運用」であって「意味の自動突き合わせ」ではない、という点だ。</p>
+<figure>
+<img src="/memo-blog/images/open-semantic-interchange-cross-model.png" alt="OSIはフォーマットを統一するが、意味の整合はマッピングと共通語彙層が担う">
+<figcaption aria-hidden="true">OSIはフォーマットを統一するが、意味の整合はマッピングと共通語彙層が担う</figcaption>
+</figure>
+<p>A社とB社が別々のセマンティックモデルを持つ場合、OSI
+は両社のモデルを同じ文法（YAML／JSON）で表現させる。相手のメトリクス定義（式・ディメンション・関係・方言別の式）が機械可読で明示的になり、プロプライエタリなサイロや専用コネクタから解放される。ただし
+A社の「churn」と
+B社の「churn」を自動で同一視することはしない。定義が食い違えば OSI
+はその差分を正確に可視化するが、対応づけ（マッピングや統一定義の合意）は当事者のガバナンスに委ねられる。コア仕様にモデル間クロスウォークの仕組みはまだなく、ロードマップ上の目標にとどまる<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a>。</p>
+<p>この線引きは Apache Ossie の ROADMAP
+でも明言されている。「現状は構造的相互運用は解けている（どのツールも共通フォーマットでモデルを読み書きできる）が、概念的相互運用（conceptual
+interoperability）はまだ解けていない」という認識だ<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a>。差分を可視化した先を担う取り組みも進む。「Dataset
+Abstraction &amp; Logical
+Modeling」はモデルをまたいだデータセット・関係の再利用（composability）を、「Ontology
+&amp; Semantic
+Interoperability」は業務概念を物理レイアウトから切り離し、オントロジーベースのモデルとモデル間の概念的アラインメントを可能にすることを目標に掲げる<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a>。</p>
+<p>業界横断では「業界が OSI
+の上に共通ドメイン語彙を作る」パターンになる。金融サービス向けのセマンティック
+WG は、Net Asset Value のような定義を業界で揃えようとする例だ<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a>。異なる業界どうしなら、双方が参照する共通リファレンス・オントロジー（金融の
+FIBO
+など）へのマッピングが鍵になるが、これは現時点ではロードマップであり、完成したスキーマ機能ではない<a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a>。</p>
+<p>要するに、OSI
+は共通の文法・ファイル形式であって共通の意味辞書ではない。「同じ単語で違う意味」を自動解決はしないが、各自の意味を交渉可能なほど明示化し、Composability
+や Ontology 層で整合を積み上げる土台を与える。</p>
+<h2><span id="考察">考察</span></h2>
+<p>OSI
+が解くのは「セマンティック層の断片化」という古くて新しい問題だ。BI
+時代にはメトリクス定義の不統一がダッシュボード間の数字の食い違いを生んでいた。AI
+エージェントが普及した今、定義の不統一はエージェントの判断誤りに直結するため、共通の定義基盤の価値は質的に高まる。</p>
+<p>一方で普及の速度は、5つの WG
+が実装ガイドと相互運用テストをどれだけ早く整備できるかに依存する。ここで効いてくるのが
+Apache Incubator
+への移管だ。特定ベンダーのイニシアチブから中立な財団のガバナンス下に移ったことで、参加ベンダーが安心して実装へ投資しやすくなる。dbt
+Core のように import が実際に動く実装が出てきた段階であり、今後は
+Snowflake・Cube・BI 各社の export/import
+がどこまで揃うかが分岐点になる。</p>
+<h2><span id="参考文献">参考文献</span></h2>
+<h2><span id="更新履歴">更新履歴</span></h2>
+<ul>
+<li>2026-07-10: 初版</li>
+<li>2026-07-13: ワーキンググループの記述を最新の Apache Ossie ROADMAP
+に合わせて修正し、WG関連の出典（ROADMAP・初回WG会合・金融WG）を追加。仕様リポジトリのURLを
+Apache Ossie に更新</li>
+</ul>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/" target="_blank" rel="noopener">Open Semantic
+Interchange</a>", アクセス日 2026-07-10<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/open-semantic-interchanges-specs-finalized/" target="_blank" rel="noopener">Open
+Semantic Interchange (OSI) Specification Finalized</a>", アクセス日
+2026-07-10<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Apache Incubator, "<a href="https://incubator.apache.org/clutch/ossie.html" target="_blank" rel="noopener">Apache Ossie
+(incubating)</a>", アクセス日 2026-07-12<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/" target="_blank" rel="noopener">Open Semantic
+Interchange</a>", アクセス日 2026-07-10<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/open-semantic-interchanges-specs-finalized/" target="_blank" rel="noopener">Open
+Semantic Interchange (OSI) Specification Finalized</a>", アクセス日
+2026-07-10<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/" target="_blank" rel="noopener">Open Semantic
+Interchange</a>", アクセス日 2026-07-10<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>dbt Labs, "<a href="https://docs.getdbt.com/docs/build/osi-semantic-models" target="_blank" rel="noopener">OSI
+semantic layer documents</a>", アクセス日 2026-07-12<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie" target="_blank" rel="noopener">Apache Ossie (旧 OSI)
+仕様リポジトリ</a>", アクセス日 2026-07-13<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie" target="_blank" rel="noopener">Apache Ossie (旧 OSI)
+仕様リポジトリ</a>", アクセス日 2026-07-13<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie" target="_blank" rel="noopener">Apache Ossie (旧 OSI)
+仕様リポジトリ</a>", アクセス日 2026-07-13<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie" target="_blank" rel="noopener">Apache Ossie (旧 OSI)
+仕様リポジトリ</a>", アクセス日 2026-07-13<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>dbt Labs, "<a href="https://docs.getdbt.com/docs/build/osi-semantic-models" target="_blank" rel="noopener">OSI
+semantic layer documents</a>", アクセス日 2026-07-12<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>dbt Labs, "<a href="https://docs.getdbt.com/docs/build/osi-semantic-models" target="_blank" rel="noopener">OSI
+semantic layer documents</a>", アクセス日 2026-07-12<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p>dbt Labs, "<a href="https://docs.getdbt.com/docs/build/osi-semantic-models" target="_blank" rel="noopener">OSI
+semantic layer documents</a>", アクセス日 2026-07-12<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15" role="doc-endnote"><p>Apache Incubator, "<a href="https://incubator.apache.org/clutch/ossie.html" target="_blank" rel="noopener">Apache Ossie
+(incubating)</a>", アクセス日 2026-07-12<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/" target="_blank" rel="noopener">Open Semantic
+Interchange</a>", アクセス日 2026-07-10<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/open-semantic-interchanges-specs-finalized/" target="_blank" rel="noopener">Open
+Semantic Interchange (OSI) Specification Finalized</a>", アクセス日
+2026-07-10<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
+Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
+Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/osi-initiative-expands-partners/" target="_blank" rel="noopener">OSI
+Further Expands Partner Ecosystem and Holds First Working Group
+Meeting</a>", アクセス日 2026-07-13<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/updates/" target="_blank" rel="noopener">Updates（金融サービス向けWG
+ほか）</a>", アクセス日 2026-07-13<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie" target="_blank" rel="noopener">Apache Ossie (旧 OSI)
+仕様リポジトリ</a>", アクセス日 2026-07-13<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/open-semantic-interchanges-specs-finalized/" target="_blank" rel="noopener">Open
+Semantic Interchange (OSI) Specification Finalized</a>", アクセス日
+2026-07-10<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn24" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie" target="_blank" rel="noopener">Apache Ossie (旧 OSI)
+仕様リポジトリ</a>", アクセス日 2026-07-13<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn25" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
+Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn26" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
+Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn27" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/updates/" target="_blank" rel="noopener">Updates（金融サービス向けWG
+ほか）</a>", アクセス日 2026-07-13<a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn28" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
+Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref28" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" data-id="cmriil2j501bu18qndr4lorkl" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -968,358 +1345,7 @@ EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" data-id="cmriico8h004018qvubu4g63v" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Open-Semantic-Interchange-technical-deep-dive" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/">Open Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/">
-            <time datetime="2026-07-09T15:00:00.000Z" itemprop="datePublished">2026-07-10</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/cross/">cross</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/Apache-Ossie/">Apache Ossie</a>, <a class="tag-link" href="/memo-blog/tags/Open-Semantic-Interchange/">Open Semantic Interchange</a>, <a class="tag-link" href="/memo-blog/tags/セマンティック層/">セマンティック層</a>, <a class="tag-link" href="/memo-blog/tags/データ相互運用性/">データ相互運用性</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#open-semantic-interchange-osi-技術深掘り-スコープと利用実例" id="toc-open-semantic-interchange-osi-技術深掘り-スコープと利用実例">Open
-Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</a>
-<ul>
-<li><a href="#概要" id="toc-概要">概要</a></li>
-<li><a href="#詳細" id="toc-詳細">詳細</a>
-<ul>
-<li><a href="#仕様概要とライセンス" id="toc-仕様概要とライセンス">仕様概要とライセンス</a></li>
-<li><a href="#osiのスコープ" id="toc-osiのスコープ">OSIのスコープ</a></li>
-<li><a href="#技術的イメージと利用実例" id="toc-技術的イメージと利用実例">技術的イメージと利用実例</a></li>
-<li><a href="#参加組織と5つのワーキンググループ" id="toc-参加組織と5つのワーキンググループ">参加組織と5つのワーキンググループ</a></li>
-<li><a href="#ai統合対応" id="toc-ai統合対応">AI統合対応</a></li>
-<li><a href="#異なるセマンティックモデルをまたぐ連携" id="toc-異なるセマンティックモデルをまたぐ連携">異なるセマンティックモデルをまたぐ連携</a></li>
-</ul></li>
-<li><a href="#考察" id="toc-考察">考察</a></li>
-<li><a href="#参考文献" id="toc-参考文献">参考文献</a></li>
-<li><a href="#更新履歴" id="toc-更新履歴">更新履歴</a></li>
-</ul></li>
-</ul>
-</div>
-<h1><span id="opensemantic-interchange-osi-技術深掘り-スコープと利用実例">Open
-Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</span></h1>
-<h2><span id="概要">概要</span></h2>
-<p>Open Semantic
-Interchange（OSI）は、セマンティック層の構成要素（データセット・メトリクス・ディメンション・関係・コンテキスト）をベンダー中立かつ拡張可能な形式で表現するオープン標準だ。Snowflake
-が主導し、Salesforce・dbt Labs・BlackRock
-らと2025年9月23日に発足、2026年1月27日に初版仕様（v0.1系）を GitHub
-上で公開した<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。「Write Once, Query
-Anywhere」の原則で、メトリクス定義を一度書けば
-BI・AI・分析ツール間で一貫して解釈できるようにする。2026年6月には Apache
-Software Foundation の Incubator に受け入れられ、「Apache Ossie
-(incubating)」として開発が続いている<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。</p>
-<h2><span id="詳細">詳細</span></h2>
-<h3><span id="仕様概要とライセンス">仕様概要とライセンス</span></h3>
-<p>OSI は YAML／JSON で宣言的にセマンティックモデルを定義する Apache 2.0
-ライセンスのオープン標準である<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>。ベンダー中立な形式で構成要素を定義し、BI・AI・分析ツール間で一貫した解釈を可能にする<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>。公開された初版はバージョン v0.1
-系で、dbt の実装も document version <code>0.1.0</code> /
-<code>0.1.1</code> を対象としている<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>。「v1.0」という表記が流通することがあるが、正式なバージョンタグではない点に注意したい。</p>
-<h3><span id="osiのスコープ">OSIのスコープ</span></h3>
-<p>OSI
-は「論理的なセマンティック層」に範囲を絞り、物理層や実行層には踏み込まない。何を対象とし、何を対象外とするかは明確に線引きされている<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>。</p>
-<table>
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>区分</th>
-<th>内容</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>スコープ内</td>
-<td>Semantic
-Model（データセット・関係・メトリクスを束ねる最上位コンテナ）、Datasets（ファクト／ディメンションの論理エンティティ、主キー・一意キー）、Fields（グルーピング・フィルタ・式に使う行レベル属性）、Relationships（データセット間の外部キー、単純／複合キー）、Metrics（複数データセットにまたがる集計指標）、Custom
-Extensions（ベンダー固有メタデータ）、AI
-Context（指示・同義語・サンプルクエリ等の注釈）</td>
-</tr>
-<tr class="even">
-<td>スコープ外</td>
-<td>物理データ形式（Parquet・Arrow）、クエリ／アクセスインターフェース（ODBC・JDBC）、カタログメタデータ（Hive
-Metastore 等）、クエリの実行そのもの</td>
-</tr>
-</tbody>
-</table>
-<p>OSI
-はこれらの既存標準を置き換えるものではなく、補完する位置づけを明言している<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>。オーサリングツールを置き換えるのではなく、その出力を相互運用可能にすることが狙いだ。Custom
-Extensions
-は互換性保証の対象外だが、仕様を理解しないツールを経由しても往復変換で保持されるため、ベンダー間の変換で情報が失われない<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>。</p>
-<h3><span id="技術的イメージと利用実例">技術的イメージと利用実例</span></h3>
-<p>構造はハブ&amp;スポークだ。各ツールが OSI
-という単一の交換フォーマットを介するため、ツール同士を N×N
-で個別接続する必要がなくなる。定義側（dbt/MetricFlow、Snowflake、Cube
-など）が OSI を出力し、利用側（Tableau・Sigma・ThoughtSpot などの BI、AI
-エージェント、分析ツール）が OSI を読む。</p>
-<figure>
-<img src="/memo-blog/images/open-semantic-interchange-architecture.png" alt="OSIによるWrite Once, Query Anywhereのハブ&amp;スポーク構造">
-<figcaption aria-hidden="true">OSIによるWrite Once, Query
-Anywhereのハブ&amp;スポーク構造</figcaption>
-</figure>
-<p>技術的な特徴のひとつが、フィールドやメトリクスの式を SQL
-方言ごとに持てることだ。同じ論理定義に対して、実行先の方言に応じた式を並記する<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">expression:</span></span><br><span class="line"><span class="attr">  dialects:</span></span><br><span class="line"><span class="attr">    - dialect:</span> <span class="string">ANSI_SQL</span></span><br><span class="line"><span class="attr">      expression:</span> <span class="string">LOWER(email)</span></span><br><span class="line"><span class="attr">    - dialect:</span> <span class="string">SNOWFLAKE</span></span><br><span class="line"><span class="attr">      expression:</span> <span class="string">LOWER(email)::VARCHAR</span></span><br><span class="line"><span class="attr">    - dialect:</span> <span class="string">DATABRICKS</span></span><br><span class="line"><span class="attr">      expression:</span> <span class="string">lower(email)</span></span><br></pre></td></tr></table></figure>
-<p>実装例として、dbt Core は v1.12 以降で OSI
-をサポートする。プロジェクト直下の <code>OSI/</code>
-ディレクトリ（または <code>dbt_project.yml</code> の
-<code>osi-paths</code> で指定した場所）に OSI
-ドキュメントを置き、<code>dbt compile</code> または <code>dbt run</code>
-で解析させると、<code>target/</code> 配下に
-<code>osi_document.json</code>・<code>manifest.json</code>・<code>semantic_manifest.json</code>
-が生成される<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>。OSI 由来の定義と dbt
-ネイティブのセマンティックモデルは同一プロジェクトで共存できる<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.1.1"</span>,</span><br><span class="line">  <span class="attr">"semantic_model"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"orders"</span>,</span><br><span class="line">      <span class="attr">"datasets"</span>: [</span><br><span class="line">        &#123; <span class="attr">"name"</span>: <span class="string">"orders"</span>, <span class="attr">"source"</span>: <span class="string">"my_database.my_schema.fct_orders"</span> &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>source</code>
-はウェアハウス上の完全修飾名（<code>database.schema.table</code>）で、dbt
-は各データセットを既存の dbt モデルに突き合わせる<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>。エクスポート側では、データカタログの
-Dawiso がデータプロダクトを OSI
-形式へ書き出す機能を提供している。コア開発は Snowflake・dbt Labs・Dremio
-が担う<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>。</p>
-<h3><span id="参加組織と5つのワーキンググループ">参加組織と5つのワーキンググループ</span></h3>
-<p>参加組織は50を超える。Snowflake・Databricks・Salesforce・Oracle・Alation・BlackRock・ServiceNow・Mistral
-AI などが名を連ねる<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a><a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>。仕様策定は次の5つのワーキンググループで進む<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>。</p>
-<ul>
-<li>高度なメトリクス・式言語（Advanced Metrics &amp; Expression
-Language）</li>
-<li>コンポーザビリティ（Composability）</li>
-<li>カタログ統合（Catalog Integration）</li>
-<li>オントロジー表現（Ontology Representation）</li>
-<li>モデル変換・開発者ツール（Model Converters &amp; Developer
-Tools）</li>
-</ul>
-<p>加えて、2026年6月には金融サービス向けのセマンティック WG
-も設置された<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>。</p>
-<h3><span id="ai統合対応">AI統合対応</span></h3>
-<p>OSI は AI
-エージェントにセマンティックコンテキストを渡すことを設計に組み込んでいる。AI
-Context
-として、指示・同義語・サンプルクエリといった注釈をモデルに付与できる<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>。すべてのツールとエージェントが同一の定義から動くことで、チーム間の定義不一致や重複作業を避けられる<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>。</p>
-<h3><span id="異なるセマンティックモデルをまたぐ連携">異なるセマンティックモデルをまたぐ連携</span></h3>
-<p>押さえるべき線引きは、OSI
-が与えるのは「フォーマット（構造）の相互運用」であって「意味の自動突き合わせ」ではない、という点だ。</p>
-<figure>
-<img src="/memo-blog/images/open-semantic-interchange-cross-model.png" alt="OSIはフォーマットを統一するが、意味の整合はマッピングと共通語彙層が担う">
-<figcaption aria-hidden="true">OSIはフォーマットを統一するが、意味の整合はマッピングと共通語彙層が担う</figcaption>
-</figure>
-<p>A社とB社が別々のセマンティックモデルを持つ場合、OSI
-は両社のモデルを同じ文法（YAML／JSON）で表現させる。相手のメトリクス定義（式・ディメンション・関係・方言別の式）が機械可読で明示的になり、プロプライエタリなサイロや専用コネクタから解放される。ただし
-A社の「churn」と
-B社の「churn」を自動で同一視することはしない。定義が食い違えば OSI
-はその差分を正確に可視化するが、対応づけ（マッピングや統一定義の合意）は当事者のガバナンスに委ねられる。コア仕様にモデル間クロスウォークの仕組みはまだなく、ロードマップ上の目標にとどまる<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a>。</p>
-<p>差分を可視化した先を担うのが2つの WG だ。Composability WG
-は、モデルが互いを参照・再利用・拡張できるようにする。巨大な単一モデルを作り直すのではなく、財務・製品といったドメインごとに定義を保持したまま安全に参照し合うフェデレーテッド構成を可能にする<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a>。Ontology Representation WG は、OSI
-概念を形式オントロジーに対応づけ、意味を保管場所から切り離した概念的相互運用を狙う<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a>。</p>
-<p>業界横断では「業界が OSI
-の上に共通ドメイン語彙を作る」パターンになる。金融サービス向けのセマンティック
-WG は、Net Asset Value のような定義を業界で揃えようとする例だ<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a>。異なる業界どうしなら、双方が参照する共通リファレンス・オントロジー（金融の
-FIBO
-など）へのマッピングが鍵になるが、これは現時点ではロードマップであり、完成したスキーマ機能ではない<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a>。</p>
-<p>要するに、OSI
-は共通の文法・ファイル形式であって共通の意味辞書ではない。「同じ単語で違う意味」を自動解決はしないが、各自の意味を交渉可能なほど明示化し、Composability
-や Ontology 層で整合を積み上げる土台を与える。</p>
-<h2><span id="考察">考察</span></h2>
-<p>OSI
-が解くのは「セマンティック層の断片化」という古くて新しい問題だ。BI
-時代にはメトリクス定義の不統一がダッシュボード間の数字の食い違いを生んでいた。AI
-エージェントが普及した今、定義の不統一はエージェントの判断誤りに直結するため、共通の定義基盤の価値は質的に高まる。</p>
-<p>一方で普及の速度は、5つの WG
-が実装ガイドと相互運用テストをどれだけ早く整備できるかに依存する。ここで効いてくるのが
-Apache Incubator
-への移管だ。特定ベンダーのイニシアチブから中立な財団のガバナンス下に移ったことで、参加ベンダーが安心して実装へ投資しやすくなる。dbt
-Core のように import が実際に動く実装が出てきた段階であり、今後は
-Snowflake・Cube・BI 各社の export/import
-がどこまで揃うかが分岐点になる。</p>
-<h2><span id="参考文献">参考文献</span></h2>
-<h2><span id="更新履歴">更新履歴</span></h2>
-<ul>
-<li>2026-07-10: 初版</li>
-</ul>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/" target="_blank" rel="noopener">Open Semantic
-Interchange</a>", アクセス日 2026-07-10<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/open-semantic-interchanges-specs-finalized/" target="_blank" rel="noopener">Open
-Semantic Interchange (OSI) Specification Finalized</a>", アクセス日
-2026-07-10<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Apache Incubator, "<a href="https://incubator.apache.org/clutch/ossie.html" target="_blank" rel="noopener">Apache Ossie
-(incubating)</a>", アクセス日 2026-07-12<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/" target="_blank" rel="noopener">Open Semantic
-Interchange</a>", アクセス日 2026-07-10<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/open-semantic-interchanges-specs-finalized/" target="_blank" rel="noopener">Open
-Semantic Interchange (OSI) Specification Finalized</a>", アクセス日
-2026-07-10<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/" target="_blank" rel="noopener">Open Semantic
-Interchange</a>", アクセス日 2026-07-10<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7" role="doc-endnote"><p>dbt Labs, "<a href="https://docs.getdbt.com/docs/build/osi-semantic-models" target="_blank" rel="noopener">OSI
-semantic layer documents</a>", アクセス日 2026-07-12<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://github.com/open-semantic-interchange/OSI" target="_blank" rel="noopener">OSI
-Specification (GitHub)</a>", アクセス日 2026-07-12<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://github.com/open-semantic-interchange/OSI" target="_blank" rel="noopener">OSI
-Specification (GitHub)</a>", アクセス日 2026-07-12<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://github.com/open-semantic-interchange/OSI" target="_blank" rel="noopener">OSI
-Specification (GitHub)</a>", アクセス日 2026-07-12<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://github.com/open-semantic-interchange/OSI" target="_blank" rel="noopener">OSI
-Specification (GitHub)</a>", アクセス日 2026-07-12<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12" role="doc-endnote"><p>dbt Labs, "<a href="https://docs.getdbt.com/docs/build/osi-semantic-models" target="_blank" rel="noopener">OSI
-semantic layer documents</a>", アクセス日 2026-07-12<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13" role="doc-endnote"><p>dbt Labs, "<a href="https://docs.getdbt.com/docs/build/osi-semantic-models" target="_blank" rel="noopener">OSI
-semantic layer documents</a>", アクセス日 2026-07-12<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn14" role="doc-endnote"><p>dbt Labs, "<a href="https://docs.getdbt.com/docs/build/osi-semantic-models" target="_blank" rel="noopener">OSI
-semantic layer documents</a>", アクセス日 2026-07-12<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn15" role="doc-endnote"><p>Apache Incubator, "<a href="https://incubator.apache.org/clutch/ossie.html" target="_blank" rel="noopener">Apache Ossie
-(incubating)</a>", アクセス日 2026-07-12<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn16" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/" target="_blank" rel="noopener">Open Semantic
-Interchange</a>", アクセス日 2026-07-10<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn17" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/open-semantic-interchanges-specs-finalized/" target="_blank" rel="noopener">Open
-Semantic Interchange (OSI) Specification Finalized</a>", アクセス日
-2026-07-10<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn18" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://github.com/open-semantic-interchange/OSI" target="_blank" rel="noopener">OSI
-Specification (GitHub)</a>", アクセス日 2026-07-12<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn19" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://github.com/open-semantic-interchange/OSI" target="_blank" rel="noopener">OSI
-Specification (GitHub)</a>", アクセス日 2026-07-12<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn20" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://github.com/open-semantic-interchange/OSI" target="_blank" rel="noopener">OSI
-Specification (GitHub)</a>", アクセス日 2026-07-12<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn21" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/open-semantic-interchanges-specs-finalized/" target="_blank" rel="noopener">Open
-Semantic Interchange (OSI) Specification Finalized</a>", アクセス日
-2026-07-10<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn22" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://github.com/open-semantic-interchange/OSI" target="_blank" rel="noopener">OSI
-Specification (GitHub)</a>", アクセス日 2026-07-12<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn23" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://github.com/open-semantic-interchange/OSI" target="_blank" rel="noopener">OSI
-Specification (GitHub)</a>", アクセス日 2026-07-12<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn24" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://github.com/open-semantic-interchange/OSI" target="_blank" rel="noopener">OSI
-Specification (GitHub)</a>", アクセス日 2026-07-12<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn25" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/" target="_blank" rel="noopener">Open Semantic
-Interchange</a>", アクセス日 2026-07-10<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn26" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://github.com/open-semantic-interchange/OSI" target="_blank" rel="noopener">OSI
-Specification (GitHub)</a>", アクセス日 2026-07-12<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" data-id="cmriicol501c618qv86yo2fss" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" data-id="cmriil25f004n18qnw20q0qxf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1596,7 +1622,7 @@ IP のある拠点に置く</li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/05/24/Tailscale-slow-internet-troubleshooting/" data-id="cmriicobs00b318qvhhv88o0r" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/24/Tailscale-slow-internet-troubleshooting/" data-id="cmriil28i00bd18qnl3bmqgbh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2182,7 +2208,7 @@ OSでCapslockをCTRLにする</a>（過去記事、X11時代の手法との比�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/05/09/Customize-keyboard-on-Ubuntu26/" data-id="cmriicon501i418qvb6rdd6rz" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/09/Customize-keyboard-on-Ubuntu26/" data-id="cmriil2l501hw18qnp4s39ytk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3323,7 +3349,7 @@ Ansible による自動化の足場も用意しました。 EC2 構成は前提�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/05/06/Headscale-Self-Hosting/" data-id="cmriicoqb01nm18qv4imie2zy" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/06/Headscale-Self-Hosting/" data-id="cmriil2nw01ne18qnplbn93dr" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3689,7 +3715,7 @@ GitHub</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/04/05/Data-centric-AI-Survey/" data-id="cmriicon801i618qv1p1ued8a" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/04/05/Data-centric-AI-Survey/" data-id="cmriil2l701hy18qnzm7hn04s" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3888,7 +3914,7 @@ Codexを呼び出す方法を解説する。</p></p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-OpenAI-Codex-MCP/" data-id="cmriicojv019h18qvvmus8iq3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-OpenAI-Codex-MCP/" data-id="cmriil2hy019918qnjoh3g5d3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -4395,7 +4421,7 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Gemini-with-Claude-Code/" data-id="cmriicokb01aj18qvyw7p29sb" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Gemini-with-Claude-Code/" data-id="cmriil2ig01ag18qnrex8gd2h" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -4506,8 +4532,8 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/core/">core</a></p>
-                            <p class="item-title"><a href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" class="title">EU Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/cross/">cross</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" class="title">Open Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</a></p>
                             <p class="item-date"><time datetime="2026-07-09T15:00:00.000Z" itemprop="datePublished">2026-07-10</time></p>
                         </div>
                     </li>
@@ -4515,8 +4541,8 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/cross/">cross</a></p>
-                            <p class="item-title"><a href="/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" class="title">Open Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/core/">core</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" class="title">EU Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</a></p>
                             <p class="item-date"><time datetime="2026-07-09T15:00:00.000Z" itemprop="datePublished">2026-07-10</time></p>
                         </div>
                     </li>
@@ -4625,5 +4651,20 @@ CodeとGeminiの連携でAIコーディングを強化する</a></li>
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
