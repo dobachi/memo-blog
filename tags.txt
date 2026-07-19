@@ -1,0 +1,710 @@
+# Category
+/mnt/c/Users/dobachi/Sources/memo-blog-text/bin
+/mnt/c/Users/dobachi/Sources/memo-blog-text
+  - 
+
+  - Clipping
+
+  - Clipping
+  - AI
+
+  - Clipping
+  - Camera
+
+  - Clipping
+  - Camera
+  - Lighting
+
+  - Clipping
+  - Cloud
+
+  - Clipping
+  - Database
+
+  - Clipping
+  - Kafka
+
+  - Clipping
+  - List
+
+  - Clipping
+  - List
+  - Research
+
+  - Clipping
+  - Management
+
+  - Clipping
+  - PostgreSQL
+
+  - Clipping
+  - Stream Processing
+
+  - Clipping
+  - Uber
+
+  - Clipping
+  - Vim
+
+  - Clipping
+  - Windows Tools
+
+  - Home server
+
+  - Home server
+  - File server
+
+  - Home server
+  - Hardware
+
+  - Home server
+  - Nature Remo
+
+  - Home server
+  - Network
+
+  - Home server
+  - Remote desktop
+
+  - Home server
+  - Ubuntu
+
+  - Home server
+  - Ubuntu
+  - Adobe Reader
+
+  - Home server
+  - Ubuntu
+  - Gnome
+
+  - Home server
+  - Ubuntu
+  - KVM
+
+  - Home server
+  - Ubuntu
+  - OneDrive
+
+  - Home server
+  - Ubuntu
+  - vim
+
+  - Home server
+  - Video processing
+
+  - Knowledge Management
+
+  - Knowledge Management
+  - Alluxio
+
+  - Knowledge Management
+  - BaaS
+
+  - Knowledge Management
+  - Configuration Management
+
+  - Knowledge Management
+  - Configuration Management
+  - Ansible
+
+  - Knowledge Management
+  - Data Collaboration
+
+  - Knowledge Management
+  - Data Collaboration
+  - Delta Sharing
+
+  - Knowledge Management
+  - Data Engineering
+
+  - Knowledge Management
+  - Data Engineering
+  - Data Lineage
+
+  - Knowledge Management
+  - Data Engineering
+  - Data Transformation
+
+  - Knowledge Management
+  - Data Mesh
+
+  - Knowledge Management
+  - Data Processing Engine
+
+  - Knowledge Management
+  - Documentation
+
+  - Knowledge Management
+  - Flask
+
+  - Knowledge Management
+  - GPD Pocket
+
+  - Knowledge Management
+  - GPD Pocket
+  - Device
+
+  - Knowledge Management
+  - GPD Pocket
+  - Device
+  - Bluetooth
+
+  - Knowledge Management
+  - Hadoop
+
+  - Knowledge Management
+  - Hadoop
+  - Ambari
+
+  - Knowledge Management
+  - Hadoop
+  - BigTop
+
+  - Knowledge Management
+  - Hadoop
+  - HDP
+
+  - Knowledge Management
+  - HBase
+
+  - Knowledge Management
+  - Hexo
+
+  - Knowledge Management
+  - Home Network
+
+  - Knowledge Management
+  - Hyper
+
+  - Knowledge Management
+  - Hyper
+  - Plugin
+
+  - Knowledge Management
+  - Keyboard
+
+  - Knowledge Management
+  - Keyboard
+  - Corne Chocolate
+
+  - Knowledge Management
+  - Keyboard
+  - QMK
+
+  - Knowledge Management
+  - Machine Learning
+
+  - Knowledge Management
+  - Machine Learning
+  - Analytics Zoo
+
+  - Knowledge Management
+  - Machine Learning
+  - AutoML
+
+  - Knowledge Management
+  - Machine Learning
+  - Data Platform
+
+  - Knowledge Management
+  - Machine Learning
+  - Flow Engine
+
+  - Knowledge Management
+  - Machine Learning
+  - Kaggle
+
+  - Knowledge Management
+  - Machine Learning
+  - MLflow
+
+  - Knowledge Management
+  - Machine Learning
+  - Model
+
+  - Knowledge Management
+  - Machine Learning
+  - Model
+  - Cross Validation
+
+  - Knowledge Management
+  - Machine Learning
+  - Model
+  - Data Leakage
+
+  - Knowledge Management
+  - Machine Learning
+  - Model
+  - Partial Dependency Plot
+
+  - Knowledge Management
+  - Machine Learning
+  - Model
+  - XGBoost
+
+  - Knowledge Management
+  - Machine Learning
+  - Model Management
+
+  - Knowledge Management
+  - Machine Learning
+  - Model Management
+  - Clipper
+
+  - Knowledge Management
+  - Machine Learning
+  - OpML
+
+  - Knowledge Management
+  - Machine Learning
+  - Preparation
+
+  - Knowledge Management
+  - Machine Learning
+  - Software Engineering Patterns
+
+  - Knowledge Management
+  - Machine Learning
+  - Stream Processing
+
+  - Knowledge Management
+  - Machine Learning
+  - Visualization
+
+  - Knowledge Management
+  - Machine Learning
+  - Visualization
+  - Seaborn
+
+  - Knowledge Management
+  - Machine Learning
+  - Word2Vec
+
+  - Knowledge Management
+  - Messaging System
+
+  - Knowledge Management
+  - Messaging System
+  - Kafka
+
+  - Knowledge Management
+  - Metadata Management
+
+  - Knowledge Management
+  - Monitering
+
+  - Knowledge Management
+  - Open Data
+
+  - Knowledge Management
+  - Open Data
+  - Scraping
+
+  - Knowledge Management
+  - Open Data
+  - Tellus
+
+  - Knowledge Management
+  - Pinot
+
+  - Knowledge Management
+  - Power Grid Data
+
+  - Knowledge Management
+  - Python
+
+  - Knowledge Management
+  - Python
+  - Jupyter
+
+  - Knowledge Management
+  - Python
+  - Pipenv
+
+  - Knowledge Management
+  - Python
+  - pyenv
+
+  - Knowledge Management
+  - Scala
+
+  - Knowledge Management
+  - Scala
+  - SBT
+
+  - Knowledge Management
+  - Spark
+
+  - Knowledge Management
+  - Spark
+  - Spark Summit
+
+  - Knowledge Management
+  - SQLAlchemy
+
+  - Knowledge Management
+  - Storage Layer
+
+  - Knowledge Management
+  - Storage Layer
+  - Delta Lake
+
+  - Knowledge Management
+  - Storage Layer
+  - Hudi
+
+  - Knowledge Management
+  - Storage Layer
+  - Minio
+
+  - Knowledge Management
+  - Stream Processing
+
+  - Knowledge Management
+  - Stream Processing
+  - Apache Edgent
+
+  - Knowledge Management
+  - Stream Processing
+  - Kappa Architecture
+
+  - Knowledge Management
+  - Stream Processing
+  - MillWheel
+
+  - Knowledge Management
+  - Stream Processing
+  - Twitter Heron
+
+  - Knowledge Management
+  - Tools
+
+  - Knowledge Management
+  - Tools
+  - Git
+
+  - Knowledge Management
+  - Tools
+  - Intellij
+
+  - Knowledge Management
+  - Tools
+  - Selenium
+
+  - Knowledge Management
+  - Tools
+  - tmux
+
+  - Knowledge Management
+  - vim
+
+  - Knowledge Management
+  - Windows
+
+  - Knowledge Management
+  - Windows
+  - Ansible
+
+  - Knowledge Management
+  - Windows
+  - Docker
+
+  - Knowledge Management
+  - Windows
+  - Hyper V
+
+  - Knowledge Management
+  - WSL
+
+  - Knowledge Management
+  - WSL
+  - CentOS
+
+  - Knowledge Management
+  - WSL
+  - Docker
+
+  - Knowledge Management
+  - WSL
+  - Terminal tool
+
+  - Knowledge Management
+  - WSL
+  - Vagrant
+
+  - Knowledge Management
+  - WSL
+  - X Window
+
+  - Knowledge Management
+  - Zeppelin
+
+  - Knowledge Management
+  - ZooKeeper
+
+  - Research
+
+  - Research
+  - AWS
+
+  - Research
+  - Conference
+
+  - Research
+  - Conference
+  - DevSumi
+
+  - Research
+  - Data Analytics
+
+  - Research
+  - Data Analytics
+  - Tools
+
+  - Research
+  - Machine Learning
+
+  - Research
+  - Machine Learning
+  - BigDL
+
+  - Research
+  - Machine Learning
+  - TensorFlow
+
+  - Research
+  - NVM
+
+  - Research
+  - SX Aurora Frovedis
+
+  - Research
+  - Trends
+
+  - Research
+  - Video processing
+
+  - Research
+  - Video processing
+  - BlazeIt
+
+  - Research
+  - Visualization
+
+  - Research
+  - Visualization
+  - Superset
+
+# Tag
+  - Academia
+  - Adobe Reader
+  - AI
+  - Alluxio
+  - Ambari
+  - Analytics Zoo
+  - Ansible
+  - Apache Edgent
+  - Apache Hudi
+  - Apache Kafka
+  - Apache Spark
+  - Apple
+  - Automagica
+  - AutoML
+  - Autonomous Database
+  - AWS
+  - BaaS
+  - Behavioral Economics
+  - Big Data
+  - BigDL
+  - BigTop
+  - BlazeIt
+  - Blog
+  - Bluetooth
+  - bug
+  - Camera
+  - CDC
+  - CentOS
+  - CentOS7
+  - CircleCI
+  - Clipper
+  - Clipping
+  - Cloud
+  - Comcast
+  - Computing resource
+  - Conference
+  - Configuration Management
+  - Corne Chocolate
+  - Cross Validation
+  - Dask
+  - Data Analysis
+  - Data Analytics
+  - Data Lake
+  - Data Leakage
+  - Data Lineage
+  - Data Mesh
+  - Data Platform
+  - Data Processing Engine
+  - Data Transformation
+  - DB
+  - dein
+  - Delta Lake
+  - Delta Sharing
+  - DevSumi
+  - Docker
+  - Dockerfile
+  - Druid
+  - dstat
+  - Flask
+  - Flow Engine
+  - Frovedis
+  - fsync
+  - GIS
+  - Git
+  - GitHub Actions
+  - GNOME
+  - Google
+  - Goverment
+  - GPD Pocket
+  - Graceful Shutdown
+  - Gradle
+  - Hadoop
+  - HBase
+  - HDP
+  - Hexo
+  - Hexo Plugin
+  - HPC
+  - Hyper
+  - Hyper V
+  - Icarus
+  - IEEE
+  - Incident
+  - Intel
+  - Intellij
+  - IPv6
+  - Java
+  - JSON
+  - Jupyter
+  - Kafak Connect
+  - Kafka
+  - Kafka Connect
+  - Kafka Streams
+  - Kafka Summit
+  - Kaggle
+  - Kappa Architecture
+  - Keyboard
+  - Kinesis
+  - KVM
+  - Lambda Architecture
+  - libvirt
+  - Lighthing
+  - LinkedIn
+  - Machine Learning
+  - Machine Learning Lifecycle
+  - Management
+  - Map
+  - Markdown
+  - MATE Desktop
+  - Messaging System
+  - Metadata Management
+  - MillWheel
+  - Minio
+  - ML Model Management
+  - ML Ops
+  - MLflow
+  - Model
+  - Model Management
+  - Monitering
+  - Mouse
+  - Nature Remo
+  - NERDTree
+  - Network
+  - nltk
+  - NVM
+  - OLAP
+  - OneDrive
+  - Open Data
+  - Open Messaging Benchmark
+  - OpenML
+  - OpML
+  - Oracle
+  - pandoc
+  - Paper
+  - PAPIDS
+  - Parquet
+  - Partial Dependency Plot
+  - PDF
+  - Pinot
+  - Pipenv
+  - PostgreSQL
+  - Power Grid Data
+  - PowerShell
+  - Preparation
+  - Profiler
+  - Pulsar
+  - pyenv
+  - PySpark
+  - Python
+  - Python3
+  - QMK
+  - Query Engine
+  - RDBMS
+  - Redshift
+  - Research later
+  - RPA
+  - S3
+  - Samba
+  - SBT
+  - Scala
+  - Scraping
+  - Seaborn
+  - Security
+  - Session
+  - Slenium
+  - Smart Home
+  - Snowflake
+  - Software Engineering Patterns
+  - Spark
+  - Spark Summit
+  - Sphinx
+  - SQLAlchemy
+  - SQLite
+  - Statistic
+  - Stonebraker
+  - Storage
+  - Storage Engine
+  - Storage Layer
+  - Storage Layer Software
+  - Stream Processing
+  - Superset
+  - Supervision
+  - SX Aurora
+  - Tellus
+  - TensorFlow
+  - TensorFlowOnSpark
+  - tmux
+  - Tools
+  - Trends
+  - Twitter
+  - Twitter Heron
+  - Uber
+  - Ubuntu
+  - Vagrant
+  - Vault
+  - Vector Engine
+  - Video Processing
+  - vim
+  - Visualization
+  - VMWare
+  - Web
+  - WhereHows
+  - WiFi
+  - WiFi6
+  - Windows
+  - Windows Tools
+  - Word
+  - Word2Vec
+  - WSL
+  - X Window
+  - XGBoost
+  - Zeppelin
+  - ZooKeeper

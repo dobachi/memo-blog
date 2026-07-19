@@ -1,0 +1,26 @@
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
+*~
+*swp
+*swo
+*swn
+*swm
+.idea
+.vscode
+
+# 未公開コンテンツ。実体は親プロジェクト DevMemoBlog/content/ 側で管理する。
+# ここに実ファイルを置くと公開リポジトリに載るので注意。
+source/_drafts
+source/_removed
+research/
+
+# AIツールのローカル設定
+.claude/
+.gemini/
+.openhands/
+.codex/

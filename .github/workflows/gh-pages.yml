@@ -1,0 +1,39 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Generate static files with Hexo
+        uses: dobachi/hexo-pandoc-action@v1.0.11
+
+      # 記事の原稿(Markdown)も公開する。ただし未公開の下書き・退避記事は除外する。
+      - name: Copy source files to public
+        run: |
+          sudo chown -R runner public
+          rsync -a --exclude '_drafts/' --exclude '_removed/' ./source/ ./public/source/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages

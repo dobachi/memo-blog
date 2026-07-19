@@ -1,0 +1,3 @@
+[submodule "themes/icarus"]
+	path = themes/icarus
+	url = https://dobachi@github.com/dobachi/hexo-theme-icarus.git
