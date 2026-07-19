@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="メモ  環境  Caps LockとCtrlの入れ替え  方法1: GNOME Tweaks（GUI） 方法2: gsettingsコマンド（CLI / Wayland対応） 方法3（補足）: keyd によるカーネルレベルの入れ替え  Ctrl + Space で日本語/英語切り替え  注意: Super + Space との競合 パターンA: IBus + Mozc の場合 パターンB:">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2026-07-19T08:56:47.756Z">
+<meta property="og:updated_time" content="2026-07-19T09:23:27.785Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu 26でキーボードをカスタマイズ（Caps Lock⇔Ctrl入れ替えとCtrl+SpaceでIME切替）">
 <meta name="twitter:description" content="メモ  環境  Caps LockとCtrlの入れ替え  方法1: GNOME Tweaks（GUI） 方法2: gsettingsコマンド（CLI / Wayland対応） 方法3（補足）: keyd によるカーネルレベルの入れ替え  Ctrl + Space で日本語/英語切り替え  注意: Super + Space との競合 パターンA: IBus + Mozc の場合 パターンB:">
@@ -714,7 +714,7 @@ OSでCapslockをCTRLにする</a>（過去記事、X11時代の手法との比�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/05/09/Customize-keyboard-on-Ubuntu26/" data-id="cmrrkb0oe01bx18qdd699qnr7" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/09/Customize-keyboard-on-Ubuntu26/" data-id="cmrrl9aj701cu18mjej85h5ud" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -965,5 +965,20 @@ OSでCapslockをCTRLにする</a>（過去記事、X11時代の手法との比�
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

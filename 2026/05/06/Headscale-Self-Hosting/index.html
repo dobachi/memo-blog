@@ -15,7 +15,7 @@
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/headscale-control-data-plane.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/headscale-cgnat-vps.png">
-<meta property="og:updated_time" content="2026-07-19T08:56:47.769Z">
+<meta property="og:updated_time" content="2026-07-19T09:23:27.798Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Headscale を自宅サーバまたは AWS EC2 で運用する">
 <meta name="twitter:description" content="はじめに Headscale の概要 構成パターンの選択 事前準備（AWS アカウントとローカル環境）  AWS を使う場合  1. AWS アカウントと IAM ユーザー 2. AWS CLI のプロファイル設定 3. SSH 鍵と EC2 キーペア 4. 利用可能な AZ の確認 5. ドメイン  自宅サーバを使う場合 ローカル PC のツール 想定コスト（AWS 構成、東京リージョン）">
@@ -1272,7 +1272,7 @@ Ansible による自動化の足場も用意しました。 EC2 構成は前提�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/05/06/Headscale-Self-Hosting/" data-id="cmrrkb0qj01h918qd34iax6ub" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/06/Headscale-Self-Hosting/" data-id="cmrrl9al301i618mjfk5swjn4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1523,5 +1523,20 @@ Ansible による自動化の足場も用意しました。 EC2 構成は前提�
 <script src="/memo-blog/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
