@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="Apache Iceberg と REST Catalog の仕組み — 調べて、動かして確かめた  概要 詳細  Iceberg とは何か（そして何でないか） 三層のメタデータ構造 コミットは「ポインタの差し替え」 409 と 500 を分ける理由 credential vending テーブル仕様のバージョンと、実装との距離 カタログ実装を選ぶときに見るもの  まとめ 参考文献 更新履歴">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2026-07-19T08:35:14.656Z">
+<meta property="og:updated_time" content="2026-07-19T08:41:53.404Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apache Iceberg と REST Catalog の仕組み — 調べて、動かして確かめた">
 <meta name="twitter:description" content="Apache Iceberg と REST Catalog の仕組み — 調べて、動かして確かめた  概要 詳細  Iceberg とは何か（そして何でないか） 三層のメタデータ構造 コミットは「ポインタの差し替え」 409 と 500 を分ける理由 credential vending テーブル仕様のバージョンと、実装との距離 カタログ実装を選ぶときに見るもの  まとめ 参考文献 更新履歴">
@@ -286,9 +286,8 @@ Lab</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2
 を使った実験記録</li>
 </ul>
 <p>本記事はその要点で、Iceberg
-の中核である<strong>メタデータ構造とコミットの仕組み</strong>を中心にまとめる。どちらも個人的な調査メモであり、本番環境での利用を想定したものではない。</p>
-<p>調べる過程で強く感じたのは、Iceberg
-では<strong>仕様と実装の距離が大きい</strong>ということだ。仕様が定めていることと、ある実装が実際にできることは一致しない。この記事でも、仕様の記述と、手元で観測した挙動を分けて書く。</p>
+の中核であるメタデータ構造とコミットの仕組みを中心にまとめる。どちらも個人的な調査メモであり、本番環境での利用を想定したものではない。</p>
+<p>調べていて繰り返し出てきたのは、仕様と実装の距離である。仕様が定めていることと、ある実装が実際にできることは一致しない。この記事でも、仕様の記述と、手元で観測した挙動を分けて書く。</p>
 <p>検証環境は Apache Iceberg 1.11.0 / PyIceberg 0.11.1 / Apache Polaris
 1.6.0、検証基準日は 2026-07-17 である。</p>
 <h2><span id="詳細">詳細</span></h2>
@@ -296,7 +295,7 @@ Lab</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2
 とは何か（そして何でないか）</span></h3>
 <p>Iceberg はデータの保存形式ではない。データ本体は Parquet や ORC、Avro
 のままで、Iceberg
-が定めるのは<strong>そのファイル群を1つのテーブルとして扱うための取り決め</strong>、つまりテーブル仕様である<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。</p>
+が定めるのは、そのファイル群を1つのテーブルとして扱うための取り決め、つまりテーブル仕様である<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。</p>
 <p>実体はオブジェクトストレージ上のファイル群だ。データも、スキーマも、スナップショットの履歴も、すべて
 S3
 上に置かれる。ではカタログは何を持っているのかというと、<strong>「このテーブルの最新の
@@ -307,13 +306,13 @@ metadata.json はどれか」というポインタ1本だけ</strong>である�
 <h3><span id="三層のメタデータ構造">三層のメタデータ構造</span></h3>
 <p>ポインタの先は次のように連なる。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">catalog → metadata.json → manifest list → manifest → data file</span><br></pre></td></tr></table></figure>
-<p>なぜ間に2層も挟むのか。<strong>クエリプランニングで段階的に枝刈りするため</strong>である。</p>
+<p>なぜ間に2層も挟むのか。クエリプランニングで段階的に枝刈りするためである。</p>
 <p>第1段では manifest list に記録された各 manifest
 のパーティション要約統計だけを見て、manifest
 ファイル自体を開かずにスキップを判定する。第2段で残った manifest
 を開き、第3段で data file ごとの列統計（lower_bound /
 upper_bound）を使ってファイル単位で除外する。述語に合致しないファイルは、開かれることなく落ちる。</p>
-<p>裏を返すと、<strong>統計が効かない条件ではこの枝刈りが働かない</strong>。既定値には注意が要る。</p>
+<p>裏を返すと、統計が効かない条件ではこの枝刈りが働かない。既定値には注意が要る。</p>
 <ul>
 <li><code>write.metadata.metrics.default = truncate(16)</code> —
 文字列の境界値は16文字で切り詰められる。URL
@@ -324,9 +323,9 @@ upper_bound）を使ってファイル単位で除外する。述語に合致し
 101列目以降には既定でメトリクスが収集されない。ワイドテーブルで後方の列に述語をかけると全ファイル読みになる</li>
 </ul>
 <p>どちらも「遅い」という形でしか表面化せず、原因にたどり着きにくい。</p>
-<p>メタデータの肥大も構造上の帰結だ。手元の実験では、5行のデータを3回に分けて書いただけで、<strong>manifest
+<p>メタデータの肥大も構造上の帰結だ。手元の実験では、5行のデータを3回に分けて書いただけで、manifest
 ファイル（4434〜4438バイト）のほうが、それが記述する data
-file（1746〜1753バイト）より大きい</strong>状態になった。append
+file（1746〜1753バイト）より大きくなった。append
 1回がスナップショット1個と metadata JSON
 1個を生むためで、これは最適化の余地ではなく原子性のための要件である。高頻度コミットがメタデータを膨らませるのはこのためだ。</p>
 <h3><span id="コミットはポインタの差し替え">コミットは「ポインタの差し替え」</span></h3>
@@ -361,7 +360,7 @@ updates を適用する。requirements
 <p>なお仕様は、未知の requirement や update を受け取ったサーバは 400
 で失敗しなければならないと定めている<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>。黙って読み飛ばす実装があると、クライアントは検証されたつもりでコミットが通ってしまうためだ。</p>
 <h3><span id="409-と-500-を分ける理由">409 と 500 を分ける理由</span></h3>
-<p>コミットの失敗には、意味がまったく違う2種類がある。この区別を誤るとデータが壊れる。</p>
+<p>コミットの失敗には、意味の異なる2種類がある。</p>
 <table>
 <colgroup>
 <col style="width: 25%">
@@ -394,23 +393,23 @@ updates を適用する。requirements
 </tbody>
 </table>
 <p>500
-が厄介なのは、成功したかもしれないことだ。ポインタを書き換えたあと応答を返す前に落ちた場合がこれにあたる。単純にリトライすると、同じスナップショットをもう一度追加してしまう。</p>
+の場合は、成功している可能性が残る。ポインタを書き換えたあと応答を返す前に落ちた場合がこれにあたる。単純にリトライすると、同じスナップショットをもう一度追加してしまう。</p>
 <p>これを解消するのが <code>Idempotency-Key</code>
 ヘッダで、同じ鍵のリクエストをサーバが2回目以降は処理せず1回目の結果を返す。ただし対応は必須ではない。仕様は
 <code>GET /v1/config</code> のレスポンスに
 <code>idempotency-key-lifetime</code>
-が無ければ非対応とみなせと定めており<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>、<strong>フィールドの有無そのものが対応可否の宣言</strong>になっている。手元の
+が無ければ非対応とみなせと定めており<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>、フィールドの有無そのものが対応可否の宣言になっている。手元の
 Polaris 1.6.0 はこのフィールドを返さなかったため、500
 を受けたらクライアント側でテーブルを読み直し、自分のコミットが入っているか確認する経路が要る。</p>
-<p>紛らわしい点をもう1つ挙げると、<strong>同じ 409
-が別の意味でも使われる</strong>。namespace 作成時の 409
+<p>同じ 409 が別の意味でも使われる点にも注意が要る。namespace 作成時の
+409
 は「すでに存在する」で、何度リトライしても結果は変わらない。ステータスコードだけで分岐すると無限にリトライする実装になるので、エラーボディの
 <code>type</code> を見る必要がある。</p>
 <h3><span id="credential-vending">credential vending</span></h3>
 <p>クライアントが S3 上のデータを読むには、S3
-の資格情報が要る。しかしそれを全クライアントに配ると、<strong>テーブル単位の権限管理が成立しない</strong>。カタログ側で「このユーザはこのテーブルだけ」と決めても、鍵を持っていればバケット全体を直接触れてしまうからだ。</p>
+の資格情報が要る。しかしそれを全クライアントに配ると、テーブル単位の権限管理が成立しない。カタログ側で「このユーザはこのテーブルだけ」と決めても、鍵を持っていればバケット全体を直接触れてしまうからだ。</p>
 <p>credential vending はこの矛盾を解く。クライアントは S3
-の鍵を持たず、カタログにテーブルを要求する。カタログは権限を確認したうえで、<strong>そのテーブルのパスにだけ有効な期限付きの鍵</strong>を発行する。</p>
+の鍵を持たず、カタログにテーブルを要求する。カタログは権限を確認したうえで、そのテーブルのパスにだけ有効な期限付きの鍵を発行する。</p>
 <p>手元で loadTable を叩いたところ、実際に払い出された。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">storage-credentials が 1 個返りました:</span><br><span class="line">  prefix: s3://warehouse/lab_catalog/lab/rest_demo</span><br><span class="line">    s3.access-key-id = ***</span><br><span class="line">    s3.secret-access-key = ***</span><br><span class="line">    s3.session-token = ***</span><br><span class="line">    expiration-time = 1784386178000</span><br></pre></td></tr></table></figure>
 <p><code>prefix</code>
@@ -424,9 +423,8 @@ Polaris 1.6.0 はこのフィールドを返さなかったため、500
 <p>テーブル仕様は版で管理されている。v1 が基本形、v2 で position delete
 / equality delete による merge-on-read が入り、v3 で deletion vector と
 row lineage が加わった<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>。</p>
-<p>ここで冒頭の「仕様と実装の距離」が効いてくる。<strong>新規テーブルの既定は今も
-v2 である。</strong> v3 が定義されていることと、v3
-が使えることは別だ。</p>
+<p>ここで冒頭の「仕様と実装の距離」が関わる。新規テーブルの既定は今も v2
+である。v3 が定義されていることと、v3 が使えることは別だ。</p>
 <p>PyIceberg 0.11.1 では v3 テーブルを作れない。試すと
 <code>ValueError: Unsupported table format version: 3</code>
 になる。ソースを追うと二重にガードされていて、手前の
@@ -437,7 +435,7 @@ issue は 2026年7月時点で Open のままである<a href="#fn11" class="foo
 <p>紛らわしいのは型定義で、<code>typedef.py</code> の
 <code>TableVersion = Literal[1, 2, 3]</code> は v3
 を許容しているように読める<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>。しかし実際に書けるのは v2
-までだ。<strong>型定義だけを見て対応状況を判断すると誤る。</strong></p>
+までである。型定義だけを見て対応状況を判断すると誤る。</p>
 <p>さらに v4 は仕様として未採択でありながら、Java 実装は 1.10.0 以降
 <code>format-version=4</code>
 を設定できる。つまり「仕様が定めている」と「実装ができる」がどちらの方向にもずれる。</p>
@@ -460,8 +458,8 @@ issue は 2026年7月時点で Open のままである<a href="#fn11" class="foo
 </tr>
 <tr class="even">
 <td>equality delete の読み取り</td>
-<td>書けないだけでなく<strong>読めない</strong>。Flink の UPSERT は
-equality delete ベースなので、その組み合わせは実害が出る</td>
+<td>書けないだけでなく読めない。Flink の UPSERT は equality delete
+ベースなので、その組み合わせは実害が出る</td>
 </tr>
 <tr class="odd">
 <td>merge-on-read での書き込み</td>
@@ -481,32 +479,44 @@ Spark、という分担が現実的である。</p>
 <h3><span id="カタログ実装を選ぶときに見るもの">カタログ実装を選ぶときに見るもの</span></h3>
 <p>REST Catalog は「サーバが仕様どおりの HTTP
 を話しさえすれば、クライアントは実装を知らずに済む」という差し替え可能性のために生まれた。実装は増えており、選定の観点も整理が要る。</p>
-<p>調査の過程で、活動の活発さを測る指標に落とし穴があった。<strong>GitHub
-のコミット数は依存更新ボットで水増しされる。</strong>
-ある実装は直近365日で1,652コミットあったが、そのうち85.2%が renovate
-ボットで、人間のコミットは245件、しかも実質1人に集中していた。リリース頻度が高いのも、依存更新を自動リリースしているためだった。ボットを除いた数字で見ないと評価を誤る。</p>
-<p>ストレージ側でも想定外があった。ローカル検証で定番だった MinIO
+<p>開発の活発さを見るときは、コミット数に依存更新ボットの分が含まれる点に注意した。ある実装は直近365日で1,652コミットあったが、うち85.2%が
+renovate
+ボットで、人間のコミットは245件だった。リリース頻度が高いのも、依存更新を自動リリースしているためである。</p>
+<p>ストレージ側にも変化があった。ローカル検証で使われてきた MinIO
 は、2026-04-25 にリポジトリがアーカイブされている<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>。入手可能な最新の公開イメージは、2025年10月の権限昇格の修正を含まない。Apache
 Polaris 公式も MinIO ガイドに maintenance mode の警告を出し、RustFS
 の例を追加している<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>。ここで流通している「ライセンスを
-AGPLv3 に変更したのが理由」という説明は誤りで、<strong>ライセンスは
-AGPLv3
-のまま変わっていない</strong>。変わったのは保守方針と配布形態である。</p>
-<p>なお実験では、Polaris
-の権限まわりでも仕様と挙動のずれに行き当たった。OAuth2 の
-<code>scope</code> は「どの principal role
-を有効化するか」の指定として使われるが、存在しないロール名を指定して<strong>有効ロールが空になったトークンでも、テーブルを新規作成できた</strong>。実装を確認すると、ロール名は確かに解釈され絞り込みも働いており、ログにも
-<code>roles=[]</code> と警告が出ている<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>。それでも書き込みが通る理由までは追えていない。スコープを権限の絞り込み手段として当てにしないほうが安全だと考えている。</p>
+AGPLv3 に変更したのが理由」という説明は誤りで、ライセンスは AGPLv3
+のまま変わっていない。変わったのは保守方針と配布形態である。</p>
+<p>認証は、そもそも使う経路に注意が要る。ラボでは便宜上
+<code>POST /v1/oauth/tokens</code>
+でトークンを取得したが、このエンドポイントは仕様上 DEPRECATED for
+REMOVAL である<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>。</p>
+<blockquote>
+<p>The <code>oauth/tokens</code> endpoint is <strong>DEPRECATED for
+REMOVAL</strong>. It is <em>not</em> recommended to implement this
+endpoint, unless you are fully aware of the potential security
+implications.</p>
+</blockquote>
+<p>Iceberg (Java) 1.6.0 で非推奨となり、2.0
+で仕様から削除される予定と明記されている<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>。推奨されるのは、クライアントに
+<code>oauth2-server-uri</code> を設定して外部の IdP
+を使う構成である。学習用途で使う分には差し支えないが、本番構成の出発点にはならない。</p>
+<p>この非推奨の経路では、OAuth2 の <code>scope</code>（Polaris
+では「どの principal role
+を有効化するか」の指定）に存在しないロール名を渡し、有効ロールが空になったトークンでも、テーブルを新規作成できた。ロール名自体は解釈されており、ログには
+<code>roles=[]</code> と警告が出る<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>。書き込みが通る理由までは追えていない。削除予定の経路での観測なので、外部
+IdP を使う構成での挙動は別途確認が要る。</p>
 <h2><span id="まとめ">まとめ</span></h2>
 <p>Iceberg の中核設計は、確かめた範囲では一貫していた。field ID
 による列の解決、manifest を書いた時点の spec
 で解釈する規則、ポインタ差し替えによるコミット。これらは互いに噛み合っており、スキーマ進化とパーティション進化が既存データを書き換えずに成立する理由になっている。</p>
-<p>一方で、<strong>「Iceberg
-が対応している」という表現は、どの仕様バージョンの、どの実装の話かを伴わなければ意味を持たない</strong>。仕様は
+<p>一方で、「Iceberg
+が対応している」という表現は、どの仕様バージョンの、どの実装の話かを伴わなければ意味を持たない。仕様は
 v3 で deletion vector を定義し v4 が議論されているが、PyIceberg は v3
 を書けず、Java 実装は未採択の v4
 を既に受け付ける。仕様・実装・記事の3つは一致しないという前提で読む必要がある。</p>
-<p>判断に使う数値やバージョンは、この記事も含めて一次情報で確認してほしい。調べた範囲と、確かめられなかったことは公開したサイト<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a><a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>に明記してある。</p>
+<p>判断に使う数値やバージョンは、この記事も含めて一次情報で確認してほしい。調べた範囲と、確かめられなかったことは公開したサイト<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a><a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>に明記してある。</p>
 <h2><span id="参考文献">参考文献</span></h2>
 <h2><span id="更新履歴">更新履歴</span></h2>
 <ul>
@@ -544,12 +554,16 @@ L212（TableVersion の定義）</a>", アクセス日 2026-07-19<a href="#fnref
 リポジトリ（アーカイブ済み）</a>", アクセス日 2026-07-19<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn14" role="doc-endnote"><p>apache/polaris, "<a href="https://github.com/apache/polaris/pull/3482" target="_blank" rel="noopener">PR #3482: RustFS
 の例を追加</a>", アクセス日 2026-07-19<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn15" role="doc-endnote"><p>Apache Polaris, "<a href="https://github.com/apache/polaris/blob/apache-polaris-1.6.0/runtime/service/src/main/java/org/apache/polaris/service/auth/DefaultAuthenticator.java" target="_blank" rel="noopener">DefaultAuthenticator.java（principal
-role の解決）</a>", アクセス日 2026-07-19<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn16" role="doc-endnote"><p>dobachi, "<a href="https://dobachi.github.io/iceberg-research/">Apache Iceberg
-調査報告書</a>", アクセス日 2026-07-19<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn17" role="doc-endnote"><p>dobachi, "<a href="https://dobachi.github.io/iceberg-rest-lab/">Iceberg REST
-Lab</a>", アクセス日 2026-07-19<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15" role="doc-endnote"><p>Apache Iceberg, "<a href="https://github.com/apache/iceberg/blob/main/open-api/rest-catalog-open-api.yaml" target="_blank" rel="noopener">Iceberg
+REST Catalog OpenAPI 仕様</a>", アクセス日 2026-07-19<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16" role="doc-endnote"><p>Apache Iceberg, "<a href="https://github.com/apache/iceberg/blob/main/open-api/rest-catalog-open-api.yaml" target="_blank" rel="noopener">Iceberg
+REST Catalog OpenAPI 仕様</a>", アクセス日 2026-07-19<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17" role="doc-endnote"><p>Apache Polaris, "<a href="https://github.com/apache/polaris/blob/apache-polaris-1.6.0/runtime/service/src/main/java/org/apache/polaris/service/auth/DefaultAuthenticator.java" target="_blank" rel="noopener">DefaultAuthenticator.java（principal
+role の解決）</a>", アクセス日 2026-07-19<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18" role="doc-endnote"><p>dobachi, "<a href="https://dobachi.github.io/iceberg-research/">Apache Iceberg
+調査報告書</a>", アクセス日 2026-07-19<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19" role="doc-endnote"><p>dobachi, "<a href="https://dobachi.github.io/iceberg-rest-lab/">Iceberg REST
+Lab</a>", アクセス日 2026-07-19<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -562,7 +576,7 @@ Lab</a>", アクセス日 2026-07-19<a href="#fnref17" class="footnote-back" rol
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/19/Apache-Iceberg-and-REST-Catalog-hands-on/" data-id="cmrrjjd2l01hw18piw63959gx" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/19/Apache-Iceberg-and-REST-Catalog-hands-on/" data-id="cmrrjrtre01f118nnqhwp57mo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
