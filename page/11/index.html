@@ -267,7 +267,7 @@ Liveのインストール手順</a> の通り、最新版をインストール�
 <p>ただし、 <a href="https://github.com/jgm/pandoc-templates/blob/master/default.latex" target="_blank" rel="noopener">default.latex</a>
 に示すとおり、リンクに色を付けるなどしたいので、
 上記マークダウンファイルには先頭部分にYAMLでコンフィグを記載することとした。</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: テスト文章</span><br><span class="line">date: 2020-10-30</span><br><span class="line">author: dobachi</span><br><span class="line">colorlinks: yes</span><br><span class="line">numbersections: yes</span><br><span class="line">toc: yes</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section"># test</span></span><br><span class="line"></span><br><span class="line"><span class="section">## これはテスト</span></span><br><span class="line"></span><br><span class="line">[<span class="string">Google</span>](<span class="link">https://www.google.com</span>)</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- vim: set ft=markdown : --&gt;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: テスト文章</span><br><span class="line">date: 2020-10-30</span><br><span class="line">author: dobachi</span><br><span class="line">colorlinks: yes</span><br><span class="line">numbersections: yes</span><br><span class="line">toc: yes</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section"># test</span></span><br><span class="line"></span><br><span class="line"><span class="section">## これはテスト</span></span><br><span class="line"></span><br><span class="line">[<span class="string">Google</span>](<span class="link">https://www.google.com</span>)</span><br><span class="line"></span><br><span class="line">&lt;!-- vim: set ft=markdown : --&gt;</span><br></pre></td></tr></table></figure>
 <!-- vim: set et tw=0 ts=2 sw=2: -->
 
         
@@ -279,7 +279,7 @@ Liveのインストール手順</a> の通り、最新版をインストール�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/10/29/Generate-PDF-using-pandoc/" data-id="cmrrjrtib004s18nnsbrk1h9b" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/10/29/Generate-PDF-using-pandoc/" data-id="cmrrk7nwk003d18mmk168rqte" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -424,12 +424,12 @@ Liveのインストール手順</a> の通り、最新版をインストール�
 <p>そこで、 <a href="https://hadoop.apache.org/docs/current/hadoop-aws/tools/hadoop-aws/index.html" target="_blank" rel="noopener">Hadoopの公式ドキュメント</a>
 の通り、hadoop-awsをインポートすると、それに関連した依存関係をインポートすることにした。
 spark-shellで試すとしたら以下の通り。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /opt/spark/default/bin/spark-shell --packages org.apache.hadoop:hadoop-aws:3.2.0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> /opt/spark/default/bin/spark-shell --packages org.apache.hadoop:hadoop-aws:3.2.0</span><br></pre></td></tr></table></figure>
 <h2><span id="profileを使ったクレデンシャル設定">profileを使ったクレデンシャル設定</span></h2>
 <p>awscliを利用しているとしたら、profileを設定しながらクレデンシャルを使い分けていることもあると思う。
 その場合、起動時の環境変数でプロフィールを指定しながら、以下のようにproviderを指定することで、
 profileを利用したクレデンシャル管理の仕組みを利用してアクセスできる。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> AWS_PROFILE=s3test /opt/spark/default/bin/spark-shell --packages org.apache.hadoop:hadoop-aws:3.2.0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> AWS_PROFILE=s3test /opt/spark/default/bin/spark-shell --packages org.apache.hadoop:hadoop-aws:3.2.0</span><br></pre></td></tr></table></figure>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; spark.sparkContext.hadoopConfiguration.set(<span class="string">"fs.s3a.aws.credentials.provider"</span>, <span class="string">"com.amazonaws.auth.DefaultAWSCredentialsProviderChain"</span>)</span><br></pre></td></tr></table></figure>
 <h3><span id="補足パラメータと指定するクラスについて">（補足）パラメータと指定するクラスについて</span></h3>
 <p>ちなみに、上記パラメータの説明には、</p>
@@ -464,7 +464,7 @@ provider.</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/09/14/Access-AWS-S3-from-Hadoop3/" data-id="cmrrjrthe001f18nno4go0qkh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/09/14/Access-AWS-S3-from-Hadoop3/" data-id="cmrrk7nvd000618mm1dr4urej" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -622,7 +622,7 @@ Firmwareでファームウェアをビルドしようとしたらavr-gccでコ�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/09/06/qmk-firmware-202009/" data-id="cmrrjrtof00yl18nnkzmuufwr" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/09/06/qmk-firmware-202009/" data-id="cmrrk7o0f00f818mm5fxnhmxh" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -800,7 +800,7 @@ Deploy Keyを利用するよう修正した。</p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/08/09/Use-GitHub-actions-to-deploy-documents/" data-id="cmrrjrtni00uk18nnlp46t8og" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/08/09/Use-GitHub-actions-to-deploy-documents/" data-id="cmrrk7nzg00bi18mm1j8km0ok" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -952,7 +952,7 @@ Hadoopをインストールできるかどうかを試してみることとす�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/07/21/Install-Bigtop-RPMs-using-Yum/" data-id="cmrrjrtit006418nnrhb89h9v" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/07/21/Install-Bigtop-RPMs-using-Yum/" data-id="cmrrk7nx6004q18mmd2ixlkw1" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1229,7 +1229,7 @@ triggerでは一度に溜まったすべてのデータを読み込むように�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/06/19/Delta-Lake-0-7-0/" data-id="cmrrjrtp2011318nnf9jpiqve" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/06/19/Delta-Lake-0-7-0/" data-id="cmrrk7o4y014e18mmxmt9b4cm" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1453,7 +1453,7 @@ timeが長いほど、ウィンドウ結果が確定したと言えるタイミ�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/05/20/About-tream-table-theory/" data-id="cmrrjrthc001918nnhnny0ip2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/05/20/About-tream-table-theory/" data-id="cmrrk7nv5000118mmrwev6hxg" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1782,7 +1782,7 @@ v0.5.2におけるParquetのバージョンは以下の通り、1.10.1である�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/05/12/Handle-pictures-in-delta-lake/" data-id="cmrrjrtso01ja18nngl6i0pqf" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/05/12/Handle-pictures-in-delta-lake/" data-id="cmrrk7o8c01fg18mm5bg7lqn2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2028,7 +2028,7 @@ ODPiのレポジトリが見当たらなかった。
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/04/24/Research-about-BigTop/" data-id="cmrrjrtqz01dw18nnvch1ck9v" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/04/24/Research-about-BigTop/" data-id="cmrrk7o5v016n18mmklaf1cby" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2641,7 +2641,7 @@ MACHINE &amp; DEEP LEARNING WITH INTELLIGENT STORAGE</a>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2020/04/10/Storage-Layer-Software-for-Machine-Learning/" data-id="cmrrjrtr101e018nn5npi52ja" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2020/04/10/Storage-Layer-Software-for-Machine-Learning/" data-id="cmrrk7o5y016v18mmteayb5vn" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2761,8 +2761,8 @@ MACHINE &amp; DEEP LEARNING WITH INTELLIGENT STORAGE</a>
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/cross/">cross</a></p>
-                            <p class="item-title"><a href="/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" class="title">Open Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/core/">core</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" class="title">EU Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</a></p>
                             <p class="item-date"><time datetime="2026-07-09T15:00:00.000Z" itemprop="datePublished">2026-07-10</time></p>
                         </div>
                     </li>
@@ -2770,8 +2770,8 @@ MACHINE &amp; DEEP LEARNING WITH INTELLIGENT STORAGE</a>
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/core/">core</a></p>
-                            <p class="item-title"><a href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" class="title">EU Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/cross/">cross</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" class="title">Open Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</a></p>
                             <p class="item-date"><time datetime="2026-07-09T15:00:00.000Z" itemprop="datePublished">2026-07-10</time></p>
                         </div>
                     </li>

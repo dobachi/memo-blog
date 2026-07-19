@@ -575,7 +575,7 @@ Lab</a>", アクセス日 2026-07-19<a href="#fnref19" class="footnote-back" rol
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/19/Apache-Iceberg-and-REST-Catalog-hands-on/" data-id="cmrrjrtre01f118nnqhwp57mo" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/19/Apache-Iceberg-and-REST-Catalog-hands-on/" data-id="cmrrk7o7501bx18mmmbjrh2md" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -914,7 +914,7 @@ NapeProConfiguration を使えば、設定を JSON
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/keychron-nape-pro-settings-backup/" data-id="cmrrjrtr601ee18nnia3474j4" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/keychron-nape-pro-settings-backup/" data-id="cmrrk7o61017318mmh4v6o5c5" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1194,7 +1194,229 @@ Data Space Connector Report</a>", アクセス日 2026-07-11<a href="#fnref11" c
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/IDSA-Connector-Report-2026/" data-id="cmrrjrtmx00sa18nnnzxkb7e3" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/11/IDSA-Connector-Report-2026/" data-id="cmrrk7nwy004j18mmfbvifk9n" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-EU-Data-Act-B2B-by-design-2026" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/">EU Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/">
+            <time datetime="2026-07-09T15:00:00.000Z" itemprop="datePublished">2026-07-10</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/memo-blog/categories/core/">core</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/memo-blog/tags/B2B-by-design/">B2B by design</a>, <a class="tag-link" href="/memo-blog/tags/EU-Data-Act/">EU Data Act</a>, <a class="tag-link" href="/memo-blog/tags/FRAND/">FRAND</a>, <a class="tag-link" href="/memo-blog/tags/日本製造業/">日本製造業</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div id="TOC">
+	<ul>
+<li><a href="#eu-data-act-b2b-by-design-2026-日本の電気機械メーカーへの具体的影響" id="toc-eu-data-act-b2b-by-design-2026-日本の電気機械メーカーへの具体的影響">EU
+Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</a>
+<ul>
+<li><a href="#概要" id="toc-概要">概要</a></li>
+<li><a href="#詳細" id="toc-詳細">詳細</a>
+<ul>
+<li><a href="#phase-1-phase-2-の段階的義務化" id="toc-phase-1-phase-2-の段階的義務化">Phase 1 → Phase 2
+の段階的義務化</a></li>
+<li><a href="#日本メーカーへの適用範囲" id="toc-日本メーカーへの適用範囲">日本メーカーへの適用範囲</a></li>
+<li><a href="#b2bb2c-双方への適用とfrand条件" id="toc-b2bb2c-双方への適用とfrand条件">B2B・B2C
+双方への適用とFRAND条件</a></li>
+</ul></li>
+<li><a href="#考察" id="toc-考察">考察</a></li>
+<li><a href="#参考文献" id="toc-参考文献">参考文献</a></li>
+<li><a href="#更新履歴" id="toc-更新履歴">更新履歴</a></li>
+</ul></li>
+</ul>
+</div>
+<h1><span id="eudata-act-b2b-by-design-2026-日本の電気機械メーカーへの具体的影響">EU
+Data Act B2B by design 2026 —
+日本の電気・機械メーカーへの具体的影響</span></h1>
+<h2><span id="概要">概要</span></h2>
+<p>EU Data
+Act（EU規則2023/2854）は、コネクテッド製品のデータアクセス権を段階的に義務化する規則だ。2025年9月12日のPhase
+1施行に続き、2026年9月12日にはアクセス機能を製品設計段階で組み込む「access-by-design」義務が発効する。EU市場で製品を販売する日本の電気・機械メーカーは、設立地を問わず規制対象となる。対応すべき実務は、製品再設計・契約対応・法的代理人の選任の3点に整理できる。</p>
+<h2><span id="詳細">詳細</span></h2>
+<h3><span id="phase-1-phase-2の段階的義務化">Phase 1 → Phase 2
+の段階的義務化</span></h3>
+<p>EU Data Act の施行は二段階に分かれている。2025年9月12日のPhase
+1では、EU向けコネクテッド製品のメーカーに対し、B2B・B2Cを問わずユーザーへのデータアクセス権の付与が義務付けられた<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。データは「遅延なく、無償で、継続的かつリアルタイムに」提供しなければならない。ただし規則本文（第4条）では、継続的・リアルタイムの提供は「関連性があり技術的に可能な場合」に限られる<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。</p>
+<p>2026年9月12日からのPhase
+2では、この日以降にEU市場へ新規投入するコネクテッド製品に「access-by-design」義務が課される。データアクセス機能を、デフォルトで容易・安全・直接に利用できる形で製品設計段階から実装する必要がある（第3条、「関連性があり技術的に可能な場合」の限定付き）<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。過去に上市済みの製品を遡及的に再設計する義務ではないが、同一モデルでも2026年9月12日以降に初めて出荷する個体は本義務の対象となる。</p>
+<p>なお「Phase 1 / Phase
+2」は施行スケジュールを説明するための呼称で、規則本文が用いる法令用語ではない。</p>
+<figure>
+<img src="/memo-blog/images/eu-data-act-b2b-2026.png" alt="EU Data Act の段階的義務化と日本メーカーへの適用">
+<figcaption aria-hidden="true">EU Data Act
+の段階的義務化と日本メーカーへの適用</figcaption>
+</figure>
+<h3><span id="日本メーカーへの適用範囲">日本メーカーへの適用範囲</span></h3>
+<p>日本に法人を置くメーカーでも、EU市場でコネクテッド製品を販売する場合は規制対象となる<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>。Data Act
+は特定業界に限定しない水平規則で、データ収集・通信機能を持つ産業機器・農業機械・医療機器が対象に含まれる<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>。IoT機能を搭載した工場設備や農業用機械も対象になりうる。</p>
+<h3><span id="b2bb2c双方への適用とfrand条件">B2B・B2C
+双方への適用とFRAND条件</span></h3>
+<p>データアクセス権はビジネスユーザー（B2B）にも消費者（B2C）にも等しく適用される<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>。B2Bのデータ共有には、FRAND（公正・合理的・非差別的）条件が義務付けられる<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>。中小企業（SME）向けのデータ提供対価は、データ提供にかかる直接コストを上限とし、利益マージンを上乗せできない（第9条2項）<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>。</p>
+<h2><span id="考察">考察</span></h2>
+<p>2026年9月の「access-by-design」義務は、要求仕様を後付けで満たす「パッチ型」対応では費用対効果が悪い。製品ロードマップへ前倒しで統合する方が合理的だ。特に影響が大きいのは、「データはメーカーが保有・活用する」という前提のまま開発されてきたIoT機器群で、アーキテクチャ全体の見直しを迫られる。</p>
+<p>FRAND条件の実装では、データ仲介レイヤーや標準API仕様の活用が実務的な選択肢になる。あわせて、EU域外企業に課される法的代理人の選任要件は、日本企業が見落としやすい実務コストであり、早めの手当てが要る。</p>
+<h2><span id="参考文献">参考文献</span></h2>
+<h2><span id="更新履歴">更新履歴</span></h2>
+<ul>
+<li>2026-07-10: 初版</li>
+</ul>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>Wilson Sonsini, "<a href="https://www.wsgrdataadvisor.com/2026/06/eu-data-act-september-2026-deadline-what-businesses-need-to-know/" target="_blank" rel="noopener">EU
+Data Act September 2026 Deadline: What Businesses Need to Know</a>",
+アクセス日 2026-07-10<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
+EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
+アクセス日 2026-07-10<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
+EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
+アクセス日 2026-07-10<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Wilson Sonsini, "<a href="https://www.wsgrdataadvisor.com/2026/06/eu-data-act-september-2026-deadline-what-businesses-need-to-know/" target="_blank" rel="noopener">EU
+Data Act September 2026 Deadline: What Businesses Need to Know</a>",
+アクセス日 2026-07-10<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>Wilson Sonsini, "<a href="https://www.wsgrdataadvisor.com/2026/06/eu-data-act-september-2026-deadline-what-businesses-need-to-know/" target="_blank" rel="noopener">EU
+Data Act September 2026 Deadline: What Businesses Need to Know</a>",
+アクセス日 2026-07-10<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
+EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
+アクセス日 2026-07-10<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
+EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
+アクセス日 2026-07-10<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>Wilson Sonsini, "<a href="https://www.wsgrdataadvisor.com/2026/06/eu-data-act-september-2026-deadline-what-businesses-need-to-know/" target="_blank" rel="noopener">EU
+Data Act September 2026 Deadline: What Businesses Need to Know</a>",
+アクセス日 2026-07-10<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
+EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
+アクセス日 2026-07-10<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
+EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
+アクセス日 2026-07-10<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
+EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
+アクセス日 2026-07-10<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" data-id="cmrrk7nwb002j18mmi23wub3g" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1571,229 +1793,7 @@ Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" data-id="cmrrjrtph012p18nn3gnm4rxw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-EU-Data-Act-B2B-by-design-2026" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/">EU Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/">
-            <time datetime="2026-07-09T15:00:00.000Z" itemprop="datePublished">2026-07-10</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/memo-blog/categories/core/">core</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/memo-blog/tags/B2B-by-design/">B2B by design</a>, <a class="tag-link" href="/memo-blog/tags/EU-Data-Act/">EU Data Act</a>, <a class="tag-link" href="/memo-blog/tags/FRAND/">FRAND</a>, <a class="tag-link" href="/memo-blog/tags/日本製造業/">日本製造業</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <div id="TOC">
-	<ul>
-<li><a href="#eu-data-act-b2b-by-design-2026-日本の電気機械メーカーへの具体的影響" id="toc-eu-data-act-b2b-by-design-2026-日本の電気機械メーカーへの具体的影響">EU
-Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</a>
-<ul>
-<li><a href="#概要" id="toc-概要">概要</a></li>
-<li><a href="#詳細" id="toc-詳細">詳細</a>
-<ul>
-<li><a href="#phase-1-phase-2-の段階的義務化" id="toc-phase-1-phase-2-の段階的義務化">Phase 1 → Phase 2
-の段階的義務化</a></li>
-<li><a href="#日本メーカーへの適用範囲" id="toc-日本メーカーへの適用範囲">日本メーカーへの適用範囲</a></li>
-<li><a href="#b2bb2c-双方への適用とfrand条件" id="toc-b2bb2c-双方への適用とfrand条件">B2B・B2C
-双方への適用とFRAND条件</a></li>
-</ul></li>
-<li><a href="#考察" id="toc-考察">考察</a></li>
-<li><a href="#参考文献" id="toc-参考文献">参考文献</a></li>
-<li><a href="#更新履歴" id="toc-更新履歴">更新履歴</a></li>
-</ul></li>
-</ul>
-</div>
-<h1><span id="eudata-act-b2b-by-design-2026-日本の電気機械メーカーへの具体的影響">EU
-Data Act B2B by design 2026 —
-日本の電気・機械メーカーへの具体的影響</span></h1>
-<h2><span id="概要">概要</span></h2>
-<p>EU Data
-Act（EU規則2023/2854）は、コネクテッド製品のデータアクセス権を段階的に義務化する規則だ。2025年9月12日のPhase
-1施行に続き、2026年9月12日にはアクセス機能を製品設計段階で組み込む「access-by-design」義務が発効する。EU市場で製品を販売する日本の電気・機械メーカーは、設立地を問わず規制対象となる。対応すべき実務は、製品再設計・契約対応・法的代理人の選任の3点に整理できる。</p>
-<h2><span id="詳細">詳細</span></h2>
-<h3><span id="phase-1-phase-2の段階的義務化">Phase 1 → Phase 2
-の段階的義務化</span></h3>
-<p>EU Data Act の施行は二段階に分かれている。2025年9月12日のPhase
-1では、EU向けコネクテッド製品のメーカーに対し、B2B・B2Cを問わずユーザーへのデータアクセス権の付与が義務付けられた<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。データは「遅延なく、無償で、継続的かつリアルタイムに」提供しなければならない。ただし規則本文（第4条）では、継続的・リアルタイムの提供は「関連性があり技術的に可能な場合」に限られる<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。</p>
-<p>2026年9月12日からのPhase
-2では、この日以降にEU市場へ新規投入するコネクテッド製品に「access-by-design」義務が課される。データアクセス機能を、デフォルトで容易・安全・直接に利用できる形で製品設計段階から実装する必要がある（第3条、「関連性があり技術的に可能な場合」の限定付き）<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。過去に上市済みの製品を遡及的に再設計する義務ではないが、同一モデルでも2026年9月12日以降に初めて出荷する個体は本義務の対象となる。</p>
-<p>なお「Phase 1 / Phase
-2」は施行スケジュールを説明するための呼称で、規則本文が用いる法令用語ではない。</p>
-<figure>
-<img src="/memo-blog/images/eu-data-act-b2b-2026.png" alt="EU Data Act の段階的義務化と日本メーカーへの適用">
-<figcaption aria-hidden="true">EU Data Act
-の段階的義務化と日本メーカーへの適用</figcaption>
-</figure>
-<h3><span id="日本メーカーへの適用範囲">日本メーカーへの適用範囲</span></h3>
-<p>日本に法人を置くメーカーでも、EU市場でコネクテッド製品を販売する場合は規制対象となる<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>。Data Act
-は特定業界に限定しない水平規則で、データ収集・通信機能を持つ産業機器・農業機械・医療機器が対象に含まれる<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>。IoT機能を搭載した工場設備や農業用機械も対象になりうる。</p>
-<h3><span id="b2bb2c双方への適用とfrand条件">B2B・B2C
-双方への適用とFRAND条件</span></h3>
-<p>データアクセス権はビジネスユーザー（B2B）にも消費者（B2C）にも等しく適用される<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>。B2Bのデータ共有には、FRAND（公正・合理的・非差別的）条件が義務付けられる<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>。中小企業（SME）向けのデータ提供対価は、データ提供にかかる直接コストを上限とし、利益マージンを上乗せできない（第9条2項）<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>。</p>
-<h2><span id="考察">考察</span></h2>
-<p>2026年9月の「access-by-design」義務は、要求仕様を後付けで満たす「パッチ型」対応では費用対効果が悪い。製品ロードマップへ前倒しで統合する方が合理的だ。特に影響が大きいのは、「データはメーカーが保有・活用する」という前提のまま開発されてきたIoT機器群で、アーキテクチャ全体の見直しを迫られる。</p>
-<p>FRAND条件の実装では、データ仲介レイヤーや標準API仕様の活用が実務的な選択肢になる。あわせて、EU域外企業に課される法的代理人の選任要件は、日本企業が見落としやすい実務コストであり、早めの手当てが要る。</p>
-<h2><span id="参考文献">参考文献</span></h2>
-<h2><span id="更新履歴">更新履歴</span></h2>
-<ul>
-<li>2026-07-10: 初版</li>
-</ul>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1" role="doc-endnote"><p>Wilson Sonsini, "<a href="https://www.wsgrdataadvisor.com/2026/06/eu-data-act-september-2026-deadline-what-businesses-need-to-know/" target="_blank" rel="noopener">EU
-Data Act September 2026 Deadline: What Businesses Need to Know</a>",
-アクセス日 2026-07-10<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
-EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
-アクセス日 2026-07-10<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
-EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
-アクセス日 2026-07-10<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>Wilson Sonsini, "<a href="https://www.wsgrdataadvisor.com/2026/06/eu-data-act-september-2026-deadline-what-businesses-need-to-know/" target="_blank" rel="noopener">EU
-Data Act September 2026 Deadline: What Businesses Need to Know</a>",
-アクセス日 2026-07-10<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Wilson Sonsini, "<a href="https://www.wsgrdataadvisor.com/2026/06/eu-data-act-september-2026-deadline-what-businesses-need-to-know/" target="_blank" rel="noopener">EU
-Data Act September 2026 Deadline: What Businesses Need to Know</a>",
-アクセス日 2026-07-10<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
-EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
-アクセス日 2026-07-10<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
-EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
-アクセス日 2026-07-10<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8" role="doc-endnote"><p>Wilson Sonsini, "<a href="https://www.wsgrdataadvisor.com/2026/06/eu-data-act-september-2026-deadline-what-businesses-need-to-know/" target="_blank" rel="noopener">EU
-Data Act September 2026 Deadline: What Businesses Need to Know</a>",
-アクセス日 2026-07-10<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
-EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
-アクセス日 2026-07-10<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
-EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
-アクセス日 2026-07-10<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11" role="doc-endnote"><p>Faegre Drinker, "<a href="https://www.faegredrinker.com/en/insights/publications/2025/8/the-eu-data-act-impact-on-connected-products-and-device-manufacturers" target="_blank" rel="noopener">The
-EU Data Act: Impact on Connected Products and Device Manufacturers</a>",
-アクセス日 2026-07-10<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" data-id="cmrrjrtik005q18nnt28jkxrp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" data-id="cmrrk7o5q016c18mmhx8fgdpc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2070,7 +2070,7 @@ IP のある拠点に置く</li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/05/24/Tailscale-slow-internet-troubleshooting/" data-id="cmrrjrtn300t618nnws9vpvnt" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/24/Tailscale-slow-internet-troubleshooting/" data-id="cmrrk7nz300ah18mmfqdrecaq" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2656,7 +2656,7 @@ OSでCapslockをCTRLにする</a>（過去記事、X11時代の手法との比�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/05/09/Customize-keyboard-on-Ubuntu26/" data-id="cmrrjrtrf01f518nnq9q2zanc" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/09/Customize-keyboard-on-Ubuntu26/" data-id="cmrrk7o7701bz18mmcyjragh0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -3797,7 +3797,7 @@ Ansible による自動化の足場も用意しました。 EC2 構成は前提�
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/05/06/Headscale-Self-Hosting/" data-id="cmrrjrttb01lo18nnlzmugu08" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/05/06/Headscale-Self-Hosting/" data-id="cmrrk7o9101hb18mmaem5prep" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -4163,7 +4163,7 @@ GitHub</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/04/05/Data-centric-AI-Survey/" data-id="cmrrjrtrg01f918nnziagtzh9" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/04/05/Data-centric-AI-Survey/" data-id="cmrrk7o7801c118mmv195lm42" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -4362,7 +4362,7 @@ Codexを呼び出す方法を解説する。</p></p>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-OpenAI-Codex-MCP/" data-id="cmrrjrtox010f18nn384mcmgr" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/01/25/Claude-Code-OpenAI-Codex-MCP/" data-id="cmrrk7o4q014118mmyr9nrelk" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -4482,8 +4482,8 @@ Codexを呼び出す方法を解説する。</p></p>
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/cross/">cross</a></p>
-                            <p class="item-title"><a href="/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" class="title">Open Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/core/">core</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" class="title">EU Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</a></p>
                             <p class="item-date"><time datetime="2026-07-09T15:00:00.000Z" itemprop="datePublished">2026-07-10</time></p>
                         </div>
                     </li>
@@ -4491,8 +4491,8 @@ Codexを呼び出す方法を解説する。</p></p>
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/core/">core</a></p>
-                            <p class="item-title"><a href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" class="title">EU Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/cross/">cross</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" class="title">Open Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</a></p>
                             <p class="item-date"><time datetime="2026-07-09T15:00:00.000Z" itemprop="datePublished">2026-07-10</time></p>
                         </div>
                     </li>
