@@ -28,7 +28,8 @@ jobs:
       - name: Copy source files to public
         run: |
           sudo chown -R runner public
-          rsync -a --exclude '_drafts/' --exclude '_removed/' ./source/ ./public/source/
+          rsync -a --no-links --exclude '_drafts' --exclude '_removed' ./source/ ./public/source/
+          test ! -e ./public/source/_drafts || { echo "::error::_drafts leaked into public/"; exit 1; }
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
