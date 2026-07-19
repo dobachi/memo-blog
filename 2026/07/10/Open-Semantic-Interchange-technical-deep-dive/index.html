@@ -15,7 +15,7 @@
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/open-semantic-interchange-architecture.png">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/images/open-semantic-interchange-cross-model.png">
-<meta property="og:updated_time" content="2026-07-19T09:23:27.813Z">
+<meta property="og:updated_time" content="2026-07-19T09:31:56.943Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Open Semantic Interchange (OSI) 技術深掘り — スコープと利用実例">
 <meta name="twitter:description" content="Open Semantic Interchange (OSI) 技術深掘り — スコープと利用実例  概要 詳細  仕様概要とライセンス OSIのスコープ 技術的イメージと利用実例 参加組織とワーキンググループ AI統合対応 異なるセマンティックモデルをまたぐ連携  考察 参考文献 更新履歴    Open Semantic Interchange (OSI) 技術深掘り — スコープと利用">
@@ -355,7 +355,43 @@ Dawiso がデータプロダクトを OSI
 <h3><span id="参加組織とワーキンググループ">参加組織とワーキンググループ</span></h3>
 <p>参加組織は50を超える。Snowflake・Databricks・Salesforce・Oracle・Alation・BlackRock・ServiceNow・Mistral
 AI などが名を連ねる<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a><a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>。</p>
-<p>ワーキンググループの一覧については、公式情報の中に二系統が並存している点に注意が要る。まず公式サイトのトップページは、5つのグループを掲げる<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>。</p>
+<p>ワーキンググループの一覧については、公式情報の中に三系統が並存している点に注意が要る。</p>
+<p>実態に最も近いのはリポジトリ内の <code>docs/working_groups.md</code>
+である。各グループにリード担当者と Slack
+チャンネルが割り当てられており、実際に会合が回っているのはこの単位だ<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>。</p>
+<table>
+<thead>
+<tr class="header">
+<th>ワーキンググループ</th>
+<th>リード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Metric Language and Relationships</td>
+<td>Will Pugh</td>
+</tr>
+<tr class="even">
+<td>Composability</td>
+<td>Dianne Wood（AtScale）</td>
+</tr>
+<tr class="odd">
+<td>Catalog</td>
+<td>Shubham Bhargav（Atlan）</td>
+</tr>
+<tr class="even">
+<td>Ontology</td>
+<td>Kurt（RelationalAI）</td>
+</tr>
+<tr class="odd">
+<td>Sync API</td>
+<td>Francois Lopitaux（ThoughtSpot）</td>
+</tr>
+</tbody>
+</table>
+<p>一方、公式サイトのトップページも5つを掲げるが、名称が一致しない<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>。「Sync
+API」に対応する項目がなく、代わりに「Model Converters &amp; Developer
+Tools」が入る。</p>
 <ul>
 <li>Advanced Metrics &amp; Expression
 Language（高度なメトリクスと式言語）</li>
@@ -365,7 +401,8 @@ Language（高度なメトリクスと式言語）</li>
 <li>Model Converters &amp; Developer
 Tools（モデル変換と開発者ツール）</li>
 </ul>
-<p>一方 ROADMAP は「Current Efforts / Working Groups」として3つに絞る<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>。</p>
+<p>さらに ROADMAP は「Current Efforts / Working
+Groups」として3つに絞る<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>。</p>
 <ul>
 <li>Metric Semantics &amp; Core Semantic
 Model（メトリクス意味論とコアモデル）</li>
@@ -375,7 +412,7 @@ Services（カタログ統合とセマンティックサービス）</li>
 Interoperability（オントロジーと意味的相互運用）</li>
 </ul>
 <p>さらに ROADMAP には「Future
-Efforts」として7項目が並ぶ。これらは着手前の構想であり、現行のワークストリームではない<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>。</p>
+Efforts」として7項目が並ぶ。これらは着手前の構想であり、現行のワークストリームではない<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>。</p>
 <ul>
 <li>Dataset Abstraction &amp; Logical
 Modeling（データセット抽象化と論理モデリング）</li>
@@ -392,15 +429,15 @@ Validation（ガバナンス・アイデンティティ・検証）</li>
 Models（業界・ドメイン特化モデル）</li>
 </ul>
 <p>粒度も名称も揃っておらず、2026年7月時点でこの不整合は解消されていない。ASF移管のアナウンスは
-ROADMAP 側の3つを採っている<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>。実際に動いているワークストリームを知りたければ、ROADMAP
+ROADMAP 側の3つを採っている<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a>。実際に動いているワークストリームを知りたければ、ROADMAP
 の Current Efforts を見るのが確実だ。</p>
-<p>初回のワーキンググループ会合は2025年10月に開かれた<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a>。業界特化の動きとして、2026年には金融サービス向けのセマンティック
-WG が立ち上がり、Net Asset Value のような定義の統一を進めている<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a>。</p>
+<p>初回のワーキンググループ会合は2025年10月に開かれた<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a>。業界特化の動きとして、2026年には金融サービス向けのセマンティック
+WG が立ち上がり、Net Asset Value のような定義の統一を進めている<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a>。</p>
 <h3><span id="ai統合対応">AI統合対応</span></h3>
 <p>OSI は AI
 エージェントにセマンティックコンテキストを渡すことを設計に組み込んでいる。AI
 Context
-として、指示・同義語・サンプルクエリといった注釈をモデルに付与できる<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a>。すべてのツールとエージェントが同一の定義から動くことで、チーム間の定義不一致や重複作業を避けられる<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a>。</p>
+として、指示・同義語・サンプルクエリといった注釈をモデルに付与できる<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a>。すべてのツールとエージェントが同一の定義から動くことで、チーム間の定義不一致や重複作業を避けられる<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a>。</p>
 <h3><span id="異なるセマンティックモデルをまたぐ連携">異なるセマンティックモデルをまたぐ連携</span></h3>
 <p>押さえるべき線引きは、OSI
 が与えるのは「フォーマット（構造）の相互運用」であって「意味の自動突き合わせ」ではない、という点だ。</p>
@@ -412,19 +449,19 @@ Context
 は両社のモデルを同じ文法（YAML／JSON）で表現させる。相手のメトリクス定義（式・ディメンション・関係・方言別の式）が機械可読で明示的になり、プロプライエタリなサイロや専用コネクタから解放される。ただし
 A社の「churn」と
 B社の「churn」を自動で同一視することはしない。定義が食い違えば OSI
-はその差分を正確に可視化するが、対応づけ（マッピングや統一定義の合意）は当事者のガバナンスに委ねられる。コア仕様にモデル間クロスウォークの仕組みはまだなく、ロードマップ上の目標にとどまる<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a>。</p>
+はその差分を正確に可視化するが、対応づけ（マッピングや統一定義の合意）は当事者のガバナンスに委ねられる。コア仕様にモデル間クロスウォークの仕組みはまだなく、ロードマップ上の目標にとどまる<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a>。</p>
 <p>この線引きは Apache Ossie の ROADMAP
 でも明言されている。「現状は構造的相互運用は解けている（どのツールも共通フォーマットでモデルを読み書きできる）が、概念的相互運用（conceptual
-interoperability）はまだ解けていない」という認識だ<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a>。差分を可視化した先を担う取り組みも進む。「Dataset
+interoperability）はまだ解けていない」という認識だ<a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a>。差分を可視化した先を担う取り組みも進む。「Dataset
 Abstraction &amp; Logical
 Modeling」はモデルをまたいだデータセット・関係の再利用（composability）を、「Ontology
 &amp; Semantic
-Interoperability」は業務概念を物理レイアウトから切り離し、オントロジーベースのモデルとモデル間の概念的アラインメントを可能にすることを目標に掲げる<a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a>。</p>
+Interoperability」は業務概念を物理レイアウトから切り離し、オントロジーベースのモデルとモデル間の概念的アラインメントを可能にすることを目標に掲げる<a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a>。</p>
 <p>業界横断では「業界が OSI
 の上に共通ドメイン語彙を作る」パターンになる。金融サービス向けのセマンティック
-WG は、Net Asset Value のような定義を業界で揃えようとする例だ<a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a>。異なる業界どうしなら、双方が参照する共通リファレンス・オントロジー（金融の
+WG は、Net Asset Value のような定義を業界で揃えようとする例だ<a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a>。異なる業界どうしなら、双方が参照する共通リファレンス・オントロジー（金融の
 FIBO
-など）へのマッピングが鍵になるが、これは現時点ではロードマップであり、完成したスキーマ機能ではない<a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a>。</p>
+など）へのマッピングが鍵になるが、これは現時点ではロードマップであり、完成したスキーマ機能ではない<a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a>。</p>
 <p>要するに、OSI
 は共通の文法・ファイル形式であって共通の意味辞書ではない。「同じ単語で違う意味」を自動解決はしないが、各自の意味を交渉可能なほど明示化し、Composability
 や Ontology 層で整合を積み上げる土台を与える。</p>
@@ -449,7 +486,11 @@ Snowflake・Cube・BI 各社の export/import
 Apache Ossie に更新</li>
 <li>2026-07-19: ワーキンググループの記述を訂正。ROADMAP の「Current
 Efforts」3件と「Future
-Efforts」7件を一列に並べ、計10件すべてを現行WGとして記載していた誤りを修正し、両者を区別した。あわせて公式サイトのトップページが別系統の5件を掲げている不整合を追記</li>
+Efforts」7件を一列に並べ、計10件すべてを現行WGとして記載していた誤りを修正し、両者を区別した。あわせて、リポジトリの
+<code>docs/working_groups.md</code>・公式サイトのトップページ・ROADMAP
+の三者で一覧が食い違っている実態を追記し、リード担当者と Slack
+チャンネルを伴う <code>docs/working_groups.md</code>
+を実態に最も近いものとして本文に加えた</li>
 </ul>
 <section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -491,35 +532,37 @@ Interchange</a>", アクセス日 2026-07-10<a href="#fnref16" class="footnote-b
 <li id="fn17" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/open-semantic-interchanges-specs-finalized/" target="_blank" rel="noopener">Open
 Semantic Interchange (OSI) Specification Finalized</a>", アクセス日
 2026-07-10<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn18" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/" target="_blank" rel="noopener">Open Semantic
-Interchange</a>", アクセス日 2026-07-10<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn19" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
-Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/docs/working_groups.md" target="_blank" rel="noopener">docs/working_groups.md</a>",
+アクセス日 2026-07-19<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/" target="_blank" rel="noopener">Open Semantic
+Interchange</a>", アクセス日 2026-07-10<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn20" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
 Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn21" role="doc-endnote"><p>Apache Ossie, "<a href="https://ossie.apache.org/updates/ossie-enters-apache-incubator/" target="_blank" rel="noopener">Apache
+<li id="fn21" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
+Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22" role="doc-endnote"><p>Apache Ossie, "<a href="https://ossie.apache.org/updates/ossie-enters-apache-incubator/" target="_blank" rel="noopener">Apache
 Ossie (Incubating): The New Name for Open Semantic Interchange</a>",
-アクセス日 2026-07-19<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn22" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/osi-initiative-expands-partners/" target="_blank" rel="noopener">OSI
+アクセス日 2026-07-19<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/osi-initiative-expands-partners/" target="_blank" rel="noopener">OSI
 Further Expands Partner Ecosystem and Holds First Working Group
-Meeting</a>", アクセス日 2026-07-13<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn23" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/updates/" target="_blank" rel="noopener">Updates（金融サービス向けWG
-ほか）</a>", アクセス日 2026-07-13<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn24" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie" target="_blank" rel="noopener">Apache Ossie (旧 OSI)
-仕様リポジトリ</a>", アクセス日 2026-07-13<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn25" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/open-semantic-interchanges-specs-finalized/" target="_blank" rel="noopener">Open
+Meeting</a>", アクセス日 2026-07-13<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn24" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/updates/" target="_blank" rel="noopener">Updates（金融サービス向けWG
+ほか）</a>", アクセス日 2026-07-13<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn25" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie" target="_blank" rel="noopener">Apache Ossie (旧 OSI)
+仕様リポジトリ</a>", アクセス日 2026-07-13<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn26" role="doc-endnote"><p>Snowflake, "<a href="https://www.snowflake.com/en/blog/open-semantic-interchanges-specs-finalized/" target="_blank" rel="noopener">Open
 Semantic Interchange (OSI) Specification Finalized</a>", アクセス日
-2026-07-10<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn26" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie" target="_blank" rel="noopener">Apache Ossie (旧 OSI)
-仕様リポジトリ</a>", アクセス日 2026-07-13<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn27" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
-Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+2026-07-10<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn27" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie" target="_blank" rel="noopener">Apache Ossie (旧 OSI)
+仕様リポジトリ</a>", アクセス日 2026-07-13<a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn28" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
 Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref28" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn29" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/updates/" target="_blank" rel="noopener">Updates（金融サービス向けWG
-ほか）</a>", アクセス日 2026-07-13<a href="#fnref29" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn30" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
-Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref30" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn29" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
+Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref29" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn30" role="doc-endnote"><p>Open Semantic Interchange, "<a href="https://open-semantic-interchange.org/updates/" target="_blank" rel="noopener">Updates（金融サービス向けWG
+ほか）</a>", アクセス日 2026-07-13<a href="#fnref30" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn31" role="doc-endnote"><p>Apache Ossie, "<a href="https://github.com/apache/ossie/blob/main/ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md —
+Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref31" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -532,7 +575,7 @@ Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" data-id="cmrrl9ahu017f18mjvpq4r0r2" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" data-id="cmrrlk7jy017018obx0dsp0a0" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -607,19 +650,19 @@ Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref
         
 <nav id="article-nav">
     
-        <a href="/memo-blog/2026/07/11/IDSA-Connector-Report-2026/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">新しい記事</strong>
             <div class="article-nav-title">
                 
-                    IDSA Connector Report 2026 — DSP 2025-1 と DCP 1.0 でコネクタエコシステムが成熟段階へ
+                    EU Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響
                 
             </div>
         </a>
     
     
-        <a href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/memo-blog/2026/05/24/Tailscale-slow-internet-troubleshooting/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">古い記事</strong>
-            <div class="article-nav-title">EU Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</div>
+            <div class="article-nav-title">Tailscale 使用時にインターネットが遅くなるときの切り分け（Exit Node / DNS / Direct 接続）</div>
         </a>
     
 </nav>
@@ -673,8 +716,8 @@ Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/cross/">cross</a></p>
-                            <p class="item-title"><a href="/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" class="title">Open Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/core/">core</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" class="title">EU Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</a></p>
                             <p class="item-date"><time datetime="2026-07-09T15:00:00.000Z" itemprop="datePublished">2026-07-10</time></p>
                         </div>
                     </li>
@@ -682,8 +725,8 @@ Current Efforts / Working Groups</a>", アクセス日 2026-07-13<a href="#fnref
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/core/">core</a></p>
-                            <p class="item-title"><a href="/memo-blog/2026/07/10/EU-Data-Act-B2B-by-design-2026/" class="title">EU Data Act B2B by design 2026 — 日本の電気・機械メーカーへの具体的影響</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/memo-blog/categories/cross/">cross</a></p>
+                            <p class="item-title"><a href="/memo-blog/2026/07/10/Open-Semantic-Interchange-technical-deep-dive/" class="title">Open Semantic Interchange (OSI) 技術深掘り — スコープと利用実例</a></p>
                             <p class="item-date"><time datetime="2026-07-09T15:00:00.000Z" itemprop="datePublished">2026-07-10</time></p>
                         </div>
                     </li>

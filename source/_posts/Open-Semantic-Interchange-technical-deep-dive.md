@@ -78,7 +78,19 @@ expression:
 
 参加組織は50を超える。Snowflake・Databricks・Salesforce・Oracle・Alation・BlackRock・ServiceNow・Mistral AI などが名を連ねる[^1][^2]。
 
-ワーキンググループの一覧については、公式情報の中に二系統が並存している点に注意が要る。まず公式サイトのトップページは、5つのグループを掲げる[^1]。
+ワーキンググループの一覧については、公式情報の中に三系統が並存している点に注意が要る。
+
+実態に最も近いのはリポジトリ内の `docs/working_groups.md` である。各グループにリード担当者と Slack チャンネルが割り当てられており、実際に会合が回っているのはこの単位だ[^10]。
+
+| ワーキンググループ | リード |
+| --- | --- |
+| Metric Language and Relationships | Will Pugh |
+| Composability | Dianne Wood（AtScale） |
+| Catalog | Shubham Bhargav（Atlan） |
+| Ontology | Kurt（RelationalAI） |
+| Sync API | Francois Lopitaux（ThoughtSpot） |
+
+一方、公式サイトのトップページも5つを掲げるが、名称が一致しない[^1]。「Sync API」に対応する項目がなく、代わりに「Model Converters & Developer Tools」が入る。
 
 - Advanced Metrics & Expression Language（高度なメトリクスと式言語）
 - Composability（合成可能性）
@@ -86,7 +98,7 @@ expression:
 - Ontology Representation（オントロジー表現）
 - Model Converters & Developer Tools（モデル変換と開発者ツール）
 
-一方 ROADMAP は「Current Efforts / Working Groups」として3つに絞る[^6]。
+さらに ROADMAP は「Current Efforts / Working Groups」として3つに絞る[^6]。
 
 - Metric Semantics & Core Semantic Model（メトリクス意味論とコアモデル）
 - Catalog Integration & Semantic Services（カタログ統合とセマンティックサービス）
@@ -141,9 +153,10 @@ OSI が解くのは「セマンティック層の断片化」という古くて�
 [^7]: Snowflake, "[OSI Further Expands Partner Ecosystem and Holds First Working Group Meeting](https://www.snowflake.com/en/blog/osi-initiative-expands-partners/)", アクセス日 2026-07-13
 [^8]: Open Semantic Interchange, "[Updates（金融サービス向けWG ほか）](https://open-semantic-interchange.org/updates/)", アクセス日 2026-07-13
 [^9]: Apache Ossie, "[Apache Ossie (Incubating): The New Name for Open Semantic Interchange](https://ossie.apache.org/updates/ossie-enters-apache-incubator/)", アクセス日 2026-07-19
+[^10]: Apache Ossie, "[docs/working_groups.md](https://github.com/apache/ossie/blob/main/docs/working_groups.md)", アクセス日 2026-07-19
 
 ## 更新履歴
 
 - 2026-07-10: 初版
 - 2026-07-13: ワーキンググループの記述を最新の Apache Ossie ROADMAP に合わせて修正し、WG関連の出典（ROADMAP・初回WG会合・金融WG）を追加。仕様リポジトリのURLを Apache Ossie に更新
-- 2026-07-19: ワーキンググループの記述を訂正。ROADMAP の「Current Efforts」3件と「Future Efforts」7件を一列に並べ、計10件すべてを現行WGとして記載していた誤りを修正し、両者を区別した。あわせて公式サイトのトップページが別系統の5件を掲げている不整合を追記
+- 2026-07-19: ワーキンググループの記述を訂正。ROADMAP の「Current Efforts」3件と「Future Efforts」7件を一列に並べ、計10件すべてを現行WGとして記載していた誤りを修正し、両者を区別した。あわせて、リポジトリの `docs/working_groups.md`・公式サイトのトップページ・ROADMAP の三者で一覧が食い違っている実態を追記し、リード担当者と Slack チャンネルを伴う `docs/working_groups.md` を実態に最も近いものとして本文に加えた
