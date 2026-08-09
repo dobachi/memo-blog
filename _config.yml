@@ -87,9 +87,6 @@ deploy:
     repo: git@github.com:dobachi/memo-blog.git
     branch: gh-pages
 
-i18n:
-  type: [page, post]
-  generator: [index, archive, category, tag]
 
 # Markdown-it config
 ## Docs: https://github.com/celsomiranda/hexo-renderer-markdown-it/wiki/
@@ -116,7 +113,14 @@ i18n:
 
 # Pandoc
 pandoc:
-  # other options
-  extra:
-    - toc: # will be passed as `--toc`. Note the colon
-  template: template/simple_toc.html
+  # hexo-renderer-pandoc 0.5 は引数を一切付けない。
+  # 0.3 がハードコードしていた既定値をここで明示する。
+  # 落とすと全記事の引用符が curly になり、TOC も消える。
+  args:
+    - -f
+    - markdown-smart
+    - -t
+    - html-smart
+    - --mathjax
+    - --toc
+    - --template=template/simple_toc.html

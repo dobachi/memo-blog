@@ -6,6 +6,11 @@ on:
       - main
   pull_request:
 
+env:
+  # ローカルと同じ版に固定する。pandoc の版が変わると出力（引用符・脚注など）が変わるため、
+  # ディストリの apt には任せない。
+  PANDOC_VERSION: 3.7.0.2
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,15 +26,38 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install pandoc
+        run: |
+          curl -fsSL -o /tmp/pandoc.deb \
+            "https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb"
+          sudo dpkg -i /tmp/pandoc.deb
+          pandoc --version | head -1
+
+      # npm ci は package-lock.json のとおりに入れる。
+      # 旧CIは毎回 `npm install hexo` で最新を引いており、ビルドが再現しなかった。
+      - name: Install dependencies
+        run: npm ci
+
       - name: Generate static files with Hexo
-        uses: dobachi/hexo-pandoc-action@v1.0.11
+        run: npx hexo clean && npx hexo generate
+
+      # 終了コードだけでは足りない。hexo は終了コード0のまま全ファイルを0バイトで
+      # 書き出すことがある（hexo 3.7.1 × 新しい Node）。生成物の実体を検査する。
+      - name: Verify build artifacts
+        run: python3 bin/check_build.py public
 
       # 記事の原稿(Markdown)も公開する。ただし未公開の下書き・退避記事は除外する。
       - name: Copy source files to public
         run: |
-          sudo chown -R runner public
           rsync -a --no-links --exclude '_drafts' --exclude '_removed' ./source/ ./public/source/
           test ! -e ./public/source/_drafts || { echo "::error::_drafts leaked into public/"; exit 1; }
+          test ! -e ./public/source/_removed || { echo "::error::_removed leaked into public/"; exit 1; }
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
