@@ -12,20 +12,20 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="メモ  ドキュメントより  特徴 データのモデル DataStoreとDataPusher DataStoreの拡張 バックグラウンドジョブ  Dockerで動作確認  セットアップ データストアとしてMinIO環境を整える AWS CLIでアクセスする CKANのUIで操作 （補足）初期化  （補足）FIWAREのCKANは拡張済？ インストール（パッケージ）  参考  CKAN MinI">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220121_ckan_minio1.JPG">
-<meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220123_ckan_minio2.JPG">
-<meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220123_ckan_minio3.JPG">
-<meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220121_ckan_create_org1.JPG">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20220123_ckan_minio1.JPG">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20220123_ckan_minio2.JPG">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20220123_ckan_minio3.JPG">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20220121_ckan_create_org1.JPG">
 <meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220123_ckan_create_org2.JPG">
-<meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220123_ckan_create_org3.JPG">
-<meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220121_ckan_create_dataset1.JPG">
-<meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220123_ckan_create_dataset2.JPG">
-<meta property="og:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220123_ckan_create_dataset3.JPG">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20220123_ckan_create_org3.JPG">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20220123_ckan_create_dataset1.JPG">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20220123_ckan_create_dataset2.JPG">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20220123_ckan_create_dataset3.JPG">
 <meta property="article:published_time" content="2022-01-20T09:04:05.000Z">
-<meta property="article:modified_time" content="2026-08-09T12:14:58.632Z">
+<meta property="article:modified_time" content="2026-08-09T12:43:06.453Z">
 <meta property="article:author" content="dobachi">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/images/20220121_ckan_minio1.JPG">
+<meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/20220123_ckan_minio1.JPG">
     
 
     
@@ -453,15 +453,15 @@ id="データストアとしてminio環境を整える">データストアとし
 でMinIOのウェブコンソールにアクセスできる。
 特に設定していなければ、ID：minioadmin、パスワード：minioadminである。</p>
 <figure>
-<img src="images/20220121_ckan_minio1.JPG" alt="MinIのUI" />
+<img src="/memo-blog/images/20220123_ckan_minio1.JPG" alt="MinIのUI" />
 <figcaption aria-hidden="true">MinIのUI</figcaption>
 </figure>
 <figure>
-<img src="images/20220123_ckan_minio2.JPG" alt="MinIのUI" />
+<img src="/memo-blog/images/20220123_ckan_minio2.JPG" alt="MinIのUI" />
 <figcaption aria-hidden="true">MinIのUI</figcaption>
 </figure>
 <figure>
-<img src="images/20220123_ckan_minio3.JPG" alt="MinIのUI" />
+<img src="/memo-blog/images/20220123_ckan_minio3.JPG" alt="MinIのUI" />
 <figcaption aria-hidden="true">MinIのUI</figcaption>
 </figure>
 <p>別のコンソールで <code>mc</code>クライアントを立ち上げる。</p>
@@ -484,7 +484,8 @@ CLI v2 Docker image</a> を利用してAWS CLIを起動し、MinIOにアクセ�
 <h3 id="ckanのuiで操作">CKANのUIで操作</h3>
 <p>組織の作成</p>
 <figure>
-<img src="images/20220121_ckan_create_org1.JPG" alt="組織作成" />
+<img src="/memo-blog/images/20220121_ckan_create_org1.JPG"
+alt="組織作成" />
 <figcaption aria-hidden="true">組織作成</figcaption>
 </figure>
 <figure>
@@ -492,22 +493,23 @@ CLI v2 Docker image</a> を利用してAWS CLIを起動し、MinIOにアクセ�
 <figcaption aria-hidden="true">組織作成</figcaption>
 </figure>
 <figure>
-<img src="images/20220123_ckan_create_org3.JPG" alt="組織作成" />
+<img src="/memo-blog/images/20220123_ckan_create_org3.JPG"
+alt="組織作成" />
 <figcaption aria-hidden="true">組織作成</figcaption>
 </figure>
 <p>データセット作成</p>
 <figure>
-<img src="images/20220121_ckan_create_dataset1.JPG"
+<img src="/memo-blog/images/20220123_ckan_create_dataset1.JPG"
 alt="データセット作成" />
 <figcaption aria-hidden="true">データセット作成</figcaption>
 </figure>
 <figure>
-<img src="images/20220123_ckan_create_dataset2.JPG"
+<img src="/memo-blog/images/20220123_ckan_create_dataset2.JPG"
 alt="データセット作成" />
 <figcaption aria-hidden="true">データセット作成</figcaption>
 </figure>
 <figure>
-<img src="images/20220123_ckan_create_dataset3.JPG"
+<img src="/memo-blog/images/20220123_ckan_create_dataset3.JPG"
 alt="データセット作成" />
 <figcaption aria-hidden="true">データセット作成</figcaption>
 </figure>
@@ -591,7 +593,7 @@ CLI v2 Docker image</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="cuidRt5iLg5wCyejf3-J5gK9_" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2022/01/20/Getting-started-CKAN/" data-id="cuidW6YScUibwIATEyFph4wvw" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

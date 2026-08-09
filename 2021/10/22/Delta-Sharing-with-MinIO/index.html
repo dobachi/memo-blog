@@ -12,15 +12,15 @@
 <meta property="og:site_name" content="memo-blog">
 <meta property="og:description" content="メモ  MinIOの起動 Delta Sharingサーバの起動  リリースされたパッケージを利用する場合 現在のmainブランチを利用する場合 設定ファイルの作成 Delta Sharingサーバの起動 Delta SharingのPythonクライアントを利用してアクセスする。  トラブルシュート  パス指定方法の誤り   参考  MinIO Delta Sharing Sample c">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/images/minio_test_bucket.png">
-<meta property="og:image" content="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/images/20211022_delta_sharing_client.png">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/images/minio_test_bucket.png">
+<meta property="og:image" content="https://dobachi.github.io/memo-blog/images/20211022_delta_sharing_client.png">
 <meta property="article:published_time" content="2021-10-22T02:19:39.000Z">
-<meta property="article:modified_time" content="2026-08-09T12:14:58.627Z">
+<meta property="article:modified_time" content="2026-08-09T12:43:06.447Z">
 <meta property="article:author" content="dobachi">
 <meta property="article:tag" content="Delta Sharing">
 <meta property="article:tag" content="Minio">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/images/minio_test_bucket.png">
+<meta name="twitter:image" content="https://dobachi.github.io/memo-blog/images/minio_test_bucket.png">
     
 
     
@@ -336,7 +336,7 @@ S3プロトコルでMinIOサービスにアクセスする際のID、シーク�
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./mc mb data/test_bucket</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&#x27;test&#x27;</span> &gt; test.txt</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">export</span> AWS_ACCESS_KEY_ID=minioadmin</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">export</span> AWS_SECRET_ACCESS_KEY=minioadmin</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">aws --endpoint-url http://localhost:9000 s3 <span class="built_in">ls</span></span></span><br><span class="line">2021-10-22 12:26:13 test_bucket</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">aws --endpoint-url http://localhost:9000 s3 <span class="built_in">cp</span> test.txt s3://test_bucket/test.txt</span></span><br></pre></td></tr></table></figure>
 <p>ここで、今回はMinioを利用していることから、エンドポイントURLを指定していることに注意。</p>
 <figure>
-<img src="images/minio_test_bucket.png"
+<img src="/memo-blog/images/minio_test_bucket.png"
 alt="テストバケットに入ったデータ" />
 <figcaption aria-hidden="true">テストバケットに入ったデータ</figcaption>
 </figure>
@@ -384,7 +384,7 @@ SharingのPythonクライアントを利用してアクセスする。</h3>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;shareCredentialsVersion&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;http://localhost:18080/delta-sharing/&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;bearerToken&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 <p>これを利用しながら、テーブルにアクセスする。</p>
 <figure>
-<img src="images/20211022_delta_sharing_client.png"
+<img src="/memo-blog/images/20211022_delta_sharing_client.png"
 alt="Delta Sharingのクライアントでアクセス" />
 <figcaption aria-hidden="true">Delta
 Sharingのクライアントでアクセス</figcaption>
@@ -428,7 +428,7 @@ DeltaSharingMinioExample</a></li>
 
 </div>
 
-    <a data-url="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/" data-id="cuid5zzlxD2UndEQFyMhnqyMp" class="article-share-link"><i class="fas fa-share"></i>共有</a>
+    <a data-url="https://dobachi.github.io/memo-blog/2021/10/22/Delta-Sharing-with-MinIO/" data-id="cuidSMxshxZFfEkCpt-CPTMhZ" class="article-share-link"><i class="fas fa-share"></i>共有</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

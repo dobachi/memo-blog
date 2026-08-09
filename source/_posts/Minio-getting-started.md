@@ -294,7 +294,7 @@ $ ./mc cp test.txt myminio/share/test.txt
 
 実は、ウェブUIからも発行できるため、先にそちらを試した。
 
-![ウェブUIからの署名済みURL発行の例](memo-blog/images/minio_presigned_url_via_gui.png)
+![ウェブUIからの署名済みURL発行の例](/memo-blog/images/minio_presigned_url_via_gui.png)
 
 オブジェクトブラウザから辿りオブジェクトのページを開き、共有マークを押下すると発行できた。
 実際にアクセスしたところ、ファイル本体にアクセスできた。
