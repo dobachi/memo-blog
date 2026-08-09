@@ -68,7 +68,7 @@ $ aws --endpoint-url http://localhost:9000 s3 cp test.txt s3://test_bucket/test.
 
 ここで、今回はMinioを利用していることから、エンドポイントURLを指定していることに注意。
 
-![テストバケットに入ったデータ](images/minio_test_bucket.png)
+![テストバケットに入ったデータ](/memo-blog/images/minio_test_bucket.png)
 
 ## Delta Sharingサーバの起動
 
@@ -189,7 +189,7 @@ minio.share
 
 これを利用しながら、テーブルにアクセスする。
 
-![Delta Sharingのクライアントでアクセス](images/20211022_delta_sharing_client.png)
+![Delta Sharingのクライアントでアクセス](/memo-blog/images/20211022_delta_sharing_client.png)
 
 ここでは試しにPandas DataFrameとして読み取っている。
 

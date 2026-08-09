@@ -190,7 +190,7 @@ ISO/IEC 38505-1:2017におけるデータライフサイクルの管理を以下
 
 #### モデル概要
 
-![モデル概要](/memo-blog/images/20250223_ISOIEC38505-1model)
+![モデル概要](/memo-blog/images/20250223_ISOIEC38505-1model.png)
 
 経産省『第３層：サイバー空間におけるつながり』の信頼性確保に向けたセキュリティ対策検討タスクフォースの検討の方向性より。
 https://www.meti.go.jp/shingikai/mono_info_service/sangyo_cyber/wg_seido/wg_bunyaodan/daisanso/pdf/002_03_00.pdf

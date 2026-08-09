@@ -247,11 +247,11 @@ $ docker run -p 9000:9000 -p 9001:9001 minio/minio server /data --console-addres
 http://<立ち上げたインスタンス>:9000 でMinIOのウェブコンソールにアクセスできる。
 特に設定していなければ、ID：minioadmin、パスワード：minioadminである。
 
-![MinIのUI](images/20220121_ckan_minio1.JPG)
+![MinIのUI](/memo-blog/images/20220123_ckan_minio1.JPG)
 
-![MinIのUI](images/20220123_ckan_minio2.JPG)
+![MinIのUI](/memo-blog/images/20220123_ckan_minio2.JPG)
 
-![MinIのUI](images/20220123_ckan_minio3.JPG)
+![MinIのUI](/memo-blog/images/20220123_ckan_minio3.JPG)
 
 別のコンソールで `mc`クライアントを立ち上げる。
 
@@ -292,19 +292,19 @@ $ docker run --rm -it -v ~/.aws:/root/.aws amazon/aws-cli --profile myminio s3 -
 
 組織の作成
 
-![組織作成](images/20220121_ckan_create_org1.JPG)
+![組織作成](/memo-blog/images/20220121_ckan_create_org1.JPG)
 
 ![組織作成](images/20220123_ckan_create_org2.JPG)
 
-![組織作成](images/20220123_ckan_create_org3.JPG)
+![組織作成](/memo-blog/images/20220123_ckan_create_org3.JPG)
 
 データセット作成
 
-![データセット作成](images/20220121_ckan_create_dataset1.JPG)
+![データセット作成](/memo-blog/images/20220123_ckan_create_dataset1.JPG)
 
-![データセット作成](images/20220123_ckan_create_dataset2.JPG)
+![データセット作成](/memo-blog/images/20220123_ckan_create_dataset2.JPG)
 
-![データセット作成](images/20220123_ckan_create_dataset3.JPG)
+![データセット作成](/memo-blog/images/20220123_ckan_create_dataset3.JPG)
 
 先ほどのS3プロトコルURL（ `s3://mybucket/hoge.txt` ）を登録する。
 

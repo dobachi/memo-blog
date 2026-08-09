@@ -57,6 +57,11 @@ jobs:
       - name: Verify build artifacts
         run: python3 bin/check_build.py public
 
+      # 画像リンクの先頭 `/` 落ちはビルドも200も通るため、記事を開くまで気づかない。
+      # 実際に13枚が何年も壊れたまま公開されていた。
+      - name: Verify image references
+        run: python3 bin/check_images.py public
+
       # 記事の原稿(Markdown)も公開する。ただし未公開の下書き・退避記事は除外する。
       - name: Copy source files to public
         run: |

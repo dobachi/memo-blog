@@ -32,7 +32,8 @@ check:
 	@npx hexo clean > /dev/null
 	@npx hexo generate > /dev/null || (echo "❌ hexo generate が失敗"; exit 1)
 	@python3 bin/check_build.py public || (echo "❌ 生成物が空。終了コードは0でも中身が無い"; exit 1)
-	@echo "✅ ビルド成功（生成物の実体を確認）"
+	@python3 bin/check_images.py public || (echo "❌ 画像リンクが実在しないファイルを指している"; exit 1)
+	@echo "✅ ビルド成功（生成物の実体と画像参照を確認）"
 
 new:
 ifndef TITLE
